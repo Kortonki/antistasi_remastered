@@ -1,0 +1,335 @@
+<!-- Don't get too giddy at the sight of this. We are entirely too lazy to properly implement a stringtable. This is merely a courtesy for someone who requested it and will not be maintained by us. -->
+
+<?xml version="1.0" encoding="utf-8" ?>
+<Project name="Antistasi">
+	<Package name="A3:AS - Public Version">
+		<Container name="Actions">
+			<Key ID="STR_act_offerToJoin">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\talk_ca.paa' /&gt; Offer to Join</Original>
+			</Key>
+			<Key ID="STR_act_talk">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\talk_ca.paa' /&gt; Talk</Original>
+			</Key>
+			<Key ID="STR_act_buy">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\talk_ca.paa' /&gt; Buy</Original>
+			</Key>
+			<Key ID="STR_act_interrogate">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\GUI\cfg\CommunicationMenu\instructor_ca.paa' /&gt; Interrogate</Original>
+			</Key>
+			<Key ID="STR_act_liberate">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\GUI\cfg\CommunicationMenu\instructor_ca.paa' /&gt; Liberate POW</Original>
+			</Key>
+			<Key ID="STR_act_orderRefugee">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\GUI\cfg\CommunicationMenu\instructor_ca.paa' /&gt; Order refugee to follow</Original>
+			</Key>
+			<Key ID="STR_act_toggleDevice">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\GUI\cfg\CommunicationMenu\instructor_ca.paa' /&gt; Turn Device On/Off</Original>
+			</Key>
+			<Key ID="STR_act_missionRequest">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\CommunicationMenu\attack_ca.paa' /&gt; Mission Request</Original>
+			</Key>
+			<Key ID="STR_act_healRepair">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\IGUI\RscTitles\MPProgress\respawn_ca.paa' /&gt; Heal, Repair and Rearm</Original>
+			</Key>
+			<Key ID="STR_act_useMed">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\heal_ca.paa' /&gt; Use Medical Supplies</Original>
+			</Key>
+			<Key ID="STR_act_recruitUnit">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\IGUI\Cfg\MPTable\infantry_ca.paa' /&gt; Unit Recruitment</Original>
+			</Key>
+			<Key ID="STR_act_returnControl">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\MPTable\infantry_ca.paa' /&gt; Return Control to AI</Original>
+			</Key>
+			<Key ID="STR_act_buyVehicle">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\IGUI\Cfg\MPTable\soft_ca.paa' /&gt; Buy Vehicle</Original>
+			</Key>
+			<Key ID="STR_act_unloadCargo">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\igui\cfg\VehicleToggles\VehicleCargoIconOn_ca.paa' /&gt; Unload Vehicle Cargo to Ammobox</Original>
+			</Key>
+			<Key ID="STR_act_recoverEquipment">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\igui\cfg\VehicleToggles\VehicleCargoIconOn_ca.paa' /&gt; Recover nearby equipment</Original>
+			</Key>
+			<Key ID="STR_act_arsenal">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\Logos\a_64_ca.paa' /&gt; Arsenal</Original>
+			</Key>
+			<Key ID="STR_act_persGarage">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\igui\cfg\VehicleToggles\VehicleCargoIconOn2_ca.paa' /&gt; Personal Garage</Original>
+			</Key>
+			<Key ID="STR_act_FIAGarage">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\igui\cfg\VehicleToggles\VehicleCargoIconOn2_ca.paa' /&gt; FIA Garage</Original>
+			</Key>
+			<Key ID="STR_act_refuel">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\refuel_ca.paa' /&gt; Refuel Vehicle</Original>
+			</Key>
+			<Key ID="STR_act_refuel_truck">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\refuel_ca.paa' /&gt; Refuel Vehicle (from fuel truck)</Original>
+			</Key>
+			<Key ID="STR_act_refuel_truck_check">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\refuel_ca.paa' /&gt; Check container fuel</Original>
+			</Key>
+			<Key ID="STR_act_moveAsset">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\VTOLVectoring_ca.paa' /&gt; Move this Asset</Original>
+			</Key>
+			<Key ID="STR_act_dropAsset">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\VTOLVectoring_ca.paa' /&gt; Drop Here</Original>
+			</Key>
+			<Key ID="STR_act_deployTowRopes">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\VehicleToggles\SlingLoadRopeIconOn_ca.paa' /&gt; Deploy Tow Ropes</Original>
+			</Key>
+			<Key ID="STR_act_putAwayTowRopes">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\VehicleToggles\SlingLoadRopeIconOn_ca.paa' /&gt; Put Away Tow Ropes</Original>
+			</Key>
+			<Key ID="STR_act_attachTowRopes">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\VehicleToggles\SlingLoadRopeIconOn2_ca.paa' /&gt; Attatch To Tow Ropes</Original>
+			</Key>
+			<Key ID="STR_act_dropTowRopes">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\take_ca.paa' /&gt; Drop Ropes</Original>
+			</Key>
+			<Key ID="STR_act_pickUpTowRopes">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\take_ca.paa' /&gt; Pick Up Ropes</Original>
+			</Key>
+			<Key ID="STR_act_jamCSAT">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\GUI\cfg\CommunicationMenu\call_ca.paa' /&gt; Jam CSAT</Original>
+			</Key>
+			<Key ID="STR_act_rest">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\Cursors\wait_gs.paa' /&gt; Rest for 8 Hours</Original>
+			</Key>
+			<Key ID="STR_act_hqOptions">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\Ranks\colonel_gs.paa' /&gt; HQ Options</Original>
+			</Key>
+			<Key ID="STR_act_manageTraits">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\Ranks\corporal_gs.paa' /&gt; Get expertise</Original>
+			</Key>
+			<Key ID="STR_act_gameOptions">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\IGUI\Cfg\SimpleTasks\types\use_ca.paa' /&gt; Game Options</Original>
+			</Key>
+			<Key ID="STR_act_commanderMenu">
+				<Original>Commander's Menu</Original>
+			</Key>
+			<Key ID="STR_act_mapInfo">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\Hints\Map_ca.paa' /&gt; Map Info</Original>
+			</Key>
+			<Key ID="STR_act_buildPad">
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\Map\markers\military\objective_ca.paa' /&gt; Build Vehicle Zone</Original>
+			</Key>
+			<Key ID="STR_act_buildHQ">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\takeFlag_ca.paa' /&gt; Build HQ</Original>
+			</Key>
+			<Key ID="STR_act_pamphlets">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\cfg\simpletasks\types\documents_ca.paa' /&gt; Box 'o Pams</Original>
+			</Key>
+			<Key ID="STR_act_repack">
+				<Original>Repack magazines</Original>
+			</Key>
+			<Key ID="STR_act_loadBoxCargo">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\VehicleToggles\SlingLoadRopeIconOn_ca.paa' /&gt; Load Cargo</Original>
+			</Key>
+			<Key ID="STR_act_unloadBoxCargo">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\VehicleToggles\SlingLoadRopeIconOn_ca.paa' /&gt; Unload Cargo</Original>
+			</Key>
+			<Key ID="STR_act_radio">
+				<Original>Toggle Music Player</Original>
+			</Key>
+		</Container>
+
+		<Container name="Tasks">
+			<Key ID="STR_tsk_ASOfficer">
+				<Original>Kill the officer</Original>
+			</Key>
+			<Key ID="STR_tskDesc_ASOfficer">
+				<Original>Our Spies have reported that a CSAT officer is inspecting %1. Now is the time to Strike! Make sure he is eliminated by any means possible before %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_ASSpecOp">
+				<Original>Kill CSAT SpecOps</Original>
+			</Key>
+			<Key ID="STR_tskDesc_ASSpecOp">
+				<Original>Reports have come in that a CSAT SpecOps ground team is currently patrolling near %1. From what we know, these are tough soldiers who usually make use of airial un-manned drones. A well executed strike will gain us some of their high tech equipment. Do this before %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_ASSTraitor">
+				<Original>Kill informant</Original>
+			</Key>
+			<Key ID="STR_tskDesc_ASSTraitor">
+				<Original>Bad news, one of our very own is planning to defect. We have tracked his movements to the nearby town of %1. We are not taking any chancs. Kill him before he provides the enemy with intel of the location of our soldiers homes and FIA cash stockpiles. Do this before %2:%3. We don't where exactly this meeting will happen. You will recognise the building by the nearby MRAP and CSAT presence.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_HQAttack">
+				<Original>Defend HQ</Original>
+			</Key>
+			<Key ID="STR_tskDesc_HQAttack">
+				<Original>CSAT knows the location of our HQ. We suspect that they have sent a SpecOps Air Squad in order to kill Petros. We have two choices - Either retreat and move HQ further than 1km away, or defend with all we have.</Original>
+			</Key>
+
+			<Key ID="STR_tskDesc_CONOPAA">
+				<Original>A CSAT %1 is disturbing our operations in the area. This heavily defended outpost has Mortar and UAV, from what our spies tell us. We advise the destruction of the Drone before engaging and elimination the majority of ground troops. If there is an AA tank, this is also a priorty target. The operation must be completed before %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tskDesc_CONPower">
+				<Original>A %1 has a monopoly over the power supply to nearby towns. Nato might not like this, but we have no choice- We need the Towns on our side and to achieve this we will need the Powerplant. Capture it before %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_CVY_Ammo">
+				<Original>Attack ammo convoy</Original>
+			</Key>
+			<Key ID="STR_tskDesc_CVY_Ammo">
+				<Original>An ammo convoy is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Try to intercept it. Steal or destroy that truck before it reaches it's destination. Be careful, the enemy may provide an armoured escort. The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_CVY_Fuel">
+				<Original>Attack fuel convoy</Original>
+			</Key>
+			<Key ID="STR_tskDesc_CVY_Fuel">
+				<Original>A fuel convoy is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Try to intercept it. Steal or destroy that truck before it reaches it's destination. Be careful, the enemy may provide an armoured escort. The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_CVY_Armor">
+				<Original>Attack armored convoy</Original>
+			</Key>
+			<Key ID="STR_tskDesc_CVY_Armor">
+				<Original>An armor convoy is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Try to intercept it. Destroy the main vehicle before it reaches it's destination.The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_CVY_Pris">
+				<Original>Attack prisoner convoy</Original>
+			</Key>
+			<Key ID="STR_tskDesc_CVY_Pris">
+				<Original>A POW convoy is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Sadly, it seems the enemy are planning their execution. We must intercept it and rescue them. Kill the driver or capture the truck to make them join you and bring them to HQ.The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_CVY_Money">
+				<Original>Attack Money Convoy</Original>
+			</Key>
+			<Key ID="STR_tskDesc_CVY_Money">
+				<Original>A money convoy is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Steal that truck and bring it to HQ. There aren't many better opportunities to acquire the funds we will need to build up our army, don't screw up! The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_CVY_Supply">
+				<Original>Attack supply convoy</Original>
+			</Key>
+			<Key ID="STR_tskDesc_CVY_Supply">
+				<Original>A medical convoy is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Steal the truck and bring it to %4. Let the people there know of the FIA's 'benevolence'.The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_CVY_HVT">
+				<Original>Attack HVT Convoy</Original>
+			</Key>
+			<Key ID="STR_tskDesc_CVY_HVT">
+				<Original>A convoy with a high valuable target is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Seize the opportunity and take him out! We believe he will use a decoy to obscure his exact vehicle. The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_DefCamp">
+				<Original>Defend %1</Original>
+			</Key>
+			<Key ID="STR_tskDesc_DefCamp">
+				<Original>A QRF has just been spotted taking off from %2. Their initial heading suggests that %1 is their target. We have no choice, assume defensive positions</Original>
+			</Key>
+
+			<Key ID="STR_tsk_DesAntenna">
+				<Original>Destroy Radio Tower</Original>
+			</Key>
+			<Key ID="STR_tskDesc_DesAntenna">
+				<Original> An opportunity to strike a Radio Tower in %1 presents its self. If we manage this it will interrupt %4 Comms Nework in the AO. We can destroy the antenna or capture the outpost but must complete it before %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_DesHeli">
+				<Original>Destroy helicoper</Original>
+			</Key>
+			<Key ID="STR_tskDesc_DesHeli">
+				<Original>We have downed air vehicle. This is a great chance to destroy it before it is recovered by a recovery team from %1 reaches the crash site </Original>
+			</Key>
+
+			<Key ID="STR_tsk_DesVehicle">
+				<Original>Destroy armor</Original>
+			</Key>
+			<Key ID="STR_tskDesc_DesVehicle">
+				<Original>We know an %4 is stationed in %1. This is a good chance to steal or destroy it before it causes more damage. Do it before %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_fndExp">
+				<Original>Find the Crazy Irishman</Original>
+			</Key>
+			<Key ID="STR_tskDesc_fndExp">
+				<Original>Black Market dealer Devin Connell has been spotted near %1. He's scheduled for a flight to Metavira or Arulco at %2:%3, so you better hurry up if you wish to acquire some of his fine products. From our recent meetings with him, he has agreed to meet with FIA overt soldiers only, apparently he doesnt like civilians all that much. </Original>
+			</Key>
+			<Key ID="STR_tsk_logAmmo">
+				<Original>Steal ammo truck</Original>
+			</Key>
+			<Key ID="STR_tskDesc_logAmmo">
+				<Original>We've spotted an enemy ammo truck around %1. This is a great opportunity to scavange some well-needed gear from the enemy. We have time until %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_logFuel">
+				<Original>Steal fuel truck</Original>
+			</Key>
+			<Key ID="STR_tskDesc_logFuel">
+				<Original>We've spotted an enemy fuel truck around %1. This is a great opportunity to obtain plenty from the enemy. We have time until %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_logBank">
+				<Original>Rob bank</Original>
+			</Key>
+			<Key ID="STR_tskDesc_logBank">
+				<Original>We know %5 is guarding a large amount of money in the bank of &lt;marker name='%2'&gt;%1&lt;/marker&gt;. Take this getaway vehicle and go there before %3:%4, hold the truck close to thw bank's main entrance for 2 minutes and the money will be transferred to the truck. Bring it back to HQ and the money will be ours.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_logMedical">
+				<Original>Recover supplies</Original>
+			</Key>
+			<Key ID="STR_tskDesc_logMedical">
+				<Original>We've had word from our informant that a sympathetic cell has sent supplies to &lt;marker name='%2'&gt;%1&lt;/marker&gt;. They ran into a patrol and had to abandon the truck. Find and secure the vehicle, then deliver the supplies to the people in &lt;marker name='%2'&gt;%1&lt;/marker&gt; before %5:%6. %7 command has probably dispatched a patrol from &lt;marker name='%4'&gt;%3&lt;/marker&gt; to retrieve the goods, so you better hurry. </Original>
+			</Key>
+
+			<Key ID="STR_tsk_logSupply">
+				<Original>Supply city</Original>
+			</Key>
+			<Key ID="STR_tskDesc_logSupply">
+				<Original>&lt;marker name='%2'&gt;%1&lt;/marker&gt; population is in need of supplies. As it happens, we have just what they need and it may improve our relationship with them. I reserved a transport truck with supplies near our HQ. Drive the transport truck to &lt;marker name='%2'&gt;%1&lt;/marker&gt; city center. Hold it there for 2 minutes before %3:%4.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_PRBrain">
+				<Original>Establish PR station</Original>
+			</Key>
+			<Key ID="STR_tskDesc_PRBrain">
+				<Original>We have noticed that the town of %1 is sympathetic to our cause. Travel there with this Truck and establish a semi-permanent propaganda station in order to spread the word. Once established, stay with and guard the station for as long as you deem necessary to raise town support. It would be wise to expect a number of enemy military responses to this action. You have until %2:%3 to arrive and set it up.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_PRPamphlet">
+				<Original>Drop leaflets</Original>
+			</Key>
+			<Key ID="STR_tskDesc_PRPamphlet">
+				<Original>Supporters of our cause have been working hard to bring the population of %1 over to our side. Help these brave volunteers by delivering these leaflets to safe drop locations. Pick up will take place at %2:%3, so you better have them in place by then. This might be easier if you manage to remain undetected for as long as possible.</Original>
+			</Key>
+			<Key ID="STR_tskDesc_PRPamphlet_fail">
+				<Original>You failed to provide leaflets for our volunteers in %1.</Original>
+			</Key>
+			<Key ID="STR_tskDesc_PRPamphlet_drop">
+				<Original>Drop a crate within 20m of the marked position, do this before %2:%3.</Original>
+			</Key>
+			<Key ID="STR_tskDesc_PRPamphlet_success">
+				<Original>Well done. Our volunteers in %1 are now spreading the word.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_repAntenna">
+				<Original>Disrupt tower rebuild</Original>
+			</Key>
+			<Key ID="STR_tskDesc_repAntenna">
+				<Original>%4 is rebuilding a radio tower in %1. If we want to keep up the enemy comms breakdown, the work must be stopped. Destroy the repair truck parked nearby or capture the zone. Work will be finished at %2:%3.</Original>
+			</Key>
+
+			<Key ID="STR_tsk_resPrisoners">
+				<Original>Rescue prisoners</Original>
+			</Key>
+			<Key ID="STR_tskDesc_resPrisoners">
+				<Original>A group of POWs is awaiting execution at %1. We must rescue them before %2:%3 and bring them to HQ. It would be wise to avoid using anything explosive in your rescue attempt for fear of collateral damage. </Original>
+			</Key>
+
+			<Key ID="STR_tsk_resRefugees">
+				<Original>Help refugees</Original>
+			</Key>
+			<Key ID="STR_tskDesc_resRefugees">
+				<Original>A group of FIA supportes are hidden in a house in %1. We have to get there and find them before %2 does and bring them back to base.</Original>
+			</Key>
+		</Container>
+	</Package>
+</Project>
