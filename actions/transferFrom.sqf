@@ -36,7 +36,7 @@ private _fnc_stopCondition = {
 if (call _fnc_stopCondition) then {
 	hint "Movement cancelled transfer";
 } else {
-	[_origin, _destination] call AS_fnc_transferToBox;
+	[_origin, _destination] spawn AS_fnc_transferToBox;
 };
 
 [0,true] remoteExec ["AS_fnc_showProgressBar",player];

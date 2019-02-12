@@ -14,7 +14,7 @@ params [["_skipping", false]]; //this is for not spawning patrols while skipping
 
 
 if (!(_skipping)) then {
-    call AS_mission_fnc_updateAvailable;
+    [] call AS_mission_fnc_updateAvailable;
 
     [] call AS_movement_fnc_sendAAFroadPatrol;
 

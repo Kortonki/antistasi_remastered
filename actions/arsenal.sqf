@@ -2,6 +2,8 @@
 params ["_box", "_unit"];
 
 if (AS_S("lockTransfer")) exitWith {hint "Arsenal is accessed by someone else. Wait."};
+
+AS_Sset("lockTransfer", true);
 // if the box is not "caja", then transfer everything to caja.
 // This guarantees that the player still has access to everything.
 if (_box != caja) then {
@@ -135,3 +137,5 @@ for "_i" from 0 to (count (_cargo_i select 0) - 1) do {
 };
 
 [caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
+
+AS_Sset("lockTransfer", false);
