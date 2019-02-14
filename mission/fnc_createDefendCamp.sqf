@@ -20,4 +20,4 @@ if (count ("defend_camp" call AS_mission_fnc_active_missions) != 0) exitWith {
 };
 
 private _mission = ["defend_camp", _location] call AS_mission_fnc_add;
-_mission call AS_mission_fnc_activate;
+[_mission] call AS_mission_fnc_activate;

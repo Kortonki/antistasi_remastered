@@ -60,7 +60,7 @@ private _fnc_spawn = {
 			if (random 100 < 50) then {
 				_vehiculos append ([ORIGIN, _position, _grupoheli, _location, _grupo] call AS_tactics_fnc_heli_disembark);
 			} else {
-				[ORIGIN, _position, _grupoheli, _location, _grupo] call AS_tactics_fnc_heli_fastrope;
+				[ORIGIN, _position, _grupoheli, _location, _grupo] spawn AS_tactics_fnc_heli_fastrope;
 			};
 		};
 		sleep 20;

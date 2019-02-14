@@ -1,6 +1,6 @@
 #include "../macros.hpp"
 AS_SERVER_ONLY("defendHQ");
-private _location = "FIA_HQ";
+private _location = "fia_hq";
 private _position = _location call AS_location_fnc_position;
 
 private _debug_prefix = "defend_hq cancelled: ";
@@ -14,4 +14,4 @@ if (count ("defend_hq" call AS_mission_fnc_active_missions) != 0) exitWith {
 };
 
 private _mission = ["defend_hq", _location] call AS_mission_fnc_add;
-_mission call AS_mission_fnc_activate;
+[_mission] call AS_mission_fnc_activate;

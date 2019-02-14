@@ -109,7 +109,7 @@ if (_type == "air") then {
 
 	if ((_composition == "destroy") || (_composition == "mixed")) then {
 		private _grpVeh1 = [_attackVehicle, _origin, _dir] call _spawnVehicle;
-		[_origin, _destination, _grpVeh1] call AS_tactics_fnc_heli_attack;
+		[_origin, _destination, _grpVeh1] spawn AS_tactics_fnc_heli_attack;
 	};
 
 	// small delay to prevent crashes when both helicopters are spawned
@@ -134,7 +134,7 @@ if (_type == "air") then {
 		} forEach units _cargo_group;
 
 		if (_method == "fastrope") then {
-			[_origin, _destination, _crew_group, _location, _cargo_group] call AS_tactics_fnc_heli_fastrope;
+			[_origin, _destination, _crew_group, _location, _cargo_group] spawn AS_tactics_fnc_heli_fastrope;
 		} else {
 			_vehiculos append ([_origin, _destination, _crew_group, _location, _cargo_group] call AS_tactics_fnc_heli_disembark);
 		};
@@ -154,7 +154,7 @@ if (_type == "air") then {
 	if ((_composition == "destroy") || (_composition == "mixed")) then {
 		private _crew_group = [_attackVehicle, _posRoad, _dir] call _spawnVehicle;
 
-		[_origin, _destination, _crew_group, _location] call AS_tactics_fnc_ground_attack;
+		[_origin, _destination, _crew_group, _location] spawn AS_tactics_fnc_ground_attack;
 	};
 
 	// small delay to allow for AI pathfinding
@@ -175,7 +175,7 @@ if (_type == "air") then {
 			_x moveInCargo _transport;
 		} forEach units _grpDis2;
 
-		[_origin, _destination, _crew_group, _location, _grpDis2] call AS_tactics_fnc_ground_disembark;
+		[_origin, _destination, _crew_group, _location, _grpDis2] spawn AS_tactics_fnc_ground_disembark;
 	};
 };
 

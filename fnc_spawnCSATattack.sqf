@@ -59,12 +59,12 @@ for "_i" from 1 to _count do {
 		_groups pushBack _group;
 
         if (_waveType == "paradrop") exitWith {
-            [_origin_pos, _position, _grupoheli, _marker, _group, _threatEvalAir] call AS_tactics_fnc_heli_paradrop;
+            [_origin_pos, _position, _grupoheli, _marker, _group, _threatEvalAir] spawn AS_tactics_fnc_heli_paradrop;
         };
         if (_waveType == "disembark") exitWith {
-            [_origin_pos, _position, _grupoheli, _marker, _group] call AS_tactics_fnc_heli_disembark;
+            [_origin_pos, _position, _grupoheli, _marker, _group] spawn AS_tactics_fnc_heli_disembark; //Empty helipad should be deleted somehow
         };
-        [_origin_pos, _position, _grupoheli, _marker, _group, _threatEvalAir] call AS_tactics_fnc_heli_fastrope;
+        [_origin_pos, _position, _grupoheli, _marker, _group, _threatEvalAir] spawn AS_tactics_fnc_heli_fastrope;
     };
 };
 

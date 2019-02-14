@@ -1,4 +1,4 @@
-params ["_unit", "_faction", "_spawned"];
+params ["_unit", "_faction", ["_spawned", true]];
 
 if (_faction == "AAF") exitWith {
     [_unit, _spawned] remoteExecCall ["AS_fnc_initUnitAAF", _unit];
@@ -15,3 +15,5 @@ if (_faction == "FIA") exitWith {
 if (_faction == "CIV") exitWith {
     [_unit] RemoteExec ["AS_fnc_initUnitCIV", _unit];
 };
+
+diag_log format ["[AS] Error: %1 (%2) was initialized without side: %3", _unit, typeOf _unit, _faction];

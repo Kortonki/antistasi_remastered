@@ -46,7 +46,7 @@ private _cargo_b = [[], []];
 			//Take equipment back
 
 			private _arsenal = [_unit, true] call AS_fnc_getUnitArsenal;  // restricted to locked weapons
-			_cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
+			_cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists; //TODO consider transfertobox here
 			_cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
 			_cargo_i = [_cargo_i, _arsenal select 2] call AS_fnc_mergeCargoLists;
 			_cargo_b = [_cargo_b, _arsenal select 3] call AS_fnc_mergeCargoLists;
@@ -85,7 +85,7 @@ private _cargo_b = [[], []];
 										private _vehArsenal = [_veh, true] call AS_fnc_getBoxArsenal;
 										_cargo_w = [_cargo_w, _vehArsenal select 0] call AS_fnc_mergeCargoLists;
 										_cargo_m = [_cargo_m, _vehArsenal select 1] call AS_fnc_mergeCargoLists;
-										_cargo_i = [_cargo_i, _vehArsenal select 2] call AS_fnc_mergeCargoLists;
+										_cargo_i = [_cargo_i, _vehArsenal select 2] call AS_fnc_mergeCargoLists; //TODO consider AS_fnc_transferToBox
 										_cargo_b = [_cargo_b, _vehArsenal select 3] call AS_fnc_mergeCargoLists;
 										[cajaVeh, (_vehArsenal select 4)]; call AS_fnc_addMagazineRemains;
 							};

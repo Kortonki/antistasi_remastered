@@ -17,7 +17,7 @@ _vehicles pushBack _vehicle;
 // set waypoints
 if (_toUse == "tanks") then {
 	//_vehicle allowCrewInImmobile true;
-	[_origin, getMarkerPos _patrol_marker, _vehicleGroup, _patrol_marker, _threatEval] call AS_tactics_fnc_ground_attack;
+	[_origin, getMarkerPos _patrol_marker, _vehicleGroup, _patrol_marker, _threatEval] spawn AS_tactics_fnc_ground_attack;
 } else {
 	private _groupType = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 	private _group = createGroup ("AAF" call AS_fnc_getFactionSide);
@@ -40,11 +40,11 @@ if (_toUse == "tanks") then {
 
 		//[_vehicle] spawn AS_AI_fnc_activateUnloadUnderSmoke;
 		//_vehicle allowCrewInImmobile true;
-		[_origin, getMarkerPos _patrol_marker, _vehicleGroup, _patrol_marker, _threatEval] call AS_tactics_fnc_ground_combined;
+		[_origin, getMarkerPos _patrol_marker, _vehicleGroup, _patrol_marker, _threatEval] spawn AS_tactics_fnc_ground_combined;
 	} else {  // is truck
 		_groups pushBack _group;
 
-		[_origin, getMarkerPos _patrol_marker, _vehicleGroup, _patrol_marker, _group, _threatEval] call AS_tactics_fnc_ground_disembark;
+		[_origin, getMarkerPos _patrol_marker, _vehicleGroup, _patrol_marker, _group, _threatEval] spawn AS_tactics_fnc_ground_disembark;
 	};
 };
 [_groups, _vehicles]

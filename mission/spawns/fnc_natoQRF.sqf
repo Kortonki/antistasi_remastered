@@ -50,7 +50,7 @@ private _fnc_spawn = {
 	_vehicles pushBack _heli1;
 
 	// spawn loiter script for armed escort
-	[_posOrig, _destPos, _grpVeh1] call AS_tactics_fnc_heli_attack;
+	[_posOrig, _destPos, _grpVeh1] spawn AS_tactics_fnc_heli_attack;
 
 	sleep 5;
 

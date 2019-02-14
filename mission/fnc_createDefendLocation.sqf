@@ -40,4 +40,4 @@ private _mission = ["defend_location", _location] call AS_mission_fnc_add;
 [_mission, "base", _base] call AS_mission_fnc_set;
 [_mission, "airfield", _airfield] call AS_mission_fnc_set;
 [_mission, "useCSAT", _useCSAT] call AS_mission_fnc_set;
-_mission call AS_mission_fnc_activate;
+[_mission] call AS_mission_fnc_activate;

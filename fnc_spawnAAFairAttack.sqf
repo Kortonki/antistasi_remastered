@@ -22,7 +22,7 @@ _vehicles pushBack _vehicle;
 
 // create waypoints and cargo depending on the type
 if (_toUse in ["planes", "helis_armed"]) then {
-	[_origin, _destination, _vehicleGroup] call AS_tactics_fnc_heli_attack;
+	[_origin, _destination, _vehicleGroup] spawn AS_tactics_fnc_heli_attack;
 } else {
 	private _groupType = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 	private _group = createGroup ("AAF" call AS_fnc_getFactionSide);
@@ -35,6 +35,6 @@ if (_toUse in ["planes", "helis_armed"]) then {
 	_groups pushBack _group;
 
 	//[_vehicle,"Air Transport"] spawn AS_fnc_setConvoyImmune; //Helos don't need unstuck scripts
-	[_origin, _destination, _vehicleGroup, _group] call AS_tactics_fnc_heli_disembark;
+	_vehicles append ([_origin, _destination, _vehicleGroup, _group] call AS_tactics_fnc_heli_disembark);
 };
 [_groups,  _vehicles]
