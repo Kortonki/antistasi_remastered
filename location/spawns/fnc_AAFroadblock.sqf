@@ -8,6 +8,9 @@ private _fnc_spawn = {
 	private _posicion = _location call AS_location_fnc_position;
 
 	(_posicion call AS_fnc_roadAndDir) params ["_road", "_dirveh"];
+	
+	private _VehicleTypes = selectRandom ["apcs", "cars_transport", "cars_armed", "tanks"] call AS_AAFarsenal_fnc_valid;
+	private _VehicleType = selectRandom _VehicleTypes;
 
 	// create bunker on one side
 	private _pos = [getPos _road, 7, _dirveh + 270] call BIS_Fnc_relPos;
@@ -43,6 +46,24 @@ private _fnc_spawn = {
 
 	_unit = ([_posicion, 0, _gunner, _grupoE] call bis_fnc_spawnvehicle) select 0;
 	_unit moveInGunner _veh;
+	
+	// Create random vehicle guarding checkpoint
+	//creates full crew, need change to fnc_createVehicle to spawn gunner only
+	if (random 10 < 2) then {
+		private _pos = [getPos _road, 20, _dirveh + 90] call BIS_Fnc_relPos;
+		([_vehicleType, _pos, _dirveh + 180, "AAF", "gunner", 0, "NONE", false] call AS_fnc_createVehicle) params ["_veh", "_vehCrew"];
+		_vehiculos pushBack _veh;
+		{[_x] join _grupoE} forEach units _vehCrew;
+		sleep 1;
+	};
+	
+	//new larger marker created for upsmon patrol
+	private _mrkfin = createMarker [format ["roadblock%1", random 100],_posicion];
+	_mrkfin setMarkerShape "RECTANGLE";
+	_mrkfin setMarkerSize [50,50];
+	_mrkfin setMarkerType "hd_warning";
+	_mrkfin setMarkerColor "ColorRed";
+	_mrkfin setMarkerBrush "DiagGrid";
 
 	// Create flag
 	_pos = [getPos _bunker, 6, getDir _bunker] call BIS_fnc_relPos;
@@ -62,7 +83,7 @@ private _fnc_spawn = {
 	};
 	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 
-	[leader _grupo, _location, "SAFE","SPAWNED","NOVEH2","NOFOLLOW"] spawn UPSMON;
+	[leader _grupo, _mrkfin, "SAFE","SPAWNED","NOVEH2","NOFOLLOW"] spawn UPSMON;
 
 	[_location, "resources", [taskNull, [_grupo], _vehiculos, []]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
