@@ -50,5 +50,3 @@ for "_i" from 0 to (count (_cargo_b select 0) - 1) do {
 		_box addBackpackCargoGlobal [_name,_amount];
 	};
 };
-
-if (isnil "Arsenal_initialized") then {Arsenal_initialized = true; publicVariable "Arsenal_initialized"};

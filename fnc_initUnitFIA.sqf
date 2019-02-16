@@ -7,7 +7,7 @@ if(!(local _unit)) exitWith {
 	} else {
 		diag_log format ["[AS] Error: InitUnitFIA run where the unit is not local. InitUnitFIA remoteExec'd where it's local. Time: %1, Unit: %2 Spawned: %3 place % 4 Equipment %4", time, _unit, _spawned, _place, _equipment];
 	};
-	[_unit, _spawned, _place, _equipment] remoteExecCall ["AS_fnc_initUnitFIA", _unit];
+	[_unit, _spawned, _place, _equipment] remoteExec ["AS_fnc_initUnitFIA", _unit];
 
 };
 
@@ -30,7 +30,8 @@ _unit addEventHandler ["HandleDamage", AS_fnc_EH_handleDamage_AIcontrol];
 [_unit, AS_P("skillFIA")] call AS_fnc_setDefaultSkill;
 
 //This is where recruited squads get their gear
-
+//check for lockTransfer so best equipment algorithm doesn't think the arsenal is empty if it's filling up
+waitUntil {not(AS_S("lockTransfer"))};
 if (count _equipment == 0) then {
     _equipment = [[_unit] call AS_fnc_getFIAUnitType] call AS_fnc_getBestEquipment;
 };

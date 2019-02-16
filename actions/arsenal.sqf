@@ -49,6 +49,7 @@ _cargo_m = [_cargo_m, _new_cargo select 1, false] call AS_fnc_mergeCargoLists;
 _cargo_i = [_cargo_i, _new_cargo select 2, false] call AS_fnc_mergeCargoLists;
 _cargo_b = [_cargo_b, _new_cargo select 3, false] call AS_fnc_mergeCargoLists;
 
+
 // remove from unit items that are not available.
 for "_i" from 0 to (count (_cargo_b select 0) - 1) do {
 	private _name = (_cargo_b select 0) select _i;
