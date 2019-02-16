@@ -2560,7 +2560,7 @@ _objects = [
 	["Land_HBarrierBig_F",[-12.1416,17.5918,-0.00169373],137.701,1,0,[2.18848,-4.05717],"","",true,false], 
 	["Land_Razorwire_F",[-19.3916,-4.32617,0.595688],151.547,1,0,[-0.239615,3.08233],"","",true,false], 
 	["Land_HBarrier_Big_F",[-18.0996,11.4697,0.019104],318.457,1,0,[-6.11783,2.9731],"","",true,false], 
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[-21.501,2.0293,-0.0150452],230.097,1,0,[-4.53582,7.36498],"","",true,false], 
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[-21.501,2.0293,-0.0150452],230.097,1,0,[-4.53582,7.36498],"","",true,false], 
 	["Land_HBarrier_5_F",[-19.5293,-2.58887,0.489944],150.811,1,0,[-2.76821,12.2386],"","",true,false], 
 	["Land_BagFence_Long_F",[22.8291,1.59473,-0.0493927],134.029,1,0,[-1.65074,-1.8087],"","",true,false], 
 	["Land_BagFence_Long_F",[21.9941,-7.32227,0.109833],43.0668,1,0,[2.9275,3.57315],"","",true,false], 
@@ -2660,7 +2660,7 @@ _objects = [
 
 _center = [23697.4,24259.1,0];
 _objects = [
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[-9.03711,-3.94336,-0.0341187],58.2242,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[-9.03711,-3.94336,-0.0341187],58.2242,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-8.56445,-9.75391,0.19117],329.01,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-14.0508,-0.783203,0.138481],329.022,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[9.46094,-10.8438,-0.0700684],146.186,1,0,[],"","",true,false],
@@ -2708,7 +2708,7 @@ _objects = [
 	[["CSAT", "static_mg"] call AS_fnc_getEntity,[-7.91162,8.14063,-0.0396423],302.172,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[2.18701,-9.46289,0.203278],41.6226,1,0,[],"","",true,false],
 	["Land_BagFence_Corner_F",[-7.23682,9.75,-0.0337219],300.958,1,0,[],"","",true,false],
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[-4.07959,-11.2656,-0.00253296],310.125,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[-4.07959,-11.2656,-0.00253296],310.125,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[8.78027,8.66016,0.240005],156.911,1,0,[],"","",true,false],
 	[["CSAT", "static_mortar"] call AS_fnc_getEntity,[10.9019,6.96289,-0.0450897],199.846,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[13.0112,4.41992,0.0261383],334.629,1,0,[],"","",true,false],
@@ -2741,7 +2741,7 @@ _objects = [
 
 _center = [7852.7,16664.4,0];
 _objects = [
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[5.31201,0.671875,-0.0928345],264.214,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[5.31201,0.671875,-0.0928345],264.214,1,0,[],"","",true,false],
 	["Land_HBarrier_Big_F",[-5.93799,0.666016,-0.00299072],86.4737,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[8.09863,-4.38281,-0.0711823],174.754,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[7.10742,6.05273,0.093277],174.754,1,0,[],"","",true,false],
@@ -2786,7 +2786,7 @@ _objects = [
 	["Land_HBarrier_Big_F",[-6.04688,-1.85352,0.0193329],96.2587,1,0,[],"","",true,false],
 	["Land_HBarrier_Big_F",[4.25781,6.20801,0.0032196],329.817,1,0,[],"","",true,false],
 	["Land_HBarrier_Big_F",[9.85156,-2.77539,0.0224304],329.317,1,0,[],"","",true,false],
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[9.87891,3.35742,-0.0560608],236.817,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[9.87891,3.35742,-0.0560608],236.817,1,0,[],"","",true,false],
 	["Land_BagFence_Short_F",[7.86328,-11.4893,-0.107452],253.631,1,0,[],"","",true,false],
 	["Land_BagFence_Short_F",[11.0234,-10.1855,-0.151413],252.596,1,0,[],"","",true,false],
 	["Land_BagFence_Short_F",[-6.11719,13.8643,-0.101883],56.489,1,0,[],"","",true,false],
@@ -2829,7 +2829,7 @@ _objects = [
 	["Land_BagFence_Round_F",[2.33008,9.74805,0.0345459],259.482,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[0.287598,11.1035,0.0575867],165.616,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[14.5068,-15.2148,-0.223618],220.597,1,0,[],"","",true,false],
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[9.59131,-17.6035,-0.00680542],309.994,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[9.59131,-17.6035,-0.00680542],309.994,1,0,[],"","",true,false],
 	[["CSAT", "static_mg"] call AS_fnc_getEntity,[-1.60498,20.373,-0.085495],338.465,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-3.26123,20.7813,-0.036911],110.69,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-0.880371,21.7344,-0.00325012],202.685,1,0,[],"","",true,false],
@@ -2876,7 +2876,7 @@ _objects = [
 	["Land_BagFence_Round_F",[-16.5449,-10.5293,3.05176e-005],202.685,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-15.5205,-13.1289,-0.0174255],290.861,1,0,[],"","",true,false],
 	[["CSAT", "static_mg"] call AS_fnc_getEntity,[-17.457,-12.3613,-0.112274],176.463,1,0,[],"","",true,false],
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[-15.0801,15.2344,-0.0490112],60.0282,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[-15.0801,15.2344,-0.0490112],60.0282,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-18.917,-11.4746,0.00372314],110.664,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-17.8965,-14.0645,-0.00158691],22.8823,1,0,[],"","",true,false],
 	[["CSAT", "static_mg"] call AS_fnc_getEntity,[5.17188,23.7754,-0.100067],61.927,1,0,[],"","",true,false],
@@ -2908,7 +2908,7 @@ _objects = [
 _center = [9213.28,11463.2,0];
 _objects = [
 	["Land_HBarrier_Big_F",[-1.64063,-7.24121,0],356.835,1,0,[],"","",true,false],
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[-1.35938,8.79199,-0.0558701],177.55,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[-1.35938,8.79199,-0.0558701],177.55,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[3.99219,11.6377,0.00183105],85.0784,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-6.45605,10.6494,0.000152588],85.0784,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[3.56152,17.2803,0],85.0784,1,0,[],"","",true,false],
@@ -2963,7 +2963,7 @@ _objects = [
 _center = [6528.61,21627,0];
 _objects = [
 	["Land_HBarrier_Big_F",[5.31445,0.896484,-0.000732422],275.082,1,0,[],"","",true,false],
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[-7.12646,1.21875,0.0325012],95.5878,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[-7.12646,1.21875,0.0325012],95.5878,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-9.65186,-3.41406,0.227844],3.18661,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-9.19482,7.04688,0.435791],3.12925,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-10.7998,-3.11719,0.0835571],183.547,1,0,[],"","",true,false],
@@ -3011,7 +3011,7 @@ _center = [4954.2,21856.5,0];
 _objects = [
 	["Land_HBarrier_5_F",[17.1958,2.87109,-0.181183],231.923,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[20.7339,-1.64258,-0.0022583],232.227,1,0,[],"","",true,false],
-	[["CSAT", "static_aa"] call AS_fnc_getEntity,[20.2227,8.07813,-0.055603],321.664,1,0,[],"","",true,false],
+	[["CSAT", "self_aa"] call AS_fnc_getEntity,[20.2227,8.07813,-0.055603],321.664,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[22.6162,-7.54102,0.0464478],129.973,1,0,[],"","",true,false],
 	["Land_HBarrier_Big_F",[24.6426,1.85547,-0.000610352],143.915,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[22.812,-10.0879,0.0744629],38.0276,1,0,[],"","",true,false],
