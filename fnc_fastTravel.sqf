@@ -29,7 +29,7 @@ if (_unpreparedVehicles) exitWith {
 private _enemiesNearby = false;
 {
 	private _enemy = _x;
-	if (side _enemy != ("FIA" call AS_fnc_getFactionSide) and !(captive _enemy)) then {
+	if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and !(captive _enemy)) then {
 		{
 			if (_enemy distance _x < 500) exitWith {
 				_enemiesNearby = true
