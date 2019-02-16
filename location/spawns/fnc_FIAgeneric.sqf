@@ -16,7 +16,7 @@ private _fnc_spawn = {
 	private _type = _location call AS_location_fnc_type;
 	private _isDestroyed = _location in AS_P("destroyedLocations");
 
-	if (_type != "fia_hq") then {
+	if ((_type != "fia_hq") && (_type != "city")) then {
 		// The flag
 		private _veh = createVehicle [["FIA", "flag"] call AS_fnc_getEntity, _posicion, [],0, "CAN_COLLIDE"];
 		_veh allowDamage false;
