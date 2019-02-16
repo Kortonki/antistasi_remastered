@@ -1,4 +1,4 @@
-params ["_toUse", "_origin", "_destination"];
+params ["_toUse", "_origin", "_destination", "_patrol_marker"];
 
 private _groups = [];
 private _vehicles = [];
@@ -35,6 +35,6 @@ if (_toUse in ["planes", "helis_armed"]) then {
 	_groups pushBack _group;
 
 	//[_vehicle,"Air Transport"] spawn AS_fnc_setConvoyImmune; //Helos don't need unstuck scripts
-	_vehicles append ([_origin, _destination, _vehicleGroup, _group] call AS_tactics_fnc_heli_disembark);
+	_vehicles append ([_origin, _destination, _vehicleGroup, _group, _patrol_marker] call AS_tactics_fnc_heli_disembark);
 };
 [_groups,  _vehicles]
