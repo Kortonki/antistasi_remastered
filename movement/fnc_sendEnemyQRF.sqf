@@ -136,7 +136,7 @@ if (_type == "air") then {
 		if (_method == "fastrope") then {
 			[_origin, _destination, _crew_group, _location, _cargo_group] spawn AS_tactics_fnc_heli_fastrope;
 		} else {
-			_vehiculos append ([_origin, _destination, _crew_group, _location, _cargo_group] call AS_tactics_fnc_heli_disembark);
+			_vehiculos append ([_origin, _destination, _crew_group, _cargo_group, _location] call AS_tactics_fnc_heli_disembark);
 		};
 
 		// if the QRF is dispatched to an FIA camp, provide the group

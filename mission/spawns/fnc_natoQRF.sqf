@@ -84,7 +84,7 @@ private _fnc_spawn = {
 	_groups pushBack _grpDis2;
 
 	// spawn dismount script
-	_vehicles append ([_grpVeh2, _posOrig, _destPos, _grpVeh2, _mrk, _grpDis2] call AS_tactics_fnc_heli_disembark);
+	_vehicles append ([_posOrig, _destPos, _grpVeh2, _grpDis2, _mrk] call AS_tactics_fnc_heli_disembark);
 
 	[_mission, "resources", [_task, _groups, _vehicles, [_mrk]]] call AS_spawn_fnc_set;
 };

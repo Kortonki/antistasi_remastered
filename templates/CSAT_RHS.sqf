@@ -30,7 +30,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 [_dict, "truck_ammo", "rhs_gaz66_ammo_vdv"] call DICT_fnc_set;
 [_dict, "truck_repair", "RHS_Ural_Repair_VDV_01"] call DICT_fnc_set;
-[_dict, "truck_fuel", "I_Truck_02_fuel_F"] call DICT_fnc_set;
+[_dict, "truck_fuel", "I_Truck_02_fuel_F"] call DICT_fnc_set; //RHS ural is prone to get stuck with the AI and no other RHS fuel vehicles
 
 // used in spawns (base and airfield)
 [_dict, "other_vehicles", [
