@@ -51,7 +51,7 @@ private _fnc_spawn = {
 	//creates full crew, need change to fnc_createVehicle to spawn gunner only
 	if (random 10 < 2) then {
 		private _pos = [getPos _road, 20, _dirveh + 90] call BIS_Fnc_relPos;
-		([_vehicleType, _pos, _dirveh + 180, "AAF", "gunner", 0, "NONE", false] call AS_fnc_createVehicle) params ["_veh", "_vehCrew"];
+		([_vehicleType, _pos, _dirveh + 180, "AAF", "gunner", 0, "NONE", false, 2] call AS_fnc_createVehicle) params ["_veh", "_vehCrew"];
 		_vehiculos pushBack _veh;
 		{[_x] join _grupoE} forEach units _vehCrew;
 		sleep 1;
