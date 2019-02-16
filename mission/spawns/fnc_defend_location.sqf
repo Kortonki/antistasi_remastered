@@ -129,7 +129,7 @@ private _fnc_spawn = {
 					_toUse = "planes";
 				};
 			};
-			([_toUse, _origin_pos, _position] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
+			([_toUse, _origin_pos, _position, _location] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
 			sleep 15;

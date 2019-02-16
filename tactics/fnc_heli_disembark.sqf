@@ -1,4 +1,4 @@
-params ["_origin", "_destination", "_crew_group", "_patrol_marker", "_cargo_group"];
+params ["_origin", "_destination", "_crew_group", "_cargo_group", "_patrol_marker"];
 
 private _vehicles = [];
 
