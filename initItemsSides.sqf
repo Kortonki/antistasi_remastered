@@ -4,11 +4,16 @@ private _AAFsoldiers = (["AAF", "cfgGroups"] call AS_fnc_getEntity) call AS_fnc_
 // List of all AAF equipment
 private _result = [_AAFsoldiers] call AS_fnc_listUniqueEquipment;
 AAFWeapons = _result select 0;
+AAFWeapons append (["AAF", "additionalWeapons"] call AS_fnc_getEntity);
 AAFMagazines = _result select 1;
+AAFMagazines append (["AAF", "additionalMagazines"] call AS_fnc_getEntity);
 AAFItems = _result select 2;
+AAFItems append (["AAF", "additionalItems"] call AS_fnc_getEntity);
 AAFBackpacks = _result select 3;
+AAFBackpacks append (["AAF", "additionalBackpacks"] call AS_fnc_getEntity);
 
-AAFLaunchers = AAFWeapons arrayIntersect ((AS_weapons select 8)+ (AS_weapons select 10));
+AAFLaunchers = AAFWeapons arrayIntersect ((AS_weapons select 8) + (AS_weapons select 10));
+AAFLaunchers append (["AAF", "additionalLaunchers"] call AS_fnc_getEntity);
 
 // Assign other items
 AAFVests = AAFItems arrayIntersect AS_allVests;
