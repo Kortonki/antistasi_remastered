@@ -1,9 +1,9 @@
 #include "../macros.hpp"
 params ["_box", "_unit"];
 
-if (AS_S("lockTransfer")) exitWith {hint "Arsenal is accessed by someone else. Wait."};
+if (AS_S("lockArsenal")) exitWith {"Another player is using the Arsenal. Wait."};
+AS_Sset("lockArsenal", true);
 
-AS_Sset("lockTransfer", true);
 // if the box is not "caja", then transfer everything to caja.
 // This guarantees that the player still has access to everything.
 if (_box != caja) then {
@@ -32,22 +32,20 @@ _box removeAction (_box getVariable "bis_fnc_arsenal_action");
 
 private _new_cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 
-// we update the value since during the wait someone may have removed the last weapon.
-if (_box != caja) then {
-    [_box, caja] call AS_fnc_transferToBox;
-};
-([caja, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
-
 // add all the old stuff and removes all the new stuff.
 _cargo_w = [_cargo_w, _old_cargo select 0] call AS_fnc_mergeCargoLists;
 _cargo_m = [_cargo_m, _old_cargo select 1] call AS_fnc_mergeCargoLists;
 _cargo_i = [_cargo_i, _old_cargo select 2] call AS_fnc_mergeCargoLists;
 _cargo_b = [_cargo_b, _old_cargo select 3] call AS_fnc_mergeCargoLists;
 
+[_old_cargo] remoteExec ["AS_fnc_addtoArsenal", 2];
+
 _cargo_w = [_cargo_w, _new_cargo select 0, false] call AS_fnc_mergeCargoLists;
 _cargo_m = [_cargo_m, _new_cargo select 1, false] call AS_fnc_mergeCargoLists;
 _cargo_i = [_cargo_i, _new_cargo select 2, false] call AS_fnc_mergeCargoLists;
 _cargo_b = [_cargo_b, _new_cargo select 3, false] call AS_fnc_mergeCargoLists;
+
+[_new_cargo] remoteExec ["AS_fnc_removeFromArsenal", 2];
 
 
 // remove from unit items that are not available.
@@ -61,6 +59,8 @@ for "_i" from 0 to (count (_cargo_b select 0) - 1) do {
             _cargo_m = [_cargo_m, _old_cargo select 1] call AS_fnc_mergeCargoLists;
             _cargo_i = [_cargo_i, _old_cargo select 2] call AS_fnc_mergeCargoLists;
             _cargo_b = [_cargo_b, _old_cargo select 3] call AS_fnc_mergeCargoLists;
+
+            [_old_cargo] remoteExec ["AS_fnc_addToArsenal", 2];
 			removeBackpack _unit;
 		};
 	};
@@ -76,6 +76,8 @@ for "_i" from 0 to (count (_cargo_i select 0) - 1) do {
         _cargo_m = [_cargo_m, _old_cargo select 1] call AS_fnc_mergeCargoLists;
         _cargo_i = [_cargo_i, _old_cargo select 2] call AS_fnc_mergeCargoLists;
         _cargo_b = [_cargo_b, _old_cargo select 3] call AS_fnc_mergeCargoLists;
+
+        [_old_cargo] remoteExec ["AS_fnc_addToArsenal", 2];
         removeVest _unit;
 	};
 };
@@ -101,6 +103,8 @@ for "_i" from 0 to (count (_cargo_w select 0) - 1) do {
             };
             // store the current mag
             _cargo_i = [_items, _cargo_i] call AS_fnc_listToCargoList;
+
+            [[[],[]],[[],[]],_cargo_i,[[],[]]] remoteExec ["AS_fnc_addToArsenal", 2];
 			_unit removeWeaponGlobal _name;
 		};
 	};
@@ -111,7 +115,23 @@ for "_i" from 0 to (count (_cargo_m select 0) - 1) do {
 	private _amount = (_cargo_m select 1) select _i;
 	if (_amount <= 0) then {
 		for "_j" from 0 to (-_amount - 1) do {
-			_unit removeMagazine _name;
+
+      //Remove loaded mags first
+      private _loaded = false;
+      {
+          if (_x select 2) exitWith {
+            switch (_x select 3) do {
+              case 1 : {_unit setammo [primaryWeapon _unit, 0]};
+              case 2 : {_unit setammo [handgunWeapon _unit, 0]};
+              case 4 : {_unit setammo [secondaryWeapon _unit, 0]};
+            };
+            _loaded = true;
+          };
+      }
+      foreach magazinesAmmoFull _unit;
+      if (!(_loaded)) then {
+        _unit removeMagazine _name;
+      };
 		};
 	};
 };
@@ -137,6 +157,4 @@ for "_i" from 0 to (count (_cargo_i select 0) - 1) do {
     };
 };
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
-
-AS_Sset("lockTransfer", false);
+AS_Sset("lockArsenal", false);

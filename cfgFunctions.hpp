@@ -185,6 +185,7 @@ class AS {
         FNC(arsenal,getBestMagazines);
         FNC(arsenal,listToCargoList);
         FNC(arsenal,mergeCargoLists);
+        FNC(arsenal,addToArsenal);
         FNC(arsenal,removeFromArsenal);
         FNC(arsenal,populateBox);
         FNC(arsenal,getTotalCargo);
