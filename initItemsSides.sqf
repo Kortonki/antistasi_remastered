@@ -12,7 +12,7 @@ AAFItems append (["AAF", "additionalItems"] call AS_fnc_getEntity);
 AAFBackpacks = _result select 3;
 AAFBackpacks append (["AAF", "additionalBackpacks"] call AS_fnc_getEntity);
 
-AAFLaunchers = AAFWeapons arrayIntersect (AS_weapons select 8);
+AAFLaunchers = AAFWeapons arrayIntersect ((AS_weapons select 8) + (AS_weapons select 10));
 AAFLaunchers append (["AAF", "additionalLaunchers"] call AS_fnc_getEntity);
 
 // Assign other items
