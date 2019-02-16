@@ -10,18 +10,17 @@ private _fnc_spawn = {
 	private _vehiculos = [];
 	private _grupos = [];
 	private _soldados = [];
-
 	private _posicion = _location call AS_location_fnc_position;
-
 	private _objects = _location call AS_fnc_spawnComposition;
-
-	private _AAVeh = objNull;
+	private _AAVeh = [];
+	
 	{
 		call {
-			if (typeOf _x in (["CSAT", "self_aa"] call AS_fnc_getEntity)) exitWith {_AAVeh = _x; _vehiculos pushBack _x;[_x, "CSAT"] call AS_fnc_initVehicle;};
+			if (typeOf _x == (["CSAT", "self_aa"] call AS_fnc_getEntity)) exitWith {_AAVeh pushBack _x; _vehiculos pushBack _x;};
+			if (typeOf _x == (["CSAT", "track_aa"] call AS_fnc_getEntity)) exitWith {_AAVeh pushBack _x; _vehiculos pushBack _x;};
 			if (typeOf _x in (["CSAT", "trucks"] call AS_fnc_getEntity)) exitWith {[_x, "CSAT"] call AS_fnc_initVehicle;};
-			if (typeOf _x == (["CSAT", "static_mortar"] call AS_fnc_getEntity)) then {[_x] execVM "scripts\UPSMON\MON_artillery_add.sqf";[_x, "CSAT"] call AS_fnc_initVehicle;};
-			if (typeOf _x in AS_allStatics) exitWith {_stcs pushBack _x;[_x, "CSAT"] call AS_fnc_initVehicle;};
+			if (typeOf _x == (["CSAT", "static_mortar"] call AS_fnc_getEntity)) exitWith {[_x] execVM "scripts\UPSMON\MON_artillery_add.sqf"; _stcs pushBack _x};
+			if (typeOf _x == (["CSAT", "static_mg"] call AS_fnc_getEntity)) exitWith {_stcs pushBack _x;};
 			if (typeOf _x == (["CSAT", "box"] call AS_fnc_getEntity)) exitWith {_vehiculos pushBack _x;};
 			if (typeOf _x == (["CSAT", "flag"] call AS_fnc_getEntity)) exitWith {_vehiculos pushBack _x;};
 		};
@@ -31,36 +30,29 @@ private _fnc_spawn = {
 	private _crewType = ["CSAT", "crew"] call AS_fnc_getEntity;
 
 	// init the AA
-	if !(isNull _AAVeh) then {
+	if !(isnil "_AAVeh") then {
+		{
 		private _unit = ([_posicion, 0, _crewType, _grupoCSAT] call bis_fnc_spawnvehicle) select 0;
-		_unit moveInGunner _AAVeh;
+		_unit moveInGunner _x;
 		_unit = ([_posicion, 0, _crewType, _grupoCSAT] call bis_fnc_spawnvehicle) select 0;
-		_unit moveInCommander _AAVeh;
-		_AAVeh lock 2;
-	} else {
-		([selectRandom (["CSAT", "self_aa"] call AS_fnc_getEntity), _posicion, random 360, "CSAT", "crew", 0, "NONE", false] call AS_fnc_createVehicle) params ["_AAvehicle", "_AAvehicleGroup"];
-		_vehiculos pushBack _AAVehicle;
-		_AAVeh = _AAVehicle;
-		_grupos pushBack _AAvehicleGroup;
+		_unit moveInCommander _x;
+		} forEach _AAVeh;
 	};
 
 	{
-		_vehiculos pushBack _x;
-		{
-			private _unit = ([_posicion, 0, _crewType, _grupoCSAT] call bis_fnc_spawnvehicle) select 0;
-			_unit moveInAny _x;
-			_gns pushBack _unit;
-		} forEach ([typeof _x, false] call BIS_fnc_crewCount);
+		private _unit = ([_posicion, 0, _crewType, _grupoCSAT] call bis_fnc_spawnvehicle) select 0;
+		_unit moveInAny _x;
+		_gns pushBack _unit;
 	} forEach _stcs;
 
-	private _mrkfin = createMarker [format ["specops%1", (diag_ticktime/60)],_posicion];
+	private _mrkfin = createMarker [format ["specops%1", random 100],_posicion];
 	_mrkfin setMarkerShape "RECTANGLE";
 	_mrkfin setMarkerSize [500,500];
 	_mrkfin setMarkerType "hd_warning";
 	_mrkfin setMarkerColor "ColorRed";
 	_mrkfin setMarkerBrush "DiagGrid";
 
-	//{[_x,"CSAT"] call AS_fnc_initVehicle} forEach _vehiculos; //Unnecessary, already done
+	{[_x,"CSAT"] call AS_fnc_initVehicle} forEach _vehiculos;
 
 	([_posicion, _mrkfin] call AS_fnc_spawnCSATuav) params ["_groups", "_vehicles"];
 	_vehiculos append _vehicles;
@@ -72,14 +64,14 @@ private _fnc_spawn = {
 
 	// AAF teams
 	{
-		_grupo = [_posicion, ("CSAT" call AS_fnc_getFactionSide), _x] call BIS_Fnc_spawnGroup;
+		_grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), _x] call BIS_Fnc_spawnGroup;
 		_grupos pushBack _grupo;
-		{[_x, false] call AS_fnc_initUnitCSAT; _soldados pushBack _x} forEach units _grupo;
+		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 		[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH2"] spawn UPSMON;
 		sleep 1;
 	} forEach [
-		[["CSAT", "teamsAA"] call AS_fnc_getEntity, "CSAT"] call AS_fnc_pickGroup,
-		[["CSAT", "teams"] call AS_fnc_getEntity, "CSAT"] call AS_fnc_pickGroup
+		[["AAF", "teamsAA"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup,
+		[["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup
 	];
 
 	[_location, "resources", [taskNull, _grupos, _vehiculos, [_mrkfin]]] call AS_spawn_fnc_set;
@@ -106,8 +98,8 @@ private _fnc_run = {
 	};
 	// and AA destroyed
 	private _fnc_isAAdestroyed = {true};
-	if (!isNull _AAVeh) then {
-		_fnc_isAAdestroyed = {(not alive _AAVeh)};
+	if !(isnil "_AAVeh") then {
+		_fnc_isAAdestroyed = {{alive _x} count _AAVeh == 0};
 	};
 
 	waitUntil {sleep 1;
@@ -117,11 +109,9 @@ private _fnc_run = {
 	if ((call _fnc_isAADestroyed) and (call _fnc_isCleaned)) then {
 		[-5,0,_posicion] remoteExec ["AS_fnc_changeCitySupport",2];
 		[0,-10] remoteExec ["AS_fnc_changeForeignSupport",2];
-		[["TaskSucceeded", ["", "AA Nest Cleansed"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		[["TaskSucceeded", ["", "Outpost Cleansed"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
 
-		//AA hills are not captured, they're removed:
-		//[_location,"side","FIA"] call AS_location_fnc_set;
-		_location call AS_location_fnc_remove;
+		[_location,"side","FIA"] call AS_location_fnc_set;
 
 		[[_posicion], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
 		["cl_loc"] remoteExec ["fnc_BE_XP", 2];
