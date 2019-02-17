@@ -78,12 +78,12 @@ private _fnc_spawn = {
 					[_origPos, _destPos, _groupheli, _destination, _group, _threatEval] spawn AS_tactics_fnc_heli_fastrope;
 				};
 				if ((_destination call AS_location_fnc_type) in ["resource","factory", "powerplant"]) then {
-					_vehicles append ([_origPos, _destPos, _groupheli, _destination, _group, _threatEval] call AS_tactics_fnc_heli_disembark);
+					_vehicles append ([_origPos, _destPos, _groupheli, _group, _destination] call AS_tactics_fnc_heli_disembark);
 				};
 			};
 		};
 		if (_method == "disembark") then {
-			_vehicles append ([_origPos, _destPos, _groupheli, _destination, _group, _threatEval] call AS_tactics_fnc_heli_disembark);
+			_vehicles append ([_origPos, _destPos, _groupheli, _group, _destination] call AS_tactics_fnc_heli_disembark);
 		};
 		if (_method == "fastrope") then {
 			if ((_destination call AS_location_fnc_type) in ["airfield","base", "watchpost"] or (random 10 < _threatEval)) then {

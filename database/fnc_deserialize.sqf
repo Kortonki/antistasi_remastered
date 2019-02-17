@@ -25,19 +25,21 @@ _dict call AS_database_fnc_migrate;
 diag_log "[AS] Server: loading persistents...";
 ([_dict, "AS_persistent"] call DICT_fnc_get) call AS_database_fnc_persistents_fromDict;
 
-waitUntil {sleep 0.1; not isNil "AS_common_variables_initialized"};
+waitUntil {sleep 0.1; not isNil "AS_server_side_variables_initialized"};
 
 // above initializes player_side, which is required to initialize common variables on the other thread
 // we need to wait for them to be initialized before continuing
 
 // this order matters!
-diag_log "[AS] Server: loading locations...";
-([_dict, "AS_location"] call DICT_fnc_get) call AS_location_fnc_fromDict;
+
 
 diag_log "[AS] Server: loading FIA arsenal...";
 ([_dict, "AS_fia_arsenal"] call DICT_fnc_get) call AS_FIAarsenal_fnc_fromDict; //moved above HQ to fix arsenal bug on load
 
-waitUntil {sleep 0.1; not isNil "Arsenal_initialized"};
+
+
+diag_log "[AS] Server: loading locations...";
+([_dict, "AS_location"] call DICT_fnc_get) call AS_location_fnc_fromDict;
 
 diag_log "[AS] Server: loading HQ...";
 ([_dict, "AS_fia_hq"] call DICT_fnc_get) call AS_database_fnc_hq_fromDict;

@@ -53,10 +53,11 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 "C_Truck_02_covered_F"
 ]] call DICT_fnc_set;
 
-[_dict, "static_aa", "rhsgref_cdf_b_ZU23"] call DICT_fnc_set;
-[_dict, "static_at", "RHS_TOW_TriPod_D"] call DICT_fnc_set;
-[_dict, "static_mg", "RHS_M2StaticMG_D"] call DICT_fnc_set;
-[_dict, "static_mortar", "RHS_M252_D"] call DICT_fnc_set;
+//first one should be the most used one, latter for special occasions
+[_dict, "static_aa", ["rhsgref_cdf_b_ZU23"]] call DICT_fnc_set;
+[_dict, "static_at", ["RHS_TOW_TriPod_D"]] call DICT_fnc_set; //first one is used by squads
+[_dict, "static_mg", ["RHS_M2StaticMG_D"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["RHS_M252_D"]] call DICT_fnc_set;	//first one is used by squads
 
 [_dict, "squads_custom_cost", {
 	params ["_squadType"];
@@ -69,8 +70,8 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 	} else {
 		_costHR = 2;
 		private _piece = call {
-			if (_squadType == "mobile_at") exitWith {["FIA", "static_at"] call AS_fnc_getEntity};
-			if (_squadType == "mobile_mortar") exitWith {["FIA", "static_mortar"] call AS_fnc_getEntity};
+			if (_squadType == "mobile_at") exitWith {(["FIA", "static_at"] call AS_fnc_getEntity) select 0};
+			if (_squadType == "mobile_mortar") exitWith {(["FIA", "static_mortar"] call AS_fnc_getEntity) select 0};
 		};
 		_cost = _costHR*("Crew" call AS_fnc_getCost) +
 				(["B_G_Van_01_transport_F"] call AS_fnc_getFIAvehiclePrice) +
@@ -105,8 +106,8 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 		_grupo setVariable ["staticAutoT",false,true];
 
 		private _pieceType = call {
-			if (_squadType == "mobile_at") exitWith {["FIA", "static_at"] call AS_fnc_getEntity};
-			if (_squadType == "mobile_mortar") exitWith {["FIA", "static_mortar"] call AS_fnc_getEntity};
+			if (_squadType == "mobile_at") exitWith {(["FIA", "static_at"] call AS_fnc_getEntity) select 0};
+			if (_squadType == "mobile_mortar") exitWith {(["FIA", "static_mortar"] call AS_fnc_getEntity) select 0};
 		};
 
 		private _piece = _pieceType createVehicle (_position findEmptyPosition [1,30,"B_G_Van_01_transport_F"]);

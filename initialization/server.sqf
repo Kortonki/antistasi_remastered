@@ -39,10 +39,10 @@ waitUntil {not isNil {AS_P("player_side")}};
 call compile preprocessFileLineNumbers "initialization\common_side_variables.sqf";
 call compile preprocessFileLineNumbers "initialization\server_side_variables.sqf";
 AS_server_side_variables_initialized = true;
-publicVariable "AS_server_variables_initialized";
+publicVariable "AS_server_side_variables_initialized";
 diag_log "[AS] Server: server side-variables initialized";
 
-waitUntil {not isNil "AS_dataInitialized"};
+waitUntil {not (isNil "AS_dataInitialized")};
 
 if isMultiplayer then {
     // after game start because disconnects before have no influence

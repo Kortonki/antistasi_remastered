@@ -26,17 +26,10 @@ if (_unpreparedVehicles) exitWith {
 	Hint "You cannot fast travel if you don't have a driver in all your vehicles or your vehicles cannot move";
 };
 
-private _enemiesNearby = false;
 {
-	private _enemy = _x;
-	if (side _enemy != ("FIA" call AS_fnc_getFactionSide) and !(captive _enemy)) then {
-		{
-			if (_enemy distance _x < 500) exitWith {
-				_enemiesNearby = true
-			};
-		} forEach units _group;
-	};
-} forEach allUnits;
+		if ([_x, 500] call AS_fnc_enemiesNearby) exitWith {_enemiesNearby = true};
+} foreach units _group;
+
 if (_enemiesNearby) exitWith {Hint "You cannot use fast travel with enemies near the group fast traveling"};
 
 ////// First check done. Let us pick a position on the map

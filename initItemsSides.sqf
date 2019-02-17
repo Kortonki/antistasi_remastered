@@ -4,11 +4,16 @@ private _AAFsoldiers = (["AAF", "cfgGroups"] call AS_fnc_getEntity) call AS_fnc_
 // List of all AAF equipment
 private _result = [_AAFsoldiers] call AS_fnc_listUniqueEquipment;
 AAFWeapons = _result select 0;
+AAFWeapons append (["AAF", "additionalWeapons"] call AS_fnc_getEntity);
 AAFMagazines = _result select 1;
+AAFMagazines append (["AAF", "additionalMagazines"] call AS_fnc_getEntity);
 AAFItems = _result select 2;
+AAFItems append (["AAF", "additionalItems"] call AS_fnc_getEntity);
 AAFBackpacks = _result select 3;
+AAFBackpacks append (["AAF", "additionalBackpacks"] call AS_fnc_getEntity);
 
-AAFLaunchers = AAFWeapons arrayIntersect ((AS_weapons select 8)+ (AS_weapons select 10));
+AAFLaunchers = AAFWeapons arrayIntersect ((AS_weapons select 8) + (AS_weapons select 10));
+AAFLaunchers append (["AAF", "additionalLaunchers"] call AS_fnc_getEntity);
 
 // Assign other items
 AAFVests = AAFItems arrayIntersect AS_allVests;
@@ -23,11 +28,16 @@ private _NATOsoldiers = (["NATO", "cfgGroups"] call AS_fnc_getEntity) call AS_fn
 // List of all NATO equipment
 _result = [_NATOsoldiers] call AS_fnc_listUniqueEquipment;
 NATOWeapons = _result select 0;
+NATOWeapons append (["NATO", "additionalWeapons"] call AS_fnc_getEntity);
 NATOMagazines = _result select 1;
+NATOMagazines append (["NATO", "additionalMagazines"] call AS_fnc_getEntity);
 NATOItems = _result select 2;
+NATOItems append (["NATO", "additionalItems"] call AS_fnc_getEntity);
 NATOBackpacks = _result select 3;
+NATOBackpacks append (["NATO", "additionalBackpacks"] call AS_fnc_getEntity);
 
 NATOLaunchers = NATOWeapons arrayIntersect ((AS_weapons select 8) + (AS_weapons select 10));
+NATOLaunchers append (["NATO", "additionalLaunchers"] call AS_fnc_getEntity);
 
 NATOVests = NATOItems arrayIntersect AS_allVests;
 NATOHelmets = NATOItems arrayIntersect AS_allHelmets;
@@ -41,11 +51,16 @@ private _CSATsoldiers = (["CSAT", "cfgGroups"] call AS_fnc_getEntity) call AS_fn
 // List of all CSAT equipment
 _result = [_CSATsoldiers] call AS_fnc_listUniqueEquipment;
 CSATWeapons = _result select 0;
+CSATWeapons append (["CSAT", "additionalWeapons"] call AS_fnc_getEntity);
 CSATMagazines = _result select 1;
+CSATMagazines append (["CSAT", "additionalMagazines"] call AS_fnc_getEntity);
 CSATItems = _result select 2;
+CSATItems append (["CSAT", "additionalItems"] call AS_fnc_getEntity);
 CSATBackpacks = _result select 3;
+CSATBackpacks append (["CSAT", "additionalBackpacks"] call AS_fnc_getEntity);
 
 CSATLaunchers = CSATWeapons arrayIntersect ((AS_weapons select 8) + (AS_weapons select 10));
+CSATLaunchers append (["CSAT", "additionalLaunchers"] call AS_fnc_getEntity);
 
 CSATVests = CSATItems arrayIntersect AS_allVests;
 CSATHelmets = CSATItems arrayIntersect AS_allHelmets;

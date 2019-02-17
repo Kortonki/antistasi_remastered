@@ -4,10 +4,10 @@ private _cbo = ((findDisplay 1602) displayCtrl 0);
 lbCLear _cbo;
 
 private _buyable = (["FIA", "land_vehicles"] call AS_fnc_getEntity) + (["FIA", "air_vehicles"] call AS_fnc_getEntity);
-_buyable pushback (["FIA", "static_mg"] call AS_fnc_getEntity);
-_buyable pushback (["FIA", "static_at"] call AS_fnc_getEntity);
-_buyable pushback (["FIA", "static_aa"] call AS_fnc_getEntity);
-_buyable pushback (["FIA", "static_mortar"] call AS_fnc_getEntity);
+_buyable append (["FIA", "static_mg"] call AS_fnc_getEntity);
+_buyable append (["FIA", "static_at"] call AS_fnc_getEntity);
+_buyable append (["FIA", "static_aa"] call AS_fnc_getEntity);
+_buyable append (["FIA", "static_mortar"] call AS_fnc_getEntity);
 
 {
     _cbo lbAdd (getText(configFile >> "cfgVehicles" >> _x >> "displayName"));

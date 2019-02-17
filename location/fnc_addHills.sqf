@@ -8,13 +8,12 @@ params ["_minSize", ["_excluded", []], ["_hillsAA", []]];
     private _size = [_hill, _minSize] call AS_location_fnc_getNameSize;
     if (_hill in _hillsAA and {!(_hill in _excluded)}) then {
         // creates hidden marker
-	private _name = "";
-
+	      private _name = "";
         if (_hill == "") then {
             _name = format ["hill_%1", _position];
-        } else {
-	    _name = format ["hill_%1", _hill];	
-	};
+            } else {
+	          _name = format ["hill_%1", _hill];	
+	          };
         private _mrk = createmarker [_name, _position];
         _mrk setMarkerSize [_size, _size];
         _mrk setMarkerShape "ELLIPSE";

@@ -39,17 +39,17 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "self_aa", ["CUP_O_2S6M_RU"]] call DICT_fnc_set;
 
 // special units used in special occasions
-[_dict, "officer", "CUP_O_RU_Officer_VDV"] call DICT_fnc_set;
-[_dict, "traitor", "CUP_O_RU_Officer_VDV"] call DICT_fnc_set;
-[_dict, "gunner", "CUP_O_RU_Crew_VDV"] call DICT_fnc_set;
-[_dict, "crew", "CUP_O_RU_Crew_VDV"] call DICT_fnc_set;
-[_dict, "pilot", "CUP_O_RU_Pilot_VDV"] call DICT_fnc_set;
+[_dict, "officer", ["CUP_O_RU_Officer_VDV"]] call DICT_fnc_set;
+[_dict, "traitor", ["CUP_O_RU_Officer_VDV"]] call DICT_fnc_set;
+[_dict, "gunner", ["CUP_O_RU_Crew_VDV"]] call DICT_fnc_set;
+[_dict, "crew", ["CUP_O_RU_Crew_VDV"]] call DICT_fnc_set;
+[_dict, "pilot", ["CUP_O_RU_Pilot_VDV"]] call DICT_fnc_set;
 
-[_dict, "static_aa", "CUP_O_ZU23_RU"] call DICT_fnc_set;
-[_dict, "static_at", "CUP_O_Meltis_RU"] call DICT_fnc_set;
-[_dict, "static_mg", "CUP_O_KORD_high_RU"] call DICT_fnc_set;
-[_dict, "static_mg_low", "CUP_O_KORD_RU"] call DICT_fnc_set;
-[_dict, "static_mortar", "CUP_O_2b14_82mm_RU"] call DICT_fnc_set;
+[_dict, "static_aa", ["CUP_O_ZU23_RU"]] call DICT_fnc_set;
+[_dict, "static_at", ["CUP_O_Meltis_RU"]] call DICT_fnc_set;
+[_dict, "static_mg", ["CUP_O_KORD_high_RU"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["CUP_O_KORD_RU"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["CUP_O_2b14_82mm_RU"]] call DICT_fnc_set;
 
 [_dict, "cfgGroups", configfile >> "CfgGroups" >> "east" >> "CUP_O_RU" >> "Infantry"] call DICT_fnc_set;
 [_dict, "squads", ["CUP_O_RU_InfSquad_VDV"]] call DICT_fnc_set;

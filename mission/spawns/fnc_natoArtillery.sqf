@@ -34,7 +34,7 @@ private _fnc_spawn = {
 	AS_commander hcSetGroup [_group];
 	_group setVariable ["isHCgroup", true, true];
 
-	private _tipoVeh = ["NATO", "static_mortar"] call AS_fnc_getEntity;
+	private _tipoVeh = selectRandom(["NATO", "static_mortar"] call AS_fnc_getEntity);
 	private _units = 1;
 	private _spread = 0;
 	if (_support < 33) then {

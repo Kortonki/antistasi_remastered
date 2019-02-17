@@ -11,7 +11,9 @@ player call AS_medical_fnc_initUnit;
 
 player call AS_fnc_initPlayerPosition;
 
-[player,"repackMagazines"] call AS_fnc_addAction;
+if (!(hasACE)) then {
+	[player,"repackMagazines"] call AS_fnc_addAction;
+};
 
 player addEventHandler ["WeaponAssembled", {
 	params ["_EHunit", "_EHobj"];

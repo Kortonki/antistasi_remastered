@@ -62,7 +62,7 @@ for "_i" from 1 to _count do {
             [_origin_pos, _position, _grupoheli, _marker, _group, _threatEvalAir] spawn AS_tactics_fnc_heli_paradrop;
         };
         if (_waveType == "disembark") exitWith {
-            [_origin_pos, _position, _grupoheli, _marker, _group] spawn AS_tactics_fnc_heli_disembark; //Empty helipad should be deleted somehow
+            _vehicles append ([_origin_pos, _position, _grupoheli, _group, _marker] call AS_tactics_fnc_heli_disembark); 
         };
         [_origin_pos, _position, _grupoheli, _marker, _group, _threatEvalAir] spawn AS_tactics_fnc_heli_fastrope;
     };
