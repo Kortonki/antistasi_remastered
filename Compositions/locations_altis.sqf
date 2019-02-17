@@ -2526,9 +2526,9 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[4.3418,-1.6709,0.155876],176.582,1,0,[],"","",true,false]
 
 ];
-[_dict, "Agela", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Agela", "center", _center] call DICT_fnc_set;
-[_dict, "Agela", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillAgela", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillAgela", "center", _center] call DICT_fnc_set;
+[_dict, "hillAgela", "objects", _objects] call DICT_fnc_set;
 
 _center = [11669.5,7578.51,0];
 _objects = [
@@ -2608,9 +2608,9 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-3.53516,10.1841,0.00471497],317.34,1,0,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[1.70996,12.5879,0],130.877,1,0,[],"","",true,false]
 ];
-[_dict, "Skopos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Skopos", "center", _center] call DICT_fnc_set;
-[_dict, "Skopos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillSkopos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillSkopos", "center", _center] call DICT_fnc_set;
+[_dict, "hillSkopos", "objects", _objects] call DICT_fnc_set;
 
 _center = [7883.29,14628.7,0];
 _objects = [
@@ -2654,9 +2654,9 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-10.1396,-2.51465,0.0481567],168.38,1,0,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[0.0429688,2.5625,0.0172424],0,1,0,[],"","",true,false]
 ];
-[_dict, "Agia Stemma", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Agia Stemma", "center", _center] call DICT_fnc_set;
-[_dict, "Agia Stemma", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillAgia Stemma", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillAgia Stemma", "center", _center] call DICT_fnc_set;
+[_dict, "hillAgia Stemma", "objects", _objects] call DICT_fnc_set;
 
 _center = [23697.4,24259.1,0];
 _objects = [
@@ -2693,9 +2693,9 @@ _objects = [
 	[["CSAT", "box"] call AS_fnc_getEntity,[-0.0605469,7.80469,0.00138092],308.867,1,0.0097848,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[5.87695,6.05078,0],0,1,0,[],"","",true,false]
 ];
-[_dict, "Agios Andreas", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Agios Andreas", "center", _center] call DICT_fnc_set;
-[_dict, "Agios Andreas", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillAgios Andreas", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillAgios Andreas", "center", _center] call DICT_fnc_set;
+[_dict, "hillAgios Andreas", "objects", _objects] call DICT_fnc_set;
 
 _center = [7832.41,17992.4,0];
 _objects = [
@@ -2735,9 +2735,9 @@ _objects = [
 	[["CSAT", "box"] call AS_fnc_getEntity,[17.3076,20.5371,0.000579834],0.00223059,1,0.00984257,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[25.064,21.9336,0],0,1,0,[],"","",true,false]
 ];
-[_dict, "Agios Minas", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Agios Minas", "center", _center] call DICT_fnc_set;
-[_dict, "Agios Minas", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillAgios Minas", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillAgios Minas", "center", _center] call DICT_fnc_set;
+[_dict, "hillAgios Minas", "objects", _objects] call DICT_fnc_set;
 
 _center = [7852.7,16664.4,0];
 _objects = [
@@ -2777,9 +2777,9 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-10.2456,-1.97461,-0.0253296],146.33,1,0,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[10.0068,11.7695,0],0,1,0,[],"","",true,false]
 ];
-[_dict, "Amoni", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Amoni", "center", _center] call DICT_fnc_set;
-[_dict, "Amoni", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillAmoni", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillAmoni", "center", _center] call DICT_fnc_set;
+[_dict, "hillAmoni", "objects", _objects] call DICT_fnc_set;
 
 _center = [17742.7,9890.29,0];
 _objects = [
@@ -2816,9 +2816,9 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-10.6504,-1.37598,0.0430145],4.03134,1,0,[],"","",true,false],
 	[["CSAT", "box"] call AS_fnc_getEntity,[-9.78125,-6.90332,0.0202942],57.2098,1,0.0115505,[],"","",true,false]
 ];
-[_dict, "Didymos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Didymos", "center", _center] call DICT_fnc_set;
-[_dict, "Didymos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillDidymos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillDidymos", "center", _center] call DICT_fnc_set;
+[_dict, "hillDidymos", "objects", _objects] call DICT_fnc_set;
 
 _center = [4775.84,17719.7,0];
 _objects = [
@@ -2859,9 +2859,9 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[11.002,8.77148,0.014679],8.91439,1,0,[],"","",true,false],
 	[["CSAT", "box"] call AS_fnc_getEntity,[8.11621,5.2207,0.000488281],54.3764,1,0.00991255,[],"","",true,false]
 ];
-[_dict, "Kira", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Kira", "center", _center] call DICT_fnc_set;
-[_dict, "Kira", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillKira", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillKira", "center", _center] call DICT_fnc_set;
+[_dict, "hillKira", "objects", _objects] call DICT_fnc_set;
 
 _center = [9215.07,19279.4,0];
 _objects = [
@@ -2901,9 +2901,9 @@ _objects = [
 	[["CSAT", "box"] call AS_fnc_getEntity,[-15.876,-5.02734,3.05176e-005],13.8785,1,0.00985034,[],"","",true,false],
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-20.7744,-2.45117,-0.0109253],242.949,1,0,[],"","",true,false]
 ];
-[_dict, "Pyrsos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Pyrsos", "center", _center] call DICT_fnc_set;
-[_dict, "Pyrsos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillPyrsos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillPyrsos", "center", _center] call DICT_fnc_set;
+[_dict, "hillPyrsos", "objects", _objects] call DICT_fnc_set;
 
 _center = [9213.28,11463.2,0];
 _objects = [
@@ -2956,9 +2956,9 @@ _objects = [
 	[["CSAT", "flag"] call AS_fnc_getEntity,[26.5801,10.8018,0],130.877,1,0,[],"","",true,false],
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[20.4854,15.3213,-0.0112839],13.8512,1,0,[],"","",true,false]
 ];
-[_dict, "Riga", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Riga", "center", _center] call DICT_fnc_set;
-[_dict, "Riga", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillRiga", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillRiga", "center", _center] call DICT_fnc_set;
+[_dict, "hillRiga", "objects", _objects] call DICT_fnc_set;
 
 _center = [6528.61,21627,0];
 _objects = [
@@ -3003,9 +3003,9 @@ _objects = [
 	[["CSAT", "box"] call AS_fnc_getEntity,[-17.9111,-4.33398,0.00161743],319.506,1,0,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[-20.52,-3.80078,0],130.877,1,0,[],"","",true,false]
 ];
-[_dict, "Synneforos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Synneforos", "center", _center] call DICT_fnc_set;
-[_dict, "Synneforos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillSynneforos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillSynneforos", "center", _center] call DICT_fnc_set;
+[_dict, "hillSynneforos", "objects", _objects] call DICT_fnc_set;
 
 _center = [4954.2,21856.5,0];
 _objects = [
@@ -3053,6 +3053,6 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-38.3887,-2.56055,0.107788],1.47981,1,0,[],"","",true,false],
 	[["CSAT", "box"] call AS_fnc_getEntity,[-39.5176,-7.61914,0.00512695],327.907,1,0.00893501,[],"","",true,false]
 ];
-[_dict, "Thronos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "Thronos", "center", _center] call DICT_fnc_set;
-[_dict, "Thronos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hillThronos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hillThronos", "center", _center] call DICT_fnc_set;
+[_dict, "hillThronos", "objects", _objects] call DICT_fnc_set;
