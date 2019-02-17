@@ -9,11 +9,11 @@ if mode is not "array", it just returns whether there is any units or not:
 params ["_distance", "_reference", "_variable", ["_mode", "array"]];
 
 if (_mode == "array") then {
-	allUnits select {_x getVariable [_variable,false] and {_x distance _reference < _distance}}
+	allUnits select {_x getVariable [_variable,false] and {_x distance2D _reference < _distance}}
 } else {
 	private _result = false;
 	{
-		if ((_x getvariable [_variable,false]) and {_x distance _reference < _distance}) exitWith {
+		if ((_x getvariable [_variable,false]) and {_x distance2D _reference < _distance}) exitWith {
 			_result = true
 		};
 	} forEach allUnits;

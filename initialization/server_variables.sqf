@@ -103,7 +103,7 @@ AS_Pset("clear", false); //This to signal weather module to not keep default cle
 AS_spawnLoopTime = 2; // seconds between each check of spawn/despawn locations (expensive loop).
 publicVariable "AS_spawnLoopTime";
 
-private _nextUpdate = [date select 0, date select 1, date select 2, date select 3, (date select 4) + (_upFreq/60)];
+private _nextUpdate = [date select 0, date select 1, date select 2, date select 3, (date select 4)];
 _nextUpdate = datetoNumber _nextUpdate;
 AS_Pset("upFreq", _upFreq);
 AS_Pset("nextUpdate", _nextUpdate);

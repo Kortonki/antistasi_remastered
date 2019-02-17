@@ -71,7 +71,8 @@ private _fnc_spawn = {
 	//Arm the guy with pistol
 	private _dweapon = (selectRandom (AS_weapons select 4));
 	_dealer addWeapon _dweapon;
-	_dealer addMagazines [selectRandom (AS_allweaponsAttrs select (AS_allWeapons find _dweapon)), 4];
+	private _magtype = (selectRandom ((AS_allWeaponsAttrs select (AS_allWeapons find _dweapon)) select 2));
+	_dealer addMagazines [_magtype, 4];
 
 	{
 		call {

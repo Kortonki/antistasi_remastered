@@ -190,7 +190,7 @@ private _fnc_deliver = {
 		if (_currentDropCount < DROP_COUNT) then {
 			{
 				if (isPlayer _x) then {[petros,"hint","Head to the next location."] remoteExec ["AS_fnc_localCommunication",_x]};
-			} forEach ([150, _truck, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
+			} forEach ([150, (position _currentDrop), "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
 
 			[_mission, "currentDrop", _currentDropCount] call AS_spawn_fnc_set;
 			[_mission, "state_index", 2] call AS_spawn_fnc_set;

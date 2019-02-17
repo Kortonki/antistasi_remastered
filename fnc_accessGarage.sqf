@@ -49,6 +49,8 @@ Cam camCommit 0;
 ["<t size='0.6'>Garage Keys.<t size='0.5'><br/>A-D Navigate<br/>SPACE to Select<br/>ESCAPE to Exit",0,0,5,0,0,4] spawn bis_fnc_dynamicText;
 
 garageKeys = (findDisplay 46) displayAddEventHandler ["KeyDown", {
+	//This to avoid multiple spawn if player spams the keys
+	if (isNull garageVeh) exitWith {false};
 	private _key = _this select 1;
 	if not (_key in [57, 1, 32, 30]) exitWith {
 		false
@@ -91,13 +93,15 @@ garageKeys = (findDisplay 46) displayAddEventHandler ["KeyDown", {
 		if (isNil "_tipo") then {_exitGarage = true};
 		if (typeName _tipo != typeName "") then {_exitGarage = true};
 		if (!_exitGarage) then {
-			//Here we need the spawned function to have 0.5 secs between vehicles so don't collide because of network lag
+			//Here we need the spawned function to have 0.2 secs between vehicles so don't collide because of network lag
 			[_tipo] spawn {
 				params ["_tipo"];
-				sleep 0.5;
+
+				sleep 0.2;
 				garageVeh = createVehicle [_tipo, garagePos, [], 0, "CAN_COLLIDE"];
-				garageVeh setDir AS_S("AS_vehicleOrientation");
+				[garageVeh, false] remoteExecCall ["enablesimulationGlobal", 2];
 				garageVeh allowDamage false;
+				garageVeh setDir AS_S("AS_vehicleOrientation");
 			};
 		};
 	};
