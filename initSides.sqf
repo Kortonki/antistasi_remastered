@@ -24,7 +24,6 @@
 						_statics pushBackUnique _x;
 					} foreach ([_x, _type] call AS_fnc_getEntity);
 				};
-			};
 		};
 	} forEach ["CSAT", "NATO", "AAF", "FIA"];
 
