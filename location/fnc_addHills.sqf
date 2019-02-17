@@ -9,7 +9,7 @@ params ["_minSize", ["_excluded", []], ["_hillsAA", []]];
     if (_hill in _hillsAA and {!(_hill in _excluded)}) then {
         // creates hidden marker
 
-        private _name = format ["hill_%1", _position];
+        private _name = format ["hill_%1", _hill];
         private _mrk = createmarker [_name, _position];
         _mrk setMarkerSize [_size, _size];
         _mrk setMarkerShape "ELLIPSE";
