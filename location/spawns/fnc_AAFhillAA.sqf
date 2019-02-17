@@ -18,10 +18,10 @@ private _fnc_spawn = {
 	private _AAVeh = objNull;
 	{
 		call {
-			if (typeOf _x in (["CSAT", "self_aa"] call AS_fnc_getEntity)) exitWith {_AAVeh = _x; _vehiculos pushBack _x;[_x, "CSAT"] call AS_fnc_initVehicle;};
+			if (typeOf _x == (["CSAT", "self_aa"] call AS_fnc_getEntity)) exitWith {_AAVeh pushBack _x; _vehiculos pushBack _x;};
 			if (typeOf _x in (["CSAT", "trucks"] call AS_fnc_getEntity)) exitWith {[_x, "CSAT"] call AS_fnc_initVehicle;};
-			if (typeOf _x == (["CSAT", "static_mortar"] call AS_fnc_getEntity)) then {[_x] execVM "scripts\UPSMON\MON_artillery_add.sqf";[_x, "CSAT"] call AS_fnc_initVehicle;};
-			if (typeOf _x in AS_allStatics) exitWith {_stcs pushBack _x;[_x, "CSAT"] call AS_fnc_initVehicle;};
+			if (typeOf _x == (["CSAT", "static_mortar"] call AS_fnc_getEntity)) exitWith {[_x] execVM "scripts\UPSMON\MON_artillery_add.sqf"; _stcs pushBack _x};
+			if (typeOf _x == (["CSAT", "static_mg"] call AS_fnc_getEntity)) exitWith {_stcs pushBack _x;};
 			if (typeOf _x == (["CSAT", "box"] call AS_fnc_getEntity)) exitWith {_vehiculos pushBack _x;};
 			if (typeOf _x == (["CSAT", "flag"] call AS_fnc_getEntity)) exitWith {_vehiculos pushBack _x;};
 		};
@@ -38,7 +38,7 @@ private _fnc_spawn = {
 		_unit moveInCommander _AAVeh;
 		_AAVeh lock 2;
 	} else {
-		([selectRandom (["CSAT", "self_aa"] call AS_fnc_getEntity), _posicion, random 360, "CSAT", "crew", 0, "NONE", false] call AS_fnc_createVehicle) params ["_AAvehicle", "_AAvehicleGroup"];
+		([["CSAT", "self_aa"] call AS_fnc_getEntity, _posicion, random 360, "CSAT", "crew", 0, "NONE", false] call AS_fnc_createVehicle) params ["_AAvehicle", "_AAvehicleGroup"];
 		_vehiculos pushBack _AAVehicle;
 		_AAVeh = _AAVehicle;
 		_grupos pushBack _AAvehicleGroup;
