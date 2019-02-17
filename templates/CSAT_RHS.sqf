@@ -30,14 +30,14 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 [_dict, "truck_ammo", "rhs_gaz66_ammo_vdv"] call DICT_fnc_set;
 [_dict, "truck_repair", "RHS_Ural_Repair_VDV_01"] call DICT_fnc_set;
-[_dict, "truck_fuel", "I_Truck_02_fuel_F"] call DICT_fnc_set;
+[_dict, "truck_fuel", "I_Truck_02_fuel_F"] call DICT_fnc_set; //RHS ural is prone to get stuck with the AI and no other RHS fuel vehicles
 
 // used in spawns (base and airfield)
 [_dict, "other_vehicles", [
 "rhs_gaz66_ammo_vdv", "RHS_Ural_Fuel_VDV_01", "rhs_gaz66_ap2_vdv", "RHS_Ural_Repair_VDV_01"
 ]] call DICT_fnc_set;
 
-[_dict, "self_aa", ["rhs_zsu234_aa"]] call DICT_fnc_set;
+[_dict, "self_aa", "rhs_zsu234_aa"] call DICT_fnc_set; //cant be an array due to compositions
 
 // special units used in special occasions
 [_dict, "officer", "rhs_vdv_recon_officer"] call DICT_fnc_set;
@@ -59,6 +59,13 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "patrols", ["rhs_group_rus_vdv_infantry_fireteam","rhs_group_rus_vdv_infantry_MANEUVER","rhs_group_rus_vdv_infantry_section_marksman"]] call DICT_fnc_set;
 [_dict, "recon_squad", configfile >> "CfgGroups" >> "east" >> "rhs_faction_vdv">> "rhs_group_rus_vdv_infantry_recon" >> "rhs_group_rus_vdv_infantry_recon_squad"] call DICT_fnc_set;
 [_dict, "recon_team", configfile >> "CfgGroups" >> "east" >> "rhs_faction_vdv">> "rhs_group_rus_vdv_infantry_recon" >> "rhs_group_rus_vdv_infantry_recon_MANEUVER"] call DICT_fnc_set;
+
+// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
+[_dict, "additionalWeapons", ["rhs_weap_ak105","rhs_weap_ak104"]] call DICT_fnc_set;
+[_dict, "additionalMagazines", []] call DICT_fnc_set;
+[_dict, "additionalItems", []] call DICT_fnc_set;
+[_dict, "additionalBackpacks", []] call DICT_fnc_set;
+[_dict, "additionalLaunchers", []] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["rhs_mine_pmn2"]] call DICT_fnc_set;
