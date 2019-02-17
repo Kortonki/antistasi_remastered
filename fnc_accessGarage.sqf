@@ -91,6 +91,7 @@ garageKeys = (findDisplay 46) displayAddEventHandler ["KeyDown", {
 		if (isNil "_tipo") then {_exitGarage = true};
 		if (typeName _tipo != typeName "") then {_exitGarage = true};
 		if (!_exitGarage) then {
+			sleep 0.5;
 			garageVeh = createVehicle [_tipo, garagePos, [], 0, "CAN_COLLIDE"];
 			garageVeh setDir AS_S("AS_vehicleOrientation");
 			garageVeh allowDamage false;

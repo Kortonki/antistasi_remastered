@@ -3,7 +3,7 @@
 #include "dialogs.hpp"
 
 author="Kortonki";
-OnLoadName = "Kortonki's Antistasi";
+OnLoadName = "Antistasi - Remastered";
 OnLoadMission = "Be a Resistance Leader - Be Badass";
 loadScreen = "pic.jpg";
 
