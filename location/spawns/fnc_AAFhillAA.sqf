@@ -38,8 +38,7 @@ private _fnc_spawn = {
 		_unit moveInCommander _AAVeh;
 		_AAVeh lock 2;
 	} else {
-		([["CSAT", "self_aa"] call AS_fnc_getEntity, _posicion, random 360, "CSAT", "crew", 0, "NONE", false] call AS_fnc_createVehicle) params ["_AAvehicle", "_AAvehicleGroup"];
-		_vehiculos pushBack _AAVehicle;
+		([selectRandom (["CSAT", "self_aa"] call AS_fnc_getEntity), _posicion, random 360, "CSAT", "crew", 0, "NONE", false] call AS_fnc_createVehicle) params ["_AAvehicle", "_AAvehicleGroup"];		_vehiculos pushBack _AAVehicle;
 		_AAVeh = _AAVehicle;
 		_grupos pushBack _AAvehicleGroup;
 	};
