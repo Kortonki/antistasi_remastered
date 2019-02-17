@@ -46,11 +46,12 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "crew", "B_crew_F"] call DICT_fnc_set;
 [_dict, "pilot", "B_Pilot_F"] call DICT_fnc_set;
 
-[_dict, "static_aa", "B_static_AA_F"] call DICT_fnc_set;
-[_dict, "static_at", "B_static_AT_F"] call DICT_fnc_set;
-[_dict, "static_mg", "B_HMG_01_high_F"] call DICT_fnc_set;
-[_dict, "static_mg_low", "B_HMG_01_F"] call DICT_fnc_set;
-[_dict, "static_mortar", "B_Mortar_01_F"] call DICT_fnc_set;
+//first one should be the most used one, latter for special occasions
+[_dict, "static_aa", ["B_static_AA_F"]] call DICT_fnc_set;
+[_dict, "static_at", ["B_static_AT_F"]] call DICT_fnc_set;
+[_dict, "static_mg", ["B_HMG_01_high_F"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["B_HMG_01_F"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["B_Mortar_01_F"]] call DICT_fnc_set;
 
 [_dict, "cfgGroups", (configfile >> "CfgGroups" >> "West" >> "BLU_F" >> "Infantry")] call DICT_fnc_set;
 [_dict, "squads", ["BUS_InfSquad"]] call DICT_fnc_set;

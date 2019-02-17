@@ -56,11 +56,12 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "crew", "rhsusf_usmc_marpat_wd_crewman"] call DICT_fnc_set;
 [_dict, "pilot", "rhsusf_airforce_pilot"] call DICT_fnc_set;
 
-[_dict, "static_aa", "RHS_Stinger_AA_pod_USMC_WD"] call DICT_fnc_set;
-[_dict, "static_at", "RHS_TOW_TriPod_USMC_WD"] call DICT_fnc_set;
-[_dict, "static_mg", "RHS_M2StaticMG_USMC_WD"] call DICT_fnc_set;
-[_dict, "static_mg_low", "RHS_M2StaticMG_MiniTripod_USMC_WD"] call DICT_fnc_set;
-[_dict, "static_mortar", "RHS_M252_USMC_WD"] call DICT_fnc_set;
+//first one should be the most used one, latter for special occasions
+[_dict, "static_aa", ["RHS_Stinger_AA_pod_USMC_WD"]] call DICT_fnc_set;
+[_dict, "static_at", ["RHS_TOW_TriPod_USMC_WD"]] call DICT_fnc_set;
+[_dict, "static_mg", ["RHS_M2StaticMG_USMC_WD"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["RHS_M2StaticMG_MiniTripod_USMC_WD"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["RHS_M252_USMC_WD"]] call DICT_fnc_set;
 
 //
 //Jatka tästä

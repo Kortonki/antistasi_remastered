@@ -90,9 +90,9 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "squads_custom_cost", {
 	params ["_squadType"];
 	private _pieceType = call {
-		if (_squadType == "mobile_aa") exitWith {["FIA", "static_aa"] call AS_fnc_getEntity};
-		if (_squadType == "mobile_at") exitWith {["FIA", "static_at"] call AS_fnc_getEntity};
-		if (_squadType == "mobile_mortar") exitWith {["FIA", "static_mortar"] call AS_fnc_getEntity};
+		if (_squadType == "mobile_aa") exitWith {(["FIA", "static_aa"] call AS_fnc_getEntity) select 0};
+		if (_squadType == "mobile_at") exitWith {(["FIA", "static_at"] call AS_fnc_getEntity) select 0};
+		if (_squadType == "mobile_mortar") exitWith {(["FIA", "static_mortar"] call AS_fnc_getEntity) select 0};
 	};
 	private _cost = 2*("Crew" call AS_fnc_getCost);
 	private _costHR = 2;
@@ -111,9 +111,9 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 	_group setVariable ["staticAutoT", false, true];
 	private _pieceType = call {
-		if (_squadType == "mobile_aa") exitWith {["FIA", "static_aa"] call AS_fnc_getEntity};
-		if (_squadType == "mobile_at") exitWith {["FIA", "static_at"] call AS_fnc_getEntity};
-		if (_squadType == "mobile_mortar") exitWith {["FIA", "static_mortar"] call AS_fnc_getEntity};
+		if (_squadType == "mobile_aa") exitWith {(["FIA", "static_aa"] call AS_fnc_getEntity) select 0};
+		if (_squadType == "mobile_at") exitWith {(["FIA", "static_at"] call AS_fnc_getEntity)  select 0};
+		if (_squadType == "mobile_mortar") exitWith {(["FIA", "static_mortar"] call AS_fnc_getEntity) select 0};
 	};
 
 	private _piece = _pieceType createVehicle (_position findEmptyPosition [1,30,"B_G_Van_01_transport_F"]);
@@ -132,10 +132,11 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 	_group
 }] call DICT_fnc_set;
 
-[_dict, "static_aa", "B_static_AA_F"] call DICT_fnc_set;
-[_dict, "static_at", "B_static_AT_F"] call DICT_fnc_set;
-[_dict, "static_mg", "B_HMG_01_high_F"] call DICT_fnc_set;
-[_dict, "static_mortar", "B_G_Mortar_01_F"] call DICT_fnc_set;
+//first one should be the most used one, latter for special occasions
+[_dict, "static_aa", ["B_static_AA_F"]] call DICT_fnc_set;
+[_dict, "static_at", ["B_static_AT_F"]] call DICT_fnc_set; //first one is used by squads
+[_dict, "static_mg", ["B_HMG_01_high_F"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["B_G_Mortar_01_F"]] call DICT_fnc_set; //first one is used by squads
 
 // FIA minefield uses first of this list
 [_dict, "land_vehicles", ["C_Offroad_01_F","C_Van_01_transport_F","B_G_Quadbike_01_F","B_G_Offroad_01_armed_F"]] call DICT_fnc_set;

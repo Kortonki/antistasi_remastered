@@ -45,11 +45,12 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "crew", "CUP_B_USMC_Crew"] call DICT_fnc_set;
 [_dict, "pilot", "CUP_B_USMC_Pilot"] call DICT_fnc_set;
 
-[_dict, "static_aa", ""] call DICT_fnc_set;
-[_dict, "static_at", "CUP_B_TOW_TriPod_USMC"] call DICT_fnc_set;
-[_dict, "static_mg", "CUP_B_M2StaticMG_USMC"] call DICT_fnc_set;
-[_dict, "static_mg_low", "CUP_B_M2StaticMG_MiniTripod_USMC"] call DICT_fnc_set;
-[_dict, "static_mortar", "CUP_B_M252_USMC"] call DICT_fnc_set;
+//first one should be the most used one, latter for special occasions
+[_dict, "static_aa", [""]] call DICT_fnc_set;
+[_dict, "static_at", ["CUP_B_TOW_TriPod_USMC"]] call DICT_fnc_set;
+[_dict, "static_mg", ["CUP_B_M2StaticMG_USMC"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["CUP_B_M2StaticMG_MiniTripod_USMC"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["CUP_B_M252_USMC"]] call DICT_fnc_set;
 
 [_dict, "cfgGroups", (configfile >> "CfgGroups" >> "West" >> "CUP_B_USMC" >> "Infantry")] call DICT_fnc_set;
 [_dict, "squads", ["CUP_B_USMC_InfSquad"]] call DICT_fnc_set;

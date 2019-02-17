@@ -7,8 +7,8 @@ private _addChopper = (_side == "AAF") and
 	{!([_location] call AS_fnc_location_isFrontline)} and
 	{"helis_transport" call AS_AAFarsenal_fnc_count > 0};
 
-private _staticAA = [_side, "static_aa"] call AS_fnc_getEntity;
-private _staticMG = [_side, "static_mg"] call AS_fnc_getEntity;
+private _staticAA = selectRandom([_side, "static_aa"] call AS_fnc_getEntity);
+private _staticMG = selectRandom([_side, "static_mg"] call AS_fnc_getEntity);
 private _gunnerCrew = [_side, "gunner"] call AS_fnc_getEntity;
 
 private _soldiers = [];

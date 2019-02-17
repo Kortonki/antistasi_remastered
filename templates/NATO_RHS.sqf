@@ -57,11 +57,12 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "crew", "rhsusf_usmc_marpat_d_crewman"] call DICT_fnc_set;
 [_dict, "pilot", "rhsusf_airforce_pilot"] call DICT_fnc_set;
 
-[_dict, "static_aa", "RHS_Stinger_AA_pod_USMC_D"] call DICT_fnc_set;
-[_dict, "static_at", "RHS_TOW_TriPod_USMC_D"] call DICT_fnc_set;
-[_dict, "static_mg", "RHS_M2StaticMG_USMC_D"] call DICT_fnc_set;
-[_dict, "static_mg_low", "RHS_M2StaticMG_MiniTripod_USMC_D"] call DICT_fnc_set;
-[_dict, "static_mortar", "RHS_M252_USMC_D"] call DICT_fnc_set;
+//first one should be the most used one, latter for special occasions
+[_dict, "static_aa", ["RHS_Stinger_AA_pod_USMC_D"]] call DICT_fnc_set;
+[_dict, "static_at", ["RHS_TOW_TriPod_USMC_D"]] call DICT_fnc_set;
+[_dict, "static_mg", ["RHS_M2StaticMG_USMC_D"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["RHS_M2StaticMG_MiniTripod_USMC_D"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["RHS_M252_USMC_D"]] call DICT_fnc_set;
 
 [_dict, "cfgGroups", (configfile >> "CfgGroups" >> "West" >> "rhs_faction_usmc_d" >> "rhs_group_nato_usmc_d_infantry")] call DICT_fnc_set;
 [_dict, "squads", ["rhs_group_nato_usmc_d_infantry_squad","rhs_group_nato_usmc_d_infantry_squad_sniper","rhs_group_nato_usmc_d_infantry_weaponsquad"]] call DICT_fnc_set;

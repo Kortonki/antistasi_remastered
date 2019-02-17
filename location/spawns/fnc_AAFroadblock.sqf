@@ -15,7 +15,7 @@ private _fnc_spawn = {
 	_bunker setDir _dirveh;
 	_vehiculos pushBack _bunker;
 
-	private _static_mg = ["AAF", "static_mg"] call AS_fnc_getEntity;
+	private _static_mg = selectRandom(["AAF", "static_mg"] call AS_fnc_getEntity);
 	private _gunner = ["AAF", "gunner"] call AS_fnc_getEntity;
 
 	private _veh = _static_mg createVehicle _posicion;
