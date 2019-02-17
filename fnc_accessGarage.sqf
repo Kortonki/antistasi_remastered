@@ -91,10 +91,14 @@ garageKeys = (findDisplay 46) displayAddEventHandler ["KeyDown", {
 		if (isNil "_tipo") then {_exitGarage = true};
 		if (typeName _tipo != typeName "") then {_exitGarage = true};
 		if (!_exitGarage) then {
-			sleep 0.5;
-			garageVeh = createVehicle [_tipo, garagePos, [], 0, "CAN_COLLIDE"];
-			garageVeh setDir AS_S("AS_vehicleOrientation");
-			garageVeh allowDamage false;
+			//Here we need the spawned function to have 0.5 secs between vehicles so don't collide because of network lag
+			[_tipo] spawn {
+				params ["_tipo"];
+				sleep 0.5;
+				garageVeh = createVehicle [_tipo, garagePos, [], 0, "CAN_COLLIDE"];
+				garageVeh setDir AS_S("AS_vehicleOrientation");
+				garageVeh allowDamage false;
+			};
 		};
 	};
 	if _exitGarage then {
