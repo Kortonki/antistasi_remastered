@@ -23,4 +23,11 @@ while {_state_index < count _functions} do {
     _state_index = _state_index + 1;
     [_spawn, "state_index", _state_index] call AS_spawn_fnc_set;
 };
-_spawn call AS_spawn_fnc_delete;
+
+//Don't delete the spawn immediately. Missions etc. whice are possibly running on other threads could still need data from the spawn
+//TODO: Better way to check for completion
+[_spawn] spawn {
+  params ["_spawn"];
+  sleep 30;
+  _spawn call AS_spawn_fnc_delete;
+};
