@@ -46,11 +46,12 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "crew", "rhs_vdv_armoredcrew"] call DICT_fnc_set;
 [_dict, "pilot", "rhs_pilot_combat_heli"] call DICT_fnc_set;
 
-[_dict, "static_aa", "rhs_Igla_AA_pod_vdv"] call DICT_fnc_set;
-[_dict, "static_at", "rhs_Metis_9k115_2_vdv"] call DICT_fnc_set;
-[_dict, "static_mg", "rhs_KORD_high_vdv"] call DICT_fnc_set;
-[_dict, "static_mg_low", "rhs_KORD_vdv"] call DICT_fnc_set;
-[_dict, "static_mortar", "rhs_2b14_82mm_vdv"] call DICT_fnc_set;
+//first one should be the most used one, latter for special occasions
+[_dict, "static_aa", ["rhs_Igla_AA_pod_vdv"]] call DICT_fnc_set;
+[_dict, "static_at", ["rhs_Metis_9k115_2_vdv"]] call DICT_fnc_set;
+[_dict, "static_mg", ["rhs_KORD_high_vdv"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["rhs_KORD_vdv"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["rhs_2b14_82mm_vdv"]] call DICT_fnc_set;
 
 [_dict, "cfgGroups", configfile >> "CfgGroups" >> "east" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_infantry"] call DICT_fnc_set;
 [_dict, "squads", ["rhs_group_rus_vdv_infantry_squad","rhs_group_rus_vdv_infantry_squad_2mg","rhs_group_rus_vdv_infantry_squad_sniper","rhs_group_rus_vdv_infantry_squad_mg_sniper"]] call DICT_fnc_set;

@@ -100,15 +100,19 @@ SHK_Fastrope_fnc_AIs = {
   };
 
   _heli = objectParent (_units select 0);
+  private _driver = driver _heli;
 
-  doStop (driver _heli);
+  doStop _driver;
+  [_driver, "MOVE"] remoteExec ["disableAI", _driver];
   (driver _heli) setBehaviour "Careless";
   (driver _heli) setCombatMode "Blue";
 
   [_heli, _units] spawn {
     params ["_heli","_units","_ropes","_rope","_count","_sh",["_i",0]];
-    _sh = _heli spawn SHK_Fastrope_fnc_createRopes;
-    waitUntil {sleep 0.1; scriptDone _sh};
+    _heli call SHK_Fastrope_fnc_createRopes;
+    private _driver = driver _heli;
+
+
 
 
     _ropes = _heli getVariable ["SHK_Fastrope_Ropes",[]];
@@ -139,6 +143,7 @@ SHK_Fastrope_fnc_AIs = {
     };
     sleep 5;
     (driver _heli) doFollow (leader group (driver _heli));
+    [_driver, "MOVE"] remoteExec ["enableAI", _driver];
     (driver _heli) setBehaviour "Aware";
     (driver _heli) setCombatMode "White";
   };

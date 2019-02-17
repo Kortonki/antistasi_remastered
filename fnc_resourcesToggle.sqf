@@ -16,7 +16,9 @@ if (not AS_resourcing and _on) then {
 			waitUntil {sleep AS_spawnLoopTime; private _date = dateToNumber date; _date > (AS_P("nextUpdate")) or _date > (AS_P("nextAttack"))};
 
 			if (dateToNumber date > (AS_P("nextUpdate"))) then {
-					call AS_fnc_resourcesUpdate;
+					diag_log format ["[AS] ResourcesUpdate: Update started at %1", date];
+					[] call AS_fnc_resourcesUpdate;
+					diag_log format ["[AS] ResourcesUpdate: Update finished at %1", date];
 				};
 			if (dateToNumber date > (AS_P("nextAttack"))) then {
 				private _noWaves = isNil {AS_S("waves_active")};

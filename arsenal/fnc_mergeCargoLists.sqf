@@ -1,5 +1,9 @@
 params ["_cargoList1", "_cargoList2", ["_add", true]];
 
+//Try running merging only on server to avoid arsenal desyncinc delete/duplication
+//this need a remoteExec back to the client
+//if (!isServer) exitWith {([_cargoList1, _cargoList2, _add] remoteExecCall ["AS_fnc_mergeCargoLists", 2])};
+
 private _fnc_add = {
     params ["_cargo1", "_cargo2"];
     {

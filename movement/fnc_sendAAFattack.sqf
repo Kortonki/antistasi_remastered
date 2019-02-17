@@ -120,7 +120,7 @@ if (_useCSAT) then {
 				_objectives append [_x, _x, _x, _x, _x];
 			};
 		};
-		// todo: make a camp discoverable by AAF before being attackable...
+
 		if (_type == "camp") exitWith {_objectives append [_x, _x, _x, _x, _x]};
 		private _base = [_position, true] call AS_fnc_getBasesForCA;
 		private _aeropuerto = [_position, true] call AS_fnc_getAirportsForCA;

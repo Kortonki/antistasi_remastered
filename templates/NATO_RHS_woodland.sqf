@@ -56,11 +56,12 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "crew", "rhsusf_usmc_marpat_wd_crewman"] call DICT_fnc_set;
 [_dict, "pilot", "rhsusf_airforce_pilot"] call DICT_fnc_set;
 
-[_dict, "static_aa", "RHS_Stinger_AA_pod_USMC_WD"] call DICT_fnc_set;
-[_dict, "static_at", "RHS_TOW_TriPod_USMC_WD"] call DICT_fnc_set;
-[_dict, "static_mg", "RHS_M2StaticMG_USMC_WD"] call DICT_fnc_set;
-[_dict, "static_mg_low", "RHS_M2StaticMG_MiniTripod_USMC_WD"] call DICT_fnc_set;
-[_dict, "static_mortar", "RHS_M252_USMC_WD"] call DICT_fnc_set;
+//first one should be the most used one, latter for special occasions
+[_dict, "static_aa", ["RHS_Stinger_AA_pod_USMC_WD"]] call DICT_fnc_set;
+[_dict, "static_at", ["RHS_TOW_TriPod_USMC_WD"]] call DICT_fnc_set;
+[_dict, "static_mg", ["RHS_M2StaticMG_USMC_WD"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["RHS_M2StaticMG_MiniTripod_USMC_WD"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["RHS_M252_USMC_WD"]] call DICT_fnc_set;
 
 //
 //Jatka tästä
@@ -73,6 +74,13 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "patrols", ["rhs_group_nato_usmc_wd_infantry_team"]] call DICT_fnc_set;
 [_dict, "recon_squad", configfile >> "CfgGroups" >> "West" >> "rhs_faction_usmc_wd" >> "rhs_group_nato_usmc_recon_wd_infantry" >> "rhs_group_nato_usmc_recon_wd_infantry_team_lite"] call DICT_fnc_set;
 [_dict, "recon_team", configfile >> "CfgGroups" >> "West" >> "rhs_faction_usmc_wd" >> "rhs_group_nato_usmc_recon_wd_infantry" >> "rhs_group_nato_usmc_recon_wd_infantry_team_lite"] call DICT_fnc_set;
+
+// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
+[_dict, "additionalWeapons", ["rhs_weap_ak105","rhs_weap_ak104"]] call DICT_fnc_set;
+[_dict, "additionalMagazines", []] call DICT_fnc_set;
+[_dict, "additionalItems", []] call DICT_fnc_set;
+[_dict, "additionalBackpacks", []] call DICT_fnc_set;
+[_dict, "additionalLaunchers", []] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["rhs_mine_pmn2"]] call DICT_fnc_set;

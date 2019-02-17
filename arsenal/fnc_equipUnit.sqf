@@ -72,20 +72,9 @@ if (_binoculars != "") then {
     _unit addPrimaryWeaponItem _x;
 } forEach _primaryWeaponItems;
 
-//Spawn here for suspending: EXPERIMENT
-[_unit] spawn {
-params ["_unit"];
+//All arsenal removal and adding happens on server: EXPERIMENT
 // remove from box stuff that was used.
 private _cargo = [_unit, true] call AS_fnc_getUnitArsenal;
-waitUntil {not AS_S("lockTransfer")};
-AS_Sset("lockTransfer", true);
-([caja] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
-private _cargo_w = [_cargo_w, _cargo select 0, false] call AS_fnc_mergeCargoLists;
-private _cargo_m = [_cargo_m, _cargo select 1, false] call AS_fnc_mergeCargoLists;
-private _cargo_i = [_cargo_i, _cargo select 2, false] call AS_fnc_mergeCargoLists;
-private _cargo_b = [_cargo_b, _cargo select 3, false] call AS_fnc_mergeCargoLists;
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
-AS_Sset("lockTransfer", false);
+[_cargo] remoteExec ["AS_fnc_removeFromArsenal", 2];
 
 _unit selectWeapon (primaryWeapon _unit);
-};

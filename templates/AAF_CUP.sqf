@@ -41,11 +41,11 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "uavs_small", []] call DICT_fnc_set;
 [_dict, "uavs_attack", []] call DICT_fnc_set;
 
-[_dict, "static_aa", "CUP_O_ZU23_CHDKZ"] call DICT_fnc_set;
-[_dict, "static_at", "CUP_O_Meltis_CHDKZ"] call DICT_fnc_set;
-[_dict, "static_mg", "CUP_O_KORD_high_CHDKZ"] call DICT_fnc_set;
-[_dict, "static_mg_low", "CUP_O_KORD_CHDKZ"] call DICT_fnc_set;
-[_dict, "static_mortar", "CUP_O_2b14_82mm_CHDKZ"] call DICT_fnc_set;
+[_dict, "static_aa", ["CUP_O_ZU23_CHDKZ"]] call DICT_fnc_set;
+[_dict, "static_at", ["CUP_O_Meltis_CHDKZ"]] call DICT_fnc_set;
+[_dict, "static_mg", ["CUP_O_KORD_high_CHDKZ"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["CUP_O_KORD_CHDKZ"]] call DICT_fnc_set;
+[_dict, "static_mortar", ["CUP_O_2b14_82mm_CHDKZ"]] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["CUP_MineE"]] call DICT_fnc_set;

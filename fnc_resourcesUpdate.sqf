@@ -5,10 +5,13 @@ params [["_skipping", false]]; //this is for not spawning patrols while skipping
 
 //Xomment this out: is it really necessary? This function gets called as well
 //if (isMultiplayer) then {waitUntil {sleep 10; isPlayer AS_commander}};
-
+diag_log format ["[AS] ResourcesUpdate: updateAll started at %1", date];
 [_skipping] call AS_fnc_updateAll;
+diag_log format ["[AS] ResourcesUpdate: updateAll finished at %1", date];
 // update AAF economics.
+diag_log format ["[AS] ResourcesUpdate: spendAAFMoney started at %1", date];
 [] call AS_fnc_spendAAFmoney;
+diag_log format ["[AS] ResourcesUpdate: spendAAFMoney finished at %1", date];
 
 // Assign new commander if needed.
 
@@ -16,7 +19,9 @@ params [["_skipping", false]]; //this is for not spawning patrols while skipping
 if (!(_skipping)) then {
     [] call AS_mission_fnc_updateAvailable;
 
+    diag_log format ["[AS] ResourcesUpdate: movement_sendAAFroadPatrol started at %1", date];
     [] call AS_movement_fnc_sendAAFroadPatrol;
+    diag_log format ["[AS] ResourcesUpdate: movement_sendAAFroadPatrol started at %1", date];
 
     // Check if any communications were intercepted.
     [] call AS_fnc_revealFromAAFRadio;

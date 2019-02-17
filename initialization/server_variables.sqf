@@ -117,6 +117,7 @@ AS_Sset("AAFpatrols", 0);
 
 // Used to make a transfer to `caja` atomic
 AS_Sset("lockTransfer", false);
+AS_Sset("lockArsenal", false);
 
 // This sets whether the CSAT can attack or not. The FIA has an option to block
 // attacks by jamming radio signals (close to flags with towers)

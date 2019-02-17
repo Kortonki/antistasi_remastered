@@ -16,3 +16,7 @@ publicVariable "unlockedItems";
 publicVariable "unlockedBackpacks";
 
 [caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
+
+//Tell petros and garrison to equip themselves
+Arsenal_initialized = true;
+publicVariable "Arsenal_initialized";

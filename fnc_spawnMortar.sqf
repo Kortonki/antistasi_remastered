@@ -17,7 +17,7 @@ private _objects = [
 private _vehicles = [_position, 0, _objects] call BIS_fnc_ObjectsMapper;
 {_x setVectorUp (surfacenormal (getPosATL _x))} forEach _vehicles;
 
-private _mortarType = [_faction, "static_mortar"] call AS_fnc_getEntity;
+private _mortarType = selectRandom([_faction, "static_mortar"] call AS_fnc_getEntity);
 private _gunnerType = [_faction, "gunner"] call AS_fnc_getEntity;
 
 private _group = createGroup (_faction call AS_fnc_getFactionSide);

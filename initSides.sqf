@@ -19,10 +19,11 @@
 	{
 		if not ((_type == "static_mg_low") and (_x == "FIA")) then {
 			// FIA does use "static_mg_low".
-			private _static = [_x, _type] call AS_fnc_getEntity;
-			if not isNil "_static" then {
-				_statics pushBackUnique _static;
-			};
+				if (not(isNil{[_x, _type] call AS_fnc_getEntity})) then {
+					{
+						_statics pushBackUnique _x;
+					} foreach ([_x, _type] call AS_fnc_getEntity);
+				};
 		};
 	} forEach ["CSAT", "NATO", "AAF", "FIA"];
 
@@ -108,10 +109,10 @@ AS_allFIAUnitTypes = [
 } forEach (["FIA", "water_vehicles"] call AS_fnc_getEntity);
 
 // cost of statics
-AS_data_allCosts setVariable [["FIA", "static_mg"] call AS_fnc_getEntity, 300];
-AS_data_allCosts setVariable [["FIA", "static_at"] call AS_fnc_getEntity, 1200];
-AS_data_allCosts setVariable [["FIA", "static_aa"] call AS_fnc_getEntity, 1200];
-AS_data_allCosts setVariable [["FIA", "static_mortar"] call AS_fnc_getEntity, 1200];
+{AS_data_allCosts setVariable [_x, 300];} foreach (["FIA", "static_mg"] call AS_fnc_getEntity);
+{AS_data_allCosts setVariable [_x, 1200];} foreach (["FIA", "static_at"] call AS_fnc_getEntity);
+{AS_data_allCosts setVariable [_x, 1200];} foreach (["FIA", "static_aa"] call AS_fnc_getEntity);
+{AS_data_allCosts setVariable [_x, 1200];} foreach (["FIA", "static_mortar"] call AS_fnc_getEntity);
 
 // costs of land vehicles
 private _costs = ["FIA", "costs"] call AS_fnc_getEntity;

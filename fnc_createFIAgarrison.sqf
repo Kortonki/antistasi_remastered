@@ -46,7 +46,7 @@ _grupos = _grupos + [_grupo];
 		_unit = [_x, _posicion, _grupo] call AS_fnc_spawnFIAUnit;
 		if (_x == "Squad Leader") then {_grupo selectLeader _unit};
 	};
-	[_unit,false,_location] remoteExecCall ["AS_fnc_initUnitFIA", _unit];
+	[_unit,false,_location] remoteExec ["AS_fnc_initUnitFIA", _unit];
 	_soldados pushBack _unit;
 	sleep 0.5;
 
