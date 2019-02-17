@@ -44,7 +44,7 @@ if (_crew in [2,3,6,7]) then {
 
 if (_crew in [4,5,6,7]) then {
 
-  while {isNull assignedCommander _vehicle and {_vehicle emptyPositions "Commander" > 0}}} do {
+  while {isNull assignedCommander _vehicle and {_vehicle emptyPositions "Commander" > 0}} do {
     private _unit = _vehicleGroup createUnit [[_side, _type] call AS_fnc_getEntity, _pos, [], 0, "NONE"];
     [_unit, _side, _spawn] call AS_fnc_initUnit;
     _unit setRank "LIEUTENANT";
