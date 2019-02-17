@@ -2458,7 +2458,6 @@ _objects = [
 [_dict, "AS_outpostAA_1", "center", _center] call DICT_fnc_set;
 [_dict, "AS_outpostAA_1", "objects", _objects] call DICT_fnc_set;
 
-
 _center = [9136.29,8342.23,0];
 _objects = [
 	["Land_HBarrier_Big_F",[6.6543,-0.875,-0.00107574],87.1529,1,0,[5.19154,1.5764],"","",true,false], 
