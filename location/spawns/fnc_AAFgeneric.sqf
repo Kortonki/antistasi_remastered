@@ -17,11 +17,11 @@ private _fnc_spawn = {
 	_flag allowDamage false;
 	_vehiculos pushBack _flag;
 
-	//spawn a bunker
-
-	private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
-	_vehiculos pushBack _bunker;
-
+	//create _bunker, only if there's no preset composition
+	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
+		_vehiculos pushBack _bunker;
+	};
 	// spawn 2 patrols
 	// _mrk => to be deleted at the end
 	([_location, 2] call AS_fnc_spawnAAF_patrol) params ["_units1", "_groups1", "_mrk"];

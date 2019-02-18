@@ -26,14 +26,16 @@ private _fnc_spawn = {
 	// create flag
 	private _veh = createVehicle [(["NATO", "flag"] call AS_fnc_getEntity), _posicion, [],0, "CAN_COLLIDE"];
 	_veh allowDamage false;
-	[[_veh,"unit"],"AS_fnc_addAction"] call BIS_fnc_MP;
-	[[_veh,"vehicle"],"AS_fnc_addAction"] call BIS_fnc_MP;
-	[[_veh,"garage"],"AS_fnc_addAction"] call BIS_fnc_MP;
+	[_veh, "unit"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+	[_veh,"vehicle"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+	[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 	_vehiculos pushBack _veh;
 
-	//create _bunker
-	private _bunker = "Land_BagBunker_01_large_green_F" createVehicle [((_posicion select 0) + (random 20)), ((_posicion select 1) + (random 20)), 0];
-	_vehiculos pushBack _bunker;
+	//create _bunker, only if there's no preset composition
+	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+		private _bunker = AS_big_bunker_type createVehicle [((_posicion select 0) + (random 20)), ((_posicion select 1) + (random 20)), 0];
+		_vehiculos pushBack _bunker;
+	};
 
 	private _nVeh = round ((_size / 30)*_prestigio);
 	if (_nVeh > 4) then {_nVeh = 4;};

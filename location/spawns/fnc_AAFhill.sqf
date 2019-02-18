@@ -19,10 +19,11 @@ private _fnc_spawn = {
 	_veh = (["AAF", "flag"] call AS_fnc_getEntity) createVehicle _posicion;
 	_vehiculos pushBack _veh;
 
-	//create _bunker
-	private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
-	_vehiculos pushBack _bunker;
-
+	//create _bunker, only if there's no preset composition
+	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
+		_vehiculos pushBack _bunker;
+	};
 	// create crate
 	_veh = (["AAF", "box"] call AS_fnc_getEntity) createVehicle _posicion;
 	_vehiculos pushBack _veh;

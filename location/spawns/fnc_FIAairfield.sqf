@@ -46,9 +46,9 @@ private _fnc_spawn = {
 	private _pos = [_posicion, 3,0] call BIS_fnc_relPos;
 	private _veh = createVehicle [(["NATO", "flag"] call AS_fnc_getEntity), _pos, [],0, "CAN_COLLIDE"];
 	_veh allowDamage false;
-	[[_veh,"unit"],"AS_fnc_addAction"] call BIS_fnc_MP;
-	[[_veh,"vehicle"],"AS_fnc_addAction"] call BIS_fnc_MP;
-	[[_veh,"garage"],"AS_fnc_addAction"] call BIS_fnc_MP;
+	[_veh, "unit"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+	[_veh,"vehicle"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+	[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 	_vehiculos pushBack _veh;
 
 

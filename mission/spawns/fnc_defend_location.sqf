@@ -75,8 +75,12 @@ private _fnc_spawn = {
 		private _size = _base call AS_location_fnc_size;
 
 		// compute number of trucks based on the marker size
-		private _nVeh = round (_size/30);
-		if (_nVeh < 1) then {_nVeh = 1};
+		private _nVeh = (round (_size/30)) max 1;
+
+		private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
+		_patrolMarker setMarkerShape "ELLIPSE";
+		_patrolMarker setMarkerSize [100,100];
+		_patrolMarker setMarkerAlpha 0;
 
 		// spawn them
 		for "_i" from 1 to _nveh do {
@@ -87,7 +91,7 @@ private _fnc_spawn = {
 			if (_threatEvalLand > 5 and ("tanks" call AS_AAFarsenal_fnc_count > 0)) then {
 				_toUse = "tanks";
 			};
-			([_toUse, _origin_pos, _location, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+			([_toUse, _origin_pos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
 			sleep 5;
@@ -141,7 +145,7 @@ private _fnc_spawn = {
 
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 	[_mission, "origin_pos", _origin_pos] call AS_spawn_fnc_set;
-    [_mission, "resources", [_task, _groups, _vehicles, []]] call AS_spawn_fnc_set;
+  [_mission, "resources", [_task, _groups, _vehicles, [_patrolMarker]]] call AS_spawn_fnc_set;
 	[_mission, "soldiers", _soldiers] call AS_spawn_fnc_set;
 };
 

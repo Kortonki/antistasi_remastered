@@ -65,9 +65,9 @@ private _fnc_spawn = {
 		[_campBox] call AS_fnc_emptyCrate;
 
 		// adds options to access the box
-		[[_campBox,"heal_camp"],"AS_fnc_addAction"] call BIS_fnc_MP;
-		[[_campBox,"arsenal"],"AS_fnc_addAction"] call BIS_fnc_MP;
-		[[_campBox,"transferFrom"],"AS_fnc_addAction"] call BIS_fnc_MP;
+		[_campBox,"heal_camp"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+		[_campBox,"arsenal"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+		[_campBox,"transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 
 		[_location, "campBox", _campBox] call AS_spawn_fnc_set;
 	};

@@ -31,8 +31,13 @@ private _fnc_spawn = {
 	_caja setVariable ["requiredVehs", ["Truck_F"], true];
 	_caja setVariable ["asCargo", false, true];
 	_vehiculos pushBack _caja;
-	private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
-	_vehiculos pushBack _bunker;
+
+	//create _bunker, only if there's no preset composition
+	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
+		_vehiculos pushBack _bunker;
+	};
+
 	{[_x, "AAF"] call AS_fnc_initVehicle;} forEach _vehiculos;
 
 	if (_location call AS_location_fnc_type == "seaport") then {

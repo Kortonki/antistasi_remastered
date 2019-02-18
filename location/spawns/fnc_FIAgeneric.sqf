@@ -21,12 +21,12 @@ private _fnc_spawn = {
 		private _veh = createVehicle [["FIA", "flag"] call AS_fnc_getEntity, _posicion, [],0, "CAN_COLLIDE"];
 		_veh allowDamage false;
 		_vehiculos pushBack _veh;
-		[[_veh,"unit"],"AS_fnc_addAction"] call BIS_fnc_MP;
-		[[_veh,"vehicle"],"AS_fnc_addAction"] call BIS_fnc_MP;
-		[[_veh,"garage"],"AS_fnc_addAction"] call BIS_fnc_MP;
+		[_veh, "unit"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+		[_veh,"vehicle"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+		[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 		if (_type == "seaport") then {
-			[[_veh,"seaport"],"AS_fnc_addAction"] call BIS_fnc_MP;
-		};
+			[_veh, "seaport"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+			};
 
 		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
 		_vehiculos pushBack _bunker;

@@ -29,9 +29,9 @@ private _fnc_initialize = {
 
 	// this is a hidden marker used by the task.
 	// If the mission is completed, it becomes owned by the new location
-	private _mrk = createMarker [format ["FIAlocation%1", (diag_tickTime / 60)], _position];
+	private _mrk = createMarker [format ["FIAlocation%1", _position], _position];
 	_mrk setMarkerShape "ELLIPSE";
-	_mrk setMarkerSize [50,50];
+	_mrk setMarkerSize [100,100];
 	_mrk setMarkerAlpha 0;
 
 	[_mission, [_taskDesc, _taskTitle, _mrk], _position, "Move"] call AS_mission_spawn_fnc_saveTask;
@@ -190,7 +190,7 @@ private _fnc_run = {
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 
 
-		[_mission, "resources", [_task, [], [], _markers]] call AS_spawn_fnc_set;
+		[_mission, "resources", [_task, [], [], [_mrk]]] call AS_spawn_fnc_set;
 
 		_group addVehicle _vehicle;
 		[[_group]] remoteExec ["AS_fnc_dismissFIAsquads", _group];

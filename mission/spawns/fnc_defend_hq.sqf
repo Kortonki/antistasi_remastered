@@ -5,7 +5,7 @@ private _fnc_initialize = {
 	private _tskTitle = localize "STR_tsk_HQAttack";
 	private _tskDesc = localize "STR_tskDesc_HQAttack";
 
-	private _location = "FIA_HQ";
+	private _location = "fia_hq";
 	private _position = _location call AS_location_fnc_position;
 
 	[_mission, [_tskDesc,_tskTitle,_location], _position, "Defend"] call AS_mission_spawn_fnc_saveTask;
@@ -13,7 +13,7 @@ private _fnc_initialize = {
 
 private _fnc_spawn = {
 	params ["_mission"];
-	private _location = "FIA_HQ";
+	private _location = "fia_hq";
 	private _position = _location call AS_location_fnc_position;
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 	private _origin = getMarkerPos "spawnCSAT";
@@ -42,7 +42,58 @@ private _fnc_spawn = {
 	private _soldiers = [];
 	{_soldiers append (units _x)} forEach _groups;
 
-	[_mission, "resources", [_task, _groups, _vehiculos, []]] call AS_spawn_fnc_set;
+	//Use arty and air strike
+
+	[_location] spawn {
+		params ["_location"];
+		for "_i" from 0 to round (random 2) do {
+			[_location, selectRandom opCASFW] spawn AS_fnc_activateAirstrike;
+			sleep 30;
+		};
+		if ((_location call AS_location_fnc_type) in ["base","airfield"]) then {
+			[_location] spawn AS_fnc_dropArtilleryShells;
+		};
+	};
+
+	//Spawn AAF land attack as well
+
+	private _base = [_position, true] call AS_fnc_getBasesForCA;
+
+	private _origin_pos = [];
+	if (_base != "") then {
+		[_base,60] call AS_location_fnc_increaseBusy;
+		_origin_pos = _base call AS_location_fnc_position;
+		private _size = _base call AS_location_fnc_size;
+
+		// compute number of trucks based on the marker size
+		private _nVeh = (round (_size/30)) max 1;
+
+		private _threat = [_position] call AS_fnc_getLandThreat;
+		private _patrolMarker = createMarker [format ["defhq_%1", round (diag_tickTime/60)], _position];
+		_patrolMarker setMarkerShape "ELLIPSE";
+		_patrolMarker setMarkerSize [100,100];
+		_patrolMarker setMarkerAlpha 0;
+
+		// spawn them
+		for "_i" from 1 to _nveh do {
+			private _toUse = "trucks";
+			if (_threat > 3 and ("apcs" call AS_AAFarsenal_fnc_count > 0)) then {
+				_toUse = "apcs";
+				};
+			if (_threat > 5 and ("tanks" call AS_AAFarsenal_fnc_count > 0)) then {
+				_toUse = "tanks";
+				};
+			([_toUse, _origin_pos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+			_groups append _groups1;
+			_vehiculos append _vehicles1;
+			{_soldiers append (units _x)} foreach _groups1;
+			sleep 5;
+			};
+		};
+
+
+
+	[_mission, "resources", [_task, _groups, _vehiculos, [_patrolMarker]]] call AS_spawn_fnc_set;
 	[_mission, "soldiers", _soldiers] call AS_spawn_fnc_set;
 };
 

@@ -8,7 +8,7 @@ private _dog = createAgent ["Fin_random_F", getPos _unit, [], 0, "CAN_COLLIDE"];
 _dog setVariable ["BIS_fnc_animalBehaviour_disable", true];
 _dog attachTo [_unit, [0,0,0]];
 //This must be run on server to work
-[_unit, true] remoteExec ["hideObjectGlobal" 2];
+[_unit, true] remoteExec ["hideObjectGlobal", 2];
 _unit setSpeaker "NoVoice"; //Will this silence the dog? Check if dog as a soldier gies too much info
 
 // logic to have a dog following a group
