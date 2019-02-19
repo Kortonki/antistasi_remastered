@@ -47,7 +47,7 @@ if (count _validLocations == 0) exitWith {
 			"convoy_hvt",
 			"convoy_supplies",
 			"convoy_money",
-			"convoy_prisoners",
+			"convoy_prisoners"
 			]}};
 
 		if (count _missions > 0) then {
