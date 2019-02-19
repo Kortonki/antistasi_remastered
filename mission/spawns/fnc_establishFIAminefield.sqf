@@ -46,7 +46,7 @@ private _fnc_spawn = {
 	_group addVehicle _truck;
 	["Explosives Specialist", getMarkerPos "FIA_HQ", _group] call AS_fnc_spawnFIAUnit;
 	["Explosives Specialist", getMarkerPos "FIA_HQ", _group] call AS_fnc_spawnFIAUnit;
-	{[_x] remoteExecCall ["AS_fnc_initUnitFIA", _x]; [_x] orderGetIn true} forEach units _group;
+	{[_x] remoteExec ["AS_fnc_initUnitFIA", _x]; [_x] orderGetIn true} forEach units _group;
 	leader _group setBehaviour "SAFE";
 	_truck allowCrewInImmobile true;
 

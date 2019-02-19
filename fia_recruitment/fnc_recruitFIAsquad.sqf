@@ -60,7 +60,7 @@ if (_grouptype == "mobile_aa") then {_groupID = "M.AA-"};
 if (_grouptype == "mobile_at") then {_groupID = "M.AT-"};
 _grupo setGroupId [format ["%1%2",_groupID,{side (leader _x) == ("FIA" call AS_fnc_getFactionSide)} count allGroups]];
 
-{[_x] remoteExeccall ["AS_fnc_initUnitFIA", _x]} forEach units _grupo;
+{[_x] remoteExec ["AS_fnc_initUnitFIA", _x]} forEach units _grupo;
 leader _grupo setBehaviour "SAFE";
 AS_commander hcSetGroup [_grupo];
 _grupo setVariable ["isHCgroup", true, true];

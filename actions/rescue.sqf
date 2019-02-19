@@ -20,7 +20,7 @@ _unit enableAI "TARGET";
 _unit enableAI "ANIM";*/
 //[_unit setCaptive false;
 [_unit, false] remoteExecCall ["setcaptive", _unit];
-[_unit] remoteExecCall ["AS_fnc_initUnitFIA", _unit]; 
+[_unit] remoteExec ["AS_fnc_initUnitFIA", _unit];
 
 sleep 5; // This to make sure the unit is inited
 [[_unit], group _player] RemoteExecCall ["join", _player];

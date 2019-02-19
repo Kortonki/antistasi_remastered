@@ -48,7 +48,6 @@ if (count _validLocations == 0) exitWith {
 			"convoy_supplies",
 			"convoy_money",
 			"convoy_prisoners",
-			"help_meds"
 			]}};
 
 		if (count _missions > 0) then {

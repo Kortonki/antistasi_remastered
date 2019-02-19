@@ -84,6 +84,8 @@ player addEventHandler ["GetInMan", {
 		private _EHid2 = [_vehicle, "radio"] call AS_fnc_addAction;
 		private _ids = player getVariable ["EH_ids", []];
 		_ids pushBack _EHid2;
+		player setVariable ["EH_ids", _ids];
+
 
 
 	};

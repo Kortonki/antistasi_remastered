@@ -52,7 +52,7 @@ private _fnc_spawn = {
 	[_groupType, getMarkerPos "FIA_HQ", _group] call AS_fnc_spawnFIAsquad;
 	AS_commander hcSetGroup [_group];
 	_group setVariable ["isHCgroup", true, true];
-	{[_x] remoteExecCall ["AS_fnc_initUnitFIA", _x]} forEach units _group;
+	{[_x] remoteExec ["AS_fnc_initUnitFIA", _x]} forEach units _group;
 
 	// get a road close to the FIA_HQ
 	// if there's a vehicle spawn pad, use it
