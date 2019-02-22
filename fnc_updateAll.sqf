@@ -55,7 +55,7 @@ private _FIAResIncomeMultiplier = 1;
             _incomeFIA = (_incomeFIA/2);
             _HRincomeFIA = (_HRincomeFIA/2);
             if _power then {
-                if (_AAFsupport + _FIAsupport + 1 <= 100) then {[1,0,_city] call AS_fnc_changeCitySupport};
+                if (_AAFsupport + _FIAsupport + 1 <= 100) then {[1,0,_city] spawn AS_fnc_changeCitySupport};
             }
             else {
                 if (_AAFsupport > 6) then {

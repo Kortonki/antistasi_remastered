@@ -103,12 +103,13 @@ SHK_Fastrope_fnc_AIs = {
   private _driver = driver _heli;
 
   doStop _driver;
-  [_driver, "MOVE"] remoteExec ["disableAI", _driver];
-  (driver _heli) setBehaviour "Careless";
-  (driver _heli) setCombatMode "Blue";
+  //[_driver, "MOVE"] remoteExec ["disableAI", _driver];
+  _driver setBehaviour "Careless";
+  _driver setCombatMode "Blue";
 
   [_heli, _units] spawn {
     params ["_heli","_units","_ropes","_rope","_count","_sh",["_i",0]];
+    waitUntil {(speed _heli) < 5};
     _heli call SHK_Fastrope_fnc_createRopes;
     private _driver = driver _heli;
 
@@ -142,10 +143,11 @@ SHK_Fastrope_fnc_AIs = {
       _heli call SHK_Fastrope_fnc_cutRopes;
     };
     sleep 5;
-    (driver _heli) doFollow (leader group (driver _heli));
-    [_driver, "MOVE"] remoteExec ["enableAI", _driver];
-    (driver _heli) setBehaviour "Aware";
-    (driver _heli) setCombatMode "White";
+    _driver doFollow (leader group (driver _heli));
+  //  [_driver, "MOVE"] remoteExec ["enableAI", _driver];
+    _driver setBehaviour "Aware";
+    _driver setCombatMode "White";
+    _heli setVariable ["RoppingReady", true, true];
   };
 };
 

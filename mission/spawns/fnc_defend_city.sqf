@@ -94,7 +94,7 @@ private _fnc_spawn = {
 	[_location] spawn AS_fnc_dropArtilleryShells;
 
 	for "_i" from 0 to round random 2 do {
-		[_location, selectRandom opCASFW] spawn AS_fnc_activateAirstrike;
+		[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
 	};
 
 	private _soldiers = [];

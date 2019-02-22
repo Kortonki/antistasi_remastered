@@ -1,10 +1,12 @@
 params ["_origin", "_destination", "_crew_group", "_patrol_marker", "_cargo_group", ["_threat", 0]];
 
+private _heli = vehicle (leader _crew_group);
 private _safePosition = [_destination, (100 + 10*_threat) min 300, 500, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 private _wp1 = _crew_group addWaypoint [_safePosition, 0];
 _wp1 setWaypointType "MOVE";
 _wp1 setWaypointSpeed "FULL";
 _wp1 setWaypointBehaviour "CARELESS";
+_heli flyinHeight 30;
 
 _crew_group setVariable ["AS_cargo_group", _cargo_group, true];
 private _statement = {
@@ -27,10 +29,17 @@ _wp4 setWaypointFormation "LINE";
 _wp4 setWaypointBehaviour "COMBAT";
 
 _cargo_group setVariable ["AS_patrol_marker", _patrol_marker, true];
-private _statement = {
+private _statement2 = {
     [this, group this getVariable "AS_patrol_marker", "COMBAT", "SPAWNED", "NOFOLLOW"] spawn UPSMON;
 };
-_wp2 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
+_wp2 setWaypointStatements ["true", _statement2 call AS_fnc_codeToString];
 
 // send the helicopter home
-_crew_group addWaypoint [_origin, 0];
+sleep 5;
+private _timeLeave = time + 60;
+waitUntil {sleep 2; not(isnil {_heli getVariable "RoppingReady"}) or time > _timeLeave};
+private _wp2 = _crew_group addWaypoint [_origin, 0];
+_wp1 setWaypointType "MOVE";
+_wp1 setWaypointSpeed "FULL";
+_wp1 setWaypointBehaviour "CARELESS";
+_crew_group setCurrentWaypoint [_crew_group, 2];

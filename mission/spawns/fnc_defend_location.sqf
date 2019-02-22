@@ -59,7 +59,7 @@ private _fnc_spawn = {
 		[_location] spawn {
 			params ["_location"];
 			for "_i" from 0 to round (random 2) do {
-				[_location, selectRandom opCASFW] spawn AS_fnc_activateAirstrike;
+				[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
 				sleep 30;
 			};
 			if ((_location call AS_location_fnc_type) in ["base","airfield"]) then {
@@ -79,7 +79,7 @@ private _fnc_spawn = {
 
 		private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
 		_patrolMarker setMarkerShape "ELLIPSE";
-		_patrolMarker setMarkerSize [100,100];
+		_patrolMarker setMarkerSize [50,50];
 		_patrolMarker setMarkerAlpha 0;
 
 		// spawn them

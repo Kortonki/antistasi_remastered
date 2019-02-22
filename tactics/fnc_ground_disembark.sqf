@@ -53,6 +53,6 @@ _wp2 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 
 };
 // send home
-private _wp3 = _crew_group addWaypoint [_origin, 1];
+private _wp3 = _crew_group addWaypoint [_origin, 0];
 _wp3 setWaypointType "MOVE";
 [vehicle (leader _crew_group), "Attack", waypointposition [_crew_group, 2]] spawn AS_fnc_setConvoyImmune;

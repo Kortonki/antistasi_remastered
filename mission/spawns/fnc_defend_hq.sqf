@@ -21,6 +21,11 @@ private _fnc_spawn = {
 	private _vehiculos = [];
 	private _groups = [];
 
+	private _patrolMarker = createMarker [format ["defhq_%1", round (diag_tickTime/60)], _position];
+	_patrolMarker setMarkerShape "ELLIPSE";
+	_patrolMarker setMarkerSize [50,50];
+	_patrolMarker setMarkerAlpha 0;
+
 	for "_i" from 1 to (1 + round random 2) do {
 		private _pos = [_origin, AS_P("spawnDistance") * 3, random 360] call BIS_Fnc_relPos;
 		private _type = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);
@@ -36,7 +41,7 @@ private _fnc_spawn = {
 		{_x assignAsCargo _heli; _x moveInCargo _heli; _x call AS_fnc_initUnitCSAT} forEach units _grupo;
 		_groups pushBack _grupo;
 		[_heli,"CSAT Air Transport"] spawn AS_fnc_setConvoyImmune;
-		[_origin, _position, _grupoheli, _location, _grupo] spawn AS_tactics_fnc_heli_fastrope;
+		[_origin, _position, _grupoheli, _patrolMarker, _grupo] spawn AS_tactics_fnc_heli_fastrope;
 	};
 
 	private _soldiers = [];
@@ -47,17 +52,18 @@ private _fnc_spawn = {
 	[_location] spawn {
 		params ["_location"];
 		for "_i" from 0 to round (random 2) do {
-			[_location, selectRandom opCASFW] spawn AS_fnc_activateAirstrike;
+			[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
 			sleep 30;
 		};
-		if ((_location call AS_location_fnc_type) in ["base","airfield"]) then {
-			[_location] spawn AS_fnc_dropArtilleryShells;
-		};
+
+	[_location] spawn AS_fnc_dropArtilleryShells;
+
 	};
 
 	//Spawn AAF land attack as well
 
 	private _base = [_position, true] call AS_fnc_getBasesForCA;
+
 
 	private _origin_pos = [];
 	if (_base != "") then {
@@ -69,10 +75,8 @@ private _fnc_spawn = {
 		private _nVeh = (round (_size/30)) max 1;
 
 		private _threat = [_position] call AS_fnc_getLandThreat;
-		private _patrolMarker = createMarker [format ["defhq_%1", round (diag_tickTime/60)], _position];
-		_patrolMarker setMarkerShape "ELLIPSE";
-		_patrolMarker setMarkerSize [100,100];
-		_patrolMarker setMarkerAlpha 0;
+
+
 
 		// spawn them
 		for "_i" from 1 to _nveh do {

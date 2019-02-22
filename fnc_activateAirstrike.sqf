@@ -30,7 +30,7 @@ _wp1 = _grupoplane addWaypoint [_pos1, 0];
 _wp1 setWaypointType "MOVE";
 _wp1 setWaypointSpeed "LIMITED";
 _wp1 setWaypointBehaviour "CARELESS";
-if (_tipoavion in opCASFW) then {
+if (_tipoavion in (["CSAT", "planes"] call AS_fnc_getEntity)) then {
 	if ((_location call AS_location_fnc_type) in ["base", "airfield"]) then
 		{
 		_wp1 setWaypointStatements ["true", "[this] execVM 'AI\airbomb.sqf'"];
