@@ -279,7 +279,7 @@ private _fnc_spawn = {
 
 		//TODO better condition to end the loop
 		// Trying if this works without as it might be buggy
-		while {alive _mainVehicle} do {
+		/*while {alive _mainVehicle} do {
 
 			waitUntil {sleep 60; currentWaypoint (group (leader (driver _mainVehicle))) != (_wp0 select 2)};
 
@@ -301,7 +301,7 @@ private _fnc_spawn = {
 		10 * cos (getDir (vehicle (leader (driver _mainVehicle)))),
 		0
 		];
-		};
+		};*/
 	};
 
 	[_mission, "mainGroup", _group] call AS_spawn_fnc_set;
@@ -389,7 +389,7 @@ private _fnc_run = {
 					[30*60] remoteExec ["AS_fnc_changeSecondsforAAFattack",2];
 
 					if (_missionType == "convoy_supplies") then {
-						[-10,-10] remoteExec ["AS_fnc_changeCitySupport",2];
+						[-10,-10, _position] remoteExec ["AS_fnc_changeCitySupport",2];
 					};
 
 					if (_missionType in ["convoy_money","convoy_fuel"]) then {

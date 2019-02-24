@@ -71,7 +71,7 @@ while {alive _unit} do {
 
     if (_wasUnconscious and not _isUnconscious) then {
         // became conscious
-        _unit setCaptive false;
+        if (!(_unit getVariable ["surrendered", false])) then  {_unit setCaptive false};
         _unit setFatigue 1;
 
         _wasUnconscious = false;

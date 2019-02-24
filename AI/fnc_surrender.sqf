@@ -52,14 +52,15 @@ _unit setVariable ["surrendered",true, true];
 if (alive _unit) then
 	{
 	waitUntil {sleep 2; !(_unit call AS_medical_fnc_isUnconscious)};
+	[_unit, true] remoteExecCall ["setCaptive", _unit];
 	_unit setUnitPos "UP";
 
 	//_unit disableAI "ANIM";
 	//_unit switchMove ""; //removed this for freezing issuses
 	//_unit playMoveNow "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon";
 	_unit playActionNow "Surrender";
-	sleep 2;
 	_unit disableAI "MOVE";
+	sleep 2;
 	};
 _unit setSpeaker "NoVoice";
 _unit addEventHandler ["HandleDamage", {
