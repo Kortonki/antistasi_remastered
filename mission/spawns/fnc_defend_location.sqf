@@ -31,6 +31,12 @@ private _fnc_spawn = {
 
 	[_location, true] call AS_location_fnc_spawn;
 
+	private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
+	_patrolMarker setMarkerShape "ELLIPSE";
+	_patrolMarker setMarkerSize [50,50];
+	_patrolMarker setMarkerAlpha 0;
+
+
 	private _threatEvalAir = 0;
 	if (_airfield != "" or _useCSAT) then {_threatEvalAir = [_position] call AS_fnc_getAirThreat};
 
@@ -77,10 +83,7 @@ private _fnc_spawn = {
 		// compute number of trucks based on the marker size
 		private _nVeh = (round (_size/30)) max 1;
 
-		private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
-		_patrolMarker setMarkerShape "ELLIPSE";
-		_patrolMarker setMarkerSize [50,50];
-		_patrolMarker setMarkerAlpha 0;
+
 
 		// spawn them
 		for "_i" from 1 to _nveh do {
@@ -133,7 +136,7 @@ private _fnc_spawn = {
 					_toUse = "planes";
 				};
 			};
-			([_toUse, _origin_pos, _position, _location] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
+			([_toUse, _origin_pos, _position, _patrolMarker] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
 			sleep 15;

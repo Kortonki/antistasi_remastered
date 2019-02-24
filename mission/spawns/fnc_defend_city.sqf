@@ -29,6 +29,11 @@ private _fnc_spawn = {
 	_csatAir append (["CSAT", "helis_transport"] call AS_fnc_getEntity);
 	_csatAir append (["CSAT", "planes"] call AS_fnc_getEntity);
 
+	private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
+	_patrolMarker setMarkerShape "ELLIPSE";
+	_patrolMarker setMarkerSize [_size,_size];
+	_patrolMarker setMarkerAlpha 0;
+
 	for "_i" from 1 to 3 do {
 		private _tipoveh = selectRandom _csatAir;
 		private _timeOut = 0;
@@ -62,9 +67,9 @@ private _fnc_spawn = {
 			[_heli,"CSAT Air Transport"] spawn AS_fnc_setConvoyImmune;
 
 			if (random 100 < 50) then {
-				_vehiculos append ([ORIGIN, _position, _grupoheli, _grupo, _location] call AS_tactics_fnc_heli_disembark);
+				_vehiculos append ([ORIGIN, _position, _grupoheli, _grupo, _patrolMarker] call AS_tactics_fnc_heli_disembark);
 			} else {
-				[ORIGIN, _position, _grupoheli, _location, _grupo] spawn AS_tactics_fnc_heli_fastrope;
+				[ORIGIN, _position, _grupoheli, _patrolMarker, _grupo] spawn AS_tactics_fnc_heli_fastrope;
 			};
 		};
 		sleep 20;
@@ -111,7 +116,7 @@ private _fnc_spawn = {
 	{if ((surfaceIsWater position _x) and (vehicle _x == _x)) then {_x setDamage 1}} forEach _soldiers;
 
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-    [_mission, "resources", [_task, _grupos, _vehiculos, []]] call AS_spawn_fnc_set;
+    [_mission, "resources", [_task, _grupos, _vehiculos, [_patrolMarker]]] call AS_spawn_fnc_set;
 	[_mission, "soldiers", _soldiers] call AS_spawn_fnc_set;
 	[_mission, "civilians", _civilians] call AS_spawn_fnc_set;
 };
