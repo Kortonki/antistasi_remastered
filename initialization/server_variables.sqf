@@ -136,5 +136,8 @@ AS_AAF_attackLock = nil;
 AS_maxSkill = 20;
 publicVariable "AS_maxSkill";
 
+//Percentage how much FIA funds are given to players each update
+AS_players_share = 10;
+
 // BE_modul handles all the permissions e.g. to build roadblocks, skill, etc.
 #include "..\Scripts\BE_modul.sqf"

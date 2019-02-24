@@ -5,7 +5,7 @@ params ["_position", "_size", "_box"]; //_box appears to be caja for all the cal
     ([_x, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
     [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
     [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
-    [_x] RemoteExecCall ["deleteVehicle", _x];
+    [_x] RemoteExec ["deleteVehicle", _x];
 } forEach nearestObjects [_position, ["WeaponHolderSimulated", "WeaponHolder"], _size];
 
 {

@@ -45,7 +45,7 @@ _cargo_m = [_cargo_m, _new_cargo select 1, false] call AS_fnc_mergeCargoLists;
 _cargo_i = [_cargo_i, _new_cargo select 2, false] call AS_fnc_mergeCargoLists;
 _cargo_b = [_cargo_b, _new_cargo select 3, false] call AS_fnc_mergeCargoLists;
 
-[_new_cargo] remoteExec ["AS_fnc_removeFromArsenal", 2];
+[_new_cargo] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
 
 
 // remove from unit items that are not available.

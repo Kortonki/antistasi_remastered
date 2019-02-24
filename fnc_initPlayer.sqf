@@ -78,7 +78,6 @@ player addEventHandler ["GetInMan", {
 
 		if (_seat == "driver" and _vehicle isKindOf "Truck_F") then {
 			private _EHid = [_vehicle, "transferFrom"] call AS_fnc_addAction;
-			private _EHid1 = [_vehicle, "recoverEquipment"] call AS_fnc_addAction;
 			player setVariable ["EH_ids", [_EHid, _EHid1]];
 		};
 		private _EHid2 = [_vehicle, "radio"] call AS_fnc_addAction;

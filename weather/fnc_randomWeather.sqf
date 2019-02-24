@@ -65,7 +65,7 @@ if(_daytime > 24) then {_daytime = _daytime - 24};
 
 //At dawn more chance for fog
 
-if (_daytime > 4 && _daytime < 10) then {
+if (sunOrMoon == 0) then { //Previously (_daytime > 4 && _daytime < 10)
 
   if (random 10 < (2+_overcast*4)) then {
   _fog = ((1-(_windSpeed/18)) max 0) * (random 1)^2;

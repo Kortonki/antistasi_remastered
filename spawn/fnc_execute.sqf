@@ -28,6 +28,7 @@ while {_state_index < count _functions} do {
 //TODO: Better way to check for completion
 [_spawn] spawn {
   params ["_spawn"];
-  sleep 30;
+  waitUntil {sleep 10; ([_spawn, "delete"] call AS_spawn_fnc_get)};
+  sleep 20;
   _spawn call AS_spawn_fnc_delete;
 };

@@ -42,7 +42,14 @@ private _spawningOPFORunits = [];
             };
         };
         if (_isSpawned and {!_spawnCondition}) then {
-            _x call AS_location_fnc_despawn;
+            [_x, _position, _spawningBLUFORunits] spawn {
+              params ["_spawn", "_position", "_spawningBLUFORunits"];
+              sleep 60; //Delay to reduce unneccessary despawn
+
+              if (!((_spawn call AS_location_fnc_forced_spawned) or ({(_x distance _position < AS_P("spawnDistance"))} count _spawningBLUFORunits > 0))) then {
+                _spawn call AS_location_fnc_despawn;
+                };
+              };
         };
     };
     if (_x call AS_location_fnc_side == "FIA") then {
@@ -66,7 +73,20 @@ private _spawningOPFORunits = [];
             };
         };
         if (_isSpawned and {!_spawnCondition}) then {
-            _x call AS_location_fnc_despawn;
+          [_x, _position, _spawningBLUFORunits, _spawningOPFORunits] spawn {
+            params ["_spawn", "_position", "_spawningBLUFORunits", "_spawningOPFORunits"];
+            sleep 60; //Delay to reduce unneccessary despawn
+
+            private _playerIsClose = (_spawn call AS_location_fnc_forced_spawned) or
+                                     ({not (_x call AS_fnc_controlsAI) and {_x distance _position < AS_P("spawnDistance")}} count _spawningBLUFORunits > 0);
+            // enemies are close.
+            private _spawnCondition = _playerIsClose or {{_x distance _position < AS_P("spawnDistance")} count _spawningOPFORunits > 0};
+
+            if (!_spawnCondition) then {
+              _spawn call AS_location_fnc_despawn;
+              };
+            };
+
         };
     };
 } forEach (call AS_location_fnc_all);

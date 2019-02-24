@@ -51,12 +51,16 @@ private _fnc_spawn = {
 
 	[_location] spawn {
 		params ["_location"];
-		for "_i" from 0 to round (random 2) do {
-			[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
-			sleep 30;
+		if ((AS_P("CSATSupport")) >= 50) then {
+			for "_i" from 0 to round (random (AS_P("CSATSupport")/25)) do {
+				[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
+				sleep 30;
+				};
 		};
 
-	[_location] spawn AS_fnc_dropArtilleryShells;
+	if ((AS_P("CSATSupport")) >= 25) then {
+		[_location] spawn AS_fnc_dropArtilleryShells;
+		};
 
 	};
 

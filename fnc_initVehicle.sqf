@@ -46,6 +46,7 @@ _veh addEventHandler ["Killed", {
 			 detach _x;
 		 } foreach (_veh getVariable "boxCargo");
 		};
+
 	}];
 
 private _aaf_veh_EHkilled = {
@@ -112,6 +113,26 @@ private _aaf_veh_EHkilled = {
 	_veh removeEventHandler ["killed", _thisEventHandler];
 };
 
+_csat_veh_EHkilled = {
+	params ["_veh", "_killer"];
+	private _type = typeOf _veh;
+	private _effect = 0;
+	if (_type in (["CSAT", "helis_transport"] call AS_fnc_getEntity)) then {_effect = 5};
+	if (_type in (["CSAT", "helis_attack"] call AS_fnc_getEntity)) then {_effect = 10};
+	if (_type in (["CSAT", "planes"] call AS_fnc_getEntity)) then {_effect = 10};
+	if (_type in (["CSAT", "helis_armed"] call AS_fnc_getEntity)) then {_effect = 5};
+
+	[0, -(_effect)] remoteExec ["AS_fnc_changeForeignSupport", 2];
+	[-(_effect/2),(_effect/2), position _veh] remoteExec ["AS_fnc_changeCitySupport",2];
+	if (_type in (["CSAT", "helis_transport"] call AS_fnc_getEntity)) then {
+		["des_arm"] remoteExec ["fnc_BE_XP", 2];
+		} else {
+		["des_veh"] remoteExec ["fnc_BE_XP", 2];
+		};
+
+	_veh removeEventHandler ["killed", _thisEventHandler];
+};
+
 if (_side  == "AAF" and not(_vehicleCategory == "")) then {
 	//Steal Penalty
 
@@ -128,6 +149,10 @@ if (_side  == "AAF" and not(_vehicleCategory == "")) then {
 		}];
 
 	_veh addEventHandler ["killed", _aaf_veh_EHkilled];
+};
+
+if (_side == "CSAT") then {
+	_veh addeventHandler ["killed", _csat_veh_EHkilled];
 };
 
 // UAV is not part of the AAF arsenal, so the killing of it is dealt separately
@@ -232,6 +257,9 @@ if (_side == "FIA") then {
 			} else {
 			_veh call AS_fuel_fnc_setVehicleFuel;
 			};
+		 if (_tipo isKindof "Truck_F" and {!(finite (getFuelCargo _veh))}) then {
+			 [_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+			 };
 		_veh setVariable ["boxCargo",[], true];
 	};
 
@@ -239,13 +267,22 @@ if (_side == "FIA") then {
 			params ["_vehicle", "_role", "_unit", "_turret"];
 			private _side = _unit call AS_fnc_getSide;
 			if (_side != "FIA") then {
-				if (_killed in AS_P("vehicles")) then {
-					[_killed, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+				if (_vehicle in AS_P("vehicles")) then {
+					[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 				};
 				//Here anything related to FIA vehicles being captured
 			};
 
 		}];
+
+		_veh addEventHandler ["killed", {
+			private _vehicle = _this select 0;
+			if (_vehicle in (AS_P("vehicles"))) then {
+				[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+				};
+			}];
+
+
 };
 
 if (not(_side == "FIA")) then {

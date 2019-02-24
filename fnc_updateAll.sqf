@@ -42,26 +42,26 @@ private _FIAResIncomeMultiplier = 1;
         if (_side == "FIA") then {
             _incomeAAF = _incomeAAF/2;
             if _power then {
-                if (_FIAsupport + _AAFsupport + 1 <= 100) then {[0,1,_city] spawn AS_fnc_changeCitySupport};
+                if (_FIAsupport + _AAFsupport + 1 <= 100) then {[0,1,_city] call AS_fnc_changeCitySupport};
             }
             else {
                 if (_FIAsupport > 6) then {
-                    [0,-1,_city] spawn AS_fnc_changeCitySupport;
+                    [0,-1,_city] call AS_fnc_changeCitySupport;
                 } else {
-                    [1,0,_city] spawn AS_fnc_changeCitySupport;
+                    [1,0,_city] call AS_fnc_changeCitySupport;
                 };
             };
         } else {
             _incomeFIA = (_incomeFIA/2);
             _HRincomeFIA = (_HRincomeFIA/2);
             if _power then {
-                if (_AAFsupport + _FIAsupport + 1 <= 100) then {[1,0,_city] spawn AS_fnc_changeCitySupport};
+                if (_AAFsupport + _FIAsupport + 1 <= 100) then {[1,0,_city] call AS_fnc_changeCitySupport};
             }
             else {
                 if (_AAFsupport > 6) then {
-                    [-1,0,_city] spawn AS_fnc_changeCitySupport;
+                    [-1,0,_city] call AS_fnc_changeCitySupport;
                 } else {
-                    [0,1,_city] spawn AS_fnc_changeCitySupport;
+                    [0,1,_city] call AS_fnc_changeCitySupport;
                 };
             };
         };
@@ -159,6 +159,10 @@ if (_FIAnewHR > 0) then {
 _AAFnewMoney = AS_P("resourcesAAF") + round _AAFnewMoney;
 _FIAnewMoney = AS_P("resourcesFIA") + round _FIAnewMoney;
 _FIAnewFuel = AS_P("fuelFIA") + _FIAnewFuel;
+
+//Share money among FIA members TODO: adjustment to the share value? make it persistent then
+
+[round((AS_players_share/100)*_FIAnewMoney)] call AS_players_fnc_shareMoney;
 
 //Set next update time:
 

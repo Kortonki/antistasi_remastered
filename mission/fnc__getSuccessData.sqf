@@ -65,17 +65,19 @@ if (_type == "convoy_prisoners") exitWith {
 
 if (_type == "defend_city") exitWith {
     [50, [500, _position, 10], [10, 5], [0, 0], [-5, 20, _position], 120*60, [
-        [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities", {[-5,0,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)]
+        [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities, FIA gains 5", {[-5,5,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)]
     ]]
 };
 if (_type == "defend_camp") exitWith {
-    [5, [500, _position, 10], [0, 5], [0, 0]]
+    [5, [500, _position, 10], [0, 5], [0, 0], [0, 0, []], 30*60]
 };
 if (_type == "defend_location") exitWith {
-    [5, [500, _position, 10], [0, 5], [0, 0], [0, 0, []], 45*60]
+    [5, [500, _position, 10], [0, 5], [0, 0], [0, 0, []], 30*60]
 };
 if (_type == "defend_hq") exitWith {
-    [10, [500, _position, 20], [0, 5], [0, 0], [0, 0, []], 45*60]
+    [10, [500, _position, 20], [0, 5], [0, 0], [0, 0, []], 60*60, [
+        [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities", {[-5,0,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)]
+    ]]
 };
 
 if (_type == "destroy_antenna") exitWith {

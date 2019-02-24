@@ -50,24 +50,17 @@ else {
 	if (_index != -1) then {
 		_magazineAmmo pushBack (_x select 1);
 		_countTypes = _countTypes + 1;
-	}
 
-	else {
+	} else {
 
 		for "_i" from 0 to (_countTypes - 1) step 1 do {
 
 			if (_x select 0 == (_magazineTypes select _i)) then {
 				_magazineAmmo set [_i, (_magazineAmmo select _i) + (_x select 1)];
+				};
 			};
-
-
-
 		};
 	};
-
-};
-
-
 
 } forEach _magazinesCargo;
 

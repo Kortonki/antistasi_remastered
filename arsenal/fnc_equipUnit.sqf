@@ -75,6 +75,6 @@ if (_binoculars != "") then {
 //All arsenal removal and adding happens on server: EXPERIMENT
 // remove from box stuff that was used.
 private _cargo = [_unit, true] call AS_fnc_getUnitArsenal;
-[_cargo] remoteExec ["AS_fnc_removeFromArsenal", 2];
+[_cargo] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
 
 _unit selectWeapon (primaryWeapon _unit);

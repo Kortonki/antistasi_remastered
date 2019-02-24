@@ -130,7 +130,7 @@ if (_useCSAT) then {
 
 			(_closeEnemylocations call AS_fnc_AAFattackScore) params ["_scoreNeededLand", "_scoreNeededAir"];
 
-			private _isEasy = (_scoreNeededLand < 4) and (_scoreNeededAir < 4) and (count _garrison < 4) and !(_type in ["base", "airfield"]);
+			private _isEasy = (_scoreNeededLand < 4) and (_scoreNeededAir < 4) and (count _garrison < 4) and !(_type in ["base", "airfield", "fia_hq"]);
 
 			_debug_message = format ["%1: (%2,%3) (%4,%5) %6", _location, _scoreAir, _scoreNeededAir, _scoreLand, _scoreNeededLand, _isEasy];
 			diag_log(_debug_prefix + _debug_message);
@@ -139,7 +139,7 @@ if (_useCSAT) then {
 			if (_scoreNeededLand > _scoreLand) then {
 				_base = "";
 			} else {  // if it is easy,
-				if (_isEasy and (_base != "") and (_count_easy < 4)) then {
+				if (_isEasy and {_base != ""}) then {
 					if !(_location in AS_P("patrollingLocations")) then {
 						_count_easy = _count_easy + 2;
 						[[_location,_base], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
@@ -151,7 +151,7 @@ if (_useCSAT) then {
 				_aeropuerto = "";
 			}
 			else {
-				if (_isEasy and (_base == "") and (_aeropuerto != "") and (_count_easy < 4)) then {
+				if (_isEasy and {_base == "" and {_aeropuerto != ""}}) then {
 					if !(_location in AS_P("patrollingLocations")) then {
 						_count_easy = _count_easy + 1;
 						[[_location,_aeropuerto], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
@@ -161,7 +161,7 @@ if (_useCSAT) then {
 			};
 
 			// add the location to the objectives
-			if (((_base != "") or (_aeropuerto != "")) and (!_isEasy)) then {
+			if (((_base != "") or (_aeropuerto != ""))) then {
 				// increase likelihood of bases and others
 				private _cuenta = 1;
 				if (_type in ["resource"]) then {_cuenta = 3};
@@ -178,15 +178,16 @@ if (_useCSAT) then {
 				};
 			};
 		} else {
-			_debug_message = format ["  %1: No valid bases or airfields to attack.", _location];
+			_debug_message = format ["  %1: No valid hq, bases or airfields to attack.", _location];
 			diag_log(_debug_prefix + _debug_message);
 		};
 	};
 } forEach _validLocations;
 
-if ((count _objectives > 0) and (_count_easy < 3)) then {
+if (count _objectives > 0) then {
 	private _location = selectRandom _objectives;
 	call {
+		//TODO make isEasy  parameter effect attack strength inside functions below
 		if (_location call AS_location_fnc_type == "camp") exitWith {
 			_location call AS_mission_fnc_createDefendCamp;
 			_alarm = true;

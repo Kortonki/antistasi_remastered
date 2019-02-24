@@ -1,6 +1,7 @@
 params ["_vehicle"];
 
 private _unit = _this select 1;
+private _group = group _unit;
 
 if ((_unit getVariable ["loadingCrate", false])) exitWith {
 	hint "You are already transfering cargo...";
@@ -17,10 +18,12 @@ if ([position _vehicle, 50] call AS_fnc_enemiesNearby) exitWith {
 
 };
 
-player setVariable ["loadingCrate", true];
+_unit setVariable ["loadingCrate", true];
+_unit setcaptive false; //Cannot stay undercover
 
 private _position = position _vehicle;
 private _size = 20;
+
 
 private _totalRecovered = 0;
 
@@ -30,7 +33,7 @@ while {true} do {
 
 	//Nearby boxes
 	private _boxes = nearestObjects [_position, ["LandVehicle", "ReammoBox_F"], _size];
-	_boxes = _boxes select {count ((getweaponCargo _x select 0) + (getmagazineCargo _x select 0) + (getitemCargo _x select 0) + (getbackpackCargo _x select 0)) > 0}; //Try  //Try using getMagazine instead of magazine for locality issues
+	_boxes = _boxes select {!(_x getvariable ["asCargo", false]) and {count ((getweaponCargo _x select 0) + (getmagazineCargo _x select 0) + (getitemCargo _x select 0) + (getbackpackCargo _x select 0)) > 0}}; //Try  //Try using getMagazine instead of magazine for locality issues
 
 	{
 		if (_x != _vehicle) then {
@@ -39,7 +42,9 @@ while {true} do {
 						_total = _total + _x;
 			} foreach ((getweaponCargo _x select 1) + (getmagazineCargo _x select 1) + (getitemCargo _x select 1) + (getbackpackCargo _x select 1));
 
-	    [_x, _position, _total/2, {true}, {speed _vehicle >= 1}, "", "Keep the truck still"] call AS_fnc_wait_or_fail;
+			private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
+			private _time = (_total/((count _units) max 0.0001));
+	    [_x, _position, _time/2, {true}, {speed _vehicle >= 1}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
 
 		if (speed _vehicle < 1) then {
 			[_x, _vehicle] call AS_fnc_transferToBox;
@@ -67,8 +72,10 @@ while {true} do {
 					_total = _total + _x;
 		} foreach ((getweaponCargo _x select 1) + (getmagazineCargo _x select 1) + (getitemCargo _x select 1) + (getbackpackCargo _x select 1));
 
-	   // 1s for every 5 objects in the body
-	   [_x, _position, _total/1, {true}, {speed _vehicle >= 1}, "", "Keep the truck still"] call AS_fnc_wait_or_fail;
+	   // Time depends on friendly units around the truck
+		 private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
+		 private _time = (_total/((count _units) max 0.0001));
+	   [_x, _position, _time, {true}, {speed _vehicle >= 1}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
 
 		if (speed _vehicle < 1) then {
 			[_x, _vehicle] call AS_fnc_transferToBox;
@@ -97,7 +104,10 @@ while {true} do {
 				{_total = _total + _x} forEach (_x select 1);
 			} forEach [_cargo_w, _cargo_m, _cargo_i, _cargo_b];
 
-			[_x, _position, _total/1, {true}, {speed _vehicle >= 1}, "", "Keep the truck still"] call AS_fnc_wait_or_fail;
+			private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
+			private _time = (_total/((count _units) max 0.0001));
+
+			[_x, _position, _time, {true}, {speed _vehicle >= 1}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
 
 			if (speed _vehicle < 1) then {
 				[_vehicle, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;

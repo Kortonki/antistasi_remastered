@@ -138,6 +138,7 @@ private _fnc_clean = {
 	AS_Sset("AAFpatrols", AS_S("AAFpatrols") - 1);
 	([_spawnName, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
 	[_groups, _vehicles, _markers] call AS_fnc_cleanResources;
+	[_spawnName, "delete", true] call AS_spawn_fnc_set;
 };
 
 AS_spawn_AAFroadPatrol_states = ["spawn", "run", "clean"];

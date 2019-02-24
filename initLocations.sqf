@@ -138,6 +138,9 @@ mapa allowDamage false;
 cajaVeh = "Box_NATO_AmmoVeh_F" createvehicle [0,0,0];
 publicVariable "cajaVeh";
 cajaVeh allowDamage false;
+vehiclePad = "Land_JumpTarget_F" createvehicle [0,0,0];
+publicVariable "vehiclePad";
+vehiclePad allowDamage false;
 
-AS_permanent_HQplacements = [caja, cajaVeh, mapa, fuego, bandera];
+AS_permanent_HQplacements = [caja, cajaVeh, mapa, fuego, bandera, vehiclePad];
 AS_HQ_placements = []; // objects placed on HQ

@@ -9,6 +9,8 @@ class AS_players {
 
         FNC(players,change);
         FNC(players,set);
+        FNC(players,shareMoney);
+        FNC(players,incomeChart);
     };
 
     class common {

@@ -27,11 +27,6 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 	["kill"] remoteExec ["fnc_BE_XP", 2];
 	_group = group _killed;
 
-	// scoring.
-	if (isPlayer _killer) then {
-		[_killer, "money", 2, false] remoteExec ["AS_players_fnc_change", 2];
-	};
-
 	// if dead has no weapons, it is an unlawful kill
 	if ((vehicle _killed == _killed) and {count weapons _killed < 1}) then { //if manning a driver/commander, non-weapon position, do not penalize
 		[-1,0] remoteExec ["AS_fnc_changeForeignSupport",2];

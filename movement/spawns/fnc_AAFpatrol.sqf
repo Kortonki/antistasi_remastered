@@ -133,6 +133,7 @@ private _fnc_clean = {
 	private _groups = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 1);
 	private _vehicles = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 2);
 	[_groups, _vehicles, []] call AS_fnc_cleanResources;
+	[_spawnName, "delete", true] call AS_spawn_fnc_set;
 };
 
 AS_spawn_patrolAAF_states = ["spawn", "run", "clean"];

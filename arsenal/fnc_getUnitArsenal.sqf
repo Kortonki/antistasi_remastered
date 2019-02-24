@@ -50,12 +50,8 @@ else {
 			if (_x select 0 == (_magazineTypes select _i)) then {
 				_magazineAmmo set [_i, (_magazineAmmo select _i) + (_x select 1)];
 			};
-
-
-
 		};
 	};
-
 };
 
 

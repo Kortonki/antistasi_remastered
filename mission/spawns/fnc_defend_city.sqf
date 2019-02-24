@@ -24,9 +24,13 @@ private _fnc_spawn = {
 	private _pilotos = [];
 	private _vehiculos = [];
 	private _civilians = [];
+	private _csatAir = ["CSAT", "helis_attack"] call AS_fnc_getEntity;
+	_csatAir append (["CSAT", "helis_armed"] call AS_fnc_getEntity);
+	_csatAir append (["CSAT", "helis_transport"] call AS_fnc_getEntity);
+	_csatAir append (["CSAT", "planes"] call AS_fnc_getEntity);
 
 	for "_i" from 1 to 3 do {
-		private _tipoveh = selectRandom opAir;
+		private _tipoveh = selectRandom _csatAir;
 		private _timeOut = 0;
 		private _pos = ORIGIN findEmptyPosition [0,100,_tipoveh];
 		while {_timeOut < 60 or {count _pos == 0}} do {
@@ -45,7 +49,7 @@ private _fnc_spawn = {
 		_grupos pushBack _grupoheli;
 		_vehiculos pushBack _heli;
 
-		if (_tipoveh != opHeliFR) then {
+		if (!(_tipoveh in (["CSAT", "helis_transport"] call AS_fnc_getEntity))) then {
 			private _wp1 = _grupoheli addWaypoint [_position, 0];
 			_wp1 setWaypointType "SAD";
 			[_heli,"CSAT Air Attack"] spawn AS_fnc_setConvoyImmune;
@@ -77,6 +81,7 @@ private _fnc_spawn = {
 		private _civ = _grupoCivil createUnit [selectRandom (["CIV", "units"] call AS_fnc_getEntity),_pos, [],_size,"NONE"];
 		private _rnd = random 100;
 		if (_rnd < 90) then {
+			//TODO: improve this to take weapons from templates
 			if (_rnd < 25) then {
 				[_civ, "hgun_PDW2000_F", 5, 0] call BIS_fnc_addWeapon;
 			} else {
@@ -91,12 +96,15 @@ private _fnc_spawn = {
 	[leader _grupoCivil, _location, "AWARE","SPAWNED","NOVEH2"] spawn UPSMON;
 
 	[_location,true] call AS_location_fnc_spawn;
-	[_location] spawn AS_fnc_dropArtilleryShells;
+	if ((AS_P("CSATSupport")) >= 25) then {
+		[_location] spawn AS_fnc_dropArtilleryShells;
+		};
 
-	for "_i" from 0 to round random 2 do {
-		[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
+	if ((AS_P("CSATSupport")) >= 50) then {
+		for "_i" from 0 to round (random (AS_P("CSATSupport")/25)) do {
+			[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
+		};
 	};
-
 	private _soldiers = [];
 	{_soldiers append (units _x)} forEach _grupos;
 

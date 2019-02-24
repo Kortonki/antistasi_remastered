@@ -35,7 +35,7 @@ if (_tipo == "income") then {
 	incomeRep = true;
 	playSound "3DEN_notificationDefault";
 	[_texto, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
-	sleep 2;
+	sleep 5;
 	incomeRep = nil;
 };
 if (_tipo == "countdown") then {

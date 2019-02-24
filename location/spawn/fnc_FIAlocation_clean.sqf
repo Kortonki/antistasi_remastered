@@ -80,3 +80,4 @@ if (_location call AS_location_fnc_side == "FIA") then {
 
 ([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
 [_groups, _vehicles, _markers] call AS_fnc_cleanResources;
+[_location, "delete", true] call AS_spawn_fnc_set;
