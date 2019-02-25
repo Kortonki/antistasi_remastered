@@ -11,6 +11,13 @@ player call AS_medical_fnc_initUnit;
 
 player call AS_fnc_initPlayerPosition;
 
+//Take command of HC groups again as commander
+if (player == AS_commander) then {
+	{
+			player hcSetGroup [_x];
+	} foreach (allGroups select {(_x getVariable ["isHCgroup", false])});
+};
+
 if (!(hasACE)) then {
 	[player,"repackMagazines"] call AS_fnc_addAction;
 };

@@ -37,51 +37,7 @@ if (count _validLocations == 0) exitWith {
 	_debug_message = "postponed: no valid targets. Starting a convoy mission for AAF or recon patrol";
 	diag_log (_debug_prefix + _debug_message);
 
-	//Possible mission types for AAF if it can't attack anywhere
-
-	private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status in ["available"] and
-		{_x call AS_mission_fnc_type in [
-			"convoy_ammo",
-			"convoy_armor",
-			"convoy_fuel",
-			"convoy_hvt",
-			"convoy_supplies",
-			"convoy_money",
-			"convoy_prisoners"
-			]}};
-
-		if (count _missions > 0) then {
-			private _mission = selectRandom _missions;
-			_mission call AS_mission_fnc_activate;
-			_debug_message = "Valid mission found, starting mission";
-			diag_log(_debug_prefix + _debug_message);
-		} else {
-				//if nothing else, send recon patrols somewhere
-				private _position = [];
-				private _valid = false;
-				private _i = 0;
-				while {_i = _i + 1; !(_valid) and {_i < 100}} do { //Limit to 100 iterations
-					private _searchFrom = selectRandom ([["base", "outpost", "airfield"], "AAF"] call AS_location_fnc_TS);
-					_position = [(_searchFrom call AS_location_fnc_position), 500 + random 2000, random 360] call bis_fnc_relPos; //TODO check for map edges
-					_valid = true;
-					if (surfaceisWater _position) then {_valid = false;}
-					else {
-						{
-							if ((_x call AS_location_fnc_position) distance2D _position < 500) exitWith {_valid = false;}; //position is not too close to any other enemy position
-						} foreach (["AAF", "CSAT"] call AS_location_fnc_S);
-					};
-				};
-
-				if (_valid) then {
-					[_position] spawn AS_movement_fnc_sendAAFpatrol;
-					_debug_message = "No valid missions: Send AAF recon patrol";
-					diag_log(_debug_prefix + _debug_message);
-				} else {
-					_debug_message = "No valid missions or recon areas for AAF. Do nothing";
-					diag_log(_debug_prefix + _debug_message);
-				};
-
-		};
+	[] call AS_movement_fnc_sendAAFConvoy;
 	};
 		//Schedule next attack
 		private _attFreq = AS_P("secondsForAAFattack");
@@ -180,6 +136,9 @@ if (_useCSAT) then {
 		} else {
 			_debug_message = format ["  %1: No valid hq, bases or airfields to attack.", _location];
 			diag_log(_debug_prefix + _debug_message);
+
+			//TODO: send convoy or recon patrol here. Make an external function of it and call it above if validLocations == 0
+
 		};
 	};
 } forEach _validLocations;
@@ -204,6 +163,8 @@ if (count _objectives > 0) then {
 		_alarm = true;
 	};
 
+} else {
+	[] call AS_movement_fnc_sendAAFConvoy;
 };
 
 //Schedule next attack

@@ -9,7 +9,6 @@ if (!(isNil{_box getVariable "loading"})) exitWith {
 //Search for a nearby vehicles
 private _vehicleReq = _box getVariable ["requiredVehs", ["Truck_F"]];
 
-
 private _candidates = (position _box) nearEntities [_vehicleReq, 10];
 if (count _candidates == 0) exitWith {
   private _text = "You need a proper truck close to the cargo to load";

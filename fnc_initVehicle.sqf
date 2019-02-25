@@ -35,6 +35,10 @@ if (_side != "NATO") then {
 		[_vehicle, _unit call AS_fnc_getSide] call AS_fnc_setSide;
 		if (isNil{_veh getVariable "boxCargo"}) then {_veh setVariable ["boxCargo",[], true];}
 	}];
+
+	if (_tipo isKindof "Truck_F" and {!(finite (getFuelCargo _veh))}) then {
+		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+		};
 };
 
 
@@ -257,9 +261,7 @@ if (_side == "FIA") then {
 			} else {
 			_veh call AS_fuel_fnc_setVehicleFuel;
 			};
-		 if (_tipo isKindof "Truck_F" and {!(finite (getFuelCargo _veh))}) then {
-			 [_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-			 };
+
 		_veh setVariable ["boxCargo",[], true];
 	};
 

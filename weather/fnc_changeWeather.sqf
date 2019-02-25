@@ -31,7 +31,7 @@ diag_log format ["AS_weather: Previous, time: %1 /nOvercast %2/nRain %3/nWindDir
 
 // Change overcast TODO: tweak this
 
-_overcast = (-0.2 + (random 0.35) + (_overcast*(random 2)) min 1) max 0;
+_overcast = (-0.2 + (random 0.37) + (_overcast*(random 2)) min 1) max 0;
 
 if (_overcast >= 0.7) then {
   _rain = ((_rain - 0.2 + _overcast * (random 1)^2) min 1) max 0;

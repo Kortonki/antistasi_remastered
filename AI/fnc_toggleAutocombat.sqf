@@ -2,7 +2,7 @@
 params ["_unit", ["_toggle", false]];
 
 if _toggle then {
-  _unit enableAI "AUTOCOMBAT";
+  [_unit, "AUTOCOMBAT"] remoteExec ["enableAI", _unit];
 } else {
-  _unit disableAI "AUTOCOMBAT";
+  [_unit, "AUTOCOMBAT"] remoteExec ["enableAI", _unit];
 };

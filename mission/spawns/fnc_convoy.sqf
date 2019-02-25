@@ -13,6 +13,7 @@ private _fnc_initialize = {
 		_mission call AS_mission_fnc_remove;
 
 		[_mission, "state_index", 100] call AS_spawn_fnc_set; // terminate everything
+		[_mission, "delete", true] call AS_spawn_fnc_set;
 	};
 
 	private _tiempolim = 120;

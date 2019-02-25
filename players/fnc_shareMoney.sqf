@@ -44,7 +44,7 @@ private _moneyLeft = _money; //This is what is left of the share
       //Add to the rank spesific share. Allways take half of what is left
       {
         _share = round(_share + (_moneyLeft/2));
-        _moneyLeft = _moneyLeft/2;
+        _moneyLeft = round(_moneyLeft/2);
       } foreach _sameRank;
       //Share the money inside ranks
       {

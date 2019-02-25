@@ -5,6 +5,8 @@ class AS_movement {
         FNC(movement,sendAAFpatrol);
         FNC(movement,sendEnemyQRF);
         FNC(movement,sendAAFattack);
+        FNC(movement,sendAAFConvoy);
+        FNC(movement,sendAAFRecon);
     };
 
     class common {

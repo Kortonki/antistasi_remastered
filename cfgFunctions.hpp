@@ -280,6 +280,9 @@ class AS_AI {
         FNC(AI,activateUnloadUnderSmoke);
         FNC(AI,surrender);
         FNC(AI,dismountOnDanger);
+        FNC(ai,autoCombatCallON);
+        FNC(ai,autoCombatCallOFF);
+        FNC(ai,rearmCall);
     };
 };
 
