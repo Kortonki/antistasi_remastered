@@ -15,6 +15,12 @@ private _fnc_spawn = {
 
 	private _objects = _location call AS_fnc_spawnComposition;
 
+	//create _bunker, only if there's no preset composition
+	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
+		_vehiculos pushBack _bunker;
+	};
+
 	private _AAVeh = objNull;
 	{
 		call {
@@ -56,9 +62,7 @@ private _fnc_spawn = {
 	private _mrkfin = createMarker [format ["specops%1", (diag_ticktime/60)],_posicion];
 	_mrkfin setMarkerShape "RECTANGLE";
 	_mrkfin setMarkerSize [500,500];
-	_mrkfin setMarkerType "hd_warning";
-	_mrkfin setMarkerColor "ColorRed";
-	_mrkfin setMarkerBrush "DiagGrid";
+
 
 	//{[_x,"CSAT"] call AS_fnc_initVehicle} forEach _vehiculos; //Unnecessary, already done
 

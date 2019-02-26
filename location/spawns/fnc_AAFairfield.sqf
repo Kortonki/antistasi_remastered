@@ -23,7 +23,11 @@ private _fnc_spawn = {
 	[_veh, "Airbase"] call AS_fnc_fillCrateAAF;
 	_vehiculos pushBack _veh;
 
-
+	//create _bunker, only if there's no preset composition
+	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
+		_vehiculos pushBack _bunker;
+	};
 
 	// spawn AT road block
 	private _grupo = createGroup ("AAF" call AS_fnc_getFactionSide);
@@ -57,11 +61,9 @@ private _fnc_spawn = {
 				if !(_location call AS_location_fnc_spawned) exitWith {};
 
 				private _tipoveh = selectRandom _valid_vehicles;
-				private _veh = createVehicle [_tipoveh, _pos, [],3, "NONE"];
-				_veh setDir (_ang + 90);
+				([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
 				sleep 1;
 				_vehiculos pushBack _veh;
-				[_veh, "AAF"] call AS_fnc_initVehicle;
 				private _pos = [_pos, 20,_ang] call BIS_fnc_relPos;
 				private _unit = ([_posicion, 0, ["AAF", "pilot"] call AS_fnc_getEntity, _grupo] call bis_fnc_spawnvehicle) select 0;
 				[_unit, false] call AS_fnc_initUnitAAF;
@@ -81,10 +83,8 @@ private _fnc_spawn = {
 
 		private _tipoveh = selectRandom _valid_vehicles;
 		private _pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
-		_veh = createVehicle [_tipoVeh, _pos, [], 0, "NONE"];
-		_veh setDir random 360;
+		([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
 		_vehiculos pushBack _veh;
-		[_veh, "AAF"] call AS_fnc_initVehicle;
 		sleep 1;
 	};
 

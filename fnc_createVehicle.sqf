@@ -59,5 +59,4 @@ _vehicleGroup addVehicle _vehicle;
 _vehicle allowDamage true;
 [_vehicle, true] remoteExecCall ["enablesimulationGlobal", 2];
 
-
 [_vehicle, _vehicleGroup, _driver]

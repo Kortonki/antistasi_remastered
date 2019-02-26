@@ -24,24 +24,23 @@ private _fnc_spawn = {
 	private _markers = [];
 
 	// save the marker or position
+	//Location needs a patrol marker for good measure as well
+	private _patrolMarker = createMarkerLocal [format ["%1patrolarea", (diag_tickTime/60)], _position];
+	_patrolMarker setMarkerShapeLocal "RECTANGLE";
+	_patrolMarker setMarkerSizeLocal [200, 200];
+	_patrolMarker setMarkerAlpha 0;
+	_markers pushBack _patrolMarker;
+
+	private _origin = [];
+
 	if _isLocation then {
 		AS_Pset("patrollingLocations", AS_P("patrollingLocations") + [_location]);
 	} else {
 		AS_Pset("patrollingPositions", AS_P("patrollingPositions") + [_position]);
-
-		// for a position, we need marker for the patrolling
-		_location = createMarkerLocal [format ["%1patrolarea", (diag_tickTime/60)], _position];
-		_location setMarkerShapeLocal "RECTANGLE";
-		_location setMarkerSizeLocal [200, 200];
-		_location setMarkerTypeLocal "hd_warning";
-		_location setMarkerColorLocal "ColorRed";
-		_location setMarkerBrushLocal "DiagGrid";
-		_location setMarkerAlphaLocal 0;
-		_markers pushBack _location;
 	};
 
 	if (_base != "") then {
-		private _posorigen = _base call AS_location_fnc_position;
+		_origin = _base call AS_location_fnc_position;
 		_aeropuerto = "";
 		if (!_isDirectAttack) then {[_base,20] call AS_location_fnc_increaseBusy;};
 
@@ -53,14 +52,14 @@ private _fnc_spawn = {
 			_toUse = "tanks";
 		};
 
-		([_toUse, _posorigen, _location, _threatEval] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+		([_toUse, _origin, _patrolMarker, _threatEval] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 		_grupos append _groups1;
 		_vehiculos append _vehicles1;
 	};
 
 	if (_aeropuerto != "") then {
 		if (!_isDirectAttack) then {[_aeropuerto,20] call AS_location_fnc_increaseBusy;};
-		private _posorigen = _aeropuerto call AS_location_fnc_position;
+		_origin = _aeropuerto call AS_location_fnc_position;
 		private _cuenta = 1;
 		if (_isLocation) then {_cuenta = 2};
 		for "_i" from 1 to _cuenta do {  // the attack has 2 units for a non-marker
@@ -75,7 +74,7 @@ private _fnc_spawn = {
 					_toUse = "planes";
 				};
 			};
-			([_toUse, _posorigen, _position, _location] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
+			([_toUse, _origin, _position, _patrolMarker] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
 			_grupos = _grupos + _groups1;
 			_vehiculos = _vehiculos + _vehicles1;
 			sleep 30;
@@ -83,25 +82,28 @@ private _fnc_spawn = {
 	};
 
 	if _useCSAT then {
-		([_location, 3, _threatEval] call AS_fnc_spawnCSATattack) params ["_groups1", "_vehicles1"];
+		([_patrolMarker, 3, _threatEval] call AS_fnc_spawnCSATattack) params ["_groups1", "_vehicles1"];
 		_grupos append _groups1;
 		_vehiculos append _vehicles1;
 	};
 
-	[_spawnName, "resources", [taskNull, _grupos, _vehiculos, []]] call AS_spawn_fnc_set;
+	[_spawnName, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;
+	[_spawnName, "origin", _origin] call AS_spawn_fnc_set;
 };
 
 private _fnc_run = {
 	params ["_spawnName"];
 	private _location = [_spawnName, "location"] call AS_spawn_fnc_get;
+	private _origin = [_spawnName, "origin"] call AS_spawn_fnc_get;
 	private _isLocation = false;
 	private _position = "";
+
 	if (typeName _location == typeName "") then {
 		_isLocation = true;
 		_position = _location call AS_location_fnc_position;
 	} else {
 		_position = _location;
-		_location = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 2) select 0;
+		_location = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 2) select 0; //Vehicle as location? Investigate
 	};
 	private _groups = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 1);
 
@@ -113,7 +115,7 @@ private _fnc_run = {
 	if _isLocation then {
 		private _tiempo = time + 3600;
 
-		waitUntil {sleep 5;
+		waitUntil {sleep 10;
 			(({not (captive _x)} count _soldados) < ({captive _x} count _soldados)) or
 			{{_x call AS_fnc_canFight} count _soldados == 0} or
 			{_location call AS_location_fnc_side == "AAF"} or
@@ -121,9 +123,14 @@ private _fnc_run = {
 		};
 
 		AS_Pset("patrollingLocations", AS_P("patrollingLocations") - [_location]);
-		waitUntil {sleep 1; not (_location call AS_location_fnc_spawned)};
+		waitUntil {sleep 10; not (_location call AS_location_fnc_spawned)};
 	} else {
-		waitUntil {sleep 1; !([AS_P("spawnDistance"), _position, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)};
+		private _tiempo = time + 1800;
+		//TODO: arrange pickup for the troops
+		{
+				_x move _origin;
+		} foreach _groups;
+		waitUntil {sleep 10; time > _tiempo and {!([AS_P("spawnDistance"), _position, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}};
 		AS_Pset("patrollingPositions", AS_P("patrollingPositions") - [_position]);
 	};
 };

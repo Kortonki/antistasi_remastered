@@ -6,7 +6,7 @@ params [
 ["_destination", []]
 ];
 
-If (typeOf _veh != "LandVehicle") exitWith {}; //Exit for air vehicles and such
+If (!(_veh isKindOf "LandVehicle")) exitWith {}; //Exit for air vehicles and such
 
 
 waitUntil {sleep 5; (alive _veh) and {!(isNull driver _veh)}};

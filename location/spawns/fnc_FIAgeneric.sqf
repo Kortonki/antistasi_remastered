@@ -27,10 +27,11 @@ private _fnc_spawn = {
 		if (_type == "seaport") then {
 			[_veh, "seaport"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 			};
-
-		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
-		_vehiculos pushBack _bunker;
-
+		//create _bunker, only if there's no preset composition
+		if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+			private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
+			_vehiculos pushBack _bunker;
+		};
 		// worker civilians in non-military non-destroyed markers
 		if ((_type in ["powerplant","resource","factory"]) and !_isDestroyed) then {
 			if ((daytime > 8) and (daytime < 18)) then {

@@ -14,7 +14,6 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
   if (count _missions > 0) then {
     private _mission = selectRandom _missions;
     _mission call AS_mission_fnc_activate;
-    _debug_message = ;
     diag_log "[AS] sendAAFConvoy: Valid convoy mission found, starting mission";
   } else {
     [] call AS_movement_fnc_sendAAFRecon;

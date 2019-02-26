@@ -90,6 +90,7 @@ class AS {
         FNC_BASE(spawnAAF_roadAT);
         FNC_BASE(spawnAAF_truck);
         FNC_BASE(createVehicle);
+        FNC_BASE(createEmptyVehicle);
 
         FNC(Scripts,spawnAttackWaves);
 

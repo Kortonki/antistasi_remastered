@@ -1,4 +1,4 @@
-
+//TODO: Improve this to send recon patrols where FIA has been seen
 
 private _position = [];
 private _valid = false;

@@ -25,11 +25,17 @@ private _fnc_spawn = {
 	_soldados append _gunners;
 	_vehiculos append _vehicles;
 
-	// spawn flag and crate 
+	// spawn flag and crate
 	private _bandera = createVehicle [["AAF", "flag"] call AS_fnc_getEntity, _posicion, [],0, "CAN_COLLIDE"];
 	_bandera allowDamage false;
 	private _veh = (["AAF", "box"] call AS_fnc_getEntity) createVehicle _posicion;
 	[_veh, "Watchpost"] call AS_fnc_fillCrateAAF;
+
+	//create _bunker, only if there's no preset composition
+	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
+		_vehiculos pushBack _bunker;
+	};
 
 	// spawn up to 4 mortars
 	for "_i" from 1 to ((round (_size / 30)) min 4) do {
@@ -64,9 +70,7 @@ private _fnc_spawn = {
 			} else {
 				_pos = _posicion findEmptyPosition [10,60,_tipoVeh];
 			};
-			private _veh = createVehicle [_tipoVeh, _pos, [], 0, "NONE"];
-			_veh setDir random 360;
-			[_veh, "AAF"] call AS_fnc_initVehicle;
+			([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
 			_vehiculos pushBack _veh;
 			sleep 1;
 		};

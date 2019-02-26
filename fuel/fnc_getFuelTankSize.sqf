@@ -1,11 +1,9 @@
 params ["_vehicle"];
 
-if (isNull _vehicle) exitWith {diag_log format["[AS] Error: AS_fnc_getVehicleFuel.sqf: No vehicle specified"];101};
+if (isNull _vehicle) exitWith {diag_log format["[AS] Error: AS_fnc_getVehicleFuel: No vehicle specified"];101};
 
 if (not(isNil {_vehicle getVariable "fuelTankSize"})) exitWith {(_vehicle getVariable "fuelTankSize")};
 //If there's a reasonable value in the vehicle config, use that. Otherwise use values below. Improve and test
-
-
 private _type = typeOf _vehicle;
 
 private _fuelConsumptionRate = [configFile >> "CfgVehicles" >> _type, "fuelConsumptionRate"] call BIS_fnc_returnConfigEntry;
@@ -15,36 +13,44 @@ if (not(_fuelConsumptionRate == 0.01) and {not(isNil "_fuelTankSize")}) exitWith
 //TODO if no reasonable value, base the fuel tank size on vehicle size and mass
 
 //Fuel tanks sizes for vehicle classes in liters
-private _fallback = 100;
+//Middle number after vehicle is the default mass for the class - more than that bigger fuel tank and vice versa.
+//Last number tells how much the mass affects fuel tank size
+//TODO: take small and big of the class: take their mass and fuel capacity -> solve the equation to get a linear function
 
-private _quadbike = 20;
-private _car = 60;
-private _van = 100;
-private _truck = 300;
-private _apc = 500;
-private _tank = 1500;
-private _heli = 300;
-private _plane = 300;
-private _boat = 30;
+_fuelTankSize = 100;
 
-//exception for quadbikes
-if (_vehicle isKindOf "Quadbike_01_base_F") exitWith {_vehicle setVariable ["fuelTankSize",_quadbike, true]; _quadbike};
+_fuelTankSize = _vehicle call {
+  params ["_vehicle"];
+  //exception for quadbikes
+  if (_vehicle isKindOf "Quadbike_01_base_F") exitWith {20};
+  //exception for vans
+  if (_vehicle isKindOf "Van_02_base_F" or _vehicle isKindOf "Van_01_base_F") exitWith {
+    100 + (round((getmass _vehicle)-1500)*0.001)*40};
+  if (_type in BE_class_APC) exitWith {
+    500 + (round((getmass _vehicle)-13000)*0.001)*40};
+  if (_vehicle isKindof "APC_Wheeled_01_base_F") exitWith {
+    500 + (round((getmass _vehicle)-13000)*0.001)*40};
+    //MRAP use truck fuel capacities
+  if (_type in BE_class_MRAP) exitWith {
+    100 + (round((getmass _vehicle)-1000)*0.001)*40};
+  if (_vehicle isKindof "Truck_F") exitWith {
+    300 + (round((getmass _vehicle)-5000)*0.001)*40};
+  if (_vehicle isKindof "Car") exitWith {
+    60 + (round((getmass _vehicle)-1000)*0.001)*40};
+  if (_vehicle isKindof "Tank" or _type in BE_class_MBT) exitWith {
+    1500 + (round((getmass _vehicle)-60000)*0.001)*40};
+  if (_vehicle isKindof "Helicopter" or _type in BE_class_Heli) exitWith {
+    200 + (round((getmass _vehicle)-1400)*0.001)*200};
+  if (_vehicle isKindof "Plane") exitWith {
+    3660 + (round((getmass _vehicle)-15000)*0.001)*250};
+  if (_vehicle isKindof "Boat") exitWith {
+    60 + (round((getmass _vehicle)-1000)*0.001)*40};
+  diag_log format["[AS] Error: AS_fnc_getFuelTankSize: Invalid vehicle type %1: fallback fuel tank size used", _vehicle];
+};
 
-//exception for vans
-if (_vehicle isKindOf "Van_02_base_F" or _vehicle isKindOf "Van_01_base_F") exitWith {_vehicle setVariable ["fuelTankSize",_van, true]; _van};
+if (_fuelTankSize < 0) then {
+  diag_log format["[AS] Error: AS_fnc_getFuelTankSize: Vehicle type %1, fuel tank size < 0: fallback fuel tank size used", _vehicle];
+  _fuelTankSize = 100;
+};
 
-//MRAP use truck fuel capacities
-if (_type in BE_class_MRAP) exitWith {_vehicle setVariable ["fuelTankSize",_van, true]; _van};
-
-if (_vehicle isKindof "Truck_F") exitWith {_vehicle setVariable ["fuelTankSize",_truck, true]; _truck};
-if (_vehicle isKindof "Car") exitWith {_vehicle setVariable ["fuelTankSize",_car, true]; _car};
-if (_type in BE_class_APC) exitWith {_vehicle setVariable ["fuelTankSize",_apc, true]; _apc};
-if (_vehicle isKindof "APC_Wheeled_01_base_F") exitWith {_vehicle setVariable ["fuelTankSize",_apc, true]; _apc};
-if (_vehicle isKindof "Tank" or _type in BE_class_MBT) exitWith {_vehicle setVariable ["fuelTankSize",_tank, true]; _tank};
-if (_vehicle isKindof "Helicopter" or _type in BE_class_Heli) exitWith {_vehicle setVariable ["fuelTankSize",_heli, true]; _heli};
-if (_vehicle isKindof "Plane") exitWith {_vehicle setVariable ["fuelTankSize",_plane, true]; _plane};
-if (_vehicle isKindof "Boat") exitWith {_vehicle setVariable ["fuelTankSize",_boat, true]; _boat};
-
-diag_log format["[AS] Error: AS_fnc_getFuelTankSize.sqf: invalid vehicle type %1, fallback fuel tank size used", _vehicle];
-
-_fallback
+_fuelTankSize

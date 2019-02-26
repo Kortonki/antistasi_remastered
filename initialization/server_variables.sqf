@@ -137,7 +137,7 @@ AS_maxSkill = 20;
 publicVariable "AS_maxSkill";
 
 //Percentage how much FIA funds are given to players each update
-AS_players_share = 10;
+AS_players_share = 5;
 
 // BE_modul handles all the permissions e.g. to build roadblocks, skill, etc.
 #include "..\Scripts\BE_modul.sqf"

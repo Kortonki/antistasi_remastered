@@ -174,8 +174,6 @@ private _fnc_spawn = {
 		[_grupoEsc, _vehicle] spawn AS_AI_fnc_DismountOnDanger;
 
 	};
-
-
 	_posRoad = [(_posRoad select 0) - (10*(sin _dir )), (_posRoad select 1) - (10*(cos _dir)), 0]; //next pos is 10m behing
 
 	([_mainVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_mainVehicle","_mainVehicleGroup","_driver"];
@@ -184,7 +182,6 @@ private _fnc_spawn = {
 		[_x] joinSilent _group;
 	} foreach units _mainVehicleGroup;
 	_mainVehicle setConvoySeparation _separation;
-
 
 	//Override fuel cargo from InitVehicle
 
@@ -229,9 +226,6 @@ private _fnc_spawn = {
 
 		};
 
-		//foreach fullcrew [_mainVehicle, "gunner", true] select {isNull (_x select 0)}; //Sketching alternative algorithm for bodyguards
-
-
 	};
 	if (_missionType == "convoy_armor") then {
 		_mainVehicle lock 3;
@@ -250,7 +244,7 @@ private _fnc_spawn = {
 			_unit moveInCargo [_mainVehicle, _i + 3]; // 3 because first 3 are in front
 			removeAllWeapons _unit;
 			removeAllAssignedItems _unit;
-			[[_unit,"refugiado"],"AS_fnc_addAction"] call BIS_fnc_MP;
+			[_unit, "refugiado"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 			_POWs pushBack _unit;
 		};
 		[_mission, "grpPOW", _grpPOW] call AS_spawn_fnc_set;
@@ -445,11 +439,40 @@ private _fnc_run = {
 		};
 		if (_missionType == "convoy_prisoners") exitWith {
 			{
-				private _POWs = [_mission, "POWs"] call AS_spawn_fnc_get;
-				private _grpPOW = [_mission, "grpPOW"] call AS_spawn_fnc_get;
+				private _pows = [_mission, "POWs"] call AS_spawn_fnc_get;
 				[_mission,  [getPos _mainVehicle, ({alive _x} count _POWs)]] remoteExec ["AS_mission_fnc_success", 2];
 
-				{[_x] join _grpPOW; [_x] orderGetin false} forEach _POWs;
+				{
+					if (captive _x) then {
+						_x setcaptive false;
+					};
+				} foreach _pows;
+
+					//Wait unit to lose undercover and get weapons back
+
+				sleep 30;
+
+				private _cargo_w = [[], []];
+				private _cargo_m = [[], []];
+				private _cargo_i = [[], []];
+				private _cargo_b = [[], []];
+
+				{
+					[_x] join _grpPOW;
+					[_x] orderGetin false;
+
+					private _arsenal = [_x, true] call AS_fnc_getUnitArsenal;  // restricted to locked weapons
+					_cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
+					_cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
+					_cargo_i = [_cargo_i, _arsenal select 2] call AS_fnc_mergeCargoLists;
+					_cargo_b = [_cargo_b, _arsenal select 3] call AS_fnc_mergeCargoLists;
+					[cajaVeh, (_arsenal select 4)] call AS_fnc_addMagazineRemains;
+
+					[_x]  RemoteExec ["deleteVehicle", _x];
+
+				} forEach _pows;
+
+				[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
 			}
 		};
 	};

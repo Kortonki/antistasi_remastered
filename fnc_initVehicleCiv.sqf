@@ -50,28 +50,3 @@ _veh addEventHandler ["Getin", {
 _veh addEventHandler ["Killed", {
 	[_this select 0] remoteExec ["AS_fnc_activateCleanup", 2];
 }];
-
-//Commented out vehicle simulation disable because of locality issues
-
-if (count crew _veh == 0) then {
-		//_veh enableSimulationGlobal false;
-		_veh allowDamage false;
-	sleep 60;
-	// stop its simulation and on
-	_veh allowDamage true;
-
-	/*_veh addEventHandler ["GetIn", {
-		_veh = _this select 0;
-		if (!simulationEnabled _veh) then {
-			_veh enableSimulationGlobal true
-		};
-		[_veh] spawn AS_fnc_activateVehicleCleanup;
-	}];
-
-	_veh addEventHandler ["HandleDamage", {
-		_veh = _this select 0;
-		if (!simulationEnabled _veh) then {
-			_veh enableSimulationGlobal true
-		};
-	}];*/
-};

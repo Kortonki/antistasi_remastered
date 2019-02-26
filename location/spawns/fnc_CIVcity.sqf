@@ -56,10 +56,8 @@ private _fnc_spawn = {
 			private _pos = [_p1, 3, _dirveh + 90] call BIS_Fnc_relPos;
 			private _type = ((["CIV", "vehicles"] call AS_fnc_getEntity) call BIS_Fnc_selectRandom);
 			if (count (_pos findEmptyPosition [0,5,_type]) > 0) then {
-				private _veh = createVehicle [_type, [_pos select 0, _pos select 1, 0.1], [], 0, "NONE"];
-				_veh setDir _dirveh;
+				([_type,_pos,"CIV", _dirVeh] call AS_fnc_createEmptyVehicle) params ["_veh"];
 				_vehiculos pushBack _veh;
-				[_veh] spawn AS_fnc_initVehicleCiv;
 				_counter = _counter + 1;
 			};
 		};
