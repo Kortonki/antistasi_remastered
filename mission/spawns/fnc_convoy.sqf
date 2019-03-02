@@ -440,6 +440,7 @@ private _fnc_run = {
 		if (_missionType == "convoy_prisoners") exitWith {
 			{
 				private _pows = [_mission, "POWs"] call AS_spawn_fnc_get;
+				private _grpPOW = [_mission, "grpPOW"] call AS_spawn_fnc_get;
 				[_mission,  [getPos _mainVehicle, ({alive _x} count _POWs)]] remoteExec ["AS_mission_fnc_success", 2];
 
 				{

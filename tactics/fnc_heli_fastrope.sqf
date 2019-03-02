@@ -6,7 +6,7 @@ private _wp1 = _crew_group addWaypoint [_safePosition, 0];
 _wp1 setWaypointType "MOVE";
 _wp1 setWaypointSpeed "FULL";
 _wp1 setWaypointBehaviour "CARELESS";
-_heli flyinHeight 30;
+_heli flyinHeight 40;
 
 _crew_group setVariable ["AS_cargo_group", _cargo_group, true];
 private _statement = {

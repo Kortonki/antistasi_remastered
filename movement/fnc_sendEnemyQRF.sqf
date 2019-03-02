@@ -65,17 +65,13 @@ private _soldados = [];
 private _vehiculos = [];
 private _markers = [];
 
-// create a patrol marker if none provided
-if (_location == "none") then {
-	_location = createMarkerLocal [format ["Patrol-%1-%2", (diag_tickTime/60), round (random 100)],_destination];
-	_location setMarkerShapeLocal "RECTANGLE";
-	_location setMarkerSizeLocal [150,150];
-	_location setMarkerTypeLocal "hd_warning";
-	_location setMarkerColorLocal "ColorRed";
-	_location setMarkerBrushLocal "DiagGrid";
-    _location setMarkerAlpha 0;
-	_markers pushBack _location;
-};
+// create a patrol marker
+private _patrolMarker = createMarkerLocal [format ["Patrol-%1-%2", (diag_tickTime/60), round (random 100)],_destination];
+_patrolMarker setMarkerShapeLocal "RECTANGLE";
+_patrolMarker setMarkerSizeLocal [150,150];
+_patrolMarker setMarkerAlpha 0;
+_markers pushBack _patrolMarker;
+
 
 private _spawnGroup = {
 	params ["_groupType"];
@@ -134,9 +130,9 @@ if (_type == "air") then {
 		} forEach units _cargo_group;
 
 		if (_method == "fastrope") then {
-			[_origin, _destination, _crew_group, _location, _cargo_group] spawn AS_tactics_fnc_heli_fastrope;
+			[_origin, _destination, _crew_group, _patrolMarker, _cargo_group] spawn AS_tactics_fnc_heli_fastrope;
 		} else {
-			_vehiculos append ([_origin, _destination, _crew_group, _cargo_group, _location] call AS_tactics_fnc_heli_disembark);
+			_vehiculos append ([_origin, _destination, _crew_group, _cargo_group, _patrolMarker] call AS_tactics_fnc_heli_disembark);
 		};
 
 		// if the QRF is dispatched to an FIA camp, provide the group
@@ -154,7 +150,7 @@ if (_type == "air") then {
 	if ((_composition == "destroy") || (_composition == "mixed")) then {
 		private _crew_group = [_attackVehicle, _posRoad, _dir] call _spawnVehicle;
 
-		[_origin, _destination, _crew_group, _location] spawn AS_tactics_fnc_ground_attack;
+		[_origin, _destination, _crew_group, _patrolMarker] spawn AS_tactics_fnc_ground_attack;
 	};
 
 	// small delay to allow for AI pathfinding
@@ -175,7 +171,7 @@ if (_type == "air") then {
 			_x moveInCargo _transport;
 		} forEach units _grpDis2;
 
-		[_origin, _destination, _crew_group, _location, _grpDis2] spawn AS_tactics_fnc_ground_disembark;
+		[_origin, _destination, _crew_group, _patrolMarker, _grpDis2] spawn AS_tactics_fnc_ground_disembark;
 	};
 };
 
