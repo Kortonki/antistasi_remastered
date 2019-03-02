@@ -37,10 +37,10 @@ if (_type == "conquer") exitWith {
     [-5, 0, [0, 0], [0, 0], [5, 0, _position], -10*60]
 };
 if (_type == "convoy_supplies") exitWith {
-    [-10, 0, [0, 0], [0, 0], [20, -10, _position], -10*60]
+    [-10, 0, [0, 0], [0, 0], [15, 0, _position], 0]
 };
 if (_type == "convoy_money") exitWith {
-    [-10, 0, [0, 0], [0, 0], [10, -10, _position], -10*60, [[(["AAF", "name"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
+    [-10, 0, [0, 0], [0, 0], [20, 0, _position], 0, [[(["AAF", "name"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
 };
 if (_type == "convoy_ammo") exitWith {
     [-10, 0, [0, 0], [0, 0], [0, 0, []], -10*60, [[(["AAF", "name"] call AS_fnc_getEntity) + " gains money", {[10000] call AS_fnc_changeAAFmoney}]]]
@@ -59,7 +59,7 @@ if (_type == "convoy_hvt") exitWith {
     [-10, 0, [0, 0], [0, 0], [0, 0, []], -20*60]
 };
 if (_type == "convoy_prisoners") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, -10, _position], -10*60]
+    [-10, 0, [0, 0], [0, 0], [-5, -5, _position], -10*60]
 };
 if (_type == "defend_city") exitWith {
     [-50, [500, _position, 5], [5, -5], [0, 0], [-10, -20, _position], -10*60, [
@@ -71,20 +71,23 @@ if (_type == "defend_city") exitWith {
     ]]
 };
 if (_type == "defend_camp") exitWith {
-    [-5, [500, _position, 5], [0, -5], [0, 0], [0, 0, []], -10*60]
+    [-5, [500, _position, 5], [0, -5], [0, 0], [0, -5, _position], -10*60]
 };
 if (_type == "defend_location") exitWith {
-    [-5, [500, _position, 5], [0, -5], [0, 0], [0, 0, []], -10*60]
+    [-5, [500, _position, 5], [0, -5], [0, 0], [0, -5, _position], -10*60]
 };
 if (_type == "defend_hq") exitWith {
-    [-10, [500, _position, 5], [0, -5], [0, 0], [0, 0, []], -10*60]
+    [-10, [500, _position, 5], [0, -5], [0, 0], [0, -10, _position], -10*60]
 };
 if (_type in ["destroy_antenna", "destroy_helicopter", "destroy_vehicle", "steal_ammo", "rob_bank","steal_fuel"]) exitWith {
     [-10, 0, [0, 0], [0, 0], [0, 0, []], -10*60]
 };
 
-if (_type in ["send_meds", "help_meds"]) exitWith {
-    [-10, 0, [0, 0], [0, 0], [5,-5,_position]]
+if (_type == "send_meds") exitWith {
+    [-10, 0, [0, 0], [0, 0], [0,-15,_position]]
+};
+if (_type == "help_meds") exitWith {
+    [-10, 0, [0, 0], [0, 0], [15,0,_position]]
 };
 if (_type in ["nato_armor", "nato_ammo", "nato_artillery", "nato_uav", "nato_roadblock", "nato_qrf", "nato_cas"]) exitWith {
     [-10, 0, [-10, 0]]

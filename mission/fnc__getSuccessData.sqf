@@ -33,12 +33,12 @@ if (_type == "conquer") exitWith {
 };
 if (_type  == "convoy_money") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [0, 0], [0, 5000], [10, -20, _position], 20*60]
+    [5, [500, _vehPosition, 10], [0, 0], [0, 5000], [-10, -20, _position], 20*60]
 };
 
 if (_type == "convoy_supplies") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [-20, 10, _position], 20*60]
+    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [-15, 15, _position], 10*60]
 };
 
 if (_type in ["convoy_ammo", "convoy_fuel"]) exitWith {
@@ -54,28 +54,28 @@ if (_type == "convoy_armor") exitWith {
 };
 if (_type == "convoy_hvt") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [10, 0], [0, 0], [0, 5, _position], 30*60]
+    [5, [500, _vehPosition, 10], [10, 0], [0, 0], [0, 5, _position], 45*60]
 };
 if (_type == "convoy_prisoners") exitWith {
     _args params [["_vehPosition", [0,0,0]], ["_hr", 0]];
-    [round (_hr/2), [500, _vehPosition, _hr], [_hr, 0], [_hr, 0], [0, 5, _position], 0,
+    [round (_hr/2), [500, _vehPosition, _hr], [_hr, 0], [_hr, 0], [-_hr, _hr, _position], 0,
         [["Variable number of resources, foreign support and city support", {}]]
     ]
 };
 
 if (_type == "defend_city") exitWith {
-    [50, [500, _position, 10], [10, 5], [0, 0], [-5, 20, _position], 120*60, [
+    [50, [500, _position, 10], [10, 5], [0, 0], [-10, 20, _position], 120*60, [
         [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities, FIA gains 5", {[-5,5,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)]
     ]]
 };
 if (_type == "defend_camp") exitWith {
-    [5, [500, _position, 10], [0, 5], [0, 0], [0, 0, []], 30*60]
+    [5, [500, _position, 10], [0, 5], [0, 0], [-5, 5, _position], 30*60]
 };
 if (_type == "defend_location") exitWith {
-    [5, [500, _position, 10], [0, 5], [0, 0], [0, 0, []], 30*60]
+    [5, [500, _position, 10], [0, 5], [0, 0], [-5, 10, _position], 30*60]
 };
 if (_type == "defend_hq") exitWith {
-    [10, [500, _position, 20], [0, 5], [0, 0], [0, 0, []], 60*60, [
+    [10, [500, _position, 20], [0, 5], [0, 0], [-5, 10, _position], 60*60, [
         [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities", {[-5,0,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)]
     ]]
 };
@@ -115,7 +115,7 @@ if (_type == "send_meds") exitWith {
         }, []]]]
 };
 if (_type == "help_meds") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [0, 15, _position]]
+    [5, [500, _position, 10], [5, 0], [0, 0], [-15, 15, _position]]
 };
 if (_type == "broadcast") exitWith {
     _args params [["_prestige",0]];
@@ -136,13 +136,13 @@ if (_type == "repair_antenna") exitWith {
 };
 if (_type == "rescue_prisioners") exitWith {
     _args params [["_hr", 0]];
-    [round (_hr/2), [500, getMarkerPos "FIA_HQ", _hr], [_hr, 0], [_hr, 0],  [0, 5, _position], 0,
+    [round (_hr/2), [500, getMarkerPos "FIA_HQ", _hr], [_hr, 0], [_hr, 0],  [0, _hr, _position], 0,
         [["Variable number of resources, foreign support and city support", {}]]
     ]
 };
 if (_type == "rescue_refugees") exitWith {
     _args params [["_hr", 0]];
-    [round (_hr/2), [500, getMarkerPos "FIA_HQ", _hr], [_hr, 0], [_hr, 0],  [0, 5, _position], 0,
+    [round (_hr/2), [500, getMarkerPos "FIA_HQ", _hr], [_hr, 0], [_hr, 0],  [0, _hr, _position], 0,
         [["Variable number of resources, foreign support and city support", {}]]
     ]
 };

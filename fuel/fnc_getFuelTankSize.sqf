@@ -25,26 +25,26 @@ _fuelTankSize = _vehicle call {
   if (_vehicle isKindOf "Quadbike_01_base_F") exitWith {20};
   //exception for vans
   if (_vehicle isKindOf "Van_02_base_F" or _vehicle isKindOf "Van_01_base_F") exitWith {
-    100 + (round((getmass _vehicle)-1500)*0.001)*40};
+    100 + round(((getmass _vehicle)-1500)*0.001)*30};
   if (_type in BE_class_APC) exitWith {
-    500 + (round((getmass _vehicle)-13000)*0.001)*40};
+    500 + round(((getmass _vehicle)-13000)*0.001)*40};
   if (_vehicle isKindof "APC_Wheeled_01_base_F") exitWith {
-    500 + (round((getmass _vehicle)-13000)*0.001)*40};
+    500 + round(((getmass _vehicle)-13000)*0.001)*40};
     //MRAP use truck fuel capacities
   if (_type in BE_class_MRAP) exitWith {
-    100 + (round((getmass _vehicle)-1000)*0.001)*40};
+    100 + round(((getmass _vehicle)-1000)*0.001)*30};
   if (_vehicle isKindof "Truck_F") exitWith {
-    300 + (round((getmass _vehicle)-5000)*0.001)*40};
+    300 + round(((getmass _vehicle)-5000)*0.001)*30};
   if (_vehicle isKindof "Car") exitWith {
-    60 + (round((getmass _vehicle)-1000)*0.001)*40};
+    60 + round(((getmass _vehicle)-1000)*0.001)*30};
   if (_vehicle isKindof "Tank" or _type in BE_class_MBT) exitWith {
-    1500 + (round((getmass _vehicle)-60000)*0.001)*40};
+    1500 + round(((getmass _vehicle)-60000)*0.001)*60};
   if (_vehicle isKindof "Helicopter" or _type in BE_class_Heli) exitWith {
-    200 + (round((getmass _vehicle)-1400)*0.001)*200};
+    200 + round(((getmass _vehicle)-1400)*0.001)*200};
   if (_vehicle isKindof "Plane") exitWith {
-    3660 + (round((getmass _vehicle)-15000)*0.001)*250};
+    3660 + round(((getmass _vehicle)-15000)*0.001)*250};
   if (_vehicle isKindof "Boat") exitWith {
-    60 + (round((getmass _vehicle)-1000)*0.001)*40};
+    60 + round(((getmass _vehicle)-1000)*0.001)*40};
   diag_log format["[AS] Error: AS_fnc_getFuelTankSize: Invalid vehicle type %1: fallback fuel tank size used", _vehicle];
 };
 

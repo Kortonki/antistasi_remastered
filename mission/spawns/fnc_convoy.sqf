@@ -381,7 +381,6 @@ private _fnc_run = {
 				private _fnc_missionFailedCondition = {not(alive _mainVehicle) or (dateToNumber date > _max_date)};
 				private _fnc_missionFailed = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-					[30*60] remoteExec ["AS_fnc_changeSecondsforAAFattack",2];
 
 					if (_missionType == "convoy_supplies") then {
 						[-10,-10, _position] remoteExec ["AS_fnc_changeCitySupport",2];
@@ -389,10 +388,12 @@ private _fnc_run = {
 
 					if (_missionType in ["convoy_money","convoy_fuel"]) then {
 						[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];
+						[30*60] remoteExec ["AS_fnc_changeSecondsforAAFattack",2];
 					};
 
 					if (_missionType == "convoy_ammo") then {
 						[-10000] remoteExec ["AS_fnc_changeAAFmoney",2];
+						[30*60] remoteExec ["AS_fnc_changeSecondsforAAFattack",2];
 					};
 
 
