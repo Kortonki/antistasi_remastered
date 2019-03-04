@@ -43,7 +43,11 @@ while {true} do {
 			} foreach ((getweaponCargo _x select 1) + (getmagazineCargo _x select 1) + (getitemCargo _x select 1) + (getbackpackCargo _x select 1));
 
 			private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
-			private _time = (_total/((count _units) max 0.0001));
+			if (count _units == 0) then {
+				[_unit, "hint", "Have someone from your group outside the truck"] call AS_fnc_localCommunication;
+				breakTO "main"
+			};
+			private _time = _total/(count _units);
 	    [_x, _position, _time/2, {true}, {speed _vehicle >= 1}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
 
 		if (speed _vehicle < 1) then {
@@ -74,7 +78,10 @@ while {true} do {
 
 	   // Time depends on friendly units around the truck
 		 private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
-		 private _time = (_total/((count _units) max 0.0001));
+		 if (count _units == 0) then {
+			 [_unit, "hint", "Have someone from your group outside the truck"] call AS_fnc_localCommunication;
+			 breakTO "main"};
+		 private _time = _total/(count _units);
 	   [_x, _position, _time, {true}, {speed _vehicle >= 1}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
 
 		if (speed _vehicle < 1) then {
@@ -105,7 +112,11 @@ while {true} do {
 			} forEach [_cargo_w, _cargo_m, _cargo_i, _cargo_b];
 
 			private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
-			private _time = (_total/((count _units) max 0.0001));
+			if (count _units == 0) then {
+				[_unit, "hint", "Have someone from your group outside the truck"] call AS_fnc_localCommunication;
+				breakTO "main"
+			};
+			private _time = _total/(count _units);
 
 			[_x, _position, _time, {true}, {speed _vehicle >= 1}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
 
@@ -129,8 +140,10 @@ while {true} do {
 	breakTo "main";
 };
 
-//This is where the hoarding loop breaks to in case enemies come within 50m
-
-hint format ["%1 items recovered into the truck", _totalRecovered];
+//This is where the hoarding loop breaks to in case enemies come within 50m or there are no one outside the truck
+if (_totalRecovered > 0) then {
+	private _text = format ["%1 items recovered into the truck", _totalRecovered];
+	[_unit, "hint", _text] call AS_fnc_localCommunication;
+};
 [0,true] remoteExec ["AS_fnc_showProgressBar",player];
 _unit setVariable ["loadingCrate", false];

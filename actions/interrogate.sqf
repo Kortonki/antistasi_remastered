@@ -1,11 +1,11 @@
 #include "../macros.hpp"
 params ["_unit", "_player"];
 
-[[_unit,"remove"],"AS_fnc_addAction"] call BIS_fnc_MP;
+[_unit, "remove"] remoteExec ["AS_fnc_addaction", [0,-2] select isDedicated];
 
 if (!alive _unit) exitWith {};
 
-_player globalChat "You souvlaki! Tell me what you know!";
+_player globalChat "You *&%#¤! Tell me what you know!";
 
 private _chance = AS_P("NATOsupport") - AS_P("CSATsupport");
 

@@ -55,14 +55,21 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 	private _coeffSurr = 8; //TODO experiment this: 4 is in the ballpark for 1 vs 1 surrender inside 50 meters and 0.5 courage => 50% chance for surrendering
 	private _coeffSurrConstant = -0.7; //TODO experiment this. Setting this to 1 and 1 vs 1 never surrenders, but 1 vs 2 has 50% chance if coeffSurr = 4
 
+
+	//TODO Figure a way to increase surrender probability when squadmates surrender
 	{
 		if (alive _x) then {
 			if (fleeing _x) then {
 				if !(_x getVariable ["surrendered",false]) then {
 					if (([200, _x, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) and
-							{_coeffSurrConstant + (random ({alive _x and {!([_x] call AS_fnc_isDog) and {!(_x getVariable ["surrendered", false])}}} count units _group))*(_x skill "courage")*_coeffSurr < count ([50, _x, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
+							{_coeffSurrConstant + _coeffSurr*(random ({alive _x and {!([_x] call AS_fnc_isDog) and {!(_x getVariable ["surrendered", false])}}} count units _group))*(_x skill "courage") < count ([50, _x, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
 							then {
-								[_x] spawn AS_AI_fnc_surrender;
+								if (_x == leader group _x) then {
+									{[_x] spawn AS_AI_fnc_surrender} foreach (units group _x); 	//If squad leader surrenders, everybody in the group surrender as well
+								} else {
+									[_x] spawn AS_AI_fnc_surrender;
+								};
+
 							} else {
 								[_x,_x] spawn AS_AI_fnc_smokeCover;
 							};

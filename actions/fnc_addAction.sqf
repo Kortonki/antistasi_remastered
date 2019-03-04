@@ -23,7 +23,7 @@ switch _type do {
 	};
 	case "refugiado": {_object addAction [localize "STR_act_orderRefugee", "actions\rescue.sqf",nil,0,false,true]};
 	case "prisionero": {_object addAction [localize "STR_act_liberate", "actions\rescue.sqf",nil,0,false,true]};
-	case "interrogate": {_object addAction [localize "STR_act_interrogate", "actions\askIntel.sqf",nil,0,false,true,"",IS_PLAYER]};
+	case "interrogate": {_object addAction [localize "STR_act_interrogate", "actions\interrogate.sqf",nil,0,false,true,"",IS_PLAYER]};
 	case "offerToJoin": {_object addAction [localize "STR_act_offerToJoin", "actions\offerToJoin.sqf",nil,0,false,true,"",IS_PLAYER]};
 	case "buildHQ": {_object addAction [localize "STR_act_buildHQ", {[] remoteExec ["AS_fnc_HQbuild", 2]},nil,0,false,true,"",IS_PLAYER]};
 	case "seaport": {_object addAction ["Buy Boat", "actions\buyBoat.sqf",nil,0,false,true,"",IS_PLAYER]};

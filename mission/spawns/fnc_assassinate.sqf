@@ -94,10 +94,11 @@ private _fnc_run = {
 
 	private _fnc_missionSuccessfulCondition = {not alive _target};
 	if (typeName _target == "GROUP") then {
-	    _fnc_missionSuccessfulCondition = {{alive _x} count units _target == 0};
+	    _fnc_missionSuccessfulCondition = {{alive _x} count units _target == 0 or {!(_x getVariable ["surrendered", false])} count units _target == 0};
 	};
 
 	private _fnc_missionSuccessful = {
+		[0, -({(_x getVariable ["surrendered", false])} count units _target)] remoteExec ["AS_fnc_changeForeignSupport", 2];
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 	};

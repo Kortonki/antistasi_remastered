@@ -59,7 +59,7 @@ if (_type == "convoy_hvt") exitWith {
     [-10, 0, [0, 0], [0, 0], [0, 0, []], -20*60]
 };
 if (_type == "convoy_prisoners") exitWith {
-    [-10, 0, [0, 0], [0, 0], [-5, -5, _position], -10*60]
+    [-10, 0, [0, 0], [0, 0], [-5, -5, _position], 0]
 };
 if (_type == "defend_city") exitWith {
     [-50, [500, _position, 5], [5, -5], [0, 0], [-10, -20, _position], -10*60, [
@@ -87,7 +87,7 @@ if (_type == "send_meds") exitWith {
     [-10, 0, [0, 0], [0, 0], [0,-15,_position]]
 };
 if (_type == "help_meds") exitWith {
-    [-10, 0, [0, 0], [0, 0], [15,0,_position]]
+    [-10, 0, [0, 0], [0, 0], [0,0,[]]] //City support depends on if the crate was left intact
 };
 if (_type in ["nato_armor", "nato_ammo", "nato_artillery", "nato_uav", "nato_roadblock", "nato_qrf", "nato_cas"]) exitWith {
     [-10, 0, [-10, 0]]
@@ -117,6 +117,6 @@ if (_type == "rescue_prisioners") exitWith {
 };
 if (_type == "rescue_refugees") exitWith {
     _args params [["_dead", 0]];
-    [-10, 0, [-_dead, 0], [0, 0], [0, -15, _position], 0, [["Variable lost of NATO support", {}]]]
+    [-10, 0, [-_dead, 0], [0, 0], [0, -_dead, _position], 0, [["Variable lost of NATO and city support", {}]]]
 };
 [-10]

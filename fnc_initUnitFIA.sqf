@@ -77,7 +77,7 @@ if (isPlayer(leader _unit)) then {
 		params ["_unit"];
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
-		[0.25,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
+		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 		_unit setVariable ["BLUFORSpawn",nil,true];
 	}];
 
@@ -123,7 +123,7 @@ if (isPlayer(leader _unit)) then {
 		if (isPlayer _killer) then {
 			[player, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
 		};
-		[0.25,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
+		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 
 		if (_unit getVariable ["BLUFORSpawn",false]) then {
 			_unit setVariable ["BLUFORSpawn",nil,true];

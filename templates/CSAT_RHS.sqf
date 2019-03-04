@@ -58,8 +58,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "teams", ["rhs_group_rus_vdv_infantry_section_mg","rhs_group_rus_vdv_infantry_section_marksman","rhs_group_rus_vdv_infantry_section_AT"]] call DICT_fnc_set;
 [_dict, "teamsAA", ["rhs_group_rus_vdv_infantry_section_AA"]] call DICT_fnc_set;
 [_dict, "patrols", ["rhs_group_rus_vdv_infantry_fireteam","rhs_group_rus_vdv_infantry_MANEUVER","rhs_group_rus_vdv_infantry_section_marksman"]] call DICT_fnc_set;
-[_dict, "recon_squad", configfile >> "CfgGroups" >> "east" >> "rhs_faction_vdv">> "rhs_group_rus_vdv_infantry_recon" >> "rhs_group_rus_vdv_infantry_recon_squad"] call DICT_fnc_set;
-[_dict, "recon_team", configfile >> "CfgGroups" >> "east" >> "rhs_faction_vdv">> "rhs_group_rus_vdv_infantry_recon" >> "rhs_group_rus_vdv_infantry_recon_MANEUVER"] call DICT_fnc_set;
+[_dict, "recon_squad", ["rhs_group_rus_vdv_infantry_recon_squad"]] call DICT_fnc_set;
+[_dict, "recon_team", ["rhs_group_rus_vdv_infantry_recon_MANEUVER"]] call DICT_fnc_set;
 
 // To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
 [_dict, "additionalWeapons", ["rhs_weap_ak105","rhs_weap_ak104"]] call DICT_fnc_set;

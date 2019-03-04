@@ -4,35 +4,34 @@ _unit = _this select 0;
 
 if ((!alive _unit) or (isPlayer _unit) or (vehicle _unit != _unit) or (player != leader group player) or (captive _unit)) exitWith {};
 if (_unit call AS_medical_fnc_isUnconscious) exitWith {};
-_ayudando = _unit getVariable "ayudando";
+private _ayudando = _unit getVariable "ayudando";
 if (!(isNil "_ayudando")) exitWith {_unit groupChat "I cannot rearm right now. I'm healing a comrade"};
-_rearming = _unit getVariable ["rearming", false];
+private _rearming = _unit getVariable ["rearming", false];
 if (_rearming) exitWith {_unit groupChat "I am currently rearming"};
 
 _unit setVariable ["rearming",true];
 
-_Pweapon = primaryWeapon _unit;
-_Sweapon = secondaryWeapon _unit;
+private _Pweapon = primaryWeapon _unit;
+private _Sweapon = secondaryWeapon _unit;
 
-_objetos = [];
-_hayCaja = false;
-_arma = "";
-_armas = [];
-_distancia = 51;
-_objetos = nearestObjects [_unit, ["ReammoBox_F","LandVehicle","WeaponHolderSimulated", "GroundWeaponHolder", "WeaponHolder"], 50];
+private _hayCaja = false;
+private _arma = "";
+private _armas = [];
+private _distancia = 51;
+private _objetos = nearestObjects [_unit, ["ReammoBox_F","LandVehicle","WeaponHolderSimulated", "GroundWeaponHolder", "WeaponHolder"], 50];
 //if (caja in _objetos) then {_objetos = _objetos - [caja]}; //Why not rearm from arsenal box?
-_necesita = false;
-_muertos = [];
-_validWeapons = [];
+private _necesita = false;
+private _muertos = [];
+private _validWeapons = [];
 
 {
-_muerto = _x;
-if (_muerto distance _unit < _distancia) then
+	private _muerto = _x;
+	if (_muerto distance2D _unit < _distancia) then
 	{
-	_busy = _muerto getVariable "busy";
-	if (isNil "_busy") then
+		_busy = _muerto getVariable "busy";
+		if (isNil "_busy") then
 		{
-		_muertos pushBack _muerto;
+			_muertos pushBack _muerto;
 		};
 	};
 } forEach allDead;
@@ -55,7 +54,7 @@ if (_muerto distance _unit < _distancia) then
 						{
 						_posible = _armas select _i;
 						_basePosible = [_posible] call BIS_fnc_baseWeapon;
-            _validWeapons = (AS_weapons select 0) + (AS_weapons select 5) + (AS_weapons select 3) + (AS_weapons select 6) + (AS_weapons select 15);
+            _validWeapons = (AS_weapons select 0) + (AS_weapons select 5) + (AS_weapons select 3) + (AS_weapons select 6) + (AS_weapons select 15) + (AS_weapons select 13);
 						if (_basePosible in _validWeapons) then
 							{
 							_target = _objeto;

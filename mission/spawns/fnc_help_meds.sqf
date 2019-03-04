@@ -319,6 +319,12 @@ private _fnc_wait_to_deliver = {
 		} forEach ([80, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
 
 	} else {
+		if (not(alive _crate)) then {
+			[-10,-10, _position] remoteExec ["AS_fnc_changeCitySupport",2]; // No one delivers the crate: both lose support
+		} else {
+			[15,0, _position] remoteExec ["AS_fnc_changeCitySupport", 2]; // AAF manages to deliver the crate
+		};
+
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExecCall ["AS_mission_fnc_fail", 2];
 	};
