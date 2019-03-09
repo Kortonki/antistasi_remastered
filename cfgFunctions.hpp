@@ -209,6 +209,7 @@ class AS {
         FNC_BASE(initUnitCIV);
         FNC_BASE(initUnitNATO);
         FNC_BASE(initUnitCSAT);
+        FNC_BASE(initUnitSurvivor);
     };
 
     class withInterface {

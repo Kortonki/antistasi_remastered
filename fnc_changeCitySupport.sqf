@@ -52,7 +52,7 @@ if (_FIAsupport + _AAFsupport < 5) then {_AAFsupport = 1; _FIAsupport = 5};
 
 if _notify then {
 	private _sign = "+";
-	if (_blufor < 0) then {_sign = "-";};
+	if (_blufor < 0) then {_sign = "";};
 	private _text = format ["%1 FIA Support\n%2%3 -> %4", _city, _sign,_blufor,_FIAsupport];
 	[petros, "income", _text] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
 };

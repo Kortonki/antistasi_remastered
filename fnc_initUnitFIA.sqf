@@ -11,6 +11,7 @@ if(!(local _unit)) exitWith {
 
 };
 
+_unit removeAllEventHandlers "killed"; //This effects mainly prisoners/refugees, AAF don't get unarmed killing penalty anymore
 
 [_unit, "FIA"] call AS_fnc_setSide;
 
@@ -142,3 +143,40 @@ if (isPlayer(leader _unit)) then {
 
 _unit enableIRLasers true;
 _unit enableGunLights "AUTO";
+
+
+//Eventhandler to increase City support for healing CIVS
+_unit addEventhandler ["handleHeal", {
+		params ["_unit", "_healer", "_isMedic"];
+
+		private _return = false; //Use normal heal if not healing a civilian
+		if ((_unit call AS_fnc_getSide) isEqualTo "CIV") then {
+
+			//Maximum support from healing single CIV = 1.5 > 2 (penalty of wounding a CIV)
+			//Thus, no possibility to exploit
+			private _support = 0;
+			if (damage _unit > 0.25) then { //First aid via anybody heals some -> some support
+				_support = _support + 0.5;
+				_unit setdamage 0.25;
+			};
+			if (_isMedic) then { //Using medic gains more support
+				_support = _support + 0.5;
+				_unit setdamage 0;
+			};
+			if (_unit call AS_medical_fnc_isUnconscious) then {
+				_support = _support + 0.5;
+			};
+			[0,_support, position _unit, true] remoteExec ["AS_fnc_changeCitySupport", 2];
+			[_unit, _healer] spawn {
+				params ["_unit", "_healer"];
+				_unit stop true;
+				_healer playActionNow "MedicOther";
+				sleep 8;
+				_unit stop false;
+			};
+			_return = true;
+		};
+
+
+		_return
+	}];

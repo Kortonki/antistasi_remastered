@@ -35,27 +35,13 @@ private _fnc_spawn = {
 
 	private _spawnFail = false;
 
-	private _initSurvivor = {
-		params ["_unit"];
-		_unit allowDamage false;
-		_unit setCaptive true;
-		_unit disableAI "MOVE";
-		_unit disableAI "AUTOTARGET";
-		_unit disableAI "TARGET";
-		_unit setBehaviour "CARELESS";
-		_unit allowFleeing 0;
-		removeAllWeapons _unit;
-		removeAllAssignedItems _unit;
-		_unit setUnitPos "UP";
-	};
-
 	private _grpPOW = createGroup ("FIA" call AS_fnc_getFactionSide);
 	if (_missionType == "rescue_prisioners") then {
 		private _prisioners = 5 + round random 10;
 
 		for "_i" from 1 to _prisioners do {
 			private _unit = ["Survivor", [_position, 5, random 360] call BIS_Fnc_relPos, _grpPOW] call AS_fnc_spawnFIAUnit;
-			_unit call _initSurvivor;
+			_unit call AS_fnc_initUnitSurvivor;
 			[_unit, "prisionero"] remoteExec ["AS_fnc_addaction", [0, -2] select isDedicated];
 		};
 	};

@@ -74,7 +74,8 @@ if (typeOf _unit == "C_Journalist_F") then {
 					[0, -1, getpos _unit] remoteExec ["AS_fnc_changeForeignSupport", 2];
 					{[0,-1,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 					[0,-4,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
-				} else {
+				};
+			if (side _source == ("AAF" call AS_fnc_getFactionSide)) then {
 					[0, 1, getpos _unit] remoteExec ["AS_fnc_changeForeignSupport", 2];
 					{[-1, 0,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 					[-4,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
@@ -92,7 +93,7 @@ if (typeOf _unit == "C_Journalist_F") then {
 
 		[_unit, _source] spawn {
 			params ["_unit", "_source"];
-			sleep 1;
+			sleep 5;
 
 			if (!(alive _unit)) exitWith {}; //If unit was killed, then only kill penalty
 			//Civilian INJURY penalties

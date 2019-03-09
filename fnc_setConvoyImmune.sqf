@@ -34,9 +34,13 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 		private _road = [_newPos,100] call BIS_fnc_nearestRoad;
 		if (!isNull _road) then {
 			_veh setPos getPos _road;
+			diag_log format ["[AS] SetConvoyImmune. Vehicle returned to road. Vehicle: %1 Type of vehicle %2 Destination: %3 Text %4", _veh, typeOf _veh, _destination, _text];
 		} else {
 			_newPos = _newPos findEmptyPosition [1,10, (typeOf _veh)];
-			if (!(_newPos isEqualTo [])) then{ _veh setPos _newPos;};
+			if (!(_newPos isEqualTo [])) then{
+				_veh setPos _newPos;
+				diag_log format ["[AS] SetConvoyImmune. Vehicle set to new position. Vehicle: %1 Type of vehicle %2 Destination: %3 Text %4", _veh, typeOf _veh, _destination, _text];
+			};
 
 		};
 	};

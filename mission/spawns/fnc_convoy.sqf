@@ -235,14 +235,9 @@ private _fnc_spawn = {
 		_groups pushBack _grpPOW;
 		for "_i" from 1 to (1+ round (random 11)) do {
 			private _unit = ["Survivor", _position, _grpPOW] call AS_fnc_spawnFIAUnit;
-			_unit setCaptive true;
-			_unit disableAI "MOVE";
-			_unit setBehaviour "CARELESS";
-			_unit allowFleeing 0;
+			_unit call AS_fnc_initUnitSurvivor;
 			_unit assignAsCargo _mainVehicle;
 			_unit moveInCargo [_mainVehicle, _i + 3]; // 3 because first 3 are in front
-			removeAllWeapons _unit;
-			removeAllAssignedItems _unit;
 			[_unit, "refugiado"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 			_POWs pushBack _unit;
 		};
