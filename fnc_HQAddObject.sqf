@@ -63,5 +63,4 @@ if (_objType == "h_barrier") then {
 private _object = _item createVehicle _pos;
 AS_HQ_placements pushBack _object;
 
-//[[_object,"moveObject"],"AS_fnc_addAction"] call BIS_fnc_MP;
 [_object, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];

@@ -138,6 +138,13 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "static_mg", ["B_HMG_01_high_F"]] call DICT_fnc_set;
 [_dict, "static_mortar", ["B_G_Mortar_01_F"]] call DICT_fnc_set; //first one is used by squads
 
+// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
+[_dict, "additionalWeapons", []] call DICT_fnc_set;
+[_dict, "additionalMagazines", []] call DICT_fnc_set;
+[_dict, "additionalItems", []] call DICT_fnc_set;
+[_dict, "additionalBackpacks", []] call DICT_fnc_set;
+[_dict, "additionalLaunchers", []] call DICT_fnc_set;
+
 // FIA minefield uses first of this list
 [_dict, "land_vehicles", ["C_Offroad_01_F","C_Van_01_transport_F","B_G_Quadbike_01_F","B_G_Offroad_01_armed_F"]] call DICT_fnc_set;
 [_dict, "water_vehicles", ["B_G_Boat_Transport_01_F"]] call DICT_fnc_set;

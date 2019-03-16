@@ -8,6 +8,7 @@ _unit disableAI "TARGET";
 _unit setBehaviour "CARELESS";
 _unit setUnitPos "UP";
 _unit allowFleeing 0;
+_unit setSkill 0;
 
 removeAllWeapons _unit;
 removeAllAssignedItems _unit;

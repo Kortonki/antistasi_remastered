@@ -47,6 +47,13 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "static_mg_low", ["CUP_O_KORD_CHDKZ"]] call DICT_fnc_set;
 [_dict, "static_mortar", ["CUP_O_2b14_82mm_CHDKZ"]] call DICT_fnc_set;
 
+// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
+[_dict, "additionalWeapons", []] call DICT_fnc_set;
+[_dict, "additionalMagazines", []] call DICT_fnc_set;
+[_dict, "additionalItems", []] call DICT_fnc_set;
+[_dict, "additionalBackpacks", []] call DICT_fnc_set;
+[_dict, "additionalLaunchers", []] call DICT_fnc_set;
+
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["CUP_MineE"]] call DICT_fnc_set;
 [_dict, "at_mines", ["CUP_Mine"]] call DICT_fnc_set;

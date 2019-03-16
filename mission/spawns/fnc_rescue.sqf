@@ -71,8 +71,7 @@ private _fnc_spawn = {
 		private _num = ((count _house_positions)/2) min 8; //Note: this edited so there's at least 2 positions per refugee
 		for "_i" from 0 to _num - 1 do {
 			private _unit = ["Survivor", _house_positions select _i, _grpPOW] call AS_fnc_spawnFIAUnit;
-			_unit call _initSurvivor;
-			_unit setSkill 0;  // refugees have no skill
+			_unit call AS_fnc_initUnitSurvivor;
 			[_unit, "refugiado"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		};
 

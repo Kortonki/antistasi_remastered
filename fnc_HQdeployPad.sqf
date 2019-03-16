@@ -16,5 +16,6 @@ if !(isNil "vehiclePad") exitWith {
 AS_Sset("AS_vehicleOrientation", [_caller, _obj] call BIS_fnc_dirTo);
 vehiclePad = createVehicle ["Land_JumpTarget_F", _pos, [], 0, "CAN_COLLIDE"];
 publicVariable "vehiclePad";
+AS_HQ_placements pushBack vehiclePad;
 
 deleteVehicle _obj;

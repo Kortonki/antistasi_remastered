@@ -24,6 +24,13 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 
 [_dict, "cars_armed", ["CUP_I_Datsun_PK"]] call DICT_fnc_set;
 
+// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
+[_dict, "additionalWeapons", []] call DICT_fnc_set;
+[_dict, "additionalMagazines", []] call DICT_fnc_set;
+[_dict, "additionalItems", []] call DICT_fnc_set;
+[_dict, "additionalBackpacks", []] call DICT_fnc_set;
+[_dict, "additionalLaunchers", []] call DICT_fnc_set;
+
 // costs of **land vehicle**. Every vehicle in `"land_vehicles"` must be here.
 private _costs = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "costs"] call DICT_fnc_del; // delete old

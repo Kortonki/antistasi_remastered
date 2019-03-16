@@ -1,7 +1,7 @@
 #include "macros.hpp"
 AS_CLIENT_ONLY("AS_fnc_localCommunication");
 
-params ["_unit", "_tipo", "_texto"];
+params ["_unit", "_tipo", "_texto", ["_showTime", 1]];
 
 private _validTypes = [
 	"sideChat", "hint", "hintCS", "globalChat", "directSay",
@@ -21,7 +21,7 @@ if (_tipo == "hint") then {
 	waitUntil {sleep 0.2; isNil "hintRep"};
 	hintRep = true;
 	hint format ["%1",_texto];
-	sleep 5;
+	sleep _showTime;
 	hintRep = nil;
 };
 if (_tipo == "hintCS") then {
@@ -35,7 +35,7 @@ if (_tipo == "income") then {
 	incomeRep = true;
 	playSound "3DEN_notificationDefault";
 	[_texto, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 5, 0, 0, 2] spawn bis_fnc_dynamicText;
-	sleep 5;
+	sleep _showTime;
 	incomeRep = nil;
 };
 if (_tipo == "countdown") then {
