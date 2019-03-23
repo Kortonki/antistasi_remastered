@@ -27,11 +27,9 @@ private _fnc_spawn = {
 	_patrolMarker setMarkerAlpha 0;
 
 	for "_i" from 1 to (1 + round random 2) do {
-		private _pos = [_origin, AS_P("spawnDistance") * 3, random 360] call BIS_Fnc_relPos;
+		private _pos = [_origin, 300, random 360] call BIS_Fnc_relPos;
 		private _type = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);
-		private _vehicle = [_pos, 0, _type, ("CSAT" call AS_fnc_getFactionSide)] call bis_fnc_spawnvehicle;
-		private _heli = _vehicle select 0;
-		private _grupoheli = _vehicle select 2;
+		([_type, _pos, random 360, "CSAT", "pilot", 300, "FLYING"]) params ["_heli", "_grupoHeli", "_pilot"];
 		_groups pushBack _grupoheli;
 		_vehiculos pushBack _heli;
 
