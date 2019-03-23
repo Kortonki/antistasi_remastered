@@ -34,7 +34,7 @@ reverse _list;
 private _playerIncomes = [];
 private _commanderIndex = 0;
 
-private _moneyLeft = _money; //This is what is left of the share
+private _moneyLeft = _money; //This is what is left of the share = pot
 {
     private _count = count _x; //This is the number of players with the same rank
     private _share = 0;
@@ -43,17 +43,18 @@ private _moneyLeft = _money; //This is what is left of the share
       //private _share = _shares select _forEachindex;
       //Add to the rank spesific share. Allways take half of what is left
       {
-        _share = round(_share + (_moneyLeft/2));
-        _moneyLeft = round(_moneyLeft/2);
+        _share = floor(_share + (_moneyLeft/2)); //with floor the rounding always happens to same "direction"
+        _moneyLeft = _moneyLeft - floor(_moneyLeft/2); //the pot is deducted from actual sum taken
       } foreach _sameRank;
       //Share the money inside ranks
       {
-        private _playerIncome = round(_share/_count);
+        private _playerIncome = floor(_share/_count);
         //Put player incomes into array
         _playerIncomes pushback [_x, _playerIncome];
         if (_x == AS_commander) then {_commanderIndex = (count _playerIncomes) - 1};
 
       } foreach _sameRank;
+      _moneyLeft = floor(_moneyLeft + _share mod (floor (_share/_count))); //Leftovers from rounding are sent back to the pot -> to commander or FIA later
     };
     //_shares pushback _share; //Now the order of shares is same as the order of ranks: no need to reverse
 } foreach _list;
