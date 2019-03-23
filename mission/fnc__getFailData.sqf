@@ -67,7 +67,7 @@ if (_type == "defend_city") exitWith {
             params ["_location"];
             [_location] call AS_fnc_destroy_location;
         }, [_location]],
-        ["FIA loses 5 support in all cities", {[0,-5,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)]
+        ["FIA loses 5 support in all cities", {{[0,-5,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)}]
     ]]
 };
 if (_type == "defend_camp") exitWith {
