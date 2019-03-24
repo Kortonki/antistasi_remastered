@@ -16,7 +16,15 @@ if (isMultiPlayer and player != AS_commander) then {
 
 if (_resourcesFIA < _coste) exitWith {hint format ["You do not have enough money for this vehicle: %1 € required",_coste]};
 
-private _pos = position player findEmptyPosition [5,50,_type];
+private _pos = [];
+if (!(isNil "vehiclePad") and {!(count (vehiclePad nearObjects ["AllVehicles",7]) > 0)}) then {
+	_pos = position vehiclePad;
+	_pos set [2, 0.5];
+} else {
+	_pos = position player findEmptyPosition [5,50,_type];
+};
+
+
 if (count _pos == 0) exitWith {
 	hint "Not enough space to place this vehicle";
 };
@@ -33,7 +41,6 @@ if (isMultiPlayer and player != AS_commander) then {
 
 if (_type isKindOf "StaticWeapon") then {
 	[_veh,"moveObject"] remoteExec ["AS_fnc_addaction", [0,-2] select isDedicated];
-	[_veh] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 };
 hint "Vehicle Purchased";
 player reveal _veh;

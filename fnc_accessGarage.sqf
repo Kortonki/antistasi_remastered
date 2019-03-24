@@ -23,7 +23,7 @@ if (isNil "vehiclePad") then {
 	garagePos = position player findEmptyPosition [5,45,"B_MBT_01_TUSK_F"];
 } else {
 	garagePos = position vehiclePad;
-	garagePos set [2, 1.5]; //Spawn vehicles above ground to avoid clipping
+	garagePos set [2, 0.5]; //Spawn vehicles above ground to avoid clipping
 	if (count (vehiclePad nearObjects ["AllVehicles",7]) > 0) then {_break = true};
 };
 if _break exitWith {hintC "Clear the area, not enough space to spawn a vehicle."};
