@@ -34,6 +34,7 @@ class AS_location {
         FNC(location,size);
         FNC(location,garrison);
         FNC(location,position);
+        FNC(location,positionConvoy);
         FNC(location,busy);
         FNC(location,spawned);
         FNC(location,forced_spawned);

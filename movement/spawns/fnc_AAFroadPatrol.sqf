@@ -6,7 +6,7 @@ private _fnc_spawn = {
 	private _type = [_spawnName, "type"] call AS_spawn_fnc_get;
 	private _isFlying = [_spawnName, "isFlying"] call AS_spawn_fnc_get;
 	private _origin = [_spawnName, "origin"] call AS_spawn_fnc_get;
-	private _posbase = _origin call AS_location_fnc_position;
+	private _posbase = _origin call AS_location_fnc_positionConvoy;
 	private _dir = 0;
 
 	if not _isFlying then {

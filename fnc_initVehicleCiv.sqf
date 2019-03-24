@@ -23,7 +23,7 @@ if (_veh isKindOf "Car") then {
 
 //The looting script
 
-if (_tipo isKindof "Truck_F" and {!(finite (getFuelCargo _veh))}) then {
+if ((typeOf _veh) isKindof "Truck_F" and {!(finite (getFuelCargo _veh))}) then {
 	[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 	};
 

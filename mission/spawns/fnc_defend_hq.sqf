@@ -26,6 +26,10 @@ private _fnc_spawn = {
 	_patrolMarker setMarkerSize [50,50];
 	_patrolMarker setMarkerAlpha 0;
 
+	if (AS_P("resourcesAAF") > 20000) then {
+		[-20000] remoteExec ["AS_fnc_changeAAFmoney",2];
+		[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
+
 	for "_i" from 1 to (1 + round random 2) do {
 		private _pos = [_origin, 300, random 360] call BIS_Fnc_relPos;
 		private _type = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);
@@ -62,6 +66,7 @@ private _fnc_spawn = {
 
 	};
 
+};
 	//Spawn AAF land attack as well
 
 	private _base = [_position, true] call AS_fnc_getBasesForCA;

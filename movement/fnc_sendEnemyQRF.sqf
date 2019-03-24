@@ -56,7 +56,7 @@ if not (_origin isEqualTo "spawnCSAT") then {
 
 // get the position of the target marker
 if (typeName _origin != "ARRAY") then {
-	_origin = _origin call AS_location_fnc_position;
+	_origin = _origin call AS_location_fnc_positionConvoy;
 };
 
 // arrays of all resources (resources owned by this script)

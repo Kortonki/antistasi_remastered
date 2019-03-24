@@ -3,7 +3,7 @@
 private _fnc_initialize = {
 	params ["_mission"];
 	private _origin = [_mission, "origin"] call AS_mission_fnc_get;
-	private _position = _origin call AS_location_fnc_position;
+	private _position = _origin call AS_location_fnc_positionConvoy;
 
 	private _tiempolim = 60;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];

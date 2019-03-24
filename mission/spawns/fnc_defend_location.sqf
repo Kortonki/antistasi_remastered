@@ -50,9 +50,8 @@ private _fnc_spawn = {
 		if (AS_P("resourcesAAF") > 20000) then {
 			[-20000] remoteExec ["AS_fnc_changeAAFmoney",2];
 			[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
-		} else {
-			[5,-20] remoteExec ["AS_fnc_changeForeignSupport",2]
 		};
+
 		private _cuenta = 3;
 		if ((_base == "") or (_airfield == "")) then {_cuenta = 6};
 
@@ -64,11 +63,13 @@ private _fnc_spawn = {
 		[["TaskSucceeded", ["", format ["%1 under artillery fire",[_location] call AS_fnc_location_name]]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
 		[_location] spawn {
 			params ["_location"];
-			for "_i" from 0 to round (random 2) do {
-				[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
-				sleep 30;
+			if ((AS_P("CSATSupport")) >= 50) then {
+				for "_i" from 0 to round(random (AS_P("CSATSupport")/25)) do {
+					[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
+					sleep 30;
+				};
 			};
-			if ((_location call AS_location_fnc_type) in ["base","airfield"]) then {
+			if ((AS_P("CSATSupport")) >= 25) then {
 				[_location] spawn AS_fnc_dropArtilleryShells;
 			};
 		};
@@ -77,7 +78,7 @@ private _fnc_spawn = {
 	private _origin_pos = [];
 	if (_base != "") then {
 		[_base,60] call AS_location_fnc_increaseBusy;
-		_origin_pos = _base call AS_location_fnc_position;
+		_origin_pos = _base call AS_location_fnc_positionConvoy;
 		private _size = _base call AS_location_fnc_size;
 
 		// compute number of trucks based on the marker size

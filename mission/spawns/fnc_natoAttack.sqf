@@ -35,7 +35,7 @@ private _fnc_spawn = {
 	private _origPos = getMarkerPos "spawnNATO";
 	private _isAirfield = true;
 	if (_origin != "spawnNATO") then {
-		_origPos = _origin call AS_location_fnc_position;
+		_origPos = _origin call AS_location_fnc_positionConvoy;
 		[_destination] spawn AS_fnc_dropArtilleryShellsNATO;
 		if (_origin call AS_location_fnc_type != "airfield") then {
 			_isAirfield = false;

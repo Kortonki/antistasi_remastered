@@ -108,7 +108,7 @@ private _fnc_spawn = {
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
 	private _origin = [_mission, "origin"] call AS_spawn_fnc_get;
-	private _posbase = _origin call AS_location_fnc_position;
+	private _posbase = _origin call AS_location_fnc_positionConvoy;
 	private _mainVehicleType = [_mission, "mainVehicleType"] call AS_spawn_fnc_get;
 	private _startTime = [_mission, "startTime"] call AS_spawn_fnc_get;
 	private _speed = "NORMAL";
@@ -481,7 +481,7 @@ private _fnc_clean = {
 	private _mainVehicle = [_mission, "mainVehicle"] call AS_spawn_fnc_get;
 	private _group = [_mission, "mainGroup"] call AS_spawn_fnc_get;
 	private _origin = [_mission, "origin"] call AS_spawn_fnc_get;
-	private _posbase = _origin call AS_location_fnc_position;
+	private _posbase = _origin call AS_location_fnc_positionConvoy;
 
 	private _wp0 = _group addWaypoint [_posbase, 0];
 	_wp0 setWaypointType "MOVE";

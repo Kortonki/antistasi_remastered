@@ -15,7 +15,7 @@ AS_HQ_placements = [];
     _obj setDir _dir;
     _obj setVectorUp (surfacenormal (getPosATL _obj));
     AS_HQ_placements pushBack _obj;
-    [[_obj,"moveObject"],"AS_fnc_addAction"] call BIS_fnc_MP;
+    [_obj, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 } forEach ([_dict, "placed"] call DICT_fnc_get);
 
 fuego inflame ([_dict, "inflame"] call DICT_fnc_get);

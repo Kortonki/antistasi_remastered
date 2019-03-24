@@ -45,12 +45,9 @@ private _fnc_spawn = {
 		};
 		if (count _pos == 0) then {_pos = ORIGIN};
 
-		private _vehicle = [_pos, 0, _tipoveh, ("CSAT" call AS_fnc_getFactionSide)] call bis_fnc_spawnvehicle;
-		private _heli = _vehicle select 0;
-		private _heliCrew = _vehicle select 1;
-		private _grupoheli = _vehicle select 2;
+		([_tipoVeh, _pos, 0, "CSAT", "pilot", 300, "FLYING"] call AS_fnc_createVehicle) params ["_heli", "_grupoHeli", "_pilot"];
+		private _heliCrew = units _grupoHeli;
 		_pilotos append _heliCrew;
-		{_x call AS_fnc_initUnitCSAT} forEach _heliCrew;
 		_grupos pushBack _grupoheli;
 		_vehiculos pushBack _heli;
 

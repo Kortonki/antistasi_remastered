@@ -40,7 +40,7 @@ private _fnc_spawn = {
 	};
 
 	if (_base != "") then {
-		_origin = _base call AS_location_fnc_position;
+		_origin = _base call AS_location_fnc_positionConvoy;
 		_aeropuerto = "";
 		if (!_isDirectAttack) then {[_base,20] call AS_location_fnc_increaseBusy;};
 
