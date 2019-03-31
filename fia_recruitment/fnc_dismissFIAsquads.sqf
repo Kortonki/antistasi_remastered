@@ -1,5 +1,7 @@
 private ["_groups","_hr","_resourcesFIA","_wp","_salir"];
 
+//TODO: Where to dismiss if FIA_HQ moving is in progress?
+
 _groups = _this select 0;
 
 _hr = 0;

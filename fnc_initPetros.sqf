@@ -10,7 +10,9 @@ if (!isNil "petros") then {
 grupoPetros = createGroup ("FIA" call AS_fnc_getFactionSide);
 petros = ["Squad Leader", getMarkerPos "FIA_HQ", grupoPetros] call AS_fnc_spawnFIAunit;
 [petros, "FIA"] call AS_fnc_setSide;
-[[petros,"mission"],"AS_fnc_addAction"] call BIS_fnc_MP;
+
+[petros,"mission"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+
 grupoPetros setGroupId ["Petros","GroupColor4"];
 petros setName "Petros";
 petros disableAI "MOVE";
@@ -19,7 +21,7 @@ removeHeadgear petros;
 removeGoggles petros;
 petros setSkill 1;
 
-// rearmPetros depends on the side weapons, which are defined afterwards
+// rearmPetros depends on the arsenal weapons, which are defined afterwards
 [] spawn {
     waitUntil {sleep 0.5; not isNil "Arsenal_initialized"};
     call AS_fnc_rearmPetros;
@@ -56,43 +58,9 @@ petros setSkill 1;
 petros addMPEventHandler ["mpkilled", {
     removeAllActions petros;
     private _killer = _this select 1;
-    if isServer then {
         diag_log format ["[AS] INFO: Petros died. Killer: %1", _killer];
-                  [] spawn {
-                //HQ garrison continues as HC group
-                private _garrison = ["FIA_HQ", "FIAsoldiers"] call AS_location_fnc_get;
-                private _group = createGroup ("FIA" call AS_fnc_getFactionSide);
-                {
-                  [_x] joinSilent _group;
-                } foreach _garrison;
-                AS_commander hcsetGroup [_group];
-                private _text = "HQ garrison is now under your command";
-                [leader _group, "sideChat", _text] call AS_fnc_localCommuncation;
-                ["FIA_HQ", "garrison", []] call AS_location_fnc_set;
+        [] remoteExec ["AS_fnc_petrosDeath", 2];
 
-				// remove 1/2 of every item.
-                waitUntil {not AS_S("lockTransfer")};
-                AS_Sset("lockTransfer", true);
-				([caja, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
-				{
-					private _values = _x select 1;
-					for "_i" from 0 to (count _values - 1) do {
-						private _new_value = floor ((_values select _i)/2.0);
-						_values set [_i, _new_value];
-					};
-				} forEach [_cargo_w, _cargo_m, _cargo_i, _cargo_b];
-
-				[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
-        AS_Sset("lockTransfer", false);
-        //Halve fuel reserves as well
-        AS_Pset("fuelFIA", floor (AS_P("fuelFIA")/2));
-        ["fia_hq", false] call AS_location_fnc_knownLocations;
-
-        waitUntil {sleep 5; isPlayer AS_commander};
-        [] remoteExec ["AS_fnc_selectNewHQ", AS_commander];
-        };
-
-    };
 }];
 
 publicVariable "grupoPetros";

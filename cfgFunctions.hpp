@@ -21,6 +21,7 @@ class AS {
 
         FNC_BASE(initPetros);
         FNC_BASE(rearmPetros);
+        FNC_BASE(petrosDeath);
         FNC_BASE(initPlayer);
         FNC_BASE(HQbuild);
         FNC_BASE(HQdeploy);
@@ -163,6 +164,7 @@ class AS {
 
         FNC_BASE(populateMilBuildings);
         FNC_BASE(createFIAgarrison);
+        FNC_BASE(garrisonRelease);
 
         FNC_BASE(getBasesForCA);
         FNC_BASE(getBasesForConvoy);

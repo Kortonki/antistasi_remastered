@@ -5,7 +5,7 @@ petros enableAI "MOVE";
 petros enableAI "AUTOTARGET";
 petros forceSpeed -1;
 
-[[petros, "remove"], "AS_fnc_addAction"] call BIS_fnc_MP;
+[petros, "remove"] remoteExec ["AS_fnc_addaction", [0,-2] select isDedicated, true];
 //call AS_fnc_rearmPetros; //no reason for this
 [petros] join AS_commander;
 petros setBehaviour "AWARE";
@@ -20,5 +20,7 @@ if isMultiplayer then {
 
 sleep 5;
 
-[[Petros, "buildHQ"],"AS_fnc_addAction"] call BIS_fnc_MP;
+[petros, "buildHQ"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
 petros setVariable ["pos", position petros, true];
+
+["fia_hq"] call AS_fnc_garrisonRelease;
