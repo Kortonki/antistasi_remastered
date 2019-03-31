@@ -16,8 +16,9 @@ waitUntil {sleep 1;
 };
 
 if _was_captured then {
-    /*[_location] remoteExec ["AS_fnc_lose_location", 2];
-    private _owner = owner (leader(_soldados select 0));
+
+    [_location] remoteExec ["AS_fnc_lose_location", 2];
+    /*private _owner = owner (leader(_soldados select 0));
     [_soldados] remoteExec ["AS_fnc_dismissFIAunits", _owner];*/
     [_location] call AS_fnc_garrisonRelease;
 
