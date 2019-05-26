@@ -2,8 +2,8 @@
 AS_SERVER_ONLY("fnc_changeForeignSupport.sqf");
 
 // locking to avoid race conditions
-waitUntil {isNil "lockForeignSupportChange"};
-lockForeignSupportChange = true;
+waitUntil {isNil "lockForeignSupport"};
+lockForeignSupport = true;
 
 params ["_nato", "_csat"];
 
@@ -26,7 +26,7 @@ if (_csatT + _csat > 100) then {
 
 if (_nato != 0) then {AS_Pset("NATOsupport",_natoT + _nato)};
 if (_csat != 0) then {AS_Pset("CSATsupport",_csatT + _csat)};
-lockForeignSupportChange = nil;
+lockForeignSupport = nil;
 
 // no change, exit
 if (_nato == 0 and _csat == 0) exitWith {};
@@ -34,9 +34,6 @@ if (_nato == 0 and _csat == 0) exitWith {};
 private _getSign = {
 	if (_this > 0) exitWith  {
 		"+"
-	};
-	if (_this < 0) exitWith  {
-		"-"
 	};
 	""
 };

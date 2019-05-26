@@ -21,4 +21,4 @@ private _locType = _location call AS_location_fnc_type;
 private _locName = text (nearestLocation [_location call AS_location_fnc_position, ""]); //Conside AS_fnc_getlocationName here
 
 private _text = format ["%1 near 2% garrison is now under your command", _locType, _locName];
-[leader _group, "sideChat", _text] call AS_fnc_localCommuncation;
+[leader _group, "sideChat", _text] call AS_fnc_localCommunication;
