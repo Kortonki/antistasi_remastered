@@ -1,8 +1,39 @@
 params ["_origin", "_destination", "_crew_group", "_patrol_marker", "_cargo_group", ["_threat", 0]];
 
 private _heli = vehicle (leader _crew_group);
-private _safePosition = [_destination, (100 + 10*_threat) min 300, 500, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
-private _wp1 = _crew_group addWaypoint [_safePosition, 0];
+private _safePosition = [_destination, (100 + 10*_threat) min 1000, 1100, 5, 0, 0.3, 0] call BIS_Fnc_findSafePos;
+
+(leader _crew_group) domove _safePosition;
+_heli flyinHeight 40;
+_heli setBehaviour "SAFE";
+_heli setSpeedMode "FULL";
+
+//Failsafe: Continue after 5 minutes if conditions not met
+
+private _timeRTB = time;
+
+//Slow down when nearing the drop-off point
+
+waitUntil {sleep 1; position _heli distance2D _safePosition < 400 or not(canmove _heli) or time > (_timeRTB + 300)};
+
+_crew_group setSpeedMode "LIMITED";
+
+waitUntil {sleep 1; position _heli distance2D _safePosition < 50 or not(canmove _heli)  or time > (_timeRTB + 300)};
+
+//Move a little if chopper happens to be over water
+
+if (surfaceIsWater (position _heli)) then {
+  _safePosition = [_safepostion, 50, 200, 5, 0, 0.9, 0] call BIS_Fnc_findSafePos;
+  (leader _crew_group) domove _safePosition;
+  waitUntil {sleep 1; position _heli distance2D _safePosition < 50 or not(canmove _heli) or time > (_timeRTB + 300)};
+};
+
+[_cargo_group, _heli] spawn SHK_Fastrope_fnc_AIs;
+
+
+
+//EXPERIMENT IF USING DOMOVE IS MORE RELIABLE
+/*private _wp1 = _crew_group addWaypoint [_safePosition, 0];
 _wp1 setWaypointType "MOVE";
 _wp1 setWaypointSpeed "FULL";
 _wp1 setWaypointBehaviour "CARELESS";
@@ -16,7 +47,7 @@ private _statement = {
     0 = [_cargo_group, _veh] spawn SHK_Fastrope_fnc_AIs;
     //waitUntil {scriptDone _ropping};
 };
-_wp1 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
+_wp1 setWaypointStatements ["true", _statement call AS_fnc_codeToString];*/
 
 private _wp2 = _cargo_group addWaypoint [_safePosition, 0];
 _wp2 setWaypointType "MOVE";
@@ -26,7 +57,7 @@ private _wp4 = _cargo_group addWaypoint [getMarkerpos _patrol_marker, _size];
 _wp4 setWaypointType "SAD";
 _wp4 setWaypointSpeed "NORMAL";
 _wp4 setWaypointFormation "LINE";
-_wp4 setWaypointBehaviour "COMBAT";
+_wp4 setWaypointBehaviour "AWARE";
 
 _cargo_group setVariable ["AS_patrol_marker", _patrol_marker, true];
 private _statement2 = {
@@ -36,7 +67,7 @@ _wp2 setWaypointStatements ["true", _statement2 call AS_fnc_codeToString];
 
 // send the helicopter home
 sleep 5;
-private _timeLeave = time + 60;
+private _timeLeave = time + (5*60); //Leave after minute (failsafe)
 waitUntil {sleep 2; not(isnil {_heli getVariable "RoppingReady"}) or time > _timeLeave};
 private _wp2 = _crew_group addWaypoint [_origin, 0];
 _wp1 setWaypointType "MOVE";

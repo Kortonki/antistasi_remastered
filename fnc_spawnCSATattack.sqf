@@ -1,8 +1,8 @@
-params ["_marker", "_count", "_threatEvalAir"];
+params ["_patrolMarker", "_count", "_threatEvalAir"];
 
-private _position = getMarkerPos _marker;
+private _position = getMarkerPos _patrolMarker;
 
-private _origin_pos = getMarkerPos "spawnCSAT";
+private _originPos = getMarkerPos "spawnCSAT";
 
 private _groups = [];
 private _vehicles = [];
@@ -20,12 +20,12 @@ for "_i" from 1 to _count do {
     // find spawn position
     private _pos = [];
     while {count _pos == 0} do {
-        _pos = _origin_pos findEmptyPosition [0, 500, _helicopterType];
+        _pos = _originPos findEmptyPosition [0, 500, _helicopterType];
     };
     _pos set [2,300];
 
     //([_pos, 0, _helicopterType, "CSAT" call AS_fnc_getFactionSide] call bis_fnc_spawnvehicle) params ["_heli", "_heliCrew", "_grupoheli"];
-    ([_helicopterType, _pos, 0, "CSAT", "pilot", 100, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoheli"];
+    ([_helicopterType, _pos, 0, "CSAT", "pilot", 300, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoheli"];
 
     _groups pushBack _grupoheli;
     _vehicles pushBack _heli;
@@ -59,12 +59,12 @@ for "_i" from 1 to _count do {
 		_groups pushBack _group;
 
         if (_waveType == "paradrop") exitWith {
-            [_origin_pos, _position, _grupoheli, _marker, _group, _threatEvalAir] spawn AS_tactics_fnc_heli_paradrop;
+            [_originPos, _position, _grupoheli, _patrolMarker, _group, _threatEvalAir] spawn AS_tactics_fnc_heli_paradrop;
         };
         if (_waveType == "disembark") exitWith {
-            _vehicles append ([_origin_pos, _position, _grupoheli, _group, _marker] call AS_tactics_fnc_heli_disembark); 
+            _vehicles append ([_originPos, _position, _grupoheli, _group, _patrolMarker] call AS_tactics_fnc_heli_disembark);
         };
-        [_origin_pos, _position, _grupoheli, _marker, _group, _threatEvalAir] spawn AS_tactics_fnc_heli_fastrope;
+        [_originPos, _position, _grupoheli, _patrolMarker, _group, _threatEvalAir] spawn AS_tactics_fnc_heli_fastrope;
     };
 };
 

@@ -18,7 +18,6 @@ private _cargo_m = [[], []];
 private _cargo_i = [[], []];
 private _cargo_b = [[], []];
 
-// TODO: URGENT: recover fuel each despawn for AI vehicles
 if (_location call AS_location_fnc_side == "FIA") then {
 
   {

@@ -19,6 +19,7 @@ private _fnc_spawn = {
 	private _origin = getMarkerPos "spawnCSAT";
 
 	private _vehiculos = [];
+	private _soldiers = [];
 	private _groups = [];
 
 	private _patrolMarker = createMarker [format ["defhq_%1", round (diag_tickTime/60)], _position];
@@ -30,10 +31,12 @@ private _fnc_spawn = {
 		[-20000] remoteExec ["AS_fnc_changeAAFmoney",2];
 		[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 
+	//Transport choppers. They will come regardless of support
+
 	for "_i" from 1 to (1 + round random 2) do {
 		private _pos = [_origin, 300, random 360] call BIS_Fnc_relPos;
 		private _type = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);
-		([_type, _pos, random 360, "CSAT", "pilot", 300, "FLYING"] call AS_fnc_createVehicle) params ["_heli", "_grupoHeli", "_pilot"];
+		([_type, _pos, random 360, "CSAT", "pilot", 300, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoHeli", "_pilot"];
 		_groups pushBack _grupoheli;
 		_vehiculos pushBack _heli;
 
@@ -46,7 +49,30 @@ private _fnc_spawn = {
 		[_origin, _position, _grupoheli, _patrolMarker, _grupo] spawn AS_tactics_fnc_heli_fastrope;
 	};
 
-	private _soldiers = [];
+	//CSAT attack helis
+
+	if ((AS_P("CSATSupport")) >= 75) then {
+
+		private _count = 1;
+
+		if (((AS_P("CSATSupport")) + random 25) > 100) then {_count = 2}; //Nearing CSAT supprt 100, bigger possibility to spawn 2 attack helos
+
+		for "_i" from 1 to _count do {
+
+			private _helicopterType = selectRandom (["CSAT", "helis_armed"] call AS_fnc_getEntity) + (["CSAT", "helis_attack"] call AS_fnc_getEntity);
+
+			([_helicopterType, _origin, 0, "CSAT", "pilot", 300, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoheli"];
+
+			private _wp1 = _grupoheli addWaypoint [_position, 0];
+			_wp1 setWaypointType "SAD";
+
+			_groups pushBack _grupoheli;
+			_vehiculos pushBack _heli;
+			_heli setVariable ["origin", getMarkerpos "spawnCSAT", true]; //Attack helos return elsewhere than others
+		};
+
+	};
+
 	{_soldiers append (units _x)} forEach _groups;
 
 	//Use arty and air strike
@@ -72,10 +98,10 @@ private _fnc_spawn = {
 	private _base = [_position, true] call AS_fnc_getBasesForCA;
 
 
-	private _origin_pos = [];
+	private _originPos = [];
 	if (_base != "") then {
 		[_base,60] call AS_location_fnc_increaseBusy;
-		_origin_pos = _base call AS_location_fnc_position;
+		_originPos = _base call AS_location_fnc_positionConvoy;
 		private _size = _base call AS_location_fnc_size;
 
 		// compute number of trucks based on the marker size
@@ -94,7 +120,7 @@ private _fnc_spawn = {
 			if (_threat > 5 and ("tanks" call AS_AAFarsenal_fnc_count > 0)) then {
 				_toUse = "tanks";
 				};
-			([_toUse, _origin_pos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+			([_toUse, _originPos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehiculos append _vehicles1;
 			{_soldiers append (units _x)} foreach _groups1;
@@ -106,20 +132,44 @@ private _fnc_spawn = {
 
 	[_mission, "resources", [_task, _groups, _vehiculos, [_patrolMarker]]] call AS_spawn_fnc_set;
 	[_mission, "soldiers", _soldiers] call AS_spawn_fnc_set;
+	[_mission, "originPos", _originPos] call AS_spawn_fnc_set;
 };
 
 private _fnc_run = {
 	params ["_mission"];
 	private _soldiers = [_mission, "soldiers"] call AS_spawn_fnc_get;
 	private _groups = ([_mission, "resources"] call AS_spawn_fnc_get) select 1;
+	private _originPos = [_mission, "originPos"] call AS_spawn_fnc_get;
 
 	private _min_fighters = round ((count _soldiers)/2);
 	private _max_time = time + 60*60;
 
-	private _fnc_missionFailedCondition = {false};
+	private _fnc_missionFailedCondition = {not(alive petros)};
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+
+		//After a while after petros' death, send the soldiers away:
+
+		[_soldiers, _groups, _originPos] spawn {
+				params ["_soldiers",["_groups",[]], ["_originPos",[0,0,0]]];
+				sleep (60*5 + (random (60*50)));
+
+				{_x doMove _originPos} forEach _soldiers;
+				{
+					//If no spesicif origin spesified, use the defualt origin
+
+					if (isNil {(vehicle leader _x) getVariable "origin"}) then {
+						private _wpRTB = _x addWaypoint [_originPos, 0];
+						_x setCurrentWaypoint _wpRTB;
+					} else {
+						private _wpRTB = _x addWaypoint [_origin, 0];
+						_x setCurrentWaypoint _wpRTB;
+						_x setCombatMode "GREEN";
+					};
+				} forEach _groups;
+		};
+
 	};
 	private _fnc_missionSuccessfulCondition = {
 		{_x call AS_fnc_canFight} count _soldiers < _min_fighters or
@@ -129,12 +179,21 @@ private _fnc_run = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 
-		private _origin = getMarkerPos "spawnCSAT";
+		//private _origin = getMarkerPos "spawnCSAT";
 
-		{_x doMove _origin} forEach _soldiers;
+		{_x doMove _originPos} forEach _soldiers;
+
 		{
-			private _wpRTB = _x addWaypoint [_origin, 0];
-			_x setCurrentWaypoint _wpRTB;
+			//If no spesicif origin spesified, use the defualt origin
+
+			if (isNil {(vehicle leader _x) getVariable "origin"}) then {
+				private _wpRTB = _x addWaypoint [_originPos, 0];
+				_x setCurrentWaypoint _wpRTB;
+			} else {
+				private _wpRTB = _x addWaypoint [_origin, 0];
+				_x setCurrentWaypoint _wpRTB;
+				_x setCombatMode "GREEN";
+			};
 		} forEach _groups;
 	};
 

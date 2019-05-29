@@ -16,7 +16,10 @@ if isMultiplayer then {
 	{_x hideObject true} forEach AS_permanent_HQplacements;
 };
 
+//TODO: maybe some kind of a delay here? or let hq objects despawn when in distance
 "delete" call AS_fnc_HQaddObject;
+
+AS_HQ_moving = true;
 
 sleep 5;
 

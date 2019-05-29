@@ -156,8 +156,8 @@ if (count _objectives > 0) then {
 			_alarm = true;
 		};
 		if (_location call AS_location_fnc_type == "fia_hq") exitWith {
-			[] call AS_mission_fnc_createDefendHQ;
-			_alarm = true;
+			_alarm = [] call AS_mission_fnc_createDefendHQ; //If mission creation fails, no alarm
+
 		};
 		_location call AS_mission_fnc_createDefendLocation;
 		_alarm = true;

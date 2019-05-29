@@ -2,9 +2,25 @@
 AS_SERVER_ONLY("fnc_initPetros.sqf");
 
 if (!isNil "petros") then {
-  //Petros' weapons are lost when he's killed
-    deleteVehicle petros;
-    deleteGroup grupoPetros;
+
+  //recover Petros' gear
+
+  private _cargo_w = [[], []];
+  private _cargo_m = [[], []];
+  private _cargo_i = [[], []];
+  private _cargo_b = [[], []];
+
+  private _arsenal = [_x, true] call AS_fnc_getUnitArsenal;  // restricted to locked weapons
+  _cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
+  _cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
+  _cargo_i = [_cargo_i, _arsenal select 2] call AS_fnc_mergeCargoLists;
+  _cargo_b = [_cargo_b, _arsenal select 3] call AS_fnc_mergeCargoLists;
+  [cajaVeh, (_arsenal select 4)]; call AS_fnc_addMagazineRemains;
+
+  [caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;
+
+  deleteVehicle petros;
+  deleteGroup grupoPetros;
 };
 
 grupoPetros = createGroup ("FIA" call AS_fnc_getFactionSide);

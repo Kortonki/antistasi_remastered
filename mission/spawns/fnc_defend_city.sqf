@@ -21,6 +21,7 @@ private _fnc_spawn = {
 	private _population = [_location, "population"] call AS_location_fnc_get;
 
 	private _grupos = [];
+	private _soldiers = [];
 	private _pilotos = [];
 	private _vehiculos = [];
 	private _civilians = [];
@@ -34,6 +35,8 @@ private _fnc_spawn = {
 	_patrolMarker setMarkerSize [_size,_size];
 	_patrolMarker setMarkerAlpha 0;
 
+	//CSAT Air Attack
+
 	for "_i" from 1 to 3 do {
 		private _tipoveh = selectRandom _csatAir;
 		private _timeOut = 0;
@@ -45,7 +48,7 @@ private _fnc_spawn = {
 		};
 		if (count _pos == 0) then {_pos = ORIGIN};
 
-		([_tipoVeh, _pos, 0, "CSAT", "pilot", 300, "FLYING"] call AS_fnc_createVehicle) params ["_heli", "_grupoHeli", "_pilot"];
+		([_tipoVeh, _pos, 0, "CSAT", "pilot", 300, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoHeli", "_pilot"];
 		private _heliCrew = units _grupoHeli;
 		_pilotos append _heliCrew;
 		_grupos pushBack _grupoheli;
@@ -97,6 +100,9 @@ private _fnc_spawn = {
 
 	[leader _grupoCivil, _location, "AWARE","SPAWNED","NOVEH2"] spawn UPSMON;
 
+
+	//CSAT Arty and air raids if enough CSAT support
+
 	[_location,true] call AS_location_fnc_spawn;
 	if ((AS_P("CSATSupport")) >= 25) then {
 		[_location] spawn AS_fnc_dropArtilleryShells;
@@ -107,10 +113,12 @@ private _fnc_spawn = {
 			[_location, selectRandom (["CSAT", "planes"] call AS_fnc_getEntity)] spawn AS_fnc_activateAirstrike;
 		};
 	};
-	private _soldiers = [];
+
 	{_soldiers append (units _x)} forEach _grupos;
 
 	{if ((surfaceIsWater position _x) and (vehicle _x == _x)) then {_x setDamage 1}} forEach _soldiers;
+
+	//TODO: Consider AAF Land attack here as well?
 
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
     [_mission, "resources", [_task, _grupos, _vehiculos, [_patrolMarker]]] call AS_spawn_fnc_set;

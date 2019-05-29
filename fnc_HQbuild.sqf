@@ -2,8 +2,9 @@
 AS_SERVER_ONLY("fnc_HQbuild.sqf");
 
 [petros] join grupoPetros;
-[[petros,"remove"],"AS_fnc_addAction"] call BIS_fnc_MP;
-[[petros,"mission"],"AS_fnc_addAction"] call BIS_fnc_MP;
+
+[petros, "remove"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
+[petros, "mission"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
 petros forceSpeed 0;
 
 ["FIA_HQ", "position", getPos petros] call AS_location_fnc_set;
@@ -21,3 +22,5 @@ if isMultiplayer then {
 } else {
 	{_x hideObject false} forEach AS_permanent_HQplacements;
 };
+
+AS_HQ_moving = nil;

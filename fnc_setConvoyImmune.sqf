@@ -43,6 +43,9 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 			};
 
 		};
+		//Give new domove command to the original waypoint avoid getting stuck
+		(driver _veh) domove _destination;
+
 	};
 };
 

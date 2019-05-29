@@ -4,6 +4,19 @@ params ["_mission", ["_args", []]];
 private _location = _mission call AS_mission_fnc_location;
 private _position = _location call AS_location_fnc_position;
 private _type = _mission call AS_mission_fnc_type;
+/*
+PARAMS:
+
+params [["_commander_score", 0],
+        ["_players_score", [0,[0,0,0],0]],
+        ["_prestige", [0, 0]],
+        ["_resourcesFIA", [0, 0]],
+        ["_citySupport", [0, 0, []]],
+        ["_changeAAFattack", 0],
+        ["_custom", []],
+        ["_increaseBusy", ["", 0]]
+
+*/
 
 if (_type == "kill_traitor") exitWith {
     [-10, 0, [0, 0], [-2, -2000], [0, 0, []], -10*60, [

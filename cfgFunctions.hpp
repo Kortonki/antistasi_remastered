@@ -19,6 +19,7 @@ class AS {
         FNC_BASE(resourcesToggle);
         FNC_BASE(resourcesUpdate);
 
+        FNC_BASE(respawnPetros);
         FNC_BASE(initPetros);
         FNC_BASE(rearmPetros);
         FNC_BASE(petrosDeath);

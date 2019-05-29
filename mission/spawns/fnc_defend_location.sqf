@@ -46,11 +46,13 @@ private _fnc_spawn = {
 	private _groups = [];
 	private _vehicles = [];
 
-	if _useCSAT then {
-		if (AS_P("resourcesAAF") > 20000) then {
-			[-20000] remoteExec ["AS_fnc_changeAAFmoney",2];
-			[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
-		};
+	//CSAT attack
+
+	if (_useCSAT and {AS_P("resourcesAAF") > 20000}) then {
+
+		[-20000] remoteExec ["AS_fnc_changeAAFmoney",2];
+		[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
+
 
 		private _cuenta = 3;
 		if ((_base == "") or (_airfield == "")) then {_cuenta = 6};
@@ -75,10 +77,10 @@ private _fnc_spawn = {
 		};
 	};
 
-	private _origin_pos = [];
+	private _originPos = [];
 	if (_base != "") then {
 		[_base,60] call AS_location_fnc_increaseBusy;
-		_origin_pos = _base call AS_location_fnc_positionConvoy;
+		_originPos = _base call AS_location_fnc_positionConvoy;
 		private _size = _base call AS_location_fnc_size;
 
 		// compute number of trucks based on the marker size
@@ -95,7 +97,7 @@ private _fnc_spawn = {
 			if (_threatEvalLand > 5 and ("tanks" call AS_AAFarsenal_fnc_count > 0)) then {
 				_toUse = "tanks";
 			};
-			([_toUse, _origin_pos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
 			sleep 5;
@@ -104,15 +106,15 @@ private _fnc_spawn = {
 
 	if (_airfield != "") then {
 		[_airfield,60] call AS_location_fnc_increaseBusy;
-		if (_base != "") then {sleep ((_origin_pos distance _position)/16)};
+		if (_base != "") then {sleep ((_originPos distance _position)/16)};
 
-		_origin_pos = _airfield call AS_location_fnc_position;
-		_origin_pos set [2,300];
+		_originPos = _airfield call AS_location_fnc_position;
+		_originPos set [2,300];
 
 		// spawn a UAV
 		private _uavTypes = ["AAF", "uavs_attack"] call AS_fnc_getEntity;
 		if (count _uavTypes != 0) then {
-			private _uav = createVehicle [selectRandom _uavTypes, _origin_pos, [], 0, "FLY"];
+			private _uav = createVehicle [selectRandom _uavTypes, _originPos, [], 0, "FLY"];
 			_uav flyInHeight 1000; // so it is in safe altitude.
 			_vehicles pushBack _uav;
 			[_uav, "AAF"] call AS_fnc_initVehicle;
@@ -137,7 +139,7 @@ private _fnc_spawn = {
 					_toUse = "planes";
 				};
 			};
-			([_toUse, _origin_pos, _position, _patrolMarker] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
+			([_toUse, _originPos, _position, _patrolMarker] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
 			sleep 15;
@@ -148,7 +150,7 @@ private _fnc_spawn = {
 	{_soldiers append (units _x)} forEach _groups;
 
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-	[_mission, "origin_pos", _origin_pos] call AS_spawn_fnc_set;
+	[_mission, "originPos", _originPos] call AS_spawn_fnc_set;
   [_mission, "resources", [_task, _groups, _vehicles, [_patrolMarker]]] call AS_spawn_fnc_set;
 	[_mission, "soldiers", _soldiers] call AS_spawn_fnc_set;
 };
@@ -175,11 +177,11 @@ private _fnc_run = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 
-		private _origin_pos = [_mission, "origin_pos"] call AS_spawn_fnc_get;
+		private _originPos = [_mission, "originPos"] call AS_spawn_fnc_get;
 
-		{_x doMove _origin_pos} forEach _soldiers;
+		{_x doMove _originPos} forEach _soldiers;
 		{
-			private _wpRTB = _x addWaypoint [_origin_pos, 0];
+			private _wpRTB = _x addWaypoint [_originPos, 0];
 			_x setCurrentWaypoint _wpRTB;
 		} forEach _groups;
 	};

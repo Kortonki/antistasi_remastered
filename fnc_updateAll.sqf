@@ -91,6 +91,7 @@ private _FIAResIncomeMultiplier = 1;
 
 
 
+
 // control the airport and have majority => win game.
 //Edited: must have twice as much influence as AAF
 if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_side == "FIA")) exitWith {
@@ -125,16 +126,16 @@ if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_
     };
 } forEach ("resource" call AS_location_fnc_T);
 
-
 //Addition: Unused HR will earn money for FIA. Consider them working for supplies etc. //TODO: probably needs balancing
 private _resCount = {(_x call AS_location_fnc_side) == "FIA"} count (["resource", "seaport"] call AS_location_fnc_T);
 _FIAnewMoney = _FIAnewMoney + (_resCount+1)*_FIAResIncomeMultiplier*(AS_P("hr"));
 
 
-
 //HR builds up over time for a full HR. There's a bonus for it in case of single player or low number of players
 private _hr_cum = AS_persistent getVariable ["hr_cum", 0];
 private _player_count = count (allPlayers - entities "HeadlessClient_F");
+
+
 
 _hr_cum = _hr_cum + _FIAnewHR - (floor _FIAnewHR);
 if (_player_count < 5) then {
@@ -146,14 +147,25 @@ while {_hr_cum >= 1} do {
   _hr_cum = _hr_cum - 1;
 };
 
-private _texto = format ["<t size='0.6' color='#C1C0BB'>Taxes Income.<br/> <t size='0.5' color='#C1C0BB'><br/>Manpower: +%1<br/>Money: +%2 €<br/>Fuel: +%3",floor _FIAnewHR, round _FIAnewMoney, round _FIAnewFuel];
+//While petros is dead or HQ is on the move, no HR or money benefits to the players. This to keep players exploiting by keeping petros dead to avoid HQ attacks or others
+//TODO: Notification during update about petros death / hq moving
 
-[petros, "income",_texto] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
+if (!(alive petros) or !(isNil "AS_HQ_moving")) then {
+  _FIAnewMoney = 0;
+  _FIAnewHR = 0;
+  _FIAnewFuel = 0;
+} else {
+
+  private _texto = format ["<t size='0.6' color='#C1C0BB'>Taxes Income.<br/> <t size='0.5' color='#C1C0BB'><br/>Manpower: +%1<br/>Money: +%2 €<br/>Fuel: +%3",floor _FIAnewHR, round _FIAnewMoney, round _FIAnewFuel];
+
+  [petros, "income",_texto] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
+
+};
 
 _FIAnewHR = AS_P("hr") + floor _FIAnewHR;
 
 if (_FIAnewHR > 0) then {
-    _FIAnewHR = _FIAnewHR min (["HR"] call fnc_BE_permission);
+  _FIAnewHR = _FIAnewHR min (["HR"] call fnc_BE_permission);
 };
 
 _AAFnewMoney = AS_P("resourcesAAF") + round _AAFnewMoney;
