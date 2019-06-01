@@ -5,7 +5,7 @@ params ["_objType", "_player"];
 //this happens at init and at players discretion
 
 if (_objType == "delete") exitWith {
-	call AS_fnc_HQdeletePad;
+	//call AS_fnc_HQdeletePad; //No need to delete, 
 	{
 		[_x] RemoteExec ["deleteVehicle", _x];
 	} foreach AS_HQ_placements;

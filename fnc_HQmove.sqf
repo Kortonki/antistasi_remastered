@@ -20,6 +20,7 @@ if isMultiplayer then {
 "delete" call AS_fnc_HQaddObject;
 
 AS_HQ_moving = true;
+publicVariable "AS_HQ_moving"; //This is used to check for group dismission which ar erun locally
 
 sleep 5;
 

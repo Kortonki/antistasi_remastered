@@ -3,7 +3,12 @@ params ["_origin", "_destination", "_crew_group", "_patrol_marker", "_cargo_grou
 private _heli = vehicle (leader _crew_group);
 private _safePosition = [_destination, (100 + 10*_threat) min 1000, 1100, 5, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 
-(leader _crew_group) domove _safePosition;
+//HERE make waypoint past the actual position to avoid ARMA 3 feature of completing air waypoints too early
+
+private _dir = [_heli, _safePosition] call bis_fnc_dirTo;
+private _movePosition = [_safePosition, 500, _dir] call bis_fnc_relPos;
+
+(leader _crew_group) domove _movePosition;
 _heli flyinHeight 40;
 _heli setBehaviour "SAFE";
 _heli setSpeedMode "FULL";
@@ -23,8 +28,14 @@ waitUntil {sleep 1; position _heli distance2D _safePosition < 50 or not(canmove 
 //Move a little if chopper happens to be over water
 
 if (surfaceIsWater (position _heli)) then {
-  _safePosition = [_safepostion, 50, 200, 5, 0, 0.9, 0] call BIS_Fnc_findSafePos;
-  (leader _crew_group) domove _safePosition;
+  _safeposition = [_safepostion, 50, 200, 5, 0, 0.9, 0] call BIS_Fnc_findSafePos;
+
+  _dir = [_heli, _safePosition] call bis_fnc_dirTo;
+  _movePosition = [_safePosition, 500, _dir] call bis_fnc_relPos;
+
+  (leader _crew_group) domove _movePosition;
+
+
   waitUntil {sleep 1; position _heli distance2D _safePosition < 50 or not(canmove _heli) or time > (_timeRTB + 300)};
 };
 
@@ -69,7 +80,7 @@ _wp2 setWaypointStatements ["true", _statement2 call AS_fnc_codeToString];
 sleep 5;
 private _timeLeave = time + (5*60); //Leave after minute (failsafe)
 waitUntil {sleep 2; not(isnil {_heli getVariable "RoppingReady"}) or time > _timeLeave};
-private _wp2 = _crew_group addWaypoint [_origin, 0];
+private _wp1 = _crew_group addWaypoint [_origin, 0];
 _wp1 setWaypointType "MOVE";
 _wp1 setWaypointSpeed "FULL";
 _wp1 setWaypointBehaviour "CARELESS";

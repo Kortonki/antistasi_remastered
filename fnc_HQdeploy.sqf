@@ -17,5 +17,5 @@ bandera setPos _pos;
 _rnd = _rnd + 45;
 _pos = [_basePos, 3, _rnd] call BIS_Fnc_relPos;
 cajaVeh setPos _pos;
-_pos = [_pos] call AS_fnc_findSpawnSpots;
+_pos = ([_pos] call AS_fnc_findSpawnSpots) select 0;
 vehiclePad setPos _pos;

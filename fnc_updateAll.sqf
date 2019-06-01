@@ -44,26 +44,27 @@ private _FIAResIncomeMultiplier = 1;
             if _power then {
                 if (_FIAsupport + _AAFsupport + 1 <= 100) then {[0,1,_city] call AS_fnc_changeCitySupport};
             }
-            else {
+            //This edited so no longer city support loss without power (game balance)
+            /*else {
                 if (_FIAsupport > 6) then {
                     [0,-1,_city] call AS_fnc_changeCitySupport;
                 } else {
                     [1,0,_city] call AS_fnc_changeCitySupport;
                 };
-            };
+            };*/
         } else {
             _incomeFIA = (_incomeFIA/2);
             _HRincomeFIA = (_HRincomeFIA/2);
             if _power then {
                 if (_AAFsupport + _FIAsupport + 1 <= 100) then {[1,0,_city] call AS_fnc_changeCitySupport};
             }
-            else {
+            /*else {
                 if (_AAFsupport > 6) then {
                     [-1,0,_city] call AS_fnc_changeCitySupport;
                 } else {
                     [0,1,_city] call AS_fnc_changeCitySupport;
                 };
-            };
+            };*/
         };
     };
 
@@ -73,7 +74,8 @@ private _FIAResIncomeMultiplier = 1;
 
     // flip cities due to majority change.
     if ((_AAFsupport < _FIAsupport) and (_side == "AAF")) then {
-        [["TaskSucceeded", ["", format ["%1 joined FIA",[_city, false] call AS_fnc_getLocationName]]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+        ["TaskSucceeded", ["", format ["%1 joined FIA",[_city, false] call AS_fnc_getLocationName]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+
         _city call AS_location_fnc_updateMarker;
 
         ["con_cit"] call fnc_BE_XP;
@@ -82,7 +84,8 @@ private _FIAResIncomeMultiplier = 1;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
     };
     if ((_AAFsupport > _FIAsupport) and (_side == "FIA")) then {
-        [["TaskFailed", ["", format ["%1 joined %2",[_city, false] call AS_fnc_getLocationName, (["AAF", "name"] call AS_fnc_getEntity)]]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+        ["TaskFailed", ["", format ["%1 joined %2",[_city, false] call AS_fnc_getLocationName, (["AAF", "name"] call AS_fnc_getEntity)]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+
         _city call AS_location_fnc_updateMarker;
         [0,-5] call AS_fnc_changeForeignSupport;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
@@ -91,12 +94,15 @@ private _FIAResIncomeMultiplier = 1;
 
 
 
-
+//WIN CONDITION
 // control the airport and have majority => win game.
-//Edited: must have twice as much influence as AAF
+//Edited: must have twice as much influence as AAF:: 66% against 33%
+//TODO: consider having a world spesific win locations instead of the airfield
 if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_side == "FIA")) exitWith {
     "end1" call BIS_fnc_endMissionServer;
 };
+
+//TODO: END Game when too much civ casualties?
 
 // forEach factory, add to multiplier
 {

@@ -171,9 +171,11 @@ private _fnc_run = {
 		};
 
 	};
+
+	//SUCCESS happens after some time, defeating most of the enemy or by moving the HQ
 	private _fnc_missionSuccessfulCondition = {
 		{_x call AS_fnc_canFight} count _soldiers < _min_fighters or
-		{time > _max_time}
+		time > _max_time or !("fia_hq" in ([] call AS_location_fnc_knownLocations))
 	};
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;

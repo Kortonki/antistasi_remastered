@@ -36,7 +36,7 @@ _fuelTankSize = _vehicle call {
   if (_vehicle isKindof "Truck_F") exitWith {
     300 + round(((getmass _vehicle)-5000)*0.001)*30};
   if (_vehicle isKindof "Car") exitWith {
-    60 + round(((getmass _vehicle)-1000)*0.001)*30};
+    60 + round(((getmass _vehicle)-1000)*0.001)*20};
   if (_vehicle isKindof "Tank" or _type in BE_class_MBT) exitWith {
     1500 + round(((getmass _vehicle)-60000)*0.001)*60};
   if (_vehicle isKindof "Helicopter" or _type in BE_class_Heli) exitWith {
@@ -46,6 +46,7 @@ _fuelTankSize = _vehicle call {
   if (_vehicle isKindof "Boat") exitWith {
     60 + round(((getmass _vehicle)-1000)*0.001)*40};
   diag_log format["[AS] Error: AS_fnc_getFuelTankSize: Invalid vehicle type %1: fallback fuel tank size used", _vehicle];
+  100
 };
 
 if (_fuelTankSize < 0) then {

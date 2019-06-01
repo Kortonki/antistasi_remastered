@@ -7,7 +7,7 @@ AS_SERVER_ONLY("fnc_HQbuild.sqf");
 [petros, "mission"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
 petros forceSpeed 0;
 
-["FIA_HQ", "position", getPos petros] call AS_location_fnc_set;
+["fia_hq", "position", getPos petros] call AS_location_fnc_set;
 if ((getpos petros) distance2D (petros getVariable ["pos", [0,0,0]]) >= 500) then {
 	//If new FIA HQ is far enough from the old one, AAF has to discover it again
 	["fia_hq", false] call AS_location_fnc_knownLocations;
@@ -24,3 +24,4 @@ if isMultiplayer then {
 };
 
 AS_HQ_moving = nil;
+publicVariable "AS_HQ_moving"; //This is used to check for group dismission

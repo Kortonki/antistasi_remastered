@@ -109,7 +109,7 @@ if (_type == "broadcast") exitWith {
     [-5, 0, [0, 0], [0, 0], [5,-5,_position]]
 };
 if (_type == "pamphlets") exitWith {
-    [-5, 0, [0, 0], [0, 0], [5,0,_position]]
+    [-5, 0, [0, 0], [0, 0], [0,-5,_position]]
 };
 if (_type == "repair_antenna") exitWith {
     _args params [["_antennaPos", [0,0,0]]];

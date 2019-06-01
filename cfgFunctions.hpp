@@ -242,6 +242,7 @@ class AS {
         FNC_BASE(addFIAlocation);
         FNC(fia_recruitment,recruitFIAgarrison);
         FNC(fia_recruitment,recruitFIAsquad);
+        FNC(fia_recruitment,dismissFIAsquad);
         FNC(fia_recruitment,dismissFIAsquads);
         FNC(fia_recruitment,dismissFIAunits);
         FNC(fia_recruitment,dismissFIAgarrison);
