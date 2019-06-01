@@ -5,7 +5,7 @@ params ["_objType", "_player"];
 //this happens at init and at players discretion
 
 if (_objType == "delete") exitWith {
-	//call AS_fnc_HQdeletePad; //No need to delete, 
+	//call AS_fnc_HQdeletePad; //No need to delete,
 	{
 		[_x] RemoteExec ["deleteVehicle", _x];
 	} foreach AS_HQ_placements;
@@ -22,12 +22,11 @@ if (position _player distance _position > 100) exitWith {
 };
 
 if (_objType == "pad") exitWith {
-	call AS_fnc_HQdeletePad;
-	{
+		{
 		if (str typeof _x find "Land_Bucket_painted_F" > -1) then {
 			[_x, {deleteVehicle _this}] remoteExec ["call", 0];
 		};
-	} forEach nearestObjects [petros, [], 80];
+	} forEach nearestObjects [fuego, [], 100];
 	private _padBag = "Land_Bucket_painted_F" createVehicle [0,0,0];
 	_padBag setPos ([getPos _player, 2, getDir _player] call BIS_Fnc_relPos);
 	[_padBag, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
