@@ -25,6 +25,7 @@ class AS {
         FNC_BASE(petrosDeath);
         FNC_BASE(initPlayer);
         FNC_BASE(HQbuild);
+        FNC_BASE(HQforceBuild);
         FNC_BASE(HQdeploy);
         FNC_BASE(HQmove);
         FNC_BASE(HQplace);

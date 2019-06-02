@@ -3,7 +3,7 @@ AS_SERVER_ONLY("AS_fnc_petrosDeath");
 
 //This is probablyn not needed, as the HQ is not moved
 //HQ garrison continues as HC group
-["fia_hq"] call AS_fnc_garrisonRelease;
+//["fia_hq"] call AS_fnc_garrisonRelease;
 
 //Halve nato support
 private _nato = AS_P("NATOsupport");

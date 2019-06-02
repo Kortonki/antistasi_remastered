@@ -19,11 +19,16 @@ class build_menu
 
 	class controls
 	{
-AS_DIALOG(3,"Building Options", "closeDialog 0; if (player == AS_commander) then {createDialog ""radio_comm_commander""} else {createDialog ""radio_comm_player""};");
+
+
+AS_DIALOG(5,"Building Options", "closeDialog 0; if (player == AS_commander) then {createDialog ""radio_comm_commander""} else {createDialog ""radio_comm_player""};");
+
+#define STR_BUILD_NEW_HQ "closeDialog 0; [position AS_commander] remoteExec [""AS_fnc_HQforceBuild"", 2];"
 
 BTN_M(1,-1,"Manage Locations", "", "closeDialog 0; [] spawn AS_fnc_UI_manageLocations_menu;");
 BTN_M(2,-1,"Build Minefield", "", "closeDialog 0; createDialog ""AS_createMinefield"";");
 BTN_M(3, -1, "HQ Fortifications", "", "closeDialog 0; nul= createDialog ""HQ_fort_dialog"";");
+BTN_M(5, -1, "Force new HQ", "Forces new HQ location at commanders position. If petros alive, will suffer penalty for petros' death", STR_BUILD_NEW_HQ);
 	};
 };
 
