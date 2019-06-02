@@ -38,6 +38,7 @@ class AS_location {
         FNC(location,busy);
         FNC(location,spawned);
         FNC(location,forced_spawned);
+        FNC(location,respawnGarrison);
         FNC(location,side);
         // Iterators
         FNC(location,all);

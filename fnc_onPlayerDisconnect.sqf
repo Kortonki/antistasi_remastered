@@ -59,7 +59,7 @@ if (_unit == AS_commander) then {
 */
 	["disconnected"] spawn AS_fnc_chooseCommander;
 	// in case the commander disconnects while moving the HQ, HQ is built in the location.
-	if (group petros == group _unit) then {call AS_fnc_HQbuild};
+	//if (group petros == group _unit) then {call AS_fnc_HQbuild};
 
 	//if ((_hr > 0) or (_recursos > 0)) then {[_hr,_recursos] spawn AS_fnc_changeFIAmoney};
 };

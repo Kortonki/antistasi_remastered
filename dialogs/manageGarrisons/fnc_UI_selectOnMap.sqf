@@ -11,4 +11,3 @@ if (map_location != "") then {
     ((findDisplay 1602) displayCtrl 2) ctrlSetText (map_location);
     call AS_fnc_UI_manageGarrisons_updateList;
 };
-map_location = nil;

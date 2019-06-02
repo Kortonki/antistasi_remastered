@@ -6,7 +6,7 @@ private _size = _location call AS_location_fnc_size;
 
 private _soldadosFIA = [_location, "FIAsoldiers"] call AS_spawn_fnc_get;
 
-waitUntil {sleep AS_spawnLoopTime; not (_location call AS_location_fnc_spawned)};
+waitUntil {sleep AS_spawnLoopTime; not(_location call AS_location_fnc_spawned)};
 
 private _buildings = nearestObjects [_posicion, AS_destroyable_buildings, _size*1.5];
 [_buildings] remoteExec ["AS_fnc_updateDestroyedBuildings", 2];
