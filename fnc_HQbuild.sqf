@@ -11,6 +11,11 @@ petros forceSpeed 0;
 if ((getpos petros) distance2D (petros getVariable ["pos", [0,0,0]]) >= 500) then {
 	//If new FIA HQ is far enough from the old one, AAF has to discover it again
 	["fia_hq", false] call AS_location_fnc_knownLocations;
+
+	if ("fia_hq" in AS_P("patrollingLocations")) then {
+		AS_Pset("patrollingLocations", (AS_P("patrollingLocations") - ["fia_hq"]));
+	};
+
 };
 
 // place everything on its place

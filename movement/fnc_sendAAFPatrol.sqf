@@ -141,4 +141,4 @@ private _spawnName = format ["aaf_patrol_%1%2", round(diag_ticktime/60), round(r
 [_spawnName, "isDirectAttack", _isDirectAttack] call AS_spawn_fnc_set;
 [_spawnName, "threatEval", _threatEval] call AS_spawn_fnc_set;
 
-[_spawnName] call AS_spawn_fnc_execute;
+[_spawnName] spawn AS_spawn_fnc_execute;

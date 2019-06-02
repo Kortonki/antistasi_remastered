@@ -34,7 +34,7 @@ sleep 5;
 
 [_location,"side","FIA"] call AS_location_fnc_set;
 
-[[_location], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
+[[_posicion], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
 
 if (_type == "airfield") then {
 	[0,10,_posicion] call AS_fnc_changeCitySupport;

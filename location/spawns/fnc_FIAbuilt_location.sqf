@@ -139,18 +139,21 @@ private _fnc_wait_to_abandon = {
 	if _wasDestroyed then {
 		if (_type == "camp") then {
 			// remove 10% of every item (rounded up) from caja
-			waitUntil {not AS_S("lockTransfer")};
-			AS_Sset("lockTransfer", true);
-		    ([caja, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
-		    {
+			//waitUntil {not AS_S("lockTransfer")};
+			//AS_Sset("lockTransfer", true);
+
+			//Improved removal, no variable checks but UNSCHEDULED at SERVER to avoid errors due to lag etc.
+			 ([caja, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
+
+				   {
 		        private _values = _x select 1;
 		        for "_i" from 0 to (count _values - 1) do {
-		            private _new_value = ceil ((_values select _i)*0.9);
+		            private _new_value = floor ((_values select _i)*0.1);
 		            _values set [_i, _new_value];
 		        };
 		    } forEach [_cargo_w, _cargo_m, _cargo_i, _cargo_b];
-		    [caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
-			AS_Sset("lockTransfer", false);
+
+				[[_cargo_w, _cargo_m, _cargo_i, _cargo_b]] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
 		};
 	} else {
 		if (_type == "camp") then {

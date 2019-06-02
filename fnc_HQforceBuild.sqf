@@ -3,7 +3,7 @@ AS_SERVER_ONLY("fnc_HQforceBuild.sqf");
 
 params ["_position"];
 
-//Forcing causes penalty for petros' death 
+//Forcing causes penalty for petros' death
 
 if (alive petros) then {
 
@@ -36,6 +36,10 @@ private _oldPos = ["fia_hq", "position"] call AS_location_fnc_get;
 if (_position distance2D _oldPos >= 500) then {
 	//If new FIA HQ is far enough from the old one, AAF has to discover it again
 	["fia_hq", false] call AS_location_fnc_knownLocations;
+
+  if ("fia_hq" in AS_P("patrollingLocations")) then {
+    AS_Pset("patrollingLocations", (AS_P("patrollingLocations") - ["fia_hq"]));
+  };
 };
 
 [] call AS_fnc_initPetros;

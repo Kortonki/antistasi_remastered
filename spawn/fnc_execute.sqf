@@ -10,6 +10,10 @@ private _type = [_spawn, "spawn_type"] call AS_spawn_fnc_get;
 
 ([_type, _spawn] call AS_spawn_fnc_states) params ["_states", "_functions"];
 
+if (!(isServer)) then {
+    sleep 10; // Just time to let dictionary sync up to avoid errors (same spawn almost simultaneosly on different machines etc.)
+};
+
 // take ownership of this spawn
 [_spawn, "spawnOwner", clientOwner] call AS_spawn_fnc_set;
 
@@ -26,9 +30,7 @@ while {_state_index < count _functions} do {
 
 //Don't delete the spawn immediately. Missions etc. whice are possibly running on other threads could still need data from the spawn
 //TODO: Better way to check for completion
-[_spawn] spawn {
-  params ["_spawn"];
-  waitUntil {sleep 10; ([_spawn, "delete"] call AS_spawn_fnc_get)};
-  sleep 20;
-  _spawn call AS_spawn_fnc_delete;
-};
+
+waitUntil {sleep 10; ([_spawn, "delete"] call AS_spawn_fnc_get)};
+sleep 20;
+_spawn call AS_spawn_fnc_delete;
