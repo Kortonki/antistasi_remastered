@@ -1,6 +1,6 @@
 #include "macros.hpp"
 AS_SERVER_ONLY("AS_fnc_changeCitySupport.sqf");
-params ["_opfor","_blufor","_pos", ["_notify", false]];
+params ["_opfor","_blufor",["_pos", [0,0,0]], ["_notify", false]];
 private ["_city","_datos","_numCiv","_numVeh","_roads"];
 
 waitUntil {isNil "AS_cityIsSupportChanging"};

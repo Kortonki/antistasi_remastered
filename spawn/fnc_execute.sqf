@@ -11,13 +11,16 @@ private _type = [_spawn, "spawn_type"] call AS_spawn_fnc_get;
 ([_type, _spawn] call AS_spawn_fnc_states) params ["_states", "_functions"];
 
 if (!(isServer)) then {
-    sleep 10; // Just time to let dictionary sync up to avoid errors (same spawn almost simultaneosly on different machines etc.)
+    sleep 5; // Just time to let dictionary sync up to avoid errors (same spawn almost simultaneosly on different machines etc.)
 };
 
 // take ownership of this spawn
 [_spawn, "spawnOwner", clientOwner] call AS_spawn_fnc_set;
 
 private _state_index = [_spawn, "state_index"] call AS_spawn_fnc_get;
+
+if (_state_index >= count _functions and {_spawn call AS_spawn_fnc_exists}) then {_state_index = 0;}; //Failsafe if locality syncing fudgery
+
 while {_state_index < count _functions} do {
     diag_log format ["[AS] %1: spawn '%2' started state '%3'", clientOwner, _spawn, _states select _state_index];
     _spawn call (_functions select _state_index);

@@ -1,4 +1,4 @@
-private ["_unit","_Pweapon","_Sweapon","_cuenta","_magazines","_hayCaja","_distancia","_objetos","_target","_muerto","_check","_timeOut","_arma","_armas","_rearming","_basePosible","_hmd","_casco"];
+private ["_unit","_Pweapon","_Sweapon","_magCount","_magazines","_findsAmmo","_distancia","_objects","_target","_body","_check","_timeOut","_arma","_armas","_rearming","_basePosible","_hmd","_casco"];
 
 _unit = _this select 0;
 
@@ -14,24 +14,24 @@ _unit setVariable ["rearming",true];
 private _Pweapon = primaryWeapon _unit;
 private _Sweapon = secondaryWeapon _unit;
 
-private _hayCaja = false;
+private _findsAmmo = false;
 private _arma = "";
 private _armas = [];
 private _distancia = 51;
-private _objetos = nearestObjects [_unit, ["ReammoBox_F","LandVehicle","WeaponHolderSimulated", "GroundWeaponHolder", "WeaponHolder"], 50];
-//if (caja in _objetos) then {_objetos = _objetos - [caja]}; //Why not rearm from arsenal box?
+private _objects = nearestObjects [_unit, ["ReammoBox_F","LandVehicle","WeaponHolderSimulated", "GroundWeaponHolder", "WeaponHolder"], 50];
+//if (caja in _objects) then {_objects = _objects - [caja]}; //Why not rearm from arsenal box?
 private _necesita = false;
-private _muertos = [];
+private _bodies = [];
 private _validWeapons = [];
 
 {
-	private _muerto = _x;
-	if (_muerto distance2D _unit < _distancia) then
+	private _body = _x;
+	if (_body distance2D _unit < _distancia) then
 	{
-		_busy = _muerto getVariable "busy";
+		_busy = _body getVariable "busy";
 		if (isNil "_busy") then
 		{
-			_muertos pushBack _muerto;
+			_bodies pushBack _body;
 		};
 	};
 } forEach allDead;
@@ -40,7 +40,7 @@ private _validWeapons = [];
 	if ((_Pweapon in unlockedWeapons) or _Pweapon == "") then
 		{
 		_necesita = true;
-		if (count _objetos > 0) then
+		if (count _objects > 0) then
 			{
 			{
 			_objeto = _x;
@@ -58,16 +58,16 @@ private _validWeapons = [];
 						if (_basePosible in _validWeapons) then
 							{
 							_target = _objeto;
-							_hayCaja = true;
+							_findsAmmo = true;
 							_distancia = _unit distance _objeto;
 							_arma = _posible;
 							};
 						};
 					};
 				};
-			} forEach _objetos;
+			} forEach _objects;
 			};
-		if ((_hayCaja) and (_unit getVariable "rearming")) then
+		if ((_findsAmmo) and (_unit getVariable "rearming")) then
 			{
 			_unit stop false;
 			if ((!alive _target) or (not(_target isKindOf "ReammoBox_F"))) then {_target setVariable ["busy",true]};
@@ -101,15 +101,15 @@ private _validWeapons = [];
 		_Pweapon = primaryWeapon _unit;
 		sleep 3;
 		};
-	_hayCaja = false;
-	_cuenta = 4;
-	if (_Pweapon in (AS_weapons select 6)) then {_cuenta = 2};
+	_findsAmmo = false;
+	_magCount = 6; //6 mags + 1 in rifle for infantryman, if less than that then try to rearm
+	if (_Pweapon in (AS_weapons select 6)) then {_magCount = 2}; //Machine gunners take less mags
 	_magazines = getArray (configFile / "CfgWeapons" / _Pweapon / "magazines");
-	if (_Pweapon != "" and {{_x in _magazines} count (magazines _unit) < _cuenta}) then
+	if (_Pweapon != "" and {{_x in _magazines} count (magazines _unit) < _magCount}) then
 		{
 		_necesita = true;
-		_hayCaja = false;
-		if (count _objetos > 0) then
+		_findsAmmo = false;
+		if (count _objects > 0) then
 			{
 			{
 			_objeto = _x;
@@ -118,24 +118,24 @@ private _validWeapons = [];
 				if (_unit distance _objeto < _distancia) then
 					{
 					_target = _objeto;
-					_hayCaja = true;
+					_findsAmmo = true;
 					_distancia = _unit distance _objeto;
 					};
 				};
-			} forEach _objetos;
+			} forEach _objects;
 			};
 		{
-		_muerto = _x;
-		_busy = _muerto getVariable "busy";
-		if (({_x in _magazines} count (magazines _muerto) > 0) and (isNil "_busy")) then
+		_body = _x;
+		_busy = _body getVariable "busy";
+		if (({_x in _magazines} count (magazines _body) > 0) and (isNil "_busy")) then
 			{
-			_target = _muerto;
-			_hayCaja = true;
-			_distancia = _muerto distance _unit;
+			_target = _body;
+			_findsAmmo = true;
+			_distancia = _body distance _unit;
 			};
-		} forEach _muertos;
+		} forEach _bodies;
 		};
-	if ((_hayCaja) and (_unit getVariable "rearming")) then
+	if ((_findsAmmo) and (_unit getVariable "rearming")) then
 		{
 		_unit stop false;
 		if ((!alive _target) or (not(_target isKindOf "ReammoBox_F"))) then {_target setVariable ["busy",true]};
@@ -147,7 +147,7 @@ private _validWeapons = [];
 		if (_unit distance _target < 3) then
 			{
 			_unit action ["rearm",_target];
-			if ({_x in _magazines} count (magazines _unit) >= _cuenta) then
+			if ({_x in _magazines} count (magazines _unit) >= _magCount) then
 				{
 				_unit groupChat "Rearmed";
 				}
@@ -168,10 +168,10 @@ private _validWeapons = [];
 		_unit groupChat "No source to rearm my primary weapon";
 		};
 
-_hayCaja = false;
+_findsAmmo = false;
 if ((_Sweapon == "") and (loadAbs _unit < 340)) then
 	{
-	if (count _objetos > 0) then
+	if (count _objects > 0) then
 		{
 		{
 		_objeto = _x;
@@ -188,16 +188,16 @@ if ((_Sweapon == "") and (loadAbs _unit < 340)) then
 					if (_posible in _valid) then
 						{
 						_target = _objeto;
-						_hayCaja = true;
+						_findsAmmo = true;
 						_distancia = _unit distance _objeto;
 						_arma = _posible;
 						};
 					};
 				};
 			};
-		} forEach _objetos;
+		} forEach _objects;
 		};
-	if ((_hayCaja) and (_unit getVariable "rearming")) then
+	if ((_findsAmmo) and (_unit getVariable "rearming")) then
 		{
 		_unit stop false;
 		if ((!alive _target) or (not(_target isKindOf "ReammoBox_F"))) then {_target setVariable ["busy",true]};
@@ -231,16 +231,16 @@ if ((_Sweapon == "") and (loadAbs _unit < 340)) then
 	_distancia = 51;
 	sleep 3;
 	};
-_hayCaja = false;
+_findsAmmo = false;
 if (_Sweapon != "") then
 	{
 	_magazines = getArray (configFile / "CfgWeapons" / _Sweapon / "magazines");
 	if ({_x in _magazines} count (magazines _unit) < 2) then
 		{
 		_necesita = true;
-		_hayCaja = false;
+		_findsAmmo = false;
 		_distancia = 50;
-		if (count _objetos > 0) then
+		if (count _objects > 0) then
 			{
 			{
 			_objeto = _x;
@@ -249,24 +249,24 @@ if (_Sweapon != "") then
 				if (_unit distance _objeto < _distancia) then
 					{
 					_target = _objeto;
-					_hayCaja = true;
+					_findsAmmo = true;
 					_distancia = _unit distance _objeto;
 					};
 				};
-			} forEach _objetos;
+			} forEach _objects;
 			};
 		{
-		_muerto = _x;
-		_busy = _muerto getVariable "busy";
-		if (({_x in _magazines} count (magazines _muerto) > 0) and (isNil "_busy")) then
+		_body = _x;
+		_busy = _body getVariable "busy";
+		if (({_x in _magazines} count (magazines _body) > 0) and (isNil "_busy")) then
 			{
-			_target = _muerto;
-			_hayCaja = true;
-			_distancia = _muerto distance _unit;
+			_target = _body;
+			_findsAmmo = true;
+			_distancia = _body distance _unit;
 			};
-		} forEach _muertos;
+		} forEach _bodies;
 		};
-	if ((_hayCaja) and (_unit getVariable "rearming")) then
+	if ((_findsAmmo) and (_unit getVariable "rearming")) then
 		{
 		_unit stop false;
 		if (!alive _target) then {_target setVariable ["busy",true]};
@@ -311,23 +311,23 @@ if (_Sweapon != "") then
 		};
 	sleep 3;
 	};
-_hayCaja = false;
+_findsAmmo = false;
 if (not("ItemRadio" in assignedItems _unit)) then
 	{
 	_necesita = true;
-	_hayCaja = false;
+	_findsAmmo = false;
 	_distancia = 50;
 	{
-	_muerto = _x;
-	_busy = _muerto getVariable "busy";
-	if (("ItemRadio" in (assignedItems _muerto)) and (isNil "_busy")) then
+	_body = _x;
+	_busy = _body getVariable "busy";
+	if (("ItemRadio" in (assignedItems _body)) and (isNil "_busy")) then
 		{
-		_target = _muerto;
-		_hayCaja = true;
-		_distancia = _muerto distance _unit;
+		_target = _body;
+		_findsAmmo = true;
+		_distancia = _body distance _unit;
 		};
-	} forEach _muertos;
-	if ((_hayCaja) and (_unit getVariable "rearming")) then
+	} forEach _bodies;
+	if ((_findsAmmo) and (_unit getVariable "rearming")) then
 		{
 		_unit stop false;
 		_target setVariable ["busy",true];
@@ -349,38 +349,38 @@ if (not("ItemRadio" in assignedItems _unit)) then
 		_unit doFollow player;
 		};
 	};
-_hayCaja = false;
+_findsAmmo = false;
 if (hmd _unit == "") then
 	{
 	_necesita = true;
-	_hayCaja = false;
+	_findsAmmo = false;
 	_distancia = 50;
 	{
-	_muerto = _x;
-	_busy = _muerto getVariable "busy";
-	if ((hmd _muerto != "") and (isNil "_busy")) then
+	_body = _x;
+	_busy = _body getVariable "busy";
+	if ((hmd _body != "") and (isNil "_busy")) then
 		{
-		_target = _muerto;
-		_hayCaja = true;
-		_distancia = _muerto distance _unit;
+		_target = _body;
+		_findsAmmo = true;
+		_distancia = _body distance _unit;
 		};
-	} forEach _muertos;
+	} forEach _bodies;
 
-	if ((_hayCaja) and (_unit getVariable "rearming")) then
+	if ((_findsAmmo) and (_unit getVariable "rearming")) then
 		{
-		_hayCaja = false;
+		_findsAmmo = false;
 		_distancia = 50;
 		{
-		_muerto = _x;
-		_busy = _muerto getVariable "busy";
-		if ((hmd _muerto != "") and (isNil "_busy")) then
+		_body = _x;
+		_busy = _body getVariable "busy";
+		if ((hmd _body != "") and (isNil "_busy")) then
 			{
-			_target = _muerto;
-			_hayCaja = true;
-			_distancia = _muerto distance _unit;
+			_target = _body;
+			_findsAmmo = true;
+			_distancia = _body distance _unit;
 			};
-		} forEach _muertos;
-		if (_hayCaja) then
+		} forEach _bodies;
+		if (_findsAmmo) then
 			{
 			_unit stop false;
 			_target setVariable ["busy",true];
@@ -404,23 +404,23 @@ if (hmd _unit == "") then
 			};
 		};
 	};
-_hayCaja = false;
+_findsAmmo = false;
 if ((headgear _unit) == "") then
 	{
 	_necesita = true;
-	_hayCaja = false;
+	_findsAmmo = false;
 	_distancia = 50;
 	{
-	_muerto = _x;
-	_busy = _muerto getVariable "busy";
-	if (((headgear _muerto) != "") and {isNil "_busy"}) then
+	_body = _x;
+	_busy = _body getVariable "busy";
+	if (((headgear _body) != "") and {isNil "_busy"}) then
 		{
-		_target = _muerto;
-		_hayCaja = true;
-		_distancia = _muerto distance _unit;
+		_target = _body;
+		_findsAmmo = true;
+		_distancia = _body distance _unit;
 		};
-	} forEach _muertos;
-	if ((_hayCaja) and (_unit getVariable "rearming")) then
+	} forEach _bodies;
+	if ((_findsAmmo) and (_unit getVariable "rearming")) then
 		{
 		_unit stop false;
 		_target setVariable ["busy",true];
