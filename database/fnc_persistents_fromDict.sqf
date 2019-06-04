@@ -14,8 +14,6 @@ params ["_dict"];
                 _vehicle allowDamage false;
                 _vehicle enableSimulationGlobal false;
                 _vehicle setDir _dir;
-                _vehicle enableSimulationGlobal true;
-                _vehicle allowDamage true;
 
                 //Combatibility for legacy stuff
                 if (isnil "_damage") then {
@@ -35,6 +33,10 @@ params ["_dict"];
                   params ["_vehicle", "_fuel", "_fuelCargo"];
                   waitUntil {sleep 0.1; not isNil "AS_dataInitialized"};
                   [_vehicle, "FIA", _fuel, _fuelCargo] call AS_fnc_initVehicle;
+                  //After init, enable simulation
+                  sleep 1;
+                  _vehicle enableSimulationGlobal true;
+                  _vehicle allowDamage true;
               };
                 _vehicles pushBack _vehicle;
             } forEach _value;

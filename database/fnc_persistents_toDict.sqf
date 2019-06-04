@@ -11,17 +11,21 @@ private _fuelReserves = AS_P("fuelFIA");
             {(_x call AS_fnc_getSide) == "FIA"} and
             {_x getVariable ["BLUFORSpawn", true]} and // garrisons are already tracked by the garrison list
             {!isPlayer _x} and
-            {(_x getVariable "AS_type") != "Survivor"} and
+             //survivors as members of FIA should count? they're inited to side == "FIA" if rescued, otherwise no side
             {group _x in (hcAllGroups AS_commander)}) then { //TODO uncoscious player leaders?
 
         _hr = _hr + 1;
+        diag_log format ["AS: Savegame, FIA unit (%1: %2) converted to 1 HR", _x, typeOf _x];
 
         if (group _x in (hcAllGroups AS_commander) and {group _x != group AS_commander}) then  {
         _money = _money + ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost);
+        diag_log format ["AS: Savegame, FIA unit (%1: %2) converted to %3 money", _x, typeOf _x, ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost)];
       };
 
     };
 } forEach allUnits;
+
+
 
 // money and fuel for FIA vehicles TODO: vehicles to garages?
 {
@@ -30,17 +34,24 @@ private _fuelReserves = AS_P("fuelFIA");
     private _size = _closest call AS_location_fnc_size;
     if    ((alive _x) and {not(_x in AS_P("vehicles"))} and // these are saved and so they are not converted to money
             {((_closest call AS_location_fnc_side == "FIA") and
-            {not(_x in AS_permanent_HQplacements)} and
+            {not(_x in AS_permanent_HQplacements)} and //hqplacements unnecessary, as there shoudn't be any vehicles CHECK
             {(_x call AS_fnc_getSide) == "FIA"} and
             {_x distance _closest_pos < _size}) or
             (((_x getvariable "owner") in (hcAllGroups AS_commander)) and
             {([_x] call AS_fuel_fnc_getVehicleFuel) >= (_x call AS_fuel_fnc_returnTripFuel)}
             )}) then {
 
-        _money = _money + ([typeOf _x] call AS_fnc_getFIAvehiclePrice);
-        _fuelReserves = _fuelReserves + (_x call AS_fuel_fnc_getVehicleFuel) - (_x call AS_fuel_fnc_returnTripFuel);
-        if (finite (getFuelCargo _x)) then {_fuelReserves = _fuelReserves + (_x getVariable ["fuelCargo",0])};
-        {_money = _money + ([typeOf _x] call AS_fnc_getFIAvehiclePrice)} forEach attachedObjects _x;
+        private _price = ([typeOf _x] call AS_fnc_getFIAvehiclePrice);
+        {_price = _price + ([typeOf _x] call AS_fnc_getFIAvehiclePrice)} forEach attachedObjects _x;
+
+        private _fuel = (_x call AS_fuel_fnc_getVehicleFuel) - (_x call AS_fuel_fnc_returnTripFuel);
+        if (finite (getFuelCargo _x)) then {_fuel = _fuel + (_x getVariable ["fuelCargo",0])};
+
+        _fuelReserves = _fuelReserves + _fuel;
+        _money = _money + _price;
+
+
+        diag_log format ["AS: Savegame, FIA vehicle (%1) converted to %2 money, %3 fuel. Location: %4", _x, _price, _fuel, _closest];
     };
 } forEach vehicles;
 
@@ -60,6 +71,7 @@ private _vehicles = [];
     private _fuelCargo = _x call AS_fuel_fnc_getFuelCargo;
 
     _vehicles pushBack [_type, _pos, _dir, _fuel, _fuelCargo, _damage];
+    diag_log format ["AS: Savegame, vehicle (%1) saved as persistent: Type %2 Pos %3 Dir %4 Fuel %5 Fuelcargo %6 Damage %7 ",_x, _type, _pos, _dir, _fuel, _fuelCargo, _damage];
 
 } forEach AS_P("vehicles");
 

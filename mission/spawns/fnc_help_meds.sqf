@@ -26,7 +26,7 @@ private _fnc_initialize = {
 	private _basePosition = [];
 	if (count _bases > 0) then {
 		_base = [_bases,_position] call BIS_fnc_nearestPosition;
-		_basePosition = _base call AS_location_fnc_position;
+		_basePosition = _base call AS_location_fnc_positionConvoy;
 	};
 	if (_base == "") exitWith {
 		[_mission, "resources", [taskNull, [], [], []]] call AS_spawn_fnc_set;

@@ -3,7 +3,7 @@
 if (player != AS_commander) exitWith {hint "Only the commander has access to this function"};
 if (!([player] call AS_fnc_hasRadio)) exitWith {hint "You need a radio in your inventory to be able to give orders to other squads"};
 
-if ([petros, 500] call AS_fnc_enemiesNearby) exitWith {
+if ([getmarkerPos "FIA_HQ", 500] call AS_fnc_enemiesNearby) exitWith {
 	hint "You cannot Recruit Squads with enemies near your HQ";
 };
 
@@ -43,7 +43,7 @@ while {true} do {
 private _grupo = grpNull;
 if _isInfantry then {
 	_grupo = createGroup ("FIA" call AS_fnc_getFactionSide);
-	[_grouptype, [_pos, 30, random 360] call BIS_Fnc_relPos, _grupo] call AS_fnc_spawnFIAsquad;
+	[_grouptype, _pos findEmptyPosition [0,100,"B_MBT_01_TUSK_F"], _grupo] call AS_fnc_spawnFIAsquad;
 } else {
 	_grupo = [_grouptype, position _road] call (["FIA", "squads_custom_init"] call AS_fnc_getEntity);
 };

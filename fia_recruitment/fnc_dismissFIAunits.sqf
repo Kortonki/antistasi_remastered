@@ -73,7 +73,7 @@ if (_ai) then {
 	} forEach units _groupToDelete;
 	[_groupToDelete] RemoteExec ["deleteGroup", _groupToDelete];
 
-	[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;
+	[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
 
 	if (!isMultiplayer) then {
 		[_hr,_resourcesFIA] remoteExec ["AS_fnc_changeFIAmoney",2];

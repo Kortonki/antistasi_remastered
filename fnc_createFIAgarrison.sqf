@@ -8,7 +8,7 @@ private _vehiculos = [];
 private _posicion = _location call AS_location_fnc_position;
 private _size = _location call AS_location_fnc_size;
 private _type = _location call AS_location_fnc_type;
-private _estaticas = AS_P("vehicles") select {_x distance _posicion < _size};
+private _estaticas = AS_P("vehicles") select {typeOf in AS_allStatics and {_x distance2D _posicion < _size}};
 private _garrison = _location call AS_location_fnc_garrison;
 
 private _grupoMort = grpNull;

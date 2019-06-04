@@ -41,6 +41,7 @@ if (_side != "NATO") then {
 		};
 };
 
+//Cargo release on destruction
 
 _veh addEventHandler ["Killed", {
 	private _veh = _this select 0;

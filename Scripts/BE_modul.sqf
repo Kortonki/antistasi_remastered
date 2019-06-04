@@ -102,8 +102,8 @@ fnc_BE_XP = {
 		case "kill": {
 			_delta = 0.5;
 		};
-		case "killCSAT"
-		{
+		case "killCSAT": {
+
 			_delta = 1;
 		};
 		case "mis": {

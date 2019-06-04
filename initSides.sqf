@@ -21,7 +21,8 @@
 	private _type = _x;
 	private _helos = [];
 	{
-		if (not(isNil{[_x, _type] call AS_fnc_getEntity})) then {
+		//AAF doens't have attack helos
+		if (not(_type == "helis_attack" and {_x == "AAF"}) and {not(isNil{[_x, _type] call AS_fnc_getEntity})}) then {
 			{
 				_helos pushBackUnique _x;
 			} foreach ([_x, _type] call AS_fnc_getEntity);

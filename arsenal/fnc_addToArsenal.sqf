@@ -1,5 +1,7 @@
 #include "../macros.hpp"
 
+//This will add cargo array to arsenal without emptying it in the process
+
 params ["_cargo", ["_notify", false]];
 
 waitUntil {sleep 0.1; not(AS_S("lockTransfer"))};

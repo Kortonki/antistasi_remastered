@@ -16,11 +16,11 @@ waitUntil {
 
   //TODO: Consider making the check for all units (some units might get stuck and the script can't finish)
 	if ([position _leader, 500] call AS_fnc_enemiesNearby) then {_near = true};
-	if (position _leader distance2D _pos) then {_hq = true};
+	if (position _leader distance2D _pos < 50) then {_hq = true};
 
 	 //waituntil condition
 	 (!(_near) and {time > _time or _hq}) or
-   {alive _x} count (units _group) < 1
+   ({alive _x} count (units _group) < 1)
  };
 
 //todo: check for uncoscius units and don't return resources for them TEST
@@ -95,5 +95,5 @@ private _vs = [];
 
 //Add everything
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;
+[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
 [_hr,_resourcesFIA] remoteExec ["AS_fnc_changeFIAmoney",2];
