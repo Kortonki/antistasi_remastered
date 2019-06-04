@@ -35,7 +35,7 @@ fnc_BE_initialize = {
 
 	//Below are also used for AI target threat estimation
 
-	BE_class_Heli = (["AAF", "helis"] call AS_fnc_getEntity) + (["CSAT", "helis"] call AS_fnc_getEntity) + (["NATO", "helis"] call AS_fnc_getEntity) + (["FIA", "air_vehicles"] cass AS_fnc_getEntity);
+	BE_class_Heli = (["AAF", "helis"] call AS_fnc_getEntity) + (["CSAT", "helis"] call AS_fnc_getEntity) + (["NATO", "helis"] call AS_fnc_getEntity) + (["FIA", "air_vehicles"] call AS_fnc_getEntity);
 	BE_class_MBT = (["AAF", "tanks"] call AS_fnc_getEntity) + (["NATO", "tanks"] call AS_fnc_getEntity);
 	BE_class_APC = (["AAF", "apcs"] call AS_fnc_getEntity) + (["NATO", "apcs"] call AS_fnc_getEntity);
 	BE_class_MRAP = (["AAF", "cars_armed"] call AS_fnc_getEntity) + (["AAF", "cars_transport"] call AS_fnc_getEntity) + (["NATO", "cars_armed"] call AS_fnc_getEntity) + (["NATO", "cars_transport"] call AS_fnc_getEntity);
