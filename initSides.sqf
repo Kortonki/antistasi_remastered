@@ -1,3 +1,5 @@
+//These variables don't need to be broadcasted - inited for all clients (init_commonvariables)
+
 // Define all helis of CSAT and NATO
 {
 	private _side = _x;
@@ -8,9 +10,39 @@
 	};
 	{
 		_vehicles append ([_side, _x] call AS_fnc_getEntity);
+
 	} forEach _categories;
 	[AS_entities, _side call AS_fnc_getFaction, "helis", _vehicles] call DICT_fnc_set;
 } forEach ["CSAT", "NATO", "AAF"];
+
+//Following isa computed list for AI target threat estimation
+//NOTE: Assuming FIA is set to not be able to buy any armed helicopters, so their armed and attack helos are allways captured
+{
+	private _type = _x;
+	private _helos = [];
+	{
+		if (not(isNil{[_x, _type] call AS_fnc_getEntity})) then {
+			{
+				_helos pushBackUnique _x;
+			} foreach ([_x, _type] call AS_fnc_getEntity);
+		};
+	} foreach ["CSAT", "AAF", "NATO"];
+
+	if (_type == "helis_armed") then {
+		AS_allArmedHelis = +_helos;
+	};
+
+	if (_type == "helis_attack") then {
+		AS_allAttackHelis = +_helos;
+	};
+
+	if (_type == "planes") then {
+		AS_allPlanes = +_helos;
+	};
+
+} foreach ["helis_armed", "helis_attack", "planes"];
+
+
 
 // compute lists of statics
 {

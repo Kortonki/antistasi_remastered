@@ -24,7 +24,7 @@ if (hasACE) then {
 };
 
 if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) then {
-	["kill"] remoteExec ["fnc_BE_XP", 2];
+	["killCSAT"] remoteExec ["fnc_BE_XP", 2];
 	_group = group _killed;
 
 	// if dead has no weapons, it is an unlawful kill
@@ -35,12 +35,10 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
 		};
 	} else {
-		// otherwise, it decreases by -0.5.
-		_cost = (typeOf _killed) call AS_fnc_getCost;
-		[-_cost] remoteExec ["AS_fnc_changeAAFmoney",2];
-		[-0.5,0,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2];
+		// otherwise, it decreases by -1.
+		[-1,0,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2]; //Double city support loss compared to AAF
 		if (isPlayer _killer) then {
-			[_killer, "score", 2, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "score", 4, false] remoteExec ["AS_players_fnc_change", 2]; //Double points compared to AAF soldiers
 		};
 	};
 
@@ -79,12 +77,12 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 			};
 
 			if (_x == leader group _x and {!([_x] call AS_fnc_isDog)}) then {
-				if (random 1 < 0.5) then { //This was increased from 0.1 to 0.5 and moved to be used if AAF unit killed, doesn't require fleeing
+				if (random 1 < 0.1) then { //This is smaller chance for CSAT QRF
 					_enemy = _x findNearestEnemy _x;
 					if (!isNull _enemy) then {
-						([_x] call AS_fnc_getContactThreat) params ["_threatEval_Land", "_threatEval_Air"];
-						diag_log format ["AS: AAF taking casualties, sending patrol to: %1 ThreatEval Land/Air %2 / %3", position _enemy, _threatEval_Land, _threatEval_Air];
-						[[position _enemy,"", _threatEval_Land, _threatEval_Air], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+						diag_log format ["AS: CSAT taking casualties, sending QRF to: %1", position _enemy];
+						//TODO: somekind of threat eval here 
+						[["spawnCSAT", position _enemy, "", 60, "random", "small", "CSATman"], "AS_movement_fnc_sendEnemyQRF"] remoteExec ["AS_scheduler_fnc_execute", 2];
 					};
 				};
 			};

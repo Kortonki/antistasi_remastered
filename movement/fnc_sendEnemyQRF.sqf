@@ -1,10 +1,11 @@
 #include "../macros.hpp"
-AS_SERVER_ONLY("fnc_sendEnemyQRF");
+//No reason to be server only
+//AS_SERVER_ONLY("fnc_sendEnemyQRF");
 /*
 parameters
 0: base/airport/carrier to start from (marker)
 1: target location (position)
-2: marker for dismounts to patrol (marker)
+2: marker for dismounts to patrol (marker) //OBSOLETE
 3: patrol duration (time in minutes)
 4: composition: transport/destroy/mixed (string)
 5: size: large/small (string)
@@ -14,11 +15,17 @@ If origin is an airport/carrier, the QRF will consist of air cavalry. Otherwise 
 */
 params ["_origin", "_destination", "_location", "_duration", "_composition", "_size", ["_source", ""]];
 
-// FIA bases/airports
+// AAF bases/airports
 private _bases = ["base", "AAF"] call AS_location_fnc_TS;
 
 private _posComp = ["transport", "destroy", "mixed"];
-if !(_composition in _posComp) exitWith {};
+if !(_composition in _posComp or _composition == "random") exitWith {
+	diag_log format ["AS_movement_fnc_sendEnemyQRF error: invalid composition: %1, caller %2", _composition, _source];
+};
+
+if (_composition == "random") then {
+	_composition = selectRandom _posComp;
+};
 
 // define type of QRF and vehicles by type of origin, plus method of troop insertion by air (rope or land)
 private _type = "air";
@@ -88,16 +95,24 @@ private _spawnGroup = {
 
 private _spawnVehicle = {
 	params ["_vehicleType", "_position", "_direction"];
-	([_position, _direction, _vehicleType, _side] call bis_fnc_spawnvehicle) params ["_vehicle", "_units", "_group"];
-	if (_faction == "AAF") then {
-		{_x call AS_fnc_initUnitAAF} forEach units _group;
-	} else {
-		{_x call AS_fnc_initUnitCSAT} forEach units _group;
+	//([_position, _direction, _vehicleType, _side] call bis_fnc_spawnvehicle) params ["_vehicle", "_units", "_group"];
+
+	if (_type == "air") exitWith {
+
+		([_vehicleType, _position, _direction, _faction, "any", 400, "FLY", true, 7] call AS_fnc_createVehicle) params ["_vehicle", "_crewGroup"];
+		_grupos pushBack _crewGroup;
+		_soldados append units _crewGroup;
+		_vehiculos pushBack _vehicle;
+		_vehicle
 	};
-	_grupos pushBack _group;
-	_soldados append units _group;
-	_vehiculos pushBack _vehicle;
-	_group
+
+		([_vehicleType, _position, _direction, _faction, "any", 0, "NONE", true, 7] call AS_fnc_createVehicle) params ["_vehicle", "_crewGroup"];
+		_grupos pushBack _crewGroup;
+		_soldados append units _crewGroup;
+		_vehiculos pushBack _vehicle;
+		_vehicle
+
+
 };
 
 if (_type == "air") then {
@@ -105,6 +120,7 @@ if (_type == "air") then {
 
 	if ((_composition == "destroy") || (_composition == "mixed")) then {
 		private _grpVeh1 = [_attackVehicle, _origin, _dir] call _spawnVehicle;
+
 		[_origin, _destination, _grpVeh1] spawn AS_tactics_fnc_heli_attack;
 	};
 
@@ -119,14 +135,14 @@ if (_type == "air") then {
 		_pos2 set [2, (_origin select 2) + 50];
 
 		// troop transport chopper
-		private _crew_group = [_transportVehicle, _pos2, _dir] call _spawnVehicle;
-		private _heli2 = _vehiculos select (count _vehiculos - 1); // last spawned vehicle is the one
+
+		private _transportHeli = [_transportVehicle, _pos2, _dir] call _spawnVehicle;
 
 		// spawn dismounts
 		private _cargo_group = _dismountGroup call _spawnGroup;
 		{
-			_x assignAsCargo _heli2;
-			_x moveInCargo _heli2;
+			_x assignAsCargo _transportHeli;
+			_x moveInCargo _transportHeli;
 		} forEach units _cargo_group;
 
 		if (_method == "fastrope") then {
@@ -137,7 +153,7 @@ if (_type == "air") then {
 
 		// if the QRF is dispatched to an FIA camp, provide the group
 		if (_source == "campQRF") then {
-			AS_Sset("campQRF", [__cargo_group]);
+			AS_Sset("campQRF", [_cargo_group]);
 		};
 	};
 } else { // ground
@@ -148,9 +164,9 @@ if (_type == "air") then {
 
 	// spawn the attack vehicle
 	if ((_composition == "destroy") || (_composition == "mixed")) then {
-		private _crew_group = [_attackVehicle, _posRoad, _dir] call _spawnVehicle;
+		private _veh = [_attackVehicle, _posRoad, _dir] call _spawnVehicle;
 
-		[_origin, _destination, _crew_group, _patrolMarker] spawn AS_tactics_fnc_ground_attack;
+		[_origin, _destination, (group (driver _veh)), _patrolMarker] spawn AS_tactics_fnc_ground_attack;
 	};
 
 	// small delay to allow for AI pathfinding
@@ -161,8 +177,8 @@ if (_type == "air") then {
 	// spawn the transport vehicle
 	if ((_composition == "transport") || (_composition == "mixed")) then {
 		// transport vehicle
-		private _crew_group = [_transportVehicle, _posRoad, _dir] call _spawnVehicle;
-		private _transport = _vehiculos select (count _vehiculos - 1); // last spawned vehicle is the one
+		private _transport = [_transportVehicle, _posRoad, _dir] call _spawnVehicle;
+
 
 		// dismount group
 		private _grpDis2 = _dismountGroup call _spawnGroup;
@@ -171,7 +187,7 @@ if (_type == "air") then {
 			_x moveInCargo _transport;
 		} forEach units _grpDis2;
 
-		[_origin, _destination, _crew_group, _patrolMarker, _grpDis2] spawn AS_tactics_fnc_ground_disembark;
+		[_origin, _destination, (group (driver _transport)), _patrolMarker, _grpDis2] spawn AS_tactics_fnc_ground_disembark;
 	};
 };
 

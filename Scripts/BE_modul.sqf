@@ -33,10 +33,12 @@ fnc_BE_initialize = {
 	if (isNil "BE_currentXP") then {BE_currentXP = 0;};
 	if (isNil "BE_progressLock") then {BE_progressLock = false;};
 
-	BE_class_Heli = (["AAF", "helis"] call AS_fnc_getEntity) + (["CSAT", "helis"] call AS_fnc_getEntity);
-	BE_class_MBT = ["AAF", "tanks"] call AS_fnc_getEntity;
-	BE_class_APC = ["AAF", "apcs"] call AS_fnc_getEntity;
-	BE_class_MRAP = (["AAF", "cars_armed"] call AS_fnc_getEntity) + (["AAF", "cars_transport"] call AS_fnc_getEntity);
+	//Below are also used for AI target threat estimation
+
+	BE_class_Heli = (["AAF", "helis"] call AS_fnc_getEntity) + (["CSAT", "helis"] call AS_fnc_getEntity) + (["NATO", "helis"] call AS_fnc_getEntity) + (["FIA", "air_vehicles"] cass AS_fnc_getEntity);
+	BE_class_MBT = (["AAF", "tanks"] call AS_fnc_getEntity) + (["NATO", "tanks"] call AS_fnc_getEntity);
+	BE_class_APC = (["AAF", "apcs"] call AS_fnc_getEntity) + (["NATO", "apcs"] call AS_fnc_getEntity);
+	BE_class_MRAP = (["AAF", "cars_armed"] call AS_fnc_getEntity) + (["AAF", "cars_transport"] call AS_fnc_getEntity) + (["NATO", "cars_armed"] call AS_fnc_getEntity) + (["NATO", "cars_transport"] call AS_fnc_getEntity);
 
 	BE_mil_vehicles = BE_class_Heli + BE_class_MBT + BE_class_APC + BE_class_MRAP;
 
@@ -99,6 +101,10 @@ fnc_BE_XP = {
 	switch (_category) do {
 		case "kill": {
 			_delta = 0.5;
+		};
+		case "killCSAT"
+		{
+			_delta = 1;
 		};
 		case "mis": {
 			_delta = 10;
@@ -284,6 +290,7 @@ fnc_BE_permission = {
 			private _vehClass = getText (configFile >> "CfgVehicles" >> _value >> "vehicleClass");
 			if (((toLower _vehClass find "heli" >= 0) || (_vehClass == "Air")) && ("Heli" in BE_current_Vehicle_Restriction)) exitWith {_result = false};
 
+			//Capture vehicle rewards
 			if (!(_vehicle getVariable ["BE_mil_veh", false]) && (_value in BE_mil_vehicles)) then {
 				call {
 					if (_vehicle in BE_class_MBT) exitWith {["cap_arm"] remoteExec ["fnc_BE_XP", 2]};

@@ -19,7 +19,7 @@ if (SunOrMoon > 1) then {
 	_unit call AS_fnc_removeNightEquipment;
 };
 
-_unit addEventHandler ["killed",AS_fnc_EH_AAFKilled];
+_unit addEventHandler ["killed",AS_fnc_EH_CSATKilled];
 
 _unit enableIRLasers true;
 _unit enableGunLights "AUTO";

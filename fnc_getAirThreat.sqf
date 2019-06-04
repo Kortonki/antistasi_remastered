@@ -22,7 +22,7 @@ if (_location call AS_location_fnc_side == "AAF") then {
 		private _garrison = _x call AS_location_fnc_garrison;
 		private _size = _x call AS_location_fnc_size;
 		if (_positionOther distance _position < AS_P("spawnDistance")) then {
-			_threat = _threat + (floor((count _garrison)/4));
+			_threat = _threat + (floor((count _garrison)/4)) + (2*({(_x == "AA Specialist")} count _garrison));
 			private _estaticas = AS_P("vehicles") select {_x distance _positionOther < _size};
 			if (count _estaticas > 0) then {
 				_threat = _threat + ({typeOf _x in AS_allMGstatics} count _estaticas) + (5*({typeOf _x in AS_allAAstatics} count _estaticas));

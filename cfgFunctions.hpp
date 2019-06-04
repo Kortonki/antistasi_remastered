@@ -127,6 +127,8 @@ class AS {
         FNC_BASE(isDog);
 
         FNC_BASE(EH_AAFKilled);
+        FNC_BASE(EH_CSATKilled);
+        FNC_BASE(getContactThreat);
         FNC_BASE(getLandThreat);
         FNC_BASE(getAirThreat);
         FNC_BASE(callArtillerySupport);

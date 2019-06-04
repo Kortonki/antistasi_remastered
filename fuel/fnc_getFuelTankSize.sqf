@@ -26,10 +26,13 @@ _fuelTankSize = _vehicle call {
   //exception for vans
   if (_vehicle isKindOf "Van_02_base_F" or _vehicle isKindOf "Van_01_base_F") exitWith {
     100 + round(((getmass _vehicle)-1500)*0.001)*30};
+  //APC checks: Multiple ways to find them all
   if (_type in BE_class_APC) exitWith {
     500 + round(((getmass _vehicle)-13000)*0.001)*40};
-  if (_vehicle isKindof "APC_Wheeled_01_base_F") exitWith {
+  if (_vehicle isKindof "APC_Wheeled_01_base_F" or _vehicle isKindof "APC_Wheeled_02_base_F") exitWith {
     500 + round(((getmass _vehicle)-13000)*0.001)*40};
+  if (_vehicle isKindof "APC_Tracked_01_base_F" or _vehicle isKindof "APC_Tracked_02_base_F") exitWith {
+      500 + round(((getmass _vehicle)-13000)*0.001)*40};
     //MRAP use truck fuel capacities
   if (_type in BE_class_MRAP) exitWith {
     100 + round(((getmass _vehicle)-1000)*0.001)*30};

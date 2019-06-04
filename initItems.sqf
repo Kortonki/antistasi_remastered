@@ -356,9 +356,9 @@ AS_allWeaponsAttrs = [];
 
 			case "MachineGun": {(AS_weapons select 6) pushBack _name};
 			case "Magazine": {(AS_weapons select 7) pushBack _name};
-			case "MissileLauncher": {(AS_weapons select 8) pushBack _name};
+			case "MissileLauncher": {(AS_weapons select 8) pushBack _name}; //AA Spesialist uses these
 			case "Mortar": {(AS_weapons select 9) pushBack _name};
-			case "RocketLauncher": {(AS_weapons select 10) pushBack _name};
+			case "RocketLauncher": {(AS_weapons select 10) pushBack _name}; //AT Spesialist uses these
 			case "Shotgun": {(AS_weapons select 11) pushBack _name};
 			case "Throw": {(AS_weapons select 12) pushBack _name};
 			case "Rifle": {(AS_weapons select 13) pushBack _name};
