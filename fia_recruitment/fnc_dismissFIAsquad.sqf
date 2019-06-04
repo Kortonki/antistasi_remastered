@@ -33,6 +33,7 @@ private _cargo_b = [[], []];
 
 private _vs = [];
 	{
+		private _unit = _x;
 		if (alive _x and (not(_x call AS_medical_fnc_isUnconscious))) then {
 			_hr = _hr + 1;
 			_resourcesFIA = _resourcesFIA + ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost); //Get unit cost back
@@ -44,13 +45,13 @@ private _vs = [];
 			_cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
 			_cargo_i = [_cargo_i, _arsenal select 2] call AS_fnc_mergeCargoLists;
 			_cargo_b = [_cargo_b, _arsenal select 3] call AS_fnc_mergeCargoLists;
-			[cajaVeh, (_arsenal select 4)]; call AS_fnc_addMagazineRemains;
+			[cajaVeh, (_arsenal select 4)] call AS_fnc_addMagazineRemains;
 
 			if (!isNull (assignedVehicle _x)) then {
 				private _veh = assignedVehicle _x;
 				if (!(_veh in _vs)) then {
 
-						//Recover everything if has fuel for the return trip
+						//Recover everything if has fuel for the return trip. rough estimate
 
 						private _fuel = _veh call AS_fuel_fnc_getVehicleFuel;
 						if (_fuel >= (_veh call AS_fuel_fnc_returnTripFuel)) then {
@@ -81,7 +82,7 @@ private _vs = [];
 										_cargo_m = [_cargo_m, _vehArsenal select 1] call AS_fnc_mergeCargoLists;
 										_cargo_i = [_cargo_i, _vehArsenal select 2] call AS_fnc_mergeCargoLists; //TODO consider AS_fnc_transferToBox
 										_cargo_b = [_cargo_b, _vehArsenal select 3] call AS_fnc_mergeCargoLists;
-										[cajaVeh, (_vehArsenal select 4)]; call AS_fnc_addMagazineRemains;
+										[cajaVeh, (_vehArsenal select 4)] call AS_fnc_addMagazineRemains;
 							};
 
 					_vs pushBack _veh; //Do not recover same vehicle twice
@@ -90,7 +91,7 @@ private _vs = [];
 				};
 			};
 		[_x] remoteExecCall ["deleteVehicle", _x];
-		} forEach units _group;
+		} forEach (units _group);
 [_group] RemoteExec ["deleteGroup", _group];
 
 //Add everything

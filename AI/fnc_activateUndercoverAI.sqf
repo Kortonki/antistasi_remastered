@@ -52,7 +52,7 @@ while {(captive (leader _unit)) and {captive _unit}} do {
 	if (_unit distance _position < _size*2) exitWith {[_unit, false] remoteExecCall ["setCaptive", _unit];};
 };
 
-if (!captive _unit) then {
+if (captive _unit) then {
 	_unit groupChat "Shit, they have spotted me!";
 	//If one in a vehicle is spotted, everyone is
 	//if-then is just for optimization: allUnits are not run unnecessarily
@@ -78,6 +78,9 @@ if ((backpack _unit == "") and (_secondaryWeapon == "")) then {
 	_unit addbackpack selectRandom (["FIA", "unlockedBackpacks"] call AS_fnc_getEntity);
 };*/
 //{if (_x != "") then {[_unit, _x, 1, 0] call BIS_fnc_addWeapon};} forEach [_primaryWeapon,_secondaryWeapon,_handGunWeapon]; //Doesn't account for partial magazine nor is global
+
+//TODO:
+//Here check for locality if it changed during undercover?
 {if (_x != "") then {_unit addWeapon _x};} forEach [_primaryWeapon,_secondaryWeapon,_handGunWeapon];
 {_unit addPrimaryWeaponItem _x} forEach _primaryWeaponItems;
 {_unit addSecondaryWeaponItem _x} forEach _secondaryWeaponItems;
