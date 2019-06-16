@@ -6,7 +6,7 @@ private _roadblocks = ("roadblock" call AS_location_fnc_T) select {[_x,"location
 {
     [_x] spawn {
         params ["_roadblock"];
-        waitUntil {sleep 5; !(_roadblock call AS_location_fnc_spawned)};
+        waitUntil {sleep 5; !(_roadblock call AS_location_fnc_spawned) and {([_roadblock, "delete"] call AS_spawn_fnc_get)}};
         _roadblock call AS_location_fnc_remove;
     };
 } forEach _roadblocks;
