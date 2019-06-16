@@ -125,7 +125,7 @@ private _fnc_run = {
 
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		[_mission,   [{alive _x} count _pows]] remoteExecCall ["AS_mission_fnc_success", 2];
+		[_mission, [{alive _x} count _pows]] remoteExec ["AS_mission_fnc_success", 2];
 
 		{
 			if (captive _x) then {

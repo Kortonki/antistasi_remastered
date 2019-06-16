@@ -52,7 +52,7 @@ while {(captive (leader _unit)) and {captive _unit}} do {
 	if (_unit distance _position < _size*2) exitWith {[_unit, false] remoteExecCall ["setCaptive", _unit];};
 };
 
-if (captive _unit) then {
+if (!(captive _unit)) then {
 	_unit groupChat "Shit, they have spotted me!";
 	//If one in a vehicle is spotted, everyone is
 	//if-then is just for optimization: allUnits are not run unnecessarily

@@ -310,7 +310,7 @@ private _fnc_wait_to_deliver = {
 
 		private _message = "Leave the crate here, they'll come to pick it up.";
 		[_crate] call AS_fnc_emptyCrate;
-		[_mission] remoteExecCall ["AS_mission_fnc_success", 2];
+		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 
 		{
 			if (isPlayer _x) then {
