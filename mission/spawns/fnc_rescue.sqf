@@ -96,7 +96,7 @@ private _fnc_spawn = {
 
 	if _spawnFail exitWith {
 	[_mission, "state_index", 3] call AS_spawn_fnc_set;
-	[_mission] remoteExecCall ["AS_mission_fnc_cancel", 2];
+	[_mission] remoteExec ["AS_mission_fnc_cancel", 2];
 	};
 
 };
