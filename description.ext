@@ -172,3 +172,5 @@ class cfgFunctions {
 
     #include "cfgFunctions.hpp"
 };
+
+//DEFAULT fixed ACE settings
