@@ -39,7 +39,7 @@ petros setSkill 1;
 
 // rearmPetros depends on the arsenal weapons, which are defined afterwards
 [] spawn {
-    waitUntil {sleep 0.5; not isNil "Arsenal_initialized"};
+    waitUntil {sleep 0.5; not isNil "AS_Arsenal_initialized"};
     call AS_fnc_rearmPetros;
 };
 

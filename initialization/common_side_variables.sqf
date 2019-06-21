@@ -5,8 +5,8 @@ call compile preprocessFileLineNumbers "initSides.sqf";
 // in the templates above. Only non-public globals defined.
 call compile preprocessFileLineNumbers "initItemsSides.sqf";
 
-Arsenal_Initialized = true;
-publicVariable "Arsenal_Initialized";
+AS_Arsenal_initialized = true;
+publicVariable "AS_Arsenal_initialized";
 
 // Compositions used to spawn camps, etc. Only non-public globals defined.
 call compile preprocessFileLineNumbers "Compositions\campList.sqf";
