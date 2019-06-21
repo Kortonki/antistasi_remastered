@@ -129,7 +129,7 @@ private _fnc_run = {
 		//TODO: arrange pickup for the troops
 
 		waitUntil {sleep 10; time > _tiempo and {!([AS_P("spawnDistance"), _position, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}};
-		
+
 		AS_Pset("patrollingPositions", AS_P("patrollingPositions") - [_position]);
 	};
 };
@@ -139,7 +139,7 @@ private _fnc_clean = {
 	private _groups = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 1);
 	private _vehicles = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 2);
 	private _markers = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 3);
-	[_groups, _vehicles, _markers call AS_fnc_cleanResources;
+	[_groups, _vehicles, _markers] call AS_fnc_cleanResources;
 	[_spawnName, "delete", true] call AS_spawn_fnc_set;
 };
 
