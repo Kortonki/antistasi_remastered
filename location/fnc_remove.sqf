@@ -1,7 +1,7 @@
 #include "../macros.hpp"
 AS_SERVER_ONLY("AS_location_fnc_remove");
 params ["_location"];
-[call AS_location_fnc_dictionary, _location] call DICT_fnc_del;
+[call AS_location_fnc_dictionary, _location] call DICT_fnc_delGlobal;
 
 //If AAF was patrolling it:
 
