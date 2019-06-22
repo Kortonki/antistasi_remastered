@@ -15,7 +15,7 @@
         values[] = {0, 1};
         texts[] = {"Off", "On"};
         default = 1;
-        typeName "BOOL";
+        typeName = "BOOL";
         force = 1;
     };
 

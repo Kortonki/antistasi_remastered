@@ -37,7 +37,7 @@ if (_side != "NATO") then {
 	}];
 
 	if (_tipo isKindof "Truck_F" and {!(finite (getFuelCargo _veh))}) then {
-		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
 		};
 };
 

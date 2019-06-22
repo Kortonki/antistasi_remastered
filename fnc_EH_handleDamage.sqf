@@ -2,7 +2,7 @@
 params ["_unit", "_part", "_dam", "_injurer"];
 
 if (captive _injurer) then {
-	_injurer setCaptive false;
+	[_injurer, false] remoteExecCall ["setCaptive", _injurer];
 };
 
 if (_injurer isKindOf "LandVehicle" and {_injurer call AS_fnc_getSide == "FIA"}) then {
