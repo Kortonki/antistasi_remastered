@@ -5,6 +5,8 @@ this Shuold only lrun on server and brocadcast local values to clients
 */
 params [["_skipTime", 0]];
 
+if (!(isNil "ace_weather_enabled") and {ace_weather_enabled}) exitWith{}; //ACE weather
+
 #include "../macros.hpp"
 AS_SERVER_ONLY("AS_fnc_randomWeather.sqf");
 

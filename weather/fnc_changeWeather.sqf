@@ -8,15 +8,17 @@ private _clear = AS_P("clear");
 if (isNil "_clear") exitWith {
 
   AS_Pset("clear",false);
-  [] spawn AS_weather_fnc_randomWeather; //Randomise once for legacy saves
+
+    [] spawn AS_weather_fnc_randomWeather; //Randomise once for legacy saves
+
   diag_log format ["AS_changeWeather, time: %1 Weather param 'clear' not found, executing AS_weather_fnc_randomWeather", time];
 
 };
 
 if (_clear) exitWith {}; //Weather set for clear, no need for manipulation. Use this to check for legacy saves
+if (!(isNil "ace_weather_enabled") and {ace_weather_enabled}) exitWith{}; //ACE weather
 
 //current values
-
 
 private _overcast = AS_P("overcast");
 private _rain = AS_P("rain");
