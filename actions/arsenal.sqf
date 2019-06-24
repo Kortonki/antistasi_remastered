@@ -32,6 +32,13 @@ _box removeAction (_box getVariable "bis_fnc_arsenal_action");
 
 private _new_cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 
+_cargo_w = [_cargo_w, _new_cargo select 0, false] call AS_fnc_mergeCargoLists;
+_cargo_m = [_cargo_m, _new_cargo select 1, false] call AS_fnc_mergeCargoLists;
+_cargo_i = [_cargo_i, _new_cargo select 2, false] call AS_fnc_mergeCargoLists;
+_cargo_b = [_cargo_b, _new_cargo select 3, false] call AS_fnc_mergeCargoLists;
+
+[_new_cargo] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
+
 // add all the old stuff and removes all the new stuff.
 _cargo_w = [_cargo_w, _old_cargo select 0] call AS_fnc_mergeCargoLists;
 _cargo_m = [_cargo_m, _old_cargo select 1] call AS_fnc_mergeCargoLists;
@@ -40,13 +47,11 @@ _cargo_b = [_cargo_b, _old_cargo select 3] call AS_fnc_mergeCargoLists;
 
 [_old_cargo] remoteExec ["AS_fnc_addtoArsenal", 2];
 
-_cargo_w = [_cargo_w, _new_cargo select 0, false] call AS_fnc_mergeCargoLists;
-_cargo_m = [_cargo_m, _new_cargo select 1, false] call AS_fnc_mergeCargoLists;
-_cargo_i = [_cargo_i, _new_cargo select 2, false] call AS_fnc_mergeCargoLists;
-_cargo_b = [_cargo_b, _new_cargo select 3, false] call AS_fnc_mergeCargoLists;
+//Wait to update the arsenal
 
-[_new_cargo] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
+waitUntil {sleep 1; (AS_S("lockTransfer"))};
 
+waitUntil {sleep 1; not(AS_S("lockTransfer"))};
 
 // remove from unit items that are not available.
 for "_i" from 0 to (count (_cargo_b select 0) - 1) do {
@@ -127,8 +132,11 @@ for "_i" from 0 to (count (_cargo_m select 0) - 1) do {
             };
             _loaded = true;
           };
+
+
       }
       foreach magazinesAmmoFull _unit;
+
       if (!(_loaded)) then {
         _unit removeMagazine _name;
       };

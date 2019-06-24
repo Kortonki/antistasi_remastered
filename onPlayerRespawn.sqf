@@ -35,7 +35,13 @@ if isMultiplayer then {
 	[-1, -0.1*_money] remoteExec ["AS_fnc_changeFIAmoney", 2];
 };
 
+AS_respawning = nil;
+
 //TODO remove player traits every death
 
+{
+		player setUnitTrait [_x, false];
 
-AS_respawning = nil;
+} foreach ([player, "traits"] call AS_players_fnc_get);
+
+[player, "traits", [], false, true] remoteExec ["AS_players_fnc_change"];

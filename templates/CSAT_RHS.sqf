@@ -49,8 +49,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 //first one should be the most used one, latter for special occasions
 [_dict, "static_aa", ["rhs_Igla_AA_pod_vdv"]] call DICT_fnc_set;
 [_dict, "static_at", ["rhs_Metis_9k115_2_vdv"]] call DICT_fnc_set;
-[_dict, "static_mg", ["rhs_KORD_high_vdv"]] call DICT_fnc_set;
-[_dict, "static_mg_low", ["rhs_KORD_vdv"]] call DICT_fnc_set;
+[_dict, "static_mg", ["rhs_KORD_high_VDV"]] call DICT_fnc_set;
+[_dict, "static_mg_low", ["rhs_KORD_VDV"]] call DICT_fnc_set;
 [_dict, "static_mortar", ["rhs_2b14_82mm_vdv"]] call DICT_fnc_set;
 
 [_dict, "cfgGroups", configfile >> "CfgGroups" >> "east" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_infantry"] call DICT_fnc_set;

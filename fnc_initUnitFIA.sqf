@@ -170,7 +170,7 @@ _unit addEventhandler ["handleHeal", {
 				if (typeOf _unit == "C_Journalist_F") then {
 					[0,_support*3, position _unit, true] remoteExec ["AS_fnc_changeCitySupport", 2];
 					{[0, round(_support/2),_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
-					[0, 1, getpos _unit] remoteExec ["AS_fnc_changeForeignSupport", 2];
+					[1, 0, getpos _unit] remoteExec ["AS_fnc_changeForeignSupport", 2];
 				}
 				else {
 					[0,_support, position _unit, true] remoteExec ["AS_fnc_changeCitySupport", 2];

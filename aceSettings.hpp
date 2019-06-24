@@ -10,7 +10,7 @@
     };
 
     class ace_ui_groupBar {
-        title = "Group Bar"
+        title = "Group Bar";
         ACE_setting = 1;
         values[] = {0, 1};
         texts[] = {"Off", "On"};
@@ -18,6 +18,48 @@
         typeName = "BOOL";
         force = 1;
     };
+
+    class ace_weather_enabled {
+        title = "ACE Weather";
+        ACE_setting = 1;
+        values[] = {0, 1};
+        texts[] = {"Off", "On"};
+        default = 0;
+        typeName = "BOOL";
+        force = 1;
+    };
+
+    class ace_weather_updateInterval {
+        title = "ACE Weather Update Interval";
+        ACE_setting = 1;
+        values[] = {10, 30, 60, 90, 120};
+        texts[] = {"10", "30", "60", "90", "120"};
+        default = 1;
+        typeName = "SCALAR";
+        force = 1;
+    };
+
+    class ace_weather_windSimulation {
+        title = "ACE Weather Wind Simulation";
+        ACE_setting = 1;
+        values[] = {0, 1};
+        texts[] = {"Off", "On"};
+        default = 1;
+        typeName = "BOOL";
+        force = 1;
+    };
+
+    class ace_winddeflection_enabled {
+        title = "ACE Wind Deflection";
+        ACE_setting = 1;
+        values[] = {0, 1};
+        texts[] = {"Off", "On"};
+        default = 1;
+        typeName = "BOOL";
+        force = 1;
+    };
+
+
 
     class ace_map_BFT_HideAiGroups {
         title = "Hide AI groups on map?";

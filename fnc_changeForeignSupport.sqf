@@ -46,4 +46,4 @@ if (_csat != 0) then {
 	_text = _text + format["%1: %2%3", ["CSAT", "name"] call AS_fnc_getEntity, _csat call _getSign, _csat];
 };
 
-[petros,"income",_text] remoteExec ["AS_fnc_localCommunication",AS_commander];
+[petros,"income",_text,5] remoteExec ["AS_fnc_localCommunication",AS_commander];

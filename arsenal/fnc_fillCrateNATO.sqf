@@ -71,6 +71,7 @@ for "_i" from 1 to 3 do {
 	(_backpacks select 1) pushback _intNATOSupp;
 };
 
+//TODO check if RHS has equivalents?
 if (hasACE and !hasRHS) then {
 	(_magazines select 0) pushBack "ACE_HuntIR_M203";
 	(_magazines select 1) pushBack 3*_intNATOSupp;
@@ -93,6 +94,56 @@ if (hasACE and !hasRHS) then {
 
 if hasTFAR then {
     _backpacks pushBack [(["NATO", "tfar_lr_radio"] call AS_fnc_getEntity), 2*_intNATOSupp];
+};
+
+//Medical equipment
+
+if hasACE then {
+
+		private _medicalItems = AS_aceBasicMedical;
+
+		if (ace_medical_level == 2) then {_medicalItems append AS_aceAdvMedical};
+
+		if (hasACEsplint) then {_medicalItems pushBack "adv_aceSplint_splint"};
+
+		{
+			if (random 10 < _intNATOSupp) then {
+
+					//Table of medical equipment amounts (Natosupp / 10 * _coeff)
+
+					private _coeff = call {
+						if (_x isEqualTo "FirstAidKit") exitWith {10};
+						if (_x isEqualTo "MediKit") exitWith {1};
+						if (_x isEqualTo "ACE_fieldDressing") exitWith {20};
+						if (_x isEqualTo "ACE_quikclot") exitWith {10};
+						if (_x isEqualTo "ACE_tourniquet") exitWith {10};
+						if (_x isEqualTo "ACE_morphine") exitWith {6};
+						if (_x isEqualTo "ACE_epinephrine") exitWith {3};
+						if (_x isEqualTo "ACE_adenosine") exitWith {3};
+						if (_x isEqualTo "ACE_personalAidKit") exitWith {1};
+						if (_x isEqualTo "ACE_surgicalKit") exitWith {1};
+						if (_x isEqualTo "adv_aceSplint_splint") exitWith {4};
+						if ((_x find "saline") > -1) exitWith {2};
+						if ((_x find "blood") > -1) exitWith {1};
+						if ((_x find "Bandage") > -1) exitWith {10};
+
+						1
+					};
+
+					(_items select 0) pushBack _x;
+					(_items select 1) pushBack _intNATOSupp*_coeff;
+				};
+
+		} foreach (_medicalItems - unlockedItems);
+
+} else {
+
+	(_items select 0) pushBack "FirstAidKit";
+	(_items select 1) pushBack _intNatoSupp*10;
+
+	(_items select 0) pushBack "MediKit";
+	(_items select 1) pushBack _intNatoSupp;
+
 };
 
 [_crate, _weapons, _magazines, _items, _backpacks, true, true] call AS_fnc_populateBox;

@@ -1,5 +1,20 @@
 // returns a list of values that are ingested by AS_mission_fnc_execute/AS_mission_fnc_description
 // that contain complete information about how a successful mission changed the game state
+
+/*
+//ORDER of Params:
+
+params [["_commander_score", 0],
+        ["_players_score", [0,[0,0,0],0]],
+        ["_prestige", [0, 0]],
+        ["_resourcesFIA", [0, 0]],
+        ["_citySupport", [0, 0, [], true]],
+        ["_changeAAFattack", 0],
+        ["_custom", []],
+        ["_increaseBusy", ["", 0]]
+
+*/
+
 params ["_mission", ["_args", []]];
 private _location = _mission call AS_mission_fnc_location;
 private _position = _location call AS_location_fnc_position;

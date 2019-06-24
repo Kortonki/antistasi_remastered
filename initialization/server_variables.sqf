@@ -94,7 +94,7 @@ AS_Pset("lightnings", 0);
 AS_Pset("waves", 0);
 AS_Pset("fog", 0);
 */
-
+[] call AS_weather_fnc_init;
 [] spawn AS_weather_fnc_randomWeather;
 
 AS_Pset("clear", false); //This to signal weather module to not keep default clear weather

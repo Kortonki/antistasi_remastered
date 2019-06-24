@@ -2,7 +2,6 @@
 
 private _fnc_spawn = {
 	params ["_location"];
-	private _pLarge = ["puesto_2","puesto_6","puesto_11","puesto_17","puesto_23"];
 
 	private _soldados = [];
 	private _grupos = [];
@@ -65,14 +64,6 @@ private _fnc_spawn = {
 	private _groupsCount = (round (_size/50)) max 1;
 	if (_frontera) then {_groupsCount = _groupsCount * 2};
 
-	if !(_location in _pLarge) then {
-		_groupsCount = (round _groupsCount/2) max 1;
-
-		_grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "teamsAA"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
-		_grupos pushBack _grupo;
-		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x;} forEach units _grupo;
-		[leader _grupo, _location, "SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] spawn UPSMON;
-	};
 
 	for "_i" from 1 to _groupsCount do {
 		if !(_location call AS_location_fnc_spawned) exitWith {};

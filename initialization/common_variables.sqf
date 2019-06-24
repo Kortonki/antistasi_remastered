@@ -50,6 +50,7 @@ hasACE = false;
 
 hasACEhearing = false;
 hasACEMedical = false;
+hasACEsplint = false;
 if (!isNil "ace_common_settingFeedbackIcons") then {
 	hasACE = true;
 	if (isClass (configFile >> "CfgSounds" >> "ACE_EarRinging_Weak")) then {
@@ -58,6 +59,9 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 	if (isClass (ConfigFile >> "CfgSounds" >> "ACE_heartbeat_fast_3") and
         (ace_medical_level != 0)) then {
 		hasACEMedical = true;
+	};
+	if ("adv_aceSplint_splint" in AS_allItems) then {
+		hasACEsplint = true;
 	};
 	// Lists of items used by ACE medical system. These are used
 	// below to define what factions use and what is unlocked

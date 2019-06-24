@@ -4,6 +4,7 @@ class AS_weather {
 
       FNC(weather,randomWeather);
       FNC(weather,changeWeather);
+      FNC(weather,init);
 
     };
 

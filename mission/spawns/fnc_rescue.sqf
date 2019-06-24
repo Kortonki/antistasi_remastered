@@ -33,6 +33,7 @@ private _fnc_spawn = {
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
 
+
 	private _spawnFail = false;
 
 	private _grpPOW = createGroup ("FIA" call AS_fnc_getFactionSide);
@@ -63,6 +64,7 @@ private _fnc_spawn = {
 
 		if (_spawnFail) exitWith { //Cancel mission if no proper house position found
 			//[_mission, "resources", [taskNull, [], [], []]] call AS_spawn_fnc_set; //Unnecessary?
+			private _tskTitle = _mission call AS_mission_fnc_title;
 			[petros, "sideChat", str _tskTitle + " canceled"] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
 		};
 		// update position

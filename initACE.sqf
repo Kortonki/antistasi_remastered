@@ -16,7 +16,11 @@ if (ace_medical_level >= 1) then {
 
 if (ace_medical_level == 2) then {
     unlockedItems = unlockedItems + AS_aceAdvMedical;
+    if (hasACEsplint) then {
+      unlockedItems = unlockedItems + ["adv_aceSplint_splint"];
+    };
 };
+
 
 if (hasACEhearing) then {
     unlockedItems = unlockedItems + ["ACE_EarPlugs"];

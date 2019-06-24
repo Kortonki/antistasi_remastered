@@ -53,6 +53,31 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 "C_Truck_02_covered_F"
 ]] call DICT_fnc_set;
 
+//No special medical equipment for extra difficulty (need to hoard morphine etc.)
+
+unlockedItems = unlockedItems - [
+"Medikit",
+"ACE_bloodIV_250",
+"ACE_bloodIV_500",
+"ACE_bloodIV",
+"ACE_epinephrine",
+"ACE_morphine",
+"ACE_plasmaIV_250",
+"ACE_plasmaIV_500",
+"ACE_plasmaIV",
+"ACE_packingBandage",
+"ACE_elasticBandage",
+"ACE_quikclot",
+"ACE_salineIV_250",
+"ACE_salineIV_500",
+"ACE_salineIV",
+"ACE_atropine",
+"ACE_adenosine",
+"ACE_personalAidKit",
+"ACE_surgicalKit",
+"adv_aceSplint_splint"
+];
+
 //first one should be the most used one, latter for special occasions
 [_dict, "static_aa", ["rhsgref_cdf_b_ZU23"]] call DICT_fnc_set;
 [_dict, "static_at", ["RHS_TOW_TriPod_D"]] call DICT_fnc_set; //first one is used by squads

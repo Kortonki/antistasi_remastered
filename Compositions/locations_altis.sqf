@@ -2460,157 +2460,157 @@ _objects = [
 
 _center = [9136.29,8342.23,0];
 _objects = [
-	["Land_HBarrier_Big_F",[6.6543,-0.875,-0.00107574],87.1529,1,0,[5.19154,1.5764],"","",true,false], 
-	["Land_HBarrier_Big_F",[6.30957,7.44531,-0.00167084],89.0136,1,0,[1.76415,0.428091],"","",true,false], 
-	["Land_BagFence_Round_F",[9.80859,-0.00488281,-0.0627441],69.9862,1,0,[1.12844,-2.0363],"","",true,false], 
-	["Land_PaperBox_open_full_F",[8.53516,6.47949,0.000236511],0,1,0,[0.458405,-1.75653],"","",true,false], 
-	["Land_BagFence_Round_F",[11.8877,-1.16602,-0.00310516],340.291,1,0,[-2.03028,-1.13926],"","",true,false], 
-	["Land_Pallet_MilBoxes_F",[8.5498,8.67188,0.00405121],0,1,0,[0.458405,-1.75653],"","",true,false], 
-	["Land_BagFence_Round_F",[12.9717,0.993164,0.0537796],249.636,1,0,[-1.11599,2.04315],"","",true,false], 
-	["Land_HBarrier_Big_F",[12.0381,-3.97656,0.0280609],181.004,1,0,[-7.38203,5.01794],"","",true,false], 
-	["Land_Cargo_Patrol_V1_F",[12.1113,9.06641,0],177,1,0,[0,-0],"","",true,false], 
-	["Land_HBarrier_Big_F",[9.60254,12.3945,0.00258636],0,1,0,[-0.76387,-4.87784],"","",true,false], 
-	["Land_BagFence_Long_F",[17.5703,-4.30176,0.0333557],181.007,1,0,[-6.94095,1.26247],"","",true,false], 
-	["Land_HBarrier_5_F",[18.2471,1.01953,-0.0569763],269.123,1,0,[-4.5236,-1.53477],"","",true,false], 
-	["Land_BagFence_End_F",[19.9971,-4.35938,0.017395],0,1,0,[6.91802,-1.38481],"","",true,false], 
-	["Land_HBarrier_5_F",[18.1602,6.76074,-0.0714722],269.094,1,0,[-2.8556,-1.86423],"","",true,false], 
-	["Land_BagFence_Long_F",[20.5068,0.629883,0.133522],181.995,1,0,[-1.75973,4.44151],"","",true,false], 
-	["CamoNet_BLUFOR_open_Curator_F",[21.8135,-1.66797,0.914429],0,1,0,[0,0],"","",true,false], 
-	["Land_HBarrierBig_F",[18.0996,13.0625,0.00907135],179,1,0,[-2.92697,2.8795],"","",true,false], 
-	["Land_BagFence_Long_F",[23.4395,0.512695,0.0770264],181.998,1,0,[-1.7094,2.99643],"","",true,false], 
-	["Land_Cargo_House_V1_F",[23.6465,8.41699,0],0,1,0,[0,0],"","",true,false], 
-	["Land_BagFence_End_F",[24.0303,-4.18652,-0.0317688],178.992,1,0,[-7.84019,3.22096],"","",true,false], 
-	["Land_BagFence_Long_F",[26.4521,-4.15039,0.0943527],176.977,1,0,[-7.72409,3.49545],"","",true,false], 
-	["Land_HBarrier_Big_F",[28.877,-0.210938,0.00062561],91.1545,1,0,[3.07544,2.8867],"","",true,false], 
-	["Land_HBarrier_Big_F",[26.334,12.9473,0.00335693],2.97635,1,0,[1.91398,-7.35914],"","",true,false], 
-	["Land_HBarrier_Big_F",[28.9883,8.28613,0.00541687],91.2761,1,0,[3.027,5.17303],"","",true,false], 
-	["Land_Razorwire_F",[32.832,-4.50586,-0.340569],269.479,1,0,[-3.15835,-2.79569],"","",true,false], 
-	["Land_Razorwire_F",[34.4199,1.99414,-0.540657],318.669,1,0,[0.0514943,-4.21384],"","",true,false], 
-	["Land_BagFence_Long_F",[36.1855,-1.62109,0.100708],131.678,1,0,[-0.508456,3.32798],"","",true,false], 
-	["Land_BagFence_Long_F",[36.2588,-3.72363,-0.0387192],226.608,1,0,[-2.30468,-2.54914],"","",true,false], 
-	["Land_Razorwire_F",[34.582,-7.38379,0.0576172],36.5976,1,0,[4.62067,-0.469599],"","",true,false], 
-	["Land_Razorwire_F",[-38.0537,-2.09766,0.339897],269.726,1,0,[8.96232,2.55247],"","",true,false], 
-	["Land_BagFence_Long_F",[38.1348,0.539063,0.0803146],131.678,1,0,[-0.508456,3.32798],"","",true,false], 
-	["Land_BagFence_Long_F",[38.1592,-5.71289,-0.0664825],226.608,1,0,[-2.30468,-2.54914],"","",true,false], 
-	["Land_BagFence_Long_F",[40.4189,2.99316,-0.0805969],2.31726,1,0,[4.55703,-3.26253],"","",true,false], 
-	["Land_BagFence_Long_F",[40.5039,-8.43359,-0.00987244],2.31824,1,0,[3.42774,0.215728],"","",true,false], 
-	["Land_Razorwire_F",[-42.2949,-7.44141,-0.156822],318.418,1,0,[5.14464,-2.01251],"","",true,false], 
-	["Land_Razorwire_F",[-42.5859,6.47852,-0.11161],36.8925,1,0,[-8.46857,-1.48754],"","",true,false], 
-	["Land_BagFence_Long_F",[-41.6279,-1.58398,0.0703735],312.239,1,0,[1.00296,1.73603],"","",true,false], 
-	["Land_BagFence_Long_F",[-41.7285,0.578125,0.0211639],46.0473,1,0,[-4.60053,0.836899],"","",true,false], 
-	["Land_BagFence_Long_F",[42.9814,0.520508,0.0469055],46.1641,1,0,[5.53864,0.807965],"","",true,false], 
-	["Land_BagFence_Long_F",[43.0068,-5.77832,-0.115532],312.199,1,0,[2.22675,-5.18431],"","",true,false], 
-	["Land_Razorwire_F",[39.1377,-14.7598,-0.00222778],359.655,1,0,[6.76776,0.0361489],"","",true,false], 
-	["Land_BagFence_Long_F",[-43.6484,2.55762,0.0211639],46.0473,1,0,[-4.60053,0.836899],"","",true,false], 
-	["Land_BagFence_Long_F",[-43.5977,-3.69238,-0.0170059],312.018,1,0,[4.89006,-2.57403],"","",true,false], 
-	["Land_BagFence_Long_F",[44.8604,-1.45898,0.131096],45.9681,1,0,[1.48183,4.71935],"","",true,false], 
-	["Land_BagFence_Long_F",[44.9473,-3.63379,-0.0418396],312.042,1,0,[4.76049,-1.97147],"","",true,false], 
-	["Land_Razorwire_F",[44.0781,4.6084,0.438377],37.036,1,0,[9.31256,3.39844],"","",true,false], 
-	["Land_BagFence_Long_F",[-46.2109,4.99316,0.157455],2.33044,1,0,[-7.82035,3.60943],"","",true,false], 
-	["Land_Razorwire_F",[44.2871,-9.52637,-0.260506],318.418,1,0,[5.00575,-2.3999],"","",true,false], 
-	["Land_BagFence_Long_F",[-46.0771,-6.32422,0.0924149],2.32825,1,0,[6.35745,0.95221],"","",true,false], 
-	["Land_BagFence_Long_F",[-48.4131,2.60156,0.0961838],131.761,1,0,[4.78411,3.45775],"","",true,false], 
-	["Land_BagFence_Long_F",[-48.376,-3.60352,0.0456161],226.934,1,0,[-8.58517,-0.698814],"","",true,false], 
-	["Land_Razorwire_F",[48.6113,-4.09082,-0.668015],269.156,1,0,[2.15551,-4.45414],"","",true,false], 
-	["Land_BagFence_Long_F",[-50.2754,-1.66602,0.123558],226.378,1,0,[-3.72366,4.49428],"","",true,false], 
-	["Land_BagFence_Long_F",[-50.3623,0.44043,0.0918961],131.753,1,0,[4.77847,3.34975],"","",true,false], 
-	["Land_Razorwire_F",[-51.9561,-5.25195,-0.0884476],36.784,1,0,[8.57322,-0.836412],"","",true,false], 
-	["Land_Razorwire_F",[-52.1162,3.99707,-0.195076],318.582,1,0,[-5.99388,-2.54491],"","",true,false], 
+	["Land_HBarrier_Big_F",[6.6543,-0.875,-0.00107574],87.1529,1,0,[5.19154,1.5764],"","",true,false],
+	["Land_HBarrier_Big_F",[6.30957,7.44531,-0.00167084],89.0136,1,0,[1.76415,0.428091],"","",true,false],
+	["Land_BagFence_Round_F",[9.80859,-0.00488281,-0.0627441],69.9862,1,0,[1.12844,-2.0363],"","",true,false],
+	["Land_PaperBox_open_full_F",[8.53516,6.47949,0.000236511],0,1,0,[0.458405,-1.75653],"","",true,false],
+	["Land_BagFence_Round_F",[11.8877,-1.16602,-0.00310516],340.291,1,0,[-2.03028,-1.13926],"","",true,false],
+	["Land_Pallet_MilBoxes_F",[8.5498,8.67188,0.00405121],0,1,0,[0.458405,-1.75653],"","",true,false],
+	["Land_BagFence_Round_F",[12.9717,0.993164,0.0537796],249.636,1,0,[-1.11599,2.04315],"","",true,false],
+	["Land_HBarrier_Big_F",[12.0381,-3.97656,0.0280609],181.004,1,0,[-7.38203,5.01794],"","",true,false],
+	["Land_Cargo_Patrol_V1_F",[12.1113,9.06641,0],177,1,0,[0,-0],"","",true,false],
+	["Land_HBarrier_Big_F",[9.60254,12.3945,0.00258636],0,1,0,[-0.76387,-4.87784],"","",true,false],
+	["Land_BagFence_Long_F",[17.5703,-4.30176,0.0333557],181.007,1,0,[-6.94095,1.26247],"","",true,false],
+	["Land_HBarrier_5_F",[18.2471,1.01953,-0.0569763],269.123,1,0,[-4.5236,-1.53477],"","",true,false],
+	["Land_BagFence_End_F",[19.9971,-4.35938,0.017395],0,1,0,[6.91802,-1.38481],"","",true,false],
+	["Land_HBarrier_5_F",[18.1602,6.76074,-0.0714722],269.094,1,0,[-2.8556,-1.86423],"","",true,false],
+	["Land_BagFence_Long_F",[20.5068,0.629883,0.133522],181.995,1,0,[-1.75973,4.44151],"","",true,false],
+	["CamoNet_BLUFOR_open_Curator_F",[21.8135,-1.66797,0.914429],0,1,0,[0,0],"","",true,false],
+	["Land_HBarrierBig_F",[18.0996,13.0625,0.00907135],179,1,0,[-2.92697,2.8795],"","",true,false],
+	["Land_BagFence_Long_F",[23.4395,0.512695,0.0770264],181.998,1,0,[-1.7094,2.99643],"","",true,false],
+	["Land_Cargo_House_V1_F",[23.6465,8.41699,0],0,1,0,[0,0],"","",true,false],
+	["Land_BagFence_End_F",[24.0303,-4.18652,-0.0317688],178.992,1,0,[-7.84019,3.22096],"","",true,false],
+	["Land_BagFence_Long_F",[26.4521,-4.15039,0.0943527],176.977,1,0,[-7.72409,3.49545],"","",true,false],
+	["Land_HBarrier_Big_F",[28.877,-0.210938,0.00062561],91.1545,1,0,[3.07544,2.8867],"","",true,false],
+	["Land_HBarrier_Big_F",[26.334,12.9473,0.00335693],2.97635,1,0,[1.91398,-7.35914],"","",true,false],
+	["Land_HBarrier_Big_F",[28.9883,8.28613,0.00541687],91.2761,1,0,[3.027,5.17303],"","",true,false],
+	["Land_Razorwire_F",[32.832,-4.50586,-0.340569],269.479,1,0,[-3.15835,-2.79569],"","",true,false],
+	["Land_Razorwire_F",[34.4199,1.99414,-0.540657],318.669,1,0,[0.0514943,-4.21384],"","",true,false],
+	["Land_BagFence_Long_F",[36.1855,-1.62109,0.100708],131.678,1,0,[-0.508456,3.32798],"","",true,false],
+	["Land_BagFence_Long_F",[36.2588,-3.72363,-0.0387192],226.608,1,0,[-2.30468,-2.54914],"","",true,false],
+	["Land_Razorwire_F",[34.582,-7.38379,0.0576172],36.5976,1,0,[4.62067,-0.469599],"","",true,false],
+	["Land_Razorwire_F",[-38.0537,-2.09766,0.339897],269.726,1,0,[8.96232,2.55247],"","",true,false],
+	["Land_BagFence_Long_F",[38.1348,0.539063,0.0803146],131.678,1,0,[-0.508456,3.32798],"","",true,false],
+	["Land_BagFence_Long_F",[38.1592,-5.71289,-0.0664825],226.608,1,0,[-2.30468,-2.54914],"","",true,false],
+	["Land_BagFence_Long_F",[40.4189,2.99316,-0.0805969],2.31726,1,0,[4.55703,-3.26253],"","",true,false],
+	["Land_BagFence_Long_F",[40.5039,-8.43359,-0.00987244],2.31824,1,0,[3.42774,0.215728],"","",true,false],
+	["Land_Razorwire_F",[-42.2949,-7.44141,-0.156822],318.418,1,0,[5.14464,-2.01251],"","",true,false],
+	["Land_Razorwire_F",[-42.5859,6.47852,-0.11161],36.8925,1,0,[-8.46857,-1.48754],"","",true,false],
+	["Land_BagFence_Long_F",[-41.6279,-1.58398,0.0703735],312.239,1,0,[1.00296,1.73603],"","",true,false],
+	["Land_BagFence_Long_F",[-41.7285,0.578125,0.0211639],46.0473,1,0,[-4.60053,0.836899],"","",true,false],
+	["Land_BagFence_Long_F",[42.9814,0.520508,0.0469055],46.1641,1,0,[5.53864,0.807965],"","",true,false],
+	["Land_BagFence_Long_F",[43.0068,-5.77832,-0.115532],312.199,1,0,[2.22675,-5.18431],"","",true,false],
+	["Land_Razorwire_F",[39.1377,-14.7598,-0.00222778],359.655,1,0,[6.76776,0.0361489],"","",true,false],
+	["Land_BagFence_Long_F",[-43.6484,2.55762,0.0211639],46.0473,1,0,[-4.60053,0.836899],"","",true,false],
+	["Land_BagFence_Long_F",[-43.5977,-3.69238,-0.0170059],312.018,1,0,[4.89006,-2.57403],"","",true,false],
+	["Land_BagFence_Long_F",[44.8604,-1.45898,0.131096],45.9681,1,0,[1.48183,4.71935],"","",true,false],
+	["Land_BagFence_Long_F",[44.9473,-3.63379,-0.0418396],312.042,1,0,[4.76049,-1.97147],"","",true,false],
+	["Land_Razorwire_F",[44.0781,4.6084,0.438377],37.036,1,0,[9.31256,3.39844],"","",true,false],
+	["Land_BagFence_Long_F",[-46.2109,4.99316,0.157455],2.33044,1,0,[-7.82035,3.60943],"","",true,false],
+	["Land_Razorwire_F",[44.2871,-9.52637,-0.260506],318.418,1,0,[5.00575,-2.3999],"","",true,false],
+	["Land_BagFence_Long_F",[-46.0771,-6.32422,0.0924149],2.32825,1,0,[6.35745,0.95221],"","",true,false],
+	["Land_BagFence_Long_F",[-48.4131,2.60156,0.0961838],131.761,1,0,[4.78411,3.45775],"","",true,false],
+	["Land_BagFence_Long_F",[-48.376,-3.60352,0.0456161],226.934,1,0,[-8.58517,-0.698814],"","",true,false],
+	["Land_Razorwire_F",[48.6113,-4.09082,-0.668015],269.156,1,0,[2.15551,-4.45414],"","",true,false],
+	["Land_BagFence_Long_F",[-50.2754,-1.66602,0.123558],226.378,1,0,[-3.72366,4.49428],"","",true,false],
+	["Land_BagFence_Long_F",[-50.3623,0.44043,0.0918961],131.753,1,0,[4.77847,3.34975],"","",true,false],
+	["Land_Razorwire_F",[-51.9561,-5.25195,-0.0884476],36.784,1,0,[8.57322,-0.836412],"","",true,false],
+	["Land_Razorwire_F",[-52.1162,3.99707,-0.195076],318.582,1,0,[-5.99388,-2.54491],"","",true,false],
 	["Land_Razorwire_F",[-53.71,-2.46582,0.10704],269.252,1,0,[-5.77722,0.763301],"","",true,false],
 	[(["CSAT", "static_mortar"] call AS_fnc_getEntity select 0),[11.8877,0.147461,-0.0497971],308.589,1,0,[-2.32635,0.0968218],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[40.3721,-2.87402,-0.121872],0.0129312,1,0,[2.82822,-1.83257],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[40.3721,-2.87402,0.221872],0.0129312,1,0,[2.82822,-1.83257],"","",true,false],
 	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[13.3477,7.52344,4.2],149.445,1,0,[0.334842,0.623217],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-46.1152,-0.722656,-0.057579],0.00125647,1,0,[6.39846,-5.78442],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-46.1152,-0.722656,0.157579],0.00125647,1,0,[6.39846,-5.78442],"","",true,false],
 	[["CSAT", "box"] call AS_fnc_getEntity,[7.19922,1.52051,0.0274963],217.695,1,0.0152418,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[-11.6289,-5.40039,0],0,1,0,[],"","",true,false],
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[4.3418,-1.6709,0.155876],176.582,1,0,[],"","",true,false]
 
 ];
-[_dict, "hillAgela", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillAgela", "center", _center] call DICT_fnc_set;
-[_dict, "hillAgela", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Agela", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Agela", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Agela", "objects", _objects] call DICT_fnc_set;
 
 _center = [11669.5,7578.51,0];
 _objects = [
-	["Land_BagFence_Long_F",[-1.0459,4.30664,-0.127701],139.803,1,0,[-0.013102,-4.38634],"","",true,false], 
-	["Land_BagFence_End_F",[0.81543,5.8833,-0.0349274],318.775,1,0,[1.60426,2.7565],"","",true,false], 
-	["Land_HBarrier_Big_F",[-5.48633,0.706543,0.00202942],139.845,1,0,[0.0788142,-5.45798],"","",true,false], 
-	["Land_BagFence_Round_F",[-7.43359,2.95264,0.12944],299.226,1,0,[1.85345,5.13781],"","",true,false], 
-	[(["CSAT", "static_mortar"] call AS_fnc_getEntity select 0),[-8.2832,3.96094,-0.0244293],270.193,1,0,[1.97648,3.59097],"","",true,false], 
-	["Land_BagFence_Round_F",[-8.00879,5.28857,0.0503845],208.443,1,0,[3.09453,2.46011],"","",true,false], 
-	["CamoNet_BLUFOR_open_Curator_F",[0.316406,9.07471,0.904099],318.72,1,0,[0,0],"","",true,false], 
-	["Land_BagFence_End_F",[3.73242,8.65674,0.0376129],137.776,1,0,[-1.65209,-2.72816],"","",true,false], 
-	["Land_BagFence_Round_F",[-9.74707,2.4541,0.0233612],28.8114,1,0,[-4.0982,0.0133776],"","",true,false], 
-	["Land_BagFence_Long_F",[-2.11133,9.98047,-0.0125732],140.719,1,0,[0.424469,-0.446151],"","",true,false], 
-	["Land_HBarrier_Big_F",[-11.6387,-0.459961,0.0146332],45.9343,1,0,[-5.96473,-1.2226],"","",true,false], 
-	["Land_BagFence_Long_F",[5.52637,10.2837,-0.0695496],135.777,1,0,[-1.74622,-2.669],"","",true,false], 
-	["Land_HBarrier_5_F",[-4.0791,8.75537,0.0157776],227.722,1,0,[0.46773,0.400566],"","",true,false], 
-	["Land_BagFence_Long_F",[0.155273,11.834,-0.0286255],140.774,1,0,[-1.50716,-2.81065],"","",true,false], 
-	["Land_Razorwire_F",[-12.2646,-0.554199,-0.418701],151.534,1,0,[2.78539,-5.4208],"","",true,false], 
-	["Land_HBarrier_Big_F",[4.71973,14.7686,0.0037384],49.7616,1,0,[-2.23783,-1.1073],"","",true,false], 
-	["Land_PaperBox_open_full_F",[-14.9814,6.42773,0.00491333],318.651,1,0,[-3.60651,5.82106],"","",true,false], 
-	["Land_HBarrier_5_F",[-14.6777,0.0703125,0.101791],150.325,1,0,[7.19035,2.49955],"","",true,false], 
-	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[-12.0127,10.4976,-0.0650635],107.983,1,0,[2.13773,-3.79196],"","",true,false], 
-	["Land_Cargo_Patrol_V1_F",[-13.9707,10.8149,3.05176e-005],135.633,1,0,[3.26359,-2.2305],"","",true,false], 
-	["Land_HBarrier_5_F",[-7.93359,12.9771,0.0881348],227.856,1,0,[4.05126,2.19946],"","",true,false], 
-	["Land_Cargo_House_V1_F",[-4.87305,17.9375,1.52588e-005],318.641,1,0,[-3.22079,3.04034],"","",true,false], 
-	["Land_Pallet_MilBoxes_F",[-16.3789,8.10693,-0.00224304],318.457,1,0,[-6.11783,2.9731],"","",true,false], 
-	["Land_TTowerSmall_1_F",[-18.3203,6.86475,0.0293274],163.355,1,0,[0,-0],"","",true,false], 
-	["Land_HBarrier_Big_F",[-0.591797,21.2012,0.000671387],49.3508,1,0,[4.53729,-6.29491],"","",true,false], 
-	["Land_HBarrierBig_F",[-12.1416,17.5918,-0.00169373],137.701,1,0,[2.18848,-4.05717],"","",true,false], 
-	["Land_Razorwire_F",[-19.3916,-4.32617,0.595688],151.547,1,0,[-0.239615,3.08233],"","",true,false], 
-	["Land_HBarrier_Big_F",[-18.0996,11.4697,0.019104],318.457,1,0,[-6.11783,2.9731],"","",true,false], 
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-21.501,2.0293,-0.0150452],230.097,1,0,[-4.53582,7.36498],"","",true,false], 
-	["Land_HBarrier_5_F",[-19.5293,-2.58887,0.489944],150.811,1,0,[-2.76821,12.2386],"","",true,false], 
-	["Land_BagFence_Long_F",[22.8291,1.59473,-0.0493927],134.029,1,0,[-1.65074,-1.8087],"","",true,false], 
-	["Land_BagFence_Long_F",[21.9941,-7.32227,0.109833],43.0668,1,0,[2.9275,3.57315],"","",true,false], 
-	["Land_HBarrier_Big_F",[-5.94043,22.7905,0.0306549],321.348,1,0,[-7.32041,6.063],"","",true,false], 
-	["Land_HBarrier_5_F",[-21.6631,8.2915,0.234238],129.638,1,0,[11.0486,5.77622],"","",true,false], 
-	["Land_Razorwire_F",[-24.1064,7.9917,-0.365509],307.973,1,0,[-11.2062,-5.45183],"","",true,false], 
-	["Land_BagFence_Long_F",[24.9092,3.69189,-0.183746],134.359,1,0,[-1.71887,-7.61961],"","",true,false], 
-	["Land_HBarrier_5_F",[-24.0752,-3.7168,0.306717],228.406,1,0,[-4.3003,7.66006],"","",true,false], 
-	["Land_BagFence_Long_F",[24.1768,-9.36768,0.125397],43.0044,1,0,[2.04438,4.51807],"","",true,false], 
-	["Land_HBarrier_5_F",[-25.1865,4.0127,0.210312],129.635,1,0,[8.40802,5.21456],"","",true,false], 
-	["Land_Razorwire_F",[-28.0205,-1.30078,-0.758774],48.9225,1,0,[4.36925,-7.62158],"","",true,false], 
-	["CamoNet_OPFOR_Curator_F",[26.6904,4.9873,0.0231781],311.328,1,0,[3.17006,6.32531],"","",true,false], 
-	["Land_BagFence_Long_F",[26.9902,5.77197,-0.144241],134.313,1,0,[-2.83589,-6.48002],"","",true,false], 
-	["Land_Razorwire_F",[-28.9844,1.9082,-0.501999],307.982,1,0,[-8.55214,-4.97002],"","",true,false], 
-	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[25.6045,-12.6768,-0.094635],190.74,1,0,[-4.54319,-2.83457],"","",true,false], 
-	["Land_BagFence_Round_F",[25.5303,-14.0576,0.0579834],13.0317,1,0,[4.39678,2.98465],"","",true,false], 
-	["Land_BagFence_Long_F",[29.0566,7.83398,-0.229279],134.575,1,0,[-2.84189,-9.26286],"","",true,false], 
-	["Land_BagFence_Long_F",[29.0654,-10.9043,-0.0473175],180,1,0,[-4.95322,-1.91632],"","",true,false], 
-	["Land_BagFence_Long_F",[31.1162,2.14111,-0.0847168],133.049,1,0,[1.07275,-4.84046],"","",true,false], 
-	["Land_BagFence_Round_F",[30.8613,-0.887207,-0.0810852],89.1895,1,0,[-2.58655,-4.23418],"","",true,false], 
-	["Land_BagFence_Long_F",[30.9121,-4.61621,-0.082901],222.047,1,0,[-2.54335,-3.22017],"","",true,false], 
-	["Land_BagFence_Long_F",[31.1475,9.91113,-0.172394],135.272,1,0,[-0.680695,-7.26982],"","",true,false], 
-	["Land_BagFence_Long_F",[32.0078,-10.9146,-0.0161285],180,1,0,[-8.71752,-0.695584],"","",true,false], 
-	["Land_BagFence_Round_F",[34.875,2.60693,-0.141098],178.997,1,0,[7.27004,-5.80916],"","",true,false], 
-	[(["CSAT", "static_mortar"] call AS_fnc_getEntity select 0),[35.1787,-1.11279,-0.0185242],267.528,1,0,[2.70742,4.15807],"","",true,false], 
-	["Land_BagFence_Round_F",[35.041,-5.04492,0.0513306],0,1,0,[2.21426,2.52128],"","",true,false], 
-	["CamoNet_OPFOR_Curator_F",[34.8965,-11.9204,-0.0158844],178.988,1,0,[-8.72819,-0.540375],"","",true,false], 
-	["Land_BagFence_Long_F",[34.9551,-13.2866,-0.0161438],180,1,0,[-8.71752,-0.695584],"","",true,false], 
-	["Land_BagFence_Round_F",[38.8672,-1.23535,0.182465],270.225,1,0,[1.74196,7.37614],"","",true,false], 
-	["Land_BagFence_Long_F",[38.6055,2.2251,0.103867],222.325,1,0,[6.64168,3.67469],"","",true,false], 
-	["Land_BagFence_Long_F",[37.8291,-10.9341,-0.142548],180,1,0,[-13.4235,-8.03649],"","",true,false], 
-	["Land_BagFence_Long_F",[39.4434,-4.78418,0.0483551],132.578,1,0,[-6.90769,4.9182],"","",true,false], 
-	["Land_BagFence_Long_F",[38.5117,9.97754,0.0702057],222.137,1,0,[4.28617,2.53954],"","",true,false], 
-	["Land_BagFence_Long_F",[40.6484,7.96729,0.0702057],222.137,1,0,[4.28617,2.53954],"","",true,false], 
-	["Land_BagFence_Long_F",[40.6523,-10.9453,-0.17099],180,1,0,[-13.4235,-8.03649],"","",true,false], 
-	["Land_BagFence_Long_F",[42.7939,5.96045,0.0702057],222.137,1,0,[4.28617,2.53954],"","",true,false], 
-	["CamoNet_OPFOR_Curator_F",[43.8701,4.92383,-0.0112305],42.1371,1,0,[-4.28617,-2.53954],"","",true,false], 
-	["Land_BagFence_Long_F",[44.8652,3.9502,-0.0168152],222.214,1,0,[12.5713,-4.1848],"","",true,false], 
-	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[43.7568,-12.5303,0.0369415],161.614,1,0,[-15.1426,-3.19791],"","",true,false], 
-	["Land_BagFence_Long_F",[45.2754,-9.68994,0.015625],139.494,1,0,[-10.4751,0.419334],"","",true,false], 
-	["Land_BagFence_Round_F",[44.3682,-13.9038,0.024826],334.254,1,0,[15.4457,1.34636],"","",true,false], 
-	["Land_BagFence_Long_F",[46.9668,2.0625,-0.0931702],221.93,1,0,[6.74361,-3.87845],"","",true,false], 
+	["Land_BagFence_Long_F",[-1.0459,4.30664,-0.127701],139.803,1,0,[-0.013102,-4.38634],"","",true,false],
+	["Land_BagFence_End_F",[0.81543,5.8833,-0.0349274],318.775,1,0,[1.60426,2.7565],"","",true,false],
+	["Land_HBarrier_Big_F",[-5.48633,0.706543,0.00202942],139.845,1,0,[0.0788142,-5.45798],"","",true,false],
+	["Land_BagFence_Round_F",[-7.43359,2.95264,0.12944],299.226,1,0,[1.85345,5.13781],"","",true,false],
+	[(["CSAT", "static_mortar"] call AS_fnc_getEntity select 0),[-8.2832,3.96094,-0.0244293],270.193,1,0,[1.97648,3.59097],"","",true,false],
+	["Land_BagFence_Round_F",[-8.00879,5.28857,0.0503845],208.443,1,0,[3.09453,2.46011],"","",true,false],
+	["CamoNet_BLUFOR_open_Curator_F",[0.316406,9.07471,0.904099],318.72,1,0,[0,0],"","",true,false],
+	["Land_BagFence_End_F",[3.73242,8.65674,0.0376129],137.776,1,0,[-1.65209,-2.72816],"","",true,false],
+	["Land_BagFence_Round_F",[-9.74707,2.4541,0.0233612],28.8114,1,0,[-4.0982,0.0133776],"","",true,false],
+	["Land_BagFence_Long_F",[-2.11133,9.98047,-0.0125732],140.719,1,0,[0.424469,-0.446151],"","",true,false],
+	["Land_HBarrier_Big_F",[-11.6387,-0.459961,0.0146332],45.9343,1,0,[-5.96473,-1.2226],"","",true,false],
+	["Land_BagFence_Long_F",[5.52637,10.2837,-0.0695496],135.777,1,0,[-1.74622,-2.669],"","",true,false],
+	["Land_HBarrier_5_F",[-4.0791,8.75537,0.0157776],227.722,1,0,[0.46773,0.400566],"","",true,false],
+	["Land_BagFence_Long_F",[0.155273,11.834,-0.0286255],140.774,1,0,[-1.50716,-2.81065],"","",true,false],
+	["Land_Razorwire_F",[-12.2646,-0.554199,-0.418701],151.534,1,0,[2.78539,-5.4208],"","",true,false],
+	["Land_HBarrier_Big_F",[4.71973,14.7686,0.0037384],49.7616,1,0,[-2.23783,-1.1073],"","",true,false],
+	["Land_PaperBox_open_full_F",[-14.9814,6.42773,0.00491333],318.651,1,0,[-3.60651,5.82106],"","",true,false],
+	["Land_HBarrier_5_F",[-14.6777,0.0703125,0.101791],150.325,1,0,[7.19035,2.49955],"","",true,false],
+	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[-12.0127,10.4976,-0.0650635],107.983,1,0,[2.13773,-3.79196],"","",true,false],
+	["Land_Cargo_Patrol_V1_F",[-13.9707,10.8149,3.05176e-005],135.633,1,0,[3.26359,-2.2305],"","",true,false],
+	["Land_HBarrier_5_F",[-7.93359,12.9771,0.0881348],227.856,1,0,[4.05126,2.19946],"","",true,false],
+	["Land_Cargo_House_V1_F",[-4.87305,17.9375,1.52588e-005],318.641,1,0,[-3.22079,3.04034],"","",true,false],
+	["Land_Pallet_MilBoxes_F",[-16.3789,8.10693,-0.00224304],318.457,1,0,[-6.11783,2.9731],"","",true,false],
+	["Land_TTowerSmall_1_F",[-18.3203,6.86475,0.0293274],163.355,1,0,[0,-0],"","",true,false],
+	["Land_HBarrier_Big_F",[-0.591797,21.2012,0.000671387],49.3508,1,0,[4.53729,-6.29491],"","",true,false],
+	["Land_HBarrierBig_F",[-12.1416,17.5918,-0.00169373],137.701,1,0,[2.18848,-4.05717],"","",true,false],
+	["Land_Razorwire_F",[-19.3916,-4.32617,0.595688],151.547,1,0,[-0.239615,3.08233],"","",true,false],
+	["Land_HBarrier_Big_F",[-18.0996,11.4697,0.019104],318.457,1,0,[-6.11783,2.9731],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-21.501,2.0293,0.1150452],230.097,1,0,[-4.53582,7.36498],"","",true,false],
+	["Land_HBarrier_5_F",[-19.5293,-2.58887,0.489944],150.811,1,0,[-2.76821,12.2386],"","",true,false],
+	["Land_BagFence_Long_F",[22.8291,1.59473,-0.0493927],134.029,1,0,[-1.65074,-1.8087],"","",true,false],
+	["Land_BagFence_Long_F",[21.9941,-7.32227,0.109833],43.0668,1,0,[2.9275,3.57315],"","",true,false],
+	["Land_HBarrier_Big_F",[-5.94043,22.7905,0.0306549],321.348,1,0,[-7.32041,6.063],"","",true,false],
+	["Land_HBarrier_5_F",[-21.6631,8.2915,0.234238],129.638,1,0,[11.0486,5.77622],"","",true,false],
+	["Land_Razorwire_F",[-24.1064,7.9917,-0.365509],307.973,1,0,[-11.2062,-5.45183],"","",true,false],
+	["Land_BagFence_Long_F",[24.9092,3.69189,-0.183746],134.359,1,0,[-1.71887,-7.61961],"","",true,false],
+	["Land_HBarrier_5_F",[-24.0752,-3.7168,0.306717],228.406,1,0,[-4.3003,7.66006],"","",true,false],
+	["Land_BagFence_Long_F",[24.1768,-9.36768,0.125397],43.0044,1,0,[2.04438,4.51807],"","",true,false],
+	["Land_HBarrier_5_F",[-25.1865,4.0127,0.210312],129.635,1,0,[8.40802,5.21456],"","",true,false],
+	["Land_Razorwire_F",[-28.0205,-1.30078,-0.758774],48.9225,1,0,[4.36925,-7.62158],"","",true,false],
+	["CamoNet_OPFOR_Curator_F",[26.6904,4.9873,0.0231781],311.328,1,0,[3.17006,6.32531],"","",true,false],
+	["Land_BagFence_Long_F",[26.9902,5.77197,-0.144241],134.313,1,0,[-2.83589,-6.48002],"","",true,false],
+	["Land_Razorwire_F",[-28.9844,1.9082,-0.501999],307.982,1,0,[-8.55214,-4.97002],"","",true,false],
+	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[25.6045,-12.6768,-0.094635],190.74,1,0,[-4.54319,-2.83457],"","",true,false],
+	["Land_BagFence_Round_F",[25.5303,-14.0576,0.0579834],13.0317,1,0,[4.39678,2.98465],"","",true,false],
+	["Land_BagFence_Long_F",[29.0566,7.83398,-0.229279],134.575,1,0,[-2.84189,-9.26286],"","",true,false],
+	["Land_BagFence_Long_F",[29.0654,-10.9043,-0.0473175],180,1,0,[-4.95322,-1.91632],"","",true,false],
+	["Land_BagFence_Long_F",[31.1162,2.14111,-0.0847168],133.049,1,0,[1.07275,-4.84046],"","",true,false],
+	["Land_BagFence_Round_F",[30.8613,-0.887207,-0.0810852],89.1895,1,0,[-2.58655,-4.23418],"","",true,false],
+	["Land_BagFence_Long_F",[30.9121,-4.61621,-0.082901],222.047,1,0,[-2.54335,-3.22017],"","",true,false],
+	["Land_BagFence_Long_F",[31.1475,9.91113,-0.172394],135.272,1,0,[-0.680695,-7.26982],"","",true,false],
+	["Land_BagFence_Long_F",[32.0078,-10.9146,-0.0161285],180,1,0,[-8.71752,-0.695584],"","",true,false],
+	["Land_BagFence_Round_F",[34.875,2.60693,-0.141098],178.997,1,0,[7.27004,-5.80916],"","",true,false],
+	[(["CSAT", "static_mortar"] call AS_fnc_getEntity select 0),[35.1787,-1.11279,-0.0185242],267.528,1,0,[2.70742,4.15807],"","",true,false],
+	["Land_BagFence_Round_F",[35.041,-5.04492,0.0513306],0,1,0,[2.21426,2.52128],"","",true,false],
+	["CamoNet_OPFOR_Curator_F",[34.8965,-11.9204,-0.0158844],178.988,1,0,[-8.72819,-0.540375],"","",true,false],
+	["Land_BagFence_Long_F",[34.9551,-13.2866,-0.0161438],180,1,0,[-8.71752,-0.695584],"","",true,false],
+	["Land_BagFence_Round_F",[38.8672,-1.23535,0.182465],270.225,1,0,[1.74196,7.37614],"","",true,false],
+	["Land_BagFence_Long_F",[38.6055,2.2251,0.103867],222.325,1,0,[6.64168,3.67469],"","",true,false],
+	["Land_BagFence_Long_F",[37.8291,-10.9341,-0.142548],180,1,0,[-13.4235,-8.03649],"","",true,false],
+	["Land_BagFence_Long_F",[39.4434,-4.78418,0.0483551],132.578,1,0,[-6.90769,4.9182],"","",true,false],
+	["Land_BagFence_Long_F",[38.5117,9.97754,0.0702057],222.137,1,0,[4.28617,2.53954],"","",true,false],
+	["Land_BagFence_Long_F",[40.6484,7.96729,0.0702057],222.137,1,0,[4.28617,2.53954],"","",true,false],
+	["Land_BagFence_Long_F",[40.6523,-10.9453,-0.17099],180,1,0,[-13.4235,-8.03649],"","",true,false],
+	["Land_BagFence_Long_F",[42.7939,5.96045,0.0702057],222.137,1,0,[4.28617,2.53954],"","",true,false],
+	["CamoNet_OPFOR_Curator_F",[43.8701,4.92383,-0.0112305],42.1371,1,0,[-4.28617,-2.53954],"","",true,false],
+	["Land_BagFence_Long_F",[44.8652,3.9502,-0.0168152],222.214,1,0,[12.5713,-4.1848],"","",true,false],
+	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[43.7568,-12.5303,0.0369415],161.614,1,0,[-15.1426,-3.19791],"","",true,false],
+	["Land_BagFence_Long_F",[45.2754,-9.68994,0.015625],139.494,1,0,[-10.4751,0.419334],"","",true,false],
+	["Land_BagFence_Round_F",[44.3682,-13.9038,0.024826],334.254,1,0,[15.4457,1.34636],"","",true,false],
+	["Land_BagFence_Long_F",[46.9668,2.0625,-0.0931702],221.93,1,0,[6.74361,-3.87845],"","",true,false],
 	["Land_BagFence_Long_F",[47.5781,-7.76904,0.0294952],139.494,1,0,[-10.4751,0.419334],"","",true,false],
 	[["CSAT", "box"] call AS_fnc_getEntity,[1.61426,8.94629,0.000518799],94.7313,1,0.00982795,[],"","",true,false],
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-3.53516,10.1841,0.00471497],317.34,1,0,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[1.70996,12.5879,0],130.877,1,0,[],"","",true,false]
 ];
-[_dict, "hillSkopos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillSkopos", "center", _center] call DICT_fnc_set;
-[_dict, "hillSkopos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Skopos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Skopos", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Skopos", "objects", _objects] call DICT_fnc_set;
 
 _center = [7883.29,14628.7,0];
 _objects = [
@@ -2618,7 +2618,7 @@ _objects = [
 	["Land_HBarrier_3_F",[1.45068,3.40527,0.00354004],82.6909,1,0,[],"","",true,false],
 	["Land_HBarrier_3_F",[1.97461,-2.96387,0.0446167],85.6134,1,0,[],"","",true,false],
 	["Land_HBarrier_3_F",[4.24756,-6.28223,0.148651],172.174,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[7.79785,-2.6084,-0.0805359],160.172,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[7.79785,-2.6084,0.1805359],160.172,1,0,[],"","",true,false],
 	["Land_HBarrier_1_F",[5.51367,-6.2041,0.00564575],0,1,0,[],"","",true,false],
 	["Land_HBarrier_1_F",[6.75879,-6.22754,0.00564575],0,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[10.8828,2.80664,-0.132202],84.9037,1,0,[],"","",true,false],
@@ -2626,13 +2626,13 @@ _objects = [
 	["Land_HBarrier_5_F",[6.78369,-10.0615,0.0556946],357.299,1,0,[],"","",true,false],
 	["Land_HBarrier_3_F",[11.3403,-6.24512,0.0623474],90.6667,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-7.59521,-11.959,-0.213745],302.883,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-10.2705,-10.4375,-0.0065918],206.975,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-10.2705,-10.4375,0.1065918],206.975,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-12.7358,-8.89844,0.186371],107.351,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-3.51904,15.0527,-0.0301208],36.4158,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-14.2305,7.66895,-0.023407],39.6549,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-0.317871,16.0244,-0.0209045],283.469,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-10.1616,-13.2275,0.0903625],2.67459,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-12.4941,10.7744,-0.111389],307.636,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-12.4941,10.7744,0.211389],307.636,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-9.77246,13.4336,0.0517273],212.609,1,0,[],"","",true,false],
 	[(["CSAT", "static_mortar"] call AS_fnc_getEntity select 0),[-2.48975,16.4404,-0.0637817],359.987,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-12.5127,-11.6875,0.255127],61.8115,1,0,[],"","",true,false],
@@ -2640,7 +2640,7 @@ _objects = [
 	["Land_BagFence_Round_F",[15.9443,-8.58496,-0.0295715],11.8532,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[10.6294,14.8604,-0.0822449],133.201,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-2.87256,18.7266,0.0564575],162.299,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[13.4976,12.8945,-0.120026],32.7453,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[13.4976,12.8945,0.120026],32.7453,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[17.9507,-7.09082,0.187531],270.587,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-15.6572,12.4707,-0.0234985],123.773,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[16.8521,10.6699,0.0686646],303.688,1,0,[],"","",true,false],
@@ -2654,13 +2654,13 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-10.1396,-2.51465,0.0481567],168.38,1,0,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[0.0429688,2.5625,0.0172424],0,1,0,[],"","",true,false]
 ];
-[_dict, "hillAgia Stemma", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillAgia Stemma", "center", _center] call DICT_fnc_set;
-[_dict, "hillAgia Stemma", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Agia Stemma", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Agia Stemma", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Agia Stemma", "objects", _objects] call DICT_fnc_set;
 
 _center = [23697.4,24259.1,0];
 _objects = [
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-9.03711,-3.94336,-0.0341187],58.2242,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-9.03711,-3.94336,0.1341187],58.2242,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-8.56445,-9.75391,0.19117],329.01,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-14.0508,-0.783203,0.138481],329.022,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[9.46094,-10.8438,-0.0700684],146.186,1,0,[],"","",true,false],
@@ -2693,9 +2693,9 @@ _objects = [
 	[["CSAT", "box"] call AS_fnc_getEntity,[-0.0605469,7.80469,0.00138092],308.867,1,0.0097848,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[5.87695,6.05078,0],0,1,0,[],"","",true,false]
 ];
-[_dict, "hillAgios Andreas", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillAgios Andreas", "center", _center] call DICT_fnc_set;
-[_dict, "hillAgios Andreas", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Agios Andreas", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Agios Andreas", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Agios Andreas", "objects", _objects] call DICT_fnc_set;
 
 _center = [7832.41,17992.4,0];
 _objects = [
@@ -2708,7 +2708,7 @@ _objects = [
 	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[-7.91162,8.14063,-0.0396423],302.172,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[2.18701,-9.46289,0.203278],41.6226,1,0,[],"","",true,false],
 	["Land_BagFence_Corner_F",[-7.23682,9.75,-0.0337219],300.958,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-4.07959,-11.2656,-0.00253296],310.125,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-4.07959,-11.2656,0.10253296],310.125,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[8.78027,8.66016,0.240005],156.911,1,0,[],"","",true,false],
 	[(["CSAT", "static_mortar"] call AS_fnc_getEntity select 0),[10.9019,6.96289,-0.0450897],199.846,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[13.0112,4.41992,0.0261383],334.629,1,0,[],"","",true,false],
@@ -2735,13 +2735,13 @@ _objects = [
 	[["CSAT", "box"] call AS_fnc_getEntity,[17.3076,20.5371,0.000579834],0.00223059,1,0.00984257,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[25.064,21.9336,0],0,1,0,[],"","",true,false]
 ];
-[_dict, "hillAgios Minas", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillAgios Minas", "center", _center] call DICT_fnc_set;
-[_dict, "hillAgios Minas", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Agios Minas", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Agios Minas", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Agios Minas", "objects", _objects] call DICT_fnc_set;
 
 _center = [7852.7,16664.4,0];
 _objects = [
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[5.31201,0.671875,-0.0928345],264.214,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[5.31201,0.671875,0.1928345],264.214,1,0,[],"","",true,false],
 	["Land_HBarrier_Big_F",[-5.93799,0.666016,-0.00299072],86.4737,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[8.09863,-4.38281,-0.0711823],174.754,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[7.10742,6.05273,0.093277],174.754,1,0,[],"","",true,false],
@@ -2777,16 +2777,16 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-10.2456,-1.97461,-0.0253296],146.33,1,0,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[10.0068,11.7695,0],0,1,0,[],"","",true,false]
 ];
-[_dict, "hillAmoni", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillAmoni", "center", _center] call DICT_fnc_set;
-[_dict, "hillAmoni", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Amoni", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Amoni", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Amoni", "objects", _objects] call DICT_fnc_set;
 
 _center = [17742.7,9890.29,0];
 _objects = [
 	["Land_HBarrier_Big_F",[-6.04688,-1.85352,0.0193329],96.2587,1,0,[],"","",true,false],
 	["Land_HBarrier_Big_F",[4.25781,6.20801,0.0032196],329.817,1,0,[],"","",true,false],
 	["Land_HBarrier_Big_F",[9.85156,-2.77539,0.0224304],329.317,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[9.87891,3.35742,-0.0560608],236.817,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[9.87891,3.35742,0.1560608],236.817,1,0,[],"","",true,false],
 	["Land_BagFence_Short_F",[7.86328,-11.4893,-0.107452],253.631,1,0,[],"","",true,false],
 	["Land_BagFence_Short_F",[11.0234,-10.1855,-0.151413],252.596,1,0,[],"","",true,false],
 	["Land_BagFence_Short_F",[-6.11719,13.8643,-0.101883],56.489,1,0,[],"","",true,false],
@@ -2816,9 +2816,9 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-10.6504,-1.37598,0.0430145],4.03134,1,0,[],"","",true,false],
 	[["CSAT", "box"] call AS_fnc_getEntity,[-9.78125,-6.90332,0.0202942],57.2098,1,0.0115505,[],"","",true,false]
 ];
-[_dict, "hillDidymos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillDidymos", "center", _center] call DICT_fnc_set;
-[_dict, "hillDidymos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Didymos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Didymos", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Didymos", "objects", _objects] call DICT_fnc_set;
 
 _center = [4775.84,17719.7,0];
 _objects = [
@@ -2829,7 +2829,7 @@ _objects = [
 	["Land_BagFence_Round_F",[2.33008,9.74805,0.0345459],259.482,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[0.287598,11.1035,0.0575867],165.616,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[14.5068,-15.2148,-0.223618],220.597,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[9.59131,-17.6035,-0.00680542],309.994,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[9.59131,-17.6035,0.11680542],309.994,1,0,[],"","",true,false],
 	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[-1.60498,20.373,-0.085495],338.465,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-3.26123,20.7813,-0.036911],110.69,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-0.880371,21.7344,-0.00325012],202.685,1,0,[],"","",true,false],
@@ -2859,9 +2859,9 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[11.002,8.77148,0.014679],8.91439,1,0,[],"","",true,false],
 	[["CSAT", "box"] call AS_fnc_getEntity,[8.11621,5.2207,0.000488281],54.3764,1,0.00991255,[],"","",true,false]
 ];
-[_dict, "hillKira", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillKira", "center", _center] call DICT_fnc_set;
-[_dict, "hillKira", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Kira", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Kira", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Kira", "objects", _objects] call DICT_fnc_set;
 
 _center = [9215.07,19279.4,0];
 _objects = [
@@ -2876,7 +2876,7 @@ _objects = [
 	["Land_BagFence_Round_F",[-16.5449,-10.5293,3.05176e-005],202.685,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-15.5205,-13.1289,-0.0174255],290.861,1,0,[],"","",true,false],
 	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[-17.457,-12.3613,-0.112274],176.463,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-15.0801,15.2344,-0.0490112],60.0282,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-15.0801,15.2344,0.1490112],60.0282,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-18.917,-11.4746,0.00372314],110.664,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[-17.8965,-14.0645,-0.00158691],22.8823,1,0,[],"","",true,false],
 	[(["CSAT", "static_mg"] call AS_fnc_getEntity select 0),[5.17188,23.7754,-0.100067],61.927,1,0,[],"","",true,false],
@@ -2901,14 +2901,14 @@ _objects = [
 	[["CSAT", "box"] call AS_fnc_getEntity,[-15.876,-5.02734,3.05176e-005],13.8785,1,0.00985034,[],"","",true,false],
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-20.7744,-2.45117,-0.0109253],242.949,1,0,[],"","",true,false]
 ];
-[_dict, "hillPyrsos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillPyrsos", "center", _center] call DICT_fnc_set;
-[_dict, "hillPyrsos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Pyrsos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Pyrsos", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Pyrsos", "objects", _objects] call DICT_fnc_set;
 
 _center = [9213.28,11463.2,0];
 _objects = [
 	["Land_HBarrier_Big_F",[-1.64063,-7.24121,0],356.835,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-1.35938,8.79199,-0.0558701],177.55,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-1.35938,8.79199,0.1558701],177.55,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[3.99219,11.6377,0.00183105],85.0784,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-6.45605,10.6494,0.000152588],85.0784,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[3.56152,17.2803,0],85.0784,1,0,[],"","",true,false],
@@ -2956,14 +2956,14 @@ _objects = [
 	[["CSAT", "flag"] call AS_fnc_getEntity,[26.5801,10.8018,0],130.877,1,0,[],"","",true,false],
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[20.4854,15.3213,-0.0112839],13.8512,1,0,[],"","",true,false]
 ];
-[_dict, "hillRiga", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillRiga", "center", _center] call DICT_fnc_set;
-[_dict, "hillRiga", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Riga", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Riga", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Riga", "objects", _objects] call DICT_fnc_set;
 
 _center = [6528.61,21627,0];
 _objects = [
 	["Land_HBarrier_Big_F",[5.31445,0.896484,-0.000732422],275.082,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-7.12646,1.21875,0.0325012],95.5878,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[-7.12646,1.21875,0.1325012],95.5878,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-9.65186,-3.41406,0.227844],3.18661,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-9.19482,7.04688,0.435791],3.12925,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[-10.7998,-3.11719,0.0835571],183.547,1,0,[],"","",true,false],
@@ -3003,15 +3003,15 @@ _objects = [
 	[["CSAT", "box"] call AS_fnc_getEntity,[-17.9111,-4.33398,0.00161743],319.506,1,0,[],"","",true,false],
 	[["CSAT", "flag"] call AS_fnc_getEntity,[-20.52,-3.80078,0],130.877,1,0,[],"","",true,false]
 ];
-[_dict, "hillSynneforos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillSynneforos", "center", _center] call DICT_fnc_set;
-[_dict, "hillSynneforos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Synneforos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Synneforos", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Synneforos", "objects", _objects] call DICT_fnc_set;
 
 _center = [4954.2,21856.5,0];
 _objects = [
 	["Land_HBarrier_5_F",[17.1958,2.87109,-0.181183],231.923,1,0,[],"","",true,false],
 	["Land_HBarrier_5_F",[20.7339,-1.64258,-0.0022583],232.227,1,0,[],"","",true,false],
-	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[20.2227,8.07813,-0.055603],321.664,1,0,[],"","",true,false],
+	[(["CSAT", "self_aa"] call AS_fnc_getEntity select 0),[20.2227,8.07813,0.155603],321.664,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[22.6162,-7.54102,0.0464478],129.973,1,0,[],"","",true,false],
 	["Land_HBarrier_Big_F",[24.6426,1.85547,-0.000610352],143.915,1,0,[],"","",true,false],
 	["Land_BagFence_Round_F",[22.812,-10.0879,0.0744629],38.0276,1,0,[],"","",true,false],
@@ -3053,6 +3053,6 @@ _objects = [
 	[["CSAT", "truck_ammo"] call AS_fnc_getEntity,[-38.3887,-2.56055,0.107788],1.47981,1,0,[],"","",true,false],
 	[["CSAT", "box"] call AS_fnc_getEntity,[-39.5176,-7.61914,0.00512695],327.907,1,0.00893501,[],"","",true,false]
 ];
-[_dict, "hillThronos", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "hillThronos", "center", _center] call DICT_fnc_set;
-[_dict, "hillThronos", "objects", _objects] call DICT_fnc_set;
+[_dict, "hill_Thronos", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "hill_Thronos", "center", _center] call DICT_fnc_set;
+[_dict, "hill_Thronos", "objects", _objects] call DICT_fnc_set;

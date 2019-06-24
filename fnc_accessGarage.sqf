@@ -20,15 +20,15 @@ if (count vehInGarageShow == 0) exitWith {
 private _break = false;
 garagePos = [];
 if (isNil "vehiclePad") then {
-	garagePos = position player findEmptyPosition [5,45,"B_MBT_01_TUSK_F"];
+	garagePos = position player findEmptyPosition [5,45,"C_Truck_02_transport_F"];
 } else {
 	garagePos = position vehiclePad;
 	garagePos set [2, 0.5]; //Spawn vehicles above ground to avoid clipping
-	if (count (vehiclePad nearObjects ["AllVehicles",7]) > 0) then {_break = true};
+	if (count (vehiclePad nearObjects ["AllVehicles",5]) > 0) then {_break = true}; //[type, radius] will fail if objects withn 5 (old 7)
 };
 if _break exitWith {hintC "Clear the area, not enough space to spawn a vehicle."};
 
-if (count garagePos == 0) exitWith {hintC "Couldn't find a safe position to spawn the vehicle, or the area is too crowded to spawn it safely"};
+if (count garagePos == 0) exitWith {hint "Couldn't find a safe position to spawn the vehicle, or the area is too crowded to spawn it safely"};
 
 // the selected as an index
 cuentaGarage = 0;
