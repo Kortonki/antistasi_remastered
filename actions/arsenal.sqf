@@ -32,13 +32,6 @@ _box removeAction (_box getVariable "bis_fnc_arsenal_action");
 
 private _new_cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 
-_cargo_w = [_cargo_w, _new_cargo select 0, false] call AS_fnc_mergeCargoLists;
-_cargo_m = [_cargo_m, _new_cargo select 1, false] call AS_fnc_mergeCargoLists;
-_cargo_i = [_cargo_i, _new_cargo select 2, false] call AS_fnc_mergeCargoLists;
-_cargo_b = [_cargo_b, _new_cargo select 3, false] call AS_fnc_mergeCargoLists;
-
-[_new_cargo] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
-
 // add all the old stuff and removes all the new stuff.
 _cargo_w = [_cargo_w, _old_cargo select 0] call AS_fnc_mergeCargoLists;
 _cargo_m = [_cargo_m, _old_cargo select 1] call AS_fnc_mergeCargoLists;
@@ -47,11 +40,13 @@ _cargo_b = [_cargo_b, _old_cargo select 3] call AS_fnc_mergeCargoLists;
 
 [_old_cargo] remoteExec ["AS_fnc_addtoArsenal", 2];
 
-//Wait to update the arsenal
+_cargo_w = [_cargo_w, _new_cargo select 0, false] call AS_fnc_mergeCargoLists;
+_cargo_m = [_cargo_m, _new_cargo select 1, false] call AS_fnc_mergeCargoLists;
+_cargo_i = [_cargo_i, _new_cargo select 2, false] call AS_fnc_mergeCargoLists;
+_cargo_b = [_cargo_b, _new_cargo select 3, false] call AS_fnc_mergeCargoLists;
 
-waitUntil {sleep 1; (AS_S("lockTransfer"))};
+[_new_cargo] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
 
-waitUntil {sleep 1; not(AS_S("lockTransfer"))};
 
 // remove from unit items that are not available.
 for "_i" from 0 to (count (_cargo_b select 0) - 1) do {
@@ -114,23 +109,25 @@ for "_i" from 0 to (count (_cargo_w select 0) - 1) do {
 		};
 	};
 };
-
+private _magRemoved = 0;
 for "_i" from 0 to (count (_cargo_m select 0) - 1) do {
 	private _name = (_cargo_m select 0) select _i;
 	private _amount = (_cargo_m select 1) select _i;
 	if (_amount <= 0) then {
+    private _loaded = false;
 		for "_j" from 0 to (-_amount - 1) do {
 
       //Remove loaded mags first
-      private _loaded = false;
+      _loaded = false;
       {
-          if (_x select 2) exitWith {
+          if (_x select 2 and {(_x select 1 > 0)}) exitWith { //added condition to not empty the same mag all over again
             switch (_x select 3) do {
               case 1 : {_unit setammo [primaryWeapon _unit, 0]};
               case 2 : {_unit setammo [handgunWeapon _unit, 0]};
               case 4 : {_unit setammo [secondaryWeapon _unit, 0]};
             };
             _loaded = true;
+            _magRemoved = _magRemoved + 1;
           };
 
 
@@ -139,9 +136,16 @@ for "_i" from 0 to (count (_cargo_m select 0) - 1) do {
 
       if (!(_loaded)) then {
         _unit removeMagazine _name;
+        _magRemoved = _magRemoved + 1;
       };
 		};
 	};
+};
+
+if (_magRemoved > 0) then {
+  private _text = format ["%1 Magazines removed", _magRemoved];
+  [petros, "hint", _text, 2] spawn AS_fnc_localCommunication;
+
 };
 
 for "_i" from 0 to (count (_cargo_i select 0) - 1) do {
@@ -164,5 +168,7 @@ for "_i" from 0 to (count (_cargo_i select 0) - 1) do {
         };
     };
 };
+
+
 
 AS_Sset("lockArsenal", false);

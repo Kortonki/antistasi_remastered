@@ -26,12 +26,8 @@ private _fnc_remove = {
         private _index = (_cargo1 select 0) find _x;
         if (_index != -1) then {
 			private _amount1 = (_cargo1 select 1 select _index);
-			if (_amount2 >= _amount1) then {
-				(_cargo1 select 0) deleteAt _index;
-	            (_cargo1 select 1) deleteAt _index;
-			} else {
-				(_cargo1 select 1) set [_index, _amount1 - _amount2];
-			};
+			(_cargo1 select 1) set [_index, _amount1 - _amount2];
+
         };
     } forEach (_cargo2 select 0);
 };
