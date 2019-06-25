@@ -4,8 +4,8 @@
 
 params ["_cargo", ["_notify", false]];
 
-waitUntil {sleep 0.1; not(AS_S("lockTransfer"))};
-AS_Sset("lockTransfer", true);
+/*waitUntil {sleep 0.1; not(AS_S("lockTransfer"))};
+AS_Sset("lockTransfer", true);*/
 /*
 ([caja] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 _cargo_w = [_cargo_w, _cargo select 0] call AS_fnc_mergeCargoLists;
@@ -64,4 +64,4 @@ if _notify then {
   };
 */
 
-AS_Sset("lockTransfer", false);
+//AS_Sset("lockTransfer", false);

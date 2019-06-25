@@ -57,4 +57,6 @@ if hasACEmedical then {
 
 } foreach _return;
 
+//TODO optimise here to delete "empty" arrays (amount is 0) afterwards
+
 _return
