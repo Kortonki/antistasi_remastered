@@ -4,6 +4,7 @@ AS_SERVER_ONLY("AS_database_fnc_persistents_toDict");
 private _money = AS_P("resourcesFIA");
 private _hr = AS_P("hr");
 private _fuelReserves = AS_P("fuelFIA");
+private _ammoReserves = AS_P("ammoFIA");
 
 // money for spawned units
 {
@@ -96,6 +97,9 @@ private _dict = call DICT_fnc_create;
         };
         if (_x == "fuelFIA") exitWith {
             [_dict, _x, _fuelReserves] call DICT_fnc_setGlobal;
+        };
+		if (_x == "ammoFIA") exitWith {
+            [_dict, _x, _ammoReserves] call DICT_fnc_setGlobal;
         };
 
         [_dict, _x, AS_P(_x)] call DICT_fnc_setGlobal;
