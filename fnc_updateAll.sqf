@@ -7,6 +7,7 @@ private _AAFnewMoney = 0;
 private _FIAnewMoney = 25;
 private _FIAnewHR = 0;
 private _FIAnewFuel = 0;
+private _FIAnewAmmo = 0;
 
 private _FIAtotalPop = 0;
 private _AAFtotalPop = 0;
@@ -126,6 +127,7 @@ if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_
         if (_side == "FIA") then {
           _FIAnewMoney = _FIAnewMoney + (100 * _powerMultiplier * _FIAResIncomeMultiplier);
           _FIAnewFuel = _FIAnewFuel + (50 * _powerMultiplier * _FIAResIncomeMultiplier);
+		  _FIAnewAmmo = _FIAnewAmmo + (50 * _powerMultiplier * _FIAResIncomeMultiplier);
         };
 
         if (_side == "AAF") then {_AAFnewMoney = _AAFnewMoney + (100 * _powerMultiplier * _AAFResIncomeMultiplier)};
@@ -160,9 +162,10 @@ if (!(alive petros) or !(isNil "AS_HQ_moving")) then {
   _FIAnewMoney = 0;
   _FIAnewHR = 0;
   _FIAnewFuel = 0;
+  _FIAnewAmmo = 0;
 } else {
 
-  private _texto = format ["<t size='0.6' color='#C1C0BB'>Taxes Income.<br/> <t size='0.5' color='#C1C0BB'><br/>Manpower: +%1<br/>Money: +%2 €<br/>Fuel: +%3",floor _FIAnewHR, round _FIAnewMoney, round _FIAnewFuel];
+  private _texto = format ["<t size='0.6' color='#C1C0BB'>Taxes Income.<br/> <t size='0.5' color='#C1C0BB'><br/>Manpower: +%1<br/>Money: +%2 €<br/>Fuel: +%3",floor _FIAnewHR, round _FIAnewMoney, round _FIAnewFuel, round _FIAnewAmmo];
 
   [petros, "income",_texto] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
 
@@ -177,6 +180,7 @@ if (_FIAnewHR > 0) then {
 _AAFnewMoney = AS_P("resourcesAAF") + round _AAFnewMoney;
 _FIAnewMoney = AS_P("resourcesFIA") + round _FIAnewMoney;
 _FIAnewFuel = AS_P("fuelFIA") + _FIAnewFuel;
+_FIAnewAmmo = AS_P("ammoFIA") + _FIAnewAmmo;
 
 //Share money among FIA members TODO: adjustment to the share value? make it persistent then
 
@@ -194,5 +198,6 @@ AS_Pset("hr_cum", _hr_cum);
 AS_Pset("resourcesFIA",_FIAnewMoney);
 AS_Pset("resourcesAAF",_AAFnewMoney);
 AS_Pset("fuelFIA",_FIAnewFuel);
+AS_Pset("ammoFIA",_FIAnewAmmo);
 
 [_skipping] spawn AS_weather_fnc_changeWeather;
