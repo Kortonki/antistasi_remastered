@@ -9,7 +9,7 @@ publicVariable "AS_database_savedGames";
 // Variables that are persistent to `AS_persistent`. They are saved and loaded accordingly.
 // Add variables here that you want to save.
 AS_database_persistents = [
-	"NATOsupport", "CSATsupport", "resourcesAAF", "resourcesFIA","fuelFIA", "skillFIA", "skillAAF", "hr",  // FIA attributes
+	"NATOsupport", "CSATsupport", "resourcesAAF", "resourcesFIA", "fuelFIA", "skillFIA", "skillAAF", "hr", "ammoFIA",  // FIA attributes
 	"civPerc", "spawnDistance", "minimumFPS", "cleantime",  // game options
 	"secondsForAAFAttack", "upFreq", "nextUpdate", "nextAttack", "destroyedLocations", "knownLocations", "vehiclesInGarage", "destroyedBuildings",
 	"antenasPos_alive", "antenasPos_dead", "vehicles", "date", "BE_module",

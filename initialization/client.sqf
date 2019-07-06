@@ -141,6 +141,7 @@ bandera addAction [localize "STR_act_manageTraits",AS_fnc_UI_manageTraits_menu,n
 removeAllActions cajaVeh;
 cajaVeh addAction [localize "str_act_healRepair", "actions\healandrepair.sqf",nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
 cajaVeh addAction [localize "STR_act_refuel", "actions\refuel.sqf",nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
+cajaVeh addAction [localize "STR_act_unloadAmmo", "actions\unloadAmmo.sqf",nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
 
 removeAllActions fuego;
 fuego addAction [localize "str_act_rest", "actions\skiptime.sqf",nil,0,false,true,"","(_this == AS_commander)"];

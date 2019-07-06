@@ -61,6 +61,9 @@
 			<Key ID="STR_act_refuel">
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\refuel_ca.paa' /&gt; Refuel Vehicle</Original>
 			</Key>
+			<Key ID="STR_act_unloadAmmo">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\refuel_ca.paa' /&gt; Unload Vehicles Ammo</Original>
+			</Key>
 			<Key ID="STR_act_refuel_truck">
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\refuel_ca.paa' /&gt; Refuel Vehicle (from fuel truck)</Original>
 			</Key>

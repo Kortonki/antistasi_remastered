@@ -54,6 +54,12 @@ params ["_dict"];
             _value = [_dict, "fuelReservesFIA"] call DICT_fnc_get;
             };
           };
+		if (_x == "ammoFIA") then {
+         if (isNil "_value") then {
+           //Fuel for legacy saves
+           _value = [_dict, "ammoReservesFIA"] call DICT_fnc_get;
+           };
+          };
         AS_Pset(_x, _value);
     };
 } forEach AS_database_persistents;

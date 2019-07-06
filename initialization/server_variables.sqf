@@ -50,6 +50,7 @@ AS_Pset("hr",_startHr); //initial HR value
 AS_Pset("hr_cum", 0); //Cumulative hr buildup for resource updates
 AS_Pset("resourcesFIA",_startMoney); //Initial FIA money pool value
 AS_Pset("fuelFIA", _startFuel); //Initial FIA fuel reserves
+AS_Pset("ammoFIA", 0); //Initial FIA fuel reserves
 
 AS_Pset("resourcesAAF",10000); //Initial AAF resources
 AS_Pset("skillFIA",0); //Initial skill level of FIA

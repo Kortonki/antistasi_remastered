@@ -21,6 +21,8 @@ _fuelTankSize = 100;
 
 _fuelTankSize = _vehicle call {
   params ["_vehicle"];
+  //exception for ACE
+  if (hasAce) exitWith {[(configFile >> "CfgVehicles" >> _type), "ace_refuel_fuelCapacity", 100] call BIS_fnc_returnConfigEntry;};
   //exception for quadbikes
   if (_vehicle isKindOf "Quadbike_01_base_F") exitWith {20};
   //exception for vans
