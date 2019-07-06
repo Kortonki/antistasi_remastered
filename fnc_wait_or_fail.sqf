@@ -16,7 +16,7 @@ while {(_counter < _waitTime) and {not call _fnc_missionFailedCondition}} do {
 			} forEach ([100, _truck, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
 			_active = true;
 			if (_str_unloadStart != "") then {
-				[petros, "hint", _str_unloadStart] remoteExec ["AS_fnc_localCommunication", _x];
+				[petros, "hint", _str_unloadStart] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
 			};
 		};
 		_counter = _counter + 1;
@@ -35,7 +35,7 @@ while {(_counter < _waitTime) and {not call _fnc_missionFailedCondition}} do {
 
 		if (not call _fnc_missionFailedCondition) then {
 			if (_str_unloadStopped != "") then {
-				[petros, "hint", _str_unloadStopped] remoteExec ["AS_fnc_localCommunication", _x];
+				[petros, "hint", _str_unloadStopped] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
 			};
 		};
 

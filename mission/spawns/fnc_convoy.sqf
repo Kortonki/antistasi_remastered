@@ -9,8 +9,7 @@ private _fnc_initialize = {
 
 	private _origin = [_position] call AS_fnc_getBasesForConvoy;
 	if (_origin == "") exitWith {
-		hint "mission is no longer available";
-		_mission call AS_mission_fnc_remove;
+		[petros, "hint", "mission is no longer available"] call AS_fnc_localCommunication;
 
 		[_mission, "state_index", 100] call AS_spawn_fnc_set; // terminate everything
 		[_mission, "delete", true] call AS_spawn_fnc_set;
