@@ -26,7 +26,7 @@ private _mags = magazinesAllTurrets _vehicle;
 		_caliber = [configFile >> "CfgAmmo" >> _ammoType, "cost"] call BIS_fnc_returnConfigEntry; 
 	};
 
-	_actualAmmo = _actualAmmo + (_caliber * _ammoCount);
+	_actualAmmo = _actualAmmo + (_caliber ^ 2 * _ammoCount);
 	diag_log _actualAmmo;
 
 } forEach _mags; 
