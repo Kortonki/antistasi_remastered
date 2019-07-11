@@ -12,9 +12,6 @@ if (_missionType == "nato_cas") exitWith {
 if (_missionType == "nato_qrf") exitWith {
     [AS_mission_natoQRF_states, AS_mission_natoQRF_state_functions]
 };
-if (_missionType == "nato_qrf") exitWith {
-    [AS_mission_natoAttack_states, AS_mission_natoAttack_state_functions]
-};
 if (_missionType == "nato_artillery") exitWith {
     [AS_mission_natoArtillery_states, AS_mission_natoArtillery_state_functions]
 };

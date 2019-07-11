@@ -65,9 +65,12 @@ if (_location call AS_location_fnc_side == "FIA") then {
   						[_veh] RemoteExecCall ["deleteVehicle", _veh];
   					};
   				};
+
+
   			};
 
       if (alive _x) then {
+          if (vehicle _x != _x) then {moveOut _x;}; //This was added so vehicle soldier is in is not deleted
           deleteVehicle _x;
       };
     } forEach _soldadosFIA;

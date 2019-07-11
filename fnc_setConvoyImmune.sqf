@@ -29,14 +29,14 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 	sleep 60;
 	private _newPos = getPos _veh;
 	// in case it stopped, give vehicles a nodge to continue
-	if (_newPos distance _pos < 5 and {{_x distance2D _newPos < 500} count (allPlayers - (entities "HeadlessClient_F")) == 0}) then {
-		_newPos = [[[_newPos,10]]] call BIS_fnc_randomPos;
+	if (_newPos distance _pos < 10 and {{_x distance2D _newPos < 500} count (allPlayers - (entities "HeadlessClient_F")) == 0}) then {
+		_newPos = [[[_newPos,20]]] call BIS_fnc_randomPos;
 		private _road = [_newPos,100] call BIS_fnc_nearestRoad;
 		if (!isNull _road) then {
 			_veh setPos getPos _road;
 			diag_log format ["[AS] SetConvoyImmune. Vehicle returned to road. Vehicle: %1 Type of vehicle %2 Destination: %3 Text %4", _veh, typeOf _veh, _destination, _text];
 		} else {
-			_newPos = _newPos findEmptyPosition [1,10, (typeOf _veh)];
+			_newPos = _newPos findEmptyPosition [1,20, (typeOf _veh)];
 			if (!(_newPos isEqualTo [])) then{
 				_veh setPos _newPos;
 				diag_log format ["[AS] SetConvoyImmune. Vehicle set to new position. Vehicle: %1 Type of vehicle %2 Destination: %3 Text %4", _veh, typeOf _veh, _destination, _text];
@@ -44,7 +44,12 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 
 		};
 		//Give new domove command to the original waypoint avoid getting stuck
-		(driver _veh) domove _destination;
+		//(driver _veh) domove _destination;
+
+		//Experiment refreshing the currentwaypoint
+		_group setCurrentWaypoint [_group, 0];
+		sleep 1;
+		_group setCurrentWaypoint [_group, _waypoint];
 
 	};
 };

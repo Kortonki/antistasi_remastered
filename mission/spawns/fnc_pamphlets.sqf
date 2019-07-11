@@ -41,6 +41,7 @@ private _fnc_spawn = {
 
 	// spawn mission crates
 
+	[0,-100] remoteExec ["AS_fnc_changeFIAMoney", 2];
 	private _crateType = "Land_WoodenCrate_01_F";
 
 	private _crate3 = createVehicle [_crateType, ("FIA_HQ" call AS_location_fnc_position), [], 0, "NONE"];

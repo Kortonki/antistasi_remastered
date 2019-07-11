@@ -7,6 +7,9 @@ if ([position player, 500] call AS_fnc_enemiesNearby) exitWith {
 
 params ["_type"];
 
+private _position = position player;
+private _location = [call AS_location_fnc_all select {(_x call AS_location_fnc_side == "FIA")}, _position] call BIS_fnc_nearestPosition;
+
 private _coste = [_type] call AS_fnc_getFIAvehiclePrice;
 
 private _resourcesFIA = AS_P("resourcesFIA");
@@ -17,11 +20,11 @@ if (isMultiPlayer and player != AS_commander) then {
 if (_resourcesFIA < _coste) exitWith {hint format ["You do not have enough money for this vehicle: %1 € required",_coste]};
 
 private _pos = [];
-if (!(isNil "vehiclePad") and {!(count (vehiclePad nearObjects ["AllVehicles",7]) > 0)}) then {
+if (_location == "fia_hq" and{!(isNil "vehiclePad") and {!(count (vehiclePad nearObjects ["AllVehicles",7]) > 0)}}) then {
 	_pos = position vehiclePad;
 	_pos set [2, 0.5];
 } else {
-	_pos = position player findEmptyPosition [5,50,_type];
+	_pos = _position findEmptyPosition [5,50,_type];
 };
 
 

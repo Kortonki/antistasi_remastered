@@ -116,6 +116,7 @@ while {true} do
 			If (!IsNull _target) then
 			{
 				_grp setvariable ["UPSMON_Grpstatus","RED"];
+				[_npc,["static"], 200 ,false, _areamarker] call UPSMON_GetIn_NearestVehicles; //ADDITION 060719
 
 				_haslos = [_npc,_target,_weaponrange,130] call UPSMON_Haslos;
 

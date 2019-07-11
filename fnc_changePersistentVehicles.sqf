@@ -1,8 +1,6 @@
 #include "macros.hpp"
 AS_SERVER_ONLY("fnc_changePersistentVehicles.sqf");
 
-waitUntil {isNil "AS_vehiclesChanging"};
-AS_vehiclesChanging = true;
 params ["_vehicles", ["_add", true]];
 
 if (typeName _vehicles != "ARRAY") then {
@@ -18,5 +16,3 @@ if (_add) then {
         [_x] spawn AS_fnc_activateVehicleCleanup;
     } forEach _vehicles;
 };
-
-AS_vehiclesChanging = nil;

@@ -26,8 +26,8 @@ private _fnc_allPossibleMissions = {
     };
 
     private _cityMissions = [
-        "pamphlets", "broadcast", "kill_specops", "kill_traitor",
-        "send_meds", "help_meds","rescue_refugees",
+        "kill_specops", "kill_traitor",
+        "help_meds","rescue_refugees",
         "convoy_money", "convoy_supplies"
     ];
     private _baseMissions = [
@@ -57,9 +57,7 @@ private _fnc_allPossibleMissions = {
         params ["_missionType", "_location"];
 
         False or
-        {not (_missionType in ["pamphlets", "broadcast", "convoy_money", "convoy_supplies", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel"])} or
-        {(_missionType == "pamphlets") and {[_location, "AAFsupport"] call AS_location_fnc_get > 0}} or
-        {(_missionType == "broadcast") and {[_location, "FIAsupport"] call AS_location_fnc_get > 10}} or
+        {not (_missionType in ["convoy_money", "convoy_supplies", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel"])} or
         {_missionType in ["convoy_money", "convoy_supplies", "convoy_fuel","convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt"] and {
             // needs a base around
             private _base = [_location call AS_location_fnc_position] call AS_fnc_getBasesForConvoy;

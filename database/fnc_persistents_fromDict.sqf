@@ -9,7 +9,7 @@ params ["_dict"];
             private _vehicles = [];
             {
                 _x params ["_type", "_pos", "_dir", "_fuel", "_fuelCargo", "_damage"];
-
+                _pos set [2, 0.5]; //Failsafe to not clip with ground so much
                 private _vehicle = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
                 _vehicle allowDamage false;
                 _vehicle enableSimulationGlobal false;
@@ -26,6 +26,9 @@ params ["_dict"];
                 };
                 if (isNil "_fuel") then {
                   _fuel = 0.5;
+                };
+                if (!(["vehicle", typeOf _vehicle, _vehicle] call fnc_BE_permission)) then {
+                    _vehicle setVehicleAmmoDef 0; //This is to not exploit rearming vehicles not yet unlocked
                 };
 
                 //Wait to initialise sides before initing vehicles

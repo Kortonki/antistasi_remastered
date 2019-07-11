@@ -99,18 +99,18 @@ private _spawnVehicle = {
 
 	if (_type == "air") exitWith {
 
-		([_vehicleType, _position, _direction, _faction, "any", 400, "FLY", true, 7] call AS_fnc_createVehicle) params ["_vehicle", "_crewGroup"];
-		_grupos pushBack _crewGroup;
-		_soldados append units _crewGroup;
+		([_vehicleType, _position, _direction, _faction, "any", 400, "FLY", true, 7] call AS_fnc_createVehicle) params ["_vehicle", "_crew_group"];
+		_grupos pushBack _crew_group;
+		_soldados append units _crew_group;
 		_vehiculos pushBack _vehicle;
-		_vehicle
+		[_vehicle, _crew_group]
 	};
 
-		([_vehicleType, _position, _direction, _faction, "any", 0, "NONE", true, 7] call AS_fnc_createVehicle) params ["_vehicle", "_crewGroup"];
-		_grupos pushBack _crewGroup;
-		_soldados append units _crewGroup;
+		([_vehicleType, _position, _direction, _faction, "any", 0, "NONE", true, 7] call AS_fnc_createVehicle) params ["_vehicle", "_crew_group"];
+		_grupos pushBack _crew_group;
+		_soldados append units _crew_group;
 		_vehiculos pushBack _vehicle;
-		_vehicle
+		[_vehicle, _crew_group]
 
 
 };
@@ -136,7 +136,9 @@ if (_type == "air") then {
 
 		// troop transport chopper
 
-		private _transportHeli = [_transportVehicle, _pos2, _dir] call _spawnVehicle;
+		private _vehArray = [_transportVehicle, _pos2, _dir] call _spawnVehicle;
+		private _transportHeli = _vehArray select 0;
+		private _crew_group = _vehArray select 1;
 
 		// spawn dismounts
 		private _cargo_group = _dismountGroup call _spawnGroup;

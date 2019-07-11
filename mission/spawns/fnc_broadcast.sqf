@@ -46,8 +46,8 @@ private _fnc_spawn = {
 	private _airports = [];
 	{
 		private _posAirport = _x call AS_location_fnc_position;
-		if ((_position distance _posAirport < 7500) and
-		    (_position distance _posAirport > 1500) and
+		if ((_position distance _posAirport < 20000) and
+		    (_position distance _posAirport > 3000) and
 			!(_x call AS_location_fnc_spawned)) then {
 			_airports pushBack _x;
 		};
@@ -58,7 +58,8 @@ private _fnc_spawn = {
 	};
 
 	// spawn mission vehicle
-	_propTruck = "C_Truck_02_box_F" createVehicle ((getMarkerPos "FIA_HQ") findEmptyPosition [10,50,"C_Truck_02_box_F"]);
+	private _propTruck = "C_Truck_02_box_F" createVehicle ((getMarkerPos "FIA_HQ") findEmptyPosition [10,50,"C_Truck_02_box_F"]);
+	[0,-600] remoteExec ["AS_fnc_changeFIAMoney", 2];
 	//publicVariable "_propTruck";
 
 	// spawn eye candy

@@ -38,7 +38,7 @@ if (_type == "kill_specops") exitWith {
     [-10, 0, [0, 0], [0, 0], [5, 0, _position], -10*60]
 };
 if (_type == "aaf_attack_hq") exitWith {
-    [-25, [500, _position, 10], [0, 3], [0, 5*60]]
+    [-25, [500, _position, 10], [0, 3], [0, 0], [0,0, []], 5*60]
 };
 if (_type == "black_market") exitWith {
     [-10, 0, [-5, 0]]

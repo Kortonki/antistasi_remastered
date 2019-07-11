@@ -3,10 +3,10 @@
 #include "../macros.hpp"
 AS_SERVER_ONLY("AS_mission_fnc_execute");
 params [["_commander_score", 0],
-        ["_players_score", [0,[0,0,0],0]],
+        ["_players_score", 0],
         ["_prestige", [0, 0]],
         ["_resourcesFIA", [0, 0]],
-        ["_citySupport", [0, 0, [], true]],
+        ["_citySupport", [0, 0, []]],
         ["_changeAAFattack", 0],
         ["_custom", []],
         ["_increaseBusy", ["", 0]]
@@ -25,7 +25,7 @@ if not (_commander_score == 0) then {
     [AS_commander, "score", _commander_score] call AS_players_fnc_change;
   //  [AS_commander, "money", _commander_score] call AS_players_fnc_change; // Commented out, mission fail shouldn't lessen player or FIA resources
 };
-if not (_players_score IsEqualTo [0,[0,0,0],0]) then {
+if not (_players_score IsEqualTo 0) then {
     _players_score call _increase_players_score;
 };
 if not (_prestige IsEqualTo [0, 0]) then {
@@ -34,7 +34,7 @@ if not (_prestige IsEqualTo [0, 0]) then {
 if not (_resourcesFIA IsEqualTo [0, 0]) then {
     _resourcesFIA call AS_fnc_changeFIAmoney;
 };
-if not (_citySupport IsEqualTo [0, 0, [], true]) then {
+if not (_citySupport IsEqualTo [0, 0, []]) then {
     _citySupport call AS_fnc_changeCitySupport;
 };
 if not (_changeAAFattack == 0) then {

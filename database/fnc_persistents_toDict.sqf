@@ -53,11 +53,23 @@ private _fuelReserves = AS_P("fuelFIA");
 
         diag_log format ["AS: Savegame, FIA vehicle (%1) converted to %2 money, %3 fuel. Location: %4", _x, _price, _fuel, _closest];
     };
+
+    //Vehicles closer than 200m and owned by FIA will become persistent
+    if (alive _x and {not(_x in AS_P("vehicles")) and {_closest_pos distance2D (position _x) <= 200 and {(_x call AS_fnc_getSide) isEqualTo "FIA"}}}) then {
+      [_x] call AS_fnc_changePersistentVehicles;
+      diag_log format ["AS: Savegame, FIA vehicle (%1) saved as persistent. Location: %2", _x,  _closest];
+    };
 } forEach vehicles;
 
 // convert vehicles to positional information
 //if motor vehicle, get vehicle fuel
+
+
+//TODO consider below if vehicles far away from FIA locations should be persistent?
+
+
 private _vehicles = [];
+
 {
     private _type = typeOf _x;
     private _pos = getPos _x;

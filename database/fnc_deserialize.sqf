@@ -19,7 +19,9 @@ private _dict = _string call DICT_fnc_deserialize;
 diag_log "[AS] Server: migrating to latest save version...";
 _dict call AS_database_fnc_migrate;
 
-
+//Shoddy attempt to detect when server has stopped terrain loading
+private _timer = time + 10;
+waitUntil {sleep 1; time > _timer or diag_fps > 30};
 
 // this only sets the persistents
 diag_log "[AS] Server: loading persistents...";

@@ -12,7 +12,7 @@ AS_database_persistents = [
 	"NATOsupport", "CSATsupport", "resourcesAAF", "resourcesFIA","fuelFIA", "skillFIA", "skillAAF", "hr",  // FIA attributes
 	"civPerc", "spawnDistance", "minimumFPS", "cleantime",  // game options
 	"secondsForAAFAttack", "upFreq", "nextUpdate", "nextAttack", "destroyedLocations", "knownLocations", "vehiclesInGarage", "destroyedBuildings",
-	"antenasPos_alive", "antenasPos_dead", "vehicles", "date", "BE_module",
+	"antenasPos_alive", "antenasPos_dead", "date", "BE_module", "vehicles",
 	"patrollingLocations", "patrollingPositions",
 	"overcast", "rain", "windDir", "windSpeed", "gusts", "lightnings", "waves", "fog", "clear" //weather
 ];

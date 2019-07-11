@@ -30,8 +30,9 @@ private _fnc_spawn = {
 	private _pos = (getMarkerPos "FIA_HQ") findEmptyPosition [1,50,_crateType];
 
 	private _crate = _crateType createVehicle _pos;
+	[0,-100] remoteExec ["AS_fnc_changeFIAMoney", 2];
 	[_crate] call AS_fnc_emptyCrate;
-	_crate addItemCargoGlobal ["FirstAidKit", 80];
+	//_crate addItemCargoGlobal ["FirstAidKit", 80]; //Removed to not be able to exploit med supplies
 	[_crate, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate setVariable ["asCargo", false, true];
 	_crate setVariable ["requiredVehs", ["Truck_F"], true];

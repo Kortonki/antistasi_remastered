@@ -17,7 +17,7 @@ if ([position player, 500] call AS_fnc_enemiesNearby) exitWith {
 	};
 } forEach allUnits;
 
-{if ((side _x == ("FIA" call AS_fnc_getFactionSide)) and (_x distance _posHQ < 30)) then {_x setVariable ["compromised",0];}} forEach allPlayers - entities "HeadlessClient_F";
+{if ((side _x == ("FIA" call AS_fnc_getFactionSide)) and (_x distance _posHQ < 100)) then {_x setVariable ["compromised",0];}} forEach allPlayers - entities "HeadlessClient_F";
 
 
 private _reportedVehs = AS_S("reportedVehs");

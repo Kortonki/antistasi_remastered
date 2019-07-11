@@ -12,8 +12,7 @@ _vehicle setVariable ["inDespawner", true, true];
 
 waitUntil {
 	sleep 20;
-	not (_vehicle in AS_P("vehicles")) and
-	{_vehicle distance getMarkerPos "FIA_HQ" > 50} and
+	(_vehicle distance getMarkerPos "FIA_HQ" > 200) and
 	{not ([AS_P("spawnDistance"), _vehicle, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}
 };
 
@@ -28,7 +27,7 @@ if (_vehicle isKindOf "test_EmptyObjectForSmoke") then {
 };
 {
 	detach _x;
-	_x setvariable ["asCargo", false, true];
+	_x setvariable ["asCargo", false, true]; 
 } foreach attachedobjects _vehicle;
 
 [_vehicle] RemoteExecCall ["deleteVehicle", _vehicle];
