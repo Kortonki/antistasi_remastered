@@ -37,9 +37,13 @@ if (_location call AS_location_fnc_side == "FIA") then {
   				private _veh = assignedVehicle _x;
   				if !(_veh in _vs) then {
   					_vs pushBack _veh; //Do not recover same vehicle twice
-  					if (!(_veh in AS_P("vehicles"))) then {
 
-  						//Recover fuel
+            //TODO: Consider if below even necessary. Can garrison have vehicles that ar enot persistent?
+  					if (!(_veh in AS_P("vehicles")) and {_veh != _x}) then {
+
+						//Recover fuel and price
+
+             _resourcesFIA = _resourcesFIA + ([(typeOf _veh)] call AS_fnc_getFIAvehiclePrice);
 
   						private _fuel = _veh call AS_fuel_fnc_getVehicleFuel;
   						if (finite (getFuelCargo _veh)) then {_fuel = _fuel + (_veh getVariable ["fuelCargo",0]);};
