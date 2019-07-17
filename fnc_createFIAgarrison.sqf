@@ -3,7 +3,6 @@ private _location = _this;
 
 private _soldados = [];
 private _grupos = [];
-private _vehiculos = [];
 
 private _position = _location call AS_location_fnc_position;
 private _size = _location call AS_location_fnc_size;
@@ -28,6 +27,7 @@ _grupos = _grupos + [_grupo];
                     _grupoMort = createGroup ("FIA" call AS_fnc_getFactionSide);
                 };
 				_unit = [_x, _position, _grupoMort] call AS_fnc_spawnFIAUnit;
+				_soldados pushBack _unit;
 				_unit assignAsGunner _estatica;
 				_unit moveInGunner _estatica;
 
@@ -37,6 +37,7 @@ _grupos = _grupos + [_grupo];
                     _grupoEst = createGroup ("FIA" call AS_fnc_getFactionSide);
                 };
 				_unit = [_x, _position, _grupoEst] call AS_fnc_spawnFIAUnit;
+				_soldados pushBack _unit;
 				_unit assignAsGunner _estatica;
 				_unit moveInGunner _estatica;
 			};
@@ -44,10 +45,11 @@ _grupos = _grupos + [_grupo];
 		};
 
 		_unit = [_x, _position, _grupo] call AS_fnc_spawnFIAUnit;
+		_soldados pushBack _unit;
 		if (_x == "Squad Leader") then {_grupo selectLeader _unit};
 	};
 	[_unit,false,_location] remoteExec ["AS_fnc_initUnitFIA", _unit];
-	_soldados pushBack _unit;
+	//_soldados pushBack _unit; //This moved to corresponding unit creation to avoid possibility that _unit would refer to the vehicle unit is mounted on
 	sleep 0.5;
 
 	// create a new group for every 8 units
@@ -65,7 +67,7 @@ if (_type == "watchpost") then {
 
 //Create the patrol marker to avoid UPSMON issues
 
-private _patrolMarker = createMarker [format ["fia_hq_%1", round (diag_tickTime/60)], _position];
+private _patrolMarker = createMarker [format ["fia_gar_%1", _location], _position];
 _patrolMarker setMarkerShape "ELLIPSE";
 _patrolMarker setMarkerSize [100,100];
 _patrolMarker setMarkerAlpha 0;
@@ -82,4 +84,4 @@ if !(isNull _grupoEst) then {
 	_grupos pushBack _grupoEst;
 };
 
-[_soldados, _grupos, _vehiculos]
+[_soldados, _grupos, _patrolMarker]

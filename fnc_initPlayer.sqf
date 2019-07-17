@@ -1,6 +1,6 @@
 #include "macros.hpp"
-waitUntil {!isNull player};
-waitUntil {player == player};
+waitUntil {sleep 0.1; !isNull player};
+waitUntil {sleep 0.1; player == player};
 
 if hasACEhearing then {player addItem "ACE_EarPlugs"};
 
@@ -14,7 +14,7 @@ player call AS_fnc_initPlayerPosition;
 //Take command of HC groups again as commander
 if (player == AS_commander) then {
 	{
-			player hcSetGroup [_x];
+			player hcSetGroup [_x, ""];
 	} foreach (allGroups select {(_x getVariable ["isHCgroup", false])});
 };
 

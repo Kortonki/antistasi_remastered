@@ -17,12 +17,12 @@ switch (AS_cityMission_type) do {
 hint format ["Choose target city for %1 mission", _typeString];
 
 MapPos = [];
-onMapSingleClick "MapPos = _pos";
-waitUntil {count MapPos > 0 or !visibleMap;};
+onMapSingleClick "MapPos = _pos;";
+waitUntil {sleep 0.1; count MapPos > 0 or !visibleMap};
 
 if (count MapPos == 0) exitWith {AS_cityMission_type = nil;};
 
-private _location = [call AS_location_fnc_cities, MapPos] call bis_fnc_NearestPosition;
+private _location = [[] call AS_location_fnc_cities, MapPos] call bis_fnc_NearestPosition;
 
 
 
@@ -55,4 +55,5 @@ _mission call AS_mission_fnc_activate;
 openMap false;
 
 AS_cityMission_type = nil;
-MapPos = nil;
+MapPos = [];
+onMapSingleClick "";

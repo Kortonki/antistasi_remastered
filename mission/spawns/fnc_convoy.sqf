@@ -309,7 +309,7 @@ private _fnc_run = {
 		if (_missionType in ["convoy_money", "convoy_armor", "convoy_ammo", "convoy_supplies", "convoy_fuel"]) exitWith {
 			{
 				private _hasArrived = {(not (driver _mainVehicle getVariable ["BLUFORSpawn",false])) and
-					{_mainVehicle distance _position < 100}};
+					{_mainVehicle distance _position < 150 and {!([500, _position, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}}}; //Check if blufor is not near
 				(false) or _hasArrived
 			}
 		};

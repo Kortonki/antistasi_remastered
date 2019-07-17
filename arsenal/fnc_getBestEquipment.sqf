@@ -54,10 +54,15 @@ if (_type == "Medic") then {
     _items = call AS_medical_fnc_FIAmedicBackpack;
     _missingGrenades = 0;
     _missingSmokes = 4;
+    _scopeType = "";
 };
 if (_type == "Engineer") then {
     _items = [["ToolKit", 1]];
 };
+if (_type == "Crew") then {
+    _scopeType = "";
+};
+
 
 private _backpack = "";
 if _useBackpack then {
@@ -121,7 +126,10 @@ if (_missingSmokes > 0) then {
     } forEach _ordered_list;
 };
 
-private _scope = ([caja, _scopeType] call AS_fnc_getBestItem);
+private _scope = "";
+if (_scopeType != "") then {
+  _scope = ([caja, _scopeType] call AS_fnc_getBestItem);
+};
 
 private _primaryWeaponItems = [];
 private _googles = "";

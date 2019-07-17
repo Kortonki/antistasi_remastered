@@ -7,6 +7,7 @@ private _fnc_spawn = {
 	private _soldados = [];
 	private _grupos = [];
 	private _vehiculos = [];
+	private _markers = [];
 	private _civs = [];
 
 	_vehiculos append (_location call AS_fnc_spawnComposition);
@@ -58,10 +59,10 @@ private _fnc_spawn = {
 	};
 
 	// Create the garrison
-	(_location call AS_fnc_createFIAgarrison) params ["_soldados1", "_grupos1", "_vehiculos1"];
+	(_location call AS_fnc_createFIAgarrison) params ["_soldados1", "_grupos1", "_patrolMarker"];
 	_soldados append _soldados1;
 	_grupos append _grupos1;
-	_vehiculos append _vehiculos1;
+	_markers pushback _patrolMarker;
 
 	// no journalist in the HQ
 	if (_type != "fia_hq") then {
@@ -76,7 +77,7 @@ private _fnc_spawn = {
 		} foreach _locationVehs;
 	};
 
-	[_location, "resources", [taskNull, _grupos, _vehiculos, []]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 	[_location, "FIAsoldiers", _soldados] call AS_spawn_fnc_set;
 };

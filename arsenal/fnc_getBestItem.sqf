@@ -1,4 +1,4 @@
-params ["_box", "_type", ["_as_list", False]];
+params ["_box", "_type", ["_as_list", False], ["_minAmount", 5]];
 
 private _availableItems = [[],[]];
 if (typename _box != "ARRAY") then {
@@ -154,9 +154,9 @@ if (_type in ["rifleScope", "sniperScope"]) then {
 };
 if (_type in ["nvg", "laser", "flashlight"]) then {
 	_allItems = call {
-		if (_type == "nvg") then {AS_allNVGs};
-		if (_type == "laser") then {AS_allLasers};
-		if (_type == "flashlight") then {AS_allFlashlights};
+		if (_type == "nvg") exitWith {AS_allNVGs};
+		if (_type == "laser") exitWith {AS_allLasers};
+		if (_type == "flashlight") exitWith {AS_allFlashlights};
 	};
 	_allItemsAttrs = [];  // we only use this because Attrs need to have the same size as allItems. The sorting function will not use it anyway.
     {_allItemsAttrs pushBack [];} forEach _allItems;
@@ -181,8 +181,11 @@ for "_index" from 0 to count _allItems - 1 do {
 			_amount = (_availableItems select 1) select (_i - count _unlockedItems);
 		};
 
-		_indexes pushBack _index;
-		_attributes pushBack ((_allItemsAttrs select _index) + [_amount]);
+		//Addition: Do not take last 5 of the items (configurable via arguments)
+		if (_amount >= _minAmount) then {
+			_indexes pushBack _index;
+			_attributes pushBack ((_allItemsAttrs select _index) + [_amount]);
+		};
 	};
 };
 

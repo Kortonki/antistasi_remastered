@@ -81,8 +81,8 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 					_enemy = _x findNearestEnemy _x;
 					if (!isNull _enemy) then {
 						diag_log format ["AS: CSAT taking casualties, sending QRF to: %1", position _enemy];
-						//TODO: somekind of threat eval here 
-						[["spawnCSAT", position _enemy, "", 60, "random", "small", "CSATman"], "AS_movement_fnc_sendEnemyQRF"] remoteExec ["AS_scheduler_fnc_execute", 2];
+						//TODO: somekind of threat eval here
+						["spawnCSAT", position _enemy, "", 60, "random", "small", "CSATman"] remoteExec ["AS_movement_fnc_sendEnemyQRF", 2];
 					};
 				};
 			};

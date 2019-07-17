@@ -21,6 +21,7 @@ if _was_captured then {
 
     //Send nearby units for a quick counterattack
     //TODO: make this an external function, without adjustable params
+    //TODO: make this qwork iwth upsmon
     {
 
       if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x == (leader _x)} and {_x distance _position < 1000}) then {

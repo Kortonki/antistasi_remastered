@@ -106,6 +106,10 @@ private _threatEval_Air = 0;
 
   };
 
+//Baseline threat for every unit  
+_threatEval_Air = _threatEval_Air + 0.1;
+_threatEval_Land = _threatEval_Land + 0.1;
+
 }  foreach (_leader call bis_fnc_enemytargets);
 
 //foreach  ((_leader nearTargets 1000) select {_x select 2 == _FIAside});

@@ -112,11 +112,11 @@ private _fnc_run = {
 
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		[_mission,  [{not alive _x or captive _x} count _pows]] remoteExec ["AS_mission_fnc_fail", 2];
+		[_mission,  [{not alive _x} count _pows]] remoteExec ["AS_mission_fnc_fail", 2];
 
 		{
 			_x setCaptive false;
-			if (group _x != _grpPOW) then {_x setVariable ["AS_type", "Rifleman", true]}; //Remnants of POWs who were already rescued join FIA and are usable
+			_x setVariable ["AS_type", "Rifleman", true]; //Remnants of POWs who were already rescued join FIA and are usable
 		} forEach _pows;
 	};
 

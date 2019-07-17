@@ -17,7 +17,7 @@ if (not(_fuelConsumptionRate == 0.01) and {not(isNil "_fuelTankSize")}) exitWith
 //Last number tells how much the mass affects fuel tank size
 //TODO: take small and big of the class: take their mass and fuel capacity -> solve the equation to get a linear function
 
-_fuelTankSize = 100;
+
 
 _fuelTankSize = _vehicle call {
   params ["_vehicle"];
@@ -25,7 +25,7 @@ _fuelTankSize = _vehicle call {
   if (_vehicle isKindOf "Quadbike_01_base_F") exitWith {20};
   //exception for vans
   if (_vehicle isKindOf "Van_02_base_F" or _vehicle isKindOf "Van_01_base_F") exitWith {
-    100 + round(((getmass _vehicle)-1500)*0.001)*30};
+    100 + round(((getmass _vehicle)-2000)*0.001)*30};
   //APC checks: Multiple ways to find them all
   if (_type in BE_class_APC) exitWith {
     500 + round(((getmass _vehicle)-13000)*0.001)*40};

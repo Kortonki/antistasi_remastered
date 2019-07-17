@@ -2,9 +2,10 @@
 // starts from the state where the spawn was left.
 params ["_spawn"];
 
-if not (_spawn in (call AS_spawn_fnc_all)) exitWith {
+//Årpbably unnecessary heavy check
+/*if not (_spawn in (call AS_spawn_fnc_all)) exitWith {
     diag_log format ["[AS] Error: spawn_fnc_execute: spawn '%1' does not exist", _spawn];
-};
+};*/
 
 private _type = [_spawn, "spawn_type"] call AS_spawn_fnc_get;
 

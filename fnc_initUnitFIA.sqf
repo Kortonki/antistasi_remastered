@@ -107,7 +107,7 @@ if (isPlayer(leader _unit)) then {
 					} forEach allUnits;
 				};
 
-				if (!(_detected) and {!(captive _soldier)}) then {[_soldier] remoteExec ["AS_fnc_activateUndercoverAI", _soldier]}; //Check locallity for this, remotexec??
+				//if (!(_detected) and {!(captive _soldier)}) then {[_soldier] remoteExec ["AS_fnc_activateUndercoverAI", _soldier]}; //Probably unnecessary, activate player undercover already does this
 			};
 		};
 

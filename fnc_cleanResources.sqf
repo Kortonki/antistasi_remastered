@@ -27,4 +27,6 @@ params ["_groups", "_vehicles", "_markers"];
 
 {
     [_x] spawn AS_fnc_activateVehicleCleanup;
+    //Addition why wait if cleanResources is triggered only after away for spawn distance?
+    //[_x] remoteExecCall ["deletevehicle", _x];
 } forEach _vehicles;

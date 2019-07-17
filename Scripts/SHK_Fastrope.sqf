@@ -215,7 +215,7 @@ SHK_Fastrope_fnc_createRopes = {
   // Create ropes
   _ropesObj = [];
   {
-    _rope = ropeCreate [_heli, _x, ROPE_LENGTH];
+    private _rope = ropeCreate [_heli, _x, ROPE_LENGTH];
     _ropesObj pushBack _rope;
   } forEach _ropesPos;
 

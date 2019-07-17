@@ -5,7 +5,7 @@ params ["_location", ["_fromBase", ""], ["_threatEval_Land", 0], ["_threatEval_A
 private _debug_prefix = format ["sendAAFPatrol from '%1' to '%2' cancelled: ", _fromBase, _location];
 if AS_S("blockCSAT") exitWith {
 	private _message = " blocked";
-	AS_ISDEBUG(_debug_prefix + _message);
+	diag_log (_debug_prefix + _message);
 };
 
 private _isDirectAttack = false;
@@ -42,12 +42,12 @@ if _exit exitWith {};
 
 if (!_isDirectAttack and !(_position call AS_fnc_hasRadioCoverage)) exitWith {
 	private _message = "no radio contact";
-	AS_ISDEBUG(_debug_prefix + _message);
+	diag_log (_debug_prefix + _message);
 };
 
 if (_isLocation and !_isDirectAttack and (_location in AS_P("patrollingLocations"))) exitWith {
 	private _message = "location being patrolled";
-	AS_ISDEBUG(_debug_prefix + _message);
+	diag_log (_debug_prefix + _message);
 };
 
 private _exit = false;
@@ -65,7 +65,7 @@ if (!_isLocation) then {
 
 if (_exit) exitWith {
 	private _message = "nearby being patrolled";
-	AS_ISDEBUG(_debug_prefix + _message);
+	diag_log (_debug_prefix + _message);
 };
 
 // select base to attack from.
@@ -82,7 +82,7 @@ if ((_base == "") and (_aeropuerto == "") and (random 100 < AS_P("CSATsupport"))
 
 if ((_base == "") and (_aeropuerto == "") and (!_hayCSAT)) exitWith {
 	private _message = "no bases close to attack";
-	AS_ISDEBUG(_debug_prefix + _message);
+	diag_log (_debug_prefix + _message);
 };  // if no way to create patrol, exit.
 
 // Compute threat and decide to use bases airfields or none.
@@ -102,7 +102,7 @@ if (_aeropuerto != "") then {
 	// decide to not send air units if treat of AA is too high.
 	if (_aeropuerto != "" and !_isDirectAttack) then {
 		_threatEval = _threatEval_Air + ([_position] call AS_fnc_getAirThreat);
-		
+
 		if (_threatEval > 15 and _planes == 0) then {
 			_aeropuerto = "";
 		};
@@ -127,7 +127,7 @@ if (_base != "") then {
 
 if ((_base == "") and (_aeropuerto == "") and (!_hayCSAT)) exitWith {
 	private _message = "threat too high or no arsenal";
-	AS_ISDEBUG(_debug_prefix + _message);
+	diag_log (_debug_prefix + _message);
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -142,5 +142,7 @@ private _spawnName = format ["aaf_patrol_%1%2", round(diag_ticktime/60), round(r
 [_spawnName, "useCSAT", _hayCSAT] call AS_spawn_fnc_set;
 [_spawnName, "isDirectAttack", _isDirectAttack] call AS_spawn_fnc_set;
 [_spawnName, "threatEval", _threatEval] call AS_spawn_fnc_set;
+
+diag_log format ["[AS] Send AAF Patrol: Spawname %1, Location %2, Base %3, Airfield %4, useCSAT %5, isDirectAttack %6 threatEval %7", _spawnName, _location, _base, _aeropuerto, _hayCSAT, _isDirectAttack, _threatEval];
 
 [_spawnName] spawn AS_spawn_fnc_execute;

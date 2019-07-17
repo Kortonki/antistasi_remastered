@@ -19,9 +19,12 @@ for "_i" from 1 to _count do {
     };
     // find spawn position
     private _pos = [];
-    while {count _pos == 0} do {
-        _pos = _originPos findEmptyPosition [0, 500, _helicopterType];
+
+    _pos = _originPos findEmptyPosition [0, 500, _helicopterType];
+    if (count _pos == 0) then {
+      _pos = _originPos;
     };
+
     _pos set [2,300];
 
     //([_pos, 0, _helicopterType, "CSAT" call AS_fnc_getFactionSide] call bis_fnc_spawnvehicle) params ["_heli", "_heliCrew", "_grupoheli"];

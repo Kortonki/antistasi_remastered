@@ -1,6 +1,6 @@
 //This action is local
 
-if (player != AS_commander) exitWith {hint "Only Player Commander is allowed to move assets"};
+//if (player != AS_commander) exitWith {hint "Only Player Commander is allowed to move assets"}; // No need to MM. Maybe make option?
 if (vehicle player != player) exitWith {hint "You cannot move assets while in a vehicle"};
 
 params ["_vehicle","_player","_EHid", ["_arguments", nil]];
@@ -11,28 +11,24 @@ if (_player != player) exitWith {
 
 private _attachPoint = [0,2,1];  // default attach point
 
-private _position = "FIA_HQ" call AS_location_fnc_position;
-private _distance = 100;
-
-if (!isNil "_arguments") then {
-	private _nearest = (["FIA" call AS_location_fnc_S, _player] call BIS_fnc_nearestPosition);
+private _nearest = (["FIA" call AS_location_fnc_S, _player] call BIS_fnc_nearestPosition);
 	//private _nearest = [("FIA" remoteExecCall ["AS_location_fnc_S", 2]), _player] call  BIS_fnc_nearestPosition;
-	_position = _nearest call AS_location_fnc_position;
-	_distance = 100;
+private	_position = _nearest call AS_location_fnc_position;
+private _distance = 200;
 
-	private _bbr = boundingBoxReal _vehicle;
-	private _p1 = _bbr select 0;
-	private _p2 = _bbr select 1;
-	private _maxHeight = abs ((_p2 select 2) - (_p1 select 2));
-	if (_maxHeight > 2.5) then {
-		private _attachPoint = [0,2,1.5];
-	};
-	if (_maxHeight > 3) then {
-		private _attachPoint = [0,2,2];
-	};
+private _bbr = boundingBoxReal _vehicle;
+private _p1 = _bbr select 0;
+private _p2 = _bbr select 1;
+private _maxHeight = abs ((_p2 select 2) - (_p1 select 2));
+if (_maxHeight > 2.5) then {
+		_attachPoint = [0,2,1.5];
+};
+if (_maxHeight > 3) then {
+		_attachPoint = [0,2,2];
 };
 
-if (position _vehicle distance _position > _distance) exitWith {hint "Asset is too far from the flag."};
+
+if (position _vehicle distance _position > _distance) exitWith {hint "Asset is too far (>200m) from the flag."};
 
 _vehicle removeAction _EHid;
 [_vehicle, false] remoteExecCall ["enableSimulationGlobal", 2]; //don't wreck anything

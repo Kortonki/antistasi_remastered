@@ -48,9 +48,7 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 [_dict, "unlockedBackpacks", ["rhs_assault_umbts"]] call DICT_fnc_set;
 
 [_dict, "vans", [
-"C_Truck_02_box_F",
-"C_IDAP_Truck_02_F",
-"C_Truck_02_covered_F"
+"C_IDAP_Truck_02_F"
 ]] call DICT_fnc_set;
 
 //No special medical equipment for extra difficulty (need to hoard morphine etc.)

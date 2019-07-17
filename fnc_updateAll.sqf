@@ -125,7 +125,7 @@ if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_
         };
         if (_side == "FIA") then {
           _FIAnewMoney = _FIAnewMoney + (100 * _powerMultiplier * _FIAResIncomeMultiplier);
-          _FIAnewFuel = _FIAnewFuel + (50 * _powerMultiplier * _FIAResIncomeMultiplier);
+          _FIAnewFuel = _FIAnewFuel + (10 * _powerMultiplier * _FIAResIncomeMultiplier);
         };
 
         if (_side == "AAF") then {_AAFnewMoney = _AAFnewMoney + (100 * _powerMultiplier * _AAFResIncomeMultiplier)};

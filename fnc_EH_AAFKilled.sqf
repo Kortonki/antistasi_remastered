@@ -84,12 +84,20 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 					if (!isNull _enemy) then {
 						([_x] call AS_fnc_getContactThreat) params ["_threatEval_Land", "_threatEval_Air"];
 						diag_log format ["AS: AAF taking casualties, sending patrol to: %1 ThreatEval Land/Air %2 / %3", position _enemy, _threatEval_Land, _threatEval_Air];
-						[[position _enemy,"", _threatEval_Land, _threatEval_Air], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+						[position _enemy,"", _threatEval_Land, _threatEval_Air] remoteExec ["AS_movement_fnc_sendAAFpatrol", 2];
 					};
 				};
 			};
 
-			if (count (magazines _x) < 1 and {count ([50, _x, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0}) then {[_x] spawn AS_AI_fnc_surrender;};
+			if (count (magazines _x) < 1) then {
+
+				if (count ([50, _x, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0) then {
+					[_x] spawn AS_AI_fnc_surrender;
+				}	else {
+					_x allowFleeing 1;
+				};
+
+			};
 		};
 	} forEach units _group;
 };

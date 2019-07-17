@@ -158,19 +158,34 @@ private _fnc_spawn = {
 		_x moveInCargo _veh;
 		[_x] call AS_fnc_initUnitAAF;
 		[_x] joinSilent _grupoVeh;
-		} forEach units _grupo;
+	} forEach units _grupo;
 		deleteGroup _grupo;
 
 	//[_veh] spawn AS_AI_fnc_activateUnloadUnderSmoke;
 	//[_grupoVeh, _veh] spawn AS_AI_fnc_DismountOnDanger;
 
+	private _initWp = _grupVeh addwaypoint [getpos leader _groupVeh, 0];
+	_initWp setWaypointTimeOut [30,600,900];
+
+
 	private _Vwp0 = _grupoVeh addWaypoint [_crashPosition, 30];
 	_Vwp0 setWaypointCompletionRadius 50;
-	_grupoVeh setCurrentWaypoint _Vwp0;
 	_Vwp0 setWaypointType "GETOUT";
 	_Vwp0 setWaypointBehaviour "SAFE";
-	private _Vwp1 = _grupoVeh addWaypoint [_crashposition, 0];
-	_vwp1 setwaypointType "SAD";
+
+	private _patrolMarker = createMarker [format ["help_meds_%1", round (diag_tickTime/60)], _position];
+	_patrolMarker setMarkerShape "ELLIPSE";
+	_patrolMarker setMarkerSize [100,100];
+	_patrolMarker setMarkerAlpha 0;
+
+	_grupoVeh setVariable ["AS_patrol_marker", _patrolmarker, true];
+
+	private _statement = {
+	    {deleteWaypoint _x} forEach waypoints group this;
+	    [this, group this getVariable "AS_patrol_marker", "SAFE", "SPAWNED", "LIMITED", "NOFOLLOW"] spawn UPSMON;
+	};
+
+	_Vwp0 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 
 	[_veh, "AAF Escort", _crashPosition] spawn AS_fnc_setConvoyImmune;
 

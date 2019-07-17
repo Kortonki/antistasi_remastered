@@ -269,7 +269,7 @@ if (_side == "FIA") then {
 	_veh addEventhandler ["Getin", {
 			params ["_vehicle", "_role", "_unit", "_turret"];
 			private _side = _unit call AS_fnc_getSide;
-			if (_side != "FIA") then {
+			if (_side in ["AAF", "CSAT"]) then {
 				if (_vehicle in AS_P("vehicles")) then {
 					[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 				};

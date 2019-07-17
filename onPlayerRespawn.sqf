@@ -15,6 +15,8 @@ if (not(isNil "AS_respawning")) exitWith {
 	diag_log "[AS] Error: Attempting to respawn while respawning";
 };
 
+hcRemoveAllGroups  _old; //Just in case it's not possible for a group to have two or more commanders. Trying to resolve problem not having HC after respawn
+
 AS_respawning = true; // avoids double-respawn
 
 // temporarly set the commander locally. It is meant to be overwritten by AS_fnc_spawnPlayer.
