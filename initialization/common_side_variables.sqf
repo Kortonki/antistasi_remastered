@@ -1,3 +1,6 @@
+//Side stuff here
+
+
 // Picks stuff from templates, checks consistency and define common names
 call compile preprocessFileLineNumbers "initSides.sqf";
 

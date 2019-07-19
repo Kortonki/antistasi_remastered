@@ -114,12 +114,11 @@ if _isJip then {
 	[false] remoteExec ["AS_fnc_refreshArsenal", 2];
 };
 
-if isNil "petros" then {
-    [] spawn {
-        waitUntil {sleep 1; not isNil "petros"};
-        [petros, "mission"] call AS_fnc_addAction;
-    };
+[] spawn {
+    waitUntil {sleep 1; not isNil "petros"};
+    [petros, "mission"] call AS_fnc_addAction;
 };
+
 
 removeAllActions caja;
 [caja,"arsenal"] call AS_fnc_addAction;

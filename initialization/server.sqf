@@ -19,12 +19,14 @@ diag_log "[AS] Server: starting";
 
 call compile preprocessFileLineNumbers "initLocations.sqf";
 diag_log "[AS] Server: initLocations done";
+
 call compile preprocessFileLineNumbers "initialization\common_variables.sqf";
 // tells the client.sqf running on this machine that variables are initialized
-AS_common_variables_initialized = true;
+
 publicVariable "AS_common_variables_initialized";
 diag_log "[AS] Server: common variables initialized";
 
+AS_common_variables_initialized = true; //this moved here was common_variables before
 
 call compile preprocessFileLineNumbers "initialization\server_variables.sqf";
 diag_log "[AS] Server: server variables initialized";
@@ -35,6 +37,7 @@ diag_log "[AS] Server: server variables initialized";
 
 diag_log "[AS] Server: waiting for side...";
 waitUntil {not isNil {AS_P("player_side")}};
+
 
 call compile preprocessFileLineNumbers "initialization\common_side_variables.sqf";
 call compile preprocessFileLineNumbers "initialization\server_side_variables.sqf";

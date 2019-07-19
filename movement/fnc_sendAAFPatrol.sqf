@@ -121,6 +121,7 @@ if (_base != "") then {
 			(_threatEval > 5 and (_tanks + _apcs == 0)) or
 			(_tanks + _apcs + _trucks == 0)) then {
 			_base = "";
+			
 		};
 	};
 };

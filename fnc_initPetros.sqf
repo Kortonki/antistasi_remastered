@@ -27,6 +27,9 @@ grupoPetros = createGroup ("FIA" call AS_fnc_getFactionSide);
 petros = ["Squad Leader", getMarkerPos "FIA_HQ", grupoPetros] call AS_fnc_spawnFIAunit;
 [petros, "FIA"] call AS_fnc_setSide;
 
+publicVariable "grupoPetros";
+publicVariable "petros";
+
 [petros,"mission"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
 
 grupoPetros setGroupId ["Petros","GroupColor4"];
@@ -78,6 +81,3 @@ petros addMPEventHandler ["mpkilled", {
         [] remoteExec ["AS_fnc_petrosDeath", 2];
 
 }];
-
-publicVariable "grupoPetros";
-publicVariable "petros";

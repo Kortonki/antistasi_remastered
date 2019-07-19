@@ -8,6 +8,7 @@ params ["_position", "_isNewGame"];
 call AS_fnc_initPetros;
 call AS_fnc_HQdeploy;
 
+
 if _isNewGame then {
 	// move all players to the HQ.
 	{_x call AS_fnc_initPlayerPosition} forEach (allPlayers - (entities "HeadlessClient_F"));

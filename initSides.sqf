@@ -50,7 +50,7 @@
 	private _statics = [];
 	private _type = _x;
 	{
-		if not ((_type == "static_mg_low") and (_x == "FIA")) then {
+		if not((_type == "static_mg_low") and {_x == "FIA"}) then {
 			// FIA does use "static_mg_low".
 				if (not(isNil{[_x, _type] call AS_fnc_getEntity})) then {
 					{
@@ -66,8 +66,11 @@
 	if (_type == "static_aa") then {
 		AS_allAAstatics = +_statics;
 	};
-	if (_type in ["static_mg", "static_mg_low"]) then {
+	if (_type == "static_mg") then {
 		AS_allMGstatics = +_statics;
+	};
+	if (_type == "statit_mg_low") then {
+		AS_allMGstatics append _statics;
 	};
 	if (_type == "static_mortar") then {
 		AS_allMortarStatics = +_statics;
