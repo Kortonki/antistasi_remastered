@@ -141,7 +141,7 @@ if hasACE then {
 	(_items select 0) pushBack "FirstAidKit";
 	(_items select 1) pushBack _intNatoSupp*10;
 
-	(_items select 0) pushBack "MediKit";
+	(_items select 0) pushBack "Medikit";
 	(_items select 1) pushBack _intNatoSupp;
 
 };
