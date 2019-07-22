@@ -118,6 +118,11 @@ unlockedItems = [
 	"Toolkit"
 ];
 
+if hasTFAR then {
+	unlockedItems = unlockedItems - ["ItemRadio"];
+	unlockedItems pushBack "tf_rf7800str";
+};
+
 if hasACE then {
 	// Must be called after unlockedItems is defined
 	call compile preprocessFileLineNumbers "initACE.sqf";

@@ -11,7 +11,7 @@ private _markerType = "";
 private _locationName = "";
 switch (_type) do {
     case "fia_hq": {_markerType = "hd_flag"; _locationName = "FIA HQ"};
-    case "city": {_markerType = "loc_cross"; _locationName = ""};
+    case "city": {_markerType = "mil_flag"; _locationName = ""};
     case "powerplant": {_markerType = "loc_power"; _locationName = "Power Plant"};
     case "airfield": {
         _locationName = "Airfield";
@@ -30,13 +30,13 @@ switch (_type) do {
         };
     };
     case "powerplant": {_markerType = "loc_power"; _locationName = "Base"};
-    case "resource": {_markerType = "loc_rock"; _locationName = "Resource"};
-    case "factory": {_markerType = "u_installation"; _locationName = "Factory"};
-    case "outpost": {_markerType = "loc_bunker"; _locationName = "Outpost"};
-    case "outpostAA": {_markerType = "loc_bunker"; _locationName = "Outpost AA"};
-    case "roadblock": {_markerType = "loc_bunker"; _locationName = "Roadblock"};
-    case "watchpost": {_markerType = "loc_bunker"; _locationName = "Watchpost"};
-    case "camp": {_markerType = "loc_bunker"; _locationName = ([_location,"name"] call AS_location_fnc_get)};
+    case "resource": {_markerType = "mil_marker"; _locationName = "Resource"};
+    case "factory": {_markerType = "mil_marker"; _locationName = "Factory"};
+    case "outpost": {_markerType = "loc_ruin"; _locationName = "Outpost"};
+    case "outpostAA": {_markerType = "loc_ruin"; _locationName = "Outpost AA"};
+    case "roadblock": {_markerType = "loc_ruin"; _locationName = "Roadblock"};
+    case "watchpost": {_markerType = "loc_ruin"; _locationName = "Watchpost"};
+    case "camp": {_markerType = "hd_flag"; _locationName = ([_location,"name"] call AS_location_fnc_get)};
     case "seaport": {_markerType = "b_naval"; _locationName = "Sea Port"};
     case "hill": {_markerType = "loc_rock"; _locationName = "Hill"};
     case "hillAA": {_markerType = "loc_rock"; _locationName = "Hill"};
@@ -65,12 +65,16 @@ if (_side == "FIA") then {
     _mrk setMarkerColor "ColorBLUFOR";
 };
 if (_side == "NATO") then {
-    _mrk setMarkerText ("NATO " + _locationName);
+    _mrk setMarkerText ("BLUFOR " + _locationName);
     _mrk setMarkerColor "ColorBLUFOR";
 };
 if (_side == "AAF") then {
     // roadblocks are hidden
-    _mrk setMarkerText "";
+    if  (_type in ["resource", "factory"]) then {
+      _mrk setMarkerText format ["%1", _locationName];
+    } else {
+      _mrk setMarkerText "";
+    };
     if (_type in ["roadblock","hill","hillAA"]) then {
         _mrk setMarkerAlpha 0;
     };

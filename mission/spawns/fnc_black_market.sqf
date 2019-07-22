@@ -141,7 +141,9 @@ private _fnc_wait_to_end = {
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
 
-	waitUntil {sleep 1; (dateToNumber date > _max_date) or !(alive _dealer) or (fleeing _dealer)};
+	//The dealer will wait for 15 minutes
+	private _time = time + 15*60;
+	waitUntil {sleep 1; (time > _time or dateToNumber date > _max_date) or !(alive _dealer) or (fleeing _dealer)};
 
 
 	//[[_dealer,"remove"],"AS_fnc_addAction"] call BIS_fnc_MP;

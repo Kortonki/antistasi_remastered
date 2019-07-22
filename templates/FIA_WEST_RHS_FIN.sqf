@@ -28,10 +28,31 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 
 [_dict, "unlockedBackpacks", ["fin_m05_backpack_small"]] call DICT_fnc_set;
 
+unlockedItems = unlockedItems - [
+"Medikit",
+"ACE_bloodIV_250",
+"ACE_bloodIV_500",
+"ACE_bloodIV",
+"ACE_epinephrine",
+"ACE_morphine",
+"ACE_plasmaIV_250",
+"ACE_plasmaIV_500",
+"ACE_plasmaIV",
+"ACE_packingBandage",
+"ACE_elasticBandage",
+"ACE_quikclot",
+"ACE_salineIV_250",
+"ACE_salineIV_500",
+"ACE_salineIV",
+"ACE_atropine",
+"ACE_adenosine",
+"ACE_personalAidKit",
+"ACE_surgicalKit",
+"adv_aceSplint_splint"
+];
+
 [_dict, "vans", [
-"C_Truck_02_box_F",
-"C_IDAP_Truck_02_F",
-"C_Truck_02_covered_F"
+"C_IDAP_Truck_02_F"
 ]] call DICT_fnc_set;
 
 [_dict, "static_aa", ["rhsgref_cdf_b_ZU23"]] call DICT_fnc_set;

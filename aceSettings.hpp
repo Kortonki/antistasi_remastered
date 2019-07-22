@@ -24,7 +24,7 @@
         ACE_setting = 1;
         values[] = {0, 1};
         texts[] = {"Off", "On"};
-        default = 0;
+        default = 1;
         typeName = "BOOL";
         force = 1;
     };
@@ -34,7 +34,7 @@
         ACE_setting = 1;
         values[] = {10, 30, 60, 90, 120};
         texts[] = {"10", "30", "60", "90", "120"};
-        default = 1;
+        default = 10;
         typeName = "SCALAR";
         force = 1;
     };

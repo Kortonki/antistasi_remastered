@@ -2,7 +2,7 @@ params ["_position", ["_ignoreRadio", false]];
 
 // get closest airfield within some conditions
 private _airfield = "";
-private _closestDistance = 10000;
+private _closestDistance = 25000;
 {
     private _busy = _x call AS_location_fnc_busy;
     private _pos = _x call AS_location_fnc_position;

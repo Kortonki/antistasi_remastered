@@ -32,7 +32,6 @@ private _threatEval_Air = 0;
     _threatEval_Air = _threatEval_Air + 10;
   };
 
-
   //TANK Threat
 
   if (_vehicle isKindof "Tank" or _type in BE_class_MBT) exitWith {
@@ -106,7 +105,7 @@ private _threatEval_Air = 0;
 
   };
 
-//Baseline threat for every unit  
+//Baseline threat for every unit
 _threatEval_Air = _threatEval_Air + 0.1;
 _threatEval_Land = _threatEval_Land + 0.1;
 

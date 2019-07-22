@@ -1,7 +1,7 @@
 #include "../../macros.hpp"
 createDialog "AS_cityMissions";
 
-waitUntil {sleep 0.02; !(isNil "AS_cityMission_type")};
+waitUntil {sleep 0.1; !(isNil "AS_cityMission_type")};
 
 
 openMap true;
@@ -13,14 +13,15 @@ switch (AS_cityMission_type) do {
     case "broadcast" : {_typeString = "propaganda";};
     default {};
 };
+waitUntil {sleep 0.1; visibleMap};
 
 hint format ["Choose target city for %1 mission", _typeString];
 
 MapPos = [];
 onMapSingleClick "MapPos = _pos;";
-waitUntil {sleep 0.1; count MapPos > 0 or !visibleMap};
+waitUntil {sleep 1; count MapPos > 0 or !visibleMap};
 
-if (count MapPos == 0) exitWith {AS_cityMission_type = nil;};
+if (count MapPos == 0) exitWith {AS_cityMission_type = nil; onMapSingleClick "";};
 
 private _location = [[] call AS_location_fnc_cities, MapPos] call bis_fnc_NearestPosition;
 
@@ -30,7 +31,10 @@ private _sig = format ["%1_%2", AS_cityMission_type, _location];
 
 //If same mission not active, activate new one.
 
-if (!(_sig call AS_mission_fnc_status == "active")) then {
+private _status = _sig call AS_mission_fnc_status;
+
+if (isNil "_status") then {_status = "";};
+if (!(_status == "active")) then {
 
   //Pass the same checks as the mission were spawned randomly
   if (AS_cityMission_type == "pamphlets" and {[_location, "AAFsupport"] call AS_location_fnc_get == 0 or (AS_P("resourcesFIA") < 100)}) exitWith {
@@ -44,8 +48,16 @@ if (!(_sig call AS_mission_fnc_status == "active")) then {
   };
 
 
-private _mission = [AS_cityMission_type, _location] call AS_mission_fnc_add;
-_mission call AS_mission_fnc_activate;
+//private _mission = [AS_cityMission_type, _location] call AS_mission_fnc_add;
+//_mission call AS_mission_fnc_activate;
+if (!(_status in ["possible", "available"])) then {
+    [AS_cityMission_type, _location] remoteExec ["AS_mission_fnc_add", 2];
+
+waitUntil {sleep 0.2; (_sig call AS_mission_fnc_status) == "possible"};
+sleep 1;
+
+  };
+[_sig] remoteExec ["AS_mission_fnc_activate", 2];
 
 
 } else {

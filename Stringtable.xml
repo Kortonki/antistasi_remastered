@@ -46,6 +46,9 @@
 			<Key ID="STR_act_unloadCargo">
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\igui\cfg\VehicleToggles\VehicleCargoIconOn_ca.paa' /&gt; Unload Vehicle Cargo to Ammobox</Original>
 			</Key>
+			<Key ID="STR_act_loadCargo">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\igui\cfg\VehicleToggles\VehicleCargoIconOn_ca.paa' /&gt; Unload Ammobox to Vehicle Cargo</Original>
+			</Key>
 			<Key ID="STR_act_recoverEquipment">
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\igui\cfg\VehicleToggles\VehicleCargoIconOn_ca.paa' /&gt; Recover nearby equipment</Original>
 			</Key>
@@ -92,7 +95,7 @@
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\GUI\cfg\CommunicationMenu\call_ca.paa' /&gt; Jam CSAT</Original>
 			</Key>
 			<Key ID="STR_act_rest">
-				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\Cursors\wait_gs.paa' /&gt; Rest for 8 Hours</Original>
+				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\Cursors\wait_gs.paa' /&gt; Rest for 1 Hour</Original>
 			</Key>
 			<Key ID="STR_act_hqOptions">
 				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\Ranks\colonel_gs.paa' /&gt; HQ Options</Original>

@@ -24,8 +24,8 @@ class AS_cityMissions
 	{
 			AS_DIALOG(3, "City Missions", "closeDialog 0;");
 
-			BTN_M(1,-1, "Supply City", "Costs 100€", "closeDialog 0; AS_cityMission_type = ""send_meds"";");
-			BTN_M(2,-1, "Propaganda", "Costs 600€ (Truck can be sold afterwards)", "closeDialog 0; AS_cityMission_type = ""broadcast"";");
-			BTN_M(3,-1, "Drop leaflets", "Costs 100€", "closeDialog 0; AS_cityMission_type = ""pamphlets"";");
+			BTN_M(1,-1, "Supply City", "Costs 100€", "closeDialog 0; AS_cityMission_type = 'send_meds';");
+			BTN_M(2,-1, "Propaganda", "Costs 600€ (Truck can be sold afterwards)", "closeDialog 0; AS_cityMission_type = 'broadcast';");
+			BTN_M(3,-1, "Drop leaflets", "Costs 100€", "closeDialog 0; AS_cityMission_type = 'pamphlets';");
 	};
 };

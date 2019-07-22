@@ -10,7 +10,7 @@ private _player = player getVariable ["AS_controller", player];
 if (captive _player) exitWith {hint "You are already undercover"};
 
 private _heli_spotters = [["base","airfield"], "AAF"] call AS_location_fnc_TS;
-private _all_spotters = [["base","airfield","outpost","seaport","roadblock","hill", "hillAA"], "AAF"] call AS_location_fnc_TS;
+private _all_spotters = [["base","airfield","outpost","seaport","hill", "hillAA"], "AAF"] call AS_location_fnc_TS; //Roadblock removed from here: there are dogs for spotting
 
 private _undercoverVehicles = (["CIV", "vehicles"] call AS_fnc_getEntity) + civHeli;
 
@@ -140,6 +140,10 @@ while {_reason == ""} do {
 				_fnc_detected) exitWith {
 				"vehicleWithExplosives"
 			};
+
+			if call _isMilitaryDressed exitWith {
+				"militaryDressed"
+			};
 			""
 		};
 	} else {
@@ -153,7 +157,7 @@ while {_reason == ""} do {
 			if (true and {
 				private _loc = [_all_spotters, _player] call BIS_fnc_nearestPosition;
 				private _position = _loc call AS_location_fnc_position;
-				_player distance2d _position < 300}) exitWith {
+				_player distance2d _position < _size*2}) exitWith {
 				"distanceToLocation"
 			};
 			""
@@ -164,10 +168,17 @@ while {_reason == ""} do {
 private _setPlayerCompromised = {
 	if (captive _player) then {_player setCaptive false};
 
+	//TODO: if player in a vehicle everyone in the vehicle become compromised
+
 	// the player only becomes compromised when he is detected
+	//
 	if (call _fnc_detected) then {
 		if (vehicle _player != _player) then {
 			AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
+			{
+				[_x, false] remoteExec ["setcaptive", _x];
+			} foreach (crew (vehicle _player));
+
 		};
 		_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
 	};

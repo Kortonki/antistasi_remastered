@@ -118,7 +118,7 @@ publicVariable "AS_h_barrier_type";
 
 call AS_location_fnc_addAllRoadblocks;
 
-["FIA_HQ","fia_hq"] call AS_location_fnc_add;
+["FIA_HQ", "fia_hq"] call AS_location_fnc_add;
 
 // Initializes HQ placements and petros
 

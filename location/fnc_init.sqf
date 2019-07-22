@@ -7,6 +7,7 @@ switch (_location call AS_location_fnc_type) do {
     case "city": {
         [_location,"AAFsupport",50, false] call AS_location_fnc_set;
         [_location,"FIAsupport",0, false] call AS_location_fnc_set;
+        [_location, "side", "AAF", false] call AS_location_fnc_set;
     };
     case "fia_hq": {
         [_location,"side","FIA", false] call AS_location_fnc_set;

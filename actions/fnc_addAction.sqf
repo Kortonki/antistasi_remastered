@@ -4,6 +4,7 @@ if not hasInterface exitWith {};
 params ["_object","_type"];
 
 #define IS_PLAYER "(isPlayer _this) and (_this == _this getVariable ['owner',_this])"
+#define IS_PLAYER_IN_VEHICLE "(isPlayer _this) and (_this == _this getVariable ['owner',_this]) and (vehicle _this != _this)"
 #define IS_COMMANDER "(isPlayer _this) and (_this == _this getVariable ['owner',_this]) and (_this == AS_commander)"
 #define IS_UNLOADED "not(_target getVariable 'asCargo')"
 #define NOT_MOVING "isNil {_this getVariable 'ObjAttached'}"
@@ -14,6 +15,7 @@ switch _type do {
 	case "vehicle": {_object addAction [localize "STR_act_buyVehicle", {call AS_fnc_UI_buyVehicle_menu},nil,0,false,true,"",IS_PLAYER]};
 	case "mission": {removeAllActions petros; petros addAction [localize "STR_act_missionRequest", {call AS_fnc_UI_manageMissions_menu},nil,0,false,true,"",IS_COMMANDER]};
 	case "transferFrom": {_object addAction [localize "STR_act_unloadCargo", "actions\transferFrom.sqf",nil,0,false,true,"",IS_PLAYER]};
+	case "transferTo": {_object addAction [localize "STR_act_loadCargo", "actions\transferFrom.sqf",nil,0,false,true,"",IS_PLAYER]};
 	case "recoverEquipment": {_object addAction [localize "STR_act_recoverEquipment", "actions\recoverEquipment.sqf",nil,0,false,true,"",IS_PLAYER]};
 	case "remove": {
 		for "_i" from 0 to (_object addAction ["",""]) do {
@@ -34,7 +36,7 @@ switch _type do {
 		_object addAction [localize "STR_act_FIAGarage", {[false] spawn AS_fnc_accessGarage},nil,0,false,true,"",IS_COMMANDER]
 	};
 	case "heal_camp": {_object addAction [localize "STR_act_useMed", "actions\heal.sqf",nil,0,false,true,"",IS_PLAYER, 10]};
-	case "refuel": {_object addAction [localize "STR_act_refuel", "actions\refuel.sqf",nil,0,false,false,"",IS_PLAYER, 20]};
+	case "refuel": {_object addAction [localize "STR_act_refuel", "actions\refuel.sqf",nil,0,false,false,"",IS_PLAYER_IN_VEHICLE, 20]};
 	case "refuel_truck": {_object addAction [localize "STR_act_refuel_truck", "actions\refuel_truck.sqf",nil,0,false,false,"",IS_PLAYER, 10]};
 	case "refuel_truck_check": {_object addAction [localize "STR_act_refuel_truck_check", "actions\refuel_truck_check.sqf",nil,0,false,false,"",IS_PLAYER,10]};
 	case "buy_exp": {_object addAction [localize "STR_act_buy", {CreateDialog "exp_menu";},nil,0,false,true,"",IS_PLAYER]};

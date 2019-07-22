@@ -11,17 +11,16 @@ if (_vehicle getVariable ["inDespawner", false]) exitWith {};
 _vehicle setVariable ["inDespawner", true, true];
 
 waitUntil {
-	sleep 5;
-	not([AS_P("spawnDistance"), _vehicle, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) or
-	(not(_vehicle isKindOf "AllVehicles"))
+	sleep 1;
+	not([AS_P("spawnDistance"), _vehicle, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)
 };
 
 if (_vehicle in AS_S("reportedVehs")) then {
 	AS_Sset("reportedVehs", AS_S("reportedVehs") - [_vehicle]);
 };
-if (_vehicle in AS_P("vehicles")) then {
-	diag_log format ["Persistent vehicle deleted via AS_fnc_activateVehicleCleanup. Vehicle %1, location %2", _vehicle, (position _vehicle) call AS_location_fnc_nerest];
-	[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+if (_vehicle in AS_P("vehicles")) exitWith {
+	diag_log format ["Persistent vehicle attempt to delete via AS_fnc_activateVehicleCleanup. Vehicle %1, location %2", _vehicle, (position _vehicle) call AS_location_fnc_nerest];
+	//[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 };
 if (_vehicle isKindOf "test_EmptyObjectForSmoke") then {
 	{[_x] RemoteExecCall ["deleteVehicle", _x]} forEach (_vehicle getVariable ["effects", []]);

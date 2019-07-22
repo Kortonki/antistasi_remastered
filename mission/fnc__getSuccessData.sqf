@@ -34,7 +34,7 @@ if (_type == "aaf_attack_hq") exitWith {
     [0, [500, _position, 10], [0, 3], [0, 300]]
 };
 if (_type == "black_market") exitWith {
-    [0, 0, [0, 0], [0, 0], [0, 0, []], 0,
+    [0, 0, [0, 0], [0, 0], [0, 0, _position], 0,
         [["Temporary access to the black market", {}]]
     ]
 };

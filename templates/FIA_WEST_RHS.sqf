@@ -47,6 +47,7 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 
 [_dict, "unlockedBackpacks", ["rhs_assault_umbts"]] call DICT_fnc_set;
 
+//These are used for AAF convoy missions
 [_dict, "vans", [
 "C_IDAP_Truck_02_F"
 ]] call DICT_fnc_set;

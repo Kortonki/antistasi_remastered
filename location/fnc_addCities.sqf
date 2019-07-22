@@ -31,6 +31,7 @@ params ["_excludeBelow", "_minSize", ["_excluded", []]];
             // stores everything
             [_city, "population", _population] call AS_location_fnc_set;
             [_city, "roads", _roads] call AS_location_fnc_set;
+            
         };
     };
 } forEach (nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"),

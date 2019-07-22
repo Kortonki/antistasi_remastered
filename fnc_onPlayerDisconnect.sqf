@@ -71,7 +71,9 @@ private _cargoArray = [_unit, true] call AS_fnc_getUnitArsenal;
 
 private _group = group _unit;
 
-[units _group] remoteExec ["AS_fnc_dismissFIAunits", _group];
+if (count (units _group select {!(isPlayer _x)}) > 0) then {
+	[units _group] remoteExec ["AS_fnc_dismissFIAunits", _group];
+};
 
 private _pos = getPosATL _unit;
 private _wholder = nearestObjects [_pos, ["weaponHolderSimulated", "weaponHolder"], 2];

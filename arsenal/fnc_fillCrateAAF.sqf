@@ -101,7 +101,9 @@ call {
 	};
 };
 
-_items = [] call AS_medical_fnc_crateMeds;
+
+//Amount of med items depend on relative AAF resources
+private _items = [(round(([] call AS_fnc_getAAFResourcesAdj)/2000)) min 10] call AS_medical_fnc_crateMeds;
 
 _items pushBack [selectRandom (AAFItems arrayIntersect AS_allNVGs), 2];
 

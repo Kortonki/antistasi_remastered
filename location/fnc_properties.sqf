@@ -6,8 +6,8 @@ private _properties = ["type", "position", "size", "side", "garrison",
 switch (_this) do {
     case "city": {
         _properties append ["population","FIAsupport","AAFsupport","roads"];
-        _properties = _properties - ["side"];
-    };
+
+        };
     case "base": {
         _properties append ["busy"];
     };

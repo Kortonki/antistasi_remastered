@@ -1,9 +1,9 @@
 #include "macros.hpp"
 
-["You decided to rest some time","BLACK",10] remoteExec ["cutText", [0,-2] select isDedicated];
-sleep 10;
+["You decided to rest some time","BLACK OUT",5] remoteExec ["cutText", [0,-2] select isDedicated];
+sleep 5;
 //TODO: A dialog to choose how long to skip?
-private _skiptimeMax = 8*60;
+private _skiptimeMax = 1*60;
 private _skippedTime = 0;
 private _attack = false;
 private _text = "Time to go";

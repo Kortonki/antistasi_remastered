@@ -12,8 +12,10 @@ if (_attribute == "money") then {
 
 [AS_container, "players", _id, _attribute, _old_amount + _difference] call DICT_fnc_setGlobal;
 
-if (_attribute == "traits" and {_clearTraits}) then {
-  [AS_container, "players", _id, _attribute, []] call DICT_fnc_setGlobal;
+if (_attribute == "traits") then {
+    if (_clearTraits) then {
+    [AS_container, "players", _id, _attribute, []] call DICT_fnc_setGlobal;
+  };
 };
 
 if (_notify and {_attribute == "money"}) then {

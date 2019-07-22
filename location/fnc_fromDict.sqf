@@ -20,6 +20,15 @@ call AS_location_fnc_deinitialize;
     if ((_x call AS_location_fnc_type) == "city") then {
         private _roads = [_x call AS_location_fnc_position, _x call AS_location_fnc_size] call AS_location_fnc_getCityRoads;
         [_x, "roads", _roads] call AS_location_fnc_set;
+
+        //This is for legacy saves without city side initialized
+        if (isNil{_x call AS_location_fnc_side}) then {
+          if (([_x, "AAFSupport"] call AS_location_fnc_get) > ([_x, "FIASupport"] call AS_location_fnc_get)) then {
+            [_x, "side", "AAF"] call AS_location_fnc_set;
+          } else {
+            [_x, "side", "FIA"] call AS_location_fnc_set;
+          };
+        };
     };
 
     // create hidden marker if it does not exist.

@@ -88,7 +88,7 @@ if (_useCSAT) then {
 
 			private _isEasy = (_scoreNeededLand < 4) and (_scoreNeededAir < 4) and (count _garrison < 4) and !(_type in ["base", "airfield", "fia_hq"]);
 
-			_debug_message = format ["%1: (%2,%3) (%4,%5) %6", _location, _scoreAir, _scoreNeededAir, _scoreLand, _scoreNeededLand, _isEasy];
+			_debug_message = format ["%1: (%2,%3) (%4,%5) %6, Base %7, Airport %8", _location, _scoreAir, _scoreNeededAir, _scoreLand, _scoreNeededLand, _isEasy, _base, _aeropuerto];
 			diag_log(_debug_prefix + _debug_message);
 
 			// decide to attack or not depending on the scores

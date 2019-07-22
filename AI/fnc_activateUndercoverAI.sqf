@@ -65,7 +65,7 @@ if (!(captive _unit)) then {
 	if (vehicle _unit != _unit) then {
 			{
 				[_x, false] remoteExecCall ["setCaptive", _x];
-			} foreach (allUnits select {vehicle _x == vehicle _unit});
+			} foreach (crew (vehicle _unit));
 		};
 	} else {
 		[_unit, false] remoteExecCall ["setCaptive", _unit];

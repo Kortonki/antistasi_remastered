@@ -1,6 +1,8 @@
 disableSerialization;
 createDialog "AS_loadMenu";
 
+waitUntil {sleep 0.1; !(isNil "AS_database_savedGames")};
+
 [] call AS_fnc_UI_loadMenu_update;
 
 // catch the escape so that the player returns to the previous menu

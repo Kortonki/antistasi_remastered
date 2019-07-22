@@ -57,15 +57,18 @@ if (isMultiplayer) then {
 player addEventHandler ["GetInMan", {
     params ["_unit", "_seat", "_vehicle"];
 	private _exit = false;
-	if isMultiplayer then {
+	//TODO: This is commented oout until there's a way to unlock dead group leaders vehicles after the group breaks
+	/*if isMultiplayer then {
 		private _owner = _vehicle getVariable "AS_vehOwner";
+
+
 		if (!isNil "_owner" and
             {{getPlayerUID _x == _owner} count (units group player) == 0}) then {
 			hint "You can only enter in other's vehicle if you are in its group";
 			moveOut _unit;
 			_exit = true;
 		};
-	};
+	};*/
 	if not _exit then {
 
 		private _detected = false;
@@ -84,7 +87,7 @@ player addEventHandler ["GetInMan", {
 		};
 
 		if (_seat == "driver" and _vehicle isKindOf "Truck_F") then {
-			private _EHid = [_vehicle, "transferFrom"] call AS_fnc_addAction;
+			private _EHid = [_vehicle, "transferTo"] call AS_fnc_addAction;
 			player setVariable ["EH_ids", [_EHid, _EHid1]];
 		};
 		private _EHid2 = [_vehicle, "radio"] call AS_fnc_addAction;

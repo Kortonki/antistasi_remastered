@@ -25,11 +25,12 @@ call {
 		_cost = 25
 	};
 
-	private _category = [_tipoVeh] call AS_AAFarsenal_fnc_category;
+	//This is already done when FIA captures the vehicle
+	/*private _category = [_tipoVeh] call AS_AAFarsenal_fnc_category;
 	if (_category != "") then {
 		[typeOf _veh] call AS_AAFarsenal_fnc_deleteVehicle;
 		_cost = _category call AS_AAFarsenal_fnc_value;
-	};
+	};*/
 };
 
 if (_cost == 0) exitWith {hint "The vehicle you are looking at is not sellable."};

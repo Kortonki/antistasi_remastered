@@ -20,7 +20,7 @@ private _fnc_spawn = {
 
 	// spawn crate
 	private _veh = (["AAF", "box"] call AS_fnc_getEntity) createVehicle _posicion;
-	[_veh, "Airbase"] call AS_fnc_fillCrateAAF;
+	[_veh, "Airfield"] call AS_fnc_fillCrateAAF;
 	_vehiculos pushBack _veh;
 
 	//create _bunker, only if there's no preset composition

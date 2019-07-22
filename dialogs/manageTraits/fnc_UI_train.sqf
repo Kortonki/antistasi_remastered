@@ -4,6 +4,10 @@ private _trait = lbData [0, lbCurSel 0];
 
 if (_trait != "") then {
 
+    if (_trait in ([player, "traits"] call AS_players_fnc_get)) exitWith {
+      hint "You already have this trait"
+    };
+
     if (player call AS_fnc_controlsAI) exitWith {
         hint "You cannot do this while controlling an AI";
     };

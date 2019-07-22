@@ -118,7 +118,7 @@ private _fnc_spawn = {
 	private _groups = [];
 	private _vehicles = [];
 
-	[_origin,30] call AS_location_fnc_increaseBusy;
+	[_origin,10] call AS_location_fnc_increaseBusy;
 
 	private _group = createGroup ("AAF" call AS_fnc_getFactionSide);
 	_groups pushBack _group;
