@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={6792.248,78.16227,6988.6982};
-		dir[]={-0.93812788,-0.33138266,0.10095784};
-		up[]={-0.32950932,0.94348508,0.035459511};
-		aside[]={0.10700395,1.2109522e-006,0.99430484};
+		pos[]={5769.1035,14.082949,6964.2046};
+		dir[]={-0.85585976,-0.17364819,-0.48718622};
+		up[]={-0.15091118,0.98480779,-0.085904092};
+		aside[]={-0.49470186,0,0.86906284};
 	};
 };
 binarizationWanted=0;
@@ -86,11 +86,57 @@ class ScenarioData
 {
 	author="Kortonki";
 	saving=0;
+	class Header
+	{
+		minPlayers=1;
+		maxPlayers=49;
+	};
 	wreckRemovalMaxTime=3600;
 };
 class CustomAttributes
 {
 	class Category0
+	{
+		name="Multiplayer";
+		class Attribute0
+		{
+			property="RespawnTemplates";
+			expression="true";
+			class Value
+			{
+				class data
+				{
+					class type
+					{
+						type[]=
+						{
+							"ARRAY"
+						};
+					};
+					class value
+					{
+						items=1;
+						class Item0
+						{
+							class data
+							{
+								class type
+								{
+									type[]=
+									{
+										"STRING"
+									};
+								};
+								value="None";
+							};
+						};
+					};
+				};
+			};
+		};
+		nAttributes=1;
+	};
+	class Category1
 	{
 		name="Scenario";
 		class Attribute0

@@ -46,10 +46,10 @@ private _fnc_spawn = {
 			private _group = createGroup ("CSAT" call AS_fnc_getFactionSide);
 
 			_target = ([_position, 0, ["CSAT", "officer"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;
-	        ([_position, 0, ["CSAT", "pilot"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;
+	        ([_position, 0, ["CSAT", "gunner"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;
 
 			_group selectLeader _target;
-			[leader _group, _location, "SAFE", "SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
+			[leader _group, _location, "SAFE", "SPAWNED", "NOVEH", "NOFOLLOW", "LIMITED"] spawn UPSMON;
 
 			{_x call AS_fnc_initUnitCSAT; _x allowFleeing 0} forEach units _group;
 

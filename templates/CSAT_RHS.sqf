@@ -40,8 +40,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "self_aa", ["rhs_zsu234_aa"]] call DICT_fnc_set;
 
 // special units used in special occasions
-[_dict, "officer", "rhs_vdv_recon_officer"] call DICT_fnc_set;
-[_dict, "traitor", "rhs_vdv_recon_officer_armored"] call DICT_fnc_set;
+[_dict, "officer", "rhs_vdv_officer"] call DICT_fnc_set;
+[_dict, "traitor", "B_G_Survivor_F"] call DICT_fnc_set;
 [_dict, "gunner", "rhs_vdv_recon_rifleman_l"] call DICT_fnc_set;
 [_dict, "crew", "rhs_vdv_armoredcrew"] call DICT_fnc_set;
 [_dict, "pilot", "rhs_pilot_combat_heli"] call DICT_fnc_set;

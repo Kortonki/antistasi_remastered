@@ -66,7 +66,7 @@ class CfgSounds
     class ofp1
     {
       name="ofp1";
-      sound[]={"music\ofp1.ogg", 30, 1, 1, 100};
+      sound[]={"music\ofp1.ogg", 1, 1, 100};
       titles[]={};
 
     };

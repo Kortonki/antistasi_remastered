@@ -120,7 +120,7 @@ unlockedItems = [
 
 if hasTFAR then {
 	unlockedItems = unlockedItems - ["ItemRadio"];
-	unlockedItems pushBack "tf_rf7800str";
+	unlockedItems pushBack "TFAR_rf7800str";
 };
 
 if hasACE then {

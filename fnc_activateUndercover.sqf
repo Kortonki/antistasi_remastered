@@ -157,6 +157,7 @@ while {_reason == ""} do {
 			if (true and {
 				private _loc = [_all_spotters, _player] call BIS_fnc_nearestPosition;
 				private _position = _loc call AS_location_fnc_position;
+				private _size = _loc call AS_location_fnc_size;
 				_player distance2d _position < _size*2}) exitWith {
 				"distanceToLocation"
 			};

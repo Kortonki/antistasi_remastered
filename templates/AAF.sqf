@@ -7,7 +7,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 // special units used in special occasions
 [_dict, "officer", "I_officer_F"] call DICT_fnc_set;
-[_dict, "traitor", "I_G_officer_F"] call DICT_fnc_set;
+[_dict, "traitor", "B_G_Survivor_F"] call DICT_fnc_set;
 [_dict, "gunner", "I_crew_F"] call DICT_fnc_set;
 [_dict, "crew", "I_crew_F"] call DICT_fnc_set;
 [_dict, "pilot", "I_helipilot_F"] call DICT_fnc_set;

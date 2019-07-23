@@ -37,7 +37,7 @@ if (_side != "NATO") then {
 	}];
 
 	//TODO: ace breaks this, normal truck might have fuel cargo, check for cargo size added for ace functionality
-	if (_tipo isKindof "Truck_F" and {!(finite (getFuelCargo _veh) and (_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
+	if (_tipo isKindof "Truck_F" and {!(finite (getFuelCargo _veh) or (hasACE and {(_veh call AS_fuel_fnc_getfuelCargoSize) > 0}))}) then {
 		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
 		};
 };
@@ -255,14 +255,21 @@ if (_side == "FIA") then {
 		_veh setFuelCargo 0;
 		if (!(isNil "_fuel")) then {
 			_veh setfuel _fuel;
-			if (finite (getFuelCargo _veh) and {_veh call AS_fuel_fnc_getfuelCargoSize > 0}) then {
+
+			if (!(isNil "_fuelCargo")) then {
 				_veh setVariable ["fuelCargo", _fuelCargo, true];
-				[_veh, "refuel_truck"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-				[_veh, "refuel_truck_check"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+
+				if (finite (getFuelCargo _veh) or _veh call AS_fuel_fnc_getfuelCargoSize > 0) then {
+
+					[_veh, "refuel_truck"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+					[_veh, "refuel_truck_check"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+					};
 				};
 			} else {
 			_veh call AS_fuel_fnc_setVehicleFuel;
 			};
+
+
 
 		_veh setVariable ["boxCargo",[], true];
 	};
@@ -313,7 +320,7 @@ if (not(_side == "FIA")) then {
 
 		};
 
-		if (finite (getFuelCargo _veh) and {_veh call AS_fuel_fnc_getfuelCargoSize > 0}) then {
+		if (finite (getFuelCargo _veh) or _veh call AS_fuel_fnc_getfuelCargoSize > 0) then {
 				//TODO Improve this to revert to FIA fuel system to prevent cheating. For AI must have vanilla fuel cargo system
 				//TODO Ability to carry fuel can be checked by much simpler terms via dictionary fuel vehicle
 
@@ -326,8 +333,8 @@ if (not(_side == "FIA")) then {
 
 				if (_sideunit == "FIA") exitWith {
 					_vehicle setFuelCargo 0;
-					[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
-					[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+					[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+					[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 					_vehicle removeEventHandler ["Getin", _thisEventHandler];
 
 					};
