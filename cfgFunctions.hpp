@@ -90,6 +90,7 @@ class AS {
         FNC_BASE(roadAndDir);
         FNC_BASE(spawnAAF_patrol);
         FNC_BASE(spawnAAF_patrolSquad);
+        FNC_BASE(spawnAAF_vehiclePatrol);
         FNC_BASE(spawnAAF_roadAT);
         FNC_BASE(spawnAAF_truck);
         FNC_BASE(createVehicle);

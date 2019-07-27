@@ -44,7 +44,7 @@ while {true} do {
 
 			private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
 			if (count _units == 0) then {
-				[_unit, "hint", "Have someone from your group outside the truck"] call AS_fnc_localCommunication;
+				hint "Have someone from your group outside the truck";
 				breakTO "main"
 			};
 			private _time = _total/(count _units);
@@ -79,7 +79,7 @@ while {true} do {
 	   // Time depends on friendly units around the truck
 		 private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
 		 if (count _units == 0) then {
-			 [_unit, "hint", "Have someone from your group outside the truck"] call AS_fnc_localCommunication;
+			 hint "Have someone from your group outside the truck";
 			 breakTO "main"};
 		 private _time = _total/(count _units);
 	   [_x, _position, _time, {true}, {speed _vehicle >= 1}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
@@ -113,7 +113,7 @@ while {true} do {
 
 			private _units = (units _group) select {alive _x and {vehicle _x == _x and {!(_x call AS_medical_fnc_isUnconscious) and {_x distance2D _position <= _size}}}};
 			if (count _units == 0) then {
-				[_unit, "hint", "Have someone from your group outside the truck"] call AS_fnc_localCommunication;
+				hint "Have someone from your group outside the truck";
 				breakTO "main"
 			};
 			private _time = _total/(count _units);

@@ -1,7 +1,7 @@
 disableSerialization;
 createDialog "AS_loadMenu";
 
-waitUntil {sleep 0.1; !(isNil "AS_database_savedGames")};
+waitUntil {sleep 0.1; !(isNil "AS_database_savedGames") and !(isNull (findDisplay 1601))};
 
 [] call AS_fnc_UI_loadMenu_update;
 

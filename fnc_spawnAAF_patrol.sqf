@@ -30,7 +30,7 @@ for "_i" from 1 to _amount do {
     if (random 10 < 2.5) then {
         [_group] call AS_fnc_spawnDog;
     };
-    [leader _group, _mrk, "SAFE","SPAWNED", "NOVEH2"] spawn UPSMON;
+    [leader _group, _mrk, "SAFE","SPAWNED", "NOVEH"] spawn UPSMON;
 
     _groups pushBack _group;
     {[_x, false] call AS_fnc_initUnitAAF; _units pushBack _x} forEach units _group;

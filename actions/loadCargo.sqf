@@ -26,7 +26,7 @@ if (([_truck] call AS_fnc_getSide) != "FIA") exitWith {
   false
 };
 
-if (finite (getFuelCargo _truck)  or finite (getRepairCargo _truck)) exitWith {
+if ((_truck call AS_fuel_fnc_getFuelCargo) > 0 or (getRepairCargo _truck) > 0) exitWith {
   private _text = "Nearest vehicle isn't suitable for this cargo";
   [_unit, "hint", _text] call AS_fnc_localCommunication;
   false

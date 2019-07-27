@@ -74,7 +74,8 @@ private _FIAResIncomeMultiplier = 1;
 
     // flip cities due to majority change.
     if ((_AAFsupport < _FIAsupport) and (_side == "AAF")) then {
-        ["TaskSucceeded", ["", format ["%1 joined FIA",[_city, false] call AS_fnc_getLocationName]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+        //For now use the location as string. getlocationName returns empty string
+        ["TaskSucceeded", ["", format ["%1 joined FIA",_city]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 
         [_city, "side", "FIA"] call AS_location_fnc_set;
         _city call AS_location_fnc_updateMarker;
@@ -85,11 +86,11 @@ private _FIAResIncomeMultiplier = 1;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
     };
     if ((_AAFsupport > _FIAsupport) and (_side == "FIA")) then {
-        ["TaskFailed", ["", format ["%1 joined %2",[_city, false] call AS_fnc_getLocationName, (["AAF", "name"] call AS_fnc_getEntity)]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+        ["TaskFailed", ["", format ["%1 joined %2", _city]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 
         [_city, "side", "AAF"] call AS_location_fnc_set;
         _city call AS_location_fnc_updateMarker;
-        
+
         [0,-5] call AS_fnc_changeForeignSupport;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
     };

@@ -6,6 +6,7 @@ private _fnc_spawn = {
 	private _soldados = [];
 	private _grupos = [];
 	private _vehiculos = [];
+	private _markers = [];
 
 	private _spatrol = [];
 
@@ -62,20 +63,27 @@ private _fnc_spawn = {
 	private _groupCount = (round (_size/30)) max 1;
 
 	if (!_busy) then {
-		private _count_vehicles = ["trucks", "apcs"] call AS_AAFarsenal_fnc_count;
-		private _valid_vehicles = ["trucks", "apcs"] call AS_AAFarsenal_fnc_valid;
+		private _count_vehicles = ["trucks", "cars_armed", "apcs", "tanks"] call AS_AAFarsenal_fnc_count;
+		private _valid_vehicles = ["trucks", "cars_armed", "apcs", "tanks"] call AS_AAFarsenal_fnc_valid;
 
 		for "_i" from 1 to (_groupCount min _count_vehicles) do {
 			if !(_location call AS_location_fnc_spawned) exitWith {};
 			private _tipoVeh = selectRandom _valid_vehicles;
 			private _pos = [];
 			if (_size > 40) then {
-				_pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
+				_pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0, [], [_posicion, [0,0,0]]] call BIS_Fnc_findSafePos;
 			} else {
 				_pos = _posicion findEmptyPosition [10,60,_tipoVeh];
 			};
-			([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
-			_vehiculos pushBack _veh;
+			if (random 10 < 5 or (_tipoVeh in (["AAF", "trucks"] call AS_fnc_getEntity))) then {
+				([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
+				_vehiculos pushBack _veh;
+			} else {
+				([_tipoVeh, _location, "AAF"] call AS_fnc_spawnAAF_vehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
+				_vehiculos pushback _veh2;
+				_grupos pushBack _group2;
+				_markers pushback _patrolMarker2;
+			};
 			sleep 1;
 		};
 	};
@@ -85,6 +93,7 @@ private _fnc_spawn = {
 	([_location, _groupCount] call AS_fnc_spawnAAF_patrol) params ["_units1", "_groups1", "_mrk"];
 	_spatrol append _units1;
 	_grupos append _groups1;
+	_markers pushBack _mrk;
 
 	// spawn guarding squads
 	if (_frontera) then {_groupCount = _groupCount * 2};
@@ -94,7 +103,7 @@ private _fnc_spawn = {
 
 	[_location, _grupos] call AS_fnc_spawnJournalist;
 
-	[_location, "resources", [taskNull, _grupos, _vehiculos, [_mrk]]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 };
 

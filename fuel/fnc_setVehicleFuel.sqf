@@ -29,4 +29,4 @@ _text = format ["The fuel tank wasn't topped up because of low fuel reserves\n\n
 };
 
 
-if (finite (getFuelCargo _vehicle) or (_vehicle call AS_fuel_fnc_getfuelCargoSize) > 0) then {_vehicle call AS_fuel_fnc_setFuelCargo;};
+if ((_vehicle call AS_fuel_fnc_getfuelCargoSize) > 0) then {_vehicle call AS_fuel_fnc_setFuelCargo;};

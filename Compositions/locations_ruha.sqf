@@ -96,9 +96,9 @@ _objects = [
 	["Land_BagBunker_Small_F",[128.873,-63.0652,-0.048317],270.134,1,0,[5.45427,0.875539],"","",true,false]
 ];
 
-[_dict, "AS_base", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "AS_base", "center", _center] call DICT_fnc_set;
-[_dict, "AS_base", "objects", _objects] call DICT_fnc_set;
+[_dict, "AS_powerplant", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "AS_powerplant", "center", _center] call DICT_fnc_set;
+[_dict, "AS_powerplant", "objects", _objects] call DICT_fnc_set;
 
 
 /*
@@ -132,7 +132,7 @@ _objects = [
 	["Land_BagFence_Long_F",[30.2163,-42.4839,-0.0574284],327.373,1,0,[0.829431,-1.89169],"","",true,false],
 	["Land_BagFence_Long_F",[32.5718,-40.9912,-0.0443478],331.042,1,0,[0.628864,-1.8212],"","",true,false],
 	["Land_HBarrier_5_F",[52.3076,7.56689,0.128359],248.302,1,0,[0.365358,3.24273],"","",true,false],
-	["Land_Razorwire_F",[-43.0762,32.4937,-1.45197],15.5853,1,0,[-7.81279,-10.0952],"","",true,false], 
+	["Land_Razorwire_F",[-43.0762,32.4937,-1.45197],15.5853,1,0,[-7.81279,-10.0952],"","",true,false],
 	["Land_HBarrier_5_F",[46.3115,23.2739,0.0882969],268.764,1,0,[-2.96044,2.21191],"","",true,false],
 	["Land_BagFence_Short_F",[24.3945,47.3755,-0.0745792],245.256,1,0,[11.8082,-5.81623],"","",true,false],
 	["Land_BagFence_Long_F",[9.7207,-52.7559,-0.0132999],277.551,1,0,[-0.227045,-0.463626],"","",true,false],

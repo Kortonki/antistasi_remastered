@@ -23,14 +23,14 @@ if (_veh isKindOf "Car") then {
 
 //The looting script
 
-if ((typeOf _veh) isKindof "Truck_F" and {!(finite (getFuelCargo _veh))}) then {
+if ((typeOf _veh) isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
 	[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 	};
 
 //Randomise fuel and fuel cargo
 
 _veh setfuel (0 + 1*((random 1)^2));
-if (finite (getFuelCargo _veh)) then {
+if (_veh call AS_fuel_fnc_getfuelCargoSize > 0) then {
 	_veh setfuelCargo 0;
 	[_veh, 0, 0.1] call AS_fuel_fnc_randomFuelCargo;
 	[_veh, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];

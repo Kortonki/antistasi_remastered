@@ -77,8 +77,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "box", "rhs_launcher_crate"] call DICT_fnc_set;
 
 if hasTFAR then {
-    [_dict, "tfar_lr_radio", "tf_mr3000_rhs"] call DICT_fnc_set;
-    [_dict, "tfar_radio", "tf_fadak"] call DICT_fnc_set;
+    [_dict, "tfar_lr_radio", "TFAR_mr3000_rhs"] call DICT_fnc_set;
+    [_dict, "tfar_radio", "TFAR_fadak"] call DICT_fnc_set;
 };
 
 _dict

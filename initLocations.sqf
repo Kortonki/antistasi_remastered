@@ -113,6 +113,7 @@ publicVariable "AS_h_barrier_type";
         if (_x find "AS_outpostAA" == 0) exitWith {[_x, "outpostAA"] call AS_location_fnc_add};
         if (_x find "AS_outpost" == 0) exitWith {[_x, "outpost"] call AS_location_fnc_add};
         if (_x find "AS_roadblock" == 0) exitWith {[_x, "roadblock"] call AS_location_fnc_add};
+        if (_x find "blacklist" > 0) exitWith {_x setMarkerAlpha 0}; //This was added to not spawn vehicles on runways 
     };
 } forEach (allMapMarkers select {!(_x find "convoy" > 0)}); //Do not make locations out of convoy start markers
 

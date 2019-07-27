@@ -61,8 +61,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "explosives", ["SatchelCharge_F","DemoCharge_F","ClaymoreDirectional_F"]] call DICT_fnc_set;
 
 if hasTFAR then {
-    [_dict, "tfar_lr_radio", "tf_mr3000"] call DICT_fnc_set;
-    [_dict, "tfar_radio", "tf_fadak"] call DICT_fnc_set;
+    [_dict, "tfar_lr_radio", "TFAR_anprc155"] call DICT_fnc_set;
+    [_dict, "tfar_radio", "TFAR_anprc148jem"] call DICT_fnc_set;
 };
 
 _dict

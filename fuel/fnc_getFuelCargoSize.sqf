@@ -6,8 +6,8 @@ if (not(isNil {_vehicle getVariable "fuelCargoSize"})) exitWith {(_vehicle getVa
 private _type = typeOf _vehicle;
 
 private _fuelCargoSize = call {
-	if (hasACE) exitWith {([(configFile >> "CfgVehicles" >> _type), "ace_refuel_fuelCargo", 10000] call BIS_fnc_returnConfigEntry)};
-	([(configFile >> "CfgVehicles" >> _type), "transportfuel", 10000] call BIS_fnc_returnConfigEntry)
+	if (hasACE) exitWith {([(configFile >> "CfgVehicles" >> _type), "ace_refuel_fuelCargo", 0] call BIS_fnc_returnConfigEntry)};
+	([(configFile >> "CfgVehicles" >> _type), "transportfuel", 0] call BIS_fnc_returnConfigEntry)
 };
 
 if (isnil "_fuelCargoSize") exitWith {0}; //Failsafe to not return nil. This function is used to check if vehicle is capable of loading fuel when using ACE

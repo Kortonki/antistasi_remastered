@@ -5,6 +5,7 @@ private _fnc_spawn = {
 	private _soldados = [];
 	private _grupos = [];
 	private _vehiculos = [];
+	private _markers = [];
 
 	private _posicion = _location call AS_location_fnc_position;
 	private _size = _location call AS_location_fnc_size;
@@ -42,6 +43,7 @@ private _fnc_spawn = {
 	// _mrk => to be deleted at the end
 	([_location, 4] call AS_fnc_spawnAAF_patrol) params ["_units1", "_groups1", "_mrk"];
 	_grupos append _groups1;
+	_markers pushback _mrk;
 
 	// spawn parked air vehicles
 	if (!_busy) then {
@@ -75,16 +77,29 @@ private _fnc_spawn = {
 	};
 
 	// spawn parked land vehicles
+	//TODO check if the following functions check for arsenal availability for vehicles
 	private _groupCount = round (_size/60);
-	private _count_vehicles = ["trucks", "apcs"] call AS_AAFarsenal_fnc_count;
-	private _valid_vehicles = ["trucks", "apcs"] call AS_AAFarsenal_fnc_valid;
+	private _count_vehicles = ["trucks", "cars_armed", "apcs"] call AS_AAFarsenal_fnc_count;
+	private _valid_vehicles = ["trucks", "cars_armed", "apcs"] call AS_AAFarsenal_fnc_valid;
 	for "_i" from 1 to (_groupCount min _count_vehicles) do {
 		if !(_location call AS_location_fnc_spawned) exitWith {};
 
 		private _tipoveh = selectRandom _valid_vehicles;
-		private _pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
-		([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
-		_vehiculos pushBack _veh;
+		//private _blacklistarea = format ["AS_%1_blacklist", _location]; //check for blacklist marker //WIP throws error
+		private _pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0, [], [_posicion, [0,0,0]]] call BIS_Fnc_findSafePos;
+		if (random 10 < 5 or _tipoVeh in (["AAF", "trucks"] call AS_fnc_getEntity)) then {
+				([_tipoVeh,_pos, "AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
+				_vehiculos pushBack _veh;
+				//TODO vehicle crew loitering?
+		} else {
+			([_tipoVeh, _location, "AAF"] call AS_fnc_spawnAAF_vehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
+			_vehiculos pushback _veh2;
+			_grupos pushBack _group2;
+			_markers pushback _patrolMarker2;
+		};
+
+
+
 		sleep 1;
 	};
 
@@ -94,9 +109,11 @@ private _fnc_spawn = {
 	_soldados append _units1;
 	_grupos append _groups1;
 
+
+
 	[_location, _grupos] call AS_fnc_spawnJournalist;
 
-	[_location, "resources", [taskNull, _grupos, _vehiculos, [_mrk]]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 };
 

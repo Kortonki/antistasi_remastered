@@ -67,9 +67,345 @@ class CfgSounds
     {
       name="ofp1";
       sound[]={"music\ofp1.ogg", 1, 1, 100};
+      duration = 255.2;
       titles[]={};
 
     };
+
+    class CarRadiomusic_LeadTrack01_F
+	{
+		name = "LeadTrack01_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack01_F.ogg",1.0,1.0};titles[]={};
+		duration = 162.8;
+		theme = "safe";
+		musicclass = "Lead";
+	};
+	class CarRadiomusic_LeadTrack01a_F
+	{
+		name = "LeadTrack01a_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack01a_F.ogg",1.0,1.0};titles[]={};
+		duration = 74.31;
+		theme = "safe";
+	};
+	class CarRadiomusic_LeadTrack01b_F
+	{
+		name = "LeadTrack01b_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack01b_F.ogg",1.0,1.0};titles[]={};
+		duration = 66.92;
+		theme = "safe";
+	};
+	class CarRadiomusic_LeadTrack01c_F
+	{
+		name = "LeadTrack01c_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack01c_F.ogg",1.0,1.0};titles[]={};
+		duration = 128.93;
+		theme = "safe";
+	};
+	class CarRadiomusic_LeadTrack02_F
+	{
+		name = "LeadTrack02_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack02_F.ogg",1.0,1.0};titles[]={};
+		duration = 94.14;
+		theme = "safe";
+		musicclass = "Lead";
+	};
+	class CarRadiomusic_LeadTrack03_F
+	{
+		name = "LeadTrack03_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack03_F.ogg",1.0,1.0};titles[]={};
+		duration = 96.79;
+		theme = "combat";
+		musicclass = "Action";
+	};
+	class CarRadiomusic_LeadTrack04_F
+	{
+		name = "LeadTrack04_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack04_F.ogg",1.0,1.0};titles[]={};
+		duration = 150.65;
+		theme = "combat";
+		musicclass = "Action";
+	};
+	class CarRadiomusic_LeadTrack04a_F
+	{
+		name = "LeadTrack04a_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack04a_F.ogg",1.0,1.0};titles[]={};
+		duration = 111.99;
+		theme = "combat";
+	};
+	class CarRadiomusic_LeadTrack05_F
+	{
+		name = "LeadTrack05_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack05_F.ogg",1.0,1.0};titles[]={};
+		duration = 86.41;
+		theme = "combat";
+		musicclass = "Action";
+	};
+	class CarRadiomusic_LeadTrack06_F
+	{
+		name = "LeadTrack06_F";
+		sound[] = {"@A3\music_f\Music\LeadTrack06_F.ogg",1.0,1.0};titles[]={};
+		duration = 60.0;
+		theme = "stealth";
+	};
+
+  class CarRadiomusic_Track01_Proteus
+	{
+		sound[] = {"@A3\music_f\Music\LeadTrack02_F.ogg",1.0,1.0};titles[]={};
+		duration = 94.14;
+	};
+	class CarRadiomusic_Track02_SolarPower
+	{
+		sound[] = {"@A3\music_f\Music\AmbientTrack03_F.ogg",1.0,1.0};titles[]={};
+		duration = 113.49;
+	};
+	class CarRadiomusic_Track03_OnTheRoad
+	{
+		sound[] = {"@A3\music_f\Music\BackgroundTrack02_F.ogg",1.0,1.0};titles[]={};
+		duration = 88.0;
+	};
+	class CarRadiomusic_Track04_Underwater1
+	{
+		sound[] = {"@A3\music_f\Music\BackgroundTrack01a_F.ogg",1.0,1.0};titles[]={};
+		duration = 96.0;
+	};
+	class CarRadiomusic_Track05_Underwater2
+	{
+		sound[] = {"@A3\music_f\Music\BackgroundTrack01_F.ogg",1.0,1.0};titles[]={};
+		duration = 97.67;
+	};
+	class CarRadiomusic_Track06_CarnHeli
+	{
+		sound[] = {"@A3\music_f\Music\BackgroundTrack03_F.ogg",1.0,1.0};titles[]={};
+		duration = 110.77;
+	};
+	class CarRadiomusic_Track07_ActionDark
+	{
+		sound[] = {"@A3\music_f\Music\LeadTrack04a_F.ogg",1.0,1.0};titles[]={};
+		duration = 112.0;
+	};
+	class CarRadiomusic_Track08_Night_ambient
+	{
+		sound[] = {"@A3\music_f\Music\AmbientTrack04_F.ogg",1.0,1.0};titles[]={};
+		duration = 204.04;
+	};
+	class CarRadiomusic_Track09_Night_percussions
+	{
+		sound[] = {"@A3\music_f\Music\AmbientTrack04a_F.ogg",1.0,1.0};titles[]={};
+		duration = 190.5;
+	};
+	class CarRadiomusic_Track10_StageB_action
+	{
+		sound[] = {"@A3\music_f\Music\LeadTrack03_F.ogg",1.0,1.0};titles[]={};
+		duration = 96.8;
+	};
+	class CarRadiomusic_Track11_StageB_stealth
+	{
+		sound[] = {"@A3\music_f\Music\AmbientTrack01a_F.ogg",1.0,1.0};titles[]={};
+		duration = 184.72;
+	};
+	class CarRadiomusic_Track12_StageC_action
+	{
+		sound[] = {"@A3\music_f\Music\LeadTrack05_F.ogg",1.0,1.0};titles[]={};
+		duration = 86.41;
+	};
+	class CarRadiomusic_Track13_StageC_negative
+	{
+		sound[] = {"@A3\music_f\Music\LeadTrack06_F.ogg",1.0,1.0};titles[]={};
+		duration = 60.0;
+	};
+	class CarRadiomusic_Track14_MainMenu
+	{
+		sound[] = {"@A3\music_f\Music\LeadTrack01c_F.ogg",1.0,1.0};titles[]={};
+		duration = 128.93;
+	};
+	class CarRadiomusic_Track15_MainTheme
+	{
+		sound[] = {"@A3\music_f\Music\LeadTrack01_F.ogg",1.0,1.0};titles[]={};
+		duration = 162.81;
+	};
+	class CarRadiomusic_LeadTrack01_F_Bootcamp
+	{
+		name = "LeadTrack01_F_Bootcamp";
+		sound[] = {"@A3\music_f_Bootcamp\Music\LeadTrack01_F_Bootcamp.ogg",1.0,1.0};titles[]={};
+		duration = 164.8;
+		musicclass = "Action";
+	};
+	class CarRadiomusic_LeadTrack01b_F_Bootcamp
+	{
+		name = "LeadTrack01b_F_Bootcamp";
+		sound[] = {"@A3\music_f_Bootcamp\Music\LeadTrack01b_F_Bootcamp.ogg",1.0,1.0};titles[]={};
+		duration = 32.04;
+		musicclass = "Calm";
+	};
+	class CarRadiomusic_LeadTrack02_F_Bootcamp
+	{
+		name = "LeadTrack02_F_Bootcamp";
+		sound[] = {"@A3\music_f_Bootcamp\Music\LeadTrack02_F_Bootcamp.ogg",1.0,1.0};titles[]={};
+		duration = 242.28;
+		musicclass = "Action";
+	};
+	class CarRadiomusic_LeadTrack03_F_Bootcamp
+	{
+		name = "LeadTrack03_F_Bootcamp";
+		sound[] = {"@A3\music_f_Bootcamp\Music\LeadTrack03_F_Bootcamp.ogg",1.0,1.0};titles[]={};
+		duration = 61.28;
+		musicclass = "Calm";
+	};
+	class CarRadiomusic_LeadTrack01_F_EPA
+	{
+		name = "LeadTrack01_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\LeadTrack01_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 96.04;
+		musicclass = "Calm";
+	};
+	class CarRadiomusic_LeadTrack02_F_EPA
+	{
+		name = "LeadTrack02_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\LeadTrack02_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 116.71;
+		musicclass = "Action";
+	};
+	class CarRadiomusic_LeadTrack02a_F_EPA
+	{
+		name = "LeadTrack02a_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\LeadTrack02a_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 53.39;
+	};
+	class CarRadiomusic_LeadTrack02b_F_EPA
+	{
+		name = "LeadTrack02b_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\LeadTrack02b_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 62.04;
+	};
+	class CarRadiomusic_LeadTrack03_F_EPA
+	{
+		name = "LeadTrack03_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\LeadTrack03_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 137.94;
+	};
+	class CarRadiomusic_LeadTrack03a_F_EPA
+	{
+		name = "LeadTrack03a_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\LeadTrack03a_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 22.68;
+	};
+	class CarRadiomusic_EventTrack01_F_EPA
+	{
+		name = "EventTrack01_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\EventTrack01_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 28.54;
+		theme = "Action";
+	};
+	class CarRadiomusic_EventTrack01a_F_EPA
+	{
+		name = "EventTrack01a_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\EventTrack01a_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 28.45;
+	};
+	class CarRadiomusic_EventTrack02_F_EPA
+	{
+		name = "EventTrack02_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\EventTrack02_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 36.46;
+		musicclass = "Calm";
+	};
+	class CarRadiomusic_EventTrack02a_F_EPA
+	{
+		name = "EventTrack02a_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\EventTrack02a_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 36.08;
+	};
+	class CarRadiomusic_EventTrack03_F_EPA
+	{
+		name = "EventTrack03_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\EventTrack03_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 35.91;
+		musicclass = "Action";
+	};
+	class CarRadiomusic_EventTrack03a_F_EPA
+	{
+		name = "EventTrack03a_F_EPA";
+		sound[] = {"@A3\music_f_epa\Music\EventTrack03a_F_EPA.ogg",1.0,1.0};titles[]={};
+		duration = 35.17;
+	};
+	class CarRadiomusic_LeadTrack01_F_EPB
+	{
+		name = "LeadTrack01_F_EPB";
+		sound[] = {"@A3\music_f_epb\Music\LeadTrack01_F_EPB.ogg",1.0,1.0};titles[]={};
+		duration = 135.03;
+		musicclass = "Action";
+	};
+	class CarRadiomusic_LeadTrack01a_F_EPB
+	{
+		name = "LeadTrack01a_F_EPB";
+		sound[] = {"@A3\music_f_epb\Music\LeadTrack01a_F_EPB.ogg",1.0,1.0};titles[]={};
+		duration = 85.5;
+	};
+	class CarRadiomusic_LeadTrack02_F_EPB
+	{
+		name = "LeadTrack02_F_EPB";
+		sound[] = {"@A3\music_f_epb\Music\LeadTrack02_F_EPB.ogg",1.0,1.0};titles[]={};
+		duration = 179.11;
+		musicclass = "Action";
+	};
+	class CarRadiomusic_LeadTrack02a_F_EPB
+	{
+		name = "LeadTrack02a_F_EPB";
+		sound[] = {"@A3\music_f_epb\Music\LeadTrack02a_F_EPB.ogg",1.0,1.0};titles[]={};
+		duration = 70.36;
+	};
+	class CarRadiomusic_LeadTrack02b_F_EPB
+	{
+		name = "LeadTrack02b_F_EPB";
+		sound[] = {"@A3\music_f_epb\Music\LeadTrack02b_F_EPB.ogg",1.0,1.0};titles[]={};
+		duration = 117.0;
+	};
+	class CarRadiomusic_LeadTrack03_F_EPB
+	{
+		name = "LeadTrack03_F_EPB";
+		sound[] = {"@A3\music_f_epb\Music\LeadTrack03_F_EPB.ogg",1.0,1.0};titles[]={};
+		duration = 123.2;
+		musicclass = "Stealth";
+	};
+	class CarRadiomusic_LeadTrack03a_F_EPB
+	{
+		name = "LeadTrack03a_F_EPB";
+		sound[] = {"@A3\music_f_epb\Music\LeadTrack03a_F_EPB.ogg",1.0,1.0};titles[]={};
+		duration = 60.66;
+	};
+	class CarRadiomusic_LeadTrack04_F_EPB
+	{
+		name = "LeadTrack04_F_EPB";
+		sound[] = {"@A3\music_f_epb\Music\LeadTrack04_F_EPB.ogg",1.0,1.0};titles[]={};
+		duration = 132.25;
+		musicclass = "Action";
+	};
+
+  class CarRadiomusic_C_EA_RadioBroadcast1
+{
+  sound[] = {"@A3\music_f_EPC\Music\C_EA_RadioBroadcast1.ogg",1.0,1.0};titles[]={};
+  duration = 41.73;
+  musicclass = "Action";
+};
+class CarRadiomusic_C_EA_RadioBroadcast2
+{
+  sound[] = {"@A3\music_f_EPC\Music\C_EA_RadioBroadcast2.ogg",1.0,1.0};titles[]={};
+  duration = 37.7;
+  musicclass = "Action";
+};
+class CarRadiomusic_C_EA_RadioMusic1
+{
+  sound[] = {"@A3\music_f_EPC\Music\C_EA_RadioMusic1.ogg",1.0,1.0};titles[]={};
+  duration = 52.22;
+  musicclass = "Action";
+};
+class CarRadiomusic_C_EA_RadioMusic2
+{
+  sound[] = {"@A3\music_f_EPC\Music\C_EA_RadioMusic2.ogg",1.0,1.0};titles[]={};
+  duration = 72.01;
+  musicclass = "Action";
+};
+
 };
 
 class CfgDebriefing

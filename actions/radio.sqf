@@ -16,14 +16,31 @@ private _soundFile = selectRandom AS_MusicFiles;
 
 private _soundToPlay = _soundPath + "music\" + _soundFile;*/ //Commented playsound version out
 
-private _soundToPlay = selectRandom AS_MusicFiles;
 
-[_dummy, _soundToPlay] remoteExec ["Say3D", [0,-2] select isDedicated];
-[[_soundToPlay, _dummy], {
-  params ["_soundToPlay", "_dummy"];
-  _dummy Say3D [_soundToPlay, 100, 1, true];}]
+
+private _sound = selectRandom AS_MusicFiles;
+
+[[_sound, _dummy], {
+  params ["_sound", "_dummy"];
+  _dummy Say3D [_sound, 100, 1, true];}]
 remoteExec ["call", [0, -2] select isDedicated];
 
-waitUntil {sleep 0.2; !(_target getVariable ["radio", false])};
+  //_dummy Say3D [_soundToPlay, 100, 1, true];
 
+private _length = getnumber(missionConfigFile >> "CfgSounds" >> _sound >> "duration");
+
+private _time = 120;
+if (!(isnil "_length")) then {
+  _time = time + _length;
+};
+
+waitUntil {sleep 0.2; !(_target getVariable ["radio", false]) or (time > _time)};
+
+_dummy setpos [0,0,0];
 deleteVehicle _dummy;
+
+//Loop if not shut off
+if   ((_target getVariable ["radio", false])) then {
+  _target setVariable ["radio", false, true];
+  [_target, _caller, _actionId] execVM "actions\radio.sqf";
+};

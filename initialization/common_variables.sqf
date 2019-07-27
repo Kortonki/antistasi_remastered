@@ -118,9 +118,10 @@ unlockedItems = [
 	"Toolkit"
 ];
 
+//Probably unnecessary, fixed now bug where AAF radios are unlocked
 if hasTFAR then {
 	unlockedItems = unlockedItems - ["ItemRadio"];
-	unlockedItems pushBack "TFAR_rf7800str";
+	unlockedItems append ["TFAR_rf7800str", "TFAR_anprc152"];
 };
 
 if hasACE then {
@@ -142,9 +143,21 @@ if isServer then {
 //Music files
 //with Say3D these must be defined in description.ext
 
-AS_MusicFiles = [
-"ofp1"
-];
+private _musicCfg = missionconfigFile >> "CfgSounds";
+AS_MusicFiles = [];
+
+for "_i" from 0 to ((count _musicCfg - 1)) do {
+	private _class =  _musicCfg select _i;
+	if (isClass _class) then {
+		private _name = configName _class;
+		if (isArray (_musicCfg >> _name >> "sound")) then {
+			AS_MusicFiles pushback _name;
+		};
+	};
+};
+
+AS_MusicFiles = AS_MusicFiles - ["fire"];
+
 
 AS_entities = createSimpleObject ["Static", [0, 0, 0]];
 

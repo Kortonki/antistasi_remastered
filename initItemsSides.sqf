@@ -80,7 +80,7 @@ unlockedBackpacks = ["FIA", "unlockedBackpacks"] call AS_fnc_getEntity;
 
 if hasTFAR then {
     unlockedItems = unlockedItems - ["ItemRadio"];
-    unlockedItems pushBack ([(["AAF", "tfar_radio"] call AS_fnc_getEntity)]);
+    unlockedItems pushBack (["AAF", "tfar_radio"] call AS_fnc_getEntity);
     if not hasRHS then {
 		unlockedItems pushBack "tf_microdagr";
     };
