@@ -175,7 +175,7 @@ private _fnc_run = {
 		//Recover fuel from the vehicle, it doesn't move
 
 		private _fuel = _vehicle call AS_fuel_fnc_getVehicleFuel;
-		if (finite (getFuelCargo _vehicle)) then {_fuel = _fuel + (_vehicle getVariable ["fuelCargo",0])};
+		if (_vehicle call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_vehicle call AS_fuel_fnc_getFuelCargo)};
 		[_fuel] RemoteExec ["AS_fuel_fnc_changeFIAfuelReserves", 2];
 
 		_vehicle setvelocity [0,0,0];

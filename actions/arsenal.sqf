@@ -1,7 +1,7 @@
 #include "../macros.hpp"
 params ["_box", "_unit"];
 
-if (AS_S("lockArsenal")) exitWith {"Another player is using the Arsenal. Wait."};
+if (AS_S("lockArsenal")) exitWith {hint "Another player is using the Arsenal. Wait."};
 AS_Sset("lockArsenal", true);
 
 // if the box is not "caja", then transfer everything to caja.

@@ -103,13 +103,14 @@ call {
 
 
 //Amount of med items depend on relative AAF resources
-private _items = [(round(([] call AS_fnc_getAAFResourcesAdj)/2000)) min 10] call AS_medical_fnc_crateMeds;
+private _miscItems = [round (random 10)] call AS_medical_fnc_crateMeds;
 
-_items pushBack [selectRandom (AAFItems arrayIntersect AS_allNVGs), 2];
+(_miscItems select 0) pushBack (selectRandom (AAFItems arrayIntersect AS_allNVGs));
+(_miscItems select 1) pushBack 2;
 
-for "_i" from 0 to count _items - 1 do {
-	private _name = (_items select _i) select 0;
-	private _amount = (_items select _i) select 1;
+for "_i" from 0 to count _miscItems - 1 do {
+	private _name = (_miscItems select _i) select 0;
+	private _amount = (_miscItems select _i) select 1;
 
     _crate addItemCargoGlobal [_name, _amount];
 };

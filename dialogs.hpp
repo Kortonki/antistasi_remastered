@@ -435,7 +435,8 @@ BTN_R(2,-1, "Recruit Squad", "", "closeDialog 0; [] spawn AS_fnc_UI_recruitSquad
 BTN_R(3,-1, "Building Options", "", "closeDialog 0; nul=CreateDialog ""build_menu"";");
 BTN_R(4,-1, "Player and Money", "", "closeDialog 0; if (isMultiPlayer) then {nul = createDialog ""player_money""} else {hint ""MP Only Menu""};");
 
-BTN_M(5, -1, "Resign Commander", "", "closeDialog 0; call AS_fnc_UI_toggleElegibility;");
+BTN_L(5, -1, "Resign Commander", "", "closeDialog 0; call AS_fnc_UI_toggleElegibility;");
+BTN_R(5, -1, "Choose new Commander", "Look at the player you want to make new Commander", "closeDialog 0; if (isPlayer cursorTarget) then {[cursorTarget] remoteExec ['AS_fnc_setCommander', 2]};");
 
 	};
 };

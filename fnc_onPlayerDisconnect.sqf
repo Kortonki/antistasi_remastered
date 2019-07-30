@@ -57,7 +57,7 @@ if (_unit == AS_commander) then {
 		};
 	} forEach allGroups;
 */
-	["disconnected"] spawn AS_fnc_chooseCommander;
+	["disconnected"] remoteExec ["AS_fnc_chooseCommander", 2];
 	// in case the commander disconnects while moving the HQ, HQ is built in the location.
 	//if (group petros == group _unit) then {call AS_fnc_HQbuild};
 
@@ -72,7 +72,7 @@ private _cargoArray = [_unit, true] call AS_fnc_getUnitArsenal;
 private _group = group _unit;
 
 if (count (units _group select {!(isPlayer _x)}) > 0) then {
-	[units _group] remoteExec ["AS_fnc_dismissFIAunits", _group];
+	[(units _group) select {!(isPlayer _x)}] remoteExec ["AS_fnc_dismissFIAunits", _group];
 };
 
 private _pos = getPosATL _unit;

@@ -17,6 +17,9 @@ _fillAmount = _fuelCargoSize min _fillAmount;
 
 //_vehicle setFuelCargo (_fillAmount / _fuelCargoSize);
 _vehicle setVariable ["fuelCargo", _fillAmount, true];
+if (hasACE) then {
+  [_vehicle, _fillAmount] call ace_refuel_fnc_setFuel;
+};
 
 //This is to not fill fuel cargo at all if it'd be very low to avoid floating point issues
 

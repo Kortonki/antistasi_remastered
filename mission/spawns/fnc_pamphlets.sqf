@@ -159,7 +159,7 @@ private _fnc_deliver = {
 
 	waitUntil {sleep 5;
 		private _close = {
-			if (_x distance (position _currentDrop) < 20 and !(_x getVariable "asCargo")) exitWith {
+			if (_x distance (position _currentDrop) < 20 and !(_x getVariable ["asCargo", false])) exitWith {
 				_droppedCrate = _x;
 				true
 			};

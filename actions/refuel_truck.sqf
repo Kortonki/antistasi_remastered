@@ -20,6 +20,9 @@ _fillAmount = (_fuelTankSize - _currentFuel) min _fillAmount;
 
 _fuelCargo = _fuelCargo - _fillAmount;
 _fuelTruck setVariable ["fuelCargo", _fuelCargo, true];
+if (hasACE) then {
+  [_vehicle, _fillAmount] call ace_refuel_fnc_setFuel;
+};
 
 private _newFuel = _currentFuel + _fillAmount;
 _vehicle setfuel (_newFuel / _fuelTankSize);

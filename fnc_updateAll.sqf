@@ -37,7 +37,7 @@ private _FIAResIncomeMultiplier = 1;
 
         _incomeAAF = _incomeMultiplier*_popAAF;
         _incomeFIA = _incomeMultiplier*_popFIA;
-        _HRincomeFIA = (_population * (_FIAsupport / 20000));
+        _HRincomeFIA = (_population * (_FIAsupport / 10000));
 
         if (_side == "FIA") then {
             _incomeAAF = _incomeAAF/2;
@@ -86,7 +86,7 @@ private _FIAResIncomeMultiplier = 1;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
     };
     if ((_AAFsupport > _FIAsupport) and (_side == "FIA")) then {
-        ["TaskFailed", ["", format ["%1 joined %2", _city]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+        ["TaskFailed", ["", format ["%1 joined %2", _city, ["AAF", "name"] call AS_fnc_getEntity ]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 
         [_city, "side", "AAF"] call AS_location_fnc_set;
         _city call AS_location_fnc_updateMarker;
@@ -185,6 +185,10 @@ _FIAnewFuel = AS_P("fuelFIA") + _FIAnewFuel;
 //Share money among FIA members TODO: adjustment to the share value? make it persistent then
 
 [round((AS_players_share/100)*_FIAnewMoney)] call AS_players_fnc_shareMoney;
+
+//Commander gets score every update
+
+[AS_commander, "score", 5] call AS_players_fnc_change;
 
 //Set next update time:
 

@@ -48,7 +48,7 @@ private _fuelReserves = AS_P("fuelFIA");
         {_price = _price + ([typeOf _x] call AS_fnc_getFIAvehiclePrice)} forEach attachedObjects _x;
 
         private _fuel = (_x call AS_fuel_fnc_getVehicleFuel) - (_x call AS_fuel_fnc_returnTripFuel);
-        if (finite (getFuelCargo _x)) then {_fuel = _fuel + (_x getVariable ["fuelCargo",0])};
+        if (_x call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_x call AS_fuel_fnc_getFuelCargo)};
 
         _fuelReserves = _fuelReserves + _fuel;
         _money = _money + _price;

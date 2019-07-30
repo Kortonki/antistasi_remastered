@@ -33,4 +33,4 @@ if (fuel _vehicle < 0.99) then {
 
 };
 
-if (finite (getFuelCargo _vehicle)) then {_vehicle call AS_fuel_fnc_addFuelCargo;};
+if (_vehicle call AS_fuel_fnc_getFuelCargoSize > 0) then {_vehicle call AS_fuel_fnc_addFuelCargo};

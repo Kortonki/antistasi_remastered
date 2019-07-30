@@ -47,7 +47,7 @@ if (_veh in AS_S("reportedVehs")) then {
 
 //Recover fuel
 private _fuel = _veh call AS_fuel_fnc_getVehicleFuel;
-if (finite (getFuelCargo _veh)) then {_fuel = _fuel + (_veh getVariable "fuelCargo");};
+if (_veh call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_veh call AS_fuel_fnc_getFuelCargo)};
 [_fuel] remoteExec ["AS_fuel_fnc_changeFIAfuelReserves", 2];
 
 deleteVehicle _veh;

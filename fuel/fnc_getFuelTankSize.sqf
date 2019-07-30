@@ -25,7 +25,7 @@ _fuelTankSize = _vehicle call {
   if (_vehicle isKindOf "Quadbike_01_base_F") exitWith {20};
   //exception for vans
   if (_vehicle isKindOf "Van_02_base_F" or _vehicle isKindOf "Van_01_base_F") exitWith {
-    100 + round(((getmass _vehicle)-2000)*0.001)*30};
+    80 + round(((getmass _vehicle)-2000)*0.001)*20};
   //APC checks: Multiple ways to find them all
   if (_type in BE_class_APC) exitWith {
     500 + round(((getmass _vehicle)-13000)*0.001)*40};

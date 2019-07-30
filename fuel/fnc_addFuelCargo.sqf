@@ -18,6 +18,10 @@ _fillAmount = (_fuelCargoSize - _currentFuelCargo) min _fillAmount;
 
 private _newFuelCargo = _currentFuelCargo + _fillAmount;
 _vehicle setVariable ["fuelCargo", _newFuelCargo, true];
+
+if (hasACE) then {
+  [_vehicle, _fillAmount] call ace_refuel_fnc_setFuel;
+};
 //_vehicle setfuelCargo (_newFuelCargo / _fuelCargoSize);
 
 /*if (getFuelCargo _vehicle < 0.01) exitWith {

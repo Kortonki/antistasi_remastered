@@ -138,7 +138,7 @@ private _fnc_run = {
 			//Check if the vehicle is destroyed or is emptied of any supplies it carried to penalise AAF. Either fuel or weapons
 			if 	(
 						not(alive _truck) or
-						(count ((magazineCargo _truck) + (weaponcargo _truck)) < 5 and {([_truck] call AS_fuel_fnc_getFuelcargo) < 1000 and {getFuelCargo _truck < 0.1 or not(finite (getfuelCargo _truck))}})
+						(count ((magazineCargo _truck) + (weaponcargo _truck)) < 5 and {([_truck] call AS_fuel_fnc_getFuelcargo) < 1000 and {getFuelCargo _truck < 0.1 or not(_truck call AS_fuel_fnc_getFuelCargoSize > 0)}})
 					)
 					then {
 
