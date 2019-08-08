@@ -5,7 +5,7 @@ params [["_reason", "none"], ["_notify", True]];
 
 private _currentScore = -100000;
 private _commander = AS_commander getVariable ["AS_controller", AS_commander];
-private _noCommander = (isNull _commander or _reason == "resigned" or _reason == "disconnected");
+private _noCommander = (isNull AS_commander or _reason == "resigned" or _reason == "disconnected");
 
 // There is a commander => no change
 if (not _noCommander) exitWith {};

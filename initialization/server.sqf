@@ -31,6 +31,9 @@ AS_common_variables_initialized = true; //this moved here was common_variables b
 call compile preprocessFileLineNumbers "initialization\server_variables.sqf";
 diag_log "[AS] Server: server variables initialized";
 
+AS_server_variables_initialized = true;
+publicVariable "AS_server_variables_initialized";
+
 ["Initialize"] call BIS_fnc_dynamicGroups;
 
 {if not isPlayer _x then {deleteVehicle _x}} forEach allUnits;
@@ -62,7 +65,7 @@ if isMultiplayer then {
     }];
 
     // this will wait until a commander is chosen
-    waitUntil {sleep 1; count (allPlayers - entities "HeadlessClient_F") > 0};
+    waitUntil {sleep 1; count (allPlayers - entities "HeadlessClient_F") > 0 and {isNull AS_commander}};
     ["none"] call AS_fnc_chooseCommander;
 } else {
     [player] call AS_fnc_setCommander;

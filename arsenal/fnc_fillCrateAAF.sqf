@@ -102,7 +102,7 @@ call {
 };
 
 
-//Amount of med items depend on relative AAF resources
+//TODO: Amount of med items depend on relative AAF resources
 private _miscItems = [round (random 10)] call AS_medical_fnc_crateMeds;
 
 (_miscItems select 0) pushBack (selectRandom (AAFItems arrayIntersect AS_allNVGs));

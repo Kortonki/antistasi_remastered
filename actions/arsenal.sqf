@@ -28,7 +28,7 @@ _box setvariable ["bis_addVirtualWeaponCargo_cargo",nil,true];  // see http://st
 // wait for the arsenal to close.
 waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal" )};
 // BIS_fnc_arsenal creates a new action. We remove it so the only arsenal available is this one
-_box removeAction (_box getVariable "bis_fnc_arsenal_action");
+[_box, (_box getVariable "bis_fnc_arsenal_action")] remoteExec ["removeAction", [0, -2] select isDedicated];
 
 private _new_cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 

@@ -2,6 +2,8 @@
 waitUntil {sleep 0.1; !isNull player};
 waitUntil {sleep 0.1; player == player};
 
+
+
 if hasACEhearing then {player addItem "ACE_EarPlugs"};
 
 [player, "FIA"] call AS_fnc_setSide;

@@ -22,4 +22,7 @@ if _clean then {
 
 [caja, getWeaponCargo caja, getMagazineCargo caja, getItemCargo caja, getBackpackCargo caja, true, true] call AS_fnc_populateBox;
 
+//FAILSAFE to enable arsenal again
+AS_Sset("lockArsenal", false);
+
 diag_log "[AS] Server: Arsenal resynchronised";
