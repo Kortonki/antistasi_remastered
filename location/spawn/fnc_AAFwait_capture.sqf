@@ -6,7 +6,7 @@ private _soldados = [_location, "soldiers"] call AS_spawn_fnc_get;
 
 private _fnc_was_captured = {
     (({(not(vehicle _x isKindOf "Air"))} count ([_size, _position, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)) >
-     3*({_x call AS_fnc_canFight} count _soldados))
+     3*({_x call AS_fnc_canFight and {_x distance2D _position < _size}} count _soldados))
 };
 
 private _was_captured = false;

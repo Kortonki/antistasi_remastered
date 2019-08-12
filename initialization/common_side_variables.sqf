@@ -30,3 +30,7 @@ if (worldName == "Tanoa") then {
 if (worldName == "Ruha") then {
     call compile preprocessFileLineNumbers "Compositions\locations_ruha.sqf";
 };
+
+if (worldName == "Enoch") then {
+    call compile preprocessFileLineNumbers "Compositions\locations_Enoch.sqf";
+};

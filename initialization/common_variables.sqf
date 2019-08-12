@@ -119,6 +119,7 @@ unlockedItems = [
 ];
 
 //Probably unnecessary, fixed now bug where AAF radios are unlocked
+
 if hasTFAR then {
 	unlockedItems = unlockedItems - ["ItemRadio"];
 	unlockedItems append ["TFAR_rf7800str", "TFAR_anprc152"];

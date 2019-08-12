@@ -58,7 +58,7 @@ private _fnc_spawn = {
 		if (_missionType == "kill_specops") exitWith {
 			private _mrkfin = createMarkerLocal [_mission,_position];
 			_mrkfin setMarkerShapeLocal "RECTANGLE";
-			_mrkfin setMarkerSizeLocal [500,500];
+			_mrkfin setMarkerSizeLocal [300,300];
 			_mrkfin setMarkerTypeLocal "hd_warning";
 			_mrkfin setMarkerColorLocal "ColorRed";
 			_mrkfin setMarkerBrushLocal "DiagGrid";

@@ -77,6 +77,7 @@ unlockedItems = unlockedItems - [
 "adv_aceSplint_splint"
 ];
 
+
 //first one should be the most used one, latter for special occasions
 [_dict, "static_aa", ["rhsgref_cdf_b_ZU23"]] call DICT_fnc_set;
 [_dict, "static_at", ["RHS_TOW_TriPod_D"]] call DICT_fnc_set; //first one is used by squads

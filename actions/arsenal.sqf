@@ -25,17 +25,20 @@ _box setvariable ["bis_addVirtualWeaponCargo_cargo",nil,true];  // see http://st
 
 ["Open",[nil,_box,_unit]] call BIS_fnc_arsenal;
 
-// wait for the arsenal to close.
-waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal" )};
 // BIS_fnc_arsenal creates a new action. We remove it so the only arsenal available is this one
 [_box, (_box getVariable "bis_fnc_arsenal_action")] remoteExec ["removeAction", [0, -2] select isDedicated];
+
+// wait for the arsenal to close.
+waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal" )};
+
+
 
 private _new_cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 
 // add all the old stuff and removes all the new stuff.
 _cargo_w = [_cargo_w, _old_cargo select 0] call AS_fnc_mergeCargoLists;
 _cargo_m = [_cargo_m, _old_cargo select 1] call AS_fnc_mergeCargoLists;
-_cargo_i = [_cargo_i, _old_cargo select 2] call AS_fnc_mergeCargoLists;
+_cargo_i = [_cargo_i, _old_cargo select 2] call AS_fnc_mergeCargomLists;
 _cargo_b = [_cargo_b, _old_cargo select 3] call AS_fnc_mergeCargoLists;
 
 //[_old_cargo] remoteExec ["AS_fnc_addtoArsenal", 2];

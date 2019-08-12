@@ -39,9 +39,12 @@ call AS_players_fnc_loadLocal;
 call AS_fnc_initPlayer;
 
 // Reassign player tasks (temporary fix for tasks disappearing after respawn)
+//EXPERIMENT to avoid task spawn each player respawn
 private _tasks = _old_player call BIS_fnc_tasksUnit;
 {
-	_x call BIS_fnc_taskSetCurrent;
+	//_x call BIS_fnc_taskSetCurrent;
+
+	[_x, false, false] call bis_fnc_setTaskLocal;
 } foreach _tasks;
 
 if (_oldFate == "delete") then {

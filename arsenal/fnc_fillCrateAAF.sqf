@@ -103,16 +103,16 @@ call {
 
 
 //TODO: Amount of med items depend on relative AAF resources
-private _miscItems = [round (random 10)] call AS_medical_fnc_crateMeds;
+private _miscItems = [(round (random 9)) + 1] call AS_medical_fnc_crateMeds;
 
 (_miscItems select 0) pushBack (selectRandom (AAFItems arrayIntersect AS_allNVGs));
 (_miscItems select 1) pushBack 2;
 
-for "_i" from 0 to count _miscItems - 1 do {
-	private _name = (_miscItems select _i) select 0;
-	private _amount = (_miscItems select _i) select 1;
+for "_i" from 0 to count (_miscItems select 0) - 1 do {
+	private _name = (_miscItems select 0) select _i;
+	private _amount = (_miscItems select 1) select _i;
 
-    _crate addItemCargoGlobal [_name, _amount];
+  _crate addItemCargoGlobal [_name, _amount];
 };
 
 if hasTFAR then {

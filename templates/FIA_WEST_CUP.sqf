@@ -24,6 +24,7 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 
 [_dict, "cars_armed", ["CUP_I_Datsun_PK"]] call DICT_fnc_set;
 
+
 // To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
 [_dict, "additionalWeapons", []] call DICT_fnc_set;
 [_dict, "additionalMagazines", []] call DICT_fnc_set;

@@ -76,6 +76,11 @@ if (worldName == "Ruha") then {
     _mapType = "MapBoard_tanoa_F";
 };
 
+if (worldName == "Enoch") then {
+    call compile preprocessFileLineNumbers "templates\world_Enoch.sqf";
+    _mapType = "MapBoard_tanoa_F";
+};
+
 
 // exclude from `AS_antenasPos_alive` positions whose antenas are not found
 {
@@ -104,7 +109,7 @@ publicVariable "AS_h_barrier_type";
 // This searches through all the markers in the mission.sqm and adds them.
 {
     call {
-        if (_x find "blacklist" > 0) exitWith {_x setMarkerAlpha 0}; //This was added to not spawn vehicles on runways 
+        if (_x find "blacklist" > 0) exitWith {_x setMarkerAlpha 0}; //This was added to not spawn vehicles on runways
         if (_x find "AS_powerplant" == 0) exitWith {[_x, "powerplant"] call AS_location_fnc_add};
         if (_x find "AS_base" == 0) exitWith {[_x, "base"] call AS_location_fnc_add};
         if (_x find "AS_airfield" == 0) exitWith {[_x, "airfield"] call AS_location_fnc_add};
@@ -114,6 +119,7 @@ publicVariable "AS_h_barrier_type";
         if (_x find "AS_outpostAA" == 0) exitWith {[_x, "outpostAA"] call AS_location_fnc_add};
         if (_x find "AS_outpost" == 0) exitWith {[_x, "outpost"] call AS_location_fnc_add};
         if (_x find "AS_roadblock" == 0) exitWith {[_x, "roadblock"] call AS_location_fnc_add};
+        if (_x find "AS_hillAA" == 0) exitWith {[_x, "hillAA"] call AS_location_fnc_add};
 
     };
 } forEach (allMapMarkers select {!(_x find "convoy" > 0)}); //Do not make locations out of convoy start markers

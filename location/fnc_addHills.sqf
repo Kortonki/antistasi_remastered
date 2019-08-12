@@ -12,7 +12,7 @@ params ["_minSize", ["_excluded", []], ["_hillsAA", []]];
         if (_hill == "") then {
             _name = format ["hill_%1", _position];
             } else {
-	          _name = format ["hill_%1", _hill];	
+	          _name = format ["hill_%1", _hill];
 	          };
         private _mrk = createmarker [_name, _position];
         _mrk setMarkerSize [_size, _size];

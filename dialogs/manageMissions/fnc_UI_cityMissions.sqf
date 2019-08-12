@@ -1,6 +1,8 @@
 #include "../../macros.hpp"
 createDialog "AS_cityMissions";
 
+if !(isNil "AS_cityMission_type") exitWith {}; //Avoid double spawning this script
+
 waitUntil {sleep 0.1; !(isNil "AS_cityMission_type")};
 
 
