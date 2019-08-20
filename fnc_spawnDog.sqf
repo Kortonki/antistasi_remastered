@@ -42,6 +42,7 @@ _unit setSpeaker "NoVoice"; //Will this silence the dog? Check if dog as a soldi
 		sleep 0.05;
 	};
 	deleteVehicle _guy;
+	_dog spawn AS_fnc_activateVehicleCleanup;
 };
 
 // logic for spotting undercover units and barking
@@ -53,19 +54,22 @@ _unit setSpeaker "NoVoice"; //Will this silence the dog? Check if dog as a soldi
 	while {alive _guy and {alive _dog}} do {
 		// spot every enemy within 50m
 		{
-			if ((side _x != side _guy) and {_x distance _guy < 50}) then {
+			if ((side _x != side _guy) and {_x distance _guy < 20}) then {
 				// spotted loses its cover
 				(leader group _guy) reveal [_x, 4];
 				if (captive _x) then {
-					if (random 10 < 50/(_x distance _guy)) then {
+					if (random 10 < 20/(_x distance _guy)) then {
 					[_x, false] remoteExec ["setCaptive", _x]; //at 50m -> 10% chance per 5 sec loop. 10m -> 50% chance per loop 5m -> 100%
+					_spotted = _x;
 					};
 				};
-				_spotted = _x;
+
 			};
+			if (not(isNull _spotted)) exitWith {}; //No need to check all units if potentially spotted someone already
+
 		} forEach allUnits;
 
-		if (isNil "_spotted" or {_guy distance _spotted > 75}) then {
+		if (isNil "_spotted" or _guy distance _spotted >= 20) then {
 			_spotted = objNull;
 		};
 

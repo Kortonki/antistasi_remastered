@@ -26,6 +26,7 @@ _fnc_gear = {
 
 		for "_i" from 0 to _typeInt do {
             _item = selectRandom _items;
+
 			_crate addWeaponCargoGlobal [_item, _classInt];
 
             _mag = selectRandom ([_item] call _getWeaponMags);
@@ -37,6 +38,7 @@ _fnc_gear = {
         private _items = AAFMagazines - unlockedMagazines;
 		for "_i" from 0 to _typeInt do {
 			_item = selectRandom _items;
+      if (isNil "_item") then {_item = ""};
 			_crate addMagazineCargoGlobal [_item, _classInt];
 		};
 	};
@@ -44,6 +46,7 @@ _fnc_gear = {
 	if (_cat == "item") exitWith {
 		for "_i" from 0 to _typeInt do {
 			_item = selectRandom (AAFItems - unlockedItems);
+      if (isNil "_item") then {_item = ""};
 			_crate addItemCargoGlobal [_item, _classInt];
 		};
 	};
@@ -52,6 +55,7 @@ _fnc_gear = {
         private _items = (AAFItems arrayIntersect AS_allOptics) - unlockedItems;
 		for "_i" from 0 to _typeInt do {
 			_item = selectRandom _items;
+      if (isNil "_item") then {_item = ""};
 			_crate addItemCargoGlobal [_item, _classInt];
 		};
 	};
@@ -71,6 +75,7 @@ _fnc_gear = {
         private _mines = (["AAF", "ap_mines"] call AS_fnc_getEntity) + (["AAF", "at_mines"] call AS_fnc_getEntity);
 		for "_i" from 0 to _typeInt do {
 			_item = (selectRandom _mines) call AS_fnc_mineMag;
+      if (isNil "_item") then {_item = ""};
 			_crate addMagazineCargoGlobal [_item, _classInt];
 		};
 	};
@@ -78,6 +83,7 @@ _fnc_gear = {
     if (_cat == "grenades") exitWith {
 		for "_i" from 0 to _typeInt do {
 			_item = selectRandom (AAFThrowGrenades - unlockedMagazines);
+      if (isNil "_item") then {_item = ""};
 			_crate addMagazineCargoGlobal [_item, _classInt];
 		};
     };
@@ -90,8 +96,8 @@ call {
 		["item", 5, 5] call _fnc_gear;
 		["mine", 3, 2] call _fnc_gear;
         ["grenades", 5, 5] call _fnc_gear;
-		["optic", 2, 2] call _fnc_gear;
 		["launcher", 2, 2, 3] call _fnc_gear;
+    ["optic", 2, 2] call _fnc_gear;
 	};
 
 	if (_type == "AA") exitWith {
@@ -117,6 +123,6 @@ for "_i" from 0 to count (_miscItems select 0) - 1 do {
 
 if hasTFAR then {
     if (1 < floor random 2) then {
-        _crate addBackpackCargoGlobal [(["AAF", "tfar_lr_radio"] call AS_fnc_getEntity), 1];
+        _crate addBackpackCargoGlobal [(["AAF", "tfar_lr_radio"] call AS_fnc_getEntity), 4];
     };
 };

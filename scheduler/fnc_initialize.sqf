@@ -1,5 +1,5 @@
 // number of samples in the moving average of FPS
-#define WINDOW_SIZE 12
+#define WINDOW_SIZE 6
 
 AS_FPSsamples = []; // the recent FPS samples of each machine (local)
 for "_i" from 0 to WINDOW_SIZE do {
@@ -15,7 +15,7 @@ if isServer then {
     [] spawn {
         while {true} do {
             call AS_scheduler_fnc_sendStatus;
-            sleep 5;
+            sleep 10;
         };
     };
 };

@@ -40,7 +40,6 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 	]] call DICT_fnc_set;
 
 [_dict, "unlockedMagazines", [
-	"rhsgref_5Rnd_762x54_m38",
 	"rhs_mag_9x18_8_57N181S",
 	"rhs_mag_rdg2_white"
 	]] call DICT_fnc_set;
@@ -76,6 +75,28 @@ unlockedItems = unlockedItems - [
 "ACE_surgicalKit",
 "adv_aceSplint_splint"
 ];
+
+[_dict, "addWeapons", []] call DICT_fnc_set;
+
+[_dict, "addMagazines", [
+[	"rhsgref_5Rnd_762x54_m38", 400]
+]] call DICT_fnc_set;
+
+[_dict, "addBackpacks", [
+["TFAR_anprc155", 8]
+]] call DICT_fnc_set;
+[_dict, "addItems", [
+
+["Medikit", 1],
+["ToolKit", 1],
+["adv_aceSplint_splint", 4],
+["ACE_salineIV_250", 4],
+["ACE_epinephrine", 5],
+["ACE_morphine", 5],
+["ACE_packingBandage", 10]
+
+
+]] call DICT_fnc_set;
 
 
 //first one should be the most used one, latter for special occasions

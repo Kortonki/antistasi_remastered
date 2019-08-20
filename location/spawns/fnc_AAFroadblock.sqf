@@ -10,7 +10,7 @@ private _fnc_spawn = {
 	(_posicion call AS_fnc_roadAndDir) params ["_road", "_dirveh"];
 
 	// create bunker on one side
-	private _pos = [getPos _road, 7, _dirveh + 270] call BIS_Fnc_relPos;
+	private _pos = [getPos _road, 8, _dirveh + 270] call BIS_Fnc_relPos;
 	private _bunker = AS_small_bunker_type createVehicle _pos;
 	_bunker setDir _dirveh;
 	_vehiculos pushBack _bunker;
@@ -30,7 +30,7 @@ private _fnc_spawn = {
 	sleep 1;
 
 	// create bunker on the other side
-	private _pos = [getPos _road, 7, _dirveh + 90] call BIS_Fnc_relPos;
+	private _pos = [getPos _road, 8, _dirveh + 90] call BIS_Fnc_relPos;
 	private _bunker = AS_small_bunker_type createVehicle _pos;
 	_vehiculos pushBack _bunker;
 	_bunker setDir _dirveh + 180;
@@ -62,9 +62,17 @@ private _fnc_spawn = {
 	};
 	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 
-	[leader _grupo, _location, "SAFE","SPAWNED","NOVEH2","NOFOLLOW"] spawn UPSMON;
+	private _mrk = createMarkerLocal [format ["%1patrolarea", floor (diag_tickTime)], _pos];
+	_mrk setMarkerShapeLocal "RECTANGLE";
+	_mrk setMarkerSizeLocal [50,50];
+	_mrk setMarkerTypeLocal "hd_warning";
+	_mrk setMarkerColorLocal "ColorRed";
+	_mrk setMarkerBrushLocal "DiagGrid";
+	_mrk setMarkerAlphaLocal 0;
 
-	[_location, "resources", [taskNull, [_grupo], _vehiculos, []]] call AS_spawn_fnc_set;
+	[leader _grupo, _mrk, "SAFE","SPAWNED","NOVEH2","NOFOLLOW"] spawn UPSMON;
+
+	[_location, "resources", [taskNull, [_grupo], _vehiculos, [_mrk]]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 };
 

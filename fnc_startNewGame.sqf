@@ -24,6 +24,25 @@ if (_difficulty == "easy") then {
     [caja, 10] call AS_fnc_fillCrateNATO;
 };
 
+// Fill Crate with additional items
+
+//////////////////// additional Cargo /////////////////
+  {
+    caja addweaponCargoGlobal [_x select 0, _x select 1];
+  } foreach (["FIA", "addWeapons"] call AS_fnc_getEntity);
+
+  {
+    caja addMagazineCargoGlobal [_x select 0, _x select 1];
+  } foreach (["FIA", "addMagazines"] call AS_fnc_getEntity);
+
+  {
+    caja addBackpackCargoGlobal [_x select 0, _x select 1];
+  } foreach (["FIA", "addBackpacks"] call AS_fnc_getEntity);
+
+  {
+    caja addItemCargoGlobal [_x select 0, _x select 1];
+  } foreach (["FIA", "addItems"] call AS_fnc_getEntity);
+
 // populate garage with vehicles
 private _validVehicles = (
     (["FIA", "land_vehicles"] call AS_fnc_getEntity)

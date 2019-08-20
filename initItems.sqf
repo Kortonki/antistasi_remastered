@@ -375,27 +375,30 @@ AS_allThrowGrenadesAttrs = [];
 AS_allThrowSmokes = [];
 AS_allThrowSmokesAttrs = [];
 {
-    private _mag = getArray(configFile >> "CfgWeapons" >> "Throw" >> _x >> "magazines") select 0;
-    private _ammo = getText(configFile >> "CfgMagazines" >> _mag >> "ammo");
+    //Below changed to go through all magazines in the muzzle. Should fix missing magazines bug.
+    private _mag = getArray(configFile >> "CfgWeapons" >> "Throw" >> _x >> "magazines");
+    {
+      private _ammo = getText(configFile >> "CfgMagazines" >> _x >> "ammo");
 
-    private _damage = getNumber(configFile >> "CfgAmmo" >> _ammo >> "indirectHit");
-    private _range = getNumber(configFile >> "CfgAmmo" >> _ammo >> "indirectHitRange");
+      private _damage = getNumber(configFile >> "CfgAmmo" >> _ammo >> "indirectHit");
+      private _range = getNumber(configFile >> "CfgAmmo" >> _ammo >> "indirectHitRange");
 
-    if (_damage > 0) then {
-      AS_allThrowGrenades pushBack _mag;
-      AS_allThrowGrenadesAttrs pushBack [_damage, _range];
-    } else {
+      if (_damage > 0) then {
+        AS_allThrowGrenades pushBack _x;
+        AS_allThrowGrenadesAttrs pushBack [_damage, _range];
+      } else {
 
-      if (getText(configfile >> "CfgAmmo" >> _ammo >> "aiAmmoUsageFlags") == "4 + 2") then {
+        if (getText(configfile >> "CfgAmmo" >> _ammo >> "aiAmmoUsageFlags") == "4 + 2") then {
 
-        private _mass = getNumber(configFile >> "CfgMagazines" >> _mag >> "mass");
-        private _life = getNumber(configFile >> "CfgAmmo" >> _ammo >> "timeToLive");
-        AS_allThrowSmokes pushBack _mag;
-        AS_allThrowSmokesAttrs pushBack [_mass, _life];
-        } else {
+          private _mass = getNumber(configFile >> "CfgMagazines" >> _x >> "mass");
+          private _life = getNumber(configFile >> "CfgAmmo" >> _ammo >> "timeToLive");
+          AS_allThrowSmokes pushBack _x;
+          AS_allThrowSmokesAttrs pushBack [_mass, _life];
+          } else {
           // This is for chemlights and everything that isn't smoke or does damage
         };
     };
+  } foreach _mag;
 } forEach getArray(configFile >> "CfgWeapons" >> "Throw" >> "muzzles");
 
 

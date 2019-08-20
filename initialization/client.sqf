@@ -63,14 +63,14 @@ waitUntil {sleep 1;
     if (player call AS_fnc_isAdmin and {not (isNil "AS_server_variables_initialized")}) exitWith {
         hint "You are the current administrator.";
 
-        if isNil {AS_P("player_side")} then {
+        if (isNil {AS_P("player_side")} and {not(_isJip)}) then {
             // game hasn't started: launch start menu and wait for it to start
             [] spawn AS_fnc_UI_startMenu_menu;
             waitUntil {sleep 1; not isNil {AS_P("player_side")}};
         };
     };
 
-    not isNil {AS_P("player_side")}
+    not isNil {AS_P("player_side")} or _isJip
 };
 
 if not isServer then {
@@ -123,6 +123,7 @@ if _isJip then {
 removeAllActions caja;
 [caja,"arsenal"] call AS_fnc_addAction;
 [caja,"transferFrom"] call AS_fnc_addAction;
+[caja,"emptyPlayer"] call AS_fnc_addAction;
 
 removeAllActions mapa;
 mapa addAction [localize "str_act_gameOptions", {CreateDialog "game_options";},nil,0,false,true,"","(isPlayer _this) and {_this call AS_fnc_isAdmin}"];

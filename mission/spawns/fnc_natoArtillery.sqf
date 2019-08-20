@@ -54,7 +54,8 @@ private _fnc_spawn = {
 	for "_i" from 1 to _units do {
 		private _unit = ([_position, 0, _gunnerType, _group] call bis_fnc_spawnvehicle) select 0;
 		[_unit] call AS_fnc_initUnitNATO;
-		private _pos = [_position] call AS_fnc_findSpawnSpots;
+		//private _pos = [_position] call AS_fnc_findSpawnSpots;
+		private _pos = [_position, 0, 200, 5, 0, 0.065, 0, [], [_position, _position]] call bis_fnc_findsafePos;
 		private _veh = createVehicle [_tipoVeh, _pos, [], _spread, "NONE"];
 		[_veh, "NATO"] call AS_fnc_initVehicle;
 		_unit moveInGunner _veh;

@@ -189,6 +189,8 @@ if hasRHS then {
 	AS_entities setVariable ["RHS_FIA_WEST", _dict];
 	_dict = call compile preprocessFileLineNumbers "templates\FIA_EAST_RHS.sqf";
 	AS_entities setVariable ["RHS_FIA_EAST", _dict];
+	_dict = call compile preprocessFileLineNumbers "templates\AAF_CHKDZ_RHS.sqf";
+	AS_entities setVariable ["RHS_AAF_CHKDZ", _dict];
 	if hasFINMOD then {
 		_dict = call compile preprocessFileLineNumbers "templates\FIA_WEST_RHS_FIN.sqf";
 		AS_entities setVariable ["RHS_FIN_WEST", _dict];

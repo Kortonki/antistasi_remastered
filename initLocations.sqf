@@ -27,7 +27,10 @@ AS_MGbuildings = [
     "Land_Cargo_Tower_V2_F",
     "Land_Cargo_Tower_V3_F",
     "Land_BagBunker_01_small_green_F",
-    "Land_BagBunker_Small_F"
+    "Land_BagBunker_Small_F",
+    "Land_Cargo_Patrol_V1_F",
+    "Land_Cargo_Patrol_V2_F",
+    "Land_Cargo_Patrol_V3_F"
 
 ];
 // building types whose destruction is saved persistently
@@ -35,15 +38,15 @@ AS_destroyable_buildings = AS_MGbuildings + [
     "Land_Cargo_HQ_V1_F",
     "Land_Cargo_HQ_V2_F",
     "Land_Cargo_HQ_V3_F",
-    "Land_Cargo_Patrol_V1_F",
-    "Land_Cargo_Patrol_V2_F",
-    "Land_Cargo_Patrol_V3_F",
     "Land_HelipadSquare_F",
     "Land_Cargo_Tower_V1_ruins_F",
     "Land_Cargo_Tower_V2_ruins_F",
     "Land_Cargo_Tower_V3_ruins_F",
     "Land_TTowerBig_1_F",
     "Land_TTowerBig_2_F",
+    "Land_Com_tower_ep1",
+    "Land_Telek1",
+    "Land_Vysilac_vez",
     "Land_Communication_F"
 ] - ["Land_BagBunker_01_small_green_F","Land_BagBunker_Small_F"];
 
@@ -78,7 +81,7 @@ if (worldName == "Ruha") then {
 
 if (worldName == "Enoch") then {
     call compile preprocessFileLineNumbers "templates\world_Enoch.sqf";
-    _mapType = "MapBoard_tanoa_F";
+    _mapType = "Land_MapBoard_Enoch_F";
 };
 
 

@@ -30,7 +30,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 [_dict, "truck_ammo", "B_Truck_01_ammo_F"] call DICT_fnc_set;
 [_dict, "truck_repair", "B_Truck_01_repair_F"] call DICT_fnc_set;
-[_dict, "truck_fuel", "B_Trcuk_01_fuel_F"] call DICT_fnc_set;
+[_dict, "truck_fuel", "B_Truck_01_fuel_F"] call DICT_fnc_set;
 
 // used in spawns (base and airfield)
 [_dict, "other_vehicles", [

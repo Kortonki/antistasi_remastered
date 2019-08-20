@@ -65,6 +65,11 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 [_dict, "unlockedBackpacks", ["B_TacticalPack_blk"]] call DICT_fnc_set;
 
+[_dict, "addWeapons", []] call DICT_fnc_set;
+[_dict, "addMagazines", []] call DICT_fnc_set;
+[_dict, "addBackpacks", []] call DICT_fnc_set;
+[_dict, "addItems", []] call DICT_fnc_set;
+
 [_dict, "soldier", "B_G_Soldier_F"] call DICT_fnc_set;
 [_dict, "crew", "B_G_Soldier_lite_F"] call DICT_fnc_set;
 [_dict, "survivor", "B_G_Survivor_F"] call DICT_fnc_set;

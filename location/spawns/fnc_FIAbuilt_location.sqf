@@ -50,7 +50,7 @@ private _fnc_spawn = {
 		_position = _position findEmptyPosition [5,50,"I_Heli_Transport_02_F"];
 
 		// spawn the camp objects
-		private _objs = ([_position, floor(random 361), selectRandom AS_campList] call BIS_fnc_ObjectsMapper);
+		private _objs = ([_position, floor(random 360), selectRandom AS_campList] call BIS_fnc_ObjectsMapper);
 		{
 			call {
 				if (typeof _x == "Box_NATO_Equip_F") exitWith {_campBox = _x;};
@@ -75,6 +75,8 @@ private _fnc_spawn = {
 	{
 		[_x, _location] spawn AS_location_fnc_reveal;
 	} foreach (_soldiers + _vehicles);
+
+	_location spawn AS_location_fnc_revealLoc;
 
 
 	[_location, "resources", [taskNull, _groups, _vehicles, []]] call AS_spawn_fnc_set;

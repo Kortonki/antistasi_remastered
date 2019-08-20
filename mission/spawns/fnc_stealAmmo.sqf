@@ -44,7 +44,7 @@ private _fnc_wait_spawn = {
 		[_mission, "state_index", 4] call AS_spawn_fnc_set;
 	};
 
-	[_mission, "resources", [_task, [[], [], []]]] call AS_spawn_fnc_set;
+	[_mission, "resources", [_task, [], [], []]] call AS_spawn_fnc_set;
 };
 
 private _fnc_spawn = {
@@ -61,19 +61,23 @@ private _fnc_spawn = {
 		default {_truckType = (["AAF", "trucks"] call AS_fnc_getEntity) select 0;};
 	};
 
-	private _pos = [];
+	/*private _pos = [];
 	while {count _pos < 3} do {
-		_pos = _position findEmptyPosition [10,_size, _truckType];
+		_pos = _position findEmptyPosition [0,_size, _truckType];
 		_size = _size + 20
-	};
+	};*/
+
+([_position] call AS_fnc_findSpawnSpots) params ["_pos", "_dir"];
 
 	private _vehicles = [];
 	private _groups = [];
 
 	//private _truck = _truckType createVehicle _pos;
-	private _truck = createVehicle [_truckType, _pos, [], 0, "NONE"];
+	private _truck = [_truckType, _pos, "AAF", _dir] call AS_fnc_createEmptyVehicle;
 	_vehicles pushBack _truck;
 	[_truck, "AAF"] call AS_fnc_initVehicle;
+
+
 
 	switch (_missionType) do {
 			case "steal_ammo": {[_truck, "Convoy"] call AS_fnc_fillCrateAAF;};
@@ -84,7 +88,7 @@ private _fnc_spawn = {
 	// patrol marker. To be deleted in the end
 	private _mrk = createMarkerLocal [format ["%1patrolarea", floor (diag_tickTime)], _pos];
 	_mrk setMarkerShapeLocal "RECTANGLE";
-	_mrk setMarkerSizeLocal [20,20];
+	_mrk setMarkerSizeLocal [100,100];
 	_mrk setMarkerTypeLocal "hd_warning";
 	_mrk setMarkerColorLocal "ColorRed";
 	_mrk setMarkerBrushLocal "DiagGrid";
@@ -103,7 +107,7 @@ private _fnc_spawn = {
 	};
 
 	private _task = ([_mission, "resources"] call AS_spawn_fnc_get) select 0;
-	[_mission, "resources", [_task, [_groups, _vehicles, []]]] call AS_spawn_fnc_set;
+	[_mission, "resources", [_task, _groups, _vehicles, [_mrk]]] call AS_spawn_fnc_set;
 };
 
 private _fnc_run = {
@@ -117,7 +121,7 @@ private _fnc_run = {
 	private _vehicles = ([_mission, "resources"] call AS_spawn_fnc_get) select 2;
 
 	private _truck = _vehicles select 0;
-	private _fnc_missionSuccessfulCondition = {({_x getVariable ["BLUFORSpawn",false]} count crew _truck > 0) and {_truck distance _position > 500}};
+	private _fnc_missionSuccessfulCondition = {(({_x getVariable ["BLUFORSpawn",false]} count (crew _truck) > 0) and {_truck distance _position > 500}) or not(alive _truck)};
 
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -130,24 +134,12 @@ private _fnc_run = {
 
 	};
 
-	private _fnc_missionFailedCondition = {(not alive _truck) or {dateToNumber date > _max_date}};
+	private _fnc_missionFailedCondition = {dateToNumber date > _max_date};
 
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 			//Check if the vehicle is destroyed or is emptied of any supplies it carried to penalise AAF. Either fuel or weapons
-			if 	(
-						not(alive _truck) or
-						(count ((magazineCargo _truck) + (weaponcargo _truck)) < 5 and {([_truck] call AS_fuel_fnc_getFuelcargo) < 1000 and {getFuelCargo _truck < 0.1 or not(_truck call AS_fuel_fnc_getFuelCargoSize > 0)}})
-					)
-					then {
-
-				switch (_missionType) do {
-						case "steal_ammo": {[-10000] remoteExec ["AS_fnc_changeAAFmoney",2];};
-						case "steal_fuel": {[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];};
-						default {};
-				};
-			};
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;

@@ -24,6 +24,8 @@ private _fnc_initialize = {
 private _fnc_spawn = {
 	params ["_mission"];
 
+	private _location = _mission call AS_mission_fnc_location;
+
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
 	private _crateType = ["CIV", "box"] call AS_fnc_getEntity;
@@ -36,6 +38,7 @@ private _fnc_spawn = {
 	[_crate, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate setVariable ["asCargo", false, true];
 	_crate setVariable ["requiredVehs", ["Truck_F"], true];
+	_crate setVariable ["dest", _location, true];
 	//{_x reveal _crate} forEach (allPlayers - (entities "HeadlessClient_F"));
 
 	[_mission, "resources", [_task, [], [_crate], []]] call AS_spawn_fnc_set;

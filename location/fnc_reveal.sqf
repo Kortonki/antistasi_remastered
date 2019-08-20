@@ -11,14 +11,16 @@ while {sleep AS_spawnLoopTime; (alive _veh) and {!(isNil{_veh getVariable "marca
     //Only reveal to location if there's radio coverage and the leader is alive after the contact for some.
 
       if (_x knowsAbout _veh > 1.4) then {
-        if (leader _x == _x and {(position _x) call AS_fnc_hasRadioCoverage}) then {
+        if (leader _x == _x and {(position _x) call AS_fnc_hasRadioCoverage  and {!(_x getVariable ["revealing", false])}}) then {
 
            [_x, _location] spawn {
              params ["_unit","_location"];
-             sleep (10 + random 30);
+             _unit setVariable ["revealing", true, true];
+             sleep (5 + random 30);
              if (alive _unit and {!(_unit call AS_medical_fnc_isUnconscious)}) then {
                 [_location] call AS_location_fnc_knownLocations;
               };
+              _unit setVariable ["revealing", nil];
              };
            } else {
                 private _group = group _x;

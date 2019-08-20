@@ -120,7 +120,9 @@ _box setdir (getdir _truck + 90);
 private _selectionName = "trup";
 _box attachTo [_truck, [0, -(_boxcount), 0], _selectionName]; //"trup works good with vanilla vehicles"
 
-if ((_boxcount + 1) == 1) then {[_truck, "unloadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];};
+if ((_boxcount + 1) == 1) then {
+  [_truck, "unloadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+};
 
 private _text = "Cargo loaded into the truck";
 [_unit, "hint", _text] call AS_fnc_localCommunication;

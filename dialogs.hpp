@@ -423,7 +423,7 @@ class radio_comm_commander
 
 	class controls
 	{
-AS_DIALOG(5,"Battle Options",A_CLOSE);
+AS_DIALOG(6,"Battle Options",A_CLOSE);
 
 BTN_L(1,-1, "Fast Travel", "", "closeDialog 0; [] spawn AS_fnc_fastTravel;");
 BTN_L(2,-1, "Go undercover", "While undercover, the enemies won't attack you.", "closeDialog 0; [true] spawn AS_fnc_activateUndercover;");
@@ -436,7 +436,9 @@ BTN_R(3,-1, "Building Options", "", "closeDialog 0; nul=CreateDialog ""build_men
 BTN_R(4,-1, "Player and Money", "", "closeDialog 0; if (isMultiPlayer) then {nul = createDialog ""player_money""} else {hint ""MP Only Menu""};");
 
 BTN_L(5, -1, "Resign Commander", "", "closeDialog 0; call AS_fnc_UI_toggleElegibility;");
-BTN_R(5, -1, "Choose new Commander", "Look at the player you want to make new Commander", "closeDialog 0; if (isPlayer cursorTarget) then {[cursorTarget] remoteExec ['AS_fnc_setCommander', 2]};");
+BTN_R(5, -1, "Choose new Commander", "Look at the player you want to make new Commander", "closeDialog 0; if (isPlayer cursorTarget) then {[cursorTarget] spawn AS_fnc_setCommander;};");
+
+BTN_M(6, -1, "HQ options", "", "closeDialog 0; [] spawn AS_fnc_UI_manageHQ_menu;");
 
 	};
 };

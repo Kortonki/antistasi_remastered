@@ -58,20 +58,24 @@ private _fnc_spawn = {
 			_grupos pushBack _grupo;
 
 			private _count_vehicles = ["planes", "helis_armed", "helis_transport"] call AS_AAFarsenal_fnc_count;
+			private _vehClasses = ["planes", "helis_armed", "helis_trasnport"];
 			private _valid_vehicles = ["planes", "helis_armed", "helis_transport"] call AS_AAFarsenal_fnc_valid;
-			for "_i" from 1 to (_count_vehicles min 5) do {
+			for "_i" from 0 to (_count_vehicles min 5) - 1 do {
 				if !(_location call AS_location_fnc_spawned) exitWith {};
 
-				private _tipoveh = selectRandom _valid_vehicles;
-				([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
-				sleep 1;
-				_vehiculos pushBack _veh;
-				private _pos = [_pos, 20,_ang] call BIS_fnc_relPos;
-				private _unit = ([_posicion, 0, ["AAF", "pilot"] call AS_fnc_getEntity, _grupo] call bis_fnc_spawnvehicle) select 0;
-				[_unit, false] call AS_fnc_initUnitAAF;
-				_soldados pushBack _unit;
+				private _vehClass = selectRandom _vehClasses;
+				if ((_vehClass call AS_AAFarsenal_fnc_count) - _i > 0) then {
+					private _tipoVeh = selectRandom  ([_vehClass] call AS_AAFarsenal_fnc_valid);
+					([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
+					sleep 1;
+					_vehiculos pushBack _veh;
+					private _pos = [_pos, 20,_ang] call BIS_fnc_relPos;
+					private _unit = ([_posicion, 0, ["AAF", "pilot"] call AS_fnc_getEntity, _grupo] call bis_fnc_spawnvehicle) select 0;
+					[_unit, false] call AS_fnc_initUnitAAF;
+					_soldados pushBack _unit;
 			};
 			[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH"] spawn UPSMON;
+			};
 			sleep 1;
 		};
 	};
@@ -80,12 +84,15 @@ private _fnc_spawn = {
 	//TODO check if the following functions check for arsenal availability for vehicles
 	private _groupCount = round (_size/60);
 	private _count_vehicles = ["trucks", "cars_armed", "apcs"] call AS_AAFarsenal_fnc_count;
-	private _valid_vehicles = ["trucks", "cars_armed", "apcs"] call AS_AAFarsenal_fnc_valid;
-	for "_i" from 1 to (_groupCount min _count_vehicles) do {
+	private _vehClasses = ["trucks", "cars_armed", "apcs"];
+	for "_i" from 0 to (_groupCount min _count_vehicles) - 1 do {
 		if !(_location call AS_location_fnc_spawned) exitWith {};
 
-		private _tipoveh = selectRandom _valid_vehicles;
+		private _vehClass = selectRandom _vehClasses;
+		if ((_vehClass call AS_AAFarsenal_fnc_count) - _i > 0) then {
 		//private _blacklistarea = format ["AS_%1_blacklist", _location]; //check for blacklist marker //WIP throws error
+		private _tipoVeh = selectRandom  ([_vehClass] call AS_AAFarsenal_fnc_valid);
+
 		private _pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0, [], [_posicion, [0,0,0]]] call BIS_Fnc_findSafePos;
 		if (random 10 < 5 or _tipoVeh in (["AAF", "trucks"] call AS_fnc_getEntity)) then {
 				([_tipoVeh,_pos, "AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
@@ -99,7 +106,7 @@ private _fnc_spawn = {
 		};
 
 
-
+		};
 		sleep 1;
 	};
 

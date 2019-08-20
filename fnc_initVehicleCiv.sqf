@@ -9,6 +9,8 @@ if(!(local _veh)) exitWith {
 
 [_veh] call AS_debug_fnc_initVehicle;
 
+[_veh] call AS_fnc_emptyCrate;
+
 // do not allow wheels to break when AI is driving
 if (_veh isKindOf "Car") then {
 	_veh addEventHandler ["HandleDamage", {

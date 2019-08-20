@@ -2,6 +2,8 @@
 params ["_box", "_unit"];
 
 if (AS_S("lockArsenal")) exitWith {hint "Another player is using the Arsenal. Wait."};
+if (not(isnil "AS_savingServer")) exitWith {hint "Server saving in progress. Wait."};
+
 AS_Sset("lockArsenal", true);
 
 // if the box is not "caja", then transfer everything to caja.
@@ -38,7 +40,7 @@ private _new_cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 // add all the old stuff and removes all the new stuff.
 _cargo_w = [_cargo_w, _old_cargo select 0] call AS_fnc_mergeCargoLists;
 _cargo_m = [_cargo_m, _old_cargo select 1] call AS_fnc_mergeCargoLists;
-_cargo_i = [_cargo_i, _old_cargo select 2] call AS_fnc_mergeCargomLists;
+_cargo_i = [_cargo_i, _old_cargo select 2] call AS_fnc_mergeCargoLists;
 _cargo_b = [_cargo_b, _old_cargo select 3] call AS_fnc_mergeCargoLists;
 
 //[_old_cargo] remoteExec ["AS_fnc_addtoArsenal", 2];
@@ -185,7 +187,9 @@ for "_i" from 0 to (count (_cargo_i select 0) - 1) do {
 
 //UPDATE arsenal with remaining
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
+waitUntil {sleep 0.1; isNil "AS_savingServer"};
+
+[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] remoteExecCall ["AS_fnc_populateBox", 2];
 
 
 AS_Sset("lockArsenal", false);

@@ -17,6 +17,7 @@ switch _type do {
 	case "transferFrom": {_object addAction [localize "STR_act_unloadCargo", "actions\transferFrom.sqf",nil,0,false,true,"",IS_PLAYER]};
 	case "transferTo": {_object addAction [localize "STR_act_loadCargo", "actions\transferFrom.sqf",nil,0,false,true,"",IS_PLAYER]};
 	case "recoverEquipment": {_object addAction [localize "STR_act_recoverEquipment", "actions\recoverEquipment.sqf",nil,0,false,true,"",IS_PLAYER]};
+	case "emptyPlayer": {_object addAction [localize "STR_act_emptyPlayer", "actions\emptyPlayer.sqf", nil, 0, false, true, "",IS_PLAYER]};
 	case "remove": {
 		for "_i" from 0 to (_object addAction ["",""]) do {
 			_object removeAction _i;
@@ -46,7 +47,7 @@ switch _type do {
 	case "deploy" : {_object addAction [localize "STR_act_buildPad", {[_this select 0, _this select 1] remoteExec ["AS_fnc_HQdeployPad", 2]},nil,0,false,true,"",IS_COMMANDER]};
 	case "arsenal" : {_object addAction [localize "STR_act_arsenal", "actions\arsenal.sqf",nil,0,false,true,"","(isPlayer _this)"]};
 	case "repackMagazines" : {_object addAction [localize "STR_act_repack", "actions\repackMagazines.sqf",nil,0,false,true,"",IS_PLAYER]};
-	case "loadCargo" : {_object addAction [localize "STR_act_loadBoxCargo", "actions\loadCargo.sqf",nil,0,false,true,"",IS_UNLOADED, 10]};
+	case "loadCargo" : {_object addAction [localize "STR_act_loadBoxCargo" + "(" + (_object getVariable ["dest", "any"]) + ")", "actions\loadCargo.sqf",nil,0,false,true,"",IS_UNLOADED, 10]};
 	case "unloadCargo" : {_object addAction [localize "STR_act_unloadBoxCargo", "actions\unloadCargo.sqf",nil,0,false,true,"","true", 10]};
 	case "radio" : {_object addAction [localize "STR_act_radio", "actions\radio.sqf",nil,0,false,true,"","true", 4]};
 	default {

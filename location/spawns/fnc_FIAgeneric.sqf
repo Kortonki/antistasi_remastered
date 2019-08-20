@@ -75,6 +75,8 @@ private _fnc_spawn = {
 		{
 			[_x, _location] spawn AS_location_fnc_reveal;
 		} foreach _locationVehs;
+
+		_location spawn AS_location_fnc_revealLoc;
 	};
 
 	[_location, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;

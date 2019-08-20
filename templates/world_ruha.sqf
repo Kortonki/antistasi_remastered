@@ -17,7 +17,7 @@ seaMarkers = [];
 
 // you can modify AS_antenasTypes
 
-AS_antenasTypes = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F","Land_Communication_F","Land_TTowerSmall_1_F","Land_TTowerSmall_2_F","Land_Com_tower_ep1"];
+AS_antenasTypes = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F", "Land_Com_tower_ep1", "Land_Telek1", "Land_Vysilac_vez"];
 AS_antenasPos_alive = [[5554.12,2674.38,1.7778],[976.455,4991.78,1.31231],[3849.34,7631.38,1.79234],[7729.12,6573.82,1.11914]];
 
 AS_bankPositions = [[6123.48,6921.61,2.25169]];//same as RT for Bank buildings, select the biggest buildings in your island, and make a DB with their positions.

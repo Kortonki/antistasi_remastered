@@ -1,7 +1,11 @@
 #include "../macros.hpp"
+params ["_newCommander"];
+//Workaround to choosecommander dialog bug
+if (!isServer) exitWith {[_newCommander] remoteExec ["AS_fnc_setCommander", 2]};
+
 AS_SERVER_ONLY("AS_fnc_setCommander");
 
-params ["_newCommander"];
+
 
 private _hadCommander = not isNull AS_commander;
 private _hcGroups = allGroups select {_x getVariable ["isHCgroup", false]};

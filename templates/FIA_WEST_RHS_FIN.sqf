@@ -51,6 +51,28 @@ unlockedItems = unlockedItems - [
 "adv_aceSplint_splint"
 ];
 
+[_dict, "addWeapons", []] call DICT_fnc_set;
+
+[_dict, "addMagazines", [
+[	"rhsgref_5Rnd_762x54_m38", 400]
+]] call DICT_fnc_set;
+
+[_dict, "addBackpacks", [
+["TFAR_anprc155", 8]
+]] call DICT_fnc_set;
+[_dict, "addItems", [
+
+["Medikit", 1],
+["ToolKit", 1],
+["adv_aceSplint_splint", 4],
+["ACE_salineIV_250", 4],
+["ACE_epinephrine", 5],
+["ACE_morphine", 5],
+["ACE_packingBandage", 10]
+
+
+]] call DICT_fnc_set;
+
 [_dict, "vans", [
 "C_IDAP_Truck_02_F"
 ]] call DICT_fnc_set;

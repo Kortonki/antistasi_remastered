@@ -74,7 +74,7 @@ _patrolMarker setMarkerAlpha 0;
 
 
 {
-	[leader _x, _patrolMarker, _behaviour,"SPAWNED","RANDOM","NOVEH","NOFOLLOW","LIMITED"] spawn UPSMON; //Changed NOVEH2 to NOVEH to allow manning of statics in combat
+	[leader _x, _patrolMarker, _behaviour,"SPAWNED","RANDOM","NOVEH2","NOFOLLOW","LIMITED"] spawn UPSMON; //Changed NOVEH2 to NOVEH to allow manning of statics in combat
 } forEach _grupos;
 
 if !(isNull _grupoMort) then {

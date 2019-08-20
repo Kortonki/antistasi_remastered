@@ -87,7 +87,9 @@ _box setpos _pos;
 
 _box setVariable ["asCargo", false, true];
 _truck setVariable ["boxCargo", (_truck getVariable "boxCargo") - [_box], true];
-if ((_boxcount - 1) == 0) then {[_truck, _id] remoteExec ["removeAction", [0, -2] select isDedicated, true];};
+if ((_boxcount - 1) == 0) then {
+  [_truck, _id] remoteExec ["removeAction", [0, -2] select isDedicated, true];
+};
 _truck setVariable ["Loading", nil, true];
 
 private _text = "Cargo unloaded from the truck";

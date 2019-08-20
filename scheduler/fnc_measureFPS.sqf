@@ -1,5 +1,5 @@
 // sampling rate of FPS
-#define SECONDS_PER_SAMPLE 2
+#define SECONDS_PER_SAMPLE 4
 
 private _FPSindex = 0; // the next index of AS_FPSsamples to be updated
 while {true} do {

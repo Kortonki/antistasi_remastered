@@ -86,6 +86,8 @@ private _fnc_initialize = {
 
 private _fnc_spawn = {
 	params ["_mission"];
+
+	private _location = _mission call AS_mission_fnc_location;
 	private _crashPosition = [_mission, "crashPosition"] call AS_spawn_fnc_get;
 	private _basePosition = [_mission, "basePosition"] call AS_spawn_fnc_get;
 	private _vehicleType = [_mission, "vehicleType"] call AS_spawn_fnc_get;
@@ -99,7 +101,7 @@ private _fnc_spawn = {
 	if (_truckPosition isEqualTo []) then {_truckPosition = _crashPosition};
 	private _truck = createVehicle [_vehicleType, _truckPosition, [], 0, "NONE"];
 	[_truck, "AAF"] call AS_fnc_initVehicle;
-	_truck sethit ["motor", (random 0.89)];
+	_truck sethit ["motor", 0.89];
 	//[_truck,"Mission Vehicle"] spawn AS_fnc_setConvoyImmune;
 	//AS_Sset("reportedVehs", AS_S("reportedVehs") + [_truck]);
 	_vehiculos pushBack _truck;
@@ -109,6 +111,7 @@ private _fnc_spawn = {
 	[_crate, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate setVariable ["requiredVehs", ["Truck_F"], true];
 	_crate setVariable ["asCargo", false, true];
+	_crate setVariable ["dest", _location, true];
 
 	_crate setPos ([getPos _truck, 6, 185] call BIS_Fnc_relPos);
 	_crate setDir (getDir _truck + (floor random 180));

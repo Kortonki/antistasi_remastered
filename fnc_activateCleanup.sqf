@@ -5,7 +5,7 @@ _killed = _this select 0;
 [_killed] call AS_debug_fnc_initDead;
 
 if (_killed in AS_P("vehicles")) then {
-	diag_log format ["Persistent vehicle deleted via AS_fnc_activateVehicleCleanup. Vehicle %1, location %2", _killed, (position _killed) call AS_location_fnc_nearest];
+	diag_log format ["Persistent vehicle deleted via AS_fnc_activate´Cleanup. Vehicle %1, location %2", _killed, (position _killed) call AS_location_fnc_nearest];
 	[_killed, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 };
 

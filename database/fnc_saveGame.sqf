@@ -20,8 +20,11 @@ if (not isNil "AS_savingServer") exitWith {
         _admin publicVariableClient "AS_database_waiting";
     };
 };
-// lock double saving a game
+// lock double saving a game and accessing arsenal to avoid errors
+waitUntil {sleep 0.1; not(AS_S("lockArsenal"))};
+
 AS_savingServer = true;
+publicVariable "AS_savingServer";
 
 // inform
 _message = "Saving game...";
@@ -56,3 +59,4 @@ if (_admin != -1) then {
 
 // unlock saving
 AS_savingServer = nil;
+publicVariable "AS_savingServer";

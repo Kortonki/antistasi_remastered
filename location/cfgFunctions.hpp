@@ -49,6 +49,7 @@ class AS_location {
         FNC(location,cities);
         FNC(location,knownLocations);
         FNC(location,reveal);
+        FNC(location,revealLoc);
         // auxiliar
         FNC(location,getNameSize);
 
