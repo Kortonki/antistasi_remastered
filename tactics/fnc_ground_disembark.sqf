@@ -31,7 +31,7 @@ _wp2 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
     params ["_group", "_safePosition", "_crew_group"];
     private _leader = leader _group;
 
-    waitUntil {sleep 5; _leader = leader _group; vehicle _leader == _leader or {alive _x} count (units _group) == 0 or _leader distance2D _safePosition < 50};
+    waitUntil {sleep 5; _leader = leader _group; vehicle _leader == _leader or {alive _x} count (units _group) == 0 or _leader distance2D _safePosition < 70};
     if ({alive _x} count units _group == 0) exitWith {};
 
     private _marker = _group getVariable "AS_patrol_marker";

@@ -10,7 +10,8 @@ private _group = createGroup ("FIA" call AS_fnc_getFactionSide);
   _x setVariable ["marcador", nil, true]; //Units are no longer part of the garrison. Important for location detection to the enemy
 } foreach _garrison;
 if (isPlayer AS_commander) then {
-  AS_commander hcsetGroup [_group];
+  AS_commander hcsetGroup [_group, ""];
+  _group setVariable ["isHCgroup", true, true];
 } else {
   //Dismiss the squad if no player TODO: where to dismiss if FIA HQ moving is in progress?
   [[_group]] spawn AS_fnc_dismissFIAsquads;

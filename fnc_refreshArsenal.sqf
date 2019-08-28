@@ -25,4 +25,10 @@ if _clean then {
 //FAILSAFE to enable arsenal again
 AS_Sset("lockArsenal", false);
 
+[caja, "remove"] remoteExecCall ["AS_fnc_addAction", [0,-2] select isDedicated];
+
+[caja, "arsenal"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+[caja, "transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+[caja, "emptyplayer"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+
 diag_log "[AS] Server: Arsenal resynchronised";

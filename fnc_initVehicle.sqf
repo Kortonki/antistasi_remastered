@@ -33,13 +33,15 @@ if (_side != "NATO") then {
 	_veh addEventHandler ["GetIn", {
 		params ["_vehicle", "_position", "_unit"];
 		[_vehicle, _unit call AS_fnc_getSide] call AS_fnc_setSide;
-		if (isNil{_veh getVariable "boxCargo"}) then {_veh setVariable ["boxCargo",[], true];}
+		if (isNil{_vehicle getVariable "boxCargo"}) then {_vehicle setVariable ["boxCargo",[], true];}
 	}];
 
 	//TODO: ace breaks this, normal truck might have fuel cargo, check for cargo size added for ace functionality
 	if (_tipo isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
 		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
+		[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 		};
+
 };
 
 //Cargo release on destruction
@@ -146,11 +148,11 @@ if (_side  == "AAF" and not(_vehicleCategory == "")) then {
 			private _vehicle = _this select 0;
 			private _unitveh = _this select 2;
 			private _sideunit = _unitveh call AS_fnc_getSide;
-					if (_sideunit == "FIA") exitWith {
+					if ((_vehicle call AS_fnc_getSide) != "FIA" and {_sideunit == "FIA"}) exitWith {
 
 							[_vehicle, _unitveh] call _aaf_veh_EHkilled;
+							[_vehicle, "FIA"] call AS_fnc_setSide;
 							//Changing sides are already handled via another EH
-							_vehicle removeEventHandler ["Getin", _thisEventHandler];
 					};
 		}];
 
@@ -331,11 +333,11 @@ if (not(_side == "FIA")) then {
 
 				//After capturing fuel truck, make it FIA fuel system compatible
 
-				if (_sideunit == "FIA") exitWith {
+				if ((_vehicle call AS_fnc_getside) != "FIA" and {_sideunit == "FIA"}) exitWith {
+					[_vehicle, "FIA"] call AS_fnc_setSide;
 					_vehicle setFuelCargo 0;
 					[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 					[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-					_vehicle removeEventHandler ["Getin", _thisEventHandler];
 
 					};
 				}];

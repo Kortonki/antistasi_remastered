@@ -125,6 +125,7 @@ if (isPlayer(leader _unit)) then {
 			[player, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
 		};
 		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
+		["death"] remoteExec ["fnc_be_XP", 2];
 
 		if (_unit getVariable ["BLUFORSpawn",false]) then {
 			_unit setVariable ["BLUFORSpawn",nil,true];

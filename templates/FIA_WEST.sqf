@@ -81,7 +81,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "squad", [
 	"Squad Leader", "Medic", "AT Specialist", "Autorifleman", "Grenadier", "Rifleman", "Rifleman", "Rifleman"
 ]] call DICT_fnc_set;
-[_dict, "team", ["Squad Leader", "Medic", "Grenadier", "Rifleman"]] call DICT_fnc_set;
+[_dict, "team", ["Squad Leader", "Autorifleman", "Grenadier", "Rifleman"]] call DICT_fnc_set;
 [_dict, "team_at", ["Squad Leader", "AT Specialist", "AT Specialist"]] call DICT_fnc_set;
 [_dict, "team_aa", ["Squad Leader", "AA Specialist", "AA Specialist"]] call DICT_fnc_set;
 [_dict, "team_sniper", ["Rifleman", "Sniper"]] call DICT_fnc_set;

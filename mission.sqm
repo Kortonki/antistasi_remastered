@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={6053.4971,94.478531,2523.9568};
-		dir[]={0.55340356,-0.67415494,-0.48926315};
-		up[]={0.50506419,0.7385847,-0.44652754};
-		aside[]={-0.66239798,2.3011817e-006,-0.74922866};
+		pos[]={3306.2783,50.615211,654.59839};
+		dir[]={-0.53436857,-0.1027743,-0.839086};
+		up[]={-0.055237945,0.99469173,-0.086735673};
+		aside[]={-0.84355158,-8.5821375e-007,0.53721988};
 	};
 };
 binarizationWanted=0;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.86";
+		briefingName="Antistasi Remastered V0.87";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -2483,7 +2483,7 @@ class Mission
 			class Attributes
 			{
 				condition="true";
-				onActivation="{_x hideObjectGlobal true} foreach (nearestTerrainObjects [position thisTrigger, [], 4, false, false]); deleteVehicle thisTrigger;";
+				onActivation="{_x hideObjectGlobal true} foreach (nearestTerrainObjects [position thisTrigger, [], 4, false, false]); ";
 				sizeA=4;
 				sizeB=4;
 			};
@@ -2514,7 +2514,7 @@ class Mission
 			class Attributes
 			{
 				condition="true";
-				onActivation="{_x hideObjectGlobal true} foreach (nearestTerrainObjects [position thisTrigger, [], 14, false, false]); deleteVehicle thisTrigger";
+				onActivation="{_x hideObjectGlobal true} foreach (nearestTerrainObjects [position thisTrigger, [], 14, false, false]);";
 				sizeA=14;
 				sizeB=14;
 			};

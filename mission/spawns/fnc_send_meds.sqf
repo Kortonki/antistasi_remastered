@@ -55,7 +55,7 @@ private _fnc_wait = {
 		(not alive _crate) or (dateToNumber date > _max_date)
 	};
 
-	waitUntil {sleep 1; ((_crate distance _position < 50) and (speed _crate < 1)) or _fnc_missionFailedCondition};
+	waitUntil {sleep 1; ((_crate distance2D _position < 100) and (speed _crate < 1)) or _fnc_missionFailedCondition};
 
 	if (call _fnc_missionFailedCondition) exitWith {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -76,7 +76,7 @@ private _fnc_run = {
 
 	private _fnc_unloadCondition = {
 		// The condition to allow loading the crates into the truck
-		(_crate distance _position < 50) and {not(_crate getVariable "asCargo") or (isNull attachedTo _crate)} and
+		(_crate distance2D _position < 100) and {not(_crate getVariable ["asCargo", false]) or (isNull attachedTo _crate)} and
 		{{alive _x and not (_x call AS_medical_fnc_isUnconscious)} count ([50, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0} and
 		{{!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x distance _crate < 50} and {!(_x call AS_medical_fnc_isUnconscious)}} count allUnits == 0}
 	};

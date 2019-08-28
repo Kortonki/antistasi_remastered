@@ -120,10 +120,10 @@ class carpet_bombing
 	{
 AS_DIALOG(2,"Carpet Bombing Strike","closeDialog 0; nul = createDialog ""NATO_Missions"";");
 
-BTN_L(1,-1, "HE Bombs", "Cost: 10 points", "closeDialog 0; ""HE"" call AS_fnc_UI_natoAirstrike;");
-BTN_R(1,-1, "Carpet Bombing", "Cost: 10 points", "closeDialog 0; ""CARPET"" call AS_fnc_UI_natoAirstrike;");
+BTN_L(1,-1, "HE Bombs", "Cost: 10 points", "closeDialog 0; ""HE"" spawn AS_fnc_UI_natoAirstrike;");
+BTN_R(1,-1, "Carpet Bombing", "Cost: 10 points", "closeDialog 0; ""CARPET"" spawn AS_fnc_UI_natoAirstrike;");
 
-BTN_M(2, -1, "NAPALM Bomb", "Cost: 10 points", "closeDialog 0; ""NAPALM"" call AS_fnc_UI_natoAirstrike;");
+BTN_M(2, -1, "NAPALM Bomb", "Cost: 10 points", "closeDialog 0; ""NAPALM"" spawn AS_fnc_UI_natoAirstrike;");
 
 	};
 };
@@ -387,7 +387,7 @@ class maintenance_menu {
 	#define STR1 "closeDialog 0; [] remoteExec [""AS_fnc_HQdeploy"", 2];"
 	BTN_L(1,-1, "Reset HQ", "Resets all HQ items to near Petros.", STR1);
 	#define STR1 "closeDialog 0; [] remoteExec [""AS_fnc_refreshArsenal"", 2]"
-	BTN_L(2,-1, "Cleanup arsenal", "Remove items from the arsenal that do not exist.", STR1);
+	BTN_L(2,-1, "Refresh arsenal", "Remove items from the arsenal that do not exist.", STR1);
 	#define STR1 "closeDialog 0; [] remoteExec [""AS_fnc_resetPetrosPosition"", 2]"
 	BTN_R(1,-1, "Reset Petros' position", "Move Petros next to the campfire at HQ.", STR1);
 	#define STR1 "closeDialog 0; [] execVM ""reinitY.sqf"";"
@@ -454,7 +454,7 @@ AS_DIALOG(3,"Battle Options",A_CLOSE);
 
 BTN_L(1,-1, "Fast Travel", "", "closeDialog 0; [] spawn AS_fnc_fastTravel;");
 BTN_L(2,-1, "Go undercover", "While undercover, the enemies won't attack you.", "closeDialog 0; [true] spawn AS_fnc_activateUndercover;");
-BTN_L(3,-1, "Toggle your eligiblily for commanding", "", "closeDialog 0; call AS_fnc_UI_toggleElegibility;");
+BTN_L(3,-1, "Toggle your eligiblily for commanding", "", "closeDialog 0; call AS_fnc_UI_toggleElegibility; if (isNull AS_commander or not(isPlayer AS_commander)) then {[player] call AS_fnc_setCommander};");
 
 BTN_R(1,-1, "AI Management", "", "if (player == leader group player) then {closeDialog 0; nul = createDialog ""AI_management""} else {hint ""Only group leaders may access to this option""};");
 BTN_R(2,-1, "Player and Money", "", "closeDialog 0; if (isMultiPlayer) then {nul = createDialog ""player_money""} else {hint ""MP Only Menu""};");

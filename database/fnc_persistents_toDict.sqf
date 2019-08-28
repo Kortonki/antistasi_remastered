@@ -10,7 +10,7 @@ private _fuelReserves = AS_P("fuelFIA");
     if ((alive _x) and {!(_x call AS_medical_fnc_isUnconscious)} and
             {(_x call AS_fnc_getSide) == "FIA"} and
             {_x getVariable ["BLUFORSpawn", true]} and // garrisons are already tracked by the garrison list
-            {!isPlayer _x} and
+            {isPlayer _x} and
              //survivors as members of FIA should count? they're inited to side == "FIA" if rescued, otherwise no side
             {group _x in (hcAllGroups AS_commander)}) then { //TODO uncoscious player leaders?
 
@@ -19,6 +19,9 @@ private _fuelReserves = AS_P("fuelFIA");
 
         if (group _x in (hcAllGroups AS_commander) and {group _x != group AS_commander}) then  {
         _money = _money + ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost);
+        if (isPlayer _x) then {
+          _money = _money + 50; //Player death is worth 50€
+        };
         diag_log format ["AS: Savegame, FIA unit (%1: %2) converted to %3 money", _x, typeOf _x, ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost)];
       };
 
@@ -33,7 +36,10 @@ private _fuelReserves = AS_P("fuelFIA");
     private _closest_pos = _closest call AS_location_fnc_position;
 
     //Vehicles closer than 200m and owned by FIA will become persistent
-    if (alive _x and {not(_x in AS_P("vehicles")) and {_closest_pos distance2D (position _x) <= 200 and {(_x call AS_fnc_getSide) isEqualTo "FIA"}}}) then {
+    if (alive _x and
+        {not(_x in AS_P("vehicles")) and
+        {_closest_pos distance2D (position _x) <= 200 and
+        {(_x call AS_fnc_getSide) == "FIA" or !(([driver _x] call AS_fnc_getSide) in ["AAF", "CSAT", "NATO"])}}}) then {
       [_x] call AS_fnc_changePersistentVehicles;
       diag_log format ["AS: Savegame, FIA vehicle (%1) saved as persistent. Location: %2", _x,  _closest];
     } else {

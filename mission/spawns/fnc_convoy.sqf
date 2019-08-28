@@ -371,7 +371,7 @@ private _fnc_run = {
 	private _fnc_missionSuccessful = call {
 		if (_missionType in ["convoy_money", "convoy_ammo", "convoy_supplies", "convoy_fuel"]) exitWith {
 			{
-				private _fnc_missionFailedCondition = {not(alive _mainVehicle) or (dateToNumber date > _max_date)};
+				private _fnc_missionFailedCondition = {not(alive _mainVehicle) or (dateToNumber date > _max_date and {_mainVehicle call AS_fnc_getSide == "AAF"})};
 				private _fnc_missionFailed = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
@@ -397,7 +397,7 @@ private _fnc_run = {
 					_destination = _position;
 				};
 
-				private _fnc_missionSuccessfulCondition = {(_mainVehicle distance _destination < 50) and {speed _mainVehicle < 1}};
+				private _fnc_missionSuccessfulCondition = {(_mainVehicle distance2D _destination < 50) and {speed _mainVehicle < 1}};
 				private _fnc_missionSuccessful = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 

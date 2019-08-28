@@ -17,27 +17,22 @@ AS_h_barrier_type = "Land_HBarrier_01_line_5_green_F";
 // tower buiuldings where MGs are placed. If no towers, no MGs are placed.
 AS_MGbuildings = [
     "Land_Cargo_Tower_V1_F",
-    "Land_Cargo_Tower_V1_No1_F",
-    "Land_Cargo_Tower_V1_No2_F",
-    "Land_Cargo_Tower_V1_No3_F",
-    "Land_Cargo_Tower_V1_No4_F",
-    "Land_Cargo_Tower_V1_No5_F",
-    "Land_Cargo_Tower_V1_No6_F",
-    "Land_Cargo_Tower_V1_No7_F",
     "Land_Cargo_Tower_V2_F",
     "Land_Cargo_Tower_V3_F",
-    "Land_BagBunker_01_small_green_F",
-    "Land_BagBunker_Small_F",
     "Land_Cargo_Patrol_V1_F",
     "Land_Cargo_Patrol_V2_F",
-    "Land_Cargo_Patrol_V3_F"
+    "Land_Cargo_Patrol_V3_F",
+    "Land_Cargo_HQ_V1_F",
+    "Land_Cargo_HQ_V2_F",
+    "Land_Cargo_HQ_V3_F",
+    "Land_BagBunker_01_small_green_F",
+    "Land_BagBunker_Small_F"
+
 
 ];
 // building types whose destruction is saved persistently
 AS_destroyable_buildings = AS_MGbuildings + [
-    "Land_Cargo_HQ_V1_F",
-    "Land_Cargo_HQ_V2_F",
-    "Land_Cargo_HQ_V3_F",
+
     "Land_HelipadSquare_F",
     "Land_Cargo_Tower_V1_ruins_F",
     "Land_Cargo_Tower_V2_ruins_F",
@@ -66,24 +61,31 @@ AS_lampTypes = [
 // positions of the banks. If empty, there are no bank missions.
 AS_bankPositions = [];
 
+//Map dependet enemy presence distance (affects ability to access garage, repair shit etc.)
+AS_enemyDist = 500;
+
 private _mapType = "MapBoard_altis_F";
 if (worldName == "Altis") then {
     call compile preprocessFileLineNumbers "templates\world_altis.sqf";
 };
 if (worldName == "Tanoa") then {
     call compile preprocessFileLineNumbers "templates\world_tanoa.sqf";
+    AS_enemyDist = 300;
     _mapType = "MapBoard_tanoa_F";
 };
 if (worldName == "Ruha") then {
     call compile preprocessFileLineNumbers "templates\world_ruha.sqf";
+    AS_enemyDist = 300;
     _mapType = "MapBoard_tanoa_F";
 };
 
 if (worldName == "Enoch") then {
     call compile preprocessFileLineNumbers "templates\world_Enoch.sqf";
+    AS_enemyDist = 300;
     _mapType = "Land_MapBoard_Enoch_F";
 };
 
+publicVariable "AS_enemyDist";
 
 // exclude from `AS_antenasPos_alive` positions whose antenas are not found
 {
@@ -98,8 +100,9 @@ if (worldName == "Enoch") then {
 AS_Pset("antenasPos_alive", AS_antenasPos_alive);
 AS_Pset("antenasPos_dead", []);
 // these were only needed for the list above.
-AS_antenasTypes = nil;
+//AS_antenasTypes = nil; //this is needed for new eventhandlers when antenna is repaired
 AS_antenasPos_alive = nil;
+publicVariable "AS_antenasTypes";
 publicVariable "AS_destroyable_buildings";
 publicVariable "AS_MGbuildings";
 publicVariable "AS_bankPositions";
@@ -108,6 +111,7 @@ publicVariable "AS_small_bunker_type";
 publicVariable "AS_big_bunker_type";
 publicVariable "S_camonet_type";
 publicVariable "AS_h_barrier_type";
+
 
 // This searches through all the markers in the mission.sqm and adds them.
 {

@@ -32,11 +32,13 @@ if _isCommander then {
 	[_unit] remoteExec ["AS_fnc_setCommander", 2];
 };
 
+
 // loads traits, rank, etc.
 call AS_players_fnc_loadLocal;
 
 // init event handlers, medic, etc.
 call AS_fnc_initPlayer;
+
 
 // Reassign player tasks (temporary fix for tasks disappearing after respawn)
 //EXPERIMENT to avoid task spawn each player respawn
@@ -60,5 +62,7 @@ if (_oldFate == "kill") then {
 
 // remove any progress bar the player had
 [0,true] remoteExec ["AS_fnc_showProgressBar",player];
+
+_unit setVariable ["inited", true, true];
 
 _unit

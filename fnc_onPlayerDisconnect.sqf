@@ -75,6 +75,8 @@ if (count (units _group select {!(isPlayer _x)}) > 0) then {
 	[(units _group) select {!(isPlayer _x)}] remoteExec ["AS_fnc_dismissFIAunits", _group];
 };
 
+[1, 50] remoteExec ["AS_fnc_changeFIAMoney", 2];
+
 private _pos = getPosATL _unit;
 private _wholder = nearestObjects [_pos, ["weaponHolderSimulated", "weaponHolder"], 2];
 {deleteVehicle _x;} forEach _wholder + [_unit];

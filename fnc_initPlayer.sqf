@@ -15,6 +15,12 @@ player call AS_fnc_initPlayerPosition;
 
 //Take command of HC groups again as commander
 if (player == AS_commander) then {
+
+	AS_commander synchronizeObjectsAdd [HC_comandante];
+	HC_comandante synchronizeObjectsAdd [AS_commander];
+
+	[HC_comandante] execVM '\A3\modules_f\HC\data\scripts\hc.sqf';
+
 	{
 			player hcSetGroup [_x, ""];
 	} foreach (allGroups select {(_x getVariable ["isHCgroup", false])});
@@ -88,10 +94,7 @@ player addEventHandler ["GetInMan", {
 				AS_Sset("reportedVehs", AS_S("reportedVehs") + [_vehicle]);
 		};
 
-		if (_seat == "driver" and _vehicle isKindOf "Truck_F") then {
-			private _EHid = [_vehicle, "transferTo"] call AS_fnc_addAction;
-			player setVariable ["EH_ids", [_EHid, _EHid1]];
-		};
+
 		private _EHid2 = [_vehicle, "radio"] call AS_fnc_addAction;
 		private _ids = player getVariable ["EH_ids", []];
 		_ids pushBack _EHid2;

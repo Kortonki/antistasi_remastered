@@ -16,7 +16,7 @@ if hasACEmedical then {
 		if (hasACEsplint) then {_medicalItems pushBack "adv_aceSplint_splint"};
 
 		{
-			if (random 10 < _amount) then {
+			if (random 5 < _amount) then {
 
 					//Table of medical equipment amounts (Natosupp / 10 * _coeff)
 

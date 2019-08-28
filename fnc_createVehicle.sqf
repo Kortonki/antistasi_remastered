@@ -59,4 +59,10 @@ _vehicleGroup addVehicle _vehicle;
 _vehicle allowDamage true;
 [_vehicle, true] remoteExecCall ["enablesimulationGlobal", 2];
 
+//Counter for AAF spawned vehicles to avoid more vehs than in arsenal
+if (_side == "AAF") then {
+    [_vehicleType] call AS_AAFarsenal_fnc_spawnCounter;
+};
+
+
 [_vehicle, _vehicleGroup, _driver]

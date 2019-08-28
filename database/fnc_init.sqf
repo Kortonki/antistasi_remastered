@@ -9,6 +9,7 @@ publicVariable "AS_database_savedGames";
 // Variables that are persistent to `AS_persistent`. They are saved and loaded accordingly.
 // Add variables here that you want to save.
 AS_database_persistents = [
+	"player_side", "faction_anti_state", "faction_pro_anti_state", "faction_state", "faction_pro_state", "faction_civilian", 
 	"NATOsupport", "CSATsupport", "resourcesAAF", "resourcesFIA","fuelFIA", "skillFIA", "skillAAF", "hr",  // FIA attributes
 	"civPerc", "spawnDistance", "minimumFPS", "cleantime",  // game options
 	"secondsForAAFAttack", "upFreq", "nextUpdate", "nextAttack", "destroyedLocations", "knownLocations", "vehiclesInGarage", "destroyedBuildings",
@@ -18,7 +19,7 @@ AS_database_persistents = [
 ];
 
 AS_database_persistents = AS_database_persistents + [
-	"faction_anti_state", "faction_pro_anti_state", "faction_state", "faction_pro_state", "faction_civilian", "player_side"
+
 ];
 
 AS_database_migrations = call DICT_fnc_create;

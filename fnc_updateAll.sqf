@@ -32,8 +32,8 @@ private _FIAResIncomeMultiplier = 1;
     _AAFtotalPop = _AAFtotalPop + _popAAF;
 
     if !(_city in AS_P("destroyedLocations")) then {
-        private _incomeMultiplier = 0.33;
-        if (not _power) then {_incomeMultiplier = 0.5*0.33};
+        private _incomeMultiplier = 0.5; //This was added from 0.33 -> 0.5 to compensate for player respawn money cost
+        if (not _power) then {_incomeMultiplier = 0.5*_incomeMultiplier};
 
         _incomeAAF = _incomeMultiplier*_popAAF;
         _incomeFIA = _incomeMultiplier*_popFIA;
@@ -188,7 +188,7 @@ _FIAnewFuel = AS_P("fuelFIA") + _FIAnewFuel;
 
 //Commander gets score every update
 
-[AS_commander, "score", 5] call AS_players_fnc_change;
+[AS_commander, "score", 2] call AS_players_fnc_change;
 
 //Set next update time:
 

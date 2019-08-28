@@ -118,7 +118,7 @@ if (_type == "repair_antenna") exitWith {
             params ["_antennaPos"];
             AS_Pset("antenasPos_alive", AS_P("antenasPos_alive") + [_antennaPos]);
             AS_Pset("antenasPos_dead", AS_P("antenasPos_dead") - [_antennaPos]);
-            private _antenna = nearestBuilding _antennaPos;
+            private _antenna = (nearestobjects [_antennaPos, AS_antenasTypes, 25]) select 0;
             _antenna setDammage 0;
             _antenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];
         }, [_antennaPos]]]

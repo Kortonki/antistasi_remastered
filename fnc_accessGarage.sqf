@@ -1,11 +1,21 @@
 #include "macros.hpp"
 params ["_pool"];
+private _slow = false;
 
 if (player call AS_fnc_controlsAI) exitWith {hint "You cannot access the Garage while you are controlling AI"};
 
-if ([position player, 500] call AS_fnc_enemiesNearby) exitWith {
+if ([position player, nil] call AS_fnc_enemiesNearby) exitWith {
 	Hint "You cannot manage the Garage with enemies nearby";
 };
+
+if ([position player, AS_enemyDist*2] call AS_fnc_enemiesNearby) then {
+	hint "Accessing garage is slow, enemies nearby";
+	_slow = true;
+};
+
+if (_slow) then {[bandera, position player, 2*60, {true}, {speed player < 1}, "Stay put to access the garage", ""] call AS_fnc_wait_or_fail;};
+
+if (player distance2D bandera > 10) exitWith {};
 
 if _pool then {
 	vehInGarageShow = [player, "garage"] call AS_players_fnc_get;

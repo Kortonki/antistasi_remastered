@@ -186,6 +186,8 @@ private _fnc_run = {
 		{_x doMove _originPos} forEach _soldiers;
 
 		{
+
+			_x setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes
 			//If no spesicif origin spesified, use the defualt origin
 
 			if (isNil {(vehicle leader _x) getVariable "origin"}) then {

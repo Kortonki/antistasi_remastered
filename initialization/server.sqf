@@ -23,10 +23,11 @@ diag_log "[AS] Server: initLocations done";
 call compile preprocessFileLineNumbers "initialization\common_variables.sqf";
 // tells the client.sqf running on this machine that variables are initialized
 
+AS_common_variables_initialized = true; //this moved here was common_variables before
 publicVariable "AS_common_variables_initialized";
 diag_log "[AS] Server: common variables initialized";
 
-AS_common_variables_initialized = true; //this moved here was common_variables before
+
 
 call compile preprocessFileLineNumbers "initialization\server_variables.sqf";
 diag_log "[AS] Server: server variables initialized";
@@ -65,7 +66,8 @@ if isMultiplayer then {
     }];
 
     // this will wait until a commander is chosen
-    waitUntil {sleep 1; count (allPlayers - entities "HeadlessClient_F") > 0 and {isNull AS_commander}};
+    waitUntil {sleep 1; count (allPlayers - entities "HeadlessClient_F") > 0 and {isnull AS_commander}};
+
     ["none"] call AS_fnc_chooseCommander;
 } else {
     [player] call AS_fnc_setCommander;

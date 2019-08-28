@@ -81,7 +81,7 @@ private _fnc_run = {
 
 	// 3/4 are incapacitated
 	private _fnc_missionSuccessfulCondition = {
-		({_x call AS_fnc_canFight} count _soldiers <= 1./4*(count _soldiers))
+		({_x call AS_fnc_canFight} count _soldiers <= 1/4*(count _soldiers))
 	};
 
 	private _fnc_missionSuccessful = {

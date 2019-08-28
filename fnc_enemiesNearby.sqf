@@ -1,5 +1,8 @@
 params ["_position", "_distance"];
 
+if (isNil "_distance") then {
+	_distance = AS_enemyDist;
+};
 
 private _enemiesNearby = false;
 {

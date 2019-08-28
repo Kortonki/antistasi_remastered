@@ -133,12 +133,18 @@ fnc_BE_XP = {
 		case "cl_loc": {
 			_delta = 5;
 		};
+		case "death": {
+			_delta = -0.5;
+		};
+		case "deathP": {
+			_delta = -1;
+		};
 		default {
 			diag_log format ["Error in BE module XP - param 1: %1", _category];
 		};
 	};
 
-	BE_currentXP = BE_currentXP + _delta;
+	BE_currentXP = (BE_currentXP + _delta) max 0;
 	[] call fnc_BE_updateProgressBar;
 };
 

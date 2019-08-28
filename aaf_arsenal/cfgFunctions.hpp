@@ -13,6 +13,7 @@ class AS_AAFarsenal {
         FNC(aaf_arsenal,cost);
         FNC(aaf_arsenal,canAdd);
         FNC(aaf_arsenal,category);
+        FNC(aaf_arsenal,spawnCounter);
     };
 
     class server {

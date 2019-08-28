@@ -34,8 +34,8 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 ] call DICT_fnc_set;
 
 [_dict, "unlockedWeapons", [
-	"rhs_weap_m38",
 	"rhs_weap_makarov_pm",
+	"rhs_weap_m38",
 	"Binocular"
 	]] call DICT_fnc_set;
 
@@ -224,7 +224,7 @@ private _costs = createSimpleObject ["Static", [0, 0, 0]];
 
 
 [_costs, "rhsgref_cdf_b_reg_uaz_dshkm", 700] call DICT_fnc_set;
-[_costs, "rhsgref_cdf_b_reg_uaz_spg9", 1500] call DICT_fnc_set;
+[_costs, "rhsgref_cdf_b_reg_uaz_spg9", 1200] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_gaz66_zu23", 1600] call DICT_fnc_set;
 
 [_costs, "rhs_Mi8amt_civilian", 8000] call DICT_fnc_set;

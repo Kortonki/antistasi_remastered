@@ -20,8 +20,8 @@ private _fnc_allPossibleMissions = {
     private _fnc_isPossibleMission = {
         // Checks whether the combination of location and mission type is a possible mission
         params ["_missionType", "_location"];
-
-        not (_location call AS_location_fnc_spawned) and
+        //In following missions _location is the destination so it doesn't matter if it's spawned or not
+        (not(_location call AS_location_fnc_spawned) or (_missionType in ["convoy_supplies", "convoy_money", "convoy_fuel", "convoy_armor", "convoy_prisoners", "convoy_hvt", "convoy_ammo"])) and
         {(_location call AS_location_fnc_position) distance (getMarkerPos "FIA_HQ") < AS_missions_MAX_DISTANCE}
     };
 
@@ -80,20 +80,21 @@ private _fnc_allPossibleMissions = {
             if (_mission call _fnc_isPossibleMission and {_mission call _fnc_isValidMission}) then {
                 _possible pushBack _mission;
             };
+            //"conquer", "destroy_antenna" removed for now, they don't need to be as missions
         } forEach _cityMissions + _baseMissions + [
-            "destroy_helicoper", "conquer", "destroy_antenna", "rob_bank"
+            "destroy_helicoper", "rob_bank"
         ];
     } forEach _locations;
 
     // add other missions
-    {
+    /*{
         private _location = _x call AS_location_fnc_nearest;
         if ((_x distance (getMarkerPos "FIA_HQ") < AS_missions_MAX_DISTANCE) and
             (_location call AS_location_fnc_side == "AAF") and
             not(_location call AS_location_fnc_spawned)) then {
             _possible pushBack ["destroy_antenna", _location];
         };
-    } forEach AS_P("antenasPos_alive");
+    } forEach AS_P("antenasPos_alive");*/
 
     {
         private _position = _x call AS_location_fnc_position;

@@ -7,6 +7,7 @@ private _fnc_spawn = {
 	private _grupos = [];
 	private _vehiculos = [];
 	private _soldadosFIA = [];
+	private _markers = [];
 
 	_vehiculos append (_location call AS_fnc_spawnComposition);
 
@@ -39,7 +40,7 @@ private _fnc_spawn = {
 			_pos = [_pos, 20,_ang] call BIS_fnc_relPos;
 			sleep 1;
 			};
-		[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH"] spawn UPSMON;
+		[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH2"] spawn UPSMON;
 	};
 
 	// create flag
@@ -48,7 +49,7 @@ private _fnc_spawn = {
 	_veh allowDamage false;
 	[_veh, "unit"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 	[_veh,"vehicle"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-	[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+	//[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 	_vehiculos pushBack _veh;
 
 	//create _bunker, only if there's no preset composition
@@ -86,19 +87,33 @@ private _fnc_spawn = {
 		private _grupo = [_pos, ("NATO" call AS_fnc_getFactionSide), [["NATO", "squads"] call AS_fnc_getEntity, "NATO"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
 		_grupos pushBack _grupo;
 		{[_x] call AS_fnc_initUnitNATO; _soldados pushBack _x} forEach units _grupo;
-		[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH", "NOFOLLOW"] spawn UPSMON;
+		[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH2", "NOFOLLOW"] spawn UPSMON;
 		sleep 1;
 	};
 
+	for "_i" from 1 to (floor (_nVeh/2)) do {
+		if !(_location call AS_location_fnc_spawned) exitWith {};
+
+		private _vehClass = selectRandom ["cars_armed", "apcs", "tanks", "self_aa"];
+		private _vehicleType = selectRandom (["NATO", _vehClass] call AS_fnc_getEntity);
+
+		([_vehicleType, _location, "NATO"] call AS_fnc_spawnVehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
+
+		_vehiculos pushback _veh2;
+		_grupos pushBack _group2;
+		_markers pushback _patrolMarker2;
+
+	};
+
 	// Create FIA garrison
-	(_location call AS_fnc_createFIAgarrison) params ["_soldados1", "_grupos1", "_vehiculos1"];
+	(_location call AS_fnc_createFIAgarrison) params ["_soldados1", "_grupos1", "_marker1"];
 	_soldadosFIA append _soldados1;
 	_grupos append _grupos1;
-	_vehiculos append _vehiculos1;
+	_markers pushback _marker1;
 
 	[_location, _grupos] call AS_fnc_spawnJournalist;
 
-	[_location, "resources", [taskNull, _grupos, _vehiculos, []]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 	[_location, "FIAsoldiers", _soldadosFIA] call AS_spawn_fnc_set;
 };

@@ -52,9 +52,9 @@ if (count _positionTo == 0) exitWith {};
 private _location = _positionTo call AS_location_fnc_nearest;
 private _positionTo = _location call AS_location_fnc_position;
 
-private _validLocations = "FIA" call AS_location_fnc_S;
+private _validLocations = (["camp", "FIA"] call AS_location_fnc_TS) + "fia_hq";
 if !(_location in _validLocations) exitWith {
-	hint "You can only fast travel to FIA locations";
+	hint "You can only fast travel to FIA camps and HQ";
 	openMap [false,false];
 };
 

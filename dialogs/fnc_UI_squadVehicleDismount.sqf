@@ -4,7 +4,7 @@ if (count hcSelected player != 1) exitWith {
 
 private _grupo = (hcSelected player select 0);
 
-private _isStatic = false;
+/*private _isStatic = false;
 {
     if (vehicle _x isKindOf "StaticWeapon") exitWith {
         _isStatic = true;
@@ -12,7 +12,7 @@ private _isStatic = false;
 } forEach units _grupo;
 if _isStatic exitWith {
     hint "Static Weapon squad vehicles cannot be dismounted"
-};
+};*/
 
 private _veh = objNull;
 {

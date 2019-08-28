@@ -75,7 +75,6 @@ private _fnc_spawn = {
 	//private _truck = _truckType createVehicle _pos;
 	private _truck = [_truckType, _pos, "AAF", _dir] call AS_fnc_createEmptyVehicle;
 	_vehicles pushBack _truck;
-	[_truck, "AAF"] call AS_fnc_initVehicle;
 
 
 

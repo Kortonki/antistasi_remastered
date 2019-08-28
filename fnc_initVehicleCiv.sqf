@@ -27,6 +27,7 @@ if (_veh isKindOf "Car") then {
 
 if ((typeOf _veh) isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
 	[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+	[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	};
 
 //Randomise fuel and fuel cargo
@@ -45,13 +46,13 @@ _veh addEventHandler ["Getin", {
 		private _vehicle = _this select 0;
 		private _unitveh = _this select 2;
 		private _sideunit = _unitveh call AS_fnc_getSide;
-				if (_sideunit == "FIA") exitWith {
+				if (_sideunit == "FIA" and {(_vehicle call AS_fnc_getside) != "FIA"}) exitWith {
+
 						//Penalties here
 						[-1,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 						[0,-1,getPos _vehicle] remoteExec ["AS_fnc_changeCitySupport",2]; //For comparison killing a civ it's -5%
 
 						[_vehicle, "FIA"] call AS_fnc_setSide;
-						_vehicle removeEventHandler ["Getin", _thisEventHandler];
 				};
 	}];
 

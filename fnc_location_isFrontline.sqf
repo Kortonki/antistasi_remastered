@@ -3,7 +3,7 @@ params ["_location"];
 
 private _position = _location call AS_location_fnc_position;
 
-private _locations = [["airfield", "base", "watchpost", "fia_hq"], "FIA"] call AS_location_fnc_TS;
+private _locations = [["airfield", "base", "watchpost", "outpost", "roadblock", "fia_hq"], "FIA"] call AS_location_fnc_TS;
 
 private _isfrontier = false;
 {

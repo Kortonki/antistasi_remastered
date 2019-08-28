@@ -21,6 +21,11 @@ AS_respawning = true; // avoids double-respawn
 
 // temporarly set the commander locally. It is meant to be overwritten by AS_fnc_spawnPlayer.
 if (_old == AS_commander) then {
+	hcRemoveAllGroups  _old; //Just in case it's not possible for a group to have two or more commanders. Trying to resolve problem not having HC after respawn
+
+	AS_commander synchronizeObjectsRemove [HC_comandante];
+	HC_comandante synchronizeObjectsRemove [AS_commander];
+
 	AS_commander = _new;
 };
 private _type = player call AS_fnc_getFIAUnitType;
@@ -28,13 +33,53 @@ private _unit = [_type, "kill"] call AS_fnc_spawnPlayer;
 
 waitUntil {player == _unit};
 
+private _money = AS_P("resourcesFIA");
+
+["deathP"] remoteExec ["fnc_be_XP", 2];
+
 if isMultiplayer then {
-	private _money = [player, "money"] call AS_players_fnc_get;
-	[player, "money", -round (0.1*_money)] remoteExec ["AS_players_fnc_change", 2];
+	//private _money = [player, "money"] call AS_players_fnc_get;
+	//[player, "money", -round (0.1*_money)] remoteExec ["AS_players_fnc_change", 2];
 	[player, "score", -10] remoteExec ["AS_players_fnc_change", 2];
+
+
+	if (_money < 50) then {
+		[-1, 0] remoteExec ["AS_fnc_changeFIAMoney", 2];
+		if (([player, "money"] call AS_players_fnc_get) >= 50)
+		then {
+			[player, "money", -50] remoteExec ["AS_players_fnc_change", 2];
+		} else {
+			if ((AS_P("NATOsupport")) >= 2) then {
+				[-2, 0] remoteExec ["AS_fnc_changeForeignSupport", 2];
+			} else {
+				{
+					[0,-1, _x] call AS_fnc_changeCitySupport;
+				} foreach ([] call AS_location_fnc_cities);
+			};
+
+		};
+	} else {
+		[-1, -50] remoteExec ["AS_fnc_changeFIAMoney", 2];
+	};
+
 } else {
-	private _money = AS_P("resourcesFIA");
-	[-1, -0.1*_money] remoteExec ["AS_fnc_changeFIAmoney", 2];
+
+		if (_money < 50) then {
+			[-1, 0] remoteExec ["AS_fnc_changeFIAMoney", 2];
+				if ((AS_P("NATOsupport")) >= 2) then {
+					[-2, 0] remoteExec ["AS_fnc_changeForeignSupport", 2];
+				} else {
+					{
+						[0,-1, _x] call AS_fnc_changeCitySupport;
+					} foreach ([] call AS_location_fnc_cities);
+				};
+
+		} else {
+			[-1, -50] remoteExec ["AS_fnc_changeFIAMoney", 2];
+		};
+
+
+
 };
 
 AS_respawning = nil;

@@ -99,7 +99,7 @@ private _fnc_spawn = {
 				_vehiculos pushBack _veh;
 				//TODO vehicle crew loitering?
 		} else {
-			([_tipoVeh, _location, "AAF"] call AS_fnc_spawnAAF_vehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
+			([_tipoVeh, _location, "AAF"] call AS_fnc_spawnVehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
 			_vehiculos pushback _veh2;
 			_grupos pushBack _group2;
 			_markers pushback _patrolMarker2;

@@ -1,8 +1,8 @@
 #include "../macros.hpp"
 params ["_type", "_location"];
 
-if ([_location call AS_location_fnc_position, 500] call AS_fnc_enemiesNearby) exitWith {
-	Hint "There are enemies within 500m of the zone. You can not dismiss units.";
+if ([_location call AS_location_fnc_position, nil] call AS_fnc_enemiesNearby) exitWith {
+	Hint "There are enemies near the zone. You can not dismiss units.";
 };
 
 [1, _type call AS_fnc_getCost] remoteExec ["AS_fnc_changeFIAmoney",2];

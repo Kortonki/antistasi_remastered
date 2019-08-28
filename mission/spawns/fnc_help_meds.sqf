@@ -99,8 +99,7 @@ private _fnc_spawn = {
 	private _grupos = [];
 	private _truckPosition = _crashPosition findemptyPosition [0, 40, (_vehicleType)];
 	if (_truckPosition isEqualTo []) then {_truckPosition = _crashPosition};
-	private _truck = createVehicle [_vehicleType, _truckPosition, [], 0, "NONE"];
-	[_truck, "AAF"] call AS_fnc_initVehicle;
+	private _truck = [_vehicleType, _truckPosition, "AAF", random 360] call AS_fnc_createEmptyVehicle;
 	_truck sethit ["motor", 0.89];
 	//[_truck,"Mission Vehicle"] spawn AS_fnc_setConvoyImmune;
 	//AS_Sset("reportedVehs", AS_S("reportedVehs") + [_truck]);
@@ -135,18 +134,7 @@ private _fnc_spawn = {
 	[_basePosition, _crashPosition] call AS_fnc_findSpawnSpots params ["_posRoad","_dir"];
 	//[_posRoad, 0, 20, 7, 0, 2, 0, [], _posRoad] call BIS_fnc_findSafePos;  //These are commented out because createVehicle is quite foolproof with vehicle explosions
 
-	private _veh = createvehicle [(selectRandom ("trucks" call AS_AAFarsenal_fnc_valid)), _posRoad, [], 0, "NONE"];
-	_veh setdir _dir;
-	createVehicleCrew _veh;
-
-	//private _vehicle = [_posRoad, _dir, selectRandom ("trucks" call AS_AAFarsenal_fnc_valid), "AAF" call AS_fnc_getFactionSide] call bis_fnc_spawnvehicle;
-	//private _veh = _vehicle select 0;
-	private _grupoVeh = group ((crew _veh) select 0);
-	{[_x] call AS_fnc_initUnitAAF} forEach units _grupoVeh;
-	[_veh, "AAF"] call AS_fnc_initVehicle;
-
-
-	//private _grupoVeh = _vehicle select 2;
+	([(selectRandom ("trucks" call AS_AAFarsenal_fnc_valid)), _posRoad, _dir, "AAF"] call AS_fnc_createVehicle) params ["_veh", "_grupoVeh", "_vehDriver"];
 
 	_grupos pushBack _grupoVeh;
 	_vehiculos pushBack _veh;

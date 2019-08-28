@@ -128,6 +128,13 @@ AS_Sset("reportedVehs", []);
 
 AS_Sset("AS_vehicleOrientation", 0);
 
+//Counter for spawned AAF vehicles
+
+{
+	private _name = format ["spawned_%1", _x];
+	AS_Sset(_name, 0);
+} foreach (call AS_AAFarsenal_fnc_all);
+
 AS_AAF_attackLock = nil;
 
 

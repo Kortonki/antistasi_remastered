@@ -70,7 +70,7 @@ private _fnc_spawn = {
 			if !(_location call AS_location_fnc_spawned) exitWith {};
 			private _vehClass = selectRandom _vehClasses;
 			//TODO: improve checking for availability (spawned vehs and such). if multiple spawned with vehicles able to get vehicle count negative
-			if ((_tipoVeh call AS_AAFarsenal_fnc_count) - _i > 0) then {
+			if ((_vehClass call AS_AAFarsenal_fnc_count) - _i > 0) then {
 
 				private _tipoVeh = selectRandom ([_vehClass] call AS_AAFarsenal_fnc_valid);
 				private _pos = [];
@@ -83,7 +83,7 @@ private _fnc_spawn = {
 					([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
 					_vehiculos pushBack _veh;
 					} else {
-						([_tipoVeh, _location, "AAF"] call AS_fnc_spawnAAF_vehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
+						([_tipoVeh, _location, "AAF"] call AS_fnc_spawnVehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
 						_vehiculos pushback _veh2;
 						_grupos pushBack _group2;
 						_markers pushback _patrolMarker2;

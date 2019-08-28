@@ -3,7 +3,7 @@
 if (player != AS_commander) exitWith {hint "Only the commander has access to this function"};
 if (!([player] call AS_fnc_hasRadio)) exitWith {hint "You need a radio in your inventory to be able to give orders to other squads"};
 
-if ([getmarkerPos "FIA_HQ", 500] call AS_fnc_enemiesNearby) exitWith {
+if ([getmarkerPos "FIA_HQ", nil] call AS_fnc_enemiesNearby) exitWith {
 	hint "You cannot Recruit Squads with enemies near your HQ";
 };
 
@@ -61,7 +61,7 @@ if (_grouptype == "mobile_at") then {_groupID = "M.AT-"};
 _grupo setGroupId [format ["%1%2",_groupID,{side (leader _x) == ("FIA" call AS_fnc_getFactionSide)} count allGroups]];
 
 {[_x] remoteExec ["AS_fnc_initUnitFIA", _x]} forEach units _grupo;
-leader _grupo setBehaviour "SAFE";
+leader _grupo setBehaviour "AWARE";
 AS_commander hcSetGroup [_grupo, ""];
 _grupo setVariable ["isHCgroup", true, true];
 petros directSay "SentGenReinforcementsArrived";

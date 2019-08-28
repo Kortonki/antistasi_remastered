@@ -15,6 +15,12 @@ waitUntil {
 	not([AS_P("spawnDistance"), _vehicle, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)
 };
 
+if (alive _vehicle and {_vehicle call AS_fnc_getSide == "AAF"}) then {
+	//Deduct from spawned vehicles. Killed vehicles are deducted from arsenal elsewhere
+	private _vehicleType = typeof _vehicle;
+	[_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
+};
+
 if (_vehicle in AS_S("reportedVehs")) then {
 	AS_Sset("reportedVehs", AS_S("reportedVehs") - [_vehicle]);
 };

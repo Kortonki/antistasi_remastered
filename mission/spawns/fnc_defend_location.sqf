@@ -177,10 +177,13 @@ private _fnc_run = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 
+
+
 		private _originPos = [_mission, "originPos"] call AS_spawn_fnc_get;
 
 		{_x doMove _originPos} forEach _soldiers;
 		{
+			_x setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes
 			private _wpRTB = _x addWaypoint [_originPos, 0];
 			_x setCurrentWaypoint _wpRTB;
 		} forEach _groups;

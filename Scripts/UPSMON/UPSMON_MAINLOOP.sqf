@@ -62,8 +62,7 @@ while {true} do
 
 			If (count(waypoints _grp) != 0) then
 			{
-				_wppos = waypointPosition [_grp,count(waypoints _grp)-1];
-				_targetpos = _wppos;
+				_targetpos = (waypointPosition [_grp,count(waypoints _grp)-1]);
 				_wptype = waypointType [_grp,count(waypoints _grp)-1];
 				_targetdist = [_currpos,_targetpos] call UPSMON_distancePosSqr;
 			};
@@ -904,8 +903,7 @@ while {true} do
 
 		If (count(waypoints _grp) != 0) then
 		{
-			_wppos = waypointPosition [_grp,count(waypoints _grp)-1];
-			_targetpos = _wppos;
+			_targetpos = (waypointPosition [_grp,count(waypoints _grp)-1]);
 			_wptype = waypointType [_grp,count(waypoints _grp)-1];
 			_targetdist = [_currpos,_targetpos] call UPSMON_distancePosSqr;
 		};

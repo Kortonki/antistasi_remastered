@@ -6,6 +6,7 @@ if (player call AS_fnc_controlsAI) exitWith {hint "You cannot go Undercover whil
 // the player may be temporarly controlling another unit. We check the original unit
 // the player cannot become undercover on an AI controlled unit, so this is ok
 private _player = player getVariable ["AS_controller", player];
+private _vehicle = vehicle _player;
 
 if (captive _player) exitWith {hint "You are already undercover"};
 
@@ -56,8 +57,10 @@ private _fnc_detected = {
 	_detected
 };
 
+
+
 ///// Check whether the player can become undercover
-if (vehicle _player != _player) then {
+if (_vehicle != _player) then {
 	if (not(typeOf(vehicle _player) in _undercoverVehicles)) then {
 		_reason = "You cannot go undercover because you are in a non-civilian vehicle.";
 	};
@@ -66,6 +69,18 @@ if (vehicle _player != _player) then {
 	};
 	if (call _fnc_detected) then {
 		_reason = "You cannot go undercover because the enemy knows you.";
+	};
+
+	if (count (ropeAttachedObjects _vehicle) > 0) then {
+		private _attached = ropeAttachedObjects _vehicle select 0;
+			if (!(_attached in _undercoverVehicles) or _attached in AS_S("reportedVehs")) then {
+				_reason = "You're towing a compromised vehicle";
+			} else {
+				if (count (ropeAttachedObjects _attached) > 0) then {
+					_reason = "You're towing more than one vehicle";
+				};
+			};
+
 	};
 } else {
 	{
@@ -105,7 +120,7 @@ while {_reason == ""} do {
 
 	private _veh = vehicle _player;
 	private _type = typeOf _veh;
-	if (_veh != _player) then {
+		if (_veh != _player) then {
 		_reason = call {
 			if (not(_type in _undercoverVehicles)) exitWith {
 				"militaryVehicle"
@@ -144,6 +159,25 @@ while {_reason == ""} do {
 			if call _isMilitaryDressed exitWith {
 				"militaryDressed"
 			};
+
+			private _exit = "";
+
+			if (count (ropeAttachedObjects _veh) > 0) then {
+
+				private _attached = (ropeAttachedObjects _veh) select 0;
+				if (!(_attached in _undercoverVehicles) or _attached in AS_S("reportedVehs")) then {
+					_exit = "towing";
+				} else {
+
+					if (count (ropeAttachedObjects _attached) > 0) then {
+						_exit = "towingMany";
+					};
+				};
+
+			};
+
+			if (_exit != "") exitWith {_exit};
+
 			""
 		};
 	} else {
@@ -213,5 +247,11 @@ switch _reason do {
 	};
 	case "distanceToLocation": {
 		hint "You cannot remain undercover because you are too close to an enemy location";
+	};
+	case "towing": {
+		hint "You cannot remain undercover because you're towing a compromised vehicle";
+	};
+	case "towingMany": {
+		hint "You cannot remain undercover because you're towing too many vehicles";
 	};
 };

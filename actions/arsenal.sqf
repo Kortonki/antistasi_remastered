@@ -25,13 +25,25 @@ _box setvariable ["bis_addVirtualWeaponCargo_cargo",nil,true];  // see http://st
 [_box,(_cargo_i select 0) + unlockedItems, true] call BIS_fnc_addVirtualItemCargo;
 [_box,(_cargo_b select 0) + unlockedBackpacks, true] call BIS_fnc_addVirtualBackpackCargo;
 
-["Open",[nil,_box,_unit]] call BIS_fnc_arsenal;
+//["Open",[nil,_box,_unit]] call BIS_fnc_arsenal;
+
+["Open", [nil, _box, _unit]] call BIS_fnc_arsenal;
+
 
 // BIS_fnc_arsenal creates a new action. We remove it so the only arsenal available is this one
-[_box, (_box getVariable "bis_fnc_arsenal_action")] remoteExec ["removeAction", [0, -2] select isDedicated];
+waitUntil {!isnil{_box getVariable "bis_fnc_arsenal_action"}};
+
+//Remove and add actions to avoid bug where actual Arsenal action disappears in multiplayer (action index differs between clients?)
+[_box, "remove"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
+
 
 // wait for the arsenal to close.
 waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal" )};
+
+[_box, "arsenal"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+[_box, "transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+[_box, "emptyPlayer"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+
 
 
 

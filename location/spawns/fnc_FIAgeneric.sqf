@@ -24,7 +24,7 @@ private _fnc_spawn = {
 		_vehiculos pushBack _veh;
 		[_veh, "unit"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		[_veh,"vehicle"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-		[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+		//[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 		if (_type == "seaport") then {
 			[_veh, "seaport"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 			};
@@ -53,7 +53,7 @@ private _fnc_spawn = {
 	if (_type == "outpost") then {
 		// if close to an antenna, add jam option
 		private _antennaPos = [AS_P("antenasPos_alive"),_posicion] call BIS_fnc_nearestPosition;
-		if (_antennaPos distance _posicion < 100) then {
+		if (_antennaPos distance _posicion < 200) then {
 			[[nearestBuilding _antennaPos,"jam"],"AS_fnc_addAction"] call BIS_fnc_MP;
 		};
 	};

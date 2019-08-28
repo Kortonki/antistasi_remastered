@@ -23,7 +23,9 @@ if (not AS_resourcing and _on) then {
 			if (dateToNumber date >= (AS_P("nextAttack"))) then {
 				private _noWaves = isNil {AS_S("waves_active")};
 				private _AttackLock = isNil "AS_AAF_attackLock";
-		    if (_attackLock and {_noWaves}) then {
+				//This added to avoid duplicate attacks and for perfomance reason no more than 1 attack at a time
+				private _attackMissions = {count (["defend_location", "defend_hq", "defend_city", "defend_camp"] call AS_mission_fnc_active_missions) != 0};
+		    if (_attackLock and {_noWaves} and {!([] call _attackMissions)}) then {
 		        private _script = [] spawn AS_movement_fnc_sendAAFattack;
 		   	};
 			};

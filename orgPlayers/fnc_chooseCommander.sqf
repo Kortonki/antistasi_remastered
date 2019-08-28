@@ -15,9 +15,11 @@ private _eligibles = [];
 while {count _members == 0} do {
 	{
 		private _player = _x getVariable ["AS_controller", _x];
-		_members pushBack _player;
-		if ([_player, "elegible"] call AS_players_fnc_get) then {
+		if (_player getVariable ["inited", false]) then {
+			_members pushBack _player;
+				if ([_player, "elegible"] call AS_players_fnc_get) then {
 			_eligibles pushBack _player;
+			};
 		};
 	} forEach (allPlayers - (entities "HeadlessClient_F"));
 

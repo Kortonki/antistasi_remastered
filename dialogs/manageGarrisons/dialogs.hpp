@@ -5,7 +5,7 @@ class AS_manageGarrisons
 
 	class controls
 	{
-AS_DIALOG(5,"Manage garrison - Press BACK to respawn garrison", "closeDialog 0; call AS_fnc_UI_manageHQ_menu; if (not(isNil ""garrisonUpdated"")) then {[map_location] spawn AS_location_fnc_respawnGarrison; map_location = nil; garrisonUpdate = nil;};");
+AS_DIALOG(5,"Manage garrison - Press BACK to respawn garrison", "closeDialog 0; call AS_fnc_UI_manageHQ_menu; if (not(isNil ""garrisonUpdated"")) then {[map_location] spawn AS_location_fnc_respawnGarrison; map_location = nil; garrisonUpdated = nil;};");
 
 LIST_L(0,1,1,4,"");
 

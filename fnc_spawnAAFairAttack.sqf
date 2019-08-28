@@ -14,11 +14,10 @@ while {count _pos == 0} do {
 };
 
 // spawn and init vehicle and crew
-([_pos, random 360, _vehicleType, "AAF" call AS_fnc_getFactionSide] call bis_fnc_spawnvehicle) params ["_vehicle", "_vehCrew", "_vehicleGroup"];
+//([_pos, random 360, _vehicleType, "AAF" call AS_fnc_getFactionSide] call bis_fnc_spawnvehicle) params ["_vehicle", "_vehCrew", "_vehicleGroup"];
+([_vehicleType, _pos, random 360, "AAF"] call AS_fnc_createVehicle) params ["_vehicle", "_vehicleGroup", "_vehDriver"];
 _groups pushBack _vehicleGroup;
 _vehicles pushBack _vehicle;
-{[_x] call AS_fnc_initUnitAAF} forEach units _vehicleGroup;
-[_vehicle, "AAF"] call AS_fnc_initVehicle;
 
 // create waypoints and cargo depending on the type
 if (_toUse in ["planes", "helis_armed"]) then {

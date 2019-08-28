@@ -22,7 +22,7 @@ if (random 100 < _chance) then {
 };
 if (random 100 < _chance) then {
 	private _minutes = (numberToDate [2035, (AS_P("nextAttack") - (datetoNumber date))]) select 4;
-	_texto = format ["%1 %2 Next Counterattack: %3 minutes<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), _minutes];
+	_texto = format ["%1 %2 Next possible counterattack: %3 minutes<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), _minutes];
 };
 if (random 100 < _chance) then {
 	private _resourcesAAF = AS_P("resourcesAAF");
@@ -35,7 +35,8 @@ if (random 100 < _chance) then {
 
 {
 	if (random 100 < _chance) then {
-		private _count = _x call AS_AAFarsenal_fnc_count;
+		private _name = format ["spawned_%1", _x];
+		private _count = (_x call AS_AAFarsenal_fnc_count) + AS_S(_name);
 		if (_count < 1) then {
 			_count = "None";
 		};

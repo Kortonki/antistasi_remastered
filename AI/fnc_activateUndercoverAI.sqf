@@ -7,6 +7,7 @@ private _leader = leader _unit;
 private _vehicle = vehicle _unit;
 waitUntil {sleep 1; _vehicle = vehicle _unit; (vehicle _leader != _leader and {_vehicle == vehicle _leader}) or (vehicle _leader == _leader)}; //Check if ai is in the same vehicle or all dismounted
 
+if (captive _unit) exitWith {diag_log format ["[AS] Warning: AI activating undercover while already undercover. Time: %1 Unit: %2", time, _unit]};
 	_unit groupChat "I'm undercover now";
 [_unit, true] remoteExecCall ["setCaptive", _unit];
 

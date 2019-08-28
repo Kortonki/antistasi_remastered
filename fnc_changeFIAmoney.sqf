@@ -17,7 +17,7 @@ _resourcesFIAT = round (_resourcesFIAT + _resourcesFIA);
 if (_hrT > 0) then {
 	_hrT = _hrT min (["HR"] call fnc_BE_permission);
 };
-_hrT = _hrT max 0;
+//_hrT = _hrT max 0; //HR can go to negative upon player death (for balance, player death deducts HR but players must be spawned regardelss -> HR debt)
 _resourcesFIAT = _resourcesFIAT max 0;
 
 AS_Pset("hr", _hrT);

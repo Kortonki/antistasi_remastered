@@ -90,7 +90,7 @@ class AS {
         FNC_BASE(roadAndDir);
         FNC_BASE(spawnAAF_patrol);
         FNC_BASE(spawnAAF_patrolSquad);
-        FNC_BASE(spawnAAF_vehiclePatrol);
+        FNC_BASE(spawnVehiclePatrol);
         FNC_BASE(spawnAAF_roadAT);
         FNC_BASE(spawnAAF_truck);
         FNC_BASE(createVehicle);
@@ -206,6 +206,7 @@ class AS {
         FNC(arsenal,removeNightEquipment);
         FNC(arsenal,unlockedCargoList);
         FNC(arsenal,addMagazineRemains);
+        FNC(arsenal,showUnlocked);
 
         FNC_BASE(initPlayerPosition);
         FNC_BASE(initVehicle);
