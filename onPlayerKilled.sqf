@@ -13,6 +13,10 @@ hint "The hit was so violent that you died instantly...";
 
 removeAllActions player;
 
+if (player == AS_commander) then {
+	hcRemoveAllGroups AS_commander;
+};
+
 if (isMultiplayer) then {[player, "score", -10] remoteExec ["AS_players_fnc_change", 2];};
 
 

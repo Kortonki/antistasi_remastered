@@ -19,7 +19,7 @@ AS_respawning = true; // avoids double-respawn
 
 // temporarly set the commander locally. It is meant to be overwritten by AS_fnc_spawnPlayer.
 if (_old == AS_commander) then {
-	hcRemoveAllGroups  _old; //Just in case it's not possible for a group to have two or more commanders. Trying to resolve problem not having HC after respawn
+ //Just in case it's not possible for a group to have two or more commanders. Trying to resolve problem not having HC after respawn
 	[_old] remoteExecCall ["hcRemoveAllGroups", 0];
 
 	//AS_commander synchronizeObjectsRemove [HC_comandante];

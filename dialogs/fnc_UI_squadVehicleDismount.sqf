@@ -22,8 +22,18 @@ private _veh = objNull;
     };
 } forEach vehicles;
 
+//Dismount vehicles / statics even not assigned to to squad first
+
+{
+	if (!(isNull objectParent _x)) then {
+		unassignVehicle _x;
+		[_x] orderGetIn false;
+		[_x] allowGetIn false;
+	};
+} foreach (units _grupo);
+
 if (isNull _veh) exitWith {
-    hint "The squad has no vehicle assigned"
+    hint "The squad has no vehicle assigned, will dismount everything"
 };
 
 private _transporte = true;

@@ -19,8 +19,8 @@ player call AS_fnc_initPlayerPosition;
 if (player == AS_commander) then {
 
 //EXPERIMENT not fiddling with syncing
-//	AS_commander synchronizeObjectsAdd [HC_comandante];
-	//HC_comandante synchronizeObjectsAdd [AS_commander];
+	AS_commander synchronizeObjectsAdd [HC_comandante];
+	HC_comandante synchronizeObjectsAdd [AS_commander];
 
 	//[HC_comandante] execVM '\A3\modules_f\HC\data\scripts\hc.sqf';
 

@@ -1,5 +1,5 @@
 params ["_location"];
-waitUntil {sleep 1; not (_location call AS_location_fnc_spawned)};
+waitUntil {sleep AS_spawnLoopTime; not (_location call AS_location_fnc_spawned)};
 
 private _soldados = [_location, "soldiers"] call AS_spawn_fnc_get;
 
