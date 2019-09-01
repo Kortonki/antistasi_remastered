@@ -22,11 +22,11 @@ private _fnc_allPossibleMissions = {
         params ["_missionType", "_location"];
         //In following missions _location is the destination so it doesn't matter if it's spawned or not
         (not(_location call AS_location_fnc_spawned) or (_missionType in ["convoy_supplies", "convoy_money", "convoy_fuel", "convoy_armor", "convoy_prisoners", "convoy_hvt", "convoy_ammo"])) and
-        {(_location call AS_location_fnc_position) distance (getMarkerPos "FIA_HQ") < AS_missions_MAX_DISTANCE}
+        {(_location call AS_location_fnc_position) distance2D (getMarkerPos "FIA_HQ") < AS_missions_MAX_DISTANCE}
     };
 
     private _cityMissions = [
-        "kill_specops", "kill_traitor",
+        "kill_specops",
         "help_meds","rescue_refugees",
         "convoy_money", "convoy_supplies"
     ];
@@ -58,19 +58,19 @@ private _fnc_allPossibleMissions = {
 
         False or
         {not (_missionType in ["convoy_money", "convoy_supplies", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel"])} or
-        {_missionType in ["convoy_money", "convoy_supplies", "convoy_fuel","convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt"] and {
+        (_missionType in ["convoy_money", "convoy_supplies", "convoy_fuel","convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt"] and {
             // needs a base around
             private _base = [_location call AS_location_fnc_position] call AS_fnc_getBasesForConvoy;
 
-            private _base_condition = {_base != "" and {not(_base call AS_location_fnc_spawned) and (("trucks" call AS_AAFarsenal_fnc_count) + ("apcs" call AS_AAFarsenal_fnc_count) > 0)}};
+            private _base_condition = {_base != "" and {not(_base call AS_location_fnc_spawned) and {("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3}}};
             private _condition = if (_missionType == "convoy_armor") then {
                 // there is a base and a tank
-                {True and _base_condition and {"tanks" call AS_AAFarsenal_fnc_count > 0}}
+                {True and _base_condition and {"tanks" call AS_AAFarsenal_fnc_countAvailable > 0}}
             } else {
                 _base_condition
             };
             call _condition
-        }}
+        })
     };
 
     {

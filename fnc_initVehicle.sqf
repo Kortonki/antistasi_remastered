@@ -28,21 +28,7 @@ if (_tipo == (["AAF", "truck_ammo"] call AS_fnc_getEntity) and _side == "AAF") t
 if (_tipo == (["CSAT", "box"] call AS_fnc_getEntity) and _side == "CSAT") then {[_veh, "AA"] call AS_fnc_fillCrateAAF};
 // todo: add more equipment depending on spawing side / vehicle
 
-if (_side != "NATO") then {
-	// vehicle is stolen (NATO vehicles cannot be entered)
-	_veh addEventHandler ["GetIn", {
-		params ["_vehicle", "_position", "_unit"];
-		[_vehicle, _unit call AS_fnc_getSide] call AS_fnc_setSide;
-		if (isNil{_vehicle getVariable "boxCargo"}) then {_vehicle setVariable ["boxCargo",[], true];}
-	}];
 
-	//TODO: ace breaks this, normal truck might have fuel cargo, check for cargo size added for ace functionality
-	if (_tipo isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
-		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
-		[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-		};
-
-};
 
 //Cargo release on destruction
 
@@ -141,23 +127,49 @@ _csat_veh_EHkilled = {
 	_veh removeEventHandler ["killed", _thisEventHandler];
 };
 
-if (_side  == "AAF" and not(_vehicleCategory == "")) then {
-	//Steal Penalty
+//Here is the side change when stealing vehicles
+if (_side != "NATO") then {
+	// vehicle is stolen (NATO vehicles cannot be entered)
+	_veh addEventHandler ["GetIn", {
+		params ["_vehicle", "_position", "_unit"];
 
-	_veh addEventHandler ["Getin", {
-			private _vehicle = _this select 0;
-			private _unitveh = _this select 2;
-			private _sideunit = _unitveh call AS_fnc_getSide;
-					if ((_vehicle call AS_fnc_getSide) != "FIA" and {_sideunit == "FIA"}) exitWith {
+		if (isNil{_vehicle getVariable "boxCargo"}) then {_vehicle setVariable ["boxCargo",[], true];};
 
-							[_vehicle, _unitveh] call _aaf_veh_EHkilled;
-							[_vehicle, "FIA"] call AS_fnc_setSide;
-							//Changing sides are already handled via another EH
-					};
-		}];
+		private _side = _vehicle call AS_fnc_getSide;
+		private _sideunit = _unit call AS_fnc_getSide;
+		private _vehicleCategory = (typeOf _vehicle) call AS_AAFarsenal_fnc_category;
 
-	_veh addEventHandler ["killed", _aaf_veh_EHkilled];
+
+		if (_vehicle call AS_fuel_fnc_getfuelCargoSize > 0 and {_side != "FIA" and {_sideunit == "FIA"}}) then {
+				//TODO Improve this to revert to FIA fuel system to prevent cheating. For AI must have vanilla fuel cargo system
+				//TODO Ability to carry fuel can be checked by much simpler terms via dictionary fuel vehicle
+
+				//After capturing fuel truck, make it FIA fuel system compatible
+
+					_vehicle setFuelCargo 0;
+					[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+					[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		};
+
+		if (_side  == "AAF" and {not(_vehicleCategory == "") and {_sideunit == "FIA"}}) then {
+
+					[_vehicle, _unit] call _aaf_veh_EHkilled;
+
+		};
+
+		[_vehicle, _sideunit] call AS_fnc_setSide;
+
+
+	}];
+
+	if (_tipo isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
+		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
+		[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		};
+
 };
+
+
 
 if (_side == "CSAT") then {
 	_veh addeventHandler ["killed", _csat_veh_EHkilled];
@@ -176,22 +188,12 @@ if (_tipo in AS_allMortarStatics) then {
 
 		if (_side == ("FIA" call AS_fnc_getFactionSide)) then {
 			if (random 8 < 1) then {
-				if (_mortar distance (getMarkerPos "FIA_HQ") < 200) then {
-					if (count ("aaf_attack_hq" call AS_mission_fnc_active_missions) == 0) then {
-						private _lider = leader (gunner _mortar);
-						if isPlayer _lider then {
-							[[], "AS_mission_fnc_createDefendHQ"] remoteExec ["AS_scheduler_fnc_execute", 2];
-						};
-					};
-				} else {
-					[[position _mortar], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+				 	[[position _mortar], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
 				};
 			};
-		} else {
-			// todo: chance of being detected by FIA if shot by AAF
-		};
-	}];
+		}];
 };
+
 
 // start smoke script when hit for non-statics
 if !(_veh isKindOf "StaticWeapon") then {
@@ -320,27 +322,6 @@ if (not(_side == "FIA")) then {
 			_max = (0.9*(_AAFresAdj / 1000)) min 0.9;
 			_veh setVehicleAmmoDef (0.1 + _max);
 
-		};
-
-		if (_veh call AS_fuel_fnc_getfuelCargoSize > 0) then {
-				//TODO Improve this to revert to FIA fuel system to prevent cheating. For AI must have vanilla fuel cargo system
-				//TODO Ability to carry fuel can be checked by much simpler terms via dictionary fuel vehicle
-
-			_veh addEventHandler ["Getin", {
-				private _vehicle = _this select 0;
-				private _unitveh = _this select 2;
-				private _sideunit = _unitveh call AS_fnc_getSide;
-
-				//After capturing fuel truck, make it FIA fuel system compatible
-
-				if ((_vehicle call AS_fnc_getside) != "FIA" and {_sideunit == "FIA"}) exitWith {
-					[_vehicle, "FIA"] call AS_fnc_setSide;
-					_vehicle setFuelCargo 0;
-					[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-					[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-
-					};
-				}];
 		};
 	};
 };

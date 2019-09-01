@@ -114,10 +114,10 @@ private _fnc_spawn = {
 		// spawn them
 		for "_i" from 1 to _nveh do {
 			private _toUse = "trucks";
-			if (_threat > 3 and ("apcs" call AS_AAFarsenal_fnc_count > 0)) then {
+			if (_threat > 3 and ("apcs" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
 				_toUse = "apcs";
 				};
-			if (_threat > 5 and ("tanks" call AS_AAFarsenal_fnc_count > 0)) then {
+			if (_threat > 5 and ("tanks" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
 				_toUse = "tanks";
 				};
 			([_toUse, _originPos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];

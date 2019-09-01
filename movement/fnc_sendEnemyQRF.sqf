@@ -119,9 +119,9 @@ if (_type == "air") then {
 	private _dir = [_origin, _destination] call BIS_fnc_dirTo;
 
 	if ((_composition == "destroy") || (_composition == "mixed")) then {
-		private _grpVeh1 = [_attackVehicle, _origin, _dir] call _spawnVehicle;
+		([_attackVehicle, _origin, _dir] call _spawnVehicle) params ["_grpveh1", "_crew_group"];
 
-		[_origin, _destination, _grpVeh1] spawn AS_tactics_fnc_heli_attack;
+		[_origin, _destination, _crew_group] spawn AS_tactics_fnc_heli_attack;
 	};
 
 	// small delay to prevent crashes when both helicopters are spawned
@@ -166,9 +166,9 @@ if (_type == "air") then {
 
 	// spawn the attack vehicle
 	if ((_composition == "destroy") || (_composition == "mixed")) then {
-		private _veh = [_attackVehicle, _posRoad, _dir] call _spawnVehicle;
+		([_attackVehicle, _posRoad, _dir] call _spawnVehicle) params ["_veh", "_crew_group"];
 
-		[_origin, _destination, (group (driver _veh)), _patrolMarker] spawn AS_tactics_fnc_ground_attack;
+		[_origin, _destination, _crew_group, _patrolMarker] spawn AS_tactics_fnc_ground_attack;
 	};
 
 	// small delay to allow for AI pathfinding
@@ -179,7 +179,7 @@ if (_type == "air") then {
 	// spawn the transport vehicle
 	if ((_composition == "transport") || (_composition == "mixed")) then {
 		// transport vehicle
-		private _transport = [_transportVehicle, _posRoad, _dir] call _spawnVehicle;
+		([_transportVehicle, _posRoad, _dir] call _spawnVehicle) params ["_transport", "_crew_group"];
 
 
 		// dismount group
@@ -189,7 +189,7 @@ if (_type == "air") then {
 			_x moveInCargo _transport;
 		} forEach units _grpDis2;
 
-		[_origin, _destination, (group (driver _transport)), _patrolMarker, _grpDis2] spawn AS_tactics_fnc_ground_disembark;
+		[_origin, _destination, _crew_group, _patrolMarker, _grpDis2] spawn AS_tactics_fnc_ground_disembark;
 	};
 };
 

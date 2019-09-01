@@ -59,16 +59,18 @@ if (_type == "base") then {
 if (_type == "powerplant") then {
 	[["TaskSucceeded", ["", "Powerplant Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
 	[0,5] call AS_fnc_changeForeignSupport;
+	[-10, 10, _posicion] call AS_fnc_changeCitySupport;
 	["con_ter"] call fnc_BE_XP;
 	[_location] call AS_fnc_recomputePowerGrid;
 };
 if (_type == "outpost") then {
+	[-10,10,_posicion] call AS_fnc_changeCitySupport;
 	[["TaskSucceeded", ["", "Outpost Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
 	["con_ter"] call fnc_BE_XP;
 };
 if (_type == "seaport") then {
 	[["TaskSucceeded", ["", "Seaport Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
-	[10,10] call AS_fnc_changeForeignSupport;
+	[-10,10,_posicion] call AS_fnc_changeCitySupport;
 	["con_ter"] call fnc_BE_XP;
 	[[_flag,"seaport"],"AS_fnc_addAction"] call BIS_fnc_MP;
 };
@@ -76,7 +78,8 @@ if (_type in ["factory", "resource"]) then {
 	if (_type == "factory") then {[["TaskSucceeded", ["", "Factory Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;};
 	if (_type == "resource") then {[["TaskSucceeded", ["", "Resource Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;};
 	["con_ter"] call fnc_BE_XP;
-	[0,10] call AS_fnc_changeForeignSupport;
+	[0,5] call AS_fnc_changeForeignSupport;
+	[-10, 10, _posicion] call AS_fnc_changeCitySupport;
 	private _powerpl = ["powerplant" call AS_location_fnc_T, _posicion] call BIS_fnc_nearestPosition;
 	if (_powerpl call AS_location_fnc_side == "AAF") then {
 		sleep 5;

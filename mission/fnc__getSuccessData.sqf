@@ -53,7 +53,7 @@ if (_type  == "convoy_money") exitWith {
 
 if (_type == "convoy_supplies") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [-15, 15, _position], 10*60]
+    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [-20, 20, _position], 10*60]
 };
 
 if (_type in ["convoy_ammo", "convoy_fuel"]) exitWith {
@@ -116,7 +116,7 @@ if (_type == "rob_bank") exitWith {
     [5, [500, _pos, 10], [-2, 0], [0, 5000], [0, -5, _position], 10*60]
 };
 if (_type == "send_meds") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [0, 15, _position], 10*60, [
+    [5, [500, _position, 10], [5, 0], [0, 0], [0, 20, _position], 10*60, [
         ["Probable mine pack", {
             if (random 10 < 8) then {
                 private _mines = (["AAF", "ap_mines"] call AS_fnc_getEntity) + (["AAF", "at_mines"] call AS_fnc_getEntity);
@@ -130,7 +130,7 @@ if (_type == "send_meds") exitWith {
         }, []]]]
 };
 if (_type == "help_meds") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [-15, 15, _position]]
+    [5, [500, _position, 10], [5, 0], [0, 0], [-20, 20, _position]]
 };
 if (_type == "broadcast") exitWith {
     _args params [["_prestige",0]];
@@ -142,7 +142,7 @@ if (_type == "broadcast") exitWith {
     ]
 };
 if (_type == "pamphlets") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [-15, 15, _position]]
+    [5, [500, _position, 10], [5, 0], [0, 0], [-20, 20, _position]]
 };
 if (_type == "repair_antenna") exitWith {
     [5, [500, _position, 10], [2, 0], [0, 0], [0, 0, []], 20*60,

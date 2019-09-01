@@ -57,14 +57,14 @@ private _fnc_spawn = {
 			private _grupo = createGroup ("AAF" call AS_fnc_getFactionSide);
 			_grupos pushBack _grupo;
 
-			private _count_vehicles = ["planes", "helis_armed", "helis_transport"] call AS_AAFarsenal_fnc_count;
+			private _count_vehicles = ["planes", "helis_armed", "helis_transport"] call AS_AAFarsenal_fnc_countAvailable;
 			private _vehClasses = ["planes", "helis_armed", "helis_trasnport"];
 			private _valid_vehicles = ["planes", "helis_armed", "helis_transport"] call AS_AAFarsenal_fnc_valid;
 			for "_i" from 0 to (_count_vehicles min 5) - 1 do {
 				if !(_location call AS_location_fnc_spawned) exitWith {};
 
 				private _vehClass = selectRandom _vehClasses;
-				if ((_vehClass call AS_AAFarsenal_fnc_count) - _i > 0) then {
+				if ((_vehClass call AS_AAFarsenal_fnc_countAvailable) > 0) then {
 					private _tipoVeh = selectRandom  ([_vehClass] call AS_AAFarsenal_fnc_valid);
 					([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
 					sleep 1;
@@ -83,13 +83,13 @@ private _fnc_spawn = {
 	// spawn parked land vehicles
 	//TODO check if the following functions check for arsenal availability for vehicles
 	private _groupCount = round (_size/60);
-	private _count_vehicles = ["trucks", "cars_armed", "apcs"] call AS_AAFarsenal_fnc_count;
+	private _count_vehicles = ["trucks", "cars_armed", "apcs"] call AS_AAFarsenal_fnc_countAvailable;
 	private _vehClasses = ["trucks", "cars_armed", "apcs"];
 	for "_i" from 0 to (_groupCount min _count_vehicles) - 1 do {
 		if !(_location call AS_location_fnc_spawned) exitWith {};
 
 		private _vehClass = selectRandom _vehClasses;
-		if ((_vehClass call AS_AAFarsenal_fnc_count) - _i > 0) then {
+		if ((_vehClass call AS_AAFarsenal_fnc_countAvailable) > 0) then {
 		//private _blacklistarea = format ["AS_%1_blacklist", _location]; //check for blacklist marker //WIP throws error
 		private _tipoVeh = selectRandom  ([_vehClass] call AS_AAFarsenal_fnc_valid);
 

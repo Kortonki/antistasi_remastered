@@ -14,15 +14,19 @@ player call AS_medical_fnc_initUnit;
 player call AS_fnc_initPlayerPosition;
 
 //Take command of HC groups again as commander
+//EXPERIMENT no HC fiddling
+
 if (player == AS_commander) then {
 
-	AS_commander synchronizeObjectsAdd [HC_comandante];
-	HC_comandante synchronizeObjectsAdd [AS_commander];
+//EXPERIMENT not fiddling with syncing
+//	AS_commander synchronizeObjectsAdd [HC_comandante];
+	//HC_comandante synchronizeObjectsAdd [AS_commander];
 
-	[HC_comandante] execVM '\A3\modules_f\HC\data\scripts\hc.sqf';
+	//[HC_comandante] execVM '\A3\modules_f\HC\data\scripts\hc.sqf';
 
 	{
-			player hcSetGroup [_x, ""];
+			//player hcSetGroup [_x];
+			[player, [_x]] remoteExec ["hcSetGroup", 0];
 	} foreach (allGroups select {(_x getVariable ["isHCgroup", false])});
 };
 

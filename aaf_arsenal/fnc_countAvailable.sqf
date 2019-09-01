@@ -1,4 +1,5 @@
 #include "../macros.hpp"
+//TODO something to Consider if location is important, don't spawn vehicles if there arent many of them?
 
 // the current vehicles of a given category or list of categories.
 // If no argument is provided, returns all vehicles of all categories
@@ -11,6 +12,7 @@ if (isNil "_categories") then {
 };
 private _all = 0;
 {
-  _all = _all + ([_x, "count"] call AS_AAFarsenal_fnc_get);
+  private _name = format ["spawned_%1", _x];
+  _all = _all + ([_x, "count"] call AS_AAFarsenal_fnc_get) - (AS_S(_name));
 } forEach _categories;
 _all

@@ -63,14 +63,14 @@ private _fnc_spawn = {
 	private _groupCount = (round (_size/30)) max 1;
 
 	if (!_busy) then {
-		private _count_vehicles = ["trucks", "cars_armed", "apcs", "tanks"] call AS_AAFarsenal_fnc_count;
+		private _count_vehicles = ["trucks", "cars_armed", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable;
 		private _vehClasses = ["trucks", "cars_armed", "apcs", "tanks"];
 
 		for "_i" from 0 to (_groupCount min _count_vehicles) - 1 do {
 			if !(_location call AS_location_fnc_spawned) exitWith {};
 			private _vehClass = selectRandom _vehClasses;
 			//TODO: improve checking for availability (spawned vehs and such). if multiple spawned with vehicles able to get vehicle count negative
-			if ((_vehClass call AS_AAFarsenal_fnc_count) - _i > 0) then {
+			if ((_vehClass call AS_AAFarsenal_fnc_countAvailable) > 0) then {
 
 				private _tipoVeh = selectRandom ([_vehClass] call AS_AAFarsenal_fnc_valid);
 				private _pos = [];

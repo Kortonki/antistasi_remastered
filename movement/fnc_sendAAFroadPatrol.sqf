@@ -24,7 +24,7 @@ private _category = "";
     _validOrigins = [_validOrigins, "AAF"] call AS_location_fnc_TS;
 
     _validOrigins = _validOrigins select {!(_x call AS_location_fnc_spawned)};
-    if (count _validOrigins > 0 and {_x call AS_AAFarsenal_fnc_count > 0}) exitWith {
+    if (count _validOrigins > 0 and {_x call AS_AAFarsenal_fnc_countAvailable > 0}) exitWith {
         _origin = [_validOrigins, getMarkerPos "FIA_HQ"] call BIS_fnc_nearestPosition;
         _type = selectRandom (_x call AS_AAFarsenal_fnc_valid);
         _category = _x;

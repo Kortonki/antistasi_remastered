@@ -51,7 +51,6 @@ private _fnc_spawn = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
-	private _size = [_mission, "size"] call AS_mission_fnc_get;
 	private _missionType = _mission call AS_mission_fnc_type;
 	private _truckType = "";
 

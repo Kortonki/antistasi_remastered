@@ -91,10 +91,10 @@ private _fnc_spawn = {
 		// spawn them
 		for "_i" from 1 to _nveh do {
 			private _toUse = "trucks";
-			if (_threatEvalLand > 3 and ("apcs" call AS_AAFarsenal_fnc_count > 0)) then {
+			if (_threatEvalLand > 3 and ("apcs" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
 				_toUse = "apcs";
 			};
-			if (_threatEvalLand > 5 and ("tanks" call AS_AAFarsenal_fnc_count > 0)) then {
+			if (_threatEvalLand > 5 and ("tanks" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
 				_toUse = "tanks";
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
@@ -132,10 +132,10 @@ private _fnc_spawn = {
 
 			// first 2 rounds can be any unit, stronger the higher the treat
 			if (_i < 3) then {
-				if ("helis_armed" call AS_AAFarsenal_fnc_count > 0) then {
+				if ("helis_armed" call AS_AAFarsenal_fnc_countAvailable > 0) then {
 					_toUse = "helis_armed";
 				};
-				if (_threatEvalAir > 15 and ("planes" call AS_AAFarsenal_fnc_count > 0)) then {
+				if (_threatEvalAir > 15 and ("planes" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
 					_toUse = "planes";
 				};
 			};

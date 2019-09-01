@@ -15,9 +15,9 @@ private _airfield = [_position] call AS_fnc_getAirportsForCA;
 // check if we have capabilities to use air units
 // decide to not use airfield if not enough air units
 if (_airfield != "") then {
-    private _transportHelis = "helis_transport" call AS_AAFarsenal_fnc_count;
-    private _armedHelis = "helis_armed" call AS_AAFarsenal_fnc_count;
-    private _planes = "planes" call AS_AAFarsenal_fnc_count;
+    private _transportHelis = "helis_transport" call AS_AAFarsenal_fnc_countAvailable;
+    private _armedHelis = "helis_armed" call AS_AAFarsenal_fnc_countAvailable;
+    private _planes = "planes" call AS_AAFarsenal_fnc_countAvailable;
     // 1 transported + any other if _isMarker.
     if (_transportHelis < 1 or (_transportHelis + _armedHelis + _planes < 3)) then {
         _airfield = "";

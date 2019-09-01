@@ -91,9 +91,9 @@ private _threatEval = 0;
 
 // decide to not use airfield if not enough air units or AA treat too high
 if (_aeropuerto != "") then {
-	private _transportHelis = "helis_transport" call AS_AAFarsenal_fnc_count;
-	private _armedHelis = "helis_armed" call AS_AAFarsenal_fnc_count;
-	private _planes = "planes" call AS_AAFarsenal_fnc_count;
+	private _transportHelis = "helis_transport" call AS_AAFarsenal_fnc_countAvailable;
+	private _armedHelis = "helis_armed" call AS_AAFarsenal_fnc_countAvailable;
+	private _planes = "planes" call AS_AAFarsenal_fnc_countAvailable;
 	// 1 transported + any other if _isLocation.
 	if (_transportHelis < 1 or (_isLocation and {_transportHelis + _armedHelis + _planes < 2})) then {
 		_aeropuerto = "";
@@ -112,16 +112,16 @@ if (_aeropuerto != "") then {
 // decide to not send if treat is too high.
 if (_base != "") then {
 	_threatEval = _threatEval_Land + ([_position] call AS_fnc_getLandThreat);
-	private _trucks = "trucks" call AS_AAFarsenal_fnc_count;
-	private _apcs = "apcs" call AS_AAFarsenal_fnc_count;
-	private _tanks = "tanks" call AS_AAFarsenal_fnc_count;
+	private _trucks = "trucks" call AS_AAFarsenal_fnc_countAvailable;
+	private _apcs = "apcs" call AS_AAFarsenal_fnc_countAvailable;
+	private _tanks = "tanks" call AS_AAFarsenal_fnc_countAvailable;
 
 	if (!_isDirectAttack) then {
 		if ((_threatEval > 15 and _tanks == 0) or
 			(_threatEval > 5 and (_tanks + _apcs == 0)) or
 			(_tanks + _apcs + _trucks == 0)) then {
 			_base = "";
-			
+
 		};
 	};
 };

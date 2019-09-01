@@ -37,12 +37,16 @@ waitUntil {!isnil{_box getVariable "bis_fnc_arsenal_action"}};
 [_box, "remove"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
 
 
+
 // wait for the arsenal to close.
 waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal" )};
+
+sleep 0.5;
 
 [_box, "arsenal"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 [_box, "transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 [_box, "emptyPlayer"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+[_box, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 
 
 

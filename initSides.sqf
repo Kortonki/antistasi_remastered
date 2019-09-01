@@ -146,9 +146,9 @@ AS_allFIAUnitTypes = [
 
 // cost of statics
 {AS_data_allCosts setVariable [_x, 300];} foreach (["FIA", "static_mg"] call AS_fnc_getEntity);
-{AS_data_allCosts setVariable [_x, 1200];} foreach (["FIA", "static_at"] call AS_fnc_getEntity);
-{AS_data_allCosts setVariable [_x, 1200];} foreach (["FIA", "static_aa"] call AS_fnc_getEntity);
-{AS_data_allCosts setVariable [_x, 1200];} foreach (["FIA", "static_mortar"] call AS_fnc_getEntity);
+{AS_data_allCosts setVariable [_x, 1000];} foreach (["FIA", "static_at"] call AS_fnc_getEntity);
+{AS_data_allCosts setVariable [_x, 1000];} foreach (["FIA", "static_aa"] call AS_fnc_getEntity);
+{AS_data_allCosts setVariable [_x, 1000];} foreach (["FIA", "static_mortar"] call AS_fnc_getEntity);
 
 // costs of land vehicles
 private _costs = ["FIA", "costs"] call AS_fnc_getEntity;

@@ -7,7 +7,7 @@ while {sleep AS_spawnLoopTime; _location call AS_location_fnc_spawned and {!(_lo
     //Reveal location if there's enemies within range of the location
     //Only reveal to location if there's radio coverage and the leader is alive after the contact for some.
 
-      if (_x distance2D _position < 200) then {
+      if (_x distance2D _position < 100) then {
         if (leader _x == _x and {(position _x) call AS_fnc_hasRadioCoverage and {!(_x getVariable ["revealing", false])}}) then {
 
            [_x, _location] spawn {

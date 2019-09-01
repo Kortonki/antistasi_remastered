@@ -30,5 +30,6 @@ AS_Sset("lockArsenal", false);
 [caja, "arsenal"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 [caja, "transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 [caja, "emptyplayer"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+[caja, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 
 diag_log "[AS] Server: Arsenal resynchronised";

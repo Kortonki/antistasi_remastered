@@ -16,9 +16,9 @@ private _fnc_initialize = {
 
 	private _category = [
 		["planes", "helis_armed", "helis_transport"],
-		["planes" call AS_AAFarsenal_fnc_count,
-		 "helis_armed" call AS_AAFarsenal_fnc_count,
-		 "helis_transport" call AS_AAFarsenal_fnc_count]
+		["planes" call AS_AAFarsenal_fnc_countAvailable,
+		 "helis_armed" call AS_AAFarsenal_fnc_countAvailable,
+		 "helis_transport" call AS_AAFarsenal_fnc_countAvailable]
 		] call BIS_fnc_selectRandomWeighted;
 	private _vehicleType = selectRandom (_category call AS_AAFarsenal_fnc_valid);
 

@@ -5,7 +5,7 @@ private _size = _location call AS_location_fnc_size;
 private _buildings = nearestObjects [_posicion, AS_destroyable_buildings, _size*1.5];
 private _addChopper = (_side == "AAF") and
 	{!([_location] call AS_fnc_location_isFrontline)} and
-	{"helis_transport" call AS_AAFarsenal_fnc_count > 0};
+	{"helis_transport" call AS_AAFarsenal_fnc_countAvailable > 0};
 
 private _staticAA = selectRandom([_side, "static_aa"] call AS_fnc_getEntity);
 private _staticMG = selectRandom([_side, "static_mg"] call AS_fnc_getEntity);

@@ -25,7 +25,7 @@ if (_vehicle in AS_S("reportedVehs")) then {
 	AS_Sset("reportedVehs", AS_S("reportedVehs") - [_vehicle]);
 };
 if (_vehicle in AS_P("vehicles")) exitWith {
-	diag_log format ["Persistent vehicle attempt to delete via AS_fnc_activateVehicleCleanup. Vehicle %1, location %2", _vehicle, (position _vehicle) call AS_location_fnc_nerest];
+	diag_log format ["Persistent vehicle attempt to delete via AS_fnc_activateVehicleCleanup. Vehicle %1, location %2", _vehicle, (position _vehicle) call AS_location_fnc_nearest];
 	//[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 };
 if (_vehicle isKindOf "test_EmptyObjectForSmoke") then {

@@ -48,7 +48,7 @@ private _fnc_initialize = {
 			_tskDesc = localize "STR_tskDesc_CVY_Armor";
 			_tskIcon = "destroy";
 			private _type = "tanks";
-			if (_type call AS_AAFarsenal_fnc_count == 0) then {
+			if (_type call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				_type = "apcs";
 				diag_log format ["[AS] Error: convoy: tanks requested but not available", _mission];
 			};
@@ -64,7 +64,7 @@ private _fnc_initialize = {
 			_tskIcon = "destroy";
 			private _types = ["cars_transport", "cars_armed", "trucks"];
 			private _type = selectRandom _types;
-			while {(_type call AS_AAFarsenal_fnc_count) == 0 and {count _types > 0}} do {
+			while {(_type call AS_AAFarsenal_fnc_countAvailable) == 0 and {count _types > 0}} do {
 					_types = _types - [_type];
 					_type = selectRandom _types;
 			};
@@ -83,7 +83,7 @@ private _fnc_initialize = {
 			_tskDesc = localize "STR_tskDesc_CVY_Pris";
 			_tskIcon = "run";
 			_mainVehicleType = selectRandom ("trucks" call AS_AAFarsenal_fnc_valid);
-			if ("trucks" call AS_AAFarsenal_fnc_count == 0) then {
+			if ("trucks" call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				diag_log format ["[AS] Error: convoy: truck requested but not available", _mission];
 			};
 		};
@@ -132,8 +132,8 @@ private _fnc_spawn = {
 	for "_i" from 1 to _escortSize do {
 		private _category = [
 			["trucks", "apcs"],
-			["trucks" call AS_AAFarsenal_fnc_count,
-			 "apcs" call AS_AAFarsenal_fnc_count]
+			["trucks" call AS_AAFarsenal_fnc_countAvailable,
+			 "apcs" call AS_AAFarsenal_fnc_countAvailable]
 			] call BIS_fnc_selectRandomWeighted;
 		private _escortVehicleType = selectRandom (_category call AS_AAFarsenal_fnc_valid);
 

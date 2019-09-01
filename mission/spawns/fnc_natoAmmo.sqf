@@ -61,8 +61,9 @@ private _fnc_run = {
 	private _vehicles = ([_mission, "resources"] call AS_spawn_fnc_get) select 2;
 
 	private _heli = _vehicles select 0;
+	private _grupoHeli = (([_mission, "resources"] call AS_spawn_fnc_get) select 1) select 0;
 
-	waitUntil {sleep 10;
+	waitUntil {sleep 1;
 		(_heli distance2D _position < 100) or
 		{!canMove _heli} or
 		{dateToNumber date > _max_date}
@@ -78,7 +79,7 @@ private _fnc_run = {
 	    _crate attachTo [_chute, [0, 0, -1.3]];
 	    [_crate, _support] call AS_fnc_fillCrateNATO;
 	    _vehicles append [_chute, _crate];
-	    private _wp3 = (group _heli) addWaypoint [getMarkerPos "spawnNATO", 0];
+	    private _wp3 = _grupoHeli addWaypoint [getMarkerPos "spawnNATO", 0];
 		_wp3 setWaypointType "MOVE";
 		_wp3 setWaypointSpeed "FULL";
 		waitUntil {(position _crate select 2) < 1 || isNull _chute};
@@ -93,6 +94,16 @@ private _fnc_run = {
 	} else {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+	};
+
+	_grupoHeli setVariable ["isHCgroup", false, true];
+	AS_commander hcRemoveGroup _grupoHeli;
+	[_heli, _grupoHeli] spawn {
+		params ["_heli", "_grupoHeli"];
+		waitUntil {sleep 5; _heli distance2D (getmarkerPos "spawnNATO") < 500 or ({alive _x} count (units _grupoHeli) == 0) };
+		{
+			_x setVariable ["BLUFORSpawn", false, true]; //This should activate the cleanup, no bluforspawn nearby
+		} foreach (units _grupoHeli);
 	};
 };
 

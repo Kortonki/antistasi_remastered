@@ -4,7 +4,7 @@ AS_SERVER_ONLY("fnc_updateAll.sqf");
 params [["_skipping", false]];
 
 private _AAFnewMoney = 0;
-private _FIAnewMoney = 25;
+private _FIAnewMoney = 50;
 private _FIAnewHR = 0;
 private _FIAnewFuel = 0;
 
@@ -32,7 +32,7 @@ private _FIAResIncomeMultiplier = 1;
     _AAFtotalPop = _AAFtotalPop + _popAAF;
 
     if !(_city in AS_P("destroyedLocations")) then {
-        private _incomeMultiplier = 0.5; //This was added from 0.33 -> 0.5 to compensate for player respawn money cost
+        private _incomeMultiplier = 0.33;
         if (not _power) then {_incomeMultiplier = 0.5*_incomeMultiplier};
 
         _incomeAAF = _incomeMultiplier*_popAAF;
@@ -93,6 +93,27 @@ private _FIAResIncomeMultiplier = 1;
 
         [0,-5] call AS_fnc_changeForeignSupport;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
+
+        //Release garrison if spawned, otherwise refund garrison
+        if (_city call AS_location_fnc_spawned) then {
+          _city call AS_fnc_garrisonRelease;
+        } else {
+          [_city, "garrison", []] call AS_location_fnc_set;
+          private _garHR = 0;
+          private _garMoney = 0;
+          {
+            _garHR = _garHR + 1;
+            _garMoney = _garMoney + (_x call AS_fnc_getCost);
+          } foreach ([_city, "garrison"] call AS_location_fnc_get);
+          [_garHr, _garMoney] spawn AS_fnc_changeFIAmoney; //Spawned so the lock won't slow down actual update
+        };
+
+        //Small chance for a traitor mission depending on natoSupport
+
+        if ((AS_P("NATOsupport")) < random 50) then {
+          private _mission = ["kill_traitor", _city] call AS_mission_fnc_add;
+          _mission call AS_mission_fnc_activate;
+        };
     };
 } forEach call AS_location_fnc_cities;
 

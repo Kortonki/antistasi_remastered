@@ -6,6 +6,7 @@ class AS_AAFarsenal {
         // getters
         FNC(aaf_arsenal,get);
         FNC(aaf_arsenal,count);
+        FNC(aaf_arsenal,countAvailable);
         FNC(aaf_arsenal,max);
         FNC(aaf_arsenal,name);
         FNC(aaf_arsenal,valid);

@@ -48,7 +48,8 @@ if hasACEmedical then {
     private _item = _x select 0;
     if (_item in _itemList) then {
       private _index1 = _itemList find _item;
-      (_return select _foreachindex) set [1, (_countList select _index1)]; //Take all of available
+      private _amount = (((_countList select _index1) - 1) max 0) min (_x select 1); //Leave minimum of 1 of each item to the players
+      (_return select _foreachindex) set [1, _amount];
     } else {
       if !(_item in unlockedItems) then {
         (_return select _foreachindex) set [1, 0];

@@ -58,7 +58,7 @@ private _fnc_spawn = {
 	};
 
 	// spawn mission vehicle
-	private _propTruck = "C_Truck_02_box_F" createVehicle ((getMarkerPos "FIA_HQ") findEmptyPosition [10,50,"C_Truck_02_box_F"]);
+	private _propTruck =  (selectRandom (["FIA", "vans"] call AS_fnc_getEntity)) createVehicle ((getMarkerPos "FIA_HQ") findEmptyPosition [10,50,"C_Truck_02_box_F"]);
 	[0,-600] remoteExec ["AS_fnc_changeFIAMoney", 2];
 	//publicVariable "_propTruck";
 
@@ -119,7 +119,7 @@ private _fnc_wait_to_arrive = {
 	private _fnc_missionFailedCondition = {(dateToNumber date > _max_date) or (not alive _propTruck)};
 
 	// wait until the vehicle enters the target area
-	waitUntil {sleep 1; (_propTruck distance _position < 150) or _fnc_missionFailedCondition};
+	waitUntil {sleep 1; (_propTruck distance2D _position < 150) or _fnc_missionFailedCondition};
 
 	if (call _fnc_missionFailedCondition) then {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -145,13 +145,13 @@ private _fnc_wait_to_activate = {
 			// activate if it is not moving
 			if (not _active and (speed _propTruck < 1)) then {
 				_active = true;
-				[[_propTruck,"toggle_device"],"AS_fnc_addAction"] call BIS_fnc_MP;
+				[_propTruck, "toggle_device"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 				_propTruck setVariable ["BCdisabled", false, true];
 			};
 			// deactivate if it moves
 			if (_active and (speed _propTruck > 1)) then {
 				_active = false;
-				[[_propTruck,"remove"],"AS_fnc_addAction"] call BIS_fnc_MP;
+				[_propTruck, "remove"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 				_propTruck setVariable ["BCdisabled", true, true];
 			};
 			sleep 1;

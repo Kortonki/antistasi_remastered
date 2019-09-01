@@ -20,21 +20,20 @@ if hasACEmedical then {
 
 					//Table of medical equipment amounts (Natosupp / 10 * _coeff)
 
-					private _coeff = call {
-						if (_x isEqualTo "FirstAidKit") exitWith {10};
-						if (_x isEqualTo "MediKit") exitWith {1};
-						if (_x isEqualTo "ACE_fieldDressing") exitWith {20};
-						if (_x isEqualTo "ACE_quikclot") exitWith {10};
-						if (_x isEqualTo "ACE_tourniquet") exitWith {10};
-						if (_x isEqualTo "ACE_morphine") exitWith {6};
-						if (_x isEqualTo "ACE_epinephrine") exitWith {3};
-						if (_x isEqualTo "ACE_adenosine") exitWith {3};
-						if (_x isEqualTo "ACE_personalAidKit") exitWith {1};
-						if (_x isEqualTo "ACE_surgicalKit") exitWith {1};
-						if (_x isEqualTo "adv_aceSplint_splint") exitWith {4};
-						if ((_x find "saline") > -1) exitWith {2};
-						if ((_x find "blood") > -1) exitWith {1};
-						if ((_x find "Bandage") > -1) exitWith {10};
+					private _coeff = [_x] call {
+            private _item = _this select 0;
+						if (_item isEqualTo "ACE_fieldDressing") exitWith {20};
+						if (_item isEqualTo "ACE_quikclot") exitWith {10};
+						if (_item isEqualTo "ACE_tourniquet") exitWith {10};
+						if (_item isEqualTo "ACE_morphine") exitWith {6};
+						if (_item isEqualTo "ACE_epinephrine") exitWith {3};
+						if (_item isEqualTo "ACE_adenosine") exitWith {3};
+						if (_item isEqualTo "ACE_personalAidKit") exitWith {1};
+						if (_item isEqualTo "ACE_surgicalKit") exitWith {1};
+						if (_item isEqualTo "adv_aceSplint_splint") exitWith {4};
+						if ((_item find "saline") > -1) exitWith {2};
+						if ((_item find "blood") > -1) exitWith {1};
+						if ((_item find "Bandage") > -1) exitWith {10};
 
 						1
 					};

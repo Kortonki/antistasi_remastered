@@ -9,21 +9,24 @@ private _fuelReserves = AS_P("fuelFIA");
 {
     if ((alive _x) and {!(_x call AS_medical_fnc_isUnconscious)} and
             {(_x call AS_fnc_getSide) == "FIA"} and
-            {_x getVariable ["BLUFORSpawn", true]} and // garrisons are already tracked by the garrison list
-            {isPlayer _x} and
+            {_x getVariable ["BLUFORSpawn", false]}// garrisons are already tracked by the garrison list
+
              //survivors as members of FIA should count? they're inited to side == "FIA" if rescued, otherwise no side
-            {group _x in (hcAllGroups AS_commander)}) then { //TODO uncoscious player leaders?
+            ) then { //TODO uncoscious player leaders?
 
         _hr = _hr + 1;
         diag_log format ["AS: Savegame, FIA unit (%1: %2) converted to 1 HR", _x, typeOf _x];
 
-        if (group _x in (hcAllGroups AS_commander) and {group _x != group AS_commander}) then  {
-        _money = _money + ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost);
-        if (isPlayer _x) then {
+
+        if (isPlayer _x) then { //TODO Consider here if player is controlling AI?
           _money = _money + 50; //Player death is worth 50€
+        } else {
+          //HC groups can be NATO choppers henc ethe check
+          if ((group _x) getVariable ["isHCgroup", false] and {[leader _x] call AS_fnc_getSide == "FIA"}) then  {
+            _money = _money + ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost);
         };
-        diag_log format ["AS: Savegame, FIA unit (%1: %2) converted to %3 money", _x, typeOf _x, ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost)];
       };
+      diag_log format ["AS: Savegame, FIA unit (%1: %2) converted to %3 money", _x, typeOf _x, ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost)];
 
     };
 } forEach allUnits;
@@ -37,9 +40,10 @@ private _fuelReserves = AS_P("fuelFIA");
 
     //Vehicles closer than 200m and owned by FIA will become persistent
     if (alive _x and
+        {not((_x call AS_fnc_getSide) isEqualTo "UNKNOWN") and
         {not(_x in AS_P("vehicles")) and
         {_closest_pos distance2D (position _x) <= 200 and
-        {(_x call AS_fnc_getSide) == "FIA" or !(([driver _x] call AS_fnc_getSide) in ["AAF", "CSAT", "NATO"])}}}) then {
+        {(_x call AS_fnc_getSide) == "FIA" or !(([driver _x] call AS_fnc_getSide) in ["AAF", "CSAT", "NATO"])}}}}) then {
       [_x] call AS_fnc_changePersistentVehicles;
       diag_log format ["AS: Savegame, FIA vehicle (%1) saved as persistent. Location: %2", _x,  _closest];
     } else {

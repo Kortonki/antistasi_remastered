@@ -1,18 +1,18 @@
-#define BE_REQ_XP [150, 200, 250, 350]
+#define BE_REQ_XP [100, 150, 200, 300]
 
 #define BE_FIA_SKILL_CAP [4, 8, 12, AS_maxSkill]
 #define BE_FIA_GARAGE_CAPACITY [6, 10, 15, 20]
 #define BE_PERS_GARAGE_CAPACITY [2, 4, 6, 8]
 #define BE_VEHICLE_RESTRICTION [["MBT", "APC", "Heli"], ["MBT", "Heli"], ["Heli"], ["none"]]
-#define BE_FIA_HR_CAP [30, 60, 90, 120]
+#define BE_FIA_HR_CAP [100, 200, 400, 800]
 #define BE_FIA_CAMP_CAP [2, 3, 4, 5]
 #define BE_FIA_RB_CAP [2, 4, 6, 10]
 #define BE_FIA_WP_CAP [2, 3, 4, 6]
 #define BE_FIA_RB_STYLE [0, 0, 1, 1]
 #define BE_FIA_WP_STYLE [0, 0, 1, 1]
 
-#define BE_UPGRADE_PRICES [14000, 40000, 60000]
-#define BE_UPGRADE_DISCOUNT [7000, 14500, 20000]
+#define BE_UPGRADE_PRICES [10000, 20000, 50000]
+#define BE_UPGRADE_DISCOUNT [6000, 12000, 20000]
 
 #define BE_COLOR_DONE "#1DA81D"
 #define BE_COLOR_LOCK "#D8480A"

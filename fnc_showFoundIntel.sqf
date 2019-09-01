@@ -35,8 +35,7 @@ if (random 100 < _chance) then {
 
 {
 	if (random 100 < _chance) then {
-		private _name = format ["spawned_%1", _x];
-		private _count = (_x call AS_AAFarsenal_fnc_count) + AS_S(_name);
+		private _count = (_x call AS_AAFarsenal_fnc_count);
 		if (_count < 1) then {
 			_count = "None";
 		};
