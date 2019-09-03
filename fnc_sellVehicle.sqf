@@ -4,7 +4,7 @@ _veh = cursortarget;
 
 if (isNull _veh) exitWith {hint "You are not looking to any vehicle"};
 
-if (_veh distance getMarkerPos "FIA_HQ" > 200) exitWith {hint "Vehicle must be closer than 50 meters to the flag"};
+if (_veh distance getMarkerPos "FIA_HQ" > 200) exitWith {hint "Vehicle must be closer than 200 meters to the flag"};
 
 if ({isPlayer _x} count crew _veh > 0) exitWith {hint "Vehicle must be empty (people)."};
 
@@ -21,7 +21,7 @@ call {
 	if (_tipoVeh in (["FIA", "vehicles"] call AS_fnc_getEntity) or
 			_tipoVeh in (["FIA", "static_mg"] call AS_fnc_getEntity) or
 			_tipoVeh in (["FIA", "static_at"] call AS_fnc_getEntity) or
-			_tipoVeh in (["FIA", "static_aa"] call AS_fnc_getEntity) or 
+			_tipoVeh in (["FIA", "static_aa"] call AS_fnc_getEntity) or
 			_tipoVeh in (["FIA", "static_mortar"] call AS_fnc_getEntity)) exitWith {
 		_cost = [_tipoVeh, true] call AS_fnc_getFIAvehiclePrice
 	};

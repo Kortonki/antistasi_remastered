@@ -30,7 +30,7 @@ private _fnc_getVehiclesEquipment = {
         if ((_closest call AS_location_fnc_side == "FIA") and
                 ((_x in AS_permanent_HQplacements) or {(_x call AS_fnc_getSide) == "FIA"}) and
                 {alive _x} and
-                {_x distance (_closest call AS_location_fnc_position) < 100} and
+                {_x distance2D (_closest call AS_location_fnc_position) < 200} and
                 {private _invalid = weaponsItemsCargo _x; not isNil "_invalid"}) then {
 
             private _arsenal = [_x, true] call AS_fnc_getBoxArsenal;

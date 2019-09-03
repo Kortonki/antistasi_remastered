@@ -67,7 +67,7 @@ if isMultiplayer then {
 					[-2, 0] remoteExec ["AS_fnc_changeForeignSupport", 2];
 				} else {
 					{
-						[0,-1, _x] call AS_fnc_changeCitySupport;
+						[0,-1, _x] remoteExec ["AS_fnc_changeCitySupport", 2];
 					} foreach ([] call AS_location_fnc_cities);
 				};
 

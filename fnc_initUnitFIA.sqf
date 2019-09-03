@@ -120,6 +120,8 @@ if (isPlayer(leader _unit)) then {
 		params ["_unit", "_killer"];
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
+		private _group = group _unit;
+
 		// player team-kill
 		if (isPlayer _killer) then {
 			[player, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
@@ -129,6 +131,11 @@ if (isPlayer(leader _unit)) then {
 
 		if (_unit getVariable ["BLUFORSpawn",false]) then {
 			_unit setVariable ["BLUFORSpawn",nil,true];
+		};
+
+		if (_group getVariable ["isHCgroup", false] and {{alive _x} count (units _group) < 1}) then {
+			_group setVariable ["isHCgroup", false, true];
+			deleteGroup _group;
 		};
 
 		private _location = _unit getVariable "marcador";

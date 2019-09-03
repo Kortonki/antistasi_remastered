@@ -45,7 +45,7 @@ _veh addEventHandler ["Killed", {
 
 private _aaf_veh_EHkilled = {
 	params ["_veh", "_killer"];
-	//if (([_veh] call AS_fnc_getSide) != "AAF") exitWith {}; //If vehicle was stolen, there's nothing to do here
+	if (([_veh] call AS_fnc_getSide) != "AAF") exitWith {}; //If vehicle was stolen, there's nothing to do here
 
 		//Deduct from AAF arsenal regardless of killers side
 	[typeOf _veh] call AS_AAFarsenal_fnc_deleteVehicle;
@@ -104,11 +104,13 @@ private _aaf_veh_EHkilled = {
 		if (_xpEffect != "") then {[_xpEffect] remoteExec ["fnc_BE_XP", 2]};
 	};
 	//This eventhandler is no longer needed
-	_veh removeEventHandler ["killed", _thisEventHandler];
+	//possible deletes the killed eventhandler activating cleanup
+	//_veh removeEventHandler ["killed", _thisEventHandler];
 };
 
 _csat_veh_EHkilled = {
 	params ["_veh", "_killer"];
+	if (([_veh] call AS_fnc_getSide) != "CSAT") exitWith {}; //If vehicle was stolen, there's nothing to do here
 	private _type = typeOf _veh;
 	private _effect = 0;
 	if (_type in (["CSAT", "helis_transport"] call AS_fnc_getEntity)) then {_effect = 5};
@@ -153,7 +155,13 @@ if (_side != "NATO") then {
 
 		if (_side  == "AAF" and {not(_vehicleCategory == "") and {_sideunit == "FIA"}}) then {
 
-					[_vehicle, _unit] call _aaf_veh_EHkilled;
+					[_vehicle, _unit] call _aaf_veh_EHkilled; // this must be called before changing sides
+
+		};
+
+		if (_side  == "CSAT" and {_sideunit == "FIA"}) then {
+
+					[_vehicle, _unit] call _csat_veh_EHkilled; // this must be called before changing sides
 
 		};
 
@@ -173,6 +181,10 @@ if (_side != "NATO") then {
 
 if (_side == "CSAT") then {
 	_veh addeventHandler ["killed", _csat_veh_EHkilled];
+};
+
+if (_side == "AAF") then {
+	_veh addEventHandler ["killed", _aaf_veh_EHkilled];
 };
 
 // UAV is not part of the AAF arsenal, so the killing of it is dealt separately
