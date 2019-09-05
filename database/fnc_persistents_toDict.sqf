@@ -18,7 +18,7 @@ private _fuelReserves = AS_P("fuelFIA");
         diag_log format ["AS: Savegame, FIA unit (%1: %2) converted to 1 HR", _x, typeOf _x];
 
 
-        if (isPlayer _x) then { //TODO Consider here if player is controlling AI?
+        if ((_x call AS_fnc_getFIAUnitType) == "Soldier") then {
           _money = _money + 50; //Player death is worth 50€
         } else {
           //HC groups can be NATO choppers henc ethe check

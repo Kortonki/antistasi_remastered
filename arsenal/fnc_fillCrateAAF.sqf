@@ -122,7 +122,7 @@ for "_i" from 0 to count (_miscItems select 0) - 1 do {
 };
 
 if hasTFAR then {
-    if (1 < random 3) then {
+    if (2 < random 3) then {
         _crate addBackpackCargoGlobal [(["AAF", "tfar_lr_radio"] call AS_fnc_getEntity), 4];
     };
 };

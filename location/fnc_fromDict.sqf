@@ -17,6 +17,7 @@ call AS_location_fnc_deinitialize;
     // initialize non-persistent properties
     [_x, "spawned", false] call AS_location_fnc_set;
     [_x, "forced_spawned", false] call AS_location_fnc_set;
+    [_x, "despawning", false] call AS_location_fnc_set;
     if ((_x call AS_location_fnc_type) == "city") then {
         private _roads = [_x call AS_location_fnc_position, _x call AS_location_fnc_size] call AS_location_fnc_getCityRoads;
         [_x, "roads", _roads] call AS_location_fnc_set;

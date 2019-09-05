@@ -37,3 +37,4 @@ if ("garrison" in ((_location call AS_location_fnc_type) call AS_location_fnc_pr
 };
 [_location,"spawned",false, false] call AS_location_fnc_set;
 [_location,"forced_spawned",false, false] call AS_location_fnc_set;
+[_location,"despawning", false, false];

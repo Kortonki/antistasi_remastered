@@ -21,6 +21,7 @@ if (_resourcesAAF < 0) then {
       [(-1*_debt), 0, _x] call AS_fnc_changeCitySupport;
     } foreach ([] call AS_location_fnc_cities);
   };
+  _resourcesAAF = 0;
 };
 
 AS_Pset("resourcesAAF", _resourcesAAF);

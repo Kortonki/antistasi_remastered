@@ -1,7 +1,7 @@
 params ["_box", "_weapon", "_maxAmount"];
 
 private _index = AS_allWeapons find _weapon;
-if (_index == -1) exitWith {};
+if (_index == -1) exitWith {[[""],[0]]};
 
 // all magazines of this weapon.
 private _suitableMags = (AS_allWeaponsAttrs select _index) select 2;

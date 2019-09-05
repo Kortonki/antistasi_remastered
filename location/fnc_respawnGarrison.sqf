@@ -9,3 +9,11 @@ if !(_location call AS_spawn_fnc_exists) exitWith {};
 
 //This will end the run state of locations and start the cleanup and deletion of the spawn. Then it will respawn after a delay.
 [_location, "spawned", false] call AS_location_fnc_set;
+
+//Clean vehicles asap because despawn might not trigger before respawning vehicles (unusual despawning)
+
+([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
+
+{
+ [_x] remoteExec ["deleteVehicle", _x];
+} foreach _vehicles;

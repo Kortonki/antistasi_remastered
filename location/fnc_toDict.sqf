@@ -3,7 +3,7 @@
 AS_SERVER_ONLY("AS_location_fnc_toDict");
 private _ignore_keys = [];
 {
-    _ignore_keys append [[_x, "spawn"], [_x, "spawned", "forced_spawned"]];
+    _ignore_keys append [[_x, "spawn"], [_x, "spawned", "forced_spawned", "despawning"]];
     if ((_x call AS_location_fnc_type) == "city") then {
         _ignore_keys pushBack [_x, "roads"];
     };
