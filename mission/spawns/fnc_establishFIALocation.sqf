@@ -84,6 +84,7 @@ private _fnc_spawn = {
 
 	if (_locationType == "camp") then {
 		private _crate = (typeOf caja) createVehicle _pos;
+		_crate call AS_fnc_emptyCrate;
 		_crate attachTo [_vehicle, [0.0,-1.2,0]];
 		_vehicles pushBack _crate;
 	};

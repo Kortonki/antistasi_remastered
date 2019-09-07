@@ -96,7 +96,7 @@ private _fnc_spawn = {
 	for "_i" from 1 to (2 + floor random 3) do {
 		private _tipoGrupo = [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		private _group = [_pos, "AAF" call AS_fnc_getFactionSide, _tipogrupo] call BIS_Fnc_spawnGroup;
-		_groups append _group;
+		_groups pushback _group;
 		if (random 10 < 3) then {
 			[_group] call AS_fnc_spawnDog;
 		};
@@ -119,7 +119,7 @@ private _fnc_run = {
 	private _vehicles = ([_mission, "resources"] call AS_spawn_fnc_get) select 2;
 
 	private _truck = _vehicles select 0;
-	private _fnc_missionSuccessfulCondition = {(({_x getVariable ["BLUFORSpawn",false]} count (crew _truck) > 0) and {_truck distance _position > 500}) or not(alive _truck)};
+	private _fnc_missionSuccessfulCondition = {(({_x getVariable ["BLUFORSpawn",false]} count (crew _truck) > 0) and {_truck distance2D _position > 500}) or not(alive _truck)};
 
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;

@@ -9,12 +9,13 @@ private _fnc_spawn = {
 	private _soldiers = [];
 	private _groups = [];
 	private _vehicles = [];
+	private _markers = [];
 
 	// Create the garrison
-	(_location call AS_fnc_createFIAgarrison) params ["_soldados1", "_grupos1", "_vehiculos1"];
+	(_location call AS_fnc_createFIAgarrison) params ["_soldados1", "_grupos1", "_marker1"];
 	_soldiers append _soldados1;
 	_groups append _grupos1;
-	_vehicles append _vehiculos1;
+	_markers pushback _marker1;
 
 	if (_type == "roadblock") then {
 		/*private _tam = 1;
@@ -54,7 +55,7 @@ private _fnc_spawn = {
 		{
 			call {
 				if (typeof _x == "Box_NATO_Equip_F") exitWith {_campBox = _x;};
-				if (typeof _x == "Land_MetalBarrel_F") exitWith {[[_x,"refuel"],"AS_fnc_addAction"] call BIS_fnc_MP;};
+				if (typeof _x == "Land_MetalBarrel_F") exitWith {[_x,"refuel"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];};
 				if (typeof _x == "Land_Campfire_F") exitWith {_x inflame true;};
 			};
 			_x setVectorUp (surfaceNormal (position _x));
@@ -79,7 +80,7 @@ private _fnc_spawn = {
 	_location spawn AS_location_fnc_revealLoc;
 
 
-	[_location, "resources", [taskNull, _groups, _vehicles, []]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _groups, _vehicles, _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldiers] call AS_spawn_fnc_set;
 	[_location, "FIAsoldiers", _soldiers] call AS_spawn_fnc_set;
 };

@@ -15,7 +15,9 @@ if (({isPlayer _x} count units _group > 1) and (!_isHCfastTravel)) exitWith {hin
 
 if (player call AS_fnc_controlsAI) exitWith {hint "You cannot fast travel while you are controlling AI"};
 
-private _unpreparedVehicles = false;
+if (vehicle player != player) exitWith {hint "You can only fast travel without vehicles"};
+
+/*private _unpreparedVehicles = false;
 {
 	if ((vehicle _x != _x) and ((isNull (driver vehicle _x)) or (!canMove vehicle _x) or (vehicle _x isKindOf "StaticWeapon"))) then {
 		_unpreparedVehicles = true;
@@ -24,7 +26,7 @@ private _unpreparedVehicles = false;
 
 if (_unpreparedVehicles) exitWith {
 	Hint "You cannot fast travel if you don't have a driver in all your vehicles or your vehicles cannot move";
-};
+};*/
 
 {
 		if ([_x, 500] call AS_fnc_enemiesNearby) exitWith {_enemiesNearby = true};
@@ -58,12 +60,7 @@ if !(_location in _validLocations) exitWith {
 	openMap [false,false];
 };
 
-private _enemiesNearby = false;
-{
-	if ((side _x != ("FIA" call AS_fnc_getFactionSide)) and
-		(_x distance _positionTo < 500) and
-		(not(captive _x))) exitWith {_enemiesNearby = true};
-} forEach allUnits;
+private _enemiesNearby = [_positionTo, AS_enemyDist] call AS_fnc_enemiesNearby;
 
 if (_enemiesNearby) exitWith {
 	Hint "You cannot use fast travel to a location with enemies nearby";
@@ -96,23 +93,16 @@ if !(_location call AS_location_fnc_forced_spawned) then {
 {
 	private _unit = _x;
 	vehicle _unit allowDamage false;
-	if (_unit != vehicle _unit) then {
-		if (driver vehicle _unit == _unit) then {
-			private _position = _positionTo findEmptyPosition [0,100, typeOf (vehicle _unit)];
-			vehicle _unit setPos _position;  // other passengers are moved with the vehicle
-			sleep 0.1; // findEmptyPosition needs time or it returns a non-empty position :(
-		};
-	} else {  // unit; non-vechicle
-		private _position = _positionTo findEmptyPosition [1,50,typeOf _unit];
-		_unit setPosATL _position;
-		sleep 0.1; // findEmptyPosition needs time or it returns a non-empty position :(
-		if !(_unit call AS_medical_fnc_isUnconscious) then {
+	private _position = _positionTo findEmptyPosition [1,50,typeOf _unit];
+	_unit setPosATL _position;
+	sleep 0.5; // findEmptyPosition needs time or it returns a non-empty position :(
+	if !(_unit call AS_medical_fnc_isUnconscious) then {
 			if (isPlayer leader _unit) then {_unit setVariable ["rearming",false]};
 			_unit doWatch objNull;
 			_unit doFollow leader _unit;
 		};
-	};
-} forEach units _group;
+
+} forEach ((units _group) select {vehicle _x == _x}); //Move only units who are  on foot
 
 if (!_isHCfastTravel) then {
 	disableUserInput false;

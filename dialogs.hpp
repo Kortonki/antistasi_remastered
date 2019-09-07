@@ -343,7 +343,7 @@ class game_options {
 	{
 	AS_DIALOG(3,"Game Options",A_CLOSE);
 
-	BTN_M(1,-1, "Save game", "Save this game to continue it later", "closeDialog 0; [] call AS_fnc_UI_saveMenu_menu;");
+	BTN_M(1,-1, "Save game", "Save this game to continue it later", "closeDialog 0; [] spawn AS_fnc_UI_saveMenu_menu;");
 
 	BTN_L(2,-1, "Performance Options", "Options to improve performance in case of low FPS.", "closeDialog 0; createDialog ""performance_menu"";");
 	BTN_R(2,-1, "Maintenance Options", "When something is broken, sometimes you can fix it here.", "closeDialog 0; nul = createDialog ""maintenance_menu"";");
@@ -359,6 +359,8 @@ class performance_menu {
 	{
 	AS_DIALOG(4,"Performance","closeDialog 0; createDialog ""game_options"";");
 
+	#define CLEAN_GARBAGE "[] remoteExec [""AS_fnc_cleanGarbage"", 2];"
+
 	#define _code "['spawnDistance', 100, 2500, 'Spawn distance set to %1 meters.'] call AS_fnc_UI_changePersistent;"
 	BTN_L(1,-1, "+100 Spawn Dist.", "The distance from places that triggers its spawn", _code);
 	#define _code "['spawnDistance', -100, 1000, 'Spawn distance set to %1 meters.'] call AS_fnc_UI_changePersistent;"
@@ -371,7 +373,7 @@ class performance_menu {
 	BTN_L(3,-1, "+1% Civ Spawn.", "The percentage of the population that appears in the city.", _code);
 	#define _code "[""civPerc"", -0.01, 0.01, ""Civilian percentage set to %1 percent.""] call AS_fnc_UI_changePersistent;"
 	BTN_R(3,-1, "-1% Civ Spawn.", "The percentage of the population that appears in the city.", _code);
-	BTN_M(4,-1, "Clean garbage", "Remove dead bodies and dropped items.", "[] remoteExec [""AS_fnc_cleanGarbage"", 2];");
+	BTN_M(4,-1, "Clean garbage", "Remove dead bodies and dropped items.", CLEAN_GARBAGE);
 	#undef _code
 	};
 };

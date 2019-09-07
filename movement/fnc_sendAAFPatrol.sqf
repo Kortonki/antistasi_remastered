@@ -76,11 +76,11 @@ if (!_isDirectAttack) then {
 
 // check if CSAT will help.
 private _hayCSAT = false;
-if ((_base == "") and (_aeropuerto == "") and (random 100 < AS_P("CSATsupport"))) then {
+if ((_base == "") and {(_aeropuerto == "") and {(random 100 < AS_P("CSATsupport"))}}) then {
 	_hayCSAT = true;
 };
 
-if ((_base == "") and (_aeropuerto == "") and (!_hayCSAT)) exitWith {
+if ((_base == "") and {(_aeropuerto == "") and {(!_hayCSAT)}}) exitWith {
 	private _message = "no bases close to attack";
 	diag_log (_debug_prefix + _message);
 };  // if no way to create patrol, exit.

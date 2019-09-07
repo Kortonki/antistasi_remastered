@@ -32,13 +32,13 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 // Rules:
 // 1. vehicle must exist.
 // 2. each vehicle must belong to only one category.
-[_dict, "planes", ["RHS_Su25SM_vvs"]] call DICT_fnc_set;
+[_dict, "planes", ["RHS_Su25SM_vvs"]] call DICT_fnc_set; //these are from AFRF VVS because none available for ChKDZ
 [_dict, "helis_armed", ["RHS_Mi8MTV3_vvs"]] call DICT_fnc_set;
 [_dict, "helis_transport", ["rhsgref_ins_g_Mi8amt"]] call DICT_fnc_set;
 [_dict, "tanks", ["rhsgref_ins_g_t72bc", "rhsgref_ins_g_t72bb", "rhsgref_ins_g_t72ba"]] call DICT_fnc_set;
 [_dict, "boats", ["I_G_Boat_Transport_01_F"]] call DICT_fnc_set;
 [_dict, "cars_transport", ["rhsgref_ins_g_uaz", "rhsgref_ins_g_uaz_open"]] call DICT_fnc_set;
-[_dict, "cars_armed", ["rhsgref_BRDM2_ins_g"," rhsgref_BRDM2_ATGM_ins_g", "rhsgref_BRDM2_HQ_ins_g"]] call DICT_fnc_set;
+[_dict, "cars_armed", ["rhsgref_BRDM2_ins_g"," rhsgref_BRDM2_ATGM_ins_g", "rhsgref_BRDM2_HQ_ins_g", "rhsgref_ins_uaz_ags", "rhsgref_ins_uaz_dshkm", "rhsgref_ins_uaz_spg9"]] call DICT_fnc_set;
 [_dict, "apcs", ["rhsgref_ins_g_btr60", "rhsgref_ins_g_btr70", "rhsgref_ins_g_bmd1", "rhsgref_ins_g_bmp1"," rhsgref_ins_g_bmp1p", "rhsgref_ins_g_bmp2e"]] call DICT_fnc_set;
 [_dict, "trucks", ["rhsgref_ins_g_gaz66o", "rhsgref_ins_g_gaz66"]] call DICT_fnc_set;
 

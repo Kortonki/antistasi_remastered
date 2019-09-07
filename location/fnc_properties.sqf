@@ -2,7 +2,7 @@
 
 // one parameter, the location type
 private _properties = ["type", "position", "size", "side", "garrison",
-                       "spawned", "forced_spawned"];
+                       "spawned", "forced_spawned", "despawning"];
 switch (_this) do {
     case "city": {
         _properties append ["population","FIAsupport","AAFsupport","roads"];

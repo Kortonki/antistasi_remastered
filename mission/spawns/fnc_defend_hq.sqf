@@ -105,10 +105,12 @@ private _fnc_spawn = {
 		private _size = _base call AS_location_fnc_size;
 
 		// compute number of trucks based on the marker size
-		private _nVeh = (round (_size/30)) max 1;
+		//private _nVeh = (round (_size/30)) max 1;
 
 		private _threat = [_position] call AS_fnc_getLandThreat;
 
+		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
+		private _nVeh = (round(_threat*(_arsenalCount/30)) max 1) min (_arsenalCount min 10);
 
 
 		// spawn them
@@ -126,6 +128,7 @@ private _fnc_spawn = {
 			{_soldiers append (units _x)} foreach _groups1;
 			sleep 5;
 			};
+			diag_log format ["[AS] DefendLocation: Number of vehicles: %1, ThreatEval Land: %2, toUse: %3, Location: %4", _nVeh, _threat, _toUse, _location];
 		};
 
 
