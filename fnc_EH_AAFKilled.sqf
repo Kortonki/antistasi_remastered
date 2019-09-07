@@ -86,17 +86,22 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 						private _position = position _enemy;
 						diag_log format ["AS: AAF taking casualties, sending patrol to: %1 ThreatEval Land/Air %2 / %3", _position, _threatEval_Land, _threatEval_Air];
 						[_position,"", _threatEval_Land, _threatEval_Air] remoteExec ["AS_movement_fnc_sendAAFpatrol", 2];
-						if (_threatEval_Land > random 5 or _threatEval_Air > random 5) then {
+						if (_threatEval_Land > random 10 or _threatEval_Air > random 10) then {
 
 							//Bases first if one's close enough
 							private _origin = [_position] call AS_fnc_getBasesForCA;
-							if (_origin == "" or (_origin distance2D _position > 3000)) then {
+							if (_origin == "") then {
 								_origin = [_position] call AS_fnc_getAirportsForCA;
+
+							} else {
+								if ((_origin call AS_location_fnc_position) distance2D _position > 3000) then {
+									_origin = [_position] call AS_fnc_getAirportsForCA;
+								};
 							};
 
 							if (_origin != "") then {
 								private _size = "small";
-								if (random 10 < (_threatEval_Land + _threatEval_Air)) then {_size = "large"};
+								if (random 15 < (_threatEval_Land + _threatEval_Air)) then {_size = "large"};
 								[_origin, _position, "", 30, "random", _size] remoteExec ["AS_movement_fnc_sendEnemyQRF", 2];
 								diag_log format ["AS: AAF taking casualties, sending QRF to: %1 ThreatEval Land/Air %2 / %3, size: %4, Origin: %5", _position, _threatEval_Land, _threatEval_Air, _size, _origin];
 							};

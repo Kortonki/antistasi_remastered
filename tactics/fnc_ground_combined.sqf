@@ -17,7 +17,7 @@ _crew_group setVariable ["AS_patrol_marker", _marker, true];
 
 private _statement = {
     (vehicle (leader group this)) fire  "SmokeLauncher";
-    [this, group this getVariable "AS_patrol_marker", "COMBAT", "SPAWNED", "NOFOLLOW"] spawn UPSMON;
+    [this, group this getVariable "AS_patrol_marker", "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
 };
 
 _wp1 setWaypointStatements ["true", _statement call AS_fnc_codeToString];

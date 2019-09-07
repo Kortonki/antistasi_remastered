@@ -26,15 +26,16 @@ if ([position player, AS_enemyDist*2] call AS_fnc_enemiesNearby) then {
 	};
 } forEach allUnits;
 
-{if ((side _x == ("FIA" call AS_fnc_getFactionSide)) and (_x distance _posHQ < 100)) then {_x setVariable ["compromised",0];}} forEach allPlayers - entities "HeadlessClient_F";
+{if ((side _x == ("FIA" call AS_fnc_getFactionSide)) and (_x distance _posHQ < 200)) then {_x setVariable ["compromised",0];}} forEach allPlayers - entities "HeadlessClient_F";
 
 
 private _reportedVehs = AS_S("reportedVehs");
 {
-	if (_x distance _posHQ < 100) then {
+	if (_x distance _posHQ < 200) then {
 
+		if (!(_x in (AS_P("vehicles")))) then {[_x] remoteExec ["AS_fnc_changePersistentVehicles", 2]};
 
-		 _reportedVehs = _reportedVehs - [_x];
+	 _reportedVehs = _reportedVehs - [_x];
 
 //This might set ammo to 0 for undercover AI with magazines: Maybe only has to do with gunning positions
 //For now only rearm buyable FIA armed cars and unlocked aaf vehicle types. Avoid FFV vehicles during rearm.

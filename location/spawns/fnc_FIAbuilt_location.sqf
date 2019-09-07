@@ -129,14 +129,14 @@ private _fnc_wait_to_abandon = {
 	private _wasDestroyed = [_location, "wasDestroyed"] call AS_spawn_fnc_get;
 
 	private _wasAbandoned = ({alive _x} count _soldiers) == 0;  // abandoned when it has no garrison
+	private _toRemove = false; //This is passed to the clean function
 
-	waitUntil {sleep 10;
+	waitUntil {sleep AS_spawnLoopTime;
 		_wasAbandoned or _wasDestroyed or !(_location call AS_location_fnc_spawned)
 	};
 
 	if (_wasAbandoned or _wasDestroyed) then {
-		_location call AS_location_fnc_remove;
-		[_location, false] call AS_location_fnc_knownLocations;
+		_toRemove = true;
 	};
 
 	if _wasDestroyed then {
@@ -159,16 +159,45 @@ private _fnc_wait_to_abandon = {
 				[[_cargo_w, _cargo_m, _cargo_i, _cargo_b]] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
 		};
 	} else {
+		if (_wasAbandoned) then {
+			_location call AS_fnc_garrisonRelease;
+		};
 		if (_type == "camp") then {
 			[[_location, "campBox"] call AS_spawn_fnc_get, caja] call AS_fnc_transferToBox;
 		};
 	};
+	[_location, "toRemove", _toRemove] call AS_spawn_fnc_set;
 };
+
+
+private _fnc_clean = {
+		params ["_location"];
+
+		private _toRemove = [_location, "toRemove"] call AS_spawn_fnc_get;
+
+		if (!_toRemove) then {
+			_location call AS_location_spawn_fnc_FIAlocation_clean;
+		} else {
+
+			([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
+			[_groups,  [], _markers] call AS_fnc_cleanResources; //Vehicles aren't deleted immediately because the whole spawn disappears
+			{
+				[_x] spawn AS_fnc_activateVehicleCleanup;
+			} foreach _vehicles;
+
+			[_location] remoteExec ["AS_location_fnc_remove", 2];
+			[_location, false] call AS_location_fnc_knownLocations;
+			[_location, "delete", true] call AS_spawn_fnc_set;
+
+	};
+
+};
+
 
 AS_spawn_createFIAbuilt_location_states = ["spawn", "wait_for_destruction", "wait_to_abandon", "clean"];
 AS_spawn_createFIAbuilt_location_state_functions = [
 	_fnc_spawn,
 	_fnc_wait_for_destruction,
 	_fnc_wait_to_abandon,
-	AS_location_spawn_fnc_FIAlocation_clean
+	_fnc_clean
 ];

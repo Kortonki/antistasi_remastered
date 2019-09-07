@@ -91,15 +91,31 @@ private _fnc_run = {
 		[-5,0,_posicion] remoteExec ["AS_fnc_changeCitySupport",2];
 		[["TaskSucceeded", ["", "Roadblock Cleared"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
 		[[_posicion], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+		[_location] remoteExec ["AS_location_fnc_remove", 2];
 
-		_location call AS_location_fnc_remove;
 		["cl_loc"] remoteExec ["fnc_BE_XP", 2];
 	};
+
+};
+
+private _fnc_clean = {
+	params ["_location"];
+
+	([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
+
+	[_groups,  [], _markers] call AS_fnc_cleanResources; //Vehicles aren't deleted immediately because the whole spawn disappears
+
+	{
+		[_x] spawn AS_fnc_activateVehicleCleanup;
+	} foreach _vehicles;
+
+	[_location, "delete", true] call AS_spawn_fnc_set;
+
 };
 
 AS_spawn_createAAFroadblock_states = ["spawn", "wait_capture", "clean"];
 AS_spawn_createAAFroadblock_state_functions = [
 	_fnc_spawn,
 	_fnc_run,
-	AS_location_spawn_fnc_AAFlocation_clean
+	_fnc_clean
 ];
