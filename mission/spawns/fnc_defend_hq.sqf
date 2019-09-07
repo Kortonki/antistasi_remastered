@@ -128,7 +128,7 @@ private _fnc_spawn = {
 			{_soldiers append (units _x)} foreach _groups1;
 			sleep 5;
 			};
-			diag_log format ["[AS] DefendLocation: Number of vehicles: %1, ThreatEval Land: %2, toUse: %3, Location: %4", _nVeh, _threat, _toUse, _location];
+			diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
 		};
 
 
