@@ -150,7 +150,7 @@ garageKeys = (findDisplay 46) displayAddEventHandler ["KeyDown", {
 			garageVeh allowDamage true;
 			[garageVeh, true] remoteExecCall ["enablesimulationGlobal", 2];
 
-			[garageVeh, "out"] call fnc_BE_checkVehicle;
+			//[garageVeh, "out"] call fnc_BE_checkVehicle; //This is unnecessary, checkVehicle obsolete
 		};
 		//vehInGarageShow = nil;
 		//garagePos = nil;
