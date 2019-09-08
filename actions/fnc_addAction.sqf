@@ -50,6 +50,9 @@ switch _type do {
 	case "loadCargo" : {_object addAction [localize "STR_act_loadBoxCargo" + "(" + (_object getVariable ["dest", "any"]) + ")", "actions\loadCargo.sqf",nil,0,false,true,"",IS_UNLOADED, 10]};
 	case "unloadCargo" : {_object addAction [localize "STR_act_unloadBoxCargo", "actions\unloadCargo.sqf",nil,0,false,true,"","true", 10]};
 	case "radio" : {_object addAction [localize "STR_act_radio", "actions\radio.sqf",nil,0,false,true,"","true", 4]};
+	case "build_camp" : {_object addAction [localize "STR_act_buildCamp", {[_this select 0, _this select 1] remoteExec ["AS_fnc_buildCamp", 2]},nil,0,false,true,"",IS_PLAYER]};
+	case "build_roadblock" : {_object addAction [localize "STR_act_buildRoadblock", {[_this select 0, _this select 1] remoteExec ["AS_fnc_buildRoadblock", 2]},nil,0,false,true,"",IS_PLAYER]};
+	case "build_watchpost" : {_object addAction [localize "STR_act_buildWatchpost", {[_this select 0, _this select 1] remoteExec ["AS_fnc_buildWatchpost", 2]},nil,0,false,true,"",IS_PLAYER]};
 	default {
 		diag_log format ["[AS] Error: AS_fnc_addAction: invalid action type '%1'", _type];
 		-1

@@ -17,12 +17,17 @@ if (_this call AS_spawn_fnc_exists) then {
     [_x, _this] call AS_fnc_dismissFIAgarrison;
   } foreach _garrison;
 
+  [_this, false] call AS_location_fnc_knownLocations;
+  _this call AS_location_fnc_remove;
+
   /*private _hq_garrison = "FIA_HQ" call AS_location_fnc_garrison;
   _hq_garrison append (_this call AS_location_fnc_garrison);
   ["FIA_HQ","garrison",_hq_garrison] call AS_location_fnc_set;*/
 
 };
 
-_this call AS_location_fnc_remove;
+
+
+
 
 hint "Location abandoned";

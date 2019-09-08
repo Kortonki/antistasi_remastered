@@ -2,6 +2,7 @@ if (count hcSelected player > 1) exitWith {
 	hint "You can only select one group to fast travel";
 };
 
+private _enemiesNearby = false;
 private _isHCfastTravel = false;
 private _group = group player;
 if (count hcSelected player == 1) then {
@@ -29,7 +30,7 @@ if (_unpreparedVehicles) exitWith {
 };*/
 
 {
-		if ([_x, 500] call AS_fnc_enemiesNearby) exitWith {_enemiesNearby = true};
+		if ([_x, nil] call AS_fnc_enemiesNearby) exitWith {_enemiesNearby = true};
 } foreach units _group;
 
 if (_enemiesNearby) exitWith {Hint "You cannot use fast travel with enemies near the group fast traveling"};
@@ -69,7 +70,7 @@ if (_enemiesNearby) exitWith {
 
 private _positionTo = [_positionTo, 10, random 360] call BIS_Fnc_relPos;
 
-private _distance = round ((position (leader _group)) distance _positionTo);
+private _distance = round ((position (leader _group)) distance2D _positionTo);
 
 if (!_isHCfastTravel) then {
 	disableUserInput true;

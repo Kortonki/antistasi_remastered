@@ -29,7 +29,7 @@ private _spawningOPFORunits = [];
     if (_x call AS_location_fnc_side == "AAF") then {
         private _spawnCondition = (_x call AS_location_fnc_forced_spawned) or ({(_x distance2D _position < AS_P("spawnDistance"))} count _spawningBLUFORunits > 0);
         //Added a condition here to check last spawn has finished before starting a new one. Rare but can happen because of scheduling
-        if (!_isSpawned and {_spawnCondition and {!(_x call AS_spawn_fnc_exists)}}) then {
+        if (!_isSpawned and {!(_x call AS_spawn_fnc_exists) and {_spawnCondition}}) then {
             _x call AS_location_fnc_spawn;
 
             [_x, "location"] call AS_spawn_fnc_add;
@@ -62,7 +62,7 @@ private _spawningOPFORunits = [];
         // enemies are close.
         private _spawnCondition = _playerIsClose or {{_x distance2D _position < AS_P("spawnDistance")} count _spawningOPFORunits > 0};
         //Added a condition here to check last spawn has finished before starting a new one. Rare but can happen because of scheduling
-        if (!_isSpawned and {_spawnCondition and {!(_x call AS_spawn_fnc_exists)}}) then {
+        if (!_isSpawned and {!(_x call AS_spawn_fnc_exists) and {_spawnCondition}}) then {
             _x call AS_location_fnc_spawn;
 
             [_x, "location"] call AS_spawn_fnc_add;

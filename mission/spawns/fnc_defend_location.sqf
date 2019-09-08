@@ -88,7 +88,7 @@ private _fnc_spawn = {
 		//Attack size is dependent on how much arsenal AAF has and threat evaluation TODO: prolly NEEDS BALANCING,
 		//private _nVeh = (round (_size/30)) max 1;
 		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
-		private _nVeh = (round(_threatEvalLand*(_arsenalCount/50)) max 1) min (_arsenalCount min 10);
+		private _nVeh = (round((_threatEvalLand/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min 10);
 
 
 

@@ -29,7 +29,7 @@ params ["_groups", "_vehicles", "_markers"];
     //[_x] spawn AS_fnc_activateVehicleCleanup;
     //Addition why wait if cleanResources is triggered only after away for spawn distance?
     //TODO consider what happes to towed vehicles, are they deleted when location despawns?
-    if (!(_vehicle isKindOf "AllVehicles") and !(_vehicle isKindof "ReammoBox_F")) then {
+    if (!(_x isKindOf "AllVehicles") and !(_x isKindof "ReammoBox_F")) then {
       [_x] remoteExecCall ["deletevehicle", _x];
     } else {
       [_x] spawn AS_fnc_activateVehicleCleanup;

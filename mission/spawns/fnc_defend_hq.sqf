@@ -110,7 +110,7 @@ private _fnc_spawn = {
 		private _threat = [_position] call AS_fnc_getLandThreat;
 
 		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
-		private _nVeh = (round(_threat*(_arsenalCount/30)) max 1) min (_arsenalCount min 10);
+		private _nVeh = (round((_threat/2)*(_arsenalCount/30)) max 1) min (_arsenalCount min 10);
 
 
 		// spawn them

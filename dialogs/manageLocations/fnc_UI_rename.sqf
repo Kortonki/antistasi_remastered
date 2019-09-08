@@ -1,5 +1,5 @@
 private _position = _this;
-private _location = _position call AS_location_nearest;
+private _location = _position call AS_location_fnc_nearest;
 private _type = _location call AS_location_fnc_type;
 
 if (_position distance (_location call AS_location_fnc_position) > 100 or

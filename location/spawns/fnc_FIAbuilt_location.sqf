@@ -94,7 +94,7 @@ private _fnc_wait_for_destruction = {
 
 	private _wasDestroyed = false;
 	private _wasAbandoned = ({alive _x} count _soldiers) == 0;  // abandoned when it has no garrison
-	waitUntil {sleep 10;
+	waitUntil {sleep AS_spawnLoopTime;
 		_wasDestroyed = !_wasAbandoned and ({_x call AS_fnc_canFight} count _soldiers == 0);
 		_wasAbandoned or !(_location call AS_location_fnc_spawned) or _wasDestroyed
 	};
@@ -128,7 +128,7 @@ private _fnc_wait_to_abandon = {
 	private _soldiers = [_location, "FIAsoldiers"] call AS_spawn_fnc_get;
 	private _wasDestroyed = [_location, "wasDestroyed"] call AS_spawn_fnc_get;
 
-	private _wasAbandoned = ({alive _x} count _soldiers) == 0;  // abandoned when it has no garrison
+	private _wasAbandoned = ({!(isnil{_x getVariable "marcador"})} count _soldiers == 0);  // abandoned when garrison is released
 	private _toRemove = false; //This is passed to the clean function
 
 	waitUntil {sleep AS_spawnLoopTime;
@@ -180,13 +180,9 @@ private _fnc_clean = {
 		} else {
 
 			([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
-			[_groups,  [], _markers] call AS_fnc_cleanResources; //Vehicles aren't deleted immediately because the whole spawn disappears
-			{
-				[_x] spawn AS_fnc_activateVehicleCleanup;
-			} foreach _vehicles;
-
-			[_location] remoteExec ["AS_location_fnc_remove", 2];
+			[_groups,  _vehicles, _markers] call AS_fnc_cleanResources;
 			[_location, false] call AS_location_fnc_knownLocations;
+			[_location] remoteExec ["AS_location_fnc_remove", 2];
 			[_location, "delete", true] call AS_spawn_fnc_set;
 
 	};

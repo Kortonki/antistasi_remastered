@@ -1,3 +1,5 @@
+//LEGACY CODE
+
 #include "../../macros.hpp"
 
 private _fnc_initialize = {
@@ -22,7 +24,7 @@ private _fnc_initialize = {
 		};
 	};
 	private _taskTitle = format ["Establish %1", _locationName];
-	private _taskDesc = format ["The vehicle to establish the %1 is ready. Drive it to the destination.", _locationName];
+	private _taskDesc = format ["The crate to establish the %1 is ready. Drive it to the destination.", _locationName];
 
 	// give 30m to complete mission
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30];
