@@ -48,8 +48,14 @@ private _aaf_veh_EHkilled = {
 	if (([_veh] call AS_fnc_getSide) != "AAF") exitWith {}; //If vehicle was stolen, there's nothing to do here
 
 		//Deduct from AAF arsenal regardless of killers side
-	[typeOf _veh] call AS_AAFarsenal_fnc_deleteVehicle;
-	private _vehicleCategory = (typeOf _veh) call AS_AAFarsenal_fnc_category;
+		//Also remove from spawn counter so new one can spawn
+	private _vehicleType = typeOf _veh;
+	[_vehicleType] call AS_AAFarsenal_fnc_deleteVehicle;
+	[_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
+
+	private _vehicleCategory = _vehicleType call AS_AAFarsenal_fnc_category;
+
+
 
 		//This was moved so XP is gained only if FIA is the killer or capturer
 	if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {

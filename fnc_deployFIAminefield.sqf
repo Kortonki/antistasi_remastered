@@ -29,7 +29,7 @@ if (_totalAvailableMines == 0) exitWith {
 	createDialog "AS_createminefield";
 };
 
-private _vehicleType = selectRandom (["FIA", "vans"] call AS_fnc_getEntity);
+private _vehicleType = (["FIA", "land_vehicles"] call AS_fnc_getEntity) select 0;
 private _cost = 2*("Explosives Specialist" call AS_fnc_getCost) +
 	(_vehicleType call AS_fnc_getFIAvehiclePrice);
 private _hr = 2;

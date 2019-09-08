@@ -34,7 +34,6 @@ private _fnc_spawn = {
 
 	private _pos = position (_roads select 0) findEmptyPosition [1,30,_vehType];
 
-	private _vehType = selectRandom (["FIA", "vans"] call AS_fnc_getEntity);
 	private _truck = _vehType createVehicle _pos;
 	[_truck, "FIA"] call AS_fnc_initVehicle;
 
@@ -64,7 +63,7 @@ private _fnc_wait_to_arrive = {
 
 	private _arrivedSafely = false;
 	waitUntil {sleep 1;
-		_arrivedSafely = (_truck distance _mapPosition < 100) and ({alive _x} count units _group > 0);
+		_arrivedSafely = (_truck distance2D _mapPosition < 100) and ({alive _x} count units _group > 0);
 		(!alive _truck) or _arrivedSafely
 	};
 
@@ -97,14 +96,22 @@ private _fnc_wait_to_deploy = {
 
 	if _arrivedSafely then {
 		// simulates putting mines.
-		sleep (20*(count _minesPositions));
+		//sleep (20*(count _minesPositions));
 
 		if ((alive _truck) and ({alive _x} count units _group > 0)) then {
 			// create minefield
 			private _minesData = [];
 			private _current_mine_index = 0;
 			private _current_mine_amount = 0;
+			private _units = units _group;
 			{
+
+
+				if (!(alive _truck and {({alive _x} count _units) > 0})) exitWith {
+					[petros, "sidechat", "Engineers got either killed or interrupted, minefield partially complete"] remoteExec ["AS_fnc_localCommunication", AS_commander];
+				};
+				sleep (25/(({alive _x and {!(_x call AS_medical_fnc_isUnconscious)}} count _units) + 0.5));
+
 				private _mineType = _mines_cargo select 0 select _current_mine_index;
 				private _typeCount = _mines_cargo select 1 select _current_mine_index;
 
@@ -124,6 +131,9 @@ private _fnc_wait_to_deploy = {
 			([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 			[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 		};
+	} else {
+		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
+		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 	};
 };
 
@@ -133,14 +143,17 @@ private _fnc_clean = {
 	private _group = _resources select 1 select 0;
 	private _truck = _resources select 2 select 0;
 
+	_group setVariable ["isHCgroup", false, true];
+
 	private _alive = 0;
 	{
 		if (alive _x) then {
-			([_x, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
+			([_x, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_magRemains"];
 			[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+			[cajaVeh, _magRemains] call AS_fnc_addMagazineRemains;
 			_alive = _alive + 1;
 		};
-		deleteVehicle _x;
+		[_x] remoteExec ["deleteVehicle", _x];
 	} forEach units _group;
 
 	if (alive _truck) then {
@@ -148,7 +161,7 @@ private _fnc_clean = {
 		private _cost = [_mission, "cost"] call AS_mission_fnc_get;
 		[_alive, _cost] remoteExec ["AS_fnc_changeFIAmoney",2];  // recover the costs
 	};
-	deleteVehicle _truck;
+	[_truck] remoteExec ["deleteVehicle", _truck];
 
 	_mission call AS_mission_spawn_fnc_clean;
 };

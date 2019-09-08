@@ -30,14 +30,14 @@ if (_location call AS_location_fnc_side == "FIA") then {
   			_cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
   			_cargo_i = [_cargo_i, _arsenal select 2] call AS_fnc_mergeCargoLists;
   			_cargo_b = [_cargo_b, _arsenal select 3] call AS_fnc_mergeCargoLists;
-  			[cajaVeh, (_arsenal select 4)]; call AS_fnc_addMagazineRemains;
+  			[cajaVeh, (_arsenal select 4)] call AS_fnc_addMagazineRemains;
 
 
       if (alive _x) then {
           if (!(isNull objectParent _x)) then {
             objectParent _x deletevehicleCrew _x;
           } else { //This was added so vehicle soldier is in is not deleted
-          deleteVehicle _x;
+          [_x] remoteExec ["deleteVehicle", _x];
           };
       };
     } forEach _soldadosFIA;

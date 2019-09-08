@@ -12,10 +12,11 @@ if (_killed in AS_P("vehicles")) then {
 sleep AS_P("cleantime");
 waitUntil {sleep 20; not([AS_P("spawnDistance"), _killed, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)};
 
-if (_killed call AS_fnc_getSide == "AAF") then {
+//This happens in killed eventhandler
+/*if (_killed call AS_fnc_getSide == "AAF") then {
 	private _vehicleType = typeof _killed;
 	[_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
-};
+};*/
 
 _group = group _killed;
 [_killed] RemoteExecCall ["deleteVehicle", _killed];

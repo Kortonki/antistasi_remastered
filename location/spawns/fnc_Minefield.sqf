@@ -24,7 +24,7 @@ private _fnc_clean = {
 	private _minesData = ([_location, "mines"] call AS_location_fnc_get);
 	private _mines = [_location, "mines"] call AS_spawn_fnc_get;
 
-	waitUntil {sleep 1; !(_location call AS_location_fnc_spawned)};
+	waitUntil {sleep AS_spawnLoopTime; !(_location call AS_location_fnc_spawned)};
 
 	if ({!isNull _x} count _mines == 0) then {
 		// if no mines left, delete location
@@ -40,7 +40,7 @@ private _fnc_clean = {
 	};
 
 	{
-		deleteVehicle _x;
+		[_x] remoteExec ["deleteVehicle", _x];
 	} forEach _mines;
 };
 

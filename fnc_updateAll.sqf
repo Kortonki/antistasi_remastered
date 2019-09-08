@@ -209,7 +209,7 @@ _FIAnewFuel = AS_P("fuelFIA") + _FIAnewFuel;
 
 //Commander gets score every update
 
-[AS_commander, "score", 2] call AS_players_fnc_change;
+[AS_commander, "score", 1] call AS_players_fnc_change;
 
 //Set next update time:
 

@@ -30,7 +30,7 @@ private _deployMinefield = {
     		if (not(_nearest call AS_location_fnc_spawned)) then {
     			private _size = _nearest call AS_location_fnc_size;
     			private _nearestPos = _nearest call AS_location_fnc_position;
-    			if ((_position distance _nearestPos) > (_size + 100)) then {
+    			if ((_position distance2D _nearestPos) > (_size + 100)) then {
     				private _roads = _position nearRoads 101;
     				if (count _roads == 0) then {
     					_found = true;
