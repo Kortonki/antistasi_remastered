@@ -115,7 +115,7 @@ private _fnc_spawn = {
 	_crate setPos ([getPos _truck, 6, 185] call BIS_Fnc_relPos);
 	_crate setDir (getDir _truck + (floor random 180));
 	[_crate] call AS_fnc_emptyCrate;
-	_crate addItemCargoGlobal ["FirstAidKit", 80];
+	//_crate addItemCargoGlobal ["FirstAidKit", 80];
 
 	private _tipoGrupo = [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 	private _grupo = [_crashPosition, ("AAF" call AS_fnc_getFactionSide), _tipogrupo] call BIS_Fnc_spawnGroup;
@@ -178,7 +178,9 @@ private _fnc_spawn = {
 
 	_Vwp0 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 
-	[_veh, "AAF Escort", _crashPosition] spawn AS_fnc_setConvoyImmune;
+	[_grupo, _veh] spawn AS_AI_fnc_dismountOnDanger;
+
+	[_veh, "AAF Reinforcements", _crashPosition] spawn AS_fnc_setConvoyImmune;
 
 	private _markers = ([_mission, "resources"] call AS_spawn_fnc_get) select 3;
 	[_mission, "escort", _veh] call AS_spawn_fnc_set;

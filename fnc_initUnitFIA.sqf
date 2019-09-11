@@ -30,9 +30,7 @@ _unit addEventHandler ["HandleDamage", AS_fnc_EH_handleDamage_AIcontrol];
 
 [_unit, AS_P("skillFIA")] call AS_fnc_setDefaultSkill;
 
-//This is where recruited squads get their gear
-//check for lockTransfer so best equipment algorithm doesn't think the arsenal is empty if it's filling up
-waitUntil {not(AS_S("lockTransfer"))};
+
 if (count _equipment == 0) then {
     _equipment = [[_unit] call AS_fnc_getFIAUnitType] call AS_fnc_getBestEquipment;
 };
@@ -120,6 +118,8 @@ if (isPlayer(leader _unit)) then {
 		params ["_unit", "_killer"];
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
+		private _group = group _unit;
+
 		// player team-kill
 		if (isPlayer _killer) then {
 			[player, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
@@ -129,6 +129,11 @@ if (isPlayer(leader _unit)) then {
 
 		if (_unit getVariable ["BLUFORSpawn",false]) then {
 			_unit setVariable ["BLUFORSpawn",nil,true];
+		};
+
+		if (_group getVariable ["isHCgroup", false] and {{alive _x} count (units _group) < 1}) then {
+			_group setVariable ["isHCgroup", false, true];
+			deleteGroup _group;
 		};
 
 		private _location = _unit getVariable "marcador";

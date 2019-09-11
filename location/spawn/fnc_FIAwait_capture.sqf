@@ -10,7 +10,7 @@ private _fnc_was_captured = {
 };
 
 private _was_captured = false;
-waitUntil {sleep 1;
+waitUntil {sleep AS_spawnLoopTime;
     _was_captured = call _fnc_was_captured;
     (not (_location call AS_location_fnc_spawned)) or _was_captured
 };

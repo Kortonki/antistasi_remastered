@@ -3,7 +3,7 @@
 AS_SERVER_ONLY("AS_mission_fnc_updateAvailable");
 
 // maximum distance from HQ for a mission to be available
-#define AS_missions_MAX_DISTANCE 4000
+#define AS_missions_MAX_DISTANCE 5000
 // maximum number of missions available or active.
 #define AS_missions_MAX_MISSIONS 10
 
@@ -13,9 +13,11 @@ private _fnc_allPossibleMissions = {
     private _possible = [];
 
     private _locations = [[
-        "city","outpost", "base", "airfield", "powerplant",
+        "outpost", "base", "airfield", "powerplant",
         "resource", "factory", "seaport", "outpostAA"
     ], "AAF"] call AS_location_fnc_TS;
+
+    _locations append ("city" call AS_location_fnc_T); //All cities possible for example convoy missions. AAF supply convoy missions are prioritsed for FIA cities
 
     private _fnc_isPossibleMission = {
         // Checks whether the combination of location and mission type is a possible mission

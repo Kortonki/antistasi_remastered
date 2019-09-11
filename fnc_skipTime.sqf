@@ -1,6 +1,7 @@
 #include "macros.hpp"
 
 [["You decided to rest some time","BLACK OUT",5]] remoteExec ["cutText", [0,-2] select isDedicated];
+[true] remoteExec ["disableUserInput", [0,-2] select isDedicated]; //Careful with this shit
 sleep 5;
 //TODO: A dialog to choose how long to skip?
 private _skiptimeMax = 1*60;
@@ -35,6 +36,8 @@ while {!(_attack) and {_skippedTime < _skipTimeMax}} do {
 
 //Switch everything back on:
 
+[false] remoteExec ["disableUserInput", [0,-2] select isDedicated];
+
 [true] call AS_spawn_fnc_toggle;
 [true] call AS_fnc_resourcesToggle;
 
@@ -44,5 +47,4 @@ while {!(_attack) and {_skippedTime < _skipTimeMax}} do {
 
 if (_attack) then {_text = "Alarm!"};
 
-sleep 10;
-[_text, "BLACK IN", 10] remoteExec ["cutText", [0,-2] select isDedicated];
+[[_text, "BLACK IN", 5]] remoteExec ["cutText", [0,-2] select isDedicated];

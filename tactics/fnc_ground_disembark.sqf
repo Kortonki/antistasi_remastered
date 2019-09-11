@@ -47,7 +47,7 @@ _wp2 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
       [_x] allowGetin false;
       [_x] orderGetin false;
     } foreach units _group;
-    [_leader, _group getVariable "AS_patrol_marker", "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
+    [_leader, _marker, "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
     sleep 10;
     _crew_group setCurrentWaypoint [_crew_group, 2];
 

@@ -1,9 +1,8 @@
 #include "macros.hpp"
 AS_SERVER_ONLY("AS_fnc_changeCitySupport.sqf");
 params ["_opfor","_blufor",["_pos", [0,0,0]], ["_notify", false]];
-private ["_city","_datos","_numCiv","_numVeh","_roads"];
 
-waitUntil {isNil "AS_cityIsSupportChanging"};
+waitUntil {sleep 0.5; isNil "AS_cityIsSupportChanging"};
 AS_cityIsSupportChanging = true;
 
 
@@ -32,6 +31,17 @@ else {
 		_blufor = _blufor - 5;
 	};
 };
+
+//here if AAF less than 1% and getting less add FIA support instead and vice versa
+
+if ((_blufor < 0) and {_FIAsupport <= 1}) then {
+	_opfor = _opfor - _blufor;
+};
+
+if ((_opfor < 0) and {_AAFsupport <= 1}) then {
+	_blufor = _blufor - _opfor;
+};
+
 
 if (_AAFsupport + _FIAsupport + _opfor > 100) then {
 	_opfor = 100 - (_AAFsupport + _FIAsupport);

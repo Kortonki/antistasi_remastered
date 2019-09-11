@@ -24,11 +24,12 @@ private _spawningOPFORunits = [];
 { // forEach location
     private _position = _x call AS_location_fnc_position;
     private _isSpawned = _x call AS_location_fnc_spawned;
+    private _deSpawning = _x call AS_location_fnc_despawning;
 
     if (_x call AS_location_fnc_side == "AAF") then {
-        private _spawnCondition = (_x call AS_location_fnc_forced_spawned) or ({(_x distance _position < AS_P("spawnDistance"))} count _spawningBLUFORunits > 0);
+        private _spawnCondition = (_x call AS_location_fnc_forced_spawned) or ({(_x distance2D _position < AS_P("spawnDistance"))} count _spawningBLUFORunits > 0);
         //Added a condition here to check last spawn has finished before starting a new one. Rare but can happen because of scheduling
-        if (!_isSpawned and {_spawnCondition and {!(_x call AS_spawn_fnc_exists)}}) then {
+        if (!_isSpawned and {!(_x call AS_spawn_fnc_exists) and {_spawnCondition}}) then {
             _x call AS_location_fnc_spawn;
 
             [_x, "location"] call AS_spawn_fnc_add;
@@ -41,25 +42,27 @@ private _spawningOPFORunits = [];
                 [["civ_" + _x], "AS_spawn_fnc_execute"] call AS_scheduler_fnc_execute;
             };
         };
-        if (_isSpawned and {!_spawnCondition}) then {
+        if (!(_deSpawning) and {_isSpawned and {!_spawnCondition}}) then {
             [_x, _position, _spawningBLUFORunits] spawn {
               params ["_spawn", "_position", "_spawningBLUFORunits"];
+              [_spawn, "despawning", true] call AS_location_fnc_set; //This to avoid multiple spawns of this function
               sleep 60; //Delay to reduce unneccessary despawn
 
-              if (!((_spawn call AS_location_fnc_forced_spawned) or ({(_x distance _position < AS_P("spawnDistance"))} count _spawningBLUFORunits > 0))) then {
+              if (!((_spawn call AS_location_fnc_forced_spawned) or ({(_x distance2D _position < AS_P("spawnDistance"))} count _spawningBLUFORunits > 0))) then {
                 _spawn call AS_location_fnc_despawn;
                 };
+              [_spawn, "despawning", false] call AS_location_fnc_set;
               };
         };
     };
     if (_x call AS_location_fnc_side == "FIA") then {
         // not clear what this is doing. owner is about who controls it, not something else.
         private _playerIsClose = (_x call AS_location_fnc_forced_spawned) or
-                                 ({not (_x call AS_fnc_controlsAI) and {_x distance _position < AS_P("spawnDistance")}} count _spawningBLUFORunits > 0);
+                                 ({not (_x call AS_fnc_controlsAI) and {_x distance2D _position < AS_P("spawnDistance")}} count _spawningBLUFORunits > 0);
         // enemies are close.
-        private _spawnCondition = _playerIsClose or {{_x distance _position < AS_P("spawnDistance")} count _spawningOPFORunits > 0};
+        private _spawnCondition = _playerIsClose or {{_x distance2D _position < AS_P("spawnDistance")} count _spawningOPFORunits > 0};
         //Added a condition here to check last spawn has finished before starting a new one. Rare but can happen because of scheduling
-        if (!_isSpawned and {_spawnCondition and {!(_x call AS_spawn_fnc_exists)}}) then {
+        if (!_isSpawned and {!(_x call AS_spawn_fnc_exists) and {_spawnCondition}}) then {
             _x call AS_location_fnc_spawn;
 
             [_x, "location"] call AS_spawn_fnc_add;
@@ -72,19 +75,21 @@ private _spawningOPFORunits = [];
                 [["civ_" + _x], "AS_spawn_fnc_execute"] call AS_scheduler_fnc_execute;
             };
         };
-        if (_isSpawned and {!_spawnCondition}) then {
+        if (!(_deSpawning) and {_isSpawned and {!_spawnCondition}}) then {
           [_x, _position, _spawningBLUFORunits, _spawningOPFORunits] spawn {
             params ["_spawn", "_position", "_spawningBLUFORunits", "_spawningOPFORunits"];
+            [_spawn, "despawning", true] call AS_location_fnc_set; //This to avoid multiple spawns of this function
             sleep 60; //Delay to reduce unneccessary despawn
 
             private _playerIsClose = (_spawn call AS_location_fnc_forced_spawned) or
-                                     ({not (_x call AS_fnc_controlsAI) and {_x distance _position < AS_P("spawnDistance")}} count _spawningBLUFORunits > 0);
+                                     ({not (_x call AS_fnc_controlsAI) and {_x distance2D _position < AS_P("spawnDistance")}} count _spawningBLUFORunits > 0);
             // enemies are close.
-            private _spawnCondition = _playerIsClose or {{_x distance _position < AS_P("spawnDistance")} count _spawningOPFORunits > 0};
+            private _spawnCondition = _playerIsClose or {{_x distance2D _position < AS_P("spawnDistance")} count _spawningOPFORunits > 0};
 
             if (!_spawnCondition) then {
               _spawn call AS_location_fnc_despawn;
               };
+            [_spawn, "despawning", false] call AS_location_fnc_set;
             };
 
         };

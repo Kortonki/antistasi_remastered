@@ -21,10 +21,10 @@ private _p1 = _bbr select 0;
 private _p2 = _bbr select 1;
 private _maxHeight = abs ((_p2 select 2) - (_p1 select 2));
 if (_maxHeight > 2.5) then {
-		_attachPoint = [0,2,1.5];
+		_attachPoint = [0,6,1];
 };
 if (_maxHeight > 3) then {
-		_attachPoint = [0,2,2];
+		_attachPoint = [0,8,1.5];
 };
 
 

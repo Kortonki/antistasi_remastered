@@ -27,6 +27,8 @@ if (_composition == "random") then {
 	_composition = selectRandom _posComp;
 };
 
+private _noArsenal = false;
+
 // define type of QRF and vehicles by type of origin, plus method of troop insertion by air (rope or land)
 private _type = "air";
 private _method = "fastrope";
@@ -39,32 +41,46 @@ if not (_origin isEqualTo "spawnCSAT") then {
 	_method = "disembark";
 	_faction = "AAF";
 	if (_size == "small") then {
-		_transportVehicle = selectRandom (["AAF", "helis_transport"] call AS_fnc_getEntity);
-		_dismountGroup = [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		if (_origin in _bases) then {
+			if ("cars_armed" call AS_AAFarsenal_fnc_countAvailable < 2 or "trucks" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
 			_type = "land";
 			_attackVehicle = selectRandom (["AAF", "cars_armed"] call AS_fnc_getEntity);
 			_transportVehicle = selectRandom ("trucks" call AS_AAFarsenal_fnc_valid);
 			_dismountGroup = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
+		} else {
+			if ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
+			_transportVehicle = selectRandom (["AAF", "helis_transport"] call AS_fnc_getEntity);
+			_dismountGroup = [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		};
 	} else {
-		_transportVehicle = selectRandom (["AAF", "helis_transport"] call AS_fnc_getEntity);
-		_dismountGroup = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
-		_method = "fastrope";
 		if (_origin in _bases) then {
+			if ("apcs" call AS_AAFarsenal_fnc_countAvailable < 2 or "trucks" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
 			_type = "land";
 			_attackVehicle = selectRandom ("apcs" call AS_AAFarsenal_fnc_valid);
 			_transportVehicle = selectRandom ("trucks" call AS_AAFarsenal_fnc_valid);
+		} else {
+			if ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
+			_transportVehicle = selectRandom (["AAF", "helis_transport"] call AS_fnc_getEntity);
+			_dismountGroup = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
+			_method = "fastrope";
 		};
 	};
 } else {
 	_origin = getMarkerPos "spawnCSAT";
 };
 
+if (_noArsenal) exitWith {diag_log "[AS]: Not enough vehicles, cancelling QRF";};
+
 // get the position of the target marker
 if (typeName _origin != "ARRAY") then {
-	_origin = _origin call AS_location_fnc_positionConvoy;
+	if (_type == "land") then {
+		_origin = _origin call AS_location_fnc_positionConvoy;
+	} else {
+		_origin = _origin call AS_location_fnc_position;
+	};
 };
+
+
 
 // arrays of all resources (resources owned by this script)
 private _grupos = [];

@@ -296,14 +296,16 @@ fnc_BE_permission = {
 			private _vehClass = getText (configFile >> "CfgVehicles" >> _value >> "vehicleClass");
 			if (((toLower _vehClass find "heli" >= 0) || (_vehClass == "Air")) && ("Heli" in BE_current_Vehicle_Restriction)) exitWith {_result = false};
 
+			/*
 			//Capture vehicle rewards
+			//This is handled in getin eventhandler
 			if (!(_vehicle getVariable ["BE_mil_veh", false]) && (_value in BE_mil_vehicles)) then {
 				call {
 					if (_vehicle in BE_class_MBT) exitWith {["cap_arm"] remoteExec ["fnc_BE_XP", 2]};
 					if (_vehicle in BE_class_APC) exitWith {["cap_arm"] remoteExec ["fnc_BE_XP", 2]};
 					if (_vehicle in BE_class_MRAP) exitWith {["cap_veh"] remoteExec ["fnc_BE_XP", 2]};
 				};
-			};
+			};*/
 		};
 		case "HR": {
 				_result = true;

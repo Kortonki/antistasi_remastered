@@ -33,6 +33,10 @@ class AS {
         FNC_BASE(HQdeployPad);
         FNC_BASE(HQdeletePad);
 
+        FNC_BASE(buildCamp);
+        FNC_BASE(buildRoadBlock);
+        FNC_BASE(buildWatchpost);
+
         FNC_BASE(addMinefield);
         FNC_BASE(changePersistentVehicles);
         FNC_BASE(deployAAFminefield);

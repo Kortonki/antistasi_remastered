@@ -121,6 +121,15 @@
 			<Key ID="STR_act_buildHQ">
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\takeFlag_ca.paa' /&gt; Build HQ</Original>
 			</Key>
+			<Key ID="STR_act_buildCamp">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\takeFlag_ca.paa' /&gt; Build Camp</Original>
+			</Key>
+			<Key ID="STR_act_buildRoadblock">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\takeFlag_ca.paa' /&gt; Build Roadblock</Original>
+			</Key>
+			<Key ID="STR_act_buildWatchpost">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\takeFlag_ca.paa' /&gt; Build Watchpost</Original>
+			</Key>
 			<Key ID="STR_act_pamphlets">
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\cfg\simpletasks\types\documents_ca.paa' /&gt; Box 'o Pams</Original>
 			</Key>

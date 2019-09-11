@@ -8,10 +8,11 @@ class AS_manageLocations
 AS_DIALOG(4,"Manage locations", "closeDialog 0;");
 
 // build new
-LIST_L(0,1,0,3,"");
-BTN_L(4,-1,"Choose position",
-	"Select the position to build the selected location",
-	"'add' spawn AS_fnc_UI_manageLocations_selectOnMap;");
+//LIST_L(0,1,0,3,"");
+BTN_L(1,-1,"Build Camp (200€)",	"Deliver the crate to the desired position","['camp'] spawn AS_fnc_UI_manageLocations_add");
+BTN_L(2,-1,"Build Roadblock (200€)", "Deliver the crate to the desired position","['roadblock'] spawn AS_fnc_UI_manageLocations_add");
+BTN_L(3,-1,"Build Watchpost (200€)", "Deliver the crate to the desired position", "['watchpost'] spawn AS_fnc_UI_manageLocations_add");
+
 
 // remove existing
 BTN_R(1,-1,"Abandon","Select a location on the map to abandon","'abandon' spawn AS_fnc_UI_manageLocations_selectOnMap;");

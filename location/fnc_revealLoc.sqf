@@ -14,7 +14,7 @@ while {sleep AS_spawnLoopTime; _location call AS_location_fnc_spawned and {!(_lo
              params ["_unit","_location"];
              _unit setVariable ["revealing", true, true];
              sleep (5 + random 30);
-             if (alive _unit) then {
+             if (alive _unit and {random 100 > _x distance2D _position}) then {
                 waitUntil {sleep 1; !(_unit call AS_medical_fnc_isUnconscious)};
                 [_location] call AS_location_fnc_knownLocations;
               };

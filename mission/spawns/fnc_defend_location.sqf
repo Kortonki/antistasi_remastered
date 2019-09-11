@@ -83,13 +83,18 @@ private _fnc_spawn = {
 		_originPos = _base call AS_location_fnc_positionConvoy;
 		private _size = _base call AS_location_fnc_size;
 
-		// compute number of trucks based on the marker size
-		private _nVeh = (round (_size/30)) max 1;
+		// compute number of trucks based on the marker size -> this is stupid, different places have varying marker size not representing the danger
+		//Enchantement: threat evaluation
+		//Attack size is dependent on how much arsenal AAF has and threat evaluation TODO: prolly NEEDS BALANCING,
+		//private _nVeh = (round (_size/30)) max 1;
+		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
+		private _nVeh = (round((_threatEvalLand/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min 10);
+
 
 
 
 		// spawn them
-		for "_i" from 1 to _nveh do {
+		for "_i" from 1 to _nVeh do {
 			private _toUse = "trucks";
 			if (_threatEvalLand > 3 and ("apcs" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
 				_toUse = "apcs";
@@ -102,6 +107,7 @@ private _fnc_spawn = {
 			_vehicles append _vehicles1;
 			sleep 5;
 		};
+		diag_log format ["[AS] DefendLocation: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};
 
 	if (_airfield != "") then {

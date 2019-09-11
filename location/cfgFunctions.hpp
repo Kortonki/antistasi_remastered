@@ -9,6 +9,7 @@ class AS_location {
         FNC(location,increaseBusy);
         FNC(location,spawn);
         FNC(location,despawn);
+        FNC(location,despawning);
         // initialize
         FNC(location,init);
         FNC(location,addAllRoadblocks);

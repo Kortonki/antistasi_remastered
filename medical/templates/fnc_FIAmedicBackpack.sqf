@@ -13,14 +13,14 @@ if hasACEmedical then {
 
         _return = [["ACE_tourniquet", 5], ["ACE_fieldDressing", 20], ["ACE_morphine", 20], ["ACE_epinephrine", 10], ["ACE_packingBandage", 10], ["ACE_quikclot", 10],["ACE_elasticBandage", 10],["ACE_adenosine", 10]];
 
-        if (hasACEsplint) then {_return pushBack ["adv_aceSplint_splint", 5]};
+        if (hasACEsplint) then {_return pushBack ["adv_aceSplint_splint", 5];};
 
         //Check whether there's saline or blood. Prioritize blood.
         private _bloods = [];
         private _fluids = [];
         {
-            if (_x find "blood") then {_bloods pushback _x};
-            if (_x find "saline") then {_fluids pushback _x};
+            if (_x find "blood" != -1) then {_bloods pushback _x};
+            if (_x find "saline" != -1) then {_fluids pushback _x};
         } foreach (_itemList + unlockedItems);
 
           {

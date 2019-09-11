@@ -29,7 +29,7 @@ _wp3 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
     params ["_group", "_landing_position", "_crew_group"];
     private _leader = leader _group;
 
-    waitUntil {sleep 5; _leader = leader _group; vehicle _leader == _leader or {alive _x} count (units _group) == 0 or _leader distance2D _landing_position < 50};
+    waitUntil {sleep 5; _leader = leader _group; vehicle _leader == _leader or {alive _x} count (units _group) == 0 or _leader distance2D _landing_position < 70};
     if ({alive _x} count units _group == 0) exitWith {};
 
       private _marker = _group getVariable "AS_patrol_marker";
@@ -39,13 +39,14 @@ _wp3 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
       _wp4 setWaypointSpeed "NORMAL";
       _wp4 setWaypointFormation "LINE";
       _wp4 setWaypointBehaviour "COMBAT";
+      _group setCurrentWaypoint _wp4;
 
     {
       unassignVehicle _x;
       [_x] allowGetin false;
       [_x] orderGetin false;
     } foreach units _group;
-    [_leader, _group getVariable "AS_patrol_marker", "COMBAT", "SPAWNED", "NOFOLLOW"] spawn UPSMON;
+    [_leader, _marker, "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
     sleep 10;
     _crew_group setCurrentWaypoint [_crew_group, 2];
 

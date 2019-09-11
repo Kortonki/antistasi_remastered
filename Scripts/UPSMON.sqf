@@ -252,7 +252,7 @@ if (_initpos!="ORIGINAL") then
 
 	if (_initpos=="RANDOM") then
 	{
-		while {_try<20} do
+		while {_try<30} do
 		{
 			if (_grptype == "Isboat" || _grptype == "Isdiver") then
 			{
@@ -260,13 +260,15 @@ if (_initpos!="ORIGINAL") then
 			}
 			else
 			{
-				_currPos=[_areamarker,0,[],1] call UPSMON_pos;
+				_currPos=[_areamarker,0,[],[300, "I_MRAP_03_hmg_F"]] call UPSMON_pos;
 			};
 
 			if (count _currPos > 0) then {_try=99};
 			_try=_try+1;
 			sleep .01;
 		};
+		//This added as a failsafe
+		if (count _currPos == 0) then {_currPos == getMarkerpos _areaMarker};
 	}
 	else
 	{

@@ -29,7 +29,7 @@ if (_totalAvailableMines == 0) exitWith {
 	createDialog "AS_createminefield";
 };
 
-private _vehicleType = selectRandom (["FIA", "vans"] call AS_fnc_getEntity);
+private _vehicleType = (["FIA", "land_vehicles"] call AS_fnc_getEntity) select 0;
 private _cost = 2*("Explosives Specialist" call AS_fnc_getCost) +
 	(_vehicleType call AS_fnc_getFIAvehiclePrice);
 private _hr = 2;
@@ -153,12 +153,9 @@ private _remaining = count _positions; // sum of all used mines.
 // pay price and remove mines from box
 [-_hr,-_cost] remoteExec ["AS_fnc_changeFIAmoney",2];
 
-waitUntil {not AS_S("lockTransfer")};
-AS_Sset("lockTransfer", true);
 ([caja, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 _cargo_m = [_cargo_m, _usedMines, false] call AS_fnc_mergeCargoLists;  // false -> remove from _cargo_m
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
-AS_Sset("lockTransfer", false);
+[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] remoteExecCall  ["AS_fnc_populateBox", 2];
 
 // create the mission
 private _mission = ["establish_fia_minefield", ""] call AS_mission_fnc_add;

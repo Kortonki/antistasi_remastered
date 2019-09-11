@@ -13,7 +13,7 @@ _vehicle setVariable ["inDespawner", true, true];
 //Spawndistance - 100 because while the location might be outside spawndistance, the object might not. Can cause loc to respawn while old objects still there
 waitUntil {
 	sleep AS_spawnLoopTime;
-	not([(AS_P("spawnDistance") - 100), _vehicle, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)
+	not([AS_P("spawnDistance"), _vehicle, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)
 };
 
 if (alive _vehicle and {_vehicle call AS_fnc_getSide == "AAF"}) then {

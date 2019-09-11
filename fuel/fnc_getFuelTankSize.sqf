@@ -28,20 +28,20 @@ _fuelTankSize = _vehicle call {
     80 + round(((getmass _vehicle)-2000)*0.001)*20};
   //APC checks: Multiple ways to find them all
   if (_type in BE_class_APC) exitWith {
-    500 + round(((getmass _vehicle)-13000)*0.001)*40};
+    600 + round(((getmass _vehicle)-13000)*0.001)*20};
   if (_vehicle isKindof "APC_Wheeled_01_base_F" or _vehicle isKindof "APC_Wheeled_02_base_F") exitWith {
-    500 + round(((getmass _vehicle)-13000)*0.001)*40};
+    500 + round(((getmass _vehicle)-13000)*0.001)*20};
   if (_vehicle isKindof "APC_Tracked_01_base_F" or _vehicle isKindof "APC_Tracked_02_base_F") exitWith {
-      500 + round(((getmass _vehicle)-13000)*0.001)*40};
+      700 + round(((getmass _vehicle)-13000)*0.001)*20};
     //MRAP use truck fuel capacities
   if (_type in BE_class_MRAP) exitWith {
-    100 + round(((getmass _vehicle)-1000)*0.001)*30};
+    100 + round(((getmass _vehicle)-1000)*0.001)*20};
   if (_vehicle isKindof "Truck_F") exitWith {
-    300 + round(((getmass _vehicle)-5000)*0.001)*30};
+    300 + round(((getmass _vehicle)-5000)*0.001)*20};
   if (_vehicle isKindof "Car") exitWith {
     60 + round(((getmass _vehicle)-1000)*0.001)*20};
   if (_vehicle isKindof "Tank" or _type in BE_class_MBT) exitWith {
-    1500 + round(((getmass _vehicle)-60000)*0.001)*60};
+    1500 + round(((getmass _vehicle)-60000)*0.001)*30};
   if (_vehicle isKindof "Helicopter" or _type in BE_class_Heli) exitWith {
     200 + round(((getmass _vehicle)-1400)*0.001)*200};
   if (_vehicle isKindof "Plane") exitWith {

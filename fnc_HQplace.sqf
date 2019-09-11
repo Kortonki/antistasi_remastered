@@ -2,7 +2,7 @@
 AS_SERVER_ONLY("fnc_HQplace.sqf");
 params ["_position", "_isNewGame"];
 
-"delete" call AS_fnc_HQaddObject;
+//"delete" call AS_fnc_HQaddObject; //Vehicle cleanup is already activated for old HQ placements
 
 ["fia_hq", "position", _position] call AS_location_fnc_set;
 call AS_fnc_initPetros;
