@@ -21,3 +21,4 @@ if ([_position, AS_enemyDist] call AS_fnc_enemiesNearby) exitWith {
 private _garrison = [_location, "garrison"] call AS_location_fnc_get;
 _garrison pushBack _type;
 [_location, "garrison", _garrison] call AS_location_fnc_set;
+garrisonUpdated = true; //This to respawn garrison

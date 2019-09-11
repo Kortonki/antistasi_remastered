@@ -16,9 +16,9 @@ if hasACEmedical then {
 		if (hasACEsplint) then {_medicalItems pushBack "adv_aceSplint_splint"};
 
 		{
-			if (random 5 < _amount) then {
 
 					//Table of medical equipment amounts (Natosupp / 10 * _coeff)
+          //TODO remove random items, better would be weighted randomisation for basic stuff. Now amount is random depending on support
 
 					private _coeff = [_x] call {
             private _item = _this select 0;
@@ -32,6 +32,7 @@ if hasACEmedical then {
 						if (_item isEqualTo "ACE_surgicalKit") exitWith {1};
 						if (_item isEqualTo "adv_aceSplint_splint") exitWith {4};
 						if ((_item find "saline") > -1) exitWith {2};
+            if ((_item find "plasma") > -1) exitWith {2};
 						if ((_item find "blood") > -1) exitWith {1};
 						if ((_item find "Bandage") > -1) exitWith {10};
 
@@ -39,18 +40,18 @@ if hasACEmedical then {
 					};
 
 					(_items select 0) pushBack _x;
-					(_items select 1) pushBack _amount*_coeff;
-				};
+					(_items select 1) pushBack (floor ((random _amount)*_coeff));
+
 
 		} foreach (_medicalItems - _unlocked);
 
 } else {
 
 	(_items select 0) pushBack "FirstAidKit";
-	(_items select 1) pushBack _amount*10;
+	(_items select 1) pushBack (floor ((random _amount)*10));
 
 	(_items select 0) pushBack "Medikit";
-	(_items select 1) pushBack _amount;
+	(_items select 1) pushBack (floor (random _amount));
 
 };
 

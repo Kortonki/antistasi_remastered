@@ -6,7 +6,20 @@ private _position = getpos _target;
 
 //CHECKS
 
+if (count (["roadblock", "FIA"] call AS_location_fnc_TS) >= BE_current_FIA_RB_Cap) exitWith {
+  [petros, "sideChat", "FIA cannot maintain more roadblocks. Remove roadblocks or upgrade FIA level"] remoteExec ["AS_fnc_localCommunication", _caller];
+};
+
+if (AS_P("hr") < 2) exitWith {
+  [petros, "sideChat", "Not enough HR (2)"] remoteExec ["AS_fnc_localCommunication", _caller];
+};
+
+if (AS_P("resourcesFIA") < 100) exitWith {
+  [petros, "sideChat", "Not enough money (100€)"] remoteExec ["AS_fnc_localCommunication", _caller];
+};
+
 private _nearLocations = false;
+
 {
   if (((_x call AS_location_fnc_position) distance2D _position) < AS_enemyDist) exitWith {_nearLocations = true};
 } foreach (["AAF", "CSAT"] call AS_location_fnc_S);
@@ -23,19 +36,9 @@ if (_nearLocations) exitWith {
   [petros, "sideChat", "The location is too close to a friendly location (100m)"] remoteExec ["AS_fnc_localCommunication", _caller];
 };
 
-if (AS_P("hr") < 2) exitWith {
-  [petros, "sideChat", "Not enough HR (2)"] remoteExec ["AS_fnc_localCommunication", _caller];
-};
-
-if (AS_P("resourcesFIA") < 100) exitWith {
-  [petros, "sideChat", "Not enough money (100€)"] remoteExec ["AS_fnc_localCommunication", _caller];
-};
-
-
-
 ///////////////////////END OF CHECKS/////////////////////////////////
 
-private _mrk = createMarker [format ["FIAlocation%1", _position], _position];
+private _mrk = createMarker [format ["FIAroadblock%1", _position], _position];
 _mrk setMarkerShape "ELLIPSE";
 _mrk setMarkerSize [100,100];
 _mrk setMarkerAlpha 0;

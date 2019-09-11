@@ -29,7 +29,7 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 	sleep 60;
 	private _newPos = getPos _veh;
 	// in case it stopped, give vehicles a nodge to continue
-	if (_newPos distance _pos < 10 and {{_x distance2D _newPos < 500} count (allPlayers - (entities "HeadlessClient_F")) == 0}) then {
+	if (_newPos distance2D _pos < 10 and {{_x distance2D _newPos < 500} count (allPlayers - (entities "HeadlessClient_F")) == 0}) then {
 		_newPos = [[[_newPos,20]]] call BIS_fnc_randomPos;
 		private _road = [_newPos,100] call BIS_fnc_nearestRoad;
 		if (!isNull _road) then {

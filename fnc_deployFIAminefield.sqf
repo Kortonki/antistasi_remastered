@@ -75,7 +75,7 @@ onMapSingleClick {
 	if (([AS_mapPositions,_position] call BIS_fnc_nearestPosition) distance _position < 3) exitWith {
 		hint "Mine too close from another mine";
 	};
-	if (_position distance _locationPosition > 100) exitWith {
+	if (_position distance2D _locationPosition > 100) exitWith {
 		hint "Mine too far from minefield";
 	};
 	AS_mapPositions pushBack _position;

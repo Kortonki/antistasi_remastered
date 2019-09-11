@@ -69,7 +69,7 @@ if (_type == "watchpost") then {
 
 private _patrolMarker = createMarker [format ["fia_gar_%1", _location], _position];
 _patrolMarker setMarkerShape "ELLIPSE";
-_patrolMarker setMarkerSize [100,100];
+_patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;
 
 

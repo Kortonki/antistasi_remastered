@@ -99,6 +99,7 @@ class AS {
         FNC_BASE(spawnAAF_truck);
         FNC_BASE(createVehicle);
         FNC_BASE(createEmptyVehicle);
+        FNC_BASE(safeDelete);
 
         FNC(Scripts,spawnAttackWaves);
 
@@ -298,6 +299,7 @@ class AS_AI {
         FNC(ai,autoCombatCallON);
         FNC(ai,autoCombatCallOFF);
         FNC(ai,rearmCall);
+        FNC(ai,dangerOnApproach);
     };
 };
 

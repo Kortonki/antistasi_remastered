@@ -126,7 +126,11 @@ private _fnc_spawn = {
 	([_posbase, _position] call AS_fnc_findSpawnSpots) params ["_posRoad", "_dir"];
 	//_posbase = _posbase findEmptyPosition [0, 10, _mainVehicleType];
 	private _escortSize = 1;
-	if ([_location] call AS_fnc_location_isFrontline) then {_escortSize = (round random 2) + 1};
+	private _frontLine = false;
+	if ([_location] call AS_fnc_location_isFrontline) then {
+		_frontLine = true;
+		_escortSize = (round random 2) + 1
+	};
 
 	// spawn escorts
 	for "_i" from 1 to _escortSize do {
@@ -156,7 +160,7 @@ private _fnc_spawn = {
 			_tipoGrupo = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		};
 
-		_vehicle setConvoySeparation _separation;
+		//_vehicle setConvoySeparation _separation; //Experiment not using this if it's causing AI to freeze in convoy
 
 		//Updated to make sure the group fits in the vehicle
 		//private _grupoEsc = [_posbase, ("AAF" call AS_fnc_getFactionSide), _tipoGrupo] call BIS_Fnc_spawnGroup;
@@ -170,6 +174,10 @@ private _fnc_spawn = {
 		_groups pushBack _grupoEsc;
 		_grupoEsc setbehaviour "SAFE";
 		[_grupoEsc, _vehicle] spawn AS_AI_fnc_DismountOnDanger;
+		//This should make escort disembark when approaching FIA locations or they are near
+		if (_frontLine) then {
+			[_group, _location] spawn AS_AI_fnc_dangerOnApproach;
+		};
 
 	};
 	_posRoad = [(_posRoad select 0) - (10*(sin _dir )), (_posRoad select 1) - (10*(cos _dir)), 0]; //next pos is 10m behing
@@ -179,7 +187,7 @@ private _fnc_spawn = {
 	{
 		[_x] joinSilent _group;
 	} foreach units _mainVehicleGroup;
-	_mainVehicle setConvoySeparation _separation;
+	//_mainVehicle setConvoySeparation _separation;
 
 	//Override fuel cargo from InitVehicle
 
@@ -265,7 +273,7 @@ private _fnc_spawn = {
 			[_x, "Convoy", _position] call AS_fnc_setConvoyImmune;
 		} foreach _vehicles;
 
-		//TODO better condition to end the loop
+				//TODO better condition to end the loop
 		// Trying if this works without as it might be buggy
 		/*while {alive _mainVehicle} do {
 
@@ -308,15 +316,15 @@ private _fnc_run = {
 	private _fnc_missionFailedCondition = call {
 		if (_missionType in ["convoy_money", "convoy_armor", "convoy_ammo", "convoy_supplies", "convoy_fuel"]) exitWith {
 			{
-				private _hasArrived = {(not (driver _mainVehicle getVariable ["BLUFORSpawn",false])) and
-					{_mainVehicle distance _position < 150 and {!([500, _position, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}}}; //Check if blufor is not near
+				private _hasArrived = {((driver _mainVehicle) call AS_fnc_getSide == "AAF") and
+					{_mainVehicle distance2D _position < 150 and {!([500, _position, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}}}; //Check if blufor is not near
 				(false) or _hasArrived
 			}
 		};
 		if (_missionType == "convoy_hvt") exitWith {
 			{
 				private _hvt = [_mission, "hvt"] call AS_spawn_fnc_get;
-				private _hasArrived = {_hvt distance _position < 100};
+				private _hasArrived = {_hvt distance2D _position < 100};
 
 				(dateToNumber date > _max_date) or _hasArrived
 			}
@@ -324,7 +332,7 @@ private _fnc_run = {
 		if (_missionType == "convoy_prisoners") exitWith {
 			{
 				private _hasArrived = {(not (driver _mainVehicle getVariable ["BLUFORSpawn",false])) and
-					{_mainVehicle distance _position < 100}};
+					{_mainVehicle distance2D _position < 100}};
 				private _POWs = [_mission, "POWs"] call AS_spawn_fnc_get;
 				(dateToNumber date > _max_date) or _hasArrived or ({alive _x} count _POWs < ({alive _x} count _POWs)/2)
 			}

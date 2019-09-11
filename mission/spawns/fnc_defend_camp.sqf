@@ -1,5 +1,5 @@
 #include "../../macros.hpp"
-
+//OBSOLETE uses defendLocation
 private _fnc_initialize = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;

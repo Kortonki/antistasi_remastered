@@ -13,22 +13,15 @@ params ["_groups", "_vehicles", "_markers"];
         [_x] spawn {
             params ["_unit"];
             private _rand = random 5;
+            private _group = group _unit;
             waitUntil {sleep (5 + _rand); not ([AS_P("spawnDistance"), _unit, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)};
 
-            if ({alive _x} count units group _unit == 1) then {
+            if ({alive _x} count units _group == 1) then {
                 // clean group after last unit
-                if (!(isNull objectParent _unit)) then {
-                  objectParent _unit deletevehicleCrew _unit; //This to make sure the vehicle unit is mounted on is not deleted
-                } else {
-                [_unit] remoteExec ["deleteVehicle", _unit];
-              };
-                deleteGroup (group _unit);
+                _unit call AS_fnc_safeDelete;
+                deleteGroup _group;
             } else {
-              if (!(isNull objectParent _unit)) then {
-                objectParent _unit deletevehicleCrew _unit; //This to make sure the vehicle unit is mounted on is not deleted
-              } else {
-              [_unit] remoteExec ["deleteVehicle", _unit];
-            };
+              _unit call AS_fnc_safeDelete;
           };
         };
     } forEach _units;

@@ -1,4 +1,4 @@
-params ["_group", "_pos"];
+params ["_group", ["_pos", getMarkerpos "FIA_HQ"]];
 
 private _hr = 0;
 private _resourcesFIA = 0;
@@ -15,8 +15,8 @@ waitUntil {
   private _leader = leader _group;
 
   //TODO: Consider making the check for all units (some units might get stuck and the script can't finish)
-	if ([position _leader, 500] call AS_fnc_enemiesNearby) then {_near = true};
-	if (position _leader distance2D _pos < 50) then {_hq = true};
+	if ([position _leader, nil] call AS_fnc_enemiesNearby) then {_near = true};
+	if (position _leader distance2D _pos < 100) then {_hq = true};
 
 	 //waituntil condition
 	 (!(_near) and {time > _time or _hq}) or
@@ -54,7 +54,7 @@ private _vs = [];
 						//Recover everything if has fuel for the return trip. rough estimate
 
 						private _fuel = _veh call AS_fuel_fnc_getVehicleFuel;
-						if (_fuel >= (_veh call AS_fuel_fnc_returnTripFuel)) then {
+						if (canMove _veh and {_fuel >= (_veh call AS_fuel_fnc_returnTripFuel)}) then {
 
 									//Approximate fuel for the return trip to base. Roughly 0,2 liter per 1km for a standard car, more for tanks etc.
 
@@ -86,11 +86,11 @@ private _vs = [];
 							};
 
 					_vs pushBack _veh; //Do not recover same vehicle twice
-					[_veh] RemoteExecCall ["deleteVehicle", _veh];
+					[_veh] RemoteExec ["deleteVehicle", _veh];
 					};
 				};
 			};
-		[_x] remoteExecCall ["deleteVehicle", _x];
+		_x call AS_fnc_safeDelete;
 		} forEach (units _group);
 [_group] RemoteExec ["deleteGroup", _group];
 

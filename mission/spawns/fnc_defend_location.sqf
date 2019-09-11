@@ -170,6 +170,8 @@ private _fnc_run = {
 	private _min_fighters = round ((count _soldiers)/2);
 	private _max_time = time + 60*60;
 
+	
+
 	private _fnc_missionFailedCondition = {_location call AS_location_fnc_side != "FIA"};
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;

@@ -75,8 +75,8 @@ private _fnc_wait_to_arrive = {
 	AS_commander hcRemoveGroup _group;
 
 	if _arrivedSafely then {
-		[[petros,"globalChat","Engineers are now deploying the mines."],"AS_fnc_localCommunication"] call BIS_fnc_MP;
-		[leader _group, _mrk, "SAFE","SPAWNED", "SHOWMARKER"] spawn UPSMON;
+		[[petros,"sideChat","Engineers are now deploying the mines."],"AS_fnc_localCommunication"] call BIS_fnc_MP;
+		[leader _group, _mrk, "SAFE","SPAWNED", "NOVEH2",  "SHOWMARKER"] spawn UPSMON;
 	} else {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
@@ -104,11 +104,25 @@ private _fnc_wait_to_deploy = {
 			private _current_mine_index = 0;
 			private _current_mine_amount = 0;
 			private _units = units _group;
-			{
 
+			//Make engineers disembark
+			{[_x] orderGetin false; [_x] allowGetin false} foreach _units;
+
+			{
 
 				if (!(alive _truck and {({alive _x} count _units) > 0})) exitWith {
 					[petros, "sidechat", "Engineers got either killed or interrupted, minefield partially complete"] remoteExec ["AS_fnc_localCommunication", AS_commander];
+
+					//Recover unused mines to the truck
+
+					if (alive _truck) then {
+
+						for "_i" from _current_mine_index to ((count _mines_cargo select 0) - 1) do {
+							_truck addMagazineCargoGlobal [(_mines_cargo select 0) select _i, ((_mines_cargo select 1 select _i) - _current_mine_amount)];
+							_current_mine_amount = 0;
+						};
+
+					};
 				};
 				sleep (25/(({alive _x and {!(_x call AS_medical_fnc_isUnconscious)}} count _units) + 0.5));
 
@@ -125,15 +139,15 @@ private _fnc_wait_to_deploy = {
 			} forEach _minesPositions;
 			[_mapPosition, "FIA", _minesData] call AS_fnc_addMinefield;
 
+
 			([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 			[_mission] remoteExec ["AS_mission_fnc_success", 2];
+
+			{[_x] orderGetin true; [_x] allowGetin true} foreach _units;
 		} else {
 			([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 			[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 		};
-	} else {
-		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 	};
 };
 
@@ -144,7 +158,10 @@ private _fnc_clean = {
 	private _truck = _resources select 2 select 0;
 
 	_group setVariable ["isHCgroup", false, true];
+	_group setVariable ["UPSMON_Remove", true]; 
+	[_group, getMarkerpos "FIA_HQ"] spawn AS_fnc_dismissFIAsquad; //Just dismiss usually, everythings recovered
 
+	/*
 	private _alive = 0;
 	{
 		if (alive _x) then {
@@ -158,10 +175,28 @@ private _fnc_clean = {
 
 	if (alive _truck) then {
 		// todo: make this depend on alive units
+
+		private _fuel = _truck call AS_fuel_fnc_getVehicleFuel;
+
+		if (_fuel >= (_truck call AS_fuel_fnc_returnTripFuel)) then {
+
 		private _cost = [_mission, "cost"] call AS_mission_fnc_get;
 		[_alive, _cost] remoteExec ["AS_fnc_changeFIAmoney",2];  // recover the costs
-	};
-	[_truck] remoteExec ["deleteVehicle", _truck];
+
+		//Approximate fuel for the return trip to base. Roughly 0,2 liter per 1km for a standard car, more for tanks etc.
+
+		_fuel = _fuel - (_truck call AS_fuel_fnc_returnTripFuel);
+		if (_truck call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_truck call AS_fuel_fnc_getFuelCargo);};
+		[_fuel] remoteExec ["AS_fuel_fnc_changeFIAfuelReserves", 2];
+		[_truck] remoteExec ["deleteVehicle", _truck];
+
+		} else {
+		[_alive, 0] remoteExec ["AS_fnc_changeFIAmoney",2];
+		[_truck] spawn AS_fnc_activateVehicleCleanup;
+		};
+	} else {
+		[_alive, 0] remoteExec ["AS_fnc_changeFIAmoney",2];
+	};*/
 
 	_mission call AS_mission_spawn_fnc_clean;
 };

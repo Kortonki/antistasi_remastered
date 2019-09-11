@@ -57,6 +57,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 
 
 	//TODO Figure a way to increase surrender probability when squadmates surrender
+	//TODO optimise by declaring a variable for the group and group count
 	{
 		if (alive _x) then {
 			if (fleeing _x) then {
@@ -93,7 +94,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 							private _threat = _threatEval_Land;
 							if (_origin == "") then {
 								_origin = [_position] call AS_fnc_getAirportsForCA;
-
+								_threat = _threatEval_Air;
 							} else {
 								if ((_origin call AS_location_fnc_position) distance2D _position > 3000) then {
 									_origin = [_position] call AS_fnc_getAirportsForCA;
