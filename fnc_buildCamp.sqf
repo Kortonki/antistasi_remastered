@@ -37,7 +37,7 @@ if (_nearLocations) exitWith {
 
 ///////////////////////END OF CHECKS/////////////////////////////////
 
-private _mrk = createMarker [format ["FIAcamp%1", _position], _position];
+private _mrk = createMarker [format ["FIAcamp%1%2", _position call AS_location_fnc_nearest, round (_position distance2D (getmarkerPos "FIA_HQ"))], _position];
 _mrk setMarkerShape "ELLIPSE";
 _mrk setMarkerSize [50,50];
 _mrk setMarkerAlpha 0;

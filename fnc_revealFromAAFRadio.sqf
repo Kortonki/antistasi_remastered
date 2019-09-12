@@ -4,7 +4,7 @@ AS_SERVER_ONLY("AS_fnc_revealFromAAFRadio.sqf");
 private _chance = 5;
 {
 	private _location = [call AS_location_fnc_all, _x] call BIS_fnc_nearestPosition;
-	if ((_location call AS_location_fnc_side == "FIA") and (alive ((nearestObjects [_antennaPos, AS_antenasTypes, 200]) select 0))) then {
+	if ((_location call AS_location_fnc_side == "FIA") and (alive ((nearestObjects [_location call AS_location_fnc_position, AS_antenasTypes, 200]) select 0))) then {
 		_chance = _chance + 2.25;
 	};
 } forEach AS_P("antenasPos_alive");

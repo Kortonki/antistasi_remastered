@@ -12,7 +12,7 @@ If (!(_veh isKindOf "LandVehicle")) exitWith {}; //Exit for air vehicles and suc
 waitUntil {sleep 5; (alive _veh) and {!(isNull driver _veh)}};
 private _driver = driver _veh;
 private _side = _driver call AS_fnc_getSide;
-private _group = (group(driver _veh));
+private _group = (group _driver);
 //If no destination set, it's the drivers groups waypoint
 
 private _waypoint = currentWaypoint _group; //This is used for detection of a changed waypoint
@@ -50,6 +50,7 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 		_group setCurrentWaypoint [_group, 0];
 		sleep 1;
 		_group setCurrentWaypoint [_group, _waypoint];
+		(driver _veh) dofollow (leader _group);
 
 	};
 };

@@ -19,5 +19,5 @@ while {{alive _x} count units _group > 0} do {
     _group setBehaviour "DANGER";
     [_leader, _location, "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
   };
-
+  sleep 1;
 };

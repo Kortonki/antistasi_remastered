@@ -165,6 +165,7 @@ class AS {
         FNC_BASE(getCitiesToCivPatrol);
         FNC_BASE(penalizePlayer);
         FNC_BASE(enemiesNearby);
+        FNC_BASE(friendlyNearby);
         FNC_BASE(activateCleanup);
         FNC_BASE(activateVehicleCleanup);
         FNC_BASE(localCommunication);

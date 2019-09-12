@@ -428,13 +428,13 @@ fnc_BE_C_MTN = {
 };
 
 fnc_BE_C_HR = {
-	private _minVal = 60;
+	private _minVal = 150;
 	call {
 		if (BE_currentStage == 1) exitWith {
-			_minVal = 40;
+			_minVal = 100;
 		};
 		if (BE_currentStage == 0) exitWith {
-			_minVal = 20;
+			_minVal = 50;
 		};
 	};
 	private _str = format ["Have at least %1 HR", _minVal];

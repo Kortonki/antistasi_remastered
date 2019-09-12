@@ -26,7 +26,7 @@ if (_this call AS_spawn_fnc_exists) then {
 
 };
 
-
+[0, 200] remoteExec ["AS_fnc_changeFIAmoney", 2];
 
 
 

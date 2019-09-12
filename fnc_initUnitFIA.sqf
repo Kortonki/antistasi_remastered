@@ -69,9 +69,10 @@ _unit addEventHandler ["killed", {
 		};
 	}];
 
+_unit allowFleeing 0;	//Experminet with this: way to make garrison stay in area,or detect fleeing and do things like disband etc.
+
 if (isPlayer(leader _unit)) then {
 	if (captive player and {!(captive _unit)}) then {[_unit] remoteExec ["AS_fnc_activateUndercoverAI", _unit]};
-	_unit allowFleeing 0;
 	_unit addEventHandler ["killed", {
 		params ["_unit"];
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
