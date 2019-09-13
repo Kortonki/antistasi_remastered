@@ -22,7 +22,8 @@ if (!(_minDistance)) exitWith {hint "You can only fast travel from near HQ and c
 
 if ((_leader != player) and (!_isHCfastTravel)) exitWith {hint "Only a group leader can use fast travel"};
 
-if (({isPlayer _x} count units _group > 1) and (!_isHCfastTravel)) exitWith {hint "You cannot fast travel with other players in your group"};
+//I see no reason to limit this way
+//if (({isPlayer _x} count units _group > 1) and (!_isHCfastTravel)) exitWith {hint "You cannot fast travel with other players in your group"};
 
 if (player call AS_fnc_controlsAI) exitWith {hint "You cannot fast travel while you are controlling AI"};
 

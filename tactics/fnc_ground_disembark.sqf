@@ -41,6 +41,7 @@ _wp2 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
     _wp4 setWaypointSpeed "NORMAL";
     _wp4 setWaypointFormation "LINE";
     _wp4 setWaypointBehaviour "COMBAT";
+    _group setCurrentWaypoint _wp4; 
 
     {
       unassignVehicle _x;

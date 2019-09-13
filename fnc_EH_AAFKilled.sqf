@@ -87,15 +87,17 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 						private _position = position _enemy;
 						diag_log format ["AS: AAF taking casualties, sending patrol to: %1 ThreatEval Land/Air %2 / %3", _position, _threatEval_Land, _threatEval_Air];
 						[_position,"", _threatEval_Land, _threatEval_Air] remoteExec ["AS_movement_fnc_sendAAFpatrol", 2];
-						if (_threatEval_Land + _threatEval_Air > random 30) then {
-
+						private _threat = _threatEval_Land + _threatEval_Air;
+						//Consider vehicle availabilty so AAF doesn't throw it's last vehicles into enemy //TODO prolly needs BALANCING
+						private _arsenalCount = ["cars_armed", "apcs", "tanks", "helis_transport", "helis_armed", "planes"] call AS_AAFarsenal_fnc_countAvailable;
+						if (_threat > ((random 20) - (_arsenalCount/20))) then {
 							//Bases first if one's close enough
 							private _origin = [_position] call AS_fnc_getBasesForCA;
-							private _threat = _threatEval_Land + _threatEval_Air;
+
 							if (_origin == "") then {
 								_origin = [_position] call AS_fnc_getAirportsForCA;
 							} else {
-								if ((_origin call AS_location_fnc_position) distance2D _position > 3000 or _threatEval_Land > (_threatEval_Air + random 5)) then {
+								if ((_origin call AS_location_fnc_position) distance2D _position > 3000 or _threatEval_Land > (_threatEval_Air + random 10)) then {
 									_origin = [_position] call AS_fnc_getAirportsForCA;
 								};
 							};
@@ -103,7 +105,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 							if (_origin != "") then {
 								private _size = "small";
 								private _type = "random";
-								if (random 30 < _threat) then {_size = "large"};
+								if (random 20 < _threat) then {_size = "large"};
 								if (random 20 < _threatEval_Land) then {_type = selectRandom ["destroy", "mixed"]};
 								[_origin, _position, "", 30, _type, _size] remoteExec ["AS_movement_fnc_sendEnemyQRF", 2];
 								diag_log format ["AS: AAF taking casualties, sending QRF to: %1 ThreatEval Land/Air %2 / %3, size: %4, type: %5 Origin: %6", _position, _threatEval_Land, _threatEval_Air, _size, _type, _origin];

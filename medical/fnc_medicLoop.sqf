@@ -50,12 +50,16 @@ while {alive _unit} do {
     };
     if _isUnconscious then {
         if not hasACEmedical then {
+          _unit setHit ["body",((_unit getHit "body") + 0.0005)];  //Bleedout, test & tweak
             if (_unit call AS_medical_fnc_isHealed) then {
                 sleep (5 + random 15);
+
                 if (([_unit] call AS_medical_fnc_isUnconscious)) then {[_unit, false] call AS_medical_fnc_setUnconscious;};
 
+                if ((_unit call AS_fnc_getSide) in ["AAF", "CSAT"] and {[getpos _unit, 5] call AS_fnc_friendlyNearby}) then {
+                  [_unit] spawn AS_AI_fnc_surrender; //If FIA healing wounded, make them surrender
+                };
             };
-            _unit setHit ["body",((_unit getHit "body") + 0.0005)];  //Bleedout, test & tweak
 
         } else {
             // this would not be needed, but currently the medic does not use epipen.
@@ -65,7 +69,13 @@ while {alive _unit} do {
             private _hasMorphine  = (_unit getVariable ["ACE_medical_pain", 0]) <= 0.2;
             if (_hasBandaging and _hasMorphine) then {
                 [_unit, false] call AS_medical_fnc_setUnconscious;
+
+                if ((_unit call AS_fnc_getSide) in ["AAF", "CSAT"] and {[getpos _unit, 5] call AS_fnc_friendlyNearby}) then {
+                  [_unit] spawn AS_AI_fnc_surrender; //If FIA healing wounded, make them surrender
+                };
+
             };
+
         };
     };
 
