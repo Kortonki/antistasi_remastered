@@ -13,7 +13,7 @@ if (typename _location == "STRING") then {
   _size = _location call AS_location_fnc_size;
 };
 
-private _threat = _position call AS_fnc_getLandThreat;
+private _threat = [_position] call AS_fnc_getLandThreat;
 
 private _distance = _size + (random 100) + (_threat*10);
 private _leader = leader _group;

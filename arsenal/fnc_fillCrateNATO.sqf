@@ -71,6 +71,18 @@ for "_i" from 1 to 3 do {
 	(_backpacks select 1) pushback _intNATOSupp;
 };
 
+//Add some mines + explosives
+
+{
+	(_magazines select 0) pushBack _x call AS_fnc_mineMag;
+	(_magazines select 1) pushBack 4*_intNatoSupp;
+} foreach (["NATO", "ap_mines"] call AS_fnc_getEntity);
+
+{
+	(_magazines select 0) pushBack _x call AS_fnc_mineMag;
+	(_magazines select 1) pushBack 2*_intNatoSupp;
+} foreach ((["NATO", "at_mines"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity));
+
 //TODO check if RHS has equivalents?
 if (hasACE and !hasRHS) then {
 	(_magazines select 0) pushBack "ACE_HuntIR_M203";

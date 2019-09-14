@@ -33,7 +33,7 @@ while {visibleMap} do {
 		if (_location == "FIA_HQ") then {
 			_texto = format ["FIA HQ%1",[_location] call AS_fnc_getGarrisonAsText];
 		};
-		if (_side "FIA" and {_type in ["camp", "watchpost", "roadblock"]}) then {
+		if (_side == "FIA" and {_type in ["camp", "watchpost", "roadblock"]}) then {
 			_texto = format ["%2%1",_type, [_location] call AS_fnc_getGarrisonAsText];
 		};
 		if (_type == "city") then {

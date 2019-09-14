@@ -71,7 +71,7 @@ private _cargoArray = [_unit, true] call AS_fnc_getUnitArsenal;
 
 private _group = group _unit;
 
-if (count (units _group select {!(isPlayer _x)}) > 0 and {_unit = leader _group}) then {
+if (count (units _group select {!(isPlayer _x)}) > 0 and {_unit == leader _group}) then {
 	[(units _group) select {!(isPlayer _x)}] remoteExec ["AS_fnc_dismissFIAunits", _group];
 };
 

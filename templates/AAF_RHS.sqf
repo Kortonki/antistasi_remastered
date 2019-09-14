@@ -56,7 +56,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "truck_fuel", "I_Truck_02_fuel_F"] call DICT_fnc_set;
 
 [_dict, "uavs_small", ["rhs_pchela1t_vvs"]] call DICT_fnc_set;
-[_dict, "uavs_attack", []] call DICT_fnc_set;
+[_dict, "uavs_attack", ["rhs_pchela1t_vvs"]] call DICT_fnc_set;
 
 //first one should be the most used one, latter for special occasions
 [_dict, "static_aa", ["RHS_ZU23_VDV"]] call DICT_fnc_set;

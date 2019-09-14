@@ -260,18 +260,18 @@ class exp_menu // 430
 	{
     AS_DIALOG(2,"Buy Ordnance",A_CLOSE);
 
-	#define STR_EXP_CH "if (player == AS_commander) then {[""explosives"", 800] remoteExec [""AS_fnc_buyGear"", 2];}"
+	#define STR_EXP_CH "if (player == AS_commander) then {[""explosives"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
 
 	#define STR_EXP_WP "closeDialog 0; createDialog ""wpns"";"
 
-	#define STR_EXP_MS "if (player == AS_commander) then {[""mines"", 300] remoteExec [""AS_fnc_buyGear"", 2];}"
+	#define STR_EXP_MS "if (player == AS_commander) then {[""mines"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
 
 	#define STR_EXP_AC "if (player == AS_commander) then {[""assessories"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
 
-	BTN_L(1,-1, "Charges", "Spend 800 Euros on explosives.", STR_EXP_CH);
+	BTN_L(1,-1, "Charges", "Spend 500 Euros on explosives.", STR_EXP_CH);
 	BTN_L(2,-1, "Weapons", "Spend 500 Euros on weapons and ammo.", STR_EXP_WP);
 
-	BTN_R(1,-1, "Mines", "Spend 300 Euros on mines.", STR_EXP_MS);
+	BTN_R(1,-1, "Mines", "Spend 500 Euros on mines.", STR_EXP_MS);
 	BTN_R(2,-1, "Accessories", "Spend 500 Euros on 4 weapon accessories.", STR_EXP_AC);
 	};
 };

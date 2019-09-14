@@ -1,10 +1,5 @@
 #include "../../macros.hpp"
 
-private _blownMine = {
-	params ["_mine"];
-	waitUntil {sleep AS_spawnLoopTime; isNull _mine or !(_location call AS_location_fnc_spawned)};
-};
-
 private _fnc_spawn = {
 	params ["_location"];
 

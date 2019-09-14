@@ -12,7 +12,9 @@ if (!([player] call AS_fnc_hasRadio)) exitWith {
 };
 
 private _possibleMines = (["AAF", _type] call AS_fnc_getEntity);
-
+{
+_possibleMines pushBackUnique _x;
+} foreach ((["NATO", _type] call AS_fnc_getEntity) + (["CSAT", _type] call AS_fnc_getEntity));
 
 private _allMags = magazineCargo caja;
 private _availableMines = []; // mines per type
@@ -139,7 +141,7 @@ private _remaining = count _positions; // sum of all used mines.
 	private _amount = 0;
 	if ((_availableMines select _forEachIndex) < _remaining) then {
 		_amount = _availableMines select _forEachIndex;
-		_remaining = _remaining - (_availableMines select _forEachIndex);
+		_remaining = _remaining - _amount;
 	} else {
 		_amount = _remaining;
 		_remaining = 0;

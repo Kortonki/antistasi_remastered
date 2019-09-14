@@ -17,3 +17,4 @@ if (_minesData isEqualTo []) then {
     };
 };
 [_mrk,"mines",_minesData] call AS_location_fnc_set;
+_mrk call AS_location_fnc_updateMarker; //THis so correct amount of mines is displayed after init

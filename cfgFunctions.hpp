@@ -134,6 +134,8 @@ class AS {
 
         FNC_BASE(EH_AAFKilled);
         FNC_BASE(EH_CSATKilled);
+        FNC_BASE(EH_AAFVehicleKilled);
+        FNC_BASE(EH_CSATVehicleKilled);
         FNC_BASE(getContactThreat);
         FNC_BASE(getLandThreat);
         FNC_BASE(getAirThreat);
