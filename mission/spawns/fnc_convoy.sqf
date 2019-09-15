@@ -15,7 +15,7 @@ private _fnc_initialize = {
 		[_mission, "delete", true] call AS_spawn_fnc_set;
 	};
 
-	private _tiempolim = 120;
+	private _tiempolim = 70;
 	private _startAfter = 10;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 	private _startTime = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _startAfter];
