@@ -22,7 +22,7 @@ while {count _roads == 0} do {
 private _road = objNull;
 private _minDistance = 1000000; // simulate infinity
 {
-	private _distance = _origin distance (position _x);
+	private _distance = _origin distance2D (position _x);
 	if (_distance < _minDistance) then {
 		_minDistance = _distance;
 		_road = _x;

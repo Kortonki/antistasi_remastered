@@ -11,7 +11,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "planes", ["RHS_Su25SM_vvsc", "rhs_mig29sm_vvsc","rhs_mig29s_vvsc","RHS_T50_vvs_generic"]] call DICT_fnc_set;
 
 [_dict, "uavs_small", ["rhs_pchela1t_vvs"]] call DICT_fnc_set;
-[_dict, "uavs_attack", []] call DICT_fnc_set;
+[_dict, "uavs_attack", ["rhs_pchela1t_vvs"]] call DICT_fnc_set;
 
 [_dict, "tanks", ["rhs_t72ba_tv","rhs_t72bb_tv","rhs_t72bc_tv","rhs_t80a","rhs_t80b","rhs_t90_tv"]] call DICT_fnc_set;
 [_dict, "boats", ["O_Boat_Armed_01_hmg_F"]] call DICT_fnc_set;

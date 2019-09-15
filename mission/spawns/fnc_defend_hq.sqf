@@ -27,9 +27,8 @@ private _fnc_spawn = {
 	_patrolMarker setMarkerSize [50,50];
 	_patrolMarker setMarkerAlpha 0;
 
-	if (AS_P("resourcesAAF") > 20000) then {
-		[-20000] remoteExec ["AS_fnc_changeAAFmoney",2];
-		[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
+
+	[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 
 	//Transport choppers. They will come regardless of support
 
@@ -92,7 +91,6 @@ private _fnc_spawn = {
 
 	};
 
-};
 	//Spawn AAF land attack as well
 
 	private _base = [_position, true] call AS_fnc_getBasesForCA;

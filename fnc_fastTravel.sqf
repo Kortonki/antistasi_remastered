@@ -3,20 +3,31 @@ if (count hcSelected player > 1) exitWith {
 };
 
 private _enemiesNearby = false;
+private _minDistance = false;
 private _isHCfastTravel = false;
 private _group = group player;
 if (count hcSelected player == 1) then {
 	_group = hcSelected player select 0;
 	_isHCfastTravel = true;
 };
+private _leader = leader _group;
 
-if ((leader _group != player) and (!_isHCfastTravel)) exitWith {hint "Only a group leader can use fast travel"};
+{
+	if (getpos _leader distance2D (getmarkerPos _x) <= 100) exitWith {
+		_minDistance = true;
+	};
+} foreach ([["camp", "fia_hq"], "FIA"] call AS_location_fnc_TS);
 
-if (({isPlayer _x} count units _group > 1) and (!_isHCfastTravel)) exitWith {hint "You cannot fast travel with other players in your group"};
+if (!(_minDistance)) exitWith {hint "You can only fast travel from near HQ and camps"};
+
+if ((_leader != player) and (!_isHCfastTravel)) exitWith {hint "Only a group leader can use fast travel"};
+
+//I see no reason to limit this way
+//if (({isPlayer _x} count units _group > 1) and (!_isHCfastTravel)) exitWith {hint "You cannot fast travel with other players in your group"};
 
 if (player call AS_fnc_controlsAI) exitWith {hint "You cannot fast travel while you are controlling AI"};
 
-if (vehicle player != player) exitWith {hint "You can only fast travel without vehicles"};
+if (vehicle player != player and {!(_isHCfastTravel)}) exitWith {hint "You can only fast travel without vehicles"};
 
 /*private _unpreparedVehicles = false;
 {
@@ -55,13 +66,13 @@ if (count _positionTo == 0) exitWith {};
 private _location = _positionTo call AS_location_fnc_nearest;
 private _positionTo = _location call AS_location_fnc_position;
 
-private _validLocations = (["camp", "FIA"] call AS_location_fnc_TS) + "fia_hq";
+private _validLocations = ([["camp", "fia_hq"], "FIA"] call AS_location_fnc_TS);
 if !(_location in _validLocations) exitWith {
 	hint "You can only fast travel to FIA camps and HQ";
 	openMap [false,false];
 };
 
-private _enemiesNearby = [_positionTo, AS_enemyDist] call AS_fnc_enemiesNearby;
+_enemiesNearby = [_positionTo, AS_enemyDist] call AS_fnc_enemiesNearby;
 
 if (_enemiesNearby) exitWith {
 	Hint "You cannot use fast travel to a location with enemies nearby";
@@ -70,7 +81,7 @@ if (_enemiesNearby) exitWith {
 
 private _positionTo = [_positionTo, 10, random 360] call BIS_Fnc_relPos;
 
-private _distance = round ((position (leader _group)) distance2D _positionTo);
+private _distance = round ((position _leader) distance2D _positionTo);
 
 if (!_isHCfastTravel) then {
 	disableUserInput true;
@@ -101,9 +112,9 @@ if !(_location call AS_location_fnc_forced_spawned) then {
 			if (isPlayer leader _unit) then {_unit setVariable ["rearming",false]};
 			_unit doWatch objNull;
 			_unit doFollow leader _unit;
-		};
+};
 
-} forEach ((units _group) select {vehicle _x == _x}); //Move only units who are  on foot
+} forEach ((units _group) select {vehicle _x == _x and {_x distance2D _leader < 100}}); //Move only units who are  on foot near the leader
 
 if (!_isHCfastTravel) then {
 	disableUserInput false;

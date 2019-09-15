@@ -54,7 +54,7 @@ private _fnc_spawn = {
 		// if close to an antenna, add jam option
 		private _antennaPos = [AS_P("antenasPos_alive"),_posicion] call BIS_fnc_nearestPosition;
 		if (_antennaPos distance _posicion < 200) then {
-			[[nearestBuilding _antennaPos,"jam"],"AS_fnc_addAction"] call BIS_fnc_MP;
+			[[(nearestObjects [_antennaPos, AS_antenasTypes, 25]) select 0,"jam"],"AS_fnc_addAction"] call BIS_fnc_MP;
 		};
 	};
 

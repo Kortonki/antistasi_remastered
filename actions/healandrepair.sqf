@@ -31,7 +31,7 @@ if ([position player, AS_enemyDist*2] call AS_fnc_enemiesNearby) then {
 
 private _reportedVehs = AS_S("reportedVehs");
 {
-	if (_x distance _posHQ < 200) then {
+	if (_x distance2D _posHQ < 200) then {
 
 
 

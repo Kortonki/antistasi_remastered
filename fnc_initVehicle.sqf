@@ -20,7 +20,7 @@ if (_veh isKindOf "ReammoBox_F" and _side == "AAF") exitWith {[_veh,"Watchpost"]
 [_veh] call AS_debug_fnc_initVehicle;
 
 private _tipo = typeOf _veh;
-private _vehicleCategory = _tipo call AS_AAFarsenal_fnc_category;
+private _vehCategory = _tipo call AS_AAFarsenal_fnc_category;
 
 // Equipment-related initialisation
 [_veh] call AS_fnc_emptyCrate;
@@ -32,7 +32,7 @@ if (_tipo == (["CSAT", "box"] call AS_fnc_getEntity) and _side == "CSAT") then {
 
 //Cargo release on destruction
 
-_veh addEventHandler ["Killed", {
+_veh addEventHandler ["killed", {
 	private _veh = _this select 0;
 	[_veh] spawn AS_fnc_activateCleanup;
 	if (!isNil{_veh getVariable "boxCargo"}) then {
@@ -43,97 +43,6 @@ _veh addEventHandler ["Killed", {
 
 	}];
 
-private _aaf_veh_EHkilled = {
-	params ["_veh", "_killer"];
-	if (([_veh] call AS_fnc_getSide) != "AAF") exitWith {}; //If vehicle was stolen, there's nothing to do here
-
-		//Deduct from AAF arsenal regardless of killers side
-		//Also remove from spawn counter so new one can spawn
-	private _vehicleType = typeOf _veh;
-	[_vehicleType] call AS_AAFarsenal_fnc_deleteVehicle;
-	[_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
-
-	private _vehicleCategory = _vehicleType call AS_AAFarsenal_fnc_category;
-
-
-
-		//This was moved so XP is gained only if FIA is the killer or capturer
-	if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {
-
-		private _citySupportEffect = 0;
-		private _xpEffect = "";
-		switch _vehicleCategory do {
-			case "planes": {
-				_citySupportEffect = 5;
-				_xpEffect = "des_arm";
-			};
-			case "helis_armed": {
-				_citySupportEffect = 5;
-				_xpEffect = "des_arm";
-			};
-			case "tanks": {
-				_citySupportEffect = 4;
-				_xpEffect = "des_arm";
-			};
-			case "helis_transport": {
-				_citySupportEffect = 3;
-				_xpEffect = "des_veh";
-			};
-			case "apcs": {
-				_citySupportEffect = 2;
-				_xpEffect = "des_arm";
-			};
-			case "boats" : {
-				_xpEffect = "_des_veh";
-				_citySupportEffect = 1;
-			};
-			case "cars_armed" : {
-				_xpEffect = "_des_veh";
-				_citySupportEffect = 1;
-			};
-			case "trucks" : {
-				_xpEffect = "des_veh";
-			};
-			case "cars_transport" : {
-				_xpEffect = "des_veh";
-			};
-
-
-
-			default {
-				diag_log format ["[AS] ERROR in AS_AAF_VE_EHkilled: '%1' is invalid type", typeOf _veh];
-			};
-		};
-		if (_citySupportEffect != 0) then {
-			[-_citySupportEffect,_citySupportEffect,position _veh] remoteExec ["AS_fnc_changeCitySupport",2];
-		};
-		if (_xpEffect != "") then {[_xpEffect] remoteExec ["fnc_BE_XP", 2]};
-	};
-	//This eventhandler is no longer needed
-	//possible deletes the killed eventhandler activating cleanup
-	//_veh removeEventHandler ["killed", _thisEventHandler];
-};
-
-_csat_veh_EHkilled = {
-	params ["_veh", "_killer"];
-	if (([_veh] call AS_fnc_getSide) != "CSAT") exitWith {}; //If vehicle was stolen, there's nothing to do here
-	private _type = typeOf _veh;
-	private _effect = 0;
-	if (_type in (["CSAT", "helis_transport"] call AS_fnc_getEntity)) then {_effect = 5};
-	if (_type in (["CSAT", "helis_attack"] call AS_fnc_getEntity)) then {_effect = 10};
-	if (_type in (["CSAT", "planes"] call AS_fnc_getEntity)) then {_effect = 10};
-	if (_type in (["CSAT", "helis_armed"] call AS_fnc_getEntity)) then {_effect = 5};
-
-	[0, -(_effect)] remoteExec ["AS_fnc_changeForeignSupport", 2];
-	[-(_effect/2),(_effect/2), position _veh] remoteExec ["AS_fnc_changeCitySupport",2];
-	if (_type in (["CSAT", "helis_transport"] call AS_fnc_getEntity)) then {
-		["des_arm"] remoteExec ["fnc_BE_XP", 2];
-		} else {
-		["des_veh"] remoteExec ["fnc_BE_XP", 2];
-		};
-
-	_veh removeEventHandler ["killed", _thisEventHandler];
-};
 
 //Here is the side change when stealing vehicles
 if (_side != "NATO") then {
@@ -159,15 +68,15 @@ if (_side != "NATO") then {
 					[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 		};
 
-		if (_side  == "AAF" and {not(_vehicleCategory == "") and {_sideunit == "FIA"}}) then {
+		if (_side  == "AAF" and {_vehicleCategory != "" and {_sideunit == "FIA"}}) then {
 
-					[_vehicle, _unit] call _aaf_veh_EHkilled; // this must be called before changing sides
+					[_vehicle, _unit] call AS_fnc_EH_AAFVehicleKilled; // this must be called before changing sides
 
 		};
 
 		if (_side  == "CSAT" and {_sideunit == "FIA"}) then {
 
-					[_vehicle, _unit] call _csat_veh_EHkilled; // this must be called before changing sides
+					[_vehicle, _unit] call AS_fnc_EH_CSATVehicleKilled; // this must be called before changing sides
 
 		};
 
@@ -186,11 +95,11 @@ if (_side != "NATO") then {
 
 
 if (_side == "CSAT") then {
-	_veh addeventHandler ["killed", _csat_veh_EHkilled];
+	_veh addeventHandler ["killed", {_this call AS_fnc_EH_CSATVehicleKilled}];
 };
 
 if (_side == "AAF") then {
-	_veh addEventHandler ["killed", _aaf_veh_EHkilled];
+	_veh addEventHandler ["killed", {_this call AS_fnc_EH_AAFVehicleKilled}];
 };
 
 // UAV is not part of the AAF arsenal, so the killing of it is dealt separately
@@ -226,7 +135,7 @@ if !(_veh isKindOf "StaticWeapon") then {
 };
 
 // air units can only be piloted by humans
-if (_vehicleCategory in ["planes", "helis_armed", "helis_transport"]) then {
+if (_vehCategory in ["planes", "helis_armed", "helis_transport"]) then {
 	_veh addEventHandler ["GetIn", {
 		private _posicion = _this select 1;
 		if (_posicion == "driver") then {

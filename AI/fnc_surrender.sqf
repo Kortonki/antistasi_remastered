@@ -2,6 +2,7 @@ params ["_unit"];
 
 if (_unit call AS_fnc_isDog) exitWith {};
 
+_unit setVariable ["surrendered",true, true];
 
 waitUntil {sleep 2; !(_unit call AS_medical_fnc_isUnconscious)};
 
@@ -44,9 +45,6 @@ private _cargoArray = [_unit] call AS_fnc_getUnitArsenal;
 
 _unit call AS_fnc_emptyUnit;
 
-
-
-_unit setVariable ["surrendered",true, true];
 [_unit, true] remoteExecCall ["setCaptive", _unit];
 
 if (alive _unit) then

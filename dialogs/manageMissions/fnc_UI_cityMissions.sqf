@@ -27,8 +27,6 @@ if (count MapPos == 0) exitWith {AS_cityMission_type = nil; onMapSingleClick "";
 
 private _location = [[] call AS_location_fnc_cities, MapPos] call bis_fnc_NearestPosition;
 
-
-
 private _sig = format ["%1_%2", AS_cityMission_type, _location];
 
 //If same mission not active, activate new one.

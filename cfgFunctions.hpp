@@ -99,6 +99,7 @@ class AS {
         FNC_BASE(spawnAAF_truck);
         FNC_BASE(createVehicle);
         FNC_BASE(createEmptyVehicle);
+        FNC_BASE(safeDelete);
 
         FNC(Scripts,spawnAttackWaves);
 
@@ -133,6 +134,8 @@ class AS {
 
         FNC_BASE(EH_AAFKilled);
         FNC_BASE(EH_CSATKilled);
+        FNC_BASE(EH_AAFVehicleKilled);
+        FNC_BASE(EH_CSATVehicleKilled);
         FNC_BASE(getContactThreat);
         FNC_BASE(getLandThreat);
         FNC_BASE(getAirThreat);
@@ -164,6 +167,7 @@ class AS {
         FNC_BASE(getCitiesToCivPatrol);
         FNC_BASE(penalizePlayer);
         FNC_BASE(enemiesNearby);
+        FNC_BASE(friendlyNearby);
         FNC_BASE(activateCleanup);
         FNC_BASE(activateVehicleCleanup);
         FNC_BASE(localCommunication);
@@ -298,6 +302,7 @@ class AS_AI {
         FNC(ai,autoCombatCallON);
         FNC(ai,autoCombatCallOFF);
         FNC(ai,rearmCall);
+        FNC(ai,dangerOnApproach);
     };
 };
 

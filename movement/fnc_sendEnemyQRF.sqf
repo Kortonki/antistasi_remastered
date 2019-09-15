@@ -205,6 +205,9 @@ if (_type == "air") then {
 			_x moveInCargo _transport;
 		} forEach units _grpDis2;
 
+		[_grpDis2, _transport] spawn AS_AI_fnc_DismountOnDanger;
+		[_grpDis2, _destination] spawn AS_AI_fnc_dangerOnApproach;
+
 		[_origin, _destination, _crew_group, _patrolMarker, _grpDis2] spawn AS_tactics_fnc_ground_disembark;
 	};
 };

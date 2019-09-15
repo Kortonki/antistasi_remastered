@@ -3,12 +3,12 @@ AS_SERVER_ONLY("AS_database_fnc_persistents_start");
 
 // modify map items consequent of the persistents
 {
-    private _antenna = nearestBuilding _x;
+    private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 1;
 } forEach AS_P("antenasPos_dead");
 {
-    private _antenna = nearestBuilding _x;
+    private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 0;
     _antenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];

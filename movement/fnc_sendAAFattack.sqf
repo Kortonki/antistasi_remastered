@@ -147,10 +147,11 @@ if (count _objectives > 0) then {
 	private _location = selectRandom _objectives;
 	call {
 		//TODO make isEasy  parameter effect attack strength inside functions below
-		if (_location call AS_location_fnc_type == "camp") exitWith {
+		//CAmps are now attacked like any location
+		/*if (_location call AS_location_fnc_type == "camp") exitWith {
 			_location call AS_mission_fnc_createDefendCamp;
 			_alarm = true;
-		};
+		};*/
 		if (_location call AS_location_fnc_type == "city") exitWith {
 			_location call AS_mission_fnc_createDefendCity;
 			_alarm = true;

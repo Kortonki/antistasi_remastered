@@ -5,6 +5,7 @@ class AS_AAFarsenal {
 
         // getters
         FNC(aaf_arsenal,get);
+        FNC(aaf_arsenal,set);
         FNC(aaf_arsenal,count);
         FNC(aaf_arsenal,countAvailable);
         FNC(aaf_arsenal,max);
@@ -15,6 +16,7 @@ class AS_AAFarsenal {
         FNC(aaf_arsenal,canAdd);
         FNC(aaf_arsenal,category);
         FNC(aaf_arsenal,spawnCounter);
+        FNC(aaf_arsenal,deleteVehicle);
     };
 
     class server {
@@ -24,9 +26,9 @@ class AS_AAFarsenal {
         FNC(aaf_arsenal,dictionary);
 
         // setters
-        FNC(aaf_arsenal,set);
+
         FNC(aaf_arsenal,addVehicle);
-        FNC(aaf_arsenal,deleteVehicle);
+
 
         // serialize
         FNC(aaf_arsenal,toDict);

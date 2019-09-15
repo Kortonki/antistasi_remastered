@@ -48,12 +48,9 @@ private _fnc_spawn = {
 
 	//CSAT attack
 
-	if (_useCSAT and {AS_P("resourcesAAF") > 20000}) then {
+	if (_useCSAT) then {
 
-		[-20000] remoteExec ["AS_fnc_changeAAFmoney",2];
 		[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
-
-
 		private _cuenta = 3;
 		if ((_base == "") or (_airfield == "")) then {_cuenta = 6};
 
@@ -169,6 +166,8 @@ private _fnc_run = {
 
 	private _min_fighters = round ((count _soldiers)/2);
 	private _max_time = time + 60*60;
+
+
 
 	private _fnc_missionFailedCondition = {_location call AS_location_fnc_side != "FIA"};
 	private _fnc_missionFailed = {

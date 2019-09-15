@@ -2,6 +2,8 @@
 private ["_killed", "_group"];
 _killed = _this select 0;
 
+_killed setVariable ["inDespawner", true, true]; //this to make so activaVehicleCleanup doesn't activate for mission vehicles
+
 [_killed] call AS_debug_fnc_initDead;
 
 if (_killed in AS_P("vehicles")) then {

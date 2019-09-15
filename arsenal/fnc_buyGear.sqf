@@ -9,6 +9,9 @@ if (AS_P("resourcesFIA") < _money) exitWith {
 
 private _buyableWeapons = AS_allWeapons;
 private _buyableItems = AS_allItems;
+private _buyableExplosives = (["AAF", "explosives"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity) + (["CSAT", "explosives"] call AS_fnc_getEntity);
+private _buyableAPMines =(["AAF", "ap_mines"] call AS_fnc_getEntity) + (["NATO", "ap_mines"] call AS_fnc_getEntity) + (["CSAT", "ap_mines"] call AS_fnc_getEntity);
+private _buyableATMines =  (["AAF", "at_mines"] call AS_fnc_getEntity) + (["NATO", "at_mines"] call AS_fnc_getEntity) + (["CSAT", "at_mines"] call AS_fnc_getEntity);
 
 switch (_type) do {
 	case "ASRifles": {_weapons = _buyableWeapons arrayIntersect (AS_weapons select 0); _amount = 10;};  // assault + G. launchers
@@ -26,14 +29,12 @@ switch (_type) do {
 	};
 
 	case "explosives": {
-		{
-			expCrate addMagazineCargoGlobal [_x call AS_fnc_mineMag, 2];
-		} forEach (["AAF", "explosives"] call AS_fnc_getEntity);
+			expCrate addMagazineCargoGlobal [(selectRandom _buyableExplosives) call AS_fnc_mineMag, 20];
 	};
 
 	case "mines": {
-        expCrate addMagazineCargoGlobal [(selectRandom (["AAF", "ap_mines"] call AS_fnc_getEntity)) call AS_fnc_mineMag, 2];
-		expCrate addMagazineCargoGlobal [(selectRandom (["AAF", "at_mines"] call AS_fnc_getEntity)) call AS_fnc_mineMag, 2];
+    expCrate addMagazineCargoGlobal [(selectRandom _buyableAPMines) call AS_fnc_mineMag, 20];
+		expCrate addMagazineCargoGlobal [(selectRandom _buyableATMines) call AS_fnc_mineMag, 10];
 	};
 };
 
