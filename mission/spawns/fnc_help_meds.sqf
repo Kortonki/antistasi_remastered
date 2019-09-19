@@ -179,6 +179,7 @@ private _fnc_spawn = {
 	_Vwp0 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 
 	[_grupo, _veh] spawn AS_AI_fnc_dismountOnDanger;
+	[_grupo, _position] spawn AS_AI_fnc_dangerOnApproach;
 
 	[_veh, "AAF Reinforcements", _crashPosition] spawn AS_fnc_setConvoyImmune;
 

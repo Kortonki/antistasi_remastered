@@ -85,6 +85,11 @@ if (worldName == "Enoch") then {
     _mapType = "Land_MapBoard_Enoch_F";
 };
 
+if (worldName == "tem_kujari") then {
+    call compile preprocessFileLineNumbers "templates\world_tem_kujari.sqf";
+    AS_enemyDist = 500;
+};
+
 publicVariable "AS_enemyDist";
 
 // exclude from `AS_antenasPos_alive` positions whose antenas are not found
@@ -95,6 +100,11 @@ publicVariable "AS_enemyDist";
     } else {
         AS_antenasPos_alive = AS_antenasPos_alive - [_x];
     };
+
+    private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
+    _marker setmarkerType "loc_Transmitter";
+    _marker setMarkerText "Radio Tower";
+    (_antenaProv select 0) setVariable ["marker", _marker]; //This so marker can be manipulated in destruction
 } forEach +AS_antenasPos_alive;
 
 AS_Pset("antenasPos_alive", AS_antenasPos_alive);

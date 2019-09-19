@@ -49,14 +49,14 @@ private _fnc_spawn = {
 	        ([_position, 0, ["CSAT", "gunner"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;
 
 			_group selectLeader _target;
-			[leader _group, _location, "SAFE", "SPAWNED", "NOVEH", "NOFOLLOW", "LIMITED"] spawn UPSMON;
+			[leader _group, _location, "SAFE", "SPAWNED", "NOVEH2", "NOFOLLOW", "LIMITED"] spawn UPSMON;
 
 			{_x call AS_fnc_initUnitCSAT; _x allowFleeing 0} forEach units _group;
 
 			_resources = [_task, [_group], [], []];
 		};
 		if (_missionType == "kill_specops") exitWith {
-			private _mrkfin = createMarkerLocal [_mission,_position];
+			private _mrkfin = createMarker [_mission,_position];
 			_mrkfin setMarkerShapeLocal "RECTANGLE";
 			_mrkfin setMarkerSizeLocal [300,300];
 			_mrkfin setMarkerTypeLocal "hd_warning";

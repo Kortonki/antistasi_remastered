@@ -34,3 +34,7 @@ if (worldName == "Ruha") then {
 if (worldName == "Enoch") then {
     call compile preprocessFileLineNumbers "Compositions\locations_Enoch.sqf";
 };
+
+if (worldName == "tem_kujari") then {
+    call compile preprocessFileLineNumbers "Compositions\locations_tem_kujari.sqf";
+};

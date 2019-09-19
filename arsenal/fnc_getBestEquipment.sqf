@@ -9,12 +9,12 @@ if (_type == "Survivor") exitWith {
 };
 
 // choose a list of weapons to choose from the unit type.
-private _primaryWeapons = (AS_weapons select 0) + (AS_weapons select 13) + (AS_weapons select 14); // Assault Rifles + Rifles + SubmachineGun
+private _primaryWeapons = (AS_weapons select 0) + (AS_weapons select 13) + (AS_weapons select 14); // Assault Rifles + Rifles + SubmachineGun + unlocked
 private _secondaryWeapons = [];
 private _useBinoculars = false;
 private _useBackpack = true;
 private _items = call AS_medical_fnc_FIAuniformMeds;
-private _scopeType = "rifleScope";  // "rifleScope" or "sniperScope" to choose betwene "low min zoom and high max zoom" or "very high max zoom".
+private _scopeType = "rifleScope";  // "rifleScope" prefers as low zoom as possible
 private _primaryMagCount = 6 + 1;  // +1 for the weapon.
 private _missingGrenades = 2;
 private _missingSmokes = 2;

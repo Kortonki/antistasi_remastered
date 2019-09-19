@@ -1,14 +1,18 @@
 #include "../macros.hpp"
 AS_SERVER_ONLY("AS_fnc_buyGear.sqf");
-params ["_type", "_money"];
+params ["_type", "_money", "_player"];
 private ["_weapons", "_accessories", "_amount"];
 
-if (AS_P("resourcesFIA") < _money) exitWith {
-	[AS_commander, "hint", "not enough money :("] remoteExec ["AS_fnc_localCommunication", AS_commander];
+if (_player == AS_commander and {AS_P("resourcesFIA") < _money}) exitWith {
+	[AS_commander, "hint", "not enough FIA money :("] remoteExec ["AS_fnc_localCommunication", AS_commander];
 };
 
-private _buyableWeapons = AS_allWeapons;
-private _buyableItems = AS_allItems;
+if (_player != AS_commander and {([_player, "money"] call AS_players_fnc_get) < _money}) exitWith {
+	[_player, "hint", "not enough personal money :("] remoteExec ["AS_fnc_localCommunication", _player];
+};
+
+private _buyableWeapons = AAFWeapons + NATOWeapons + CSATWeapons;
+private _buyableItems = AAFItems + NATOItems + CSATItems;
 private _buyableExplosives = (["AAF", "explosives"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity) + (["CSAT", "explosives"] call AS_fnc_getEntity);
 private _buyableAPMines =(["AAF", "ap_mines"] call AS_fnc_getEntity) + (["NATO", "ap_mines"] call AS_fnc_getEntity) + (["CSAT", "ap_mines"] call AS_fnc_getEntity);
 private _buyableATMines =  (["AAF", "at_mines"] call AS_fnc_getEntity) + (["NATO", "at_mines"] call AS_fnc_getEntity) + (["CSAT", "at_mines"] call AS_fnc_getEntity);
@@ -43,8 +47,8 @@ if (_type in ["ASRifles", "Machineguns", "Sniper Rifles", "Launchers", "Pistols"
     for "_i" from 1 to _amount do {
         private _weapon = selectRandom _weapons;
         expCrate addItemCargoGlobal [_weapon, 1];
-        private _magazines = AS_allWeaponsAttrs select (AS_allWeapons find _weapon);
-        expCrate addMagazineCargoGlobal [selectRandom _magazines, 10];
+        private _magazines = AS_allWeaponsAttrs select (AS_allWeapons find _weapon) select 2;
+        expCrate addMagazineCargoGlobal [selectRandom _magazines, 20];
     };
 };
 

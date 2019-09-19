@@ -142,7 +142,7 @@ private _fnc_spawn = {
 		private _escortVehicleType = selectRandom (_category call AS_AAFarsenal_fnc_valid);
 
 		([_escortVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_vehicle", "_vehicleGroup"];
-		_posRoad = [(_posRoad select 0) - (10*(sin _dir )), (_posRoad select 1) - (10*(cos _dir)), 0]; //next one is 10m behind
+		_posRoad = [(_posRoad select 0) - (15*(sin _dir )), (_posRoad select 1) - (15*(cos _dir)), 0]; //next one is 15m behind
 
 		{
 			if (_i == _escortSize and {_escortSize > 1}) then {_x setRank "PRIVATE";} else {_x setRank "SERGEANT";}; //Make one escort last of the convoy
@@ -180,7 +180,7 @@ private _fnc_spawn = {
 		};
 
 	};
-	_posRoad = [(_posRoad select 0) - (10*(sin _dir )), (_posRoad select 1) - (10*(cos _dir)), 0]; //next pos is 10m behing
+	_posRoad = [(_posRoad select 0) - (15*(sin _dir )), (_posRoad select 1) - (15*(cos _dir)), 0]; //next pos is 15m behing
 
 	([_mainVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_mainVehicle","_mainVehicleGroup","_driver"];
 	_vehicles pushBack _mainVehicle;
