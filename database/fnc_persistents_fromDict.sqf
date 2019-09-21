@@ -46,7 +46,7 @@ params ["_dict"];
                   waitUntil {sleep 0.1; not isNil "AS_dataInitialized"};
                   [_vehicle, "FIA", _fuel, _fuelCargo] call AS_fnc_initVehicle;
                   //After init, enable simulation
-                  sleep 1;
+                  sleep 10;
                   _vehicle enableSimulationGlobal true;
                   _vehicle allowDamage true;
               };

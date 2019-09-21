@@ -1,10 +1,8 @@
 //  In: [position,blackListMarker]
 // Out: boolean
 
-private ["_pos","_area","_return"];
-_pos = _this select 0;
-_area = _this select 1;
-_return = false;
+params ["_pos", "_area"];
+private _return = false;
 
 // Find corner positions of the rectangle
 private ["_dir"];
@@ -36,40 +34,40 @@ if (_shape == "ICON") then {
     if (_dir % 90 != 0) then {
       // Add the point position to the array to have it shifted by the FOR below
       _corners set [4,_pos];
-      
+
       // Rotate each corner position so that the rectangle is aligned with x and y axises
       // Use origo as center while rotating, but for comparison shift positions back
       private ["_posCor","_posNew","_orgX","_orgY","_shiftedX","_shiftedY","_newX","_newY"];
       for "_i" from 0 to (count _corners - 1) do {
         _posCor = _corners select _i;
-        
+
         // Original coordinates
         _orgX = _posCor select 0;
         _orgY = _posCor select 1;
-        
+
         // Subtract the marker center coordinates from corner coordinates.
         // Rotation is done using origo (0,0) as anchor/centerpoint.
         _shiftedX = _orgX - _centerX;
         _shiftedY = _orgY - _centerY;
-        
+
         // Axis-aligned corner position
         _posNew = [[_shiftedX,_shiftedY],_dir] call UPSMON_pos_fnc_rotatePosition;
-        
+
         // Shift the aligned corner position back near to the original marker location.
         _newX = _posNew select 0;
         _newY = _posNew select 1;
         _newX = _newX + _centerX;
         _newY = _newY + _centerY;
-        
+
         _posCor = [_newX,_newY];
-        
+
         _corners set [_i,_posCor];
       };
 
       // Point position
       _pos = _corners select 4;
     };
-    
+
     // Check if the position is within the marker area.
     _return = [_pos,_corners] call UPSMON_pos_fnc_isInRectangle;
   } else {

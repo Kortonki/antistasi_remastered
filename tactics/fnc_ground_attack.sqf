@@ -16,7 +16,7 @@ _wp2 setWaypointBehaviour "AWARE";
 _crew_group setVariable ["AS_patrol_marker", _marker, true];
 
 private _statement = {
-    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED", "NOFOLLOW"] spawn UPSMON;
+    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED"] spawn UPSMON;
 };
 
 _wp1 setWaypointStatements ["true", _statement call AS_fnc_codeToString];

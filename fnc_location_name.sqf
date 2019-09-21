@@ -15,5 +15,6 @@ if (_type == "factory") exitWith {format ["Factory near %1",_cityname]};
 if (_type in ["outpost", "outpostAA"]) exitWith {format ["Outpost near %1",_cityname]};
 if (_type == "seaport") exitWith {format ["Seaport near %1",_cityname]};
 if (_type == "roadblock") exitWith {format ["Roadblock near %1",_cityname]};
+if (_type == "camp") exitWith {format ["Camp %1 near %2",[_location, "name"] call AS_location_fnc_get,_cityname]};
 diag_log format ["[AS] Error: location_name: invalid type '%1'", _type];
 "Unknown location"

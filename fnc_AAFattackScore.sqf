@@ -15,7 +15,7 @@ private _scoreNeededAir = 0;
         _scoreNeededLand = _scoreNeededLand + 3;
         _scoreNeededAir = _scoreNeededAir + 3;
     };
-    private _estaticas = AS_P("vehicles") select {_x distance _analizadoPos < _analizadoSize};
+    private _estaticas = AS_P("vehicles") select {_x distance2D _analizadoPos < _analizadoSize};
 
     _scoreNeededLand = _scoreNeededLand + ({typeOf _x in AS_allMortarStatics} count _estaticas) + (2*({typeOf _x in AS_allATstatics} count _estaticas));
     _scoreNeededAir = _scoreNeededAir + ({typeOf _x in AS_allMGstatics} count _estaticas) + (5*({typeOf _x in AS_allAAstatics} count _estaticas));

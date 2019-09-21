@@ -10,8 +10,8 @@ while {sleep AS_spawnLoopTime; _location call AS_location_fnc_spawned and {!(_lo
       if (_x distance2D _position < 100) then {
         if (leader _x == _x and {(position _x) call AS_fnc_hasRadioCoverage and {!(_x getVariable ["revealing", false])}}) then {
 
-           [_x, _location] spawn {
-             params ["_unit","_location"];
+           [_x, _location, _position] spawn {
+             params ["_unit","_location", "_position"];
              _unit setVariable ["revealing", true, true];
              sleep (5 + random 30);
              if (alive _unit and {random 100 > _unit distance2D _position}) then {

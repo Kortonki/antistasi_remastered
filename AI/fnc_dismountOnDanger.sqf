@@ -15,7 +15,7 @@ while {{alive _x} count units _grupo > 0} do
 	_modoD = behaviour driver _veh;
 		};
 
-	if (_modo == "DANGER" or _modoD == "DANGER") then
+	if (_modo == "COMBAT" or _modoD == "COMBAT") then
 		{
 		{[_x] orderGetIn false; [_x] allowGetIn false} forEach units _grupo;
 		}
