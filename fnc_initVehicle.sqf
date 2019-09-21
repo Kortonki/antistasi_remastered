@@ -32,7 +32,7 @@ if (_tipo == (["CSAT", "box"] call AS_fnc_getEntity) and _side == "CSAT") then {
 
 //Cargo release on destruction
 
-_veh addEventHandler ["killed", {
+_veh addEventHandler ["Killed", {
 	private _veh = _this select 0;
 	[_veh] spawn AS_fnc_activateCleanup;
 	if (!isNil{_veh getVariable "boxCargo"}) then {
@@ -95,16 +95,16 @@ if (_side != "NATO") then {
 
 
 if (_side == "CSAT") then {
-	_veh addeventHandler ["killed", {_this call AS_fnc_EH_CSATVehicleKilled}];
+	_veh addeventHandler ["Killed", {_this call AS_fnc_EH_CSATVehicleKilled}];
 };
 
 if (_side == "AAF") then {
-	_veh addEventHandler ["killed", {_this call AS_fnc_EH_AAFVehicleKilled}];
+	_veh addEventHandler ["Killed", {_this call AS_fnc_EH_AAFVehicleKilled}];
 };
 
 // UAV is not part of the AAF arsenal, so the killing of it is dealt separately
 if (_side == "AAF" and _tipo in (["AAF", "uavs_attack"] call AS_fnc_getEntity)) then {
-    _veh addEventHandler ["killed",{[-2500] remoteExec ["AS_fnc_changeAAFmoney",2]}];
+    _veh addEventHandler ["Killed",{[-2500] remoteExec ["AS_fnc_changeAAFmoney",2]}];
 };
 
 if (_tipo in AS_allMortarStatics) then {
@@ -173,7 +173,7 @@ if (_side == "NATO") then {
         };
     }];
     // lose support when vehicle is destroyed
-    _veh addEventHandler ["killed", {
+    _veh addEventHandler ["Killed", {
         [-2,0] remoteExec ["AS_fnc_changeForeignSupport",2];
         [2,-2,position (_this select 0)] remoteExec ["AS_fnc_changeCitySupport",2];
     }];

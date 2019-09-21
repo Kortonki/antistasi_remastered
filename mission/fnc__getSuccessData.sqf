@@ -58,7 +58,7 @@ if (_type == "convoy_supplies") exitWith {
 
 if (_type in ["convoy_ammo", "convoy_fuel"]) exitWith {
   _args params [["_vehPosition", [0,0,0]]];
-  [5, [500, _vehPosition, 10], [0, 0], [0, 0], [0, 0, []], 20*60]
+  [5, [500, _vehPosition, 10], [0, 0], [0, 0], [0, 0, []], 30*60]
 };
 
 
