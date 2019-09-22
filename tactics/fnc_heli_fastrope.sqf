@@ -11,7 +11,7 @@ private _movePosition = [_safePosition, 500, _dir] call bis_fnc_relPos;
 (leader _crew_group) domove _movePosition;
 _heli flyinHeight 40;
 _heli setBehaviour "SAFE";
-_heli setSpeedMode "FULL";
+_heli setSpeedMode "NORMAL";
 
 //Failsafe: Continue after 5 minutes if conditions not met
 
@@ -19,11 +19,11 @@ private _timeRTB = time;
 
 //Slow down when nearing the drop-off point
 
-waitUntil {sleep 1; position _heli distance2D _safePosition < 400 or not(canmove _heli) or time > (_timeRTB + 300)};
+waitUntil {sleep 1; position _heli distance2D _safePosition < 500 or not(canmove _heli) or time > (_timeRTB + 300)};
 
 _crew_group setSpeedMode "LIMITED";
 
-waitUntil {sleep 1; position _heli distance2D _safePosition < 50 or not(canmove _heli)  or time > (_timeRTB + 300)};
+waitUntil {sleep 1; position _heli distance2D _safePosition < 100 or not(canmove _heli)  or time > (_timeRTB + 300) or speed _heli < 5};
 
 //Move a little if chopper happens to be over water
 
@@ -36,7 +36,7 @@ if (surfaceIsWater (position _heli)) then {
   (leader _crew_group) domove _movePosition;
 
 
-  waitUntil {sleep 1; position _heli distance2D _safePosition < 50 or not(canmove _heli) or time > (_timeRTB + 300)};
+  waitUntil {sleep 1; position _heli distance2D _safePosition < 100 or not(canmove _heli) or time > (_timeRTB + 300)};
 };
 
 [_cargo_group, _heli] spawn SHK_Fastrope_fnc_AIs;
@@ -72,7 +72,7 @@ _wp4 setWaypointBehaviour "AWARE";
 
 _cargo_group setVariable ["AS_patrol_marker", _patrol_marker, true];
 private _statement2 = {
-    [this, group this getVariable "AS_patrol_marker", "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
+    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED", "NOVEH2"] spawn UPSMON;
 };
 _wp2 setWaypointStatements ["true", _statement2 call AS_fnc_codeToString];
 

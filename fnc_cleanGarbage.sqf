@@ -15,12 +15,13 @@ private _deleteVehicles = vehicles select {!(alive _x)};
 	[_x] remoteExec ["deleteVehicle", _x];
 } foreach _deleteVehicles;
 
-private _obsoletePersistents = (AS_P("vehicles")) select {
+//TODO consider this, might delete proper objects
+/*private _obsoletePersistents = (AS_P("vehicles")) select {
 	(((getpos _x) select 2) < -1) //sunken objects
 };
 
 {
 	[_x, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
-} foreach _obsoletePersistents;
+} foreach _obsoletePersistents;*/
 
 [[petros,"hint","Garbage deleted"],"AS_fnc_localCommunication"] call BIS_fnc_MP;

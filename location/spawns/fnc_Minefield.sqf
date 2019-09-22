@@ -12,11 +12,11 @@ private _fnc_spawn = {
 		private _mine = createMine [_type, _pos, [], 0];
 		_mine setDir _dir;
 		_mines pushBack _mine;
-		_mine setVariable ["loc", _location]; //TODO consider if this must be synced
 
-		_mine addEventHandler ["Killed", {
-			params ["_mine"];
-			private _location = _mine getVariable ["loc", ""];
+		[_mine, _location] spawn {
+			params ["_mine", "_location"];
+			waitUntil {sleep 1; isNull _mine}; //Mine explosion and location despawn should trigger this
+			if (!(_location call AS_location_fnc_spawned)) exitWith {}; //don't fiddle anything after despawn
 
 			private _mines = ([_location, "mines"] call AS_spawn_fnc_get);
 			private _minesData = ([_location, "mines"] call AS_location_fnc_get);
@@ -33,7 +33,7 @@ private _fnc_spawn = {
 
 			[_location] call AS_location_fnc_updateMarker;
 
-			}];
+			};
 
 		(_side call AS_fnc_getFactionSide) revealMine _mine;
 	} forEach _minesData;
@@ -53,17 +53,18 @@ private _fnc_clean = {
 		_location call AS_location_fnc_remove;
 	} else {
 		// else, remove the missing mines. leave this as failsafe to remove in addition to the eventhandler above
-		for "_i" from 0 to (count _minesData - 1) do {
+		/*for "_i" from 0 to (count _minesData - 1) do {
 			if (isNull (_mines select _i)) then {
 				_minesData deleteAt _i;
 			};
-		};
+		};*/
 		([_location, "mines", _minesData] call AS_location_fnc_set);
 	};
 
 	{
 		[_x] remoteExec ["deleteVehicle", _x];
 	} forEach _mines;
+	[_location, "delete", true] call AS_spawn_fnc_set;
 };
 
 AS_spawn_createMinefield_states = ["spawn", "clean"];

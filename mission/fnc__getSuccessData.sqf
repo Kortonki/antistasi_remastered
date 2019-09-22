@@ -25,10 +25,10 @@ if (_type == "kill_traitor") exitWith {
     [5, [_size, _position, 10], [0, -2]]
 };
 if (_type == "kill_officer") exitWith {
-    [5, [_size, _position, 10], [0, 3], [0, 200], [0, 0, _position], 30*60, [], [_location, 30]]
+    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 0, _position], 30*60, [], [_location, 30]]
 };
 if (_type == "kill_specops") exitWith {
-    [5, [_size, _position, 10], [0, 3], [0, 200], [0, 5, _position], 10*60]
+    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 5, _position], 10*60]
 };
 if (_type == "aaf_attack_hq") exitWith {
     [0, [500, _position, 10], [0, 3], [0, 300]]
@@ -58,7 +58,7 @@ if (_type == "convoy_supplies") exitWith {
 
 if (_type in ["convoy_ammo", "convoy_fuel"]) exitWith {
   _args params [["_vehPosition", [0,0,0]]];
-  [5, [500, _vehPosition, 10], [0, 0], [0, 0], [0, 0, []], 20*60]
+  [5, [500, _vehPosition, 10], [0, 0], [0, 0], [0, 0, []], 30*60]
 };
 
 
@@ -90,7 +90,7 @@ if (_type == "defend_location") exitWith {
     [5, [500, _position, 10], [0, 5], [0, 0], [-5, 10, _position], 30*60]
 };
 if (_type == "defend_hq") exitWith {
-    [10, [500, _position, 20], [0, 5], [0, 0], [-5, 10, _position], 60*60, [
+    [10, [500, _position, 20], [0, 10], [0, 0], [-5, 10, _position], 60*60, [
         [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities", {{[-5,0,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)}]
     ]]
 };
@@ -116,18 +116,7 @@ if (_type == "rob_bank") exitWith {
     [5, [500, _pos, 10], [-2, 0], [0, 5000], [0, -5, _position], 10*60]
 };
 if (_type == "send_meds") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [0, 20, _position], 10*60, [
-        ["Probable mine pack", {
-            if (random 10 < 8) then {
-                private _mines = (["AAF", "ap_mines"] call AS_fnc_getEntity) + (["AAF", "at_mines"] call AS_fnc_getEntity);
-                for "_i" from 1 to 3 do {
-                    private _item = (selectRandom _mines) call AS_fnc_mineMag;
-                    private _num = 2 + (floor random 5);
-                    cajaVeh addMagazineCargoGlobal [_item, _num];
-                };
-                [[petros,"globalChat","Someone delivered mines to our camp [repair box]"],"AS_fnc_localCommunication"] call BIS_fnc_MP;
-            };
-        }, []]]]
+    [5, [500, _position, 10], [5, 0], [0, 0], [0, 20, _position], 10*60]
 };
 if (_type == "help_meds") exitWith {
     [5, [500, _position, 10], [5, 0], [0, 0], [-20, 20, _position]]

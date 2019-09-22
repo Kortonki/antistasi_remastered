@@ -24,11 +24,9 @@ private _fnc_spawn = {
 
 	private _patrolMarker = createMarker [format ["defhq_%1", round (diag_tickTime/60)], _position];
 	_patrolMarker setMarkerShape "ELLIPSE";
-	_patrolMarker setMarkerSize [50,50];
+	_patrolMarker setMarkerSize [100,100];
 	_patrolMarker setMarkerAlpha 0;
 
-
-	[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 
 	//Transport choppers. They will come regardless of support
 

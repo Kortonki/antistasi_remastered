@@ -68,10 +68,8 @@ if (_type == "binoculars") then {
 
 			private _w_factor = 1.0/(1 + exp (-2*(_amount - 5)));  // 0 => 0; 5 => 0.5; 10 => 1
 
-			_result = _zoomMax/_zoomMin;
-			if (_type == "sniperScope") then {
-					_result = _zoomMax;
-			};
+			_result = _zoomMax;
+
 			_w_factor*_result
 	};
 };
@@ -145,7 +143,7 @@ if (_type in ["rifleScope", "sniperScope"]) then {
 
         private _w_factor = 1.0/(1 + exp (-2*(_amount - 5)));  // 0 => 0; 5 => 0.5; 10 => 1
 
-        _result = _zoomMax/_zoomMin;
+        _result = 1/_zoomMin;
         if (_type == "sniperScope") then {
             _result = _zoomMax;
         };

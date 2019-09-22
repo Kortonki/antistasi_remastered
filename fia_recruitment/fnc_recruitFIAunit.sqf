@@ -20,8 +20,8 @@ private _equipment = [_type] call AS_fnc_getBestEquipment;
 
 _equipment params ["_vest", "_helmet", "_googles", "_backpack", "_primaryWeapon", "_primaryMags", "_secondaryWeapon", "_secondaryMags", "_scope", "_uniformItems", "_backpackItems", "_primaryWeaponItems", "_binoculars"];
 
-if (_type == "Sniper" and (_primaryWeapon == "" or ([_primaryMags] call AS_fnc_getTotalCargo) < 6 or _scope == "")) exitWith {
-    [_player, "hint", "No snipers, scopes or ammo to equip a sniper."] remoteExec ["AS_fnc_localCommunication", _player];
+if (_type == "Sniper" and (_primaryWeapon == "" or ([_primaryMags] call AS_fnc_getTotalCargo) < 6)) exitWith {
+    [_player, "hint", "No snipers or ammo to equip a sniper."] remoteExec ["AS_fnc_localCommunication", _player];
 };
 if (_type == "Grenadier" and _primaryWeapon == "") exitWith {
     // todo: check existence of enough grenades.

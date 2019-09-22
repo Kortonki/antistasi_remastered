@@ -8,27 +8,117 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=247;
+		nextID=249;
+	};
+	class MarkerIDProvider
+	{
+		nextID=2;
 	};
 	class Camera
 	{
-		pos[]={10121.399,152.74516,9184.8379};
-		dir[]={0.24414529,-0.48417339,0.84034884};
-		up[]={0.13508718,0.87493181,0.46496841};
-		aside[]={0.96038979,1.185952e-006,-0.27902353};
+		pos[]={7105.4961,25.987385,7651.1577};
+		dir[]={-0.19156003,-0.34237176,0.9198975};
+		up[]={-0.069804758,0.93955082,0.33520892};
+		aside[]={0.97906059,2.0868792e-006,0.20388332};
 	};
 };
 binarizationWanted=0;
+addons[]=
+{
+	"A3_Ui_F",
+	"A3_Modules_F_Hc",
+	"A3_Characters_F"
+};
+class AddonsMetaData
+{
+	class List
+	{
+		items=3;
+		class Item0
+		{
+			className="A3_Ui_F";
+			name="Arma 3 - User Interface";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item1
+		{
+			className="A3_Modules_F";
+			name="Arma 3 Alpha - Scripted Modules";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item2
+		{
+			className="A3_Characters_F";
+			name="Arma 3 Alpha - Characters and Clothing";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+	};
+};
 randomSeed=9674076;
 class ScenarioData
 {
 	author="Golias";
+	disabledAI=1;
+	respawn=3;
+	respawnDelay=60.365063;
+	class Header
+	{
+		minPlayers=1;
+		maxPlayers=47;
+	};
+};
+class CustomAttributes
+{
+	class Category0
+	{
+		name="Multiplayer";
+		class Attribute0
+		{
+			property="RespawnTemplates";
+			expression="true";
+			class Value
+			{
+				class data
+				{
+					class type
+					{
+						type[]=
+						{
+							"ARRAY"
+						};
+					};
+					class value
+					{
+						items=1;
+						class Item0
+						{
+							class data
+							{
+								class type
+								{
+									type[]=
+									{
+										"STRING"
+									};
+								};
+								value="Counter";
+							};
+						};
+					};
+				};
+			};
+		};
+		nAttributes=1;
+	};
 };
 class Mission
 {
 	class Intel
 	{
-		briefingName="Kortonki's Antistasi";
+		briefingName="Antistasi Remastered v0.96";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -42,14 +132,13 @@ class Mission
 		year=2035;
 		month=6;
 		day=6;
-		hour=7;
 		minute=0;
 		startFogDecay=0.013;
 		forecastFogDecay=0.013;
 	};
 	class Entities
 	{
-		items=128;
+		items=130;
 		class Item0
 		{
 			dataType="Marker";
@@ -154,7 +243,7 @@ class Mission
 			colorName="ColorGreen";
 			a=100;
 			b=80;
-			angle=345.39871;
+			angle=345.39859;
 			id=15;
 			atlOffset=-21.894897;
 		};
@@ -421,7 +510,7 @@ class Mission
 			colorName="ColorYellow";
 			a=100;
 			b=50;
-			angle=65.639984;
+			angle=65.639969;
 			id=62;
 			atlOffset=-48.73951;
 		};
@@ -449,7 +538,7 @@ class Mission
 			colorName="ColorYellow";
 			a=40;
 			b=60;
-			angle=50.972992;
+			angle=50.972977;
 			id=64;
 			atlOffset=-16.458883;
 		};
@@ -612,7 +701,7 @@ class Mission
 			colorName="ColorPink";
 			a=30;
 			b=30;
-			angle=28.028969;
+			angle=28.028946;
 			id=88;
 			atlOffset=-20.558197;
 		};
@@ -639,7 +728,7 @@ class Mission
 			colorName="ColorBrown";
 			a=100;
 			b=80;
-			angle=57.15094;
+			angle=57.150845;
 			id=91;
 			atlOffset=-183.96188;
 		};
@@ -840,14 +929,15 @@ class Mission
 		class Item61
 		{
 			dataType="Marker";
-			position[]={10136.262,140.05263,9216.5479};
+			position[]={10136.262,140.05299,9216.5479};
 			name="FIA_HQ";
 			markerType="RECTANGLE";
 			type="rectangle";
 			alpha=0.15285577;
-			a=50;
-			b=50;
+			a=100;
+			b=100;
 			id=131;
+			atlOffset=0.00036621094;
 		};
 		class Item62
 		{
@@ -2539,7 +2629,7 @@ class Mission
 			colorName="ColorGUER";
 			a=75;
 			b=75;
-			angle=169.08698;
+			angle=169.08694;
 			id=236;
 			atlOffset=-2.4482813;
 		};
@@ -2645,6 +2735,23 @@ class Mission
 			angle=180.25404;
 			id=246;
 			atlOffset=-235.91382;
+		};
+		class Item128
+		{
+			dataType="Marker";
+			position[]={11216.062,2.0179999,5174.042};
+			name="AS_base_4_convoy";
+			type="Empty";
+			id=247;
+			atlOffset=0.00040960312;
+		};
+		class Item129
+		{
+			dataType="Marker";
+			position[]={11043.539,350.38,11456.437};
+			name="AS_base_3_convoy";
+			type="Empty";
+			id=248;
 		};
 	};
 	class Connections

@@ -76,7 +76,7 @@ private _fnc_spawn = {
 
 	{
 		call {
-			if (str typeof _x find "Land_PlasticCase_01_medium_F" > -1) exitWith {expCrate = _x; [expCrate] call AS_fnc_emptyCrate;};
+			if (str typeof _x find "Box_IND_Wps_F" > -1) exitWith {expCrate = _x; [expCrate] call AS_fnc_emptyCrate;};
 			if (str typeof _x find "Box_Syndicate_Wps_F" > -1) exitWith { [_x] call AS_fnc_emptyCrate;};
 			if (str typeof _x find "Box_IED_Exp_F" > -1) exitWith { [_x] call AS_fnc_emptyCrate;};
 		};

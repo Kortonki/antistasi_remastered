@@ -260,7 +260,7 @@ if (_initpos!="ORIGINAL") then
 			}
 			else
 			{
-				_currPos=[_areamarker,0,[],[300, "I_MRAP_03_hmg_F"]] call UPSMON_pos;
+				_currPos=[_areamarker,0,[],[300, "B_Quadbike_01_F"]] call UPSMON_pos;
 			};
 
 			if (count _currPos > 0) then {_try=99};

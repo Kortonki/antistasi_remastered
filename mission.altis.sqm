@@ -5,14 +5,14 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=129;
+	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=467;
+		nextID=477;
 	};
 	class MarkerIDProvider
 	{
-		nextID=128;
+		nextID=138;
 	};
 	class LayerIndexProvider
 	{
@@ -20,23 +20,108 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={3582.5034,84.406395,10253.358};
-		dir[]={0.531784,-0.80384356,0.26696977};
-		up[]={0.71846831,0.59467369,0.36068773};
-		aside[]={0.44871944,1.7017592e-006,-0.89382458};
+		pos[]={3039.5352,175.03369,14061.788};
+		dir[]={0.89491385,-0.3257423,0.30539602};
+		up[]={0.30846187,0.94538087,0.10526564};
+		aside[]={0.32301003,-1.0538788e-006,-0.94652373};
 	};
 };
 binarizationWanted=0;
+addons[]=
+{
+	"A3_Ui_F",
+	"A3_Modules_F_Hc",
+	"A3_Characters_F"
+};
+class AddonsMetaData
+{
+	class List
+	{
+		items=3;
+		class Item0
+		{
+			className="A3_Ui_F";
+			name="Arma 3 - User Interface";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item1
+		{
+			className="A3_Modules_F";
+			name="Arma 3 Alpha - Scripted Modules";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item2
+		{
+			className="A3_Characters_F";
+			name="Arma 3 Alpha - Characters and Clothing";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+	};
+};
 randomSeed=8109385;
 class ScenarioData
 {
-	author="Golias";
+	author="Kortonki";
+	respawn=3;
+	respawnDelay=60.000004;
+	class Header
+	{
+		minPlayers=1;
+		maxPlayers=49;
+	};
+};
+class CustomAttributes
+{
+	class Category0
+	{
+		name="Multiplayer";
+		class Attribute0
+		{
+			property="RespawnTemplates";
+			expression="true";
+			class Value
+			{
+				class data
+				{
+					class type
+					{
+						type[]=
+						{
+							"ARRAY"
+						};
+					};
+					class value
+					{
+						items=1;
+						class Item0
+						{
+							class data
+							{
+								class type
+								{
+									type[]=
+									{
+										"STRING"
+									};
+								};
+								value="Counter";
+							};
+						};
+					};
+				};
+			};
+		};
+		nAttributes=1;
+	};
 };
 class Mission
 {
 	class Intel
 	{
-		briefingName="Golias' Antistasi";
+		briefingName="Antistasi Remastered v0.96";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -57,7 +142,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=178;
+		items=188;
 		class Item0
 		{
 			dataType="Marker";
@@ -1607,14 +1692,15 @@ class Mission
 		class Item130
 		{
 			dataType="Marker";
-			position[]={3621.967,14.840721,10283.446};
+			position[]={3621.967,14.841,10283.446};
 			name="FIA_HQ";
 			markerType="RECTANGLE";
 			type="rectangle";
 			alpha=0.15285577;
-			a=50;
-			b=50;
+			a=100;
+			b=100;
 			id=215;
+			atlOffset=0.0002784729;
 		};
 		class Item131
 		{
@@ -3204,6 +3290,95 @@ class Mission
 			};
 			id=459;
 			atlOffset=0.0079984665;
+		};
+		class Item178
+		{
+			dataType="Marker";
+			position[]={8452.8789,65.772606,10170.461};
+			name="AS_base_11_convoy";
+			type="Empty";
+			id=467;
+		};
+		class Item179
+		{
+			dataType="Marker";
+			position[]={12385.262,93.197998,8763.9678};
+			name="AS_base_10_convoy";
+			type="Empty";
+			id=468;
+			atlOffset=0.00017547607;
+		};
+		class Item180
+		{
+			dataType="Marker";
+			position[]={20759.023,32.153999,7054.5088};
+			name="AS_airfield_convoy";
+			type="Empty";
+			id=469;
+			atlOffset=-7.6293945e-005;
+		};
+		class Item181
+		{
+			dataType="Marker";
+			position[]={14875.011,18.327,16219.162};
+			name="AS_airfield_3_convoy";
+			type="Empty";
+			id=470;
+			atlOffset=0.00043869019;
+		};
+		class Item182
+		{
+			dataType="Marker";
+			position[]={11433.225,30.955999,12141.686};
+			name="AS_airfield_4_convoy";
+			type="Empty";
+			id=471;
+			atlOffset=0.00014686584;
+		};
+		class Item183
+		{
+			dataType="Marker";
+			position[]={23303.982,82.271004,21141.533};
+			name="AS_base_3_convoy";
+			type="Empty";
+			id=472;
+			atlOffset=-3.0517578e-005;
+		};
+		class Item184
+		{
+			dataType="Marker";
+			position[]={14190.853,62.625999,21082.482};
+			name="AS_base_6_convoy";
+			type="Empty";
+			id=473;
+			atlOffset=-0.00046157837;
+		};
+		class Item185
+		{
+			dataType="Marker";
+			position[]={9154.1387,17.816,21418.064};
+			name="AS_airfield_5_convoy";
+			type="Empty";
+			id=474;
+			atlOffset=0.00033950806;
+		};
+		class Item186
+		{
+			dataType="Marker";
+			position[]={5138.4189,23.712,14090.376};
+			name="AS_base_12_convoy";
+			type="Empty";
+			id=475;
+			atlOffset=-8.2015991e-005;
+		};
+		class Item187
+		{
+			dataType="Marker";
+			position[]={12980.689,34.244999,16456.578};
+			name="AS_base_5_convoy";
+			type="Empty";
+			id=476;
+			atlOffset=-3.0517578e-005;
 		};
 	};
 	class Connections

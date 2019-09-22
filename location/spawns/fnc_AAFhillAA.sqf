@@ -3,7 +3,6 @@
 private _fnc_spawn = {
 	params ["_location"];
 
-	private _grupo = createGroup ("AAF" call AS_fnc_getFactionSide);
 	private _grupoCSAT = createGroup ("CSAT" call AS_fnc_getFactionSide);
 	private _gns = [];
 	private _stcs = [];
@@ -20,7 +19,6 @@ private _fnc_spawn = {
 		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
 		_vehiculos pushBack _bunker;
 	};
-
 
 	private _AAVeh = [];
 	{
@@ -86,9 +84,9 @@ private _fnc_spawn = {
 	_grupos pushBack _grupoCSAT;
 	[leader _grupoCSAT, _mrkfin, "AWARE", "SPAWNED","NOVEH", "NOFOLLOW"] spawn UPSMON;
 
-	// AAF teams
+
 	{
-		_grupo = [_posicion, ("CSAT" call AS_fnc_getFactionSide), _x] call BIS_Fnc_spawnGroup;
+		private _grupo = [_posicion, ("CSAT" call AS_fnc_getFactionSide), _x] call BIS_Fnc_spawnGroup;
 		_grupos pushBack _grupo;
 		{[_x, false] call AS_fnc_initUnitCSAT; _soldados pushBack _x} forEach units _grupo;
 		[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH"] spawn UPSMON;

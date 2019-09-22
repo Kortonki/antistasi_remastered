@@ -121,6 +121,9 @@ if (_type == "repair_antenna") exitWith {
             private _antenna = (nearestobjects [_antennaPos, AS_antenasTypes, 25]) select 0;
             _antenna setDammage 0;
             _antenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];
+
+            private _marker = _antenna getVariable ["marker", ""];
+            _marker setMarkerType "loc_Transmitter";
         }, [_antennaPos]]]
     ];
 };

@@ -84,11 +84,12 @@ private _wp4 = _group addWaypoint [getMarkerpos _patrol_marker, _size];
 _wp4 setWaypointType "SAD";
 _wp4 setWaypointSpeed "NORMAL";
 _wp4 setWaypointFormation "LINE";
-_wp4 setWaypointBehaviour "COMBAT";
+_wp4 setWaypointBehaviour "AWARE";
+_group setCurrentWaypoint _wp4;
 
 _cargo_group setVariable ["AS_patrol_marker", _patrol_marker, true];
 private _statement = {
-    [this, group this getVariable "AS_patrol_marker", "COMBAT", "SPAWNED", "NOFOLLOW"] spawn UPSMON;
+    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED"] spawn UPSMON;
 };
 _wp3 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 

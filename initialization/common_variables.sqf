@@ -46,6 +46,7 @@ call compile preprocessFileLineNumbers "templates\basicLists.sqf";
 
 // Identifies mods.
 hasRHS = false;
+has3CB = false;
 hasACE = false;
 
 hasACEhearing = false;
@@ -82,6 +83,10 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 // todo: do not rely on AS_allWeapons to check for mods.
 if ("rhs_weap_akms" in AS_allWeapons) then {
 	hasRHS = true;
+};
+
+if ("UK3CB_M16A2" in AS_allWeapons) then {
+	has3CB = true;
 };
 
 hasFINMOD = false;
@@ -194,6 +199,10 @@ if hasRHS then {
 	if hasFINMOD then {
 		_dict = call compile preprocessFileLineNumbers "templates\FIA_WEST_RHS_FIN.sqf";
 		AS_entities setVariable ["RHS_FIN_WEST", _dict];
+	};
+	if has3CB then {
+		_dict = call compile preprocessFileLineNumbers "templates\NATO_3CB_AFGHAN.sqf";
+		AS_entities setVariable ["RHS_3CB_AFGHAN", _dict];
 	};
 };
 if hasCUP then {

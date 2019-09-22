@@ -285,12 +285,12 @@ class wpns
 	{
     AS_DIALOG(3,"Buy weapons","closeDialog 0; createDialog ""exp_menu"";");
 
-    #define STR_EXP_ASS_S "if (player == AS_commander) then {[""ASRifles"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
-    #define STR_EXP_PIS_S "if (player == AS_commander) then {[""Pistols"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
-    #define STR_EXP_MGS_S "if (player == AS_commander) then {[""Machineguns"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
-    #define STR_EXP_SNP_S "if (player == AS_commander) then {[""Sniper Rifles"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
-    #define STR_EXP_LCH_S "if (player == AS_commander) then {[""Launchers"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
-    #define STR_EXP_GLA_S "if (player == AS_commander) then {[""GLaunchers"", 500] remoteExec [""AS_fnc_buyGear"", 2];}"
+    #define STR_EXP_ASS_S "[""ASRifles"", 500, player] remoteExec [""AS_fnc_buyGear"", 2];"
+    #define STR_EXP_PIS_S "[""Pistols"", 500, player] remoteExec [""AS_fnc_buyGear"", 2];"
+    #define STR_EXP_MGS_S "[""Machineguns"", 500, player] remoteExec [""AS_fnc_buyGear"", 2];"
+    #define STR_EXP_SNP_S "[""Sniper Rifles"", 500, player] remoteExec [""AS_fnc_buyGear"", 2];"
+    #define STR_EXP_LCH_S "[""Launchers"", 500, player] remoteExec [""AS_fnc_buyGear"", 2];"
+    #define STR_EXP_GLA_S "[""GLaunchers"", 500, player] remoteExec [""AS_fnc_buyGear"", 2];"
 
     // these amounts are in buyGear.sqf
     BTN_L(1,-1, "10 Rifles", "", STR_EXP_ASS_S);
@@ -437,8 +437,10 @@ BTN_R(2,-1, "Recruit Squad", "", "closeDialog 0; [] spawn AS_fnc_UI_recruitSquad
 BTN_R(3,-1, "Building Options", "", "closeDialog 0; nul=CreateDialog ""build_menu"";");
 BTN_R(4,-1, "Player and Money", "", "closeDialog 0; if (isMultiPlayer) then {nul = createDialog ""player_money""} else {hint ""MP Only Menu""};");
 
+#define CHOOSE_COMMANDER "closeDialog 0; if (isPlayer cursorTarget) then {[cursorTarget] spawn AS_fnc_setCommander;};"
+
 BTN_L(5, -1, "Resign Commander", "", "closeDialog 0; call AS_fnc_UI_toggleElegibility;");
-BTN_R(5, -1, "Choose new Commander", "Look at the player you want to make new Commander", "closeDialog 0; if (isPlayer cursorTarget) then {[cursorTarget] spawn AS_fnc_setCommander;};");
+BTN_R(5, -1, "Choose new Commander", "Look at the player you want to make new Commander", CHOOSE_COMMANDER);
 
 BTN_M(6, -1, "HQ options", "", "closeDialog 0; [] spawn AS_fnc_UI_manageHQ_menu;");
 

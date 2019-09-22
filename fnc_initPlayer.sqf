@@ -115,6 +115,19 @@ player addEventHandler ["GetOutMan", {
 	player setVariable ["EH_ids", nil];
 }];
 
+player addEventHandler ["killed", {
+	params ["_unit"];
+	private _vehicle = vehicle _unit;
+	//_unit removeAllEventHandlers "HandleDamage"; //These are no longer needed //IMPORTANT: this also removes "killed" eventhNdlers!
+
+		if (_vehicle != _unit and {!(_vehicle isKindOf "StaticWeapon")}) then {
+			([_unit, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_magazineRemains"];
+			[_vehicle, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;
+			[_vehicle, _magazineRemains] call AS_fnc_addMagazineRemains;
+	    _unit call AS_fnc_emptyUnit;
+		};
+	}];
+
 //Eventhandler to increase City support for healing CIVS
 player addEventhandler ["handleHeal", {
 		params ["_unit", "_healer", "_isMedic"];

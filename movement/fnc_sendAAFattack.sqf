@@ -28,7 +28,8 @@ private _validLocations = ([_validTypes, "FIA"] call AS_location_fnc_TS); //Fixe
 private _knownLocations = [] call AS_location_fnc_knownLocations;
 _validLocations append _knownLocations;
 
-private _enemyLocations = ["FIA","NATO"] call AS_location_fnc_S;
+private _enemyLocations = "NATO" call AS_location_fnc_S; //This changed so known locations are checked and excluding minefields to avoid errors
+_enemyLocations append _validLocations;
 
 if (count _validLocations == 0) exitWith {
 
@@ -82,7 +83,7 @@ if (_useCSAT) then {
 
 		// short circuit if no valid bases or airfields to attack
 		if ((_base != "") or (_aeropuerto != "")) then {
-			private _closeEnemylocations = _enemyLocations select {((_x call AS_location_fnc_position) distance _position < AS_P("spawnDistance")/2)};
+			private _closeEnemylocations = _enemyLocations select {((_x call AS_location_fnc_position) distance2D _position < AS_P("spawnDistance")/2)};
 
 			(_closeEnemylocations call AS_fnc_AAFattackScore) params ["_scoreNeededLand", "_scoreNeededAir"];
 

@@ -74,7 +74,7 @@ private _fnc_run = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 		private _chute = createVehicle ["B_Parachute_02_F", [0, 0, 0], [], 0, 'NONE'];
-	    _chute setPos [getPosASL _heli select 0, getPosASL _heli select 1, (getPosASL _heli select 2) - 50];
+	    _chute setPos [getPos _heli select 0, getPos _heli select 1, (getPos _heli select 2) - 20];
 	    private _crate = createVehicle [["NATO", "box"] call AS_fnc_getEntity, [0, 0, 0], [], 0, 'NONE'];
 	    _crate attachTo [_chute, [0, 0, -1.3]];
 	    [_crate, _support] call AS_fnc_fillCrateNATO;
