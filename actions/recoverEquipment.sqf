@@ -32,7 +32,7 @@ private _totalRecovered = 0;
 while {true} do {
 
 	//Nearby boxes
-	private _boxes = nearestObjects [_position, ["LandVehicle", "ReammoBox_F"], _size];
+	private _boxes = nearestObjects [_position, ["AllVehicles", "ReammoBox_F"], _size];
 	if (caja in _boxes) then {_boxes = _boxes - [caja];}; //Dumbproofing
 	_boxes = _boxes select {!(_x getvariable ["asCargo", false]) and {count ((getweaponCargo _x select 0) + (getmagazineCargo _x select 0) + (getitemCargo _x select 0) + (getbackpackCargo _x select 0)) > 0}}; //Try  //Try using getMagazine instead of magazine for locality issues
 
@@ -122,7 +122,7 @@ while {true} do {
 			[_x, _position, _time, {true}, {speed _vehicle >= 1}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
 
 			if (speed _vehicle < 1) then {
-				[_vehicle, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;
+				[_vehicle, _cargo_w, _cargo_m, _cargo_i, _cargo_b, false] call AS_fnc_populateBox;
 				[_vehicle, _magazineRemains] call AS_fnc_addMagazineRemains;
 		        _x call AS_fnc_emptyUnit;
 				_totalRecovered = _totalRecovered + _total;

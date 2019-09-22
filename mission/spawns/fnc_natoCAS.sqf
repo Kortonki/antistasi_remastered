@@ -3,8 +3,11 @@ private _fnc_initialize = {
 	private _support = [_mission, "NATOsupport"] call AS_mission_fnc_get;
 	private _aeropuertos = (["airfield", "FIA"] call AS_location_fnc_TS) + ["spawnNATO"];
 
-	private _origin = [_aeropuertos,AS_commander] call BIS_fnc_nearestPosition;
-	private _position = _origin call AS_location_fnc_position;
+	private _origin = [_mission, "origin"] call AS_mission_fnc_get;
+	private _position = getMarkerPos "spawnNATO";
+	if (_origin != "spawnNATO") then {
+		_position = _origin call AS_location_fnc_position;
+	};
 
 	private _tiempolim = _support;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
@@ -26,11 +29,13 @@ private _fnc_initialize = {
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, "position", _position] call AS_spawn_fnc_set;
+	[_mission, "origin", _origin] call AS_spawn_fnc_set;
 	[_mission, [_tskDesc,_tskTitle,_origin], _position, "Attack"] call AS_mission_spawn_fnc_saveTask;
 };
 
 private _fnc_spawn = {
 	params ["_mission"];
+	private _origin = [_mission, "origin"] call AS_spawn_fnc_get;
 	private _position = [_mission, "position"] call AS_spawn_fnc_get;
 	private _support = [_mission, "NATOsupport"] call AS_mission_fnc_get;
 
@@ -61,7 +66,7 @@ private _fnc_spawn = {
 		{[_x] spawn AS_fnc_initUnitNATO; [_x] join _grupoHeli} forEach _heliCrew;
 		deleteGroup _grupoheliTmp;
 		[_heli, "NATO"] call AS_fnc_initVehicle;
-		_heli setPosATL [getPosATL _heli select 0, getPosATL _heli select 1, 1000];
+		_heli setPosATL [getPosATL _heli select 0, getPosATL _heli select 1, 100];
 		_heli flyInHeight 300;
 		sleep 10;
 	};
