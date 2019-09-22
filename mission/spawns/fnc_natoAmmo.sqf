@@ -95,6 +95,9 @@ private _fnc_run = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 	};
+	//Send enemy patrol to investigate the drop
+
+	[[_position], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
 
 	_grupoHeli setVariable ["isHCgroup", false, true];
 	AS_commander hcRemoveGroup _grupoHeli;

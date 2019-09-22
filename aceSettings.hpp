@@ -24,7 +24,7 @@
         ACE_setting = 1;
         values[] = {0, 1};
         texts[] = {"Off", "On"};
-        default = 1;
+        default = 0;
         typeName = "BOOL";
         force = 1;
     };
@@ -188,7 +188,7 @@
             ACE_setting = 1;
             values[] = {0,1};
             texts[] = {"Off","On"};
-            default = 1;
+            default = 0;
             typeName = "BOOL";
             force = 1;
     };

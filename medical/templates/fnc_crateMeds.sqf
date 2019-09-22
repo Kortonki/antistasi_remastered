@@ -22,15 +22,15 @@ if hasACEmedical then {
 
 					private _coeff = [_x] call {
             private _item = _this select 0;
-						if (_item isEqualTo "ACE_fieldDressing") exitWith {20};
-						if (_item isEqualTo "ACE_quikclot") exitWith {10};
-						if (_item isEqualTo "ACE_tourniquet") exitWith {10};
-						if (_item isEqualTo "ACE_morphine") exitWith {6};
-						if (_item isEqualTo "ACE_epinephrine") exitWith {3};
-						if (_item isEqualTo "ACE_adenosine") exitWith {3};
-						if (_item isEqualTo "ACE_personalAidKit") exitWith {1};
-						if (_item isEqualTo "ACE_surgicalKit") exitWith {1};
-						if (_item isEqualTo "adv_aceSplint_splint") exitWith {4};
+						if (_item == "ACE_fieldDressing") exitWith {20};
+						if (_item == "ACE_quikclot") exitWith {10};
+						if (_item == "ACE_tourniquet") exitWith {10};
+						if (_item == "ACE_morphine") exitWith {6};
+						if (_item == "ACE_epinephrine") exitWith {3};
+						if (_item == "ACE_adenosine") exitWith {3};
+						if (_item == "ACE_personalAidKit") exitWith {1};
+						if (_item == "ACE_surgicalKit") exitWith {1};
+						if (_item == "adv_aceSplint_splint") exitWith {4};
 						if ((_item find "saline") > -1) exitWith {2};
             if ((_item find "plasma") > -1) exitWith {2};
 						if ((_item find "blood") > -1) exitWith {1};
@@ -40,7 +40,7 @@ if hasACEmedical then {
 					};
 
 					(_items select 0) pushBack _x;
-					(_items select 1) pushBack (floor ((random _amount)*_coeff));
+					(_items select 1) pushBack (round ((random _amount)*_coeff));
 
 
 		} foreach (_medicalItems - _unlocked);

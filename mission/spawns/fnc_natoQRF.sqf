@@ -4,10 +4,14 @@ private _fnc_initialize = {
 	private _destPos = [_mission, "destinationPos"] call AS_mission_fnc_get;
 
 	private _posOrig = _origin call AS_location_fnc_position;
+	if (_origin == "spawnNATO") then {
+		_posOrig = getMarkerPos "spawnNATO";
+	};
 
 	// marker on the map, required for the UPS script
 	private _mrk = createMarker ["NATOQRF", _destPos];
 	_mrk setMarkerShape "ICON";
+	_mrk setMarkerSize [100,100];
 	_mrk setMarkerType "b_support";
 	_mrk setMarkerText ((["NATO", "name"] call AS_fnc_getEntity) + " QRF");
 
@@ -22,13 +26,14 @@ private _fnc_initialize = {
 
 	[_mission, [_tskDesc,_tskTitle,_mrk], _destPos, "Move"] call AS_mission_spawn_fnc_saveTask;
 	[_mission, "resources", [taskNull, [], [], [_mrk]]] call AS_spawn_fnc_set;
+	[_mission, "posOrig", _posOrig] call AS_spawn_fnc_set;
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 };
 
 private _fnc_spawn = {
 	params ["_mission"];
 	private _origin = [_mission, "origin"] call AS_mission_fnc_get;
-	private _posOrig = _origin call AS_location_fnc_position;
+	private _posOrig = [_mission, "posOrig"] call AS_spawn_fnc_get;
 	private _destPos = [_mission, "destinationPos"] call AS_mission_fnc_get;
 	private _mrk = (([_mission, "resources"] call AS_spawn_fnc_get) select 3) select 0;
 

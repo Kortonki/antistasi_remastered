@@ -99,13 +99,23 @@ if (_missionType == "nato_ammo") exitWith {
 private _location = _posicionTel call AS_location_fnc_nearest;
 private _position = _location call AS_location_fnc_position;
 private _type = _location call AS_location_fnc_type;
-if (_posicionTel distance _position > MIN_DISTANCE_FOR_SELECTION) exitWith {
+//Exception for now
+if (_posicionTel distance2D (getmarkerPos "spawnNATO") < MIN_DISTANCE_FOR_SELECTION) then {
+	_position = (getmarkerPos "spawnNATO");
+	_location = "spawnNATO";
+};
+
+if (_posicionTel distance2D _position > MIN_DISTANCE_FOR_SELECTION) exitWith {
 	hint "You must select a location";
+};
+
+if (_missionType == "nato_cas") exitWith {
+	[_missionType, _requiredSupport, [["origin", _location]]] remoteExec ["AS_mission_fnc_create", 2];
 };
 
 if (_missionType == "nato_qrf") exitWith {
 	// default origin
-	if not (_location in _airfields) exitWith {
+	if not (_location in (_airfields + ["spawnNATO"])) exitWith {
 		hint ((["NATO", "name"] call AS_fnc_getEntity) + " QRF must start from an airfield");
 	};
 	hint format ["QRF departing from %1. Mark the target for the QRF.", [_location] call AS_fnc_location_name];
@@ -144,7 +154,7 @@ if (_missionType == "nato_attack" and (count _airfields + count _bases == 0)) th
 } else {
 	hint format ["Click on a location for the %1 to start from", (["NATO", "name"] call AS_fnc_getEntity)];
 	_posicionTel = call _get_mapPosition;
-	if (count _posicionTel != 0 and {_posicionTel distance (getMarkerPos "spawnNATO") < MIN_DISTANCE_FOR_SELECTION}) then {
+	if (count _posicionTel != 0 and {_posicionTel distance2D (getMarkerPos "spawnNATO") < MIN_DISTANCE_FOR_SELECTION}) then {
 		_origin = "spawnNATO";
 	};
 };
