@@ -46,7 +46,7 @@ private _spawningOPFORunits = [];
             [_x, _position, _spawningBLUFORunits] spawn {
               params ["_spawn", "_position", "_spawningBLUFORunits"];
               [_spawn, "despawning", true] call AS_location_fnc_set; //This to avoid multiple spawns of this function
-              sleep 60; //Delay to reduce unneccessary despawn
+              sleep 70; //Delay to reduce unneccessary despawn
 
               if (!((_spawn call AS_location_fnc_forced_spawned) or ({(_x distance2D _position < AS_P("spawnDistance"))} count _spawningBLUFORunits > 0))) then {
                 _spawn call AS_location_fnc_despawn;
@@ -79,7 +79,7 @@ private _spawningOPFORunits = [];
           [_x, _position, _spawningBLUFORunits, _spawningOPFORunits] spawn {
             params ["_spawn", "_position", "_spawningBLUFORunits", "_spawningOPFORunits"];
             [_spawn, "despawning", true] call AS_location_fnc_set; //This to avoid multiple spawns of this function
-            sleep 60; //Delay to reduce unneccessary despawn
+            sleep 70; //Delay to reduce unneccessary despawn
 
             private _playerIsClose = (_spawn call AS_location_fnc_forced_spawned) or
                                      ({not (_x call AS_fnc_controlsAI) and {_x distance2D _position < AS_P("spawnDistance")}} count _spawningBLUFORunits > 0);

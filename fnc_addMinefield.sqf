@@ -4,7 +4,7 @@ params ["_position", "_side", ["_minesData", []]];
 
 private _size = 100;
 
-private _mrk = createMarker [format ["FIAmines%1%2", random 1000, _position call AS_location_fnc_nearest], _position];
+private _mrk = createMarker [format ["FIAmines_%1_%2",round (random 1000), _position call AS_location_fnc_nearest], _position];
 _mrk setMarkerShape "ELLIPSE";
 _mrk setMarkerSize [_size,_size];  // size of minefield
 _mrk setMarkerAlpha 0;

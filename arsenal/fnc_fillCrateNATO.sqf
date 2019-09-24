@@ -110,7 +110,9 @@ if hasTFAR then {
 
 //Medical equipment
 
-_items append ([_intNATOSupp, true] call AS_medical_fnc_crateMeds);
+private _medicalItems = ([_intNATOSupp, true] call AS_medical_fnc_crateMeds);
 
+(_items select 0) append (_medicalItems select 0);
+(_items select 1) append (_medicalItems select 1);
 
 [_crate, _weapons, _magazines, _items, _backpacks, true, true] call AS_fnc_populateBox;

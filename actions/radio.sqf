@@ -34,13 +34,13 @@ if (!(isnil "_length")) then {
   _time = time + _length;
 };
 
-waitUntil {sleep 0.2; !(_target getVariable ["radio", false]) or (time > _time)};
+waitUntil {sleep 0.2; !(_target getVariable ["radio", false]) or (time > _time) or not(alive _target)};
 
 _dummy setpos [0,0,0];
 deleteVehicle _dummy;
 
 //Loop if not shut off
-if   ((_target getVariable ["radio", false])) then {
+if   ((_target getVariable ["radio", false]) and {alive _target}) then {
   _target setVariable ["radio", false, true];
   [_target, _caller, _actionId] execVM "actions\radio.sqf";
 };
