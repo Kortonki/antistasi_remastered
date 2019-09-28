@@ -4,18 +4,31 @@ params ["_location"];
 if(!(_location call AS_spawn_fnc_exists)) exitWith {};
 
 private _garrison = [_location, "FIAsoldiers"] call AS_spawn_fnc_get;
+private _groups = [];
+private _count = 0;
 private _group = createGroup ("FIA" call AS_fnc_getFactionSide);
+_groups pushBack _group;
+//Make HC groups of 8
 {
+  if (_count == 8) then {
+     _group = createGroup ("FIA" call AS_fnc_getFactionSide);
+     _groups pushBack _group;
+     _count = 0;
+  };
   [_x] joinSilent _group;
-  _x setVariable ["marcador", nil, true]; //Units are no longer part of the garrison. Important for location detection to the enemy
+  _x setVariable ["marcador", nil, true];
+  _count = _count + 1;
 } foreach _garrison;
 if (isPlayer AS_commander) then {
-  AS_commander hcsetGroup [_group];
-  _group setVariable ["isHCgroup", true, true];
+  {
+    AS_commander hcsetGroup [_x];
+    _x setVariable ["isHCgroup", true, true];
+  } foreach _groups;
 } else {
   //Dismiss the squad if no player TODO: where to dismiss if FIA HQ moving is in progress?
-  [[_group]] spawn AS_fnc_dismissFIAsquads;
+[_groups] spawn AS_fnc_dismissFIAsquads;
 };
+
 
 _group setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes
 

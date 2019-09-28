@@ -9,7 +9,7 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
     "convoy_supplies",
     "convoy_money",
     "convoy_prisoners"
-    ]}};
+    ] and {!(_x call AS_spawn_fnc_exists)}}};
 
   if (count _missions > 0) then {
 

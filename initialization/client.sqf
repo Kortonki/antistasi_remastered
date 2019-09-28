@@ -5,6 +5,8 @@ if isNull player then {
 };
 diag_log "[AS] Client: waiting for player...";
 waitUntil {sleep 0.1; !isNull player and {player == player}};
+player enablesimulation false;
+cutText ["Initializing...","BLACK"];
 
 diag_log "[AS] Client: initializing...";
 player setPos ((getMarkerPos "FIA_HQ") findEmptyPosition [2, 10, typeOf (vehicle player)]);
@@ -119,13 +121,16 @@ if _isJip then {
     [petros, "mission"] call AS_fnc_addAction;
 };
 
+player enablesimulation true;
+cutText ["","BLACK IN", 1];
+
 
 removeAllActions caja;
 [caja,"arsenal"] call AS_fnc_addAction;
 [caja,"transferFrom"] call AS_fnc_addAction;
 [caja,"emptyPlayer"] call AS_fnc_addAction;
 
-caja addMPEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}];
+//caja addMPEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}]; //Commented for now: doesn't work
 
 removeAllActions mapa;
 mapa addAction [localize "str_act_gameOptions", {CreateDialog "game_options";},nil,0,false,true,"","(isPlayer _this) and {_this call AS_fnc_isAdmin}"];
