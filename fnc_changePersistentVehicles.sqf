@@ -13,8 +13,15 @@ if (_add) then {
 } else {
     AS_Pset("vehicles", AS_P("vehicles") - _vehicles);
     diag_log format ["[AS] Vehicle removed from persistents. Vehicle %1, location %2", _vehicles, (position (_vehicles select 0)) call AS_location_fnc_nearest];
+
+    if (_vehicle in AS_S("reportedVehs")) then {
+      AS_Sset("reportedVehs", AS_S("reportedVehs") - [_vehicle]);
+    };
     // set the vehicles back to the despawner
-    {
+    //COmmented for now deleted elsewhere
+    /*{
         [_x] spawn AS_fnc_activateVehicleCleanup;
-    } forEach _vehicles;
+    } forEach _vehicles;*/
+
+
 };

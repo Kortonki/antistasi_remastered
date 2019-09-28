@@ -21,7 +21,9 @@ waitUntil {sleep 20; not([AS_P("spawnDistance"), _killed, "BLUFORSpawn", "boolea
 };*/
 
 _group = group _killed;
-[_killed] RemoteExecCall ["deleteVehicle", _killed];
+_killed call AS_fnc_safeDelete;
+
+
 
 if (!isNull _group) then {
 	if ({alive _x} count units _group == 0) then {

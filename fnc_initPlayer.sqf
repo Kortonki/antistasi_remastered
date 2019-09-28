@@ -121,7 +121,7 @@ player addEventHandler ["killed", {
 	//_unit removeAllEventHandlers "HandleDamage"; //These are no longer needed //IMPORTANT: this also removes "killed" eventhNdlers!
 
 		if (_vehicle != _unit and {!(_vehicle isKindOf "StaticWeapon")}) then {
-			([_unit, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_magazineRemains"];
+			([_unit, false] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_magazineRemains"];
 			[_vehicle, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;
 			[_vehicle, _magazineRemains] call AS_fnc_addMagazineRemains;
 	    _unit call AS_fnc_emptyUnit;

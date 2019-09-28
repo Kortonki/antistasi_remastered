@@ -26,16 +26,14 @@ private _fnc_initialize = {
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, "position", _position] call AS_spawn_fnc_set;
-	[_mission, "origin", _origin] call AS_spawn_fnc_set;
-	[_mission, "NATOsupport", _support] call AS_spawn_fnc_set;
 	[_mission, [_tskDesc,_tskTitle,_origin], _position, "Attack"] call AS_mission_spawn_fnc_saveTask;
 };
 
 private _fnc_spawn = {
 	params ["_mission"];
 	private _origin = [_mission, "origin"] call AS_spawn_fnc_get;
-	private _position = [_mission, "position"] call AS_spawn_fnc_get;
-	private _support = [_mission, "NATOsupport"] call AS_spawn_fnc_get;
+	private _position = [_mission, "position"] call AS_mission_fnc_get;
+	private _support = [_mission, "NATOsupport"] call AS_mission_fnc_get;
 
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
