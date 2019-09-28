@@ -408,7 +408,7 @@ private _fnc_run = {
 		if (_missionType == "convoy_prisoners") exitWith {
 			{
 				private _POWs = [_mission, "POWs"] call AS_spawn_fnc_get;
-				({(alive _x) and (_x distance getMarkerPos "FIA_HQ" < 50)} count _POWs) >= (({alive _x} count _POWs) / 2)
+				({(alive _x) and (_x distance2D getMarkerPos "FIA_HQ" < 50)} count _POWs) >= (({alive _x} count _POWs) / 2)
 			 }
 		};
 	};
@@ -424,17 +424,20 @@ private _fnc_run = {
 				private _fnc_missionFailed = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
-					if (_missionType == "convoy_supplies") then {
+					if (_missionType in ["convoy_supplies", "convoy_money"]) then {
 						if (not(alive _crate)) then {
 							//Crate was destroyed by FIA
 							[-10,-10, _position] remoteExec ["AS_fnc_changeCitySupport",2];
+							if (_missionType == "convoy_money") then {
+								[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];
+							};
 						} else {
 							//The AAF delivery is late
 							[-10, 0, _position] remoteExec ["AS_fnc_changeCitySupport",2];
 						};
 					};
 					//Killing the convoy is always better than it being late
-					if (_missionType in ["convoy_money","convoy_fuel"]) then {
+					if (_missionType == "convoy_fuel") then {
 						if (not(alive _mainVehicle)) then {
 							[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];
 						};
@@ -447,6 +450,13 @@ private _fnc_run = {
 						};
 						[20*60] remoteExec ["AS_fnc_changeSecondsforAAFattack",2];
 					};
+
+					//Part of the success/fail to ensure mission is cleaned up properly
+
+					[_mission] remoteExec ["AS_mission_fnc_cancel",2];
+					//"Minor" victory -> EXP
+					["mis"] remoteExec ["fnc_BE_XP",2];
+
 
 
 				};
@@ -522,7 +532,7 @@ private _fnc_run = {
 					_cargo_b = [_cargo_b, _arsenal select 3] call AS_fnc_mergeCargoLists;
 					[cajaVeh, (_arsenal select 4)] call AS_fnc_addMagazineRemains;
 
-					[_x]  RemoteExec ["deleteVehicle", _x];
+					[_x]  RemoteExec ["AS_fnc_safeDelete", _x];
 
 				} forEach _pows;
 

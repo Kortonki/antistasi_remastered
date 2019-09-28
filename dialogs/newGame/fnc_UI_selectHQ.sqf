@@ -9,6 +9,8 @@ if _isNewGame then {
 	openMap [true,true];
 };
 
+cutText ["","BLACK IN", 1];
+
 // This is for placement only: moving the HQ still allows to place it anywhere.
 private _minDistanceToLocation = 500;
 // min distance from enemy troops to do not get killed on placement.
