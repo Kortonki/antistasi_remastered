@@ -38,6 +38,7 @@ _veh addEventHandler ["Killed", {
 	if (!isNil{_veh getVariable "boxCargo"}) then {
 		 {
 			 detach _x;
+			 _x setdammage 1;
 		 } foreach (_veh getVariable "boxCargo");
 		};
 
@@ -57,15 +58,20 @@ if (_side != "NATO") then {
 		private _vehicleCategory = (typeOf _vehicle) call AS_AAFarsenal_fnc_category;
 
 
-		if (_vehicle call AS_fuel_fnc_getfuelCargoSize > 0 and {_side != "FIA" and {_sideunit == "FIA"}}) then {
+		if (_side != "FIA" and {_sideunit == "FIA"}) then {
+
+				//Make persistent to avoid cleanup for captured vehicles
+				[_vehicle] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+
+				//After capturing fuel truck, make it FIA fuel system compatible
 				//TODO Improve this to revert to FIA fuel system to prevent cheating. For AI must have vanilla fuel cargo system
 				//TODO Ability to carry fuel can be checked by much simpler terms via dictionary fuel vehicle
 
-				//After capturing fuel truck, make it FIA fuel system compatible
-
-					_vehicle setFuelCargo 0;
-					[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-					[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+					if (_vehicle call AS_fuel_fnc_getfuelCargoSize > 0) then {
+						_vehicle setFuelCargo 0;
+						[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+						[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+					};
 		};
 
 		if (_side  == "AAF" and {_vehicleCategory != "" and {_sideunit == "FIA"}}) then {
@@ -216,13 +222,8 @@ if (_side == "FIA") then {
 			};
 
 		}];
+		//removed eventhandler killed to remove from persistents: already removied via kommon killed eventhandler
 
-		_veh addEventHandler ["killed", {
-			private _vehicle = _this select 0;
-			if (_vehicle in (AS_P("vehicles"))) then {
-				[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
-				};
-			}];
 
 
 };

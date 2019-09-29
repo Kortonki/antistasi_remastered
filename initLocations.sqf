@@ -169,3 +169,8 @@ vehiclePad allowDamage false;
 
 AS_permanent_HQplacements = [caja, cajaVeh, mapa, fuego, bandera, vehiclePad];
 AS_HQ_placements = []; // objects placed on HQ
+
+//Disable fuel from fuel stations
+
+private _allFuelStations = ([0,0,0] nearObjects 150000) select {getFuelCargo _x > 0};
+{_x setFuelCargo 0} foreach _allFuelStations;

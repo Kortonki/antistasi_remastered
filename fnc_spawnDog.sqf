@@ -42,7 +42,7 @@ _unit setSpeaker "NoVoice"; //Will this silence the dog? Check if dog as a soldi
 		sleep 0.05;
 	};
 	deleteVehicle _guy;
-	_dog spawn AS_fnc_activateVehicleCleanup;
+	[_dog] spawn AS_fnc_activateVehicleCleanup;
 };
 
 // logic for spotting undercover units and barking

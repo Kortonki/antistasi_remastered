@@ -9,8 +9,8 @@ while {{alive _x} count units _grupo > 0} do
 	{
 	sleep 3;
 	_modo = behaviour leader _grupo;
-	if (isPlayer (driver _veh) or isNull(driver _veh)) then {
-	_modoD = "SAFE";
+	if (isNull(driver _veh) or not(alive driver _veh)) then {
+	_modoD = "COMBAT";
 		}	else {
 	_modoD = behaviour driver _veh;
 		};
