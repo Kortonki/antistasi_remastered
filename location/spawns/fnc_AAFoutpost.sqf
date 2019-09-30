@@ -43,9 +43,9 @@ private _fnc_spawn = {
 	if (_location call AS_location_fnc_type == "seaport") then {
 		private _pos = [_posicion,_size,_size*3,10,2,0,0] call BIS_Fnc_findSafePos;
 		private _vehicleType = selectRandom (["AAF", "boats"] call AS_fnc_getEntity);
-		([_vehicleType, _pos, random 360, "AAF", "gunner", 0, "NONE", false] call AS_fnc_createVehicle) params ["_veh", "_vehCrew", "_grupoVeh"];
-		_soldados append _vehCrew;
-		_grupos pushBack _grupoVeh;
+		([_vehicleType, _pos, random 360, "AAF", "gunner", 0, "NONE", false] call AS_fnc_createVehicle) params ["_veh", "_vehCrew", "_driver"];
+		_soldados append (units _vehCrew);
+		_grupos pushBack _vehCrew;
 		_vehiculos pushBack _veh;
 		sleep 1;
 	} else {

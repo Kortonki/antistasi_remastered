@@ -75,7 +75,7 @@ private _fnc_spawn = {
 
 	{
 		[_x, _location] spawn AS_location_fnc_reveal;
-	} foreach (_soldiers + _vehicles);
+	} foreach (_soldiers);
 
 	_location spawn AS_location_fnc_revealLoc;
 

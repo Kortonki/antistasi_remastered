@@ -72,7 +72,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "ap_mines", ["APERSMine", "APERSTripMine", "APERSBoundingMine"]] call DICT_fnc_set;
 [_dict, "at_mines", ["ATMine", "SLAMDirectionalMine"]] call DICT_fnc_set;
 // These have to be CfgVehicles
-[_dict, "explosives", ["SatchelCharge_F","DemoCharge_F","ClaymoreDirectional_F"]] call DICT_fnc_set;
+[_dict, "explosives", ["SatchelCharge_F","DemoCharge_F","Claymore_F"]] call DICT_fnc_set;
 
 [_dict, "box", "B_supplyCrate_F"] call DICT_fnc_set;
 

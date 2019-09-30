@@ -69,7 +69,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "ap_mines", ["rhs_mine_pmn2"]] call DICT_fnc_set;
 [_dict, "at_mines", ["rhs_mine_tm62m"]] call DICT_fnc_set;
 // These have to be CfgVehicles
-[_dict, "explosives", ["SatchelCharge_F","DemoCharge_F","ClaymoreDirectional_F"]] call DICT_fnc_set;
+[_dict, "explosives", ["SatchelCharge_F","DemoCharge_F","Claymore_F"]] call DICT_fnc_set;
 
 if hasTFAR then {
     [_dict, "tfar_lr_radio", "TFAR_anprc155"] call DICT_fnc_set;
