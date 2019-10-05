@@ -56,7 +56,7 @@ while {alive _unit} do {
 
                 if (([_unit] call AS_medical_fnc_isUnconscious)) then {[_unit, false] call AS_medical_fnc_setUnconscious;};
 
-                if ((_unit call AS_fnc_getSide) in ["AAF", "CSAT"] and {[getpos _unit, 5] call AS_fnc_friendlyNearby}) then {
+                if ((_unit call AS_fnc_getSide) in ["AAF", "CSAT"] and {[_unit, 5] call AS_fnc_friendlyNearby}) then {
                   [_unit] spawn AS_AI_fnc_surrender; //If FIA healing wounded, make them surrender
                 };
             };
@@ -70,7 +70,7 @@ while {alive _unit} do {
             if (_hasBandaging and _hasMorphine) then {
                 [_unit, false] call AS_medical_fnc_setUnconscious;
 
-                if ((_unit call AS_fnc_getSide) in ["AAF", "CSAT"] and {[getpos _unit, 5] call AS_fnc_friendlyNearby}) then {
+                if ((_unit call AS_fnc_getSide) in ["AAF", "CSAT"] and {[_unit, 5] call AS_fnc_friendlyNearby}) then {
                   [_unit] spawn AS_AI_fnc_surrender; //If FIA healing wounded, make them surrender
                 };
 

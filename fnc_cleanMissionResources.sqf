@@ -14,9 +14,7 @@ params ["_groups", "_vehicles", "_markers"];
             params ["_unit"];
             private _rand = random 5;
             private _group = group _unit;
-            //TODO: figure a way to check for all friendlies nearby, as not spawning FIA would despawn anyway when player or HC is far
-            //However this function is run for FIA missions, so checking for FIA nearby is not valid
-            waitUntil {sleep (5 + _rand); not ([AS_P("spawnDistance"), _unit, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)};
+            waitUntil {sleep (5 + _rand); not ([_unit, AS_P("spawnDistance")] call AS_fnc_friendlyNearby)};
 
             if ({alive _x} count units _group == 1) then {
                 // clean group after last unit
@@ -37,6 +35,6 @@ params ["_groups", "_vehicles", "_markers"];
       [_x] remoteExecCall ["deletevehicle", _x];
     } else {
       //Sleep to avoid despawn while players are spawning
-      [_x] spawn AS_fnc_activateVehicleCleanup;
+      [_x] spawn AS_fnc_activateMissionVehicleCleanup;
     };
 } forEach _vehicles;

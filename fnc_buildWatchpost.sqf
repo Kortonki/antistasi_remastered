@@ -45,10 +45,9 @@ _mrk setMarkerAlpha 0;
 
 [_mrk, "watchpost", false] call AS_location_fnc_add;
 // location takes ownership of _mrk
-[_mrk, "name", _name, false] call AS_location_fnc_set;
 [_mrk, "side", "FIA"] call AS_location_fnc_set;
 [_mrk, "garrison", ["Sniper","Rifleman"]] call AS_location_fnc_set;
 
 [-2, -100] remoteExec ["AS_fnc_changeFIAmoney", 2];
-[_target, "remove"] call AS_fnc_addAction;
+[_target, "remove"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
 [_target] spawn AS_fnc_activateVehicleCleanup;

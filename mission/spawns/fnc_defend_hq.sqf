@@ -206,7 +206,6 @@ private _fnc_run = {
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
 
-	sleep 70; //Sleep so cleanup doesn't activate during players waiting respawn
 };
 
 AS_mission_defendHQ_states = ["initialize", "spawn", "run", "clean"];

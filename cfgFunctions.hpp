@@ -112,6 +112,7 @@ class AS {
         // auxiliars to missions
         FNC_BASE(oneStepMission);
         FNC_BASE(cleanResources);
+        FNC_BASE(cleanMissionResources);
 
         // auxiliars to FIArecruitment
         FNC(fia_recruitment,spawnFIAUnit);
@@ -170,6 +171,7 @@ class AS {
         FNC_BASE(friendlyNearby);
         FNC_BASE(activateCleanup);
         FNC_BASE(activateVehicleCleanup);
+        FNC_BASE(AS_fnc_activateMissionVehicleCleanup);
         FNC_BASE(localCommunication);
         FNC_BASE(hasRadioCoverage);
         FNC_BASE(sellVehicle);

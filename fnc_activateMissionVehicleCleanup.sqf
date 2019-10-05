@@ -17,7 +17,7 @@ _vehicle setVariable ["inDespawner", true, true];
 
 waitUntil {
 	sleep AS_spawnLoopTime;
-	not([AS_P("spawnDistance"), _vehicle, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)
+	not ([_unit, AS_P("spawnDistance")] call AS_fnc_friendlyNearby)
 };
 
 if (alive _vehicle and {_vehicle call AS_fnc_getSide == "AAF"}) then {
@@ -31,11 +31,12 @@ if (_vehicle in AS_S("reportedVehs")) then {
 };
 
 if (_vehicle isKindOf "test_EmptyObjectForSmoke") then {
-	{[_x] RemoteExecCall ["deleteVehicle", _x]} forEach (_vehicle getVariable ["effects", []]);
+	{[_x] RemoteExec ["deleteVehicle", _x]} forEach (_vehicle getVariable ["effects", []]);
 };
 {
 	detach _x;
 	_x setvariable ["asCargo", false, true];
+
 } foreach attachedobjects _vehicle;
 
-[_vehicle] RemoteExecCall ["deleteVehicle", _vehicle];
+[_vehicle] RemoteExec ["deleteVehicle", _vehicle];
