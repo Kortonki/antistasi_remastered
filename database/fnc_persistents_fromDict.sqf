@@ -23,6 +23,10 @@ params ["_dict"];
                 _vehicle enableSimulationGlobal false;
                 _vehicle setDir _dir;
 
+                if (_type isKindOf "StaticWeapon") then {
+                	[_vehicle,"moveObject"] remoteExec ["AS_fnc_addaction", [0,-2] select isDedicated];
+                };
+
                 //Combatibility for legacy stuff
                 if (isnil "_damage") then {
                   _vehicle setdamage 0;

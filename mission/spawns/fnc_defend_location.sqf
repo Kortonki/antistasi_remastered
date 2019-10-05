@@ -199,8 +199,9 @@ private _fnc_run = {
 
 private _fnc_clean = {
 	params ["_mission"];
-	private _location = _mission call AS_mission_fnc_location;
+	private _location = _mission call AS_mission_fnc_location; //TODO: is there a reason for this?
 	[_location, true] call AS_location_fnc_despawn;
+	sleep 70; //Sleep so cleanup doesn't activate during players waiting respawn
 	_mission call AS_mission_spawn_fnc_clean;
 };
 

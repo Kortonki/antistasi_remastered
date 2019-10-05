@@ -9,10 +9,10 @@ private _dict = ([AS_entities, "RHS_FIA_WEST"] call DICT_fnc_get) call DICT_fnc_
 [_dict, "engineer", "rhsgref_ins_engineer"] call DICT_fnc_set;
 [_dict, "medic", "rhsgref_ins_medic"] call DICT_fnc_set;
 */
-[_dict, "soldier", "I_G_Soldier_F"] call DICT_fnc_set;
-[_dict, "crew", "I_G_Soldier_lite_F"] call DICT_fnc_set;
-[_dict, "survivor", "I_G_Survivor_F"] call DICT_fnc_set;
-[_dict, "engineer", "I_G_engineer_F"] call DICT_fnc_set;
-[_dict, "medic", "I_G_medic_F"] call DICT_fnc_set;
+[_dict, "soldier", "O_G_Soldier_F"] call DICT_fnc_set;
+[_dict, "crew", "O_G_Soldier_lite_F"] call DICT_fnc_set;
+[_dict, "survivor", "O_G_Survivor_F"] call DICT_fnc_set;
+[_dict, "engineer", "O_G_engineer_F"] call DICT_fnc_set;
+[_dict, "medic", "O_G_medic_F"] call DICT_fnc_set;
 
 _dict

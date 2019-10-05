@@ -1,5 +1,5 @@
 params ["_thing"];
-if not AS_debug_flag exitWith {};
+if (not(AS_debug_flag)) exitWith {};
 
 private _mrk = createMarker [format ["AS_debug_flag_%1", count AS_debug_flag_all], position _thing];
 AS_debug_flag_all pushBack _mrk;

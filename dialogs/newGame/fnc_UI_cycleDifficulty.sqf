@@ -4,7 +4,7 @@ private _control = (findDisplay 1601) displayCtrl 4;
 
 private _bla = ctrlText _control;
 
-private _valid_difficulties = ["normal", "easy"];
+private _valid_difficulties = ["normal"];
 
 private _index = _valid_difficulties find _bla;
 // if not found, index == -1, which fine

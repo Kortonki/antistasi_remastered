@@ -6,6 +6,7 @@ if isNull player then {
 diag_log "[AS] Client: waiting for player...";
 waitUntil {sleep 0.1; !isNull player and {player == player}};
 player enablesimulation false;
+player setcaptive true;
 cutText ["Initializing...","BLACK"];
 
 diag_log "[AS] Client: initializing...";
@@ -122,6 +123,7 @@ if _isJip then {
 };
 
 player enablesimulation true;
+player setcaptive false;
 cutText ["","BLACK IN", 1];
 
 

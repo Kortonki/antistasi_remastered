@@ -74,13 +74,13 @@ if (_side != "NATO") then {
 					};
 		};
 
-		if (_side  == "AAF" and {_vehicleCategory != "" and {_sideunit == "FIA"}}) then {
+		if (_side == "AAF" and {_vehicleCategory != "" and {_sideunit == "FIA"}}) then {
 
 					[_vehicle, _unit] call AS_fnc_EH_AAFVehicleKilled; // this must be called before changing sides
 
 		};
 
-		if (_side  == "CSAT" and {_sideunit == "FIA"}) then {
+		if (_side == "CSAT" and {_sideunit == "FIA"}) then {
 
 					[_vehicle, _unit] call AS_fnc_EH_CSATVehicleKilled; // this must be called before changing sides
 

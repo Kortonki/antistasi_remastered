@@ -50,7 +50,7 @@ private _isMilitaryDressed = {
 private _fnc_detected = {
 	private _detected = false;
 	{
-		if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {(_x distance _player < 5) or ((_x knowsAbout (vehicle _player) > 1.4) and {_x distance _player < 500})}) exitWith {
+		if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {(_x distance2D _player < 5) or ((_x knowsAbout (vehicle _player) > 1.4) and {_x distance2D _player < 500})}) exitWith {
 			_detected = true;
 		};
 	} forEach allUnits;

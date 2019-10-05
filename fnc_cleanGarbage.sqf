@@ -13,6 +13,9 @@ private _toDelete = nearestObjects [markerPos "AS_base", ["WeaponHolderSimulated
 private _deleteVehicles = vehicles select {!(alive _x)};
 {
 	[_x] remoteExec ["deleteVehicle", _x];
+	if (_x in (AS_P("vehicles"))) then {
+		[_x, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+	};
 } foreach _deleteVehicles;
 
 //TODO consider this, might delete proper objects

@@ -4,7 +4,7 @@ _veh = cursortarget;
 
 if (isNull _veh) exitWith {hint "You are not looking to any vehicle"};
 
-if (_veh distance getMarkerPos "FIA_HQ" > 200) exitWith {hint "Vehicle must be closer than 200 meters to the flag"};
+if (_veh distance2D getMarkerPos "FIA_HQ" > 200) exitWith {hint "Vehicle must be closer than 200 meters to the flag"};
 
 if ({isPlayer _x} count crew _veh > 0) exitWith {hint "Vehicle must be empty (people)."};
 
@@ -50,10 +50,11 @@ if (_veh in AS_S("reportedVehs")) then {
 [_veh, caja] call AS_fnc_transferToBox;
 
 //Recover fuel
-private _fuel = _veh call AS_fuel_fnc_getVehicleFuel;
-if (_veh call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_veh call AS_fuel_fnc_getFuelCargo)};
-[_fuel] remoteExec ["AS_fuel_fnc_changeFIAfuelReserves", 2];
-
+if (!(_veh isKindof "StaticWeapon")) then {
+	private _fuel = _veh call AS_fuel_fnc_getVehicleFuel;
+	if (_veh call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_veh call AS_fuel_fnc_getFuelCargo)};
+	[_fuel] remoteExec ["AS_fuel_fnc_changeFIAfuelReserves", 2];
+};
 deleteVehicle _veh;
 
 hint "Vehicle Sold";
