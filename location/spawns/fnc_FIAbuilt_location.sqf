@@ -182,6 +182,8 @@ private _fnc_clean = {
 			([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
 			[_groups,  _vehicles, _markers] call AS_fnc_cleanResources;
 			[_location, false] call AS_location_fnc_knownLocations;
+			//Check for active defence missions before removing location
+			waitUntil {sleep AS_spawnLoopTime; (call AS_mission_fnc_active_missions) find (format ["defend_location_%1", _location]) == -1};
 			[_location] remoteExec ["AS_location_fnc_remove", 2];
 			[_location, "delete", true] call AS_spawn_fnc_set;
 

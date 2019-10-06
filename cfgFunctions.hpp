@@ -171,7 +171,7 @@ class AS {
         FNC_BASE(friendlyNearby);
         FNC_BASE(activateCleanup);
         FNC_BASE(activateVehicleCleanup);
-        FNC_BASE(AS_fnc_activateMissionVehicleCleanup);
+        FNC_BASE(activateMissionVehicleCleanup);
         FNC_BASE(localCommunication);
         FNC_BASE(hasRadioCoverage);
         FNC_BASE(sellVehicle);

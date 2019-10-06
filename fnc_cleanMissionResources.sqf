@@ -14,7 +14,7 @@ params ["_groups", "_vehicles", "_markers"];
             params ["_unit"];
             private _rand = random 5;
             private _group = group _unit;
-            waitUntil {sleep (5 + _rand); not ([_unit, AS_P("spawnDistance")] call AS_fnc_friendlyNearby)};
+            waitUntil {sleep (5 + _rand); not([_unit, AS_P("spawnDistance")] call AS_fnc_friendlyNearby)};
 
             if ({alive _x} count units _group == 1) then {
                 // clean group after last unit

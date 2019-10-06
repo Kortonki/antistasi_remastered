@@ -17,7 +17,7 @@ _vehicle setVariable ["inDespawner", true, true];
 
 waitUntil {
 	sleep AS_spawnLoopTime;
-	not ([_unit, AS_P("spawnDistance")] call AS_fnc_friendlyNearby)
+	not ([_vehicle, AS_P("spawnDistance")] call AS_fnc_friendlyNearby)
 };
 
 if (alive _vehicle and {_vehicle call AS_fnc_getSide == "AAF"}) then {

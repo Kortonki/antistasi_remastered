@@ -14,6 +14,4 @@ deleteMarker _location;
 // the shown marker
 deleteMarker (format ["Dum%1", _location]);
 
-waitUntil {sleep AS_spawnLoopTime; (call AS_mission_fnc_active_missions) find (format ["defend_location_%1", _location]) == -1};
-
 [call AS_location_fnc_dictionary, _location] call DICT_fnc_delGlobal;
