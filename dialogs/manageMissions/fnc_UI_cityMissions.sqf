@@ -34,7 +34,7 @@ private _sig = format ["%1_%2", AS_cityMission_type, _location];
 private _status = _sig call AS_mission_fnc_status;
 
 if (isNil "_status") then {_status = "";};
-if (!(_status == "active")) then {
+if (!(_status == "active") and {!(_sig call AS_spawn_fnc_exists)}) then {
 
   //Pass the same checks as the mission were spawned randomly
   if (AS_cityMission_type == "pamphlets" and {[_location, "AAFsupport"] call AS_location_fnc_get == 0 or (AS_P("resourcesFIA") < 100)}) exitWith {

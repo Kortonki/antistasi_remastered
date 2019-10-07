@@ -19,8 +19,7 @@ _unit removeAllEventHandlers "killed"; //This effects mainly prisoners/refugees,
 
 if (_spawned) then {
 	_unit setVariable ["BLUFORSpawn",true,true];
-}
-else {
+} else {
 	if (!isNil "_place") then {_unit setVariable ["marcador", _place, true]};
 };
 
