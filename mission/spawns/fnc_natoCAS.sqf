@@ -31,8 +31,8 @@ private _fnc_initialize = {
 
 private _fnc_spawn = {
 	params ["_mission"];
-	private _origin = [_mission, "origin"] call AS_spawn_fnc_get;
-	private _position = [_mission, "position"] call AS_mission_fnc_get;
+	private _origin = [_mission, "origin"] call AS_mission_fnc_get;
+	private _position = [_mission, "position"] call AS_spawn_fnc_get;
 	private _support = [_mission, "NATOsupport"] call AS_mission_fnc_get;
 
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;

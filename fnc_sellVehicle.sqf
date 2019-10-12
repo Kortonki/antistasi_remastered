@@ -28,13 +28,15 @@ call {
 	if (_tipoVeh in (["CIV", "vehicles"] call AS_fnc_getEntity)) exitWith {
 		_cost = 25
 	};
+	if (_tipoVeh in (["FIA", "vans"] call AS_fnc_getEntity)) exitWith {
+		_cost = "trucks" call AS_AAFarsenal_fnc_value;
+	};
 
-	//This is already done when FIA captures the vehicle
-	/*private _category = [_tipoVeh] call AS_AAFarsenal_fnc_category;
+
+	private _category = [_tipoVeh] call AS_AAFarsenal_fnc_category;
 	if (_category != "") then {
-		[typeOf _veh] call AS_AAFarsenal_fnc_deleteVehicle;
 		_cost = _category call AS_AAFarsenal_fnc_value;
-	};*/
+	};
 };
 
 if (_cost == 0) exitWith {hint "The vehicle you are looking at is not sellable."};
