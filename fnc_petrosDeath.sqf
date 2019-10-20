@@ -18,7 +18,7 @@ AS_Pset("NATOsupport", _nato);
   [_x, "FIAsupport", _sup] call AS_location_fnc_set;
 } forEach (call AS_location_fnc_cities);
 
-{"Petros is Dead" hintC "Petros has been killed. You lot part of your influence. You can respawn Petros when there's no enemies nearby HQ"} remoteExec ["bis_fnc_call", AS_commander];
+[[], {"Petros is Dead" hintC "Petros has been killed. You lot part of your influence. You can respawn Petros when there's no enemies nearby HQ"}] remoteExec ["call", AS_commander];
 {hint "Petros is Dead"} remoteExec ["bis_fnc_call", [0,-2] select isDedicated];
 
 //This is unnecessary. Petros death' no longer forces player to move HQ
