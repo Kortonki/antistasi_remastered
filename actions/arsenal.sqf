@@ -39,7 +39,9 @@ waitUntil {!isnil{_box getVariable "bis_fnc_arsenal_action"}};
 
 
 // wait for the arsenal to close.
-waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal" )};
+//failsafe
+private _time = time;
+waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal") or time > (_time + 30)};
 
 sleep 0.5;
 

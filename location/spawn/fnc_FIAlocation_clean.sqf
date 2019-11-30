@@ -19,7 +19,8 @@ private _cargo_m = [[], []];
 private _cargo_i = [[], []];
 private _cargo_b = [[], []];
 
-if (_location call AS_location_fnc_side == "FIA") then {
+//If moving FIA HQ, gear should not be returned upon despawn
+if (_location call AS_location_fnc_side == "FIA" and {(_location call AS_location_fnc_type) != "fia_hq"}) then {
 
   {
 

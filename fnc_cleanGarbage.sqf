@@ -1,6 +1,6 @@
 #include "macros.hpp"
 
-[[petros,"hint","Deleting Garbage..."],"AS_fnc_localCommunication"] call BIS_fnc_MP;
+[petros,"hint","Deleting Garbage..."] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 
 //TODO easy way to check if these have cargo -> do not delete
 
@@ -13,6 +13,9 @@ private _toDelete = nearestObjects [markerPos "AS_base", ["WeaponHolderSimulated
 private _deleteVehicles = vehicles select {!(alive _x)};
 {
 	[_x] remoteExec ["deleteVehicle", _x];
+	if (_x in (AS_P("vehicles"))) then {
+		[_x, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+	};
 } foreach _deleteVehicles;
 
 //TODO consider this, might delete proper objects
@@ -24,4 +27,4 @@ private _deleteVehicles = vehicles select {!(alive _x)};
 	[_x, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 } foreach _obsoletePersistents;*/
 
-[[petros,"hint","Garbage deleted"],"AS_fnc_localCommunication"] call BIS_fnc_MP;
+[petros,"hint","Garbage deleted"] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];

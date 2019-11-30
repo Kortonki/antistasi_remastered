@@ -123,17 +123,19 @@ private _fnc_allPossibleMissions = {
     _possible select {_x call _fnc_isAvailable}
 };
 
+
+
 // 1. intersect the list of possible missions with the cached possible missions
 //  * makes all available missions possible
 {
     [_x, "status", "possible"] call AS_mission_fnc_set;
 } forEach (([] call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "available"});
 
-// Removes all possible missions no longer possible
+// Removes all possible missions no longer possible and already in progress (is spawned)
 private _new_possible = call _fnc_allPossibleMissions;
 {
     private _signature = [_x call AS_mission_fnc_type, _x call AS_mission_fnc_location];
-    if not (_signature in _new_possible) then {
+    if (not(_signature in _new_possible))  then {
         _x call AS_mission_fnc_remove;
     };
 } forEach ((call AS_mission_fnc_all) select {_x call AS_mission_fnc_status in ["possible"]});
@@ -144,7 +146,7 @@ private _active_available = (call AS_mission_fnc_all) select {_x call AS_mission
 {
     _x params ["_type", "_location"];
     private _sig = (format ["%1_%2", _type, _location]);
-    if not (_sig in _possible or _sig in _active_available) then {
+    if not (_sig in _possible or _sig in _active_available or _sig call AS_spawn_fnc_exists) then { //added spawn exist condition to not add missions still not ended and deleted
         _x call AS_mission_fnc_add;
         _possible pushBack _sig;
     };

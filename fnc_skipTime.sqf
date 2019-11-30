@@ -1,7 +1,7 @@
 #include "macros.hpp"
 
 [["You decided to rest some time","BLACK OUT",5]] remoteExec ["cutText", [0,-2] select isDedicated];
-[true] remoteExec ["disableUserInput", [0,-2] select isDedicated]; //Careful with this shit
+[player, false] remoteExec ["enableSimulation", [0,-2] select isDedicated]; //Careful with this shit
 sleep 5;
 //TODO: A dialog to choose how long to skip?
 private _skiptimeMax = 1*60;
@@ -14,6 +14,12 @@ private _text = "Time to go";
 
 [false] call AS_spawn_fnc_toggle;
 [false] call AS_fnc_resourcesToggle;
+
+//Cancel all active missions (immersion etc.)
+//TODO exploit for not failing convoy missions or others?
+//FAILing them might not work, some fail functions need mission specific params
+//-> FAIL all convoy missions
+//Consider failing/canceling
 
 //Wait for a good measure
 sleep (2*AS_spawnLoopTime);
@@ -36,7 +42,7 @@ while {!(_attack) and {_skippedTime < _skipTimeMax}} do {
 
 //Switch everything back on:
 
-[false] remoteExec ["disableUserInput", [0,-2] select isDedicated];
+[player, true] remoteExec ["enableSimulation", [0,-2] select isDedicated];
 
 [true] call AS_spawn_fnc_toggle;
 [true] call AS_fnc_resourcesToggle;

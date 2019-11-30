@@ -51,7 +51,11 @@ AS_Pset("hr_cum", 0); //Cumulative hr buildup for resource updates
 AS_Pset("resourcesFIA",_startMoney); //Initial FIA money pool value
 AS_Pset("fuelFIA", _startFuel); //Initial FIA fuel reserves
 
-AS_Pset("resourcesAAF",10000); //Initial AAF resources
+//AAF money
+
+private _AAFmoney = 2000 * (count ([["base","airfield","outpost","resource","factory","powerplant","seaport"],"AAF"] call AS_location_fnc_TS));
+
+AS_Pset("resourcesAAF",_AAFmoney); //Initial AAF resources
 AS_Pset("skillFIA",0); //Initial skill level of FIA
 AS_Pset("skillAAF",4); //Initial skill level of AAF
 AS_Pset("NATOsupport",_startNS); //Initial NATO support
@@ -134,6 +138,16 @@ AS_Sset("AS_vehicleOrientation", 0);
 	private _name = format ["spawned_%1", _x];
 	AS_Sset(_name, 0);
 } foreach (call AS_AAFarsenal_fnc_all);
+
+//Set some vehicles
+for "_i" from 0 to (3 + round(random 8)) do {
+	"cars_transport" call AS_AAFarsenal_fnc_addVehicle;
+	"cars_transport" call AS_AAFarsenal_fnc_addVehicle;
+	"cars_armed" call AS_AAFarsenal_fnc_addVehicle;
+	"trucks" call AS_AAFarsenal_fnc_addVehicle;
+	"boats" call AS_AAFarsenal_fnc_addVehicle;
+};
+
 
 AS_AAF_attackLock = nil;
 

@@ -64,7 +64,7 @@ if (_resourcesAAF > 5000 and {_AAFresAdj > 1000}) then {
 // extra conditions to avoid AAF being too strong.
 // Categories without condition always buy if given enough money
 private _FIAcontrolledLocations = count (
-	[["outpost", "factory", "powerplant", "resource", "airfield", "base"], "FIA"] call AS_location_fnc_TS);
+	[["outpost", "factory", "powerplant", "resource", "airfield", "base", "city"], "FIA"] call AS_location_fnc_TS);
 private _FIAcontrolledBases = count (
 	[["airfield", "base"], "FIA"] call AS_location_fnc_TS);
 

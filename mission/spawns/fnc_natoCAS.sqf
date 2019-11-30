@@ -24,18 +24,14 @@ private _fnc_initialize = {
 		numberToDate [2035,dateToNumber _fechalim] select 4
 	];
 
-	private _mission = ["nato_cas", ""] call AS_mission_fnc_add;
-	[_mission, "status", "active"] call AS_mission_fnc_set;
-
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, "position", _position] call AS_spawn_fnc_set;
-	[_mission, "origin", _origin] call AS_spawn_fnc_set;
 	[_mission, [_tskDesc,_tskTitle,_origin], _position, "Attack"] call AS_mission_spawn_fnc_saveTask;
 };
 
 private _fnc_spawn = {
 	params ["_mission"];
-	private _origin = [_mission, "origin"] call AS_spawn_fnc_get;
+	private _origin = [_mission, "origin"] call AS_mission_fnc_get;
 	private _position = [_mission, "position"] call AS_spawn_fnc_get;
 	private _support = [_mission, "NATOsupport"] call AS_mission_fnc_get;
 

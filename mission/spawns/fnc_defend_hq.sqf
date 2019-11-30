@@ -152,10 +152,12 @@ private _fnc_run = {
 
 		[_soldiers, _groups, _originPos] spawn {
 				params ["_soldiers",["_groups",[]], ["_originPos",[0,0,0]]];
-				sleep (60*5 + (random (60*50)));
+				sleep (60*5);
 
 				{_x doMove _originPos} forEach _soldiers;
 				{
+
+					_x setVariable ["UPSMON_Remove", true];
 					//If no spesicif origin spesified, use the defualt origin
 
 					if (isNil {(vehicle leader _x) getVariable "origin"}) then {
@@ -164,8 +166,9 @@ private _fnc_run = {
 					} else {
 						private _wpRTB = _x addWaypoint [_origin, 0];
 						_x setCurrentWaypoint _wpRTB;
-						_x setCombatMode "GREEN";
+
 					};
+					_x setCombatMode "GREEN";
 				} forEach _groups;
 		};
 
@@ -186,7 +189,7 @@ private _fnc_run = {
 
 		{
 
-			_x setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes
+			_x setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes //TODO figure out retreat within UPSMON scope
 			//If no spesicif origin spesified, use the defualt origin
 
 			if (isNil {(vehicle leader _x) getVariable "origin"}) then {
@@ -195,12 +198,14 @@ private _fnc_run = {
 			} else {
 				private _wpRTB = _x addWaypoint [_origin, 0];
 				_x setCurrentWaypoint _wpRTB;
-				_x setCombatMode "GREEN";
+
 			};
+			_x setCombatMode "GREEN";
 		} forEach _groups;
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
+
 };
 
 AS_mission_defendHQ_states = ["initialize", "spawn", "run", "clean"];

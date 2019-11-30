@@ -74,12 +74,12 @@ for "_i" from 1 to 3 do {
 //Add some mines + explosives
 
 {
-	(_magazines select 0) pushBack _x call AS_fnc_mineMag;
+	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
 	(_magazines select 1) pushBack 4*_intNatoSupp;
 } foreach (["NATO", "ap_mines"] call AS_fnc_getEntity);
 
 {
-	(_magazines select 0) pushBack _x call AS_fnc_mineMag;
+	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
 	(_magazines select 1) pushBack 2*_intNatoSupp;
 } foreach ((["NATO", "at_mines"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity));
 
@@ -110,7 +110,9 @@ if hasTFAR then {
 
 //Medical equipment
 
-_items append ([_intNATOSupp, true] call AS_medical_fnc_crateMeds);
+private _medicalItems = ([_intNATOSupp, true] call AS_medical_fnc_crateMeds);
 
+(_items select 0) append (_medicalItems select 0);
+(_items select 1) append (_medicalItems select 1);
 
 [_crate, _weapons, _magazines, _items, _backpacks, true, true] call AS_fnc_populateBox;

@@ -15,7 +15,7 @@ if (_veh distance (getMarkerPos "FIA_HQ") > 200) exitWith {hint "The vehicle mus
 if ({isPlayer _x} count crew _veh > 0) exitWith {hint "The vehicle must be crewless"};
 if (_type in (["NATO", "vehicles"] call AS_fnc_getEntity)) exitWith {hint "You cannot keep NATO vehicles"};
 if (_veh isKindOf "Man") exitWith {hint "Are you kidding?"};
-if ([position player, 500] call AS_fnc_enemiesNearby) exitWith {Hint "You cannot manage the Garage with enemies nearby"};
+if ([position player, AS_enemyDist] call AS_fnc_enemiesNearby) exitWith {Hint "You cannot manage the Garage with enemies nearby"};
 
 if (not(_veh isKindOf "AllVehicles")) exitWith {hint "The vehicle you are looking cannot be kept in our Garage"};
 if (player call AS_fnc_controlsAI) exitWith {hint "You cannot access the Garage while you are controlling AI"};

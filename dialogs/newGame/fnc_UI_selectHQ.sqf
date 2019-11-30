@@ -4,15 +4,16 @@ private _enemyLocations = "AAF" call AS_location_fnc_S;
 if _isNewGame then {
     // first-time location can be close to roadblocks and they are removed
     _enemyLocations = _enemyLocations - ("roadblock" call AS_location_fnc_T);
-	openMap true;
+  [["","BLACK IN", 1]] remoteExec ["cutText", [0,-2] select isDedicated];
+	[[true, true]] remoteExec ["openMap", [0,-2] select isdedicated];
 } else {
 	openMap [true,true];
 };
 
 // This is for placement only: moving the HQ still allows to place it anywhere.
-private _minDistanceToLocation = 500;
+private _minDistanceToLocation = AS_enemyDist;
 // min distance from enemy troops to do not get killed on placement.
-private _minDistanceToEnemy = 500;
+private _minDistanceToEnemy = AS_enemyDist;
 
 
 // Add markers to simplify the selection
@@ -62,7 +63,7 @@ while {true} do {
 
 	if (_validLocation) exitWith {};
 };
-openmap [false,false];
+[[false, false]] remoteExec ["openMap", [0,-2] select isdedicated];
 AS_map_position = nil;
 
 {

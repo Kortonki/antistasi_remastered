@@ -51,5 +51,5 @@ campNames = campNames - [_name];
 [_mrk, "garrison", ["Rifleman","Rifleman"]] call AS_location_fnc_set;
 
 [-2, -100] remoteExec ["AS_fnc_changeFIAmoney", 2];
-[_target, "remove"] call AS_fnc_addAction;
+[_target, "remove"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
 [_target] remoteExec ["deleteVehicle", _target]; //delete so it's not mixed with the box

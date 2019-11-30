@@ -10,7 +10,7 @@ if (!isNil "petros") then {
   private _cargo_i = [[], []];
   private _cargo_b = [[], []];
 
-  private _arsenal = [_x, true] call AS_fnc_getUnitArsenal;  // restricted to locked weapons
+  private _arsenal = [petros, true] call AS_fnc_getUnitArsenal;  // restricted to locked weapons
   _cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
   _cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
   _cargo_i = [_cargo_i, _arsenal select 2] call AS_fnc_mergeCargoLists;

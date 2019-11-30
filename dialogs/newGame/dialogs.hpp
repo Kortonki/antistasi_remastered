@@ -25,7 +25,7 @@ LIST_L(0,6,2,2,"");
 READ(1,5,-1,1,"The state's supporter");
 LIST_L(1,6,3,2,"");
 
-BTN_L(8,-1,"Cycle starting difficulty:", "easy: start with some foreign weapons", "[] call AS_fnc_UI_newGame_cycleDifficulty;");
+BTN_L(8,-1,"Cycle starting difficulty:", "Normal only for now", "[] call AS_fnc_UI_newGame_cycleDifficulty;");
 READ(1,8,4,1,"normal");
 
 BTN_M(9,-1,"Start game", "", "[] spawn AS_fnc_UI_newGame_start;");

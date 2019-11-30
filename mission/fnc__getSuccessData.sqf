@@ -48,7 +48,7 @@ if (_type == "conquer") exitWith {
 };
 if (_type  == "convoy_money") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [0, 0], [0, 5000], [-10, -20, _position], 20*60]
+    [5, [500, _vehPosition, 10], [0, 0], [0, 5000], [-10, -10, _position], 20*60]
 };
 
 if (_type == "convoy_supplies") exitWith {
@@ -131,7 +131,7 @@ if (_type == "broadcast") exitWith {
     ]
 };
 if (_type == "pamphlets") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [-20, 20, _position]]
+    [5, [500, _position, 10], [5, 0], [0, 0], [-10, 10, _position]]
 };
 if (_type == "repair_antenna") exitWith {
     [5, [500, _position, 10], [2, 0], [0, 0], [0, 0, []], 20*60,
