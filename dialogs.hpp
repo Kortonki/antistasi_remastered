@@ -210,7 +210,7 @@ class mortar_type
 	{
 AS_DIALOG(2,"Select Mortar Ammo",A_CLOSE);
 
-BTN_L(1,-1, "HE", "", "closeDialog 0; tipoMuni = ""8Rnd_82mm_Mo_shells"";");
+BTN_L(1,-1, "HE", "", "closeDialog 0; if (hasRHS) then {tipoMuni = ""rhs_12Rnd_m821_HE""} else {tipoMuni = ""8Rnd_82mm_Mo_shells""};"); //This needs improvement
 BTN_R(1,-1, "Smoke", "", "closeDialog 0; tipoMuni = ""8Rnd_82mm_Mo_Smoke_white"";");
 
 	};

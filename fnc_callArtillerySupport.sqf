@@ -60,7 +60,7 @@ if ((_veh != _soldado) and (not(_veh in _artyArray))) then
 				{
 				if (_x select 0 == _tipoMuni) then
 					{
-					_hayMuni = _hayMuni + 1;
+					_hayMuni = _x select 1;
 					};
 				} forEach magazinesAmmo _veh;
 				};
@@ -81,7 +81,7 @@ if ((_veh != _soldado) and (not(_veh in _artyArray))) then
 if (isNil "_tipoMuni") exitWith {};
 if (!_hayArty) exitWith {hint "You must select an artillery group or it is a Mobile Mortar and it's moving"};
 if (!_estanVivos) exitWith {hint "All elements in this Batery cannot fire or are disabled"};
-if ((_hayMuni < 2) and (!_estanListos)) exitWith {hint "The Battery has no ammo to fire. Reload it on HQ"};
+if ((_hayMuni < 1) and (!_estanListos)) exitWith {hint "The Battery has no ammo to fire. Reload it on HQ"};
 if (!_estanListos) exitWith {hint "Selected Battery is busy right now"};
 
 hcShowBar false;

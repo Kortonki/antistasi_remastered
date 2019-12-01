@@ -7,6 +7,8 @@ while {(alive _gunner) and (alive _mortar) and (canMove _truck)} do {
 
 	moveOut _gunner;
 	_gunner assignAsCargo _truck;
+	[_gunner] orderGetin true;
+	[_gunner] allowGetin true;
 	_mortar attachTo [_truck, _mortar getVariable "attachPoint"];
 	_mortar setDir (getDir _truck + 180);
 
@@ -21,4 +23,6 @@ while {(alive _gunner) and (alive _mortar) and (canMove _truck)} do {
 	private _pos = position _truck findEmptyPosition [1,30,"B_MBT_01_TUSK_F"];
 	_mortar setPos _pos;
 	_gunner assignAsGunner _mortar;
+	[_gunner] orderGetin true;
+	[_gunner] allowGetin true;
 };

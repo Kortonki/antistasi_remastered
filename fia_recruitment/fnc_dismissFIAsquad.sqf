@@ -59,7 +59,7 @@ private _vs = [];
 									//Approximate fuel for the return trip to base. Roughly 0,2 liter per 1km for a standard car, more for tanks etc.
 
 									_fuel = _fuel - (_veh call AS_fuel_fnc_returnTripFuel);
-									if (_veh call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_veh call AS_fuel_fnc_getFuelCargo);};
+									if (!(_veh in AS_allStatics) and {_veh call AS_fuel_fnc_getFuelCargoSize > 0}) then {_fuel = _fuel + (_veh call AS_fuel_fnc_getFuelCargo);};
 									[_fuel] remoteExec ["AS_fuel_fnc_changeFIAfuelReserves", 2];
 
 									// Recover the full price of the vehicle
