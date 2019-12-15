@@ -51,6 +51,7 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 		sleep 1;
 		_group setCurrentWaypoint [_group, _waypoint];
 		(driver _veh) dofollow (leader _group);
+		(driver _veh) selectLeader (effectiveCommander _veh);
 
 	};
 };
