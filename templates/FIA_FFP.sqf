@@ -209,6 +209,8 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 [_costs, "C_Van_02_service_F", 1000] call DICT_fnc_set;
 [_costs, "ffp_van_ambulance", 300 call DICT_fnc_set;
 
+//Armed cars
+
 [_costs, "rhsgref_cdf_b_reg_uaz_dshkm", 600] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_reg_uaz_spg9", 1200] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_gaz66_zu23", 1600] call DICT_fnc_set;

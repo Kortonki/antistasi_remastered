@@ -60,7 +60,7 @@ private _threatEval_Air = 0;
   //STATICs threat
 
   if (_vehicle in AS_allATStatics) exitWith {_threatEval_Land = _threatEval_Land + 2;};
-  if (_vehicle in AS_allAAStatics) exitWith {_threatEval_Air = _threatEval_Air + 5;};
+  if (_vehicle in AS_allAAStatics) exitWith {_threatEval_Air = _threatEval_Air + 7;};
   if (_vehicle in AS_allMGStatics) exitWith {
       _threatEval_Land = _threatEval_Land + 1;
       _threatEval_Air = _threatEval_Air + 1;

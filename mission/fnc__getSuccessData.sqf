@@ -25,7 +25,7 @@ if (_type == "kill_traitor") exitWith {
     [5, [_size, _position, 10], [0, -2]]
 };
 if (_type == "kill_officer") exitWith {
-    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 0, _position], 30*60, [], [_location, 30]]
+    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 0, _position], 90*60, [], [_location, 30]]
 };
 if (_type == "kill_specops") exitWith {
     [5, [_size, _position, 10], [0, -5], [0, 200], [0, 5, _position], 10*60]
@@ -65,11 +65,11 @@ if (_type in ["convoy_ammo", "convoy_fuel"]) exitWith {
 
 if (_type == "convoy_armor") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [0, 5, _position], 45*60]
+    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [0, 5, _position], 60*60]
 };
 if (_type == "convoy_hvt") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [10, 0], [0, 0], [0, 5, _position], 45*60]
+    [5, [500, _vehPosition, 10], [10, 0], [0, 0], [0, 5, _position], 90*60]
 };
 if (_type == "convoy_prisoners") exitWith {
     _args params [["_vehPosition", [0,0,0]], ["_hr", 0]];
@@ -84,13 +84,13 @@ if (_type == "defend_city") exitWith {
     ]]
 };
 if (_type == "defend_camp") exitWith {
-    [5, [500, _position, 10], [0, 5], [0, 0], [-5, 5, _position], 30*60]
+    [5, [500, _position, 10], [0, 5], [0, 0], [-5, 5, _position], 60*60]
 };
 if (_type == "defend_location") exitWith {
-    [5, [500, _position, 10], [0, 5], [0, 0], [-5, 10, _position], 30*60]
+    [5, [500, _position, 10], [0, 5], [0, 0], [-5, 10, _position], 60*60]
 };
 if (_type == "defend_hq") exitWith {
-    [10, [500, _position, 20], [0, 10], [0, 0], [-5, 10, _position], 60*60, [
+    [10, [500, _position, 20], [0, 10], [0, 0], [-5, 10, _position], 90*60, [
         [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities", {{[-5,0,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)}]
     ]]
 };
