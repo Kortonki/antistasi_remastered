@@ -34,7 +34,7 @@ _munition = "";
 					{
 						If (_x select 1 > 0) then
 						{
-							_ammo = tolower gettext (configFile >> "CfgMagazines" >> _x select 0 >> "ammo");
+							_ammo = tolowerANSI gettext (configFile >> "CfgMagazines" >> _x select 0 >> "ammo");
 							If (_ammo iskindof "ShellBase") exitwith
 							{
 								_gun = true;

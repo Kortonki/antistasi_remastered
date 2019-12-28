@@ -24,7 +24,7 @@ private _anti_state_attributes = [
 "static_aa", "static_at", "static_mg", "static_mortar",
 "soldier", "crew", "survivor", "engineer", "medic",
 "squads", "squads_custom", "team_at", "team_sniper", "team_patrol", "team_crew",
-"land_vehicles", "water_vehicles", "air_vehicles",
+"land_vehicles", "water_vehicles", "air_vehicles", "cars_at", "cars_aa",
 "costs"
 ];
 
@@ -69,7 +69,7 @@ private _role = "anti_state";
 		private _vehicles_with_cost = allVariables ([AS_entities, _faction, "costs"] call DICT_fnc_get);
 		private _mandatory_costs = [];
 		{
-			_mandatory_costs pushBack (toLower _x);
+			_mandatory_costs pushBack (tolowerANSI _x);
 		} forEach ([AS_entities, _faction, "land_vehicles"] call DICT_fnc_get);
 
 		if (count (_mandatory_costs - _vehicles_with_cost) != 0) then {

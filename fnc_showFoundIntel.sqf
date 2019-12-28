@@ -33,6 +33,11 @@ if (random 100 < _chance) then {
 	};
 };
 
+if (random 100 < _chance) then {
+	private _csatSupport = AS_P("CSATsupport");
+		_texto = format ["%1 %2 Support: %3<br/>",_texto, (["CSAT", "name"] call AS_fnc_getEntity), _csatSupport];
+};
+
 {
 	if (random 100 < _chance) then {
 		private _count = (_x call AS_AAFarsenal_fnc_count);

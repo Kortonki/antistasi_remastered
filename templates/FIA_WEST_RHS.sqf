@@ -156,6 +156,9 @@ unlockeditems pushback "Chemlight_blue";
 [_dict, "air_vehicles", ["rhs_Mi8amt_civilian","C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
 
 [_dict, "cars_armed", ["rhsgref_cdf_b_reg_uaz_dshkm","rhsgref_cdf_b_reg_uaz_spg9","rhsgref_cdf_b_gaz66_zu23"]] call DICT_fnc_set;
+//This is new addition: used to evaluate threat
+[_dict, "cars_aa", ["rhsgref_cdf_b_gaz66_zu23"]] call DICT_fnc_set;
+[_dict, "cars_at", ["rhsgref_cdf_b_reg_uaz_spg9"]] call DICT_fnc_set;
 
 // costs of **land vehicle**. Every vehicle in `"land_vehicles"` must be here.
 //private _costs = createSimpleObject ["Static", [0, 0, 0]];

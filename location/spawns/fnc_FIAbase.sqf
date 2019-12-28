@@ -33,10 +33,11 @@ private _fnc_spawn = {
 	_vehiculos pushBack _veh;
 
 	//create _bunker, only if there's no preset composition
-	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
+	//Commented, more trouble than worth
+	/*if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
 		private _bunker = AS_big_bunker_type createVehicle [((_posicion select 0) + (random 20)), ((_posicion select 1) + (random 20)), 0];
 		_vehiculos pushBack _bunker;
-	};
+	};*/
 
 	private _nVeh = round ((_size / 30)*_prestigio);
 	if (_nVeh > 4) then {_nVeh = 4;};

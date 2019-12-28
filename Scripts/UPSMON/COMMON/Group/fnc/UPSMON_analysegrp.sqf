@@ -38,7 +38,7 @@ _artibatteryarray = [];
 				_MagazinesUnit = (magazines _vehicle);
 				_Cargo  = getNumber  (configFile >> "CfgVehicles" >> typeof _vehicle >> "transportSoldier");
 				_armor  = getNumber  (configFile >> "CfgVehicles" >> typeof _vehicle >> "armor");
-				_support =  tolower gettext (configFile >> "CfgVehicles" >> typeof _vehicle >> "vehicleClass");
+				_support =  tolowerANSI gettext (configFile >> "CfgVehicles" >> typeof _vehicle >> "vehicleClass");
 				_cfgArtillery = getnumber (configFile >> "cfgVehicles" >> typeOf (_vehicle) >> "artilleryScanner");
 				_repair = getnumber (configFile >> "cfgVehicles" >> typeOf (_vehicle) >> "transportRepair");
 				_fuel = getnumber (configFile >> "cfgVehicles" >> typeOf (_vehicle) >> "transportFuel");
@@ -54,7 +54,7 @@ _artibatteryarray = [];
 					If (alive _gunner) then
 					{
 						{
-							_ammo = tolower gettext (configFile >> "CfgMagazines" >> _x >> "ammo");
+							_ammo = tolowerANSI gettext (configFile >> "CfgMagazines" >> _x >> "ammo");
 							_irlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "irLock");
 							_laserlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "laserLock");
 							_airlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock");
@@ -291,7 +291,7 @@ _artibatteryarray = [];
 			_points = _points + 1;
 				
 			{
-				_ammo = tolower gettext (configFile >> "CfgMagazines" >> _x >> "ammo");
+				_ammo = tolowerANSI gettext (configFile >> "CfgMagazines" >> _x >> "ammo");
 				_irlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "irLock");
 				_laserlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "laserLock");
 				_airlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock");

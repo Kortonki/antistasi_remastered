@@ -63,7 +63,7 @@ _allies pushback _grp;
 						If (alive _gunner) then
 						{
 							{
-								_ammo = tolower gettext (configFile >> "CfgMagazines" >> _x >> "ammo");
+								_ammo = tolowerANSI gettext (configFile >> "CfgMagazines" >> _x >> "ammo");
 								_irlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "irLock");
 								_laserlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "laserLock");
 								_airlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock");
@@ -215,7 +215,7 @@ _allies pushback _grp;
 				_points = _points + 1;
 
 				{
-					_ammo = tolower gettext (configFile >> "CfgMagazines" >> _x >> "ammo");
+					_ammo = tolowerANSI gettext (configFile >> "CfgMagazines" >> _x >> "ammo");
 					_irlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "irLock");
 					_laserlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "laserLock");
 					_airlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock");

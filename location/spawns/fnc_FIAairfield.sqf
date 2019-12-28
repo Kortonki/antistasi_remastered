@@ -53,10 +53,12 @@ private _fnc_spawn = {
 	_vehiculos pushBack _veh;
 
 	//create _bunker, only if there's no preset composition
+	//more trouble than worth atm
+	/*
 	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
 		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
 		_vehiculos pushBack _bunker;
-	};
+	};*/
 
 	// number of vehicles and groups spawned (at least 1)
 	private _nVeh = (round ((_size/100)*_prestigio)) max 1;
