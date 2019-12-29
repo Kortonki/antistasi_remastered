@@ -6,7 +6,7 @@ private _position = getpos _target;
 
 //CHECKS
 
-if (count (["watchpost"] call AS_location_fnc_T) >= BE_current_FIA_WP_Cap) exitWith {
+if (count (["watchpost", "FIA"] call AS_location_fnc_TS) >= BE_current_FIA_WP_Cap) exitWith {
   [petros, "sideChat", "FIA cannot maintain more watchposts. Remove watchposts or upgrade FIA level"] remoteExec ["AS_fnc_localCommunication", _caller];
 };
 

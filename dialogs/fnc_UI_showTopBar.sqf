@@ -28,7 +28,7 @@ if (isMultiplayer) then {
 							 ["Not undercover", "<t color='#1DA81D'>Undercover</t>"] select (captive player)
 			];
 		} else {
-			_texto = format ["<t size='0.55'>" + "%9 | Your Money: %1 | HR: %2 | FIA Money: %3 € | Fuel: %4 l | %5 | %6 | %7",
+			_texto = format ["<t size='0.55'>" + "%8 | Your Money: %1 | HR: %2 | FIA Money: %3 € | Fuel: %4 l | %5 | %6 | %7",
 				[player, "money"] call AS_players_fnc_get,
 				AS_P("hr"),
 				AS_P("resourcesFIA"),

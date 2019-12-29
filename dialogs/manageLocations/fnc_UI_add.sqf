@@ -22,7 +22,7 @@ switch (_type) do {
   default {};
 };
 
-if (count ([_type] call AS_location_fnc_T) >= _cap) exitWith {hint "FIA cannot maintain more locations of this type"};
+if (count ([_type, "FIA"] call AS_location_fnc_TS) >= _cap) exitWith {hint "FIA cannot maintain more locations of this type"};
 
 //Checks passed spawn the crate
 

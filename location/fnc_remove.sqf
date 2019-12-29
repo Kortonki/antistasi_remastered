@@ -11,7 +11,9 @@ if (_location in AS_P("patrollingLocations")) then {
 // the hidden marker
 deleteMarker _location;
 
+private _marker = (format ["Dum%1", _location]);
+
 // the shown marker
-deleteMarker (format ["Dum%1", _location]);
+deleteMarker _marker;
 
 [call AS_location_fnc_dictionary, _location] call DICT_fnc_delGlobal;

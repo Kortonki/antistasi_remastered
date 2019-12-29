@@ -11,7 +11,10 @@ params ["_container", "_unit"];
   private _index = (_cargo_w select 0) find _x;
   if (_index != -1) then {
     _container addWeaponCargo [_x, (1-((_cargo_w select 1) select _index)) max 0];
+  } else {
+    _container addWeaponCargo [_x, 1];
   };
+
 
 } foreach unlockedWeapons;
 
@@ -19,6 +22,8 @@ params ["_container", "_unit"];
   private _index = (_cargo_m select 0) find _x;
   if (_index != -1) then {
     _container addMagazineCargo [_x, (30-((_cargo_m select 1) select _index)) max 0];
+  } else {
+    _container addMagazineCargo [_x, 30];
   };
 
 } foreach unlockedMagazines;
@@ -27,6 +32,8 @@ params ["_container", "_unit"];
   private _index = (_cargo_i select 0) find _x;
   if (_index != -1) then {
     _container addItemCargo [_x, (50-((_cargo_i select 1) select _index)) max 0];
+  }  else {
+    _container addItemCargo [_x, 50];
   };
 
 } foreach unlockedItems;
@@ -36,6 +43,8 @@ params ["_container", "_unit"];
   private _index = (_cargo_b select 0) find _x;
   if (_index != -1) then {
     _container addBackpackCargo [_x, (1-((_cargo_b select 1) select _index)) max 0];
+  }  else {
+    _container addBackpackCargo [_x, 1];
   };
 
 } foreach unlockedBackpacks;

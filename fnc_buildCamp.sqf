@@ -6,7 +6,7 @@ private _position = getpos _target;
 
 //CHECKS
 
-if (count (["camp"] call AS_location_fnc_T) >= BE_current_FIA_Camp_Cap) exitWith {
+if (count (["camp", "FIA"] call AS_location_fnc_TS) >= BE_current_FIA_Camp_Cap) exitWith {
   [petros, "sideChat", "FIA cannot maintain more camps. Remove camps or upgrade FIA level"] remoteExec ["AS_fnc_localCommunication", _caller];
 };
 
