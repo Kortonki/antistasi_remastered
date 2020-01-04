@@ -20,8 +20,9 @@ private _cargo_i = [[], []];
 private _cargo_b = [[], []];
 
 //If moving FIA HQ, gear should not be returned upon despawn
-if (_location call AS_location_fnc_side == "FIA" and {(_location call AS_location_fnc_type) != "fia_hq"}) then {
-
+//Investigate what's the idea behind below
+//if (_location call AS_location_fnc_side == "FIA" and {(_location call AS_location_fnc_type) != "fia_hq"}) then {
+if (_location call AS_location_fnc_side == "FIA") then {
   {
 
         //Recover units arsenal

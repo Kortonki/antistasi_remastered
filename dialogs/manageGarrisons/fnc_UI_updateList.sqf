@@ -7,7 +7,7 @@ lbCLear _cbo;
     _cbo lbAdd(format ["%1 (%2€)", _x, _x call AS_fnc_getCost]);
     _cbo lbSetData[(lbSize _cbo)-1, _x];
 } forEach AS_allFIARecruitableSoldiers;
-_cbo lbSetCurSel 0;
+//_cbo lbSetCurSel 0;
 
 // Fill dismiss list
 private _location = ctrlText ((findDisplay 1602) displayCtrl 2);

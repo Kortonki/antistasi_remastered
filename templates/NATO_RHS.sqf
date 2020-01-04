@@ -81,7 +81,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "box", "Box_NATO_Equip_F"] call DICT_fnc_set;
 
 // To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
-[_dict, "additionalWeapons", ["rhs_weap_ak105","rhs_weap_ak104"]] call DICT_fnc_set;
+[_dict, "additionalWeapons", []] call DICT_fnc_set;
 [_dict, "additionalMagazines", []] call DICT_fnc_set;
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;

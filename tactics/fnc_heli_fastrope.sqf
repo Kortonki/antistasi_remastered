@@ -1,7 +1,7 @@
 params ["_origin", "_destination", "_crew_group", "_patrol_marker", "_cargo_group", ["_threat", 0]];
 
 private _heli = vehicle (leader _crew_group);
-private _safePosition = [_destination, (100 + 10*_threat) min 1000, 1100, 5, 0, 0.3, 0] call BIS_Fnc_findSafePos;
+private _safePosition = [_destination, (100 + 50*_threat) min 1000, 1100, 5, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 
 //HERE make waypoint past the actual position to avoid ARMA 3 feature of completing air waypoints too early
 

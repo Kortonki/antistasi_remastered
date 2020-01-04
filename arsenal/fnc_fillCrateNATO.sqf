@@ -21,14 +21,14 @@ _addWeapon = {
 };
 
 // Handguns and submachine guns
-[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 4*_intNATOSupp, 10*4*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 2*_intNATOSupp, 18*2*_intNATOSupp] call _addWeapon;
 // Rifles
-[selectRandom (NATOweapons arrayIntersect (AS_weapons select 0)), 3*_intNATOSupp, 10*3*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect (AS_weapons select 0)), 3*_intNATOSupp, 18*3*_intNATOSupp] call _addWeapon;
 // Machine guns
-[selectRandom (NATOweapons arrayIntersect (AS_weapons select 6)), _intNATOSupp, 3*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect (AS_weapons select 6)), _intNATOSupp, 6*_intNATOSupp] call _addWeapon;
 
 // GLs
-[selectRandom (NATOweapons arrayIntersect (AS_weapons select 3)), _intNATOSupp, 10*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect (AS_weapons select 3)), _intNATOSupp, 18*_intNATOSupp] call _addWeapon;
 // HE Grenades
 (_magazines select 0) pushBack ((NATOMagazines arrayIntersect AS_allGrenades) select 0);
 (_magazines select 1) pushBack 6*_intNATOSupp;
@@ -37,7 +37,7 @@ _addWeapon = {
 (_magazines select 1) pushBack 6*_intNATOSupp;
 
 // Snipers
-[selectRandom (NATOweapons arrayIntersect (AS_weapons select 15)), _intNATOSupp, 10*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect (AS_weapons select 15)), _intNATOSupp, 20*_intNATOSupp] call _addWeapon;
 private _bestScope = [NATOItems arrayIntersect AS_allOptics, "sniperScope"] call AS_fnc_getBestItem;
 (_items select 0) pushBack _bestScope;
 (_items select 1) pushBack _intNATOSupp;
@@ -47,7 +47,7 @@ private _bestScope = [NATOItems arrayIntersect AS_allOptics, "sniperScope"] call
 
 for "_i" from 1 to 5 do {
 	(_magazines select 0) pushBack (selectRandom NATOThrowGrenades);
-	(_magazines select 1) pushBack 5*_intNATOSupp;
+	(_magazines select 1) pushBack 3*_intNATOSupp;
 };
 
 for "_i" from 1 to 5 do {
