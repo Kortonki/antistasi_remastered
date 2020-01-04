@@ -73,11 +73,11 @@ _unitsleft = _unitsleft -  _unitsinvalid;
 			{
 				_weapon = currentweapon _x;
 				_sweapon = secondaryWeapon _x;
-				_typeweapon = tolower gettext (configFile / "CfgWeapons" / _weapon / "cursor");
+				_typeweapon = tolowerANSI gettext (configFile / "CfgWeapons" / _weapon / "cursor");
 				if (_sweapon != "") then 
 				{
 					_smagazineclass = (getArray (configFile / "CfgWeapons" / _sweapon / "magazines")) select 0;
-					_ammo = tolower gettext (configFile >> "CfgMagazines" >> _smagazineclass >> "ammo");
+					_ammo = tolowerANSI gettext (configFile >> "CfgMagazines" >> _smagazineclass >> "ammo");
 					_irlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "irLock");
 					_laserlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "laserLock");
 					_airlock	= getNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock");

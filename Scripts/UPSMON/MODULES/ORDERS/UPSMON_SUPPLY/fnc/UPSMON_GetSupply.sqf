@@ -39,7 +39,7 @@ _supplygrp = ObjNull;
 						{
 							If (vehicle _x != _x) then
 							{
-								_support =  tolower gettext (configFile >> "CfgVehicles" >> typeof _vehicle >> "vehicleClass");
+								_support =  tolowerANSI gettext (configFile >> "CfgVehicles" >> typeof _vehicle >> "vehicleClass");
 								If (_support == "Support") then
 								{
 									If (!((vehicle _x) in _assignedvehicles)) then

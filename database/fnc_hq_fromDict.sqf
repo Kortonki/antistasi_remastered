@@ -19,4 +19,10 @@ AS_HQ_placements = [];
 } forEach ([_dict, "placed"] call DICT_fnc_get);
 
 fuego inflame ([_dict, "inflame"] call DICT_fnc_get);
+
+private _dummy = (["FIA", "flag"] call AS_fnc_getEntity) createVehicle [0,0,0];
+_texture = flagTexture _dummy;
+bandera setFlagTexture _texture;
+deletevehicle _dummy;
+
 call AS_fnc_initPetros;

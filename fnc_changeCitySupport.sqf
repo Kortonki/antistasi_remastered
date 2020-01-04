@@ -23,12 +23,12 @@ if (_AAFsupport + _FIAsupport > 100) then {
 
 if ((_blufor > 0) && ((_FIAsupport > 90) || (_FIAsupport + _AAFsupport > 90))) then {
 	_blufor = 0;
-	_opfor = _opfor - 5;
+	_opfor = _opfor - _blufor; //this changed from fixed 5 to amount of support: if no free support to gain, deduct same from opposing support
 }
 else {
 	if ((_opfor > 0) && ((_AAFsupport > 90) || (_FIAsupport + _AAFsupport > 90))) then {
 		_opfor = 0;
-		_blufor = _blufor - 5;
+		_blufor = _blufor - _opfor;
 	};
 };
 
@@ -58,7 +58,8 @@ if (_FIAsupport > 99) then {_FIAsupport = 99};
 if (_AAFsupport < 1) then {_AAFsupport = 1};
 if (_FIAsupport < 1) then {_FIAsupport = 1};
 
-if (_FIAsupport + _AAFsupport < 5) then {_AAFsupport = 1; _FIAsupport = 5};
+//Probably unnecessary: why give FIA edge in this situation?
+//if (_FIAsupport + _AAFsupport < 5) then {_AAFsupport = 1; _FIAsupport = 5};
 
 if _notify then {
 	private _sign = "+";

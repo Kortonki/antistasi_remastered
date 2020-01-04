@@ -27,9 +27,9 @@ _hit = 0;
 _mags = [];
 
 {
-	_ammo = tolower gettext (configFile>> "CfgMagazines" >> _x >> "ammo");
+	_ammo = tolowerANSI gettext (configFile>> "CfgMagazines" >> _x >> "ammo");
 	_parents = [(configFile>> "CfgAmmo" >> _ammo),true] call BIS_fnc_returnParents;
-	_cfg = tolower gettext (configFile>> "CfgAmmo" >> _ammo >> "submunitionAmmo");
+	_cfg = tolowerANSI gettext (configFile>> "CfgAmmo" >> _ammo >> "submunitionAmmo");
 	
 	Switch (_askmission) do 
 	{

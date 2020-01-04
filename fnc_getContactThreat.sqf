@@ -36,7 +36,7 @@ private _threatEval_Air = 0;
 
   if (_vehicle isKindof "Tank" or _type in BE_class_MBT) exitWith {
     _threatEval_Land = _threatEval_Land + 10;
-    _threatEval_Air = _threatEval_Air + 2;
+    _threatEval_Air = _threatEval_Air + 4; // this changed to 4 from 2: tanks are more dangerous than apcs
   };
 
 
@@ -50,8 +50,17 @@ private _threatEval_Air = 0;
 
   //MRAP Threat
 
-  if (typeOf _vehicle in BE_class_MRAP) exitWith {
-    _threatEval_Land = _threatEval_Land + 3;
+  if (_type in (["FIA", "cars_aa"] call AS_fnc_getEntity)) exitWith {
+    _threatEval_Land = _threatEval_Land + 2;
+    _threatEval_Air = _threatEval_Air + 8;
+  };
+
+  if (_type in (["FIA", "cars_at"] call AS_fnc_getEntity)) exitWith {
+    _threatEval_Land = _threatEval_Land + 4;
+  };
+
+  if (_type in (BE_class_MRAP + (["FIA", "cars_armed"] call AS_fnc_getEntity))) exitWith {
+    _threatEval_Land = _threatEval_Land + 2;
     _threatEval_Air = _threatEval_Air + 2;
   };
 
@@ -60,7 +69,7 @@ private _threatEval_Air = 0;
   //STATICs threat
 
   if (_vehicle in AS_allATStatics) exitWith {_threatEval_Land = _threatEval_Land + 2;};
-  if (_vehicle in AS_allAAStatics) exitWith {_threatEval_Air = _threatEval_Air + 5;};
+  if (_vehicle in AS_allAAStatics) exitWith {_threatEval_Air = _threatEval_Air + 7;};
   if (_vehicle in AS_allMGStatics) exitWith {
       _threatEval_Land = _threatEval_Land + 1;
       _threatEval_Air = _threatEval_Air + 1;

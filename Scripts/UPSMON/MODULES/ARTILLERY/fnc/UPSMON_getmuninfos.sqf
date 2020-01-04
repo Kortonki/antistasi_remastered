@@ -34,7 +34,7 @@ _mags = [];
 	{
 		case "HE": 
 		{
-			_ammo = tolower gettext (configFile>> "CfgMagazines" >> (_x select 0) >> "ammo");
+			_ammo = tolowerANSI gettext (configFile>> "CfgMagazines" >> (_x select 0) >> "ammo");
 			_parents = [(configFile>> "CfgAmmo" >> _ammo),true] call BIS_fnc_returnParents;
 	
 			If ("ShellBase" in _parents) then
@@ -48,8 +48,8 @@ _mags = [];
 		
 		case "AT": 
 		{
-			_ammo = tolower gettext (configFile>> "CfgMagazines" >> (_x select 0) >> "ammo");
-			_cfg = tolower gettext (configFile>> "CfgAmmo" >> _ammo >> "submunitionAmmo");
+			_ammo = tolowerANSI gettext (configFile>> "CfgMagazines" >> (_x select 0) >> "ammo");
+			_cfg = tolowerANSI gettext (configFile>> "CfgAmmo" >> _ammo >> "submunitionAmmo");
 	
 			If (_cfg == "M_Mo_82mm_AT_LG") then
 			{
@@ -62,8 +62,8 @@ _mags = [];
 		
 		case "SMOKE": 
 		{
-			_ammo = tolower gettext (configFile>> "CfgMagazines" >> (_x select 0) >> "ammo");
-			_cfg = tolower gettext (configFile>> "CfgAmmo" >> _ammo >> "submunitionAmmo");
+			_ammo = tolowerANSI gettext (configFile>> "CfgMagazines" >> (_x select 0) >> "ammo");
+			_cfg = tolowerANSI gettext (configFile>> "CfgAmmo" >> _ammo >> "submunitionAmmo");
 	
 			If (_cfg == "SmokeShellArty") then
 			{
@@ -76,7 +76,7 @@ _mags = [];
 		
 		case "ILLUM": 
 		{
-			_ammo = tolower gettext (configFile>> "CfgMagazines" >> (_x select 0) >> "ammo");
+			_ammo = tolowerANSI gettext (configFile>> "CfgMagazines" >> (_x select 0) >> "ammo");
 			_parents = [(configFile>> "CfgAmmo" >> _ammo),true] call BIS_fnc_returnParents;
 	
 			If ("FlareCore" in _parents) then

@@ -25,7 +25,7 @@ if (count _arguments > 1) then {
         // Recursively delete nested dictionaries
         [_key, _isGlobal] call EFUNC(_del);
     };
-    _dictionary setVariable [toLower _key, nil, _isGlobal];
+    _dictionary setVariable [tolowerANSI _key, nil, _isGlobal];
     diag_log format ["DICT:del(%1):Dictionary set to nil. Key: %2 Global exec: %3", _dictionary, _key, _isGlobal];
 } else {
     {

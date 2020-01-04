@@ -71,6 +71,10 @@ private _fuelReserves = AS_P("fuelFIA");
       };
     };
 
+    //Cleanup for destroyed but not yet cleaned vehicles
+    if (not(alive _x) and {_x in AS_P("vehicles")}) then {
+      [_x, false] call AS_fnc_changePersistentVehicles;
+    };
 } forEach vehicles;
 
 // convert vehicles to positional information

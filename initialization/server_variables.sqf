@@ -80,7 +80,7 @@ AS_Pset("destroyedBuildings", []);
 AS_Pset("vehiclesInGarage", []);
 
 // These are game options that are saved.
-AS_Pset("civPerc",0.05); //initial % civ spawn rate
+AS_Pset("civPerc",0.01); //initial % civ spawn rate
 AS_Pset("spawnDistance",1200); //initial spawn distance. Less than 1Km makes parked vehicles spawn in your nose while you approach.
 AS_Pset("minimumFPS",15); //initial minimum FPS. This value can be changed in a menu.
 AS_Pset("cleantime",60*60); // time to delete dead bodies and vehicles.
@@ -98,8 +98,7 @@ AS_Pset("lightnings", 0);
 AS_Pset("waves", 0);
 AS_Pset("fog", 0);
 */
-[] call AS_weather_fnc_init;
-[] spawn AS_weather_fnc_randomWeather;
+
 
 AS_Pset("clear", false); //This to signal weather module to not keep default clear weather
 //TODO: Parameter option to disable weather changes

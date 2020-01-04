@@ -341,14 +341,14 @@ private _fnc_run = {
 		if (_missionType in ["convoy_money","convoy_supplies"]) exitWith {
 			{
 				private _hasArrived = {
-					_crate distance2D _position < 150 and {!([_position, 150] call AS_fnc_friendlyNearby)}}; //Check if blufor is not near
+					_crate distance2D _position < 150 and {!([_crate, 50] call AS_fnc_friendlyNearby)}}; //Check if blufor is not near
 				(false) or _hasArrived
 			}
 		};
 		if (_missionType in ["convoy_armor", "convoy_ammo", "convoy_fuel"]) exitWith {
 			{
 				private _hasArrived = {((driver _mainVehicle) call AS_fnc_getSide == "AAF") and
-					{_mainVehicle distance2D _position < 150 and {!([_position, 150] call AS_fnc_friendlyNearby)}}}; //Check if blufor is not near
+					{_mainVehicle distance2D _position < 150 and {!([_crate, 50] call AS_fnc_friendlyNearby)}}}; //Check if blufor is not near
 				(false) or _hasArrived
 			}
 		};

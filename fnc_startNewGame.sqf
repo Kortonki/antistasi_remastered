@@ -59,3 +59,8 @@ AS_Pset("vehiclesInGarage", _garageVehicles);
 
 AS_dataInitialized = true;
 publicVariable "AS_dataInitialized";
+
+//Init weather
+
+[] call AS_weather_fnc_init;
+[] spawn AS_weather_fnc_randomWeather;

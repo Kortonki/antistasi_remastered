@@ -132,7 +132,7 @@ removeAllActions caja;
 [caja,"transferFrom"] call AS_fnc_addAction;
 [caja,"emptyPlayer"] call AS_fnc_addAction;
 
-//caja addMPEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}]; //Commented for now: doesn't work
+caja addEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}];
 
 removeAllActions mapa;
 mapa addAction [localize "str_act_gameOptions", {CreateDialog "game_options";},nil,0,false,true,"","(isPlayer _this) and {_this call AS_fnc_isAdmin}"];

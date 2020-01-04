@@ -33,9 +33,7 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
 
 // costs of **land vehicle**. Every vehicle in `"land_vehicles"` must be here.
-private _costs = createSimpleObject ["Static", [0, 0, 0]];
-[_dict, "costs"] call DICT_fnc_del; // delete old
-[_dict, "costs", _costs] call DICT_fnc_set;
+private _costs = [_dict, "costs"] call DICT_fnc_get; //Baseline so no missing for HC squads etc.
 [_costs, "CUP_C_UAZ_Unarmed_TK_CIV", 300] call DICT_fnc_set;
 [_costs, "CUP_C_LR_Transport_CTK", 300] call DICT_fnc_set;
 [_costs, "CUP_C_V3S_Open_TKC", 600] call DICT_fnc_set;

@@ -22,6 +22,7 @@ params ["_dict"];
                 _vehicle allowDamage false;
                 _vehicle enableSimulationGlobal false;
                 _vehicle setDir _dir;
+                _vehicle setVectorUp [0,0,1];
 
                 if (_type isKindOf "StaticWeapon") then {
                 	[_vehicle,"moveObject"] remoteExec ["AS_fnc_addaction", [0,-2] select isDedicated];
@@ -50,9 +51,11 @@ params ["_dict"];
                   waitUntil {sleep 0.1; not isNil "AS_dataInitialized"};
                   [_vehicle, "FIA", _fuel, _fuelCargo] call AS_fnc_initVehicle;
                   //After init, enable simulation
-                  sleep 10;
+                  sleep 5;
                   _vehicle enableSimulationGlobal true;
                   _vehicle allowDamage true;
+                  sleep 5;
+                  _vehicle setVectorUp [0,0,1];
               };
                 _vehicles pushBack _vehicle;
             } forEach _value;

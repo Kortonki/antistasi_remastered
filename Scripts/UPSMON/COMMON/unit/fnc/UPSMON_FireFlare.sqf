@@ -48,7 +48,7 @@ _munition = "";
 						_muns = getarray (configFile>> "cfgWeapons" >> _weapon >> _muzzle >> "magazines");
 						_flaresclass = [];
 						{
-							_ammo = tolower gettext (configFile>> "CfgMagazines" >> _x >> "ammo");
+							_ammo = tolowerANSI gettext (configFile>> "CfgMagazines" >> _x >> "ammo");
 							_cfg = getnumber (configFile>> "CfgAmmo" >> _ammo >> "useFlare");
 
 							If (_cfg == 1) then

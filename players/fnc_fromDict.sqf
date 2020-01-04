@@ -6,7 +6,7 @@ call AS_players_fnc_deinitialize;
 [AS_container, "players", _dict call DICT_fnc_copyGlobal] call DICT_fnc_setGlobal; //Changed to copyglobal
 
 {
-    private _uid = tolower getPlayerUID _x;
+    private _uid = tolowerANSI getPlayerUID _x;
     if ([AS_container, "players", _uid] call DICT_fnc_exists) then {
         [] remoteExec ["AS_players_fnc_loadLocal", owner _x];
     };

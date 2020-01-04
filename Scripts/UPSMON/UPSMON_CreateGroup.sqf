@@ -58,7 +58,7 @@ for [{_i=0}, {_i<_unitsnbr}, {_i=_i+1}] do
 	If (!(_unittype iskindof "CAManBase")) then
 	{
 		_vehicle = createVehicle [_unittype,_unitpos,[], 0, "NONE"];
-		_crew = tolower gettext (configFile >> "CfgVehicles" >> _unittype >> "crew");
+		_crew = tolowerANSI gettext (configFile >> "CfgVehicles" >> _unittype >> "crew");
 		{
 			_unit = _grp createUnit [_crew, _unitpos, [], 0, "form"];
 			Unassignvehicle _unit;

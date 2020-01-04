@@ -59,7 +59,7 @@ if (_location call AS_location_fnc_side == "AAF") then {
 
 	  if (_veh isKindof "Tank" or _type in BE_class_MBT) exitWith {
 
-	    _threat = _threat + 2;
+	    _threat = _threat + 4;
 	  };
 
 	  //APC Threat
@@ -71,27 +71,31 @@ if (_location call AS_location_fnc_side == "AAF") then {
 
 	  //MRAP Threat
 
-	  if (typeOf _veh in BE_class_MRAP) exitWith {
+		if (_type in (["FIA", "cars_aa"] call AS_fnc_getEntity)) exitWith {
+			_threat= _threat + 8;
+		};
+
+	  if (_type in (BE_class_MRAP + (["FIA", "cars_armed"] call AS_fnc_getEntity))) exitWith {
 	      _threat = _threat + 2;
 	  };
 
 	  //STATICs threat
 
-	  if (_veh in AS_allAAStatics) exitWith {_threat = _threat + 5;};
-	  if (_veh in AS_allMGStatics) exitWith {_threat = _threat + 1;};
+	  if (_type in AS_allAAStatics) exitWith {_threat = _threat + 7;};
+	  if (_type in AS_allMGStatics) exitWith {_threat = _threat + 1;};
 
 	  //Helicopter threat
 	  //TODO: attack helos + tweak BE_module to include NATO stuff?
 
-	  if (_veh in BE_class_Heli or _veh isKindof "Helicopter") exitWith {
+	  if (_type in BE_class_Heli or _veh isKindof "Helicopter") exitWith {
 
 	    call {
 
-	        if (_veh in AS_allAttackHelis) exitWith {
+	        if (_type in AS_allAttackHelis) exitWith {
 	        _threat = _threat + 5;
 
 	        };
-	        if (_veh in AS_allArmedHelis) exitWith {
+	        if (_type in AS_allArmedHelis) exitWith {
 	        _threat = _threat + 2;
 	        };
 	    };
@@ -99,7 +103,7 @@ if (_location call AS_location_fnc_side == "AAF") then {
 
 	  //Plane threat. All planes are assumed armed as they're from template file
 
-	  if (_veh in AS_allPlanes) exitWith {
+	  if (_type in AS_allPlanes) exitWith {
 	    _threat = _threat + 15;
 	  	};
 		};

@@ -1,7 +1,7 @@
 private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy;
 [_dict, "side", str west] call DICT_fnc_set;
-[_dict, "name", "FIA (RHS)"] call DICT_fnc_set;
-[_dict, "flag", "Flag_Blue_F"] call DICT_fnc_set;
+[_dict, "name", "FDF Summer (FFP)"] call DICT_fnc_set;
+[_dict, "flag", "ffp_flagcarrier_finland"] call DICT_fnc_set;
 
 [_dict, "soldier", "B_G_Soldier_F"] call DICT_fnc_set;
 [_dict, "crew", "B_G_Soldier_lite_F"] call DICT_fnc_set;
@@ -10,58 +10,87 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 [_dict, "medic", "B_G_medic_F"] call DICT_fnc_set;
 
 [_dict, "uniforms", [
-	"rhsgref_uniform_ttsko_mountain",
-	"U_IG_Guerilla1_1",
-	"U_IG_Guerilla2_1",
-	"U_IG_Guerilla2_2",
-	"U_IG_Guerilla2_3",
-	"U_IG_Guerilla3_1",
-	"U_IG_Guerilla3_2",
-	"U_IG_leader",
-	"U_BG_Guerilla1_1",
-	"U_BG_Guerilla2_2",
-	"U_BG_Guerilla2_3",
-	"U_BG_Guerilla3_1",
-	"U_BG_Guerilla3_2",
-	"U_BG_leader",
-	"U_OG_Guerilla1_1",
-	"U_OG_Guerilla2_1",
-	"U_OG_Guerilla2_2",
-	"U_OG_Guerilla2_3",
-	"U_OG_Guerilla3_1",
-	"U_OG_Guerilla3_2",
-	"U_OG_leader"]
+	"ffp_m05w_uniform",
+	"ffp_m04d_uniform_folded",
+	"ffp_m04d_uniform",
+	"ffp_m04d_alt_uniform",
+]
 ] call DICT_fnc_set;
 
+[_dict, "vests", [
+	"ffp_m05combatvest",
+	"ffp_m05combatvest_radio",
+	"ffp_m05combatvest_grenade",
+	"ffp_m05flak"
+
+]] call DICT_fnc_set;
+
+[_dict, "helmets", [
+	"H_Booniehat_khk", "H_Booniehat_oli", "H_Booniehat_grn",
+	"H_Booniehat_dirty", "H_Cap_oli", "H_Cap_blk", "H_MilCap_rucamo",
+	"H_MilCap_gry", "H_BandMask_blk",
+	"H_Bandanna_khk", "H_Bandanna_gry",
+	"H_Bandanna_camo", "H_Shemag_khk", "H_Shemag_tan",
+	"H_Shemag_olive", "H_ShemagOpen_tan", "H_Beret_grn", "H_Beret_grn_SF",
+	"H_Watchcap_camo", "H_TurbanO_blk", "H_Hat_camo", "H_Hat_tan",
+	"H_Beret_blk", "H_Beret_red",
+	"H_Beret_02", "H_Watchcap_khk",
+	"ffp_m05w_helmet",
+	"ffp_m05w_helmet_peltor",
+	"ffp_m05w_helmet_glasses",
+	"ffp_bmp2_crew_helmet"
+	]] call DICT_fnc_set;
+
+
 [_dict, "unlockedWeapons", [
-	"rhs_weap_makarov_pm",
-	"rhs_weap_m38",
+	"ffp_rk62",
+	"ffp_pist2008",
 	"sgun_HunterShotgun_01_sawedoff_F",
 	"Binocular"
 	]] call DICT_fnc_set;
 
 [_dict, "unlockedMagazines", [
-	"rhs_mag_9x18_8_57N181S",
+	"ffp_17rnd_9x9_mag",
 	"2Rnd_12Gauge_Pellets",
-	"rhs_mag_rdg2_white"
+	"ffp_smoke_white"
 	]] call DICT_fnc_set;
 
-[_dict, "unlockedBackpacks", ["rhs_assault_umbts"]] call DICT_fnc_set;
+[_dict, "unlockedBackpacks", ["ffp_m05_backpack_small"]] call DICT_fnc_set;
 
 unlockeditems pushback "Chemlight_blue";
 
-//No special medical equipment for extra difficulty (need to hoard morphine etc.)
-
-[_dict, "addWeapons", []] call DICT_fnc_set;
+[_dict, "addWeapons", [
+["ffp_rk95", 10],
+["ffp_KVKK", 2],
+["ffp_TKiv2000", 1],
+["ffp_kes88", 10],
+["ffp_apilas", 2]
+]] call DICT_fnc_set;
 
 [_dict, "addMagazines", [
-[	"rhsgref_5Rnd_762x54_m38", 400]
+["ffp_30Rnd_762x39", 400],
+["ffp_handgrenade_runko43", 100],
+["ffp_5Rnd_TKiv2000_mag", 10]
 ]] call DICT_fnc_set;
 
 
+[_dict, "addItems", [
+
+["Medikit", 2],
+["ToolKit", 2],
+["adv_aceSplint_splint", 10],
+["ACE_salineIV_250", 8],
+["ACE_epinephrine", 10],
+["ACE_morphine", 10],
+["ACE_packingBandage", 20],
+["ffp_pp09", 2],
+["ffp_optic_TKiv2000",1]
+
+]] call DICT_fnc_set;
+
 //first one should be the most used one, latter for special occasions
-[_dict, "static_aa", ["rhsgref_cdf_b_ZU23"]] call DICT_fnc_set;
-[_dict, "static_at", ["rhsgref_cdf_SPG9"]] call DICT_fnc_set; //first one is used by squads
+[_dict, "static_aa", ["ffp_23itk61"]] call DICT_fnc_set;
+[_dict, "static_at", ["ffp_pstohj83"]] call DICT_fnc_set; //first one is used by squads
 [_dict, "static_mg", ["rhsgref_cdf_DSHKM"]] call DICT_fnc_set;
 [_dict, "static_mortar", ["rhsgref_cdf_reg_M252"]] call DICT_fnc_set;	//first one is used by squads
 
@@ -135,19 +164,20 @@ unlockeditems pushback "Chemlight_blue";
 
 // FIA minefield uses first of this list
 [_dict, "land_vehicles", [
-	"rhsgref_cdf_b_reg_uaz_open",
+	"ffp_rg32m",
+	"ffp_bv206",
 	"RHS_Ural_Civ_01",
-	"rhsgref_cdf_b_ural",
-	"B_G_Quadbike_01_F",
+	"ffp_susi_sa420",
+	"ffp_susi_sa420_covered",
+	"ffp_susi_sa420_fuel",
+	"ffp_susi_sa420_repair",
+	"I_E_Quadbike_01_F",
 	"C_Offroad_01_F",
 	"C_Offroad_02_unarmed_F",
 	"C_Van_02_transport_F",
 	"C_Van_02_vehicle_F",
-	"C_Van_02_service_F",
-	"C_Van_01_fuel_F",
-	"rhsgref_cdf_b_reg_uaz_dshkm",
-	"rhsgref_cdf_b_reg_uaz_spg9",
-	"rhsgref_cdf_b_gaz66_zu23"
+	"ffp_van_ambulance"
+
 
 ]] call DICT_fnc_set;
 
@@ -156,9 +186,6 @@ unlockeditems pushback "Chemlight_blue";
 [_dict, "air_vehicles", ["rhs_Mi8amt_civilian","C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
 
 [_dict, "cars_armed", ["rhsgref_cdf_b_reg_uaz_dshkm","rhsgref_cdf_b_reg_uaz_spg9","rhsgref_cdf_b_gaz66_zu23"]] call DICT_fnc_set;
-//This is new addition: used to evaluate threat
-[_dict, "cars_aa", ["rhsgref_cdf_b_gaz66_zu23"]] call DICT_fnc_set;
-[_dict, "cars_at", ["rhsgref_cdf_b_reg_uaz_spg9"]] call DICT_fnc_set;
 
 // costs of **land vehicle**. Every vehicle in `"land_vehicles"` must be here.
 //private _costs = createSimpleObject ["Static", [0, 0, 0]];
@@ -167,17 +194,22 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 //[_dict, "costs", _costs] call DICT_fnc_set;
 
 
-[_costs, "rhsgref_cdf_b_reg_uaz_open", 300] call DICT_fnc_set;
+[_costs, "ffp_bv206", 400] call DICT_fnc_set;
 [_costs, "RHS_Ural_Civ_01", 600] call DICT_fnc_set;
-[_costs, "rhsgref_cdf_b_ural",600] call DICT_fnc_set;
-[_costs, "B_G_Quadbike_01_F", 50] call DICT_fnc_set;
+[_costs, "ffp_rg32m", 300] call DICT_fnc_set;
+[_costs, "ffp_susi_sa420", 600] call DICT_fnc_set;
+[_costs, "ffp_susi_sa420_covered", 600] call DICT_fnc_set;
+[_costs, "ffp_susi_sa420_fuel", 600] call DICT_fnc_set;
+[_costs, "ffp_susi_sa420_repair", 600] call DICT_fnc_set;
+[_costs, "I_E_Quadbike_01_F", 50] call DICT_fnc_set;
 [_costs, "C_Offroad_01_F", 300] call DICT_fnc_set;
 [_costs, "C_Offroad_02_unarmed_F", 300] call DICT_fnc_set;
 [_costs, "C_Van_02_transport_F", 300] call DICT_fnc_set;
 [_costs, "C_Van_02_vehicle_F", 300] call DICT_fnc_set;
 [_costs, "C_Van_02_service_F", 1000] call DICT_fnc_set;
-[_costs, "C_Van_01_fuel_F", 400] call DICT_fnc_set;
+[_costs, "ffp_van_ambulance", 300 call DICT_fnc_set;
 
+//Armed cars
 
 [_costs, "rhsgref_cdf_b_reg_uaz_dshkm", 600] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_reg_uaz_spg9", 1200] call DICT_fnc_set;
@@ -185,8 +217,8 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 
 //Static costs. Will override the one from initSides.sqf
 
-[_costs, "rhsgref_cdf_b_ZU23", 1200] call DICT_fnc_set;
-[_costs, "rhsgref_cdf_SPG9", 900] call DICT_fnc_set;
+[_costs, "ffp_23itk61", 1200] call DICT_fnc_set;
+[_costs, "ffp_pstohj83", 1500] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_DSHKM", 300] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_reg_M252", 600] call DICT_fnc_set;
 
