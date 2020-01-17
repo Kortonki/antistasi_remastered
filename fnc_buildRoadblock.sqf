@@ -50,4 +50,5 @@ _mrk setMarkerAlpha 0;
 
 [-2, -100] remoteExec ["AS_fnc_changeFIAmoney", 2];
 [_target, "remove"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
-[_target] spawn AS_fnc_activateVehicleCleanup;
+//[_target] spawn AS_fnc_activateVehicleCleanup;
+[_target] remoteExec ["deleteVehicle", _target];

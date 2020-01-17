@@ -47,7 +47,7 @@ private _fuelReserves = AS_P("fuelFIA");
         {(_x call AS_fnc_getSide) == "FIA"}}}})
     then {
       [_x] call AS_fnc_changePersistentVehicles;
-      diag_log format ["AS: Savegame, FIA vehicle (%1) saved as persistent. Location: %2", _x,  _closest];
+      diag_log format ["AS: Savegame, FIA vehicle (%1) added as persistent. Location: %2", _x,  _closest];
     } else {
 
       if    ((alive _x) and {not(_x in AS_P("vehicles"))} and // these are saved and so they are not converted to money
@@ -74,6 +74,7 @@ private _fuelReserves = AS_P("fuelFIA");
     //Cleanup for destroyed but not yet cleaned vehicles
     if (not(alive _x) and {_x in AS_P("vehicles")}) then {
       [_x, false] call AS_fnc_changePersistentVehicles;
+      diag_log format ["AS: Savegame, FIA vehicle (%1) removed from persistents. Location: %2", _x,  _closest];
     };
 } forEach vehicles;
 

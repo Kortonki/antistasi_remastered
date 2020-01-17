@@ -6,6 +6,7 @@ call AS_location_fnc_initialize;
 AS_antenasTypes = [];
 AS_antenasPos_alive = [];
 
+//TODO: Make these part of of world template
 //Set sandbag and bunker classnames for roadblocks, locations and HQ fortifications. Set a proper camo for map type.
 
 AS_small_bunker_type = "Land_BagBunker_01_small_green_F";

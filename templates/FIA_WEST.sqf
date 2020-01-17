@@ -197,7 +197,7 @@ unlockedItems = unlockedItems - [
 ]] call DICT_fnc_set;
 
 // FIA minefield uses first of this list
-[_dict, "land_vehicles", ["C_Offroad_01_F","C_Van_01_transport_F","B_G_Quadbike_01_F","B_G_Offroad_01_armed_F"]] call DICT_fnc_set;
+[_dict, "land_vehicles", ["C_Offroad_01_F","C_Van_01_transport_F","B_G_Quadbike_01_F","B_G_Offroad_01_armed_F", "B_G_Offroad_01_F"]] call DICT_fnc_set;
 [_dict, "water_vehicles", ["B_G_Boat_Transport_01_F"]] call DICT_fnc_set;
 // First helicopter of this list is undercover
 [_dict, "air_vehicles", ["C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
@@ -212,6 +212,7 @@ unlockedItems = unlockedItems - [
 private _costs = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "costs", _costs] call DICT_fnc_set;
 [_costs, "C_Offroad_01_F", 300] call DICT_fnc_set;
+[_costs, "B_G_Offroad_01_F", 300] call DICT_fnc_set;
 [_costs, "C_Van_01_box_F", 300] call DICT_fnc_set;  // defined on "vans"
 [_costs, "C_Van_01_transport_F", 600] call DICT_fnc_set;
 [_costs, "B_G_Quadbike_01_F", 50] call DICT_fnc_set;

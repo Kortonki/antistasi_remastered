@@ -48,6 +48,8 @@ call compile preprocessFileLineNumbers "templates\basicLists.sqf";
 hasRHS = false;
 has3CB = false;
 hasACE = false;
+hasSFP = false;
+hasFFP = false;
 
 hasACEhearing = false;
 hasACEMedical = false;
@@ -89,16 +91,19 @@ if ("UK3CB_M16A2" in AS_allWeapons) then {
 	has3CB = true;
 };
 
-hasFINMOD = false;
-if ("fin_Rk62" in AS_allWeapons) then {
-	hasFINMOD = true;
-};
-
-
 // todo: do not rely on AS_allWeapons to check for mods.
 hasCUP = false;
 if ("CUP_arifle_AKS74U" in AS_allWeapons) then {
 	hasCUP = true;
+};
+
+//Swedish and finish packs
+if ("sfp_ak4" in AS_allWeapons) then {
+	hasSFP = true;
+};
+
+if ("ffp_rk62" in AS_allWeapons) then {
+	hasFFP = true;
 };
 
 //TFAR detection and config.
@@ -196,9 +201,11 @@ if hasRHS then {
 	AS_entities setVariable ["RHS_FIA_EAST", _dict];
 	_dict = call compile preprocessFileLineNumbers "templates\AAF_CHKDZ_RHS.sqf";
 	AS_entities setVariable ["RHS_AAF_CHKDZ", _dict];
-	if hasFINMOD then {
-		_dict = call compile preprocessFileLineNumbers "templates\FIA_WEST_RHS_FIN.sqf";
-		AS_entities setVariable ["RHS_FIN_WEST", _dict];
+	if (hasSFP and {hasFFP}) then {
+		_dict = call compile preprocessFileLineNumbers "templates\FIA_WEST_FFP.sqf";
+		AS_entities setVariable ["RHS_FIA_WEST_FFP", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\FIA_EAST_FFP.sqf";
+		AS_entities setVariable ["RHS_FIA_EAST_FFP", _dict];
 	};
 	if has3CB then {
 		_dict = call compile preprocessFileLineNumbers "templates\NATO_3CB_AFGHAN.sqf";

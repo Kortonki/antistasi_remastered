@@ -11,7 +11,7 @@ private _getWeaponMags = {
     if (_index == -1) exitWith {[]};
 
     // all magazines of this weapon.
-    ((AS_allWeaponsAttrs select _index) select 2) - unlockedMagazines
+    ((AS_allWeaponsAttrs select _index) select 2)
 };
 
 _fnc_gear = {

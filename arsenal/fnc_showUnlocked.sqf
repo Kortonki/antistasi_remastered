@@ -13,9 +13,9 @@ if (!local _unit) exitWith {[_container, _unit] remoteExec ["AS_fnc_showUnlocked
 {
   private _index = (_cargo_w select 0) find _x;
   if (_index != -1) then {
-    _container addWeaponCargo [_x, (1-((_cargo_w select 1) select _index)) max 0];
+    _container addWeaponCargoGlobal [_x, (1-((_cargo_w select 1) select _index)) max 0];
   } else {
-    _container addWeaponCargo [_x, 1];
+    _container addWeaponCargoGlobal [_x, 1];
   };
 
 
@@ -24,9 +24,9 @@ if (!local _unit) exitWith {[_container, _unit] remoteExec ["AS_fnc_showUnlocked
 {
   private _index = (_cargo_m select 0) find _x;
   if (_index != -1) then {
-    _container addMagazineCargo [_x, (30-((_cargo_m select 1) select _index)) max 0];
+    _container addMagazineCargoGlobal [_x, (30-((_cargo_m select 1) select _index)) max 0];
   } else {
-    _container addMagazineCargo [_x, 30];
+    _container addMagazineCargoGlobal [_x, 30];
   };
 
 } foreach unlockedMagazines;
@@ -39,9 +39,9 @@ if (!local _unit) exitWith {[_container, _unit] remoteExec ["AS_fnc_showUnlocked
   _amount = 20;
   };
     if (_index != -1) then {
-      _container addItemCargo [_x, (_amount-((_cargo_i select 1) select _index)) max 0];
+      _container addItemCargoGlobal [_x, (_amount-((_cargo_i select 1) select _index)) max 0];
       }  else {
-    _container addItemCargo [_x, _amount];
+    _container addItemCargoGlobal [_x, _amount];
   };
 
 
@@ -51,9 +51,9 @@ if (!local _unit) exitWith {[_container, _unit] remoteExec ["AS_fnc_showUnlocked
 {
   private _index = (_cargo_b select 0) find _x;
   if (_index != -1) then {
-    _container addBackpackCargo [_x, (1-((_cargo_b select 1) select _index)) max 0];
+    _container addBackpackCargoGlobal [_x, (1-((_cargo_b select 1) select _index)) max 0];
   }  else {
-    _container addBackpackCargo [_x, 1];
+    _container addBackpackCargoGlobal [_x, 1];
   };
 
 } foreach unlockedBackpacks;

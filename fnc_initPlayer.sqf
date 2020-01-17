@@ -44,10 +44,11 @@ player addEventHandler ["WeaponAssembled", {
     [_EHobj, "FIA"] call AS_fnc_initVehicle;
 }];
 
-player addEventHandler ["WeaponDisassembled", {
+//Any reason why the backpacks need an init? More important worry is that former static get removed from persistents
+/*player addEventHandler ["WeaponDisassembled", {
     [_this select 1, "FIA"] call AS_fnc_initVehicle;
 	[_this select 2, "FIA"] call AS_fnc_initVehicle;
-}];
+}];*/
 
 /*
 if (isMultiplayer) then {
