@@ -111,6 +111,17 @@ private _FIAResIncomeMultiplier = 1;
         //Small chance for a traitor mission depending on natoSupport
 
         if ((AS_P("NATOsupport")) < random 50) then {
+
+          //If city is spawned, do not spawn mission there. random new location
+          if (_city call AS_location_fnc_spawned) then {
+            private _maxdist = 2500;
+            while {private _distance = (_city call AS_location_fnc_position) distance2D ("fia_hq" call AS_location_fnc_position);
+                  _distance > _maxdist or _distance < AS_P("spawnDistance") or _city call AS_location_fnc_spawned} do {
+            _city = selectRandom (["city"] call AS_location_fnc_T);
+            _maxdist = _maxdist + 500;
+            sleep 1;
+            };
+          };
           private _mission = ["kill_traitor", _city] call AS_mission_fnc_add;
           _mission call AS_mission_fnc_activate;
         };

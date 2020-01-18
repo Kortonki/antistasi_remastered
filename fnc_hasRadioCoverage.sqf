@@ -7,7 +7,7 @@ if (typeName _this == typeName "") then {
 
 private _ok = false;
 {
-	if ((_position distance2D _x < 5000)) then {
+	if ((_position distance2D _x < AS_RadioCoverage)) then {
 		private _location = _x call AS_location_fnc_nearest;
 		if (_location call AS_location_fnc_side == "AAF") then {
 			_ok = true;

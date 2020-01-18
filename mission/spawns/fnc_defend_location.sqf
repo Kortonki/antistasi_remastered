@@ -49,8 +49,6 @@ private _fnc_spawn = {
 	//CSAT attack
 
 	if (_useCSAT) then {
-
-		[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 		private _cuenta = 3;
 		if ((_base == "") or (_airfield == "")) then {_cuenta = 6};
 

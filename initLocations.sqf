@@ -6,6 +6,8 @@ call AS_location_fnc_initialize;
 AS_antenasTypes = [];
 AS_antenasPos_alive = [];
 
+AS_RadioCoverage = 5000;
+
 //TODO: Make these part of of world template
 //Set sandbag and bunker classnames for roadblocks, locations and HQ fortifications. Set a proper camo for map type.
 
@@ -122,6 +124,8 @@ publicVariable "AS_small_bunker_type";
 publicVariable "AS_big_bunker_type";
 publicVariable "S_camonet_type";
 publicVariable "AS_h_barrier_type";
+publicVariable "AS_RadioCoverage";
+
 
 
 // This searches through all the markers in the mission.sqm and adds them.

@@ -243,3 +243,50 @@ _objects = [
 [_dict, "AS_outpost_5", call DICT_fnc_create] call DICT_fnc_set;
 [_dict, "AS_outpost_5", "center", _center] call DICT_fnc_set;
 [_dict, "AS_outpost_5", "objects", _objects] call DICT_fnc_set;
+
+
+
+
+/*
+Grab data:
+Mission: AS_objects
+World: ruha
+Anchor position: [3465.24, 7091.87]
+Area size: 300
+Using orientation of objects: yes
+*/
+_center = [3465.24, 7091.87];
+
+_obejcts =
+
+[
+	["Land_BagFence_01_round_green_F",[27.0471,3.12012,-0.0620689],190.876,1,0,[0.405385,-2.10894],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[30.9966,3.40283,0.000572205],167.923,1,0,[-1.9493,-2.95012],"","",true,false],
+	["Land_HBarrier_01_tower_green_F",[31.3298,-5.67285,0.00265121],260.628,1,0,[0,0],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[34.074,0.446777,0.000545502],256.011,1,0,[2.88356,-2.04664],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-32.8467,-33.8535,-0.0142021],153.89,1,0,[-0.443184,-0.580166],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-33.3982,-35.8477,0.0120468],61.8719,1,0,[-1.0189,0.220446],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-27.604,-41.8062,-0.00855637],322.93,1,0,[0.400574,0.055798],"","",true,false],
+	["Land_BagBunker_01_small_green_F",[-32.5088,-39.269,0.00329208],51.8401,1,0,[-0.321934,0.98121],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-29.5581,-41.2593,0.0145378],61.8657,1,0,[-0.622989,0.657414],"","",true,false],
+	["Land_BagFence_01_round_green_F",[12.3171,53.5869,0.0137482],258.361,1,0,[2.61008,-0.0996655],"","",true,false],
+	["Land_HBarrier_01_big_tower_green_F",[-30.4138,45.9507,0.00386429],118.168,1,0,[-1.66828,0.0815393],"","",true,false],
+	["Land_HBarrier_01_line_3_green_F",[11.1018,56.291,-0.00031662],257.305,1,0,[1.22608,-0.422438],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-23,52.7124,0.00493622],107.311,1,0,[-0.443444,0.461625],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-21.3105,54.9487,0.0391769],152.951,1,0,[-1.01488,1.16171],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-10.0925,-58.1216,8.7738e-005],265.083,1,0,[2.01785,-1.61085],"","",true,false],
+	["Land_BagFence_01_round_green_F",[-3.25806,-59.0869,-0.0313797],284.282,1,0,[-0.133925,-1.21629],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-18.6543,56.3408,0.00373459],333.299,1,0,[0.319576,-0.00108043],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-7.34155,59.9834,-6.48499e-005],175.205,1,0,[0.975084,-0.368825],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-1.71265,60.4722,0.000881195],175.203,1,0,[-2.10409,0.60778],"","",true,false],
+	["Land_BagBunker_01_large_green_F",[5.58691,62.1367,-0.0301514],173.479,1,0,[3.2132,1.65302],"","",true,false],
+	["Land_HBarrier_01_big_tower_green_F",[-6.84521,-62.4688,-0.000484467],355.306,1,0,[2.32777,2.10889],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-63.3303,-15.6284,0.000747681],0,1,0,[-1.14586,1.14608],"","",true,false],
+	["Land_BagBunker_01_small_green_F",[-62.6123,-26.2773,-0.00405121],0,1,0,[0.429308,0.716005],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-66.314,-18.9873,0.00448608],88.1629,1,0,[-4.5021,-5.85398],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-65.1226,-23.2041,-0.00429535],58.1834,1,0,[-0.457658,0.620483],"","",true,false]
+];
+
+[_dict, "AS_resource_3", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "AS_resource_3", "center", _center] call DICT_fnc_set;
+[_dict, "AS_resource_3", "objects", _objects] call DICT_fnc_set;

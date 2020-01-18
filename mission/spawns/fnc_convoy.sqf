@@ -292,7 +292,7 @@ private _fnc_spawn = {
 		_wp0 setWaypointFormation "COLUMN";
 
 		{
-			[_x, "Convoy", _position] call AS_fnc_setConvoyImmune;
+			[_x, "Convoy", _position] spawn AS_fnc_setConvoyImmune;
 		} foreach _vehicles;
 
 				//TODO better condition to end the loop

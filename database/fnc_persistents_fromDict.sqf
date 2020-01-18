@@ -53,6 +53,7 @@ params ["_dict"];
                   //After init, enable simulation
                   sleep 5;
                   _vehicle enableSimulationGlobal true;
+                  _vehicle setVectorUp [0,0,1];
                   _vehicle allowDamage true;
                   sleep 5;
                   _vehicle setVectorUp [0,0,1];
