@@ -97,7 +97,7 @@ if (_type in ["destroy_antenna", "destroy_helicopter", "destroy_vehicle", "steal
 };
 
 if (_type == "send_meds") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0,-20,_position]]
+    [-10, 0, [0, 0], [0, 0], [0,-10,_position]]
 };
 if (_type == "help_meds") exitWith {
     [-10, 0, [0, 5], [0, 0], [0,0,[]]] //City support depends on if the crate was left intact

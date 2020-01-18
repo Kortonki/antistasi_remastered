@@ -19,7 +19,9 @@ private _fnc_spawn = {
 		private _grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
 
 		// generate dog with some probability.
-		private _dog = [_grupo] call AS_fnc_spawnDog;
+		if (random 10 < 2.5) then {
+			private _dog = [_grupo] call AS_fnc_spawnDog;
+		};
 		//_soldados pushBack _dog; //Dog shouldn't be counted as a soldier
 
 		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;

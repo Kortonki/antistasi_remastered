@@ -139,6 +139,7 @@ unlockeditems pushback "Chemlight_blue";
 	"RHS_Ural_Civ_01",
 	"rhsgref_cdf_b_ural",
 	"B_G_Quadbike_01_F",
+	"B_G_Offroad_01_F",
 	"C_Offroad_01_F",
 	"C_Offroad_02_unarmed_F",
 	"C_Van_02_transport_F",

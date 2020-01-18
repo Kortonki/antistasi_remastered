@@ -49,7 +49,8 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 [_dict, "unlockedMagazines", [
 	"ffp_17rnd_9x9_mag",
 	"2Rnd_12Gauge_Pellets",
-	"ffp_smoke_white"
+	"ffp_smoke_white",
+	"ffp_30Rnd_762x39"
 	]] call DICT_fnc_set;
 
 //m05 backpack is problematic atm as it contains items by default
@@ -66,7 +67,6 @@ unlockeditems pushback "Chemlight_blue";
 ]] call DICT_fnc_set;
 
 [_dict, "addMagazines", [
-["ffp_30Rnd_762x39", 400],
 ["ffp_handgrenade_runko43", 100],
 ["ffp_5Rnd_TKiv2000_mag", 10]
 ]] call DICT_fnc_set;
@@ -155,6 +155,7 @@ unlockeditems pushback "Chemlight_blue";
 	"ffp_susi_sa420_fuel",
 	"ffp_susi_sa420_repair",
 	"I_E_Quadbike_01_F",
+	"B_G_Offroad_01_F"
 	"C_Offroad_01_F",
 	"C_Offroad_02_unarmed_F",
 	"C_Van_02_transport_F",
