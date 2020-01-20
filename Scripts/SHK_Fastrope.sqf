@@ -58,6 +58,7 @@ SHK_Fastrope_AccessLevel = 0;
 SHK_Fastrope_Helis = [
 
   //[MELB] Mission Enhanced Little Bird
+
   ["MELB_MH6M",[],[[1.2,0.8,-0.1],[-1.2,0.8,-0.1]]],
 
   // RHS: Armed Forces of Russian Federation
@@ -69,6 +70,8 @@ SHK_Fastrope_Helis = [
   ["RHS_CH_47F_base",[],[[0,-0.4,0]]],
   ["RHS_UH60_base",["DoorRB"],[[1.44,1.93,-0.49]]],
   ["RHS_UH1_base",["DoorLB","DoorRB"],[[0.95,3,-0.9],[-0.95,3,-0.9]]],
+  ["RHS_MELB_MH6M",[],[[1.2,0.8,-0.1],[-1.2,0.8,-0.1]]],
+  ["RHS_MELB_AH6M",[],[[1.2,0.8,-0.1],[-1.2,0.8,-0.1]]],
 
   // Arma 3
   ["Heli_Light_01_unarmed_base_F",[],[[1.1,0.5,-0.5],[-1.1,0.5,-0.5]]], //Hummingbird
@@ -214,6 +217,11 @@ SHK_Fastrope_fnc_createRopes = {
       _ropesPos = (_x select 2);
     };
   } forEach SHK_Fastrope_Helis;
+
+  //Fallback default value
+  if (count _ropesPos == 0) then {
+    _ropesPos = [[-1.01,2.5,0.25],[1.13,2.5,0.25]];
+  };
 
   // Create ropes
   _ropesObj = [];

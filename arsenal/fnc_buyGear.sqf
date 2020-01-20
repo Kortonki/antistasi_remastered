@@ -11,8 +11,8 @@ if (_player != AS_commander and {([_player, "money"] call AS_players_fnc_get) < 
 	[_player, "hint", "not enough personal money :("] remoteExec ["AS_fnc_localCommunication", _player];
 };
 
-private _buyableWeapons = AAFWeapons + NATOWeapons + CSATWeapons;
-private _buyableItems = AAFItems + NATOItems + CSATItems;
+private _buyableWeapons = AAFWeapons + NATOWeapons + CSATWeapons + (["FIA", "additionalWeapons"] call AS_fnc_getEntity);
+private _buyableItems = AAFItems + NATOItems + CSATItems + (["FIA", "additionalItems"] call AS_fnc_getEntity);
 private _buyableExplosives = (["AAF", "explosives"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity) + (["CSAT", "explosives"] call AS_fnc_getEntity);
 private _buyableAPMines =(["AAF", "ap_mines"] call AS_fnc_getEntity) + (["NATO", "ap_mines"] call AS_fnc_getEntity) + (["CSAT", "ap_mines"] call AS_fnc_getEntity);
 private _buyableATMines =  (["AAF", "at_mines"] call AS_fnc_getEntity) + (["NATO", "at_mines"] call AS_fnc_getEntity) + (["CSAT", "at_mines"] call AS_fnc_getEntity);
@@ -43,7 +43,7 @@ switch (_type) do {
 };
 
 if (_type in ["ASRifles", "Machineguns", "Sniper Rifles", "Launchers", "Pistols", "GLaunchers"]) then {
-	_weapons = _weapons - unlockedWeapons;
+	_weapons = _weapons;
     for "_i" from 1 to _amount do {
         private _weapon = selectRandom _weapons;
         expCrate addItemCargoGlobal [_weapon, 1];

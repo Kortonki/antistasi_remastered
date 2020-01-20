@@ -158,7 +158,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "static_mg", ["B_HMG_01_high_F"]] call DICT_fnc_set;
 [_dict, "static_mortar", ["B_G_Mortar_01_F"]] call DICT_fnc_set; //first one is used by squads
 
-// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
+// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above: if side FIA, these are buyable by irishman
 [_dict, "additionalWeapons", []] call DICT_fnc_set;
 [_dict, "additionalMagazines", []] call DICT_fnc_set;
 [_dict, "additionalItems", []] call DICT_fnc_set;

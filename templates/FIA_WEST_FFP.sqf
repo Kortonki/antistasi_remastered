@@ -47,10 +47,11 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 	]] call DICT_fnc_set;
 
 [_dict, "unlockedMagazines", [
+	"ffp_30Rnd_762x39",
 	"ffp_17rnd_9x9_mag",
 	"2Rnd_12Gauge_Pellets",
-	"ffp_smoke_white",
-	"ffp_30Rnd_762x39"
+	"ffp_smoke_white"
+
 	]] call DICT_fnc_set;
 
 //m05 backpack is problematic atm as it contains items by default

@@ -5,7 +5,7 @@ private _fnc_initialize = {
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
 
-	private _tiempolim = 120;
+	private _tiempolim = 720;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 
 	private _taskTitle = _mission call AS_mission_fnc_title;
@@ -94,8 +94,8 @@ private _fnc_run = {
 
 	{
 		// make all enemies around notice the truck
-		if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x == (leader _x)} and {_x distance _position < 1000}) then {
-			if (_x distance _position < 300) then {
+		if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x == (leader _x)} and {_x distance2D _position < 1000}) then {
+			if (_x distance2D _position < 300) then {
 				_x move position _crate;
 			} else {
 				//Farther groups have probability to move based on their distance. Farther units have less probability, 300m away are sure to come.
