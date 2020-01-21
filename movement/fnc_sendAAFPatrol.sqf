@@ -54,12 +54,12 @@ private _exit = false;
 if (!_isLocation) then {
 	// do not patrol closeby patrol locations.
 	private _closestPatrolPosition = [AS_P("patrollingPositions"), _position] call BIS_fnc_nearestPosition;
-	if (_closestPatrolPosition distance _position < (AS_P("spawnDistance")/2)) exitWith {_exit = true;};
+	if (_closestPatrolPosition distance2D _position < 500) exitWith {_exit = true;};
 
 	// do not patrol closeby to patrolled markers.
 	if (count AS_P("patrollingLocations") > 0) then {
 		private _closestPatrolMarker = [AS_P("patrollingLocations"), _position] call BIS_fnc_nearestPosition;
-		if ((_closestPatrolMarker call AS_location_fnc_position) distance _position < (AS_P("spawnDistance")/2)) then {_exit = true;};
+		if ((_closestPatrolMarker call AS_location_fnc_position) distance2D _position < 500) then {_exit = true;};
 	};
 };
 

@@ -25,7 +25,7 @@ if (_type == "kill_traitor") exitWith {
     [5, [_size, _position, 10], [0, -2]]
 };
 if (_type == "kill_officer") exitWith {
-    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 0, _position], 90*60, [], [_location, 30]]
+    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 0, _position], 90*60, [], [_location, 60]]
 };
 if (_type == "kill_specops") exitWith {
     [5, [_size, _position, 10], [0, -5], [0, 200], [0, 5, _position], 10*60]

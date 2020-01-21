@@ -42,7 +42,7 @@ private _fnc_spawn = {
 	if (_base != "") then {
 		_origin = _base call AS_location_fnc_positionConvoy;
 		_aeropuerto = "";
-		if (!_isDirectAttack) then {[_base,20] call AS_location_fnc_increaseBusy;};
+		if (!_isDirectAttack) then {[_base,15] call AS_location_fnc_increaseBusy;};
 
 		private _toUse = "trucks";
 		if (_threatEval > 3 and {"apcs" call AS_AAFarsenal_fnc_countAvailable > 0}) then {
@@ -58,7 +58,7 @@ private _fnc_spawn = {
 	};
 
 	if (_aeropuerto != "") then {
-		if (!_isDirectAttack) then {[_aeropuerto,20] call AS_location_fnc_increaseBusy;};
+		if (!_isDirectAttack) then {[_aeropuerto,15] call AS_location_fnc_increaseBusy;};
 		_origin = _aeropuerto call AS_location_fnc_position;
 		private _cuenta = 1;
 		if (_isLocation) then {_cuenta = 2};
@@ -113,13 +113,12 @@ private _fnc_run = {
 	} forEach _groups;
 
 	if _isLocation then {
-		private _tiempo = time + 3600;
+		private _tiempo = time + 3600; // 60 minutes
 
 		waitUntil {sleep 10;
-			(({not (captive _x)} count _soldados) < ({captive _x} count _soldados)) or
-			{{_x call AS_fnc_canFight} count _soldados == 0} or
-			{_location call AS_location_fnc_side == "AAF"} or
-			{time > _tiempo}
+			({_x call AS_fnc_canFight} count _soldados) < ({!(_x call AS_fnc_canFight)} count _soldados) or
+			_location call AS_location_fnc_side == "AAF" or
+			time > _tiempo
 		};
 
 		AS_Pset("patrollingLocations", AS_P("patrollingLocations") - [_location]);
@@ -128,10 +127,18 @@ private _fnc_run = {
 		private _tiempo = time + 1800; //30 minutes
 		//TODO: arrange pickup for the troops
 
-		waitUntil {sleep 10; time > _tiempo and {!([AS_P("spawnDistance"), _position, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}};
+		waitUntil {sleep 10; time > _tiempo or ({_x call AS_fnc_canFight} count _soldados) < ({!(_x call AS_fnc_canFight)} count _soldados)};
+
 
 		AS_Pset("patrollingPositions", AS_P("patrollingPositions") - [_position]);
 	};
+
+	//RTB
+	{
+			[_x, "AWARE"] remoteExec ["setBehaviour", _x];
+			[_x, "GREEN"] remoteExec ["setCombatmode", _x];
+			[_x, _origin]  remoteExec ["move", _x];
+	} foreach _groups;
 };
 
 private _fnc_clean = {

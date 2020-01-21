@@ -41,6 +41,7 @@ if not (_origin isEqualTo "spawnCSAT") then {
 	_method = "disembark";
 	_faction = "AAF";
 	if (_size == "small") then {
+		[_origin,5] call AS_location_fnc_increaseBusy;
 		if (_origin in _bases) then {
 			if ("cars_armed" call AS_AAFarsenal_fnc_countAvailable < 2 or "trucks" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
 			_type = "land";
@@ -53,6 +54,7 @@ if not (_origin isEqualTo "spawnCSAT") then {
 			_dismountGroup = [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		};
 	} else {
+		[_origin,10] call AS_location_fnc_increaseBusy;
 		if (_origin in _bases) then {
 			if ("apcs" call AS_AAFarsenal_fnc_countAvailable < 2 or "trucks" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
 			_type = "land";

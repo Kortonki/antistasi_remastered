@@ -364,3 +364,44 @@ _objects =
 [_dict, "AS_resource_2", call DICT_fnc_create] call DICT_fnc_set;
 [_dict, "AS_resource_2", "center", _center] call DICT_fnc_set;
 [_dict, "AS_resource_2", "objects", _objects] call DICT_fnc_set;
+
+/*
+Grab data:
+Mission: AS_objects
+World: ruha
+Anchor position: [754.179, 3540.93]
+Area size: 100
+Using orientation of objects: yes
+*/
+
+_center = [754.179, 3540.93];
+_objects =
+
+[
+	["Land_Caravan_01_rust_F",[-10.6373,-11.4014,0.0256596],125.939,1,0,[0,-0],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-16.4783,1.98608,0.0310574],210.482,1,0,[-2.20005,1.19798],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-18.2931,1.13916,0.00778961],119.45,1,0,[1.20894,0.189124],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-20.359,-2.8562,-0.000219345],124.559,1,0,[0.584092,-1.85805],"","",true,false],
+	["Land_Caravan_01_green_F",[-14.748,-15.9414,0.00460815],123.828,1,0,[0,-0],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-23.5094,-7.44165,0.000375748],124.55,1,0,[1.9026,0.267125],"","",true,false],
+	["Land_BagFence_01_long_green_F",[17.5524,-19.5,-0.00981712],88.4477,1,0,[-1.30009,-0.394249],"","",true,false],
+	["Land_BagFence_01_long_green_F",[17.7199,-22.3459,-0.00504303],88.4394,1,0,[-0.4335,-0.130895],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-26.6803,-12.0151,3.8147e-005],124.52,1,0,[1.88872,-1.48166],"","",true,false],
+	["Land_BagFence_01_long_green_F",[28.3082,-8.97388,0.0266418],310.998,1,0,[0.563634,-0.648426],"","",true,false],
+	["Land_HBarrier_01_line_3_green_F",[6.44604,-29.1079,-0.000303268],184.387,1,0,[1.3507,-0.758237],"","",true,false],
+	["Land_BagFence_01_long_green_F",[29.1334,-6.61987,-0.102438],88.4721,1,0,[-0.5376,-3.99129],"","",true,false],
+	["Land_BagBunker_01_large_green_F",[12.8806,-27.5803,0.0056572],7.7943,1,0,[-0.541906,0.79321],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-29.4202,-15.4424,-0.125053],119.347,1,0,[2.61109,-4.92746],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-28.8701,-17.4768,0.0950375],218.942,1,0,[4.42615,3.39576],"","",true,false],
+	["Land_BagFence_01_long_green_F",[29.5731,46.3237,0.184711],105.291,1,0,[4.71218,5.57993],"","",true,false],
+	["Land_BagFence_01_long_green_F",[31.2787,47.6079,0.0946159],184.785,1,0,[-0.428916,3.4098],"","",true,false],
+	["Land_BagFence_01_long_green_F",[40.7529,42.3167,-0.0272141],289.629,1,0,[4.01424,-1.45511],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-28.4967,-51.8806,0.00110054],22.7207,1,0,[0.90311,0.0681055],"","",true,false],
+	["Land_BagBunker_01_small_green_F",[-24.0392,-55.1577,-0.00716591],8.01954,1,0,[0.74888,-0.183324],"","",true,false],
+	["Land_BagFence_01_long_green_F",[40.1046,44.644,-0.0856285],218.019,1,0,[1.01401,-3.38616],"","",true,false],
+	["Land_HBarrier_01_big_tower_green_F",[36.2233,48.1089,0.00192261],195.267,1,0,[0.967298,-2.99969],"","",true,false]
+];
+
+[_dict, "AS_resource_4", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "AS_resource_4", "center", _center] call DICT_fnc_set;
+[_dict, "AS_resource_4", "objects", _objects] call DICT_fnc_set;

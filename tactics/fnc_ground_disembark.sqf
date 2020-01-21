@@ -26,9 +26,9 @@ _wp2 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 
 
 //Failsafe if vehicle fucks up
-[_cargo_group, _safePosition, _crew_group] spawn {
+[_cargo_group, _safePosition, _crew_group, _destination] spawn {
 
-    params ["_group", "_safePosition", "_crew_group"];
+    params ["_group", "_safePosition", "_crew_group", "_destination"];
     private _leader = leader _group;
 
     waitUntil {sleep 5; _leader = leader _group; vehicle _leader == _leader or {alive _x} count (units _group) == 0 or _leader distance2D _safePosition < 70 or _leader distance2D _destination < 400};
