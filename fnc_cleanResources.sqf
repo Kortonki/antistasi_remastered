@@ -8,7 +8,7 @@ params ["_groups", "_vehicles", "_markers"];
 
 {
     private _group = _x;
-    private _units = units _group;
+    private _units = (units _group) select {alive _x};
     {
         [_x] spawn {
             params ["_unit"];

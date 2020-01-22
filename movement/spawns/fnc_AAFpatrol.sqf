@@ -139,6 +139,14 @@ private _fnc_run = {
 			[_x, "GREEN"] remoteExec ["setCombatmode", _x];
 			[_x, _origin]  remoteExec ["move", _x];
 	} foreach _groups;
+
+	waitUntil {sleep 10;
+	private _return = {
+		if ((position _x) distance2D _origin > 300) exitWith {false};
+		true
+	} foreach (_soldados select {alive _x and {!(_x call AS_medical_fnc_isUnconscious)}});
+	_return
+	};
 };
 
 private _fnc_clean = {
@@ -146,7 +154,10 @@ private _fnc_clean = {
 	private _groups = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 1);
 	private _vehicles = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 2);
 	private _markers = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 3);
-	[_groups, _vehicles, _markers] call AS_fnc_cleanResources;
+
+	//Choose only alive for cleanup -> dead are handled already by other function and bodies lootable
+
+	[_groups, _vehicles, _markers] call AS_fnc_cleanMissionResources;
 	[_spawnName, "delete", true] call AS_spawn_fnc_set;
 };
 

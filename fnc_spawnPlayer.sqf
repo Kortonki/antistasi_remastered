@@ -28,6 +28,11 @@ selectPlayer _unit;
 [_unit] call AS_fnc_emptyUnit;
 _unit call AS_fnc_equipDefault;
 
+//Make player undercover on respawn (ability to escape conquered hq for example)
+_unit forceAddUniform (selectRandom CIVUniforms);
+_unit setcaptive true;
+
+
 if _isCommander then {
 	[_unit] remoteExec ["AS_fnc_setCommander", 2];
 };
@@ -38,6 +43,54 @@ call AS_players_fnc_loadLocal;
 
 // init event handlers, medic, etc.
 call AS_fnc_initPlayer;
+
+private _money = AS_P("resourcesFIA");
+
+//This is reimbursed in start game. Player HR is returned in disconnect and savegame so player rejoining should cost the same
+
+if isMultiplayer then {
+	//private _money = [player, "money"] call AS_players_fnc_get;
+	//[player, "money", -round (0.1*_money)] remoteExec ["AS_players_fnc_change", 2];
+
+
+	if (_money < 50) then {
+		[-1, 0] remoteExec ["AS_fnc_changeFIAMoney", 2];
+		if (([player, "money"] call AS_players_fnc_get) >= 50)
+		then {
+			[player, "money", -50] remoteExec ["AS_players_fnc_change", 2];
+		} else {
+			if ((AS_P("NATOsupport")) >= 2) then {
+				[-2, 0] remoteExec ["AS_fnc_changeForeignSupport", 2];
+			} else {
+				{
+					[0,-1, _x] call AS_fnc_changeCitySupport;
+				} foreach ([] call AS_location_fnc_cities);
+			};
+
+		};
+	} else {
+		[-1, -50] remoteExec ["AS_fnc_changeFIAMoney", 2];
+	};
+
+} else {
+
+		if (_money < 50) then {
+			[-1, 0] remoteExec ["AS_fnc_changeFIAMoney", 2];
+				if ((AS_P("NATOsupport")) >= 2) then {
+					[-2, 0] remoteExec ["AS_fnc_changeForeignSupport", 2];
+				} else {
+					{
+						[0,-1, _x] remoteExec ["AS_fnc_changeCitySupport", 2];
+					} foreach ([] call AS_location_fnc_cities);
+				};
+
+		} else {
+			[-1, -50] remoteExec ["AS_fnc_changeFIAMoney", 2];
+		};
+
+
+
+};
 
 
 // Reassign player tasks (temporary fix for tasks disappearing after respawn)

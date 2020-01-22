@@ -46,9 +46,9 @@ if (_startFuel == -1) then {_startFuel = round(10000*((random 1)^3.32))};
 if (_startNS == -1) then {_startNS = round(100*((random 1)^4.322))};
 
 
-AS_Pset("hr",_startHr); //initial HR value
+AS_Pset("hr",_startHr + count (allPlayers - (entities "HeadlessClient_F"))); //initial HR value
 AS_Pset("hr_cum", 0); //Cumulative hr buildup for resource updates
-AS_Pset("resourcesFIA",_startMoney); //Initial FIA money pool value
+AS_Pset("resourcesFIA",_startMoney + (50 * count (allPlayers - (entities "HeadlessClient_F")))); //Initial FIA money pool value
 AS_Pset("fuelFIA", _startFuel); //Initial FIA fuel reserves
 
 //AAF money

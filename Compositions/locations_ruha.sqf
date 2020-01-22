@@ -200,7 +200,85 @@ _objects = [
 [_dict, "AS_base_1", "center", _center] call DICT_fnc_set;
 [_dict, "AS_base_1", "objects", _objects] call DICT_fnc_set;
 
+/*
+Grab data:
+Mission: AS_objects
+World: ruha
+Anchor position: [3850.23, 7649.63]
+Area size: 400
+Using orientation of objects: yes
+*/
 
+_center = [3850.23, 7649.63];
+_objects =
+[
+	["Land_BagFence_01_long_green_F",[15.8193,6.1582,0.0114594],324.244,1,0,[1.4832,0.34416],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-2.79517,20.2744,-0.0102348],271.751,1,0,[3.87736,-0.454538],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[20.0664,8.19727,-0.000160217],168.134,1,0,[-0.316298,-0.811655],"","",true,false],
+	["Land_Bunker_01_HQ_F",[9.19019,21.2266,0.00265503],262.394,1,0,[0,0],"","",true,false],
+	["Land_PortableLight_double_F",[6.06421,-22.4175,0.00399017],351.939,1,0,[0,0],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-2.89502,23.2734,0.03405],83.5099,1,0,[-2.69934,1.60432],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-1.54468,24.9888,-0.0843544],166.847,1,0,[-2.03693,-3.05217],"","",true,false],
+	["Land_HBarrier_01_line_3_green_F",[1.61133,25.3013,0.00217438],173.884,1,0,[-2.40981,-2.33521],"","",true,false],
+	["Land_BagFence_01_long_green_F",[24.325,9.05566,0.0205421],182.195,1,0,[0.688052,0.742961],"","",true,false],
+	["Land_PortableLight_double_F",[22.9382,-13.1948,-0.00181961],273.551,1,0,[0,0],"","",true,false],
+	["Land_BagFence_01_long_green_F",[26.3611,10.2266,0.00648117],102.647,1,0,[1.56821,0.205783],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[23.2468,-17.1377,0.000457764],263.378,1,0,[-2.107,-0.764776],"","",true,false],
+	["Land_BagFence_01_round_green_F",[15.6077,-24.7993,0.0142136],12.1702,1,0,[0.469607,0.540472],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[25.7205,14.312,-9.53674e-005],90.4007,1,0,[-0.710312,-0.864333],"","",true,false],
+	["Land_HBarrier_01_line_3_green_F",[25.7834,18.8994,-0.000114441],269.614,1,0,[0.285016,-0.144557],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[15.0959,28.9087,0.000591278],353.326,1,0,[1.55545,0.971871],"","",true,false],
+	["Land_HBarrier_01_line_1_green_F",[27.095,20.6001,4.95911e-005],175.367,1,0,[-0.0959109,0.582316],"","",true,false],
+	["Land_BagBunker_01_large_green_F",[23.1277,-25.8882,-0.0140495],324.952,1,0,[1.44137,-1.18711],"","",true,false],
+	["Land_BagFence_01_long_green_F",[19.1646,29.6772,0.0525475],1.1912,1,0,[-1.038,1.69745],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[30.5237,20.9067,-8.01086e-005],175.211,1,0,[-0.320868,-0.404401],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[23.4319,29.0747,-0.000114441],358.576,1,0,[-0.744265,-1.12763],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-35.8855,11.7319,-0.00709152],349.004,1,0,[1.26525,-0.245878],"","",true,false],
+	["Land_Cargo_Patrol_V1_F",[31.0605,25.2832,0],265.72,1,0,[0,0],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[29.0881,29.3281,-0.000118256],355.486,1,0,[-0.650133,-0.954347],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[34.1643,23.4766,0.00228119],88.6928,1,0,[0.219376,3.28678],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-39.915,12.9297,0.00158691],18.3464,1,0,[0.502044,2.57984],"","",true,false],
+	["Land_HBarrier_01_line_1_green_F",[32.5247,29.5054,0.000469208],355.447,1,0,[-1.48434,-0.600288],"","",true,false],
+	["Land_HBarrier_01_line_3_green_F",[33.9307,27.9634,0.00266266],86.5073,1,0,[-3.23028,-1.23758],"","",true,false],
+	["Land_BagBunker_01_small_green_F",[-35.2644,28.1084,0.017334],185.221,1,0,[-1.73723,0.129197],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-38.6506,26.4658,0.00366211],1.19156,1,0,[0.423733,0.294867],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-41.0051,25.146,-0.0757904],300.821,1,0,[1.12679,-1.32886],"","",true,false],
+	["Land_BagBunker_01_small_green_F",[-35.2036,-34.9204,0.00419617],0.561453,1,0,[-0.429763,-0.00421154],"","",true,false],
+	["Land_BagBunker_01_large_green_F",[-46.2429,19.4663,0.00988388],93.4186,1,0,[-0.966577,-0.631768],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-39.4058,-30.1816,0.0102234],95.0915,1,0,[1.04942,-0.481773],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-38.3359,-32.6777,-0.0216637],41.6839,1,0,[0.238826,-1.12973],"","",true,false],
+	["Land_PortableLight_double_F",[-21.5378,61.7988,-0.000923157],187.758,1,0,[0,0],"","",true,false],
+	["Land_CzechHedgehog_01_new_F",[-12.5076,66.0645,0.00965881],359.97,1,0,[-0.323801,5.9145],"","",true,false],
+	["Land_Razorwire_F",[-18.6614,66.3149,-0.478958],358.628,1,1,[0.0308638,12.7327],"","",true,false],
+	["Land_PortableLight_double_F",[-32.2244,60.4692,-0.00125504],187.758,1,0,[0,0],"","",true,false],
+	["Land_CzechHedgehog_01_new_F",[-21.0759,65.8833,3.05176e-005],0.00215281,1,0,[0.286777,1.86089e-005],"","",true,false],
+	["Land_PortableLight_double_F",[-23.9517,-67.5444,0.00133514],0,1,0,[0,0],"","",true,false],
+	["Land_CzechHedgehog_01_new_F",[-32.5171,64.5386,5.72205e-005],0.00106004,1,0,[0.42953,-0.142534],"","",true,false],
+	["Land_CzechHedgehog_01_new_F",[-15.4399,-70.7373,0.067852],359.992,1,0,[1.00515,16.4382],"","",true,false],
+	["Land_Razorwire_F",[-21.6621,-70.4736,0.529945],358.64,1,1,[1.76163,58.9804],"","",true,false],
+	["Land_Razorwire_F",[-38.6431,64.7974,-0.752182],358.628,1,1,[0.698779,-7.31112],"","",true,false],
+	["Land_CzechHedgehog_01_new_F",[-24.0066,-70.9194,0.000137329],0.00254516,1,0,[0.715992,-3.37767e-005],"","",true,false],
+	["Land_PortableLight_double_F",[-34.071,-66.8638,0.00133514],0,1,0,[0,0],"","",true,false],
+	["Land_CzechHedgehog_01_new_F",[-41.0837,64.356,0.00179672],359.999,1,0,[1.43227,-2.29099],"","",true,false],
+	["Land_CzechHedgehog_01_new_F",[-33.5129,-70.2793,-0.000473022],359.991,1,0,[0.989745,-0.0468339],"","",true,false],
+	["Land_Razorwire_F",[-39.6494,-70.0166,-0.705879],358.628,1,1,[0.85914,-0.206239],"","",true,false],
+	["Land_CzechHedgehog_01_new_F",[-42.0759,-70.46,0.00676727],359.995,1,0,[1.72704,-2.10256],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-88.5415,-44.8218,0.000411987],176.082,1,0,[4.2889,-0.150919],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-84.5745,-54.1182,0.160095],304.881,1,0,[3.19102,5.18094],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-90.72,-46.1465,0.0998611],304.461,1,0,[-3.62463,3.75789],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-86.2666,-56.4033,0.144417],312.434,1,0,[2.38832,3.53888],"","",true,false],
+	["Land_BagFence_01_end_green_F",[-90.5942,-50.0127,0.00328827],299.949,1,0,[0,0],"","",true,false],
+	["Land_BagFence_01_round_green_F",[-91.6431,-48.7783,0.000740051],211.149,1,0,[0,0],"","",true,false],
+	["Land_BagFence_01_end_green_F",[-93.1978,-48.4258,0.000549316],312.119,1,0,[0,0],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-91.5796,-51.4858,-0.0173645],302.473,1,0,[0,0],"","",true,false],
+	["Land_HBarrier_01_line_5_green_F",[-90.0249,-56.519,-0.000244141],31.3485,1,0,[0.452655,-1.56883],"","",true,false],
+	["Land_BagFence_01_long_green_F",[-94.3069,-49.7578,-0.0780258],128.875,1,0,[0,-0],"","",true,false],
+	["Land_HBarrier_01_tower_green_F",[-93.4927,-51.5908,0.012352],34.763,1,0,[0,0],"","",true,false]
+];
+
+[_dict, "AS_outpost_3", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "AS_outpost_3", "center", _center] call DICT_fnc_set;
+[_dict, "AS_outpost_3", "objects", _objects] call DICT_fnc_set;
 
 
 /*

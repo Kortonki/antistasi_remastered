@@ -75,7 +75,10 @@ if (count (units _group select {!(isPlayer _x)}) > 0 and {_unit == leader _group
 	[(units _group) select {!(isPlayer _x)}] remoteExec ["AS_fnc_dismissFIAunits", _group];
 };
 
-[1, 50] remoteExec ["AS_fnc_changeFIAMoney", 2];
+if (alive _unit and {!(_unit call AS_medical_fnc_isUnconscious)}) then {
+
+		[1, 50] remoteExec ["AS_fnc_changeFIAMoney", 2];
+	};
 
 private _pos = getPosATL _unit;
 private _wholder = nearestObjects [_pos, ["weaponHolderSimulated", "weaponHolder"], 2];

@@ -36,8 +36,7 @@ _veh setfuel (0 + 1*((random 1)^2));
 if (_veh call AS_fuel_fnc_getfuelCargoSize > 0) then {
 	_veh setfuelCargo 0;
 	[_veh, 0, 0.1] call AS_fuel_fnc_randomFuelCargo;
-	[_veh, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
-	[_veh, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+
 };
 
 //Steal Penalty
@@ -53,6 +52,14 @@ _veh addEventHandler ["Getin", {
 						[0,-1,getPos _vehicle] remoteExec ["AS_fnc_changeCitySupport",2]; //For comparison killing a civ it's -5%
 
 						[_vehicle, "FIA"] call AS_fnc_setSide;
+
+						//if it's a refuel truck
+
+						if (_vehicle call AS_fuel_fnc_getfuelCargoSize > 0) then {
+							[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+							[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+						};
+
 				};
 	}];
 

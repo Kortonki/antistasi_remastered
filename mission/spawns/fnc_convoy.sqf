@@ -177,6 +177,8 @@ private _fnc_spawn = {
 		//This should make escort disembark when approaching FIA locations or they are near
 		if (_frontLine) then {
 			[_group, _location] spawn AS_AI_fnc_dangerOnApproach;
+		} else {
+			[_group, _location, 1] spawn AS_AI_fnc_dangerOnApproach;
 		};
 
 	};
