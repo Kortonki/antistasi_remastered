@@ -141,10 +141,11 @@ private _fnc_run = {
 	} foreach _groups;
 
 	waitUntil {sleep 10;
-	private _return = {
+	private _return = true;
+	_return = {
 		if ((position _x) distance2D _origin > 300) exitWith {false};
 		true
-	} foreach (_soldados select {alive _x and {!(_x call AS_medical_fnc_isUnconscious)}});
+		} foreach (_soldados select {alive _x and {!(_x call AS_medical_fnc_isUnconscious)}});
 	_return
 	};
 };

@@ -32,3 +32,7 @@ while {{alive _x} count units _group > 0} do {
   };
   sleep 1;
 };
+
+waitUntil {sleep 10; {alive _x} count units _group == 0};
+
+deleteMarker _patrolMarker;

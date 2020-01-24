@@ -138,7 +138,7 @@ while {_reason == ""} do {
 				private _base = [_all_spotters, _player] call BIS_fnc_nearestPosition;
 				private _position = _base call AS_location_fnc_position;
 				private _size = _base call AS_location_fnc_size;
-				_player distance _position < _size*2}) exitWith {
+				_player distance _position < _size}) exitWith {
 					"distanceToLocation"
 			};
 			if ((_type in civHeli) and {

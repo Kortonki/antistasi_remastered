@@ -95,7 +95,7 @@ call {
 		["magazine", 5, 5] call _fnc_gear;
 		["item", 5, 5] call _fnc_gear;
 		["mine", 3, 2] call _fnc_gear;
-        ["grenades", 5, 5] call _fnc_gear;
+    ["grenades", 5, 5] call _fnc_gear;
 		["launcher", 2, 2, 3] call _fnc_gear;
     ["optic", 2, 2] call _fnc_gear;
 	};

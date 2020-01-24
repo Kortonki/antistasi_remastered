@@ -179,3 +179,7 @@ AS_HQ_placements = []; // objects placed on HQ
 
 private _allFuelStations = ([0,0,0] nearObjects 150000) select {getFuelCargo _x > 0};
 {_x setFuelCargo 0} foreach _allFuelStations;
+
+if (!isNil "ace_common_settingFeedbackIcons") then {
+  {[_x, 0] call ace_refuel_fnc_setFuel} foreach _allFuelStations;
+};

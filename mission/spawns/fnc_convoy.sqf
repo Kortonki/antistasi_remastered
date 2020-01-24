@@ -91,7 +91,9 @@ private _fnc_initialize = {
 
 	_tskDesc = format [_tskDesc,
 		[_origin] call AS_fnc_location_name, _origin,
-		[_location] call AS_fnc_location_name, _location];
+		[_location] call AS_fnc_location_name, _location,
+		numberToDate [2035,dateToNumber _startTime] select 3,
+		numberToDate [2035,dateToNumber _startTime] select 4];
 	_tskTitle = format [_tskTitle, (["AAF", "name"] call AS_fnc_getEntity)];
 
 	[_mission, "origin", _origin] call AS_spawn_fnc_set;

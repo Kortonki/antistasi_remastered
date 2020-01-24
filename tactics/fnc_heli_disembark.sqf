@@ -5,7 +5,7 @@ private _vehicles = [];
 // between 300m and 500m from destination, 10x10, max 0.3 sloop
 
 private _threat = [_destination] call AS_fnc_getAirThreat;
-private _distance = (250 + (_threat * 50)) min 1200;
+private _distance = (400 + (_threat * 50)) min 1200;
 private _landing_position = [_destination, _distance, _distance + 200, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 _landing_position set [2, 0];
 

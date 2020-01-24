@@ -25,10 +25,10 @@ if (_type == "kill_traitor") exitWith {
     [5, [_size, _position, 10], [0, -2]]
 };
 if (_type == "kill_officer") exitWith {
-    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 0, _position], 90*60, [], [_location, 60]]
+    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 0, _position, true], 90*60, [], [_location, 60]]
 };
 if (_type == "kill_specops") exitWith {
-    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 5, _position], 10*60]
+    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 5, _position, true], 10*60]
 };
 if (_type == "aaf_attack_hq") exitWith {
     [0, [500, _position, 10], [0, 3], [0, 300]]
@@ -42,18 +42,18 @@ if (_type == "aaf_attack") exitWith {
     [5, [500, _position, 10], [0, 0], [0, 0], [0, 0, []], 2700]
 };
 if (_type == "conquer") exitWith {
-    [10, [_size, _position, 10], [0, 0], [0, 200], [-5, 0, _position], 10*60,
+    [10, [_size, _position, 10], [0, 0], [0, 200], [-5, 0, _position, true], 10*60,
         [["Gain location", {}]]
     ]
 };
 if (_type  == "convoy_money") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [0, 0], [0, 5000], [-10, -10, _position], 20*60]
+    [5, [500, _vehPosition, 10], [0, 0], [0, 5000], [-10, -10, _position, true], 20*60]
 };
 
 if (_type == "convoy_supplies") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [-10, 20, _position], 10*60]
+    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [-10, 20, _position, true], 10*60]
 };
 
 if (_type in ["convoy_ammo", "convoy_fuel"]) exitWith {
@@ -73,13 +73,13 @@ if (_type == "convoy_hvt") exitWith {
 };
 if (_type == "convoy_prisoners") exitWith {
     _args params [["_vehPosition", [0,0,0]], ["_hr", 0]];
-    [round (_hr/2), [500, _vehPosition, _hr], [_hr, 0], [_hr, 0], [-_hr, _hr, _position], 0,
+    [round (_hr/2), [500, _vehPosition, _hr], [_hr, 0], [_hr, 0], [-_hr, _hr, _position, true], 0,
         [["Variable number of resources, foreign support and city support", {}]]
     ]
 };
 
 if (_type == "defend_city") exitWith {
-    [50, [500, _position, 10], [10, 5], [0, 0], [-10, 20, _position], 120*60, [
+    [50, [500, _position, 10], [10, 5], [0, 0], [-10, 20, _position, true], 120*60, [
         [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities, FIA gains 5", {{[-5,5,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)}]
     ]]
 };
@@ -113,25 +113,25 @@ if (_type in ["steal_ammo", "steal_fuel"]) exitWith {
 };
 if (_type == "rob_bank") exitWith {
     _args params [["_pos", [0,0,0]]];
-    [5, [500, _pos, 10], [-2, 0], [0, 5000], [0, -5, _position], 10*60]
+    [5, [500, _pos, 10], [-2, 0], [0, 5000], [0, -5, _position, true], 10*60]
 };
 if (_type == "send_meds") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [0, 20, _position], 10*60]
+    [5, [500, _position, 10], [5, 0], [0, 0], [0, 20, _position, true], 10*60]
 };
 if (_type == "help_meds") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [-10, 20, _position]]
+    [5, [500, _position, 10], [5, 0], [0, 0], [-10, 20, _position, true]]
 };
 if (_type == "broadcast") exitWith {
     _args params [["_prestige",0]];
     [5, [500, _position, 10], [0, 0], [0, 0], [0, 0, []], 0, [
         ["City support per minute spent", {
             params ["_prestige", "_location"];
-            [0, _prestige, _location] remoteExec ["AS_fnc_changeCitySupport",2];
+            [0, _prestige, _location, true] remoteExec ["AS_fnc_changeCitySupport",2];
         }, [_prestige, _location]]]
     ]
 };
 if (_type == "pamphlets") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [-10, 10, _position]]
+    [5, [500, _position, 10], [5, 0], [0, 0], [-10, 10, _position, true]]
 };
 if (_type == "repair_antenna") exitWith {
     [5, [500, _position, 10], [2, 0], [0, 0], [0, 0, []], 20*60,
@@ -140,7 +140,7 @@ if (_type == "repair_antenna") exitWith {
 };
 if (_type == "rescue_prisioners") exitWith {
     _args params [["_hr", 0]];
-    [round (_hr/2), [500, getMarkerPos "FIA_HQ", _hr], [_hr, 0], [_hr, 0],  [0, _hr, _position], 0,
+    [round (_hr/2), [500, getMarkerPos "FIA_HQ", _hr], [_hr, 0], [_hr, 0],  [0, _hr, _position, true], 0,
         [["Variable number of resources, foreign support and city support", {}]]
     ]
 };

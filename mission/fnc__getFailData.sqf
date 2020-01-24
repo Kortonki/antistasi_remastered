@@ -75,7 +75,7 @@ if (_type == "convoy_prisoners") exitWith {
     [-10, 0, [0, 0], [0, 0], [-5, -5, _position], 0]
 };
 if (_type == "defend_city") exitWith {
-    [-50, [500, _position, 5], [5, -5], [0, 0], [-20, -10, _position], -10*60, [
+    [-50, [500, _position, 5], [5, -5], [0, 0], [-20, -10, _position, true], -10*60, [
         ["City is destroyed", {
             params ["_location"];
             [_location] call AS_fnc_destroy_location;
@@ -97,7 +97,7 @@ if (_type in ["destroy_antenna", "destroy_helicopter", "destroy_vehicle", "steal
 };
 
 if (_type == "send_meds") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0,-10,_position]]
+    [-10, 0, [0, 0], [0, 0], [0,-10,_position, true]]
 };
 if (_type == "help_meds") exitWith {
     [-10, 0, [0, 5], [0, 0], [0,0,[]]] //City support depends on if the crate was left intact
@@ -106,10 +106,10 @@ if (_type in ["nato_armor", "nato_ammo", "nato_artillery", "nato_uav", "nato_roa
     [-10, 0, [-10, 0]]
 };
 if (_type == "broadcast") exitWith {
-    [-5, 0, [0, 0], [0, 0], [5,-5,_position]]
+    [-5, 0, [0, 0], [0, 0], [5,-5,_position, true]]
 };
 if (_type == "pamphlets") exitWith {
-    [-5, 0, [0, 0], [0, 0], [0,-5,_position]]
+    [-5, 0, [0, 0], [0, 0], [0,-5,_position, true]]
 };
 if (_type == "repair_antenna") exitWith {
     _args params [["_antennaPos", [0,0,0]]];
@@ -133,6 +133,6 @@ if (_type == "rescue_prisioners") exitWith {
 };
 if (_type == "rescue_refugees") exitWith {
     _args params [["_dead", 0]];
-    [-10, 0, [-_dead, 0], [0, 0], [0, -_dead, _position], 0, [["Variable lost of NATO and city support", {}]]]
+    [-10, 0, [-_dead, 0], [0, 0], [0, -_dead, _position, true], 0, [["Variable lost of NATO and city support", {}]]]
 };
 [-10]

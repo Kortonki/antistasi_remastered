@@ -61,6 +61,13 @@ if (_FIAsupport < 1) then {_FIAsupport = 1};
 //Probably unnecessary: why give FIA edge in this situation?
 //if (_FIAsupport + _AAFsupport < 5) then {_AAFsupport = 1; _FIAsupport = 5};
 
+
+
+[_city, "FIAsupport", _FIAsupport] call AS_location_fnc_set;
+[_city, "AAFsupport", _AAFsupport] call AS_location_fnc_set;
+
+AS_cityIsSupportChanging = nil;
+
 if _notify then {
 	private _sign = "+";
 	if (_blufor < 0) then {_sign = "";};
@@ -68,8 +75,4 @@ if _notify then {
 	[petros, "income", _text, 5] remoteExec ["AS_fnc_localCommunication", AS_commander];
 };
 
-[_city, "FIAsupport", _FIAsupport] call AS_location_fnc_set;
-[_city, "AAFsupport", _AAFsupport] call AS_location_fnc_set;
-
-AS_cityIsSupportChanging = nil;
 true

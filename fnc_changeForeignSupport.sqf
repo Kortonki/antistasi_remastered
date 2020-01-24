@@ -29,7 +29,7 @@ if (_csat != 0) then {AS_Pset("CSATsupport",_csatT + _csat)};
 lockForeignSupport = nil;
 
 // no change, exit
-if (_nato == 0 and _csat == 0) exitWith {};
+if (_nato == 0) exitWith {};
 
 private _getSign = {
 	if (_this > 0) exitWith  {
@@ -39,11 +39,10 @@ private _getSign = {
 };
 
 private _text = "<t size='0.6' color='#C1C0BB'>Foreign support change:<br/> <t size='0.5' color='#C1C0BB'><br/>";
-if (_nato != 0) then {
-	_text = _text + format["%1: %2%3", (["NATO", "name"] call AS_fnc_getEntity), _nato call _getSign, _nato];
-};
-if (_csat != 0) then {
-	_text = _text + format["%1: %2%3", ["CSAT", "name"] call AS_fnc_getEntity, _csat call _getSign, _csat];
-};
-
+_text = _text + format["%1: %2%3", (["NATO", "name"] call AS_fnc_getEntity), _nato call _getSign, _nato];
 [petros,"income",_text,5] remoteExec ["AS_fnc_localCommunication",AS_commander];
+
+//CSAT support info is through intel
+/*if (_csat != 0) then {
+	_text = _text + format["%1: %2%3", ["CSAT", "name"] call AS_fnc_getEntity, _csat call _getSign, _csat];
+};*/

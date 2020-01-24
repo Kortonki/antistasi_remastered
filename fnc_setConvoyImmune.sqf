@@ -32,6 +32,7 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 	if (_newPos distance2D _pos < 10 and {{_x distance2D _newPos < 500} count (allPlayers - (entities "HeadlessClient_F")) == 0}) then {
 		_newPos = [[[_newPos,20]]] call BIS_fnc_randomPos;
 		private _road = [_newPos,100] call BIS_fnc_nearestRoad;
+		sleep (random 10);
 		if (!isNull _road) then {
 			_veh setPos getPos _road;
 			diag_log format ["[AS] SetConvoyImmune. Vehicle returned to road. Vehicle: %1 Type of vehicle %2 Destination: %3 Text %4", _veh, typeOf _veh, _destination, _text];

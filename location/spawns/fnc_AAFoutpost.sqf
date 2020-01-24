@@ -26,10 +26,13 @@ private _fnc_spawn = {
 	private _bandera = createVehicle [["AAF", "flag"] call AS_fnc_getEntity, _posicion, [],0, "CAN_COLLIDE"];
 	_bandera allowDamage false;
 	_vehiculos pushBack _bandera;
+
 	private _caja = (["AAF", "box"] call AS_fnc_getEntity) createVehicle _posicion;
 	[_caja, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_caja setVariable ["requiredVehs", ["Truck_F"], true];
 	_caja setVariable ["asCargo", false, true];
+ [_caja, "Watchpost"] call AS_fnc_fillCrateAAF;
+
 	_vehiculos pushBack _caja;
 
 	//create _bunker, only if there's no preset composition
