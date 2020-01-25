@@ -9,6 +9,10 @@ if (_player != player) exitWith {
 	diag_log "[AS] Error: moveObject called from not-player.";
 };
 
+if (!(isNil _player getVariable "ObjAttached")) exitWith {
+	hint "Already carrying an object";
+};
+
 private _attachPoint = [0,2,1];  // default attach point
 
 private _nearest = (["FIA" call AS_location_fnc_S, _player] call BIS_fnc_nearestPosition);

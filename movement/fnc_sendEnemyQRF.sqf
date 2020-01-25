@@ -215,6 +215,6 @@ if (_type == "air") then {
 };
 
 private _endTime = dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + _duration];
-waitUntil {sleep 10; (dateToNumber date > _endTime) or ({_x call AS_fnc_canFight} count _soldados == 0)};
+waitUntil {sleep 10; (dateToNumber date > _endTime) or ({_x call AS_fnc_canFight} count _soldados) < ({!(_x call AS_fnc_canFight)} count _soldados)};
 
-[_grupos, _vehiculos, _markers] call AS_fnc_cleanResources;
+[_grupos, _vehiculos, _markers] call AS_fnc_cleanMissionResources;

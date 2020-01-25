@@ -140,14 +140,16 @@ private _fnc_run = {
 			[_x, _origin]  remoteExec ["move", _x];
 	} foreach _groups;
 
-	waitUntil {sleep 10;
+	//This leaves quite a lot of groups retreating and costs perfomance vise
+	//Also throws undefined error for _return (empty foreach loop? = nil)
+	/*waitUntil {sleep 10;
 	private _return = true;
 	_return = {
 		if ((position _x) distance2D _origin > 300) exitWith {false};
 		true
 		} foreach (_soldados select {alive _x and {!(_x call AS_medical_fnc_isUnconscious)}});
 	_return
-	};
+	};*/
 };
 
 private _fnc_clean = {

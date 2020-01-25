@@ -60,10 +60,19 @@ _grupos = _grupos + [_grupo];
 } forEach _garrison;
 
 // give orders to the groups
+//UPSMON doesn't support setting combatmode, so done manually
 private _behaviour = "SAFE";
+private _combatMode = "YELLOW";
 if (_type == "watchpost") then {
 	_behaviour = "STEALTH";
+	_combatmode = "GREEN";
 };
+
+if (_type == "camp") then {
+	_combatmode = "GREEN";
+};
+
+
 
 //Create the patrol marker to avoid UPSMON issues
 
@@ -74,7 +83,8 @@ _patrolMarker setMarkerAlpha 0;
 
 
 {
-	[leader _x, _patrolMarker, _behaviour,"SPAWNED","RANDOM","NOVEH2","NOFOLLOW","LIMITED"] spawn UPSMON; //Changed NOVEH2 to NOVEH to allow manning of statics in combat
+	[leader _x, _patrolMarker, _behaviour,"SPAWNED","RANDOM","NOVEH","NOFOLLOW","LIMITED"] spawn UPSMON; //Changed NOVEH2 to NOVEH to allow manning of statics in combat
+	_x setcombatMode _combatMode;
 } forEach _grupos;
 
 if !(isNull _grupoMort) then {

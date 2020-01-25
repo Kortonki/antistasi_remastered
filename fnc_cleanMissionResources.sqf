@@ -16,6 +16,10 @@ params ["_groups", "_vehicles", "_markers"];
             private _group = group _unit;
             waitUntil {sleep (5 + _rand); not([_unit, AS_P("spawnDistance")] call AS_fnc_friendlyNearby)};
 
+            //If already dead and in despawner, exit:
+
+            if (_unit getVariable ["inDespawner", false]) exitWith {};
+
             if ({alive _x} count units _group == 1) then {
                 // clean group after last unit
                 _unit call AS_fnc_safeDelete;

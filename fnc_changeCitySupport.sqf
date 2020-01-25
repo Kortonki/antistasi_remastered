@@ -71,8 +71,8 @@ AS_cityIsSupportChanging = nil;
 if _notify then {
 	private _sign = "+";
 	if (_blufor < 0) then {_sign = "";};
-	private _text = format ["%1 FIA Support\n%2%3 -> %4", _city, _sign,_blufor,_FIAsupport];
-	[petros, "income", _text, 5] remoteExec ["AS_fnc_localCommunication", AS_commander];
+	private _text = format ["%1 <t color='#0000bb'>FIA Support</t><br>%2%3 -> %4", _city, _sign,_blufor,_FIAsupport];
+	[petros, "income", _text, 5] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 };
 
 true

@@ -202,10 +202,10 @@ unlockedItems = unlockedItems - [
 // First helicopter of this list is undercover
 [_dict, "air_vehicles", ["C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
 
-[_dict, "cars_armed", ["B_G_Offroad_01_armed_F"]] call DICT_fnc_set;
+[_dict, "cars_armed", ["B_G_Offroad_01_armed_F", "B_G_Offroad_01_AT_F"]] call DICT_fnc_set;
 //This is new addition: used to evaluate threat
 [_dict, "cars_aa", []] call DICT_fnc_set;
-[_dict, "cars_at", []] call DICT_fnc_set;
+[_dict, "cars_at", ["B_G_Offroad_01_AT_F"]] call DICT_fnc_set;
 
 
 // costs of **land vehicle**. Every vehicle in `"land_vehicles"` must be here.
@@ -216,7 +216,8 @@ private _costs = createSimpleObject ["Static", [0, 0, 0]];
 [_costs, "C_Van_01_box_F", 300] call DICT_fnc_set;  // defined on "vans"
 [_costs, "C_Van_01_transport_F", 600] call DICT_fnc_set;
 [_costs, "B_G_Quadbike_01_F", 50] call DICT_fnc_set;
-[_costs, "B_G_Offroad_01_armed_F", 700] call DICT_fnc_set;
+[_costs, "B_G_Offroad_01_armed_F", 600] call DICT_fnc_set;
+[_costs, "B_G_Offroad_01_AT_F", 1200] call DICT_fnc_set;
 [_costs, "B_G_Van_01_transport_F", 400] call DICT_fnc_set;
 
 _dict

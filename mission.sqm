@@ -8,7 +8,7 @@ class EditorData
 	toggles=65;
 	class ItemIDProvider
 	{
-		nextID=2505;
+		nextID=2524;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5037.7271,51.554283,6268.3867};
-		dir[]={-0.74161446,-0.16313069,-0.65079373};
-		up[]={-0.12263458,0.98659289,-0.10761715};
-		aside[]={-0.65961951,-8.0760219e-007,0.75167692};
+		pos[]={2764.7666,37.877228,737.72589};
+		dir[]={-0.75776619,-0.28512323,-0.58695424};
+		up[]={-0.22545421,0.95847046,-0.17463379};
+		aside[]={-0.61237282,3.577079e-007,0.79057896};
 	};
 };
 binarizationWanted=0;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.7";
+		briefingName="Antistasi Remastered V0.99.8";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +183,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=110;
+		items=113;
 		class Item0
 		{
 			dataType="Marker";
@@ -1953,7 +1953,7 @@ class Mission
 		class Item64
 		{
 			dataType="Marker";
-			position[]={4430.9878,4.274591,4410.1636};
+			position[]={4466.2832,4.0862842,4367.77};
 			name="AS_roadblock_7";
 			markerType="RECTANGLE";
 			type="Empty";
@@ -2307,15 +2307,16 @@ class Mission
 		class Item90
 		{
 			dataType="Marker";
-			position[]={1345.3806,16.571476,6897.7363};
+			position[]={3019.8687,20.028809,765.36523};
 			name="AS_roadblock_30";
 			markerType="RECTANGLE";
 			type="Empty";
 			colorName="ColorPink";
 			a=30;
 			b=30;
-			angle=122.86596;
+			angle=105.02295;
 			id=530;
+			atlOffset=-1.2997494;
 		};
 		class Item91
 		{
@@ -2608,6 +2609,46 @@ class Mission
 			angle=186.33992;
 			id=2504;
 			atlOffset=-1.3360004;
+		};
+		class Item110
+		{
+			dataType="Marker";
+			position[]={4272.2822,4.2490883,4592.3647};
+			name="AS_roadblock_10";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorPink";
+			a=30;
+			b=30;
+			angle=138.77588;
+			id=2521;
+		};
+		class Item111
+		{
+			dataType="Marker";
+			position[]={7260.6812,19.942858,5067.2026};
+			name="AS_roadblock_22";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorPink";
+			a=30;
+			b=30;
+			angle=206.17653;
+			id=2522;
+		};
+		class Item112
+		{
+			dataType="Marker";
+			position[]={2705.396,7.2470703,667.50684};
+			name="AS_roadblock_34";
+			markerType="RECTANGLE";
+			type="Empty";
+			colorName="ColorPink";
+			a=30;
+			b=30;
+			angle=216.71336;
+			id=2523;
+			atlOffset=-1.3062115;
 		};
 	};
 	class Connections

@@ -215,8 +215,9 @@ _FIAnewMoney = AS_P("resourcesFIA") + round _FIAnewMoney;
 _FIAnewFuel = AS_P("fuelFIA") + _FIAnewFuel;
 
 //Share money among FIA members TODO: adjustment to the share value? make it persistent then
+//Share is the percentage or FIA income whichever is smaller
 
-[round((AS_players_share/100)*_FIAnewMoney)] call AS_players_fnc_shareMoney;
+[round(((AS_players_share/100)*_FIAnewMoney) min (_FIAnewMoney - AS_P("resourcesFIA")))] call AS_players_fnc_shareMoney;
 
 //Commander gets score every update
 
