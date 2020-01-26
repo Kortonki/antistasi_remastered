@@ -52,6 +52,7 @@ private _fnc_spawn = {
 	[_crate3, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate3 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate3 setVariable ["asCargo", false, true];
+	_crate3 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate3;
 
 	sleep 1;
@@ -61,6 +62,7 @@ private _fnc_spawn = {
 	[_crate2, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate2 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate2 setVariable ["asCargo", false, true];
+	_crate2 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate2;
 
 	sleep 1;
@@ -69,6 +71,7 @@ private _fnc_spawn = {
 	[_crate1, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate1 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate1 setVariable ["asCargo", false, true];
+	_crate1 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate1;
 
 	//Commented out: No reason for AAF to know about the thing and send patrol?
@@ -223,6 +226,9 @@ private _fnc_deliver = {
 		private _tskDesc_fail = format [localize "STR_tskDesc_PRPamphlet_fail", [_location] call AS_fnc_location_name];
 		([_mission, "FAILED", _tskDesc_fail] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+		{
+			_x setVariable ["dest", "Empty", true];
+		} foreach _crates;
 	} else {
 		private _drop = ([position _droppedCrate, random 360, _leaflets] call BIS_fnc_ObjectsMapper);
 		(_resources select 2) append _drop;

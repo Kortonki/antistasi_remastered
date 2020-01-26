@@ -164,7 +164,7 @@ private _fnc_spawn = {
 	_Vwp0 setWaypointType "GETOUT";
 	_Vwp0 setWaypointBehaviour "SAFE";
 
-	private _patrolMarker = createMarker [format ["help_meds_%1", round (diag_tickTime/60)], _position];
+	private _patrolMarker = createMarker [format ["help_meds_%1", round (diag_tickTime/60)], _crashPosition];
 	_patrolMarker setMarkerShape "ELLIPSE";
 	_patrolMarker setMarkerSize [100,100];
 	_patrolMarker setMarkerAlpha 0;
@@ -179,7 +179,7 @@ private _fnc_spawn = {
 	_Vwp0 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 
 	[_grupo, _veh] spawn AS_AI_fnc_dismountOnDanger;
-	[_grupo, _position] spawn AS_AI_fnc_dangerOnApproach;
+	[_grupo, _crashPosition] spawn AS_AI_fnc_dangerOnApproach;
 
 	[_veh, "AAF Reinforcements", _crashPosition] spawn AS_fnc_setConvoyImmune;
 
