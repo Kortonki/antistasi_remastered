@@ -45,7 +45,10 @@ private _fnc_spawn = {
 	[0,-100] remoteExec ["AS_fnc_changeFIAMoney", 2];
 	private _crateType = "Land_WoodenCrate_01_F";
 
-	private _crate3 = createVehicle [_crateType, ("FIA_HQ" call AS_location_fnc_position), [], 0, "NONE"];
+	private _pos = (getMarkerPos "FIA_HQ") findEmptyPosition [1,50,_crateType];
+	if (!(isnull vehiclePad)) then  {_pos = getpos vehiclePad};
+
+	private _crate3 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate3, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate3 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate3 setVariable ["asCargo", false, true];
@@ -54,7 +57,7 @@ private _fnc_spawn = {
 	sleep 1;
 
 
-	private _crate2 = createVehicle [_crateType, ("FIA_HQ" call AS_location_fnc_position), [], 0, "NONE"];
+	private _crate2 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate2, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate2 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate2 setVariable ["asCargo", false, true];
@@ -62,7 +65,7 @@ private _fnc_spawn = {
 
 	sleep 1;
 
-	private _crate1 = createVehicle [_crateType, ("FIA_HQ" call AS_location_fnc_position), [], 0, "NONE"];
+	private _crate1 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate1, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 	_crate1 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate1 setVariable ["asCargo", false, true];

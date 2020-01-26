@@ -6,6 +6,7 @@ _wp1 setWaypointType "UNLOAD";
 _wp1 setWaypointSpeed "NORMAL";
 _wp1 setWaypointBehaviour "SAFE";
 
+
 private _size = ((getMarkerSize _marker) select 0) min ((getMarkerSize _marker) select 1);
 private _wp2 = _crew_group addWaypoint [getMarkerpos _marker, _size];
 _wp2 setWaypointType "SAD";
@@ -17,7 +18,7 @@ _crew_group setVariable ["AS_patrol_marker", _marker, true];
 
 private _statement = {
     (vehicle (leader group this)) fire  "SmokeLauncher";
-    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED", "NOVEH2"] spawn UPSMON;
+    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED", "NOVEH"] spawn UPSMON;
 };
 
 _wp1 setWaypointStatements ["true", _statement call AS_fnc_codeToString];

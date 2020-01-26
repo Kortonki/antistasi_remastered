@@ -41,7 +41,7 @@ private _fnc_spawn = {
 
 	// create the team
 	private _grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
-	[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH2"] spawn UPSMON;
+	[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH"] spawn UPSMON;
 	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 	_grupos pushBack _grupo;
 

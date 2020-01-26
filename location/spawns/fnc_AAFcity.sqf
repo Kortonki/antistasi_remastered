@@ -27,7 +27,7 @@ private _fnc_spawn = {
 		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 
 		// put then on patrol.
-		[leader _grupo, _location, "SAFE", "RANDOM", "SPAWNED","NOVEH2", "NOFOLLOW"] spawn UPSMON;
+		[leader _grupo, _location, "SAFE", "RANDOM", "SPAWNED","NOVEH", "NOFOLLOW"] spawn UPSMON;
 		_grupos pushBack _grupo;
 	};
 

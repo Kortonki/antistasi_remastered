@@ -14,7 +14,7 @@ if (typename _location == "STRING") then {
 };
 
 private _patrolMarker = createMarker [format ["escort_%1_%2", _location, groupId _group], _position];
-_patrolMarker setMarkerShape "ELLIPSE";
+_patrolMarker setMarkerShape "RECTANGLE";
 _patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;
 
@@ -26,9 +26,9 @@ private _leader = leader _group;
 
 while {{alive _x} count units _group > 0} do {
 
-  if (_leader distance2D _position < _distance or behaviour _leader == "COMBAT") exitWith {
-    _group setBehaviour "COMBAT";
-    [_leader, _patrolMarker, "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
+  if (_leader distance2D _position < _distance or behaviour _leader == "COMBAT" or vehicle _leader == _leader) exitWith {
+    _group setBehaviour "AWARE";
+    [_leader, _patrolMarker, "AWARE", "SPAWNED", "NOFOLLOW", "NOVEH"] spawn UPSMON;
   };
   sleep 1;
 };

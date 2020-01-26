@@ -6,7 +6,7 @@ if (_position distance (_location call AS_location_fnc_position) > 100 or
     _location call AS_location_fnc_side != "FIA") exitWith {
     hint "No FIA camp selected";
 };
-if !(_type != "camp") exitWith {
+if (_type != "camp") exitWith {
     hint "Only camps can be renamed";
 };
 

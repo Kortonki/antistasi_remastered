@@ -1,6 +1,6 @@
 #include "../macros.hpp"
 AS_SERVER_ONLY("fnc_sendAAFpatrol");
-params ["_location", ["_fromBase", ""], ["_threatEval_Land", 0], ["_threatEval_Air", 0]];
+params ["_location", ["_fromBase", ""], ["_threatEval_Land", 0], ["_threatEval_Air", 0], ["_start", false]];
 
 private _debug_prefix = format ["sendAAFPatrol from '%1' to '%2' cancelled: ", _fromBase, _location];
 if AS_S("blockCSAT") exitWith {
@@ -63,7 +63,8 @@ if (!_isLocation) then {
 	};
 };
 
-if (_exit) exitWith {
+//start is to skip this step in mission load where above check will fail
+if (_exit and {!(_start)}) exitWith {
 	private _message = "nearby being patrolled";
 	diag_log (_debug_prefix + _message);
 };

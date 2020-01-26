@@ -2,6 +2,7 @@
 
 if (player != AS_commander) exitWith {hint "Only the commander has access to this function"};
 if (!([player] call AS_fnc_hasRadio)) exitWith {hint "You need a radio in your inventory to be able to give orders to other squads"};
+if (!(isNil "AS_HQ_moving")) exitWith {hint format "You can't recruit groups while HQ is not in place"};
 
 if ([getmarkerPos "FIA_HQ", nil] call AS_fnc_enemiesNearby) exitWith {
 	hint "You cannot Recruit Squads with enemies near your HQ";
@@ -32,6 +33,7 @@ if (_resourcesFIA < _cost) exitWith {hint format ["You do not have enough money 
 [- _costHR, - _cost] remoteExec ["AS_fnc_changeFIAmoney",2];
 
 private _pos = getMarkerPos "FIA_HQ";
+
 private _tam = 10;
 private ["_roads", "_road"];
 while {true} do {
@@ -100,6 +102,7 @@ if ((!dialog) and (isNil "vehQuery")) exitWith {};
 
 vehQuery = nil;
 _pos = position _road findEmptyPosition [1, 30, _vehicleType];
+if (!(isnull vehiclePad)) then  {_pos = getpos vehiclePad};
 private _vehicle = _vehicleType createVehicle _pos;
 [_vehicle, "FIA"] call AS_fnc_initVehicle;
 _grupo addVehicle _vehicle;

@@ -65,7 +65,7 @@ private _fnc_spawn = {
 			_mrkfin setMarkerAlphaLocal 0;
 
 			private _group = [_position, ("CSAT" call AS_fnc_getFactionSide), [["CSAT", "recon_team"] call AS_fnc_getEntity, "CSAT"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
-			[leader _group, _mrkfin, "RANDOM", "SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON;
+			[leader _group, _mrkfin, "RANDOM", "SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
 			{_x call AS_fnc_initUnitCSAT; _x allowFleeing 0} forEach units _group;
 
 			([_position, _mrkfin] call AS_fnc_spawnCSATuav) params ["_groups", "_vehicles"];

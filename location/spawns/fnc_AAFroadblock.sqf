@@ -62,7 +62,7 @@ private _fnc_spawn = {
 	};
 	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 
-	private _mrk = createMarkerLocal [format ["%1patrolarea", floor (diag_tickTime)], _pos];
+	private _mrk = createMarkerLocal [format ["%1patrolarea", (diag_tickTime)], _pos];
 	_mrk setMarkerShapeLocal "RECTANGLE";
 	_mrk setMarkerSizeLocal [50,50];
 	_mrk setMarkerTypeLocal "hd_warning";
@@ -70,7 +70,7 @@ private _fnc_spawn = {
 	_mrk setMarkerBrushLocal "DiagGrid";
 	_mrk setMarkerAlphaLocal 0;
 
-	[leader _grupo, _mrk, "SAFE","SPAWNED","NOVEH2","NOFOLLOW"] spawn UPSMON;
+	[leader _grupo, _mrk, "SAFE","SPAWNED","NOVEH","NOFOLLOW"] spawn UPSMON;
 
 	[_location, "resources", [taskNull, [_grupo], _vehiculos, [_mrk]]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;

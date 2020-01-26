@@ -31,6 +31,8 @@ private _fnc_spawn = {
 	private _crateType = ["CIV", "box"] call AS_fnc_getEntity;
 	private _pos = (getMarkerPos "FIA_HQ") findEmptyPosition [1,50,_crateType];
 
+	if (!(isnull vehiclePad)) then  {_pos = getpos vehiclePad};
+
 	private _crate = _crateType createVehicle _pos;
 	[0,-100] remoteExec ["AS_fnc_changeFIAMoney", 2];
 	[_crate] call AS_fnc_emptyCrate;

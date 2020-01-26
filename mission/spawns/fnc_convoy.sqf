@@ -178,9 +178,9 @@ private _fnc_spawn = {
 		[_grupoEsc, _vehicle] spawn AS_AI_fnc_DismountOnDanger;
 		//This should make escort disembark when approaching FIA locations or they are near
 		if (_frontLine) then {
-			[_group, _location] spawn AS_AI_fnc_dangerOnApproach;
+			[_grupoEsc, _location] spawn AS_AI_fnc_dangerOnApproach;
 		} else {
-			[_group, _location, 1] spawn AS_AI_fnc_dangerOnApproach;
+			[_grupoEsc, _location, 1] spawn AS_AI_fnc_dangerOnApproach;
 		};
 
 	};
@@ -375,6 +375,7 @@ private _fnc_run = {
 		};
 	};
 
+	//MAJOR FAIL
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
@@ -386,6 +387,10 @@ private _fnc_run = {
 		if (_missionType == "convoy_fuel") then {
 			[_mainVehicle , 0, 0.3] call AS_fuel_fnc_randomFuelCargo;
 			_mainVehicle setFuelCargo 0.3;
+		};
+
+		if (_missionType in ["convoy_money", "convoy_supplies"]) then {
+			_crate setVariable ["dest", "Empty", true];
 		};
 	};
 
@@ -431,13 +436,14 @@ private _fnc_run = {
 					if (_missionType in ["convoy_supplies", "convoy_money"]) then {
 						if (not(alive _crate)) then {
 							//Crate was destroyed by FIA
-							[-10,-10, _position] remoteExec ["AS_fnc_changeCitySupport",2];
+							[-10,-5, _position] remoteExec ["AS_fnc_changeCitySupport",2];
 							if (_missionType == "convoy_money") then {
 								[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];
 							};
 						} else {
 							//The AAF delivery is late
 							[-10, 0, _position] remoteExec ["AS_fnc_changeCitySupport",2];
+							_crate setVariable ["dest", "Empty", true];
 						};
 					};
 					//Killing the convoy is always better than it being late
@@ -480,6 +486,10 @@ private _fnc_run = {
 
 					if (_missionType == "convoy_ammo") then {
 						[-10000] remoteExec ["AS_fnc_changeAAFmoney",2];
+					};
+
+					if (_missionType in ["convoy_money", "convoy_supplies"]) then {
+						_crate setVariable ["dest", "Empty", true];
 					};
 
 					[_mission, [getPos _mainVehicle]] remoteExec ["AS_mission_fnc_success", 2];
@@ -546,6 +556,7 @@ private _fnc_run = {
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
+
 };
 
 private _fnc_clean = {

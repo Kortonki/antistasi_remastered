@@ -34,16 +34,26 @@ while {alive _unit} do {
             {not (_candidate call AS_medical_fnc_isUnconscious)} and
             {_candidate call AS_medical_fnc_canHeal} and
             {vehicle _candidate == _candidate} and
-            {_candidate distance _unit < _bestDistance}
+            {_candidate distance2D _unit < _bestDistance}
         };
 
         private _medic = objNull;
         {
             if (_x call _canHeal) then {
                 _medic = _x;
-                _bestDistance = _x distance _unit;
+                _bestDistance = _x distance2D _unit;
             };
         } forEach units group _unit;
+
+        if isNull _medic then {
+          {
+            if (_x call _canHeal) then {
+              _medic = _x;
+              _bestDistance = _x distance2D _unit;
+            };
+          } foreach (allUnits select {alive _x and {side _x == side _unit and {_x distance2D _unit < 50}}});
+        };
+
         if not isNull _medic then {
             [_medic, _unit] call AS_medical_fnc_healUnit;
         };

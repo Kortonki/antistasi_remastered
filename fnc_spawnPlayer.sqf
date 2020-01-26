@@ -92,9 +92,11 @@ if isMultiplayer then {
 
 };
 
+//Waituntil missions init to get tasks at game load
+waitUntil {sleep 0.5; !(isNil "AS_dataInitialized")};
 
 // Reassign player tasks (temporary fix for tasks disappearing after respawn)
-//EXPERIMENT to avoid task spawn each player respawn
+//EXPERIMENT to avoid task spam each player respawn
 private _tasks = _old_player call BIS_fnc_tasksUnit;
 {
 	//_x call BIS_fnc_taskSetCurrent;

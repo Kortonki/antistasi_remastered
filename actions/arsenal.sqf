@@ -47,10 +47,17 @@ if (not(alive _unit)) exitWith {AS_Sset("lockArsenal", false);};
 
 sleep 0.5;
 
-[_box, "arsenal"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
-[_box, "transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-[_box, "emptyPlayer"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-[_box, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+if (_box == caja) then {
+
+  [_box, "arsenal"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+  [_box, "transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+  [_box, "emptyPlayer"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+  [_box, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+} else {
+  [_box,"heal_camp"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+  [_box,"arsenal"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+  [_box,"transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+};
 
 
 

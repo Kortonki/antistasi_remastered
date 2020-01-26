@@ -68,7 +68,7 @@ if (_type == "watchpost") then {
 	_combatmode = "GREEN";
 };
 
-if (_type == "camp") then {
+if (_type in  ["camp", "fia_hq"]) then {
 	_combatmode = "GREEN";
 };
 

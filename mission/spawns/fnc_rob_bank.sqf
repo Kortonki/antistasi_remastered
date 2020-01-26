@@ -65,7 +65,7 @@ private _fnc_spawn = {
 	private _tipoGrupo = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 	private _group = [_bankPosition, "AAF" call AS_fnc_getFactionSide, _tipogrupo] call BIS_Fnc_spawnGroup;
 	sleep 1;
-	[leader _group, _mrk, "SAFE","SPAWNED", "NOVEH2", "FORTIFY"] spawn UPSMON;
+	[leader _group, _mrk, "SAFE","SPAWNED", "NOVEH", "FORTIFY"] spawn UPSMON;
 	{[_x, false] call AS_fnc_initUnitAAF} forEach units _group;
 
 	[_mission, "resources", [_task, [_group], [_truck], _markers]] call AS_spawn_fnc_set;

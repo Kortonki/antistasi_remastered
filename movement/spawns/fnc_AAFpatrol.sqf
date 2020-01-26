@@ -18,6 +18,12 @@ private _fnc_spawn = {
 		_position = _location;
 	};
 
+	if _isLocation then {
+		AS_Pset("patrollingLocations", AS_P("patrollingLocations") + [_location]);
+	} else {
+		AS_Pset("patrollingPositions", AS_P("patrollingPositions") + [_position]);
+	};
+
 	// lists of spawned stuff to delete in the end.
 	private _vehiculos = [];
 	private _grupos = [];
@@ -25,7 +31,7 @@ private _fnc_spawn = {
 
 	// save the marker or position
 	//Location needs a patrol marker for good measure as well
-	private _patrolMarker = createMarkerLocal [format ["%1patrolarea", (diag_tickTime/60)], _position];
+	private _patrolMarker = createMarkerLocal [format ["patrol_%1_%2", (diag_tickTime), round(random 100)], _position];
 	_patrolMarker setMarkerShapeLocal "RECTANGLE";
 	_patrolMarker setMarkerSizeLocal [200, 200];
 	_patrolMarker setMarkerAlpha 0;
@@ -33,11 +39,7 @@ private _fnc_spawn = {
 
 	private _origin = [];
 
-	if _isLocation then {
-		AS_Pset("patrollingLocations", AS_P("patrollingLocations") + [_location]);
-	} else {
-		AS_Pset("patrollingPositions", AS_P("patrollingPositions") + [_position]);
-	};
+
 
 	if (_base != "") then {
 		_origin = _base call AS_location_fnc_positionConvoy;
@@ -138,7 +140,7 @@ private _fnc_run = {
 			[_x, "AWARE"] remoteExec ["setBehaviour", _x];
 			[_x, "GREEN"] remoteExec ["setCombatmode", _x];
 			[_x, _origin]  remoteExec ["move", _x];
-	} foreach _groups;
+	} foreach (_groups select {(leader _x) call AS_fnc_getSide == "AAF"});
 
 	//This leaves quite a lot of groups retreating and costs perfomance vise
 	//Also throws undefined error for _return (empty foreach loop? = nil)

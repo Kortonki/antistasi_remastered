@@ -9,7 +9,8 @@ if (_player != player) exitWith {
 	diag_log "[AS] Error: moveObject called from not-player.";
 };
 
-if (!(isNil _player getVariable "ObjAttached")) exitWith {
+//Failsafe for a good measure
+if (!(isNil{_player getVariable "ObjAttached"})) exitWith {
 	hint "Already carrying an object";
 };
 
@@ -61,7 +62,8 @@ if !(isNull (_player getVariable ['ObjAttached',objNull])) then  {
 };
 
 // add the action back
-_vehicle addAction [localize "STR_act_moveAsset", "actions\moveObject.sqf",nil,0,false,true,"","(_this == AS_commander)", 5];
+//_vehicle addAction [localize "STR_act_moveAsset", "actions\moveObject.sqf",nil,0,false,true,"","(_this == AS_commander)", 5];
+[_vehicle, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 
 _player removeAction _EHid;
 
@@ -80,9 +82,11 @@ if (_vehDistance > _distance) then {
 	_vehicle setPos _pos;
 };
 
+_player allowDamage true;
+
 _vehicle setVectorUp (surfacenormal (getPosATL _vehicle));
 
 [_vehicle, true] remoteExecCall ["enableSimulationGlobal", 2];
-_player allowDamage true;
+
 
 if (vehicle _player != _player) exitWith {hint "You dropped the asset to enter in the vehicle"};

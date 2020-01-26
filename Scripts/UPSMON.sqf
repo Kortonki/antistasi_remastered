@@ -322,7 +322,7 @@ _combatmode = "YELLOW";
 // AMBUSH
 If (_ambush) then
 {
-	[_grp,[0,0],"HOLD","LINE","LIMITED","STEALTH","BLUE",1] call UPSMON_DocreateWP;
+	[_grp,[0,0],"HOLD","LINE","LIMITED","STEALTH","GREEN",1] call UPSMON_DocreateWP;
 	_grp setvariable ["UPSMON_AMBUSHFIRE",false];
 
 	{
@@ -338,7 +338,7 @@ If (_ambush) then
 	_grp setvariable ["UPSMON_LINKED",_linkdistance];
 
 	_Behaviour = "STEALTH";
-	_combatmode = "BLUE";
+	_combatmode = "GREEN";
 };
 
 if (_fortify) then

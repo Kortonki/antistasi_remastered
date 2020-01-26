@@ -94,7 +94,7 @@ private _fnc_spawn = {
 	if (random 10 < 2.5) then {
 		[_grupo] call AS_fnc_spawnDog;
 	};
-	[leader _grupo, _mrk, "SAFE","SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON;
+	[leader _grupo, _mrk, "SAFE","SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
 	{[_x, false] call AS_fnc_initUnitAAF} forEach units _grupo;
 
 	[_mission, "target", _target] call AS_spawn_fnc_set;

@@ -70,6 +70,8 @@ private _fnc_spawn = {
 		[_campBox,"arsenal"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 		[_campBox,"transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 
+		_campBox addEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}];
+
 		[_location, "campBox", _campBox] call AS_spawn_fnc_set;
 	};
 

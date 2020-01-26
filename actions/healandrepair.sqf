@@ -41,7 +41,8 @@ private _reportedVehs = AS_S("reportedVehs");
 //For now only rearm buyable FIA armed cars and unlocked aaf vehicle types. Avoid FFV vehicles during rearm.
 
 //Todo consider what vehicles to set persistent
-		if (["vehicle", typeOf _x, _x] call fnc_BE_permission) then {
+//Repair and ream only when empty to avoid setting 0 ammo to FFV positions. TODO: check turrets and load them manually
+		if (["vehicle", typeOf _x, _x] call fnc_BE_permission and {count (crew _x select {alive _x}) == 0}) then {
 
 			if (alive _x and {!(_x in (AS_P("vehicles"))) and {_x call AS_fnc_getSide == "FIA"}}) then {[_x] remoteExec ["AS_fnc_changePersistentVehicles", 2]};
 

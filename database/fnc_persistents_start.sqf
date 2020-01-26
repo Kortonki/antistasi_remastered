@@ -48,9 +48,9 @@ AS_SERVER_ONLY("AS_database_fnc_persistents_start");
 [] spawn {
    sleep 25;
    {
-    [[_x], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
+    [[_x, "", 0, 0, true], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
    } forEach AS_P("patrollingLocations");
 {
-    [[_x], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
+    [[_x, "", 0, 0, true], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
    } forEach AS_P("patrollingPositions");
 };
