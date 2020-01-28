@@ -341,18 +341,20 @@ private _fnc_run = {
 	private _mainVehicle = [_mission, "mainVehicle"] call AS_spawn_fnc_get;
 	private _crate = [_mission, "crate"] call AS_spawn_fnc_get;
 
+
+	//Trigger distance increased so last vehicle of convoy which is usually the mainvehicle can trigger fail
 	private _fnc_missionFailedCondition = call {
 		if (_missionType in ["convoy_money","convoy_supplies"]) exitWith {
 			{
 				private _hasArrived = {
-					_crate distance2D _position < 150 and {!([_crate, 50] call AS_fnc_friendlyNearby)}}; //Check if blufor is not near
+					_crate distance2D _position < 200 and {!([_crate, 50] call AS_fnc_friendlyNearby)}}; //Check if blufor is not near
 				(false) or _hasArrived
 			}
 		};
 		if (_missionType in ["convoy_armor", "convoy_ammo", "convoy_fuel"]) exitWith {
 			{
 				private _hasArrived = {((driver _mainVehicle) call AS_fnc_getSide == "AAF") and
-					{_mainVehicle distance2D _position < 150 and {!([_crate, 50] call AS_fnc_friendlyNearby)}}}; //Check if blufor is not near
+					{_mainVehicle distance2D _position < 200 and {!([_mainVehicle, 50] call AS_fnc_friendlyNearby)}}}; //Check if blufor is not near
 				(false) or _hasArrived
 			}
 		};
@@ -360,7 +362,7 @@ private _fnc_run = {
 		if (_missionType == "convoy_hvt") exitWith {
 			{
 				private _hvt = [_mission, "hvt"] call AS_spawn_fnc_get;
-				private _hasArrived = {_hvt distance2D _position < 100};
+				private _hasArrived = {_hvt distance2D _position <  200};
 
 				(dateToNumber date > _max_date) or _hasArrived
 			}
@@ -368,7 +370,7 @@ private _fnc_run = {
 		if (_missionType == "convoy_prisoners") exitWith {
 			{
 				private _hasArrived = {(not (driver _mainVehicle getVariable ["BLUFORSpawn",false])) and
-					{_mainVehicle distance2D _position < 100}};
+					{_mainVehicle distance2D _position < 200}};
 				private _POWs = [_mission, "POWs"] call AS_spawn_fnc_get;
 				(dateToNumber date > _max_date) or _hasArrived or ({alive _x} count _POWs < ({alive _x} count _POWs)/2)
 			}

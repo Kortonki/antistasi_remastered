@@ -150,6 +150,9 @@ private _fnc_spawn = {
 	private _soldiers = [];
 	{_soldiers append (units _x)} forEach _groups;
 
+	//Spawn the target location
+	[_location, true] call AS_location_fnc_spawn;
+
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 	[_mission, "originPos", _originPos] call AS_spawn_fnc_set;
   [_mission, "resources", [_task, _groups, _vehicles, [_patrolMarker]]] call AS_spawn_fnc_set;
@@ -184,7 +187,7 @@ private _fnc_run = {
 
 		private _originPos = [_mission, "originPos"] call AS_spawn_fnc_get;
 
-		{_x doMove _originPos} forEach _soldiers;
+		//{_x doMove _originPos} forEach _soldiers;
 		{
 			_x setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes
 			private _wpRTB = _x addWaypoint [_originPos, 0];
@@ -193,6 +196,8 @@ private _fnc_run = {
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
+
+	[_location, false] call AS_location_fnc_despawn;
 };
 
 private _fnc_clean = {

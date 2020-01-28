@@ -94,13 +94,15 @@ private _fnc_wait_for_destruction = {
 
 	private _soldiers = [_location, "FIAsoldiers"] call AS_spawn_fnc_get;
 
-
+	//is _wasabondoned obsolete as abandonfialocation abandons on its own?
 	private _wasAbandoned = ({!(isnil{_x getVariable "marcador"})} count _soldiers == 0);  // abandoned when it has no garrison
-	private _wasDestroyed = !_wasAbandoned and ({alive _x} count _soldiers == 0);
+	private _wasDestroyed = ({alive _x} count _soldiers) == 0;
 
 	private _destroyed = false;
 
 	waitUntil {sleep AS_spawnLoopTime;
+ _wasAbandoned = ({!(isnil{_x getVariable "marcador"})} count _soldiers == 0);  // abandoned when it has no garrison
+ _wasDestroyed = ({alive _x} count _soldiers) == 0;
 		_wasAbandoned or !(_location call AS_location_fnc_spawned) or _wasDestroyed
 	};
 
@@ -188,7 +190,10 @@ private _fnc_clean = {
 			([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
 			[_groups,  _vehicles, _markers] call AS_fnc_cleanResources;
 			[_location, false] call AS_location_fnc_knownLocations;
-			//Check for active defence missions before removing location
+			
+			//Set the side to empty to trigger possible defend location mission fail so below waituntil can finish
+			[_location, "side", "EMPTY"] call AS_location_fnc_set;
+			//Check for active defence missions before removing location.
 			waitUntil {sleep AS_spawnLoopTime; (call AS_mission_fnc_active_missions) find (format ["defend_location_%1", _location]) == -1};
 			[_location] remoteExec ["AS_location_fnc_remove", 2];
 			[_location, "delete", true] call AS_spawn_fnc_set;

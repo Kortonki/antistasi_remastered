@@ -11,6 +11,7 @@ private _groupToDelete = grpNull;
 if ({isPlayer _x} count units group player == 1) then {
 	_ai = true;
 	_groupToDelete = createGroup ("FIA" call AS_fnc_getFactionSide);
+	_groupToDelete setGroupId format ["Dismissed-%1", count allGroups];
 };
 
 {

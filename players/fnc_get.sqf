@@ -14,7 +14,7 @@ if ([AS_container, "players", _id, _attribute] call DICT_fnc_exists) then {
         case "garage": {[]};
         case "rank": {AS_ranks select 0};
         case "elegible": {if (_player == AS_commander) then {false} else {true}};
-        case "money": {100};
+        case "money": {0};
         case "score": {if (_player == AS_commander) then {25} else {0}};
         default {nil};
     }

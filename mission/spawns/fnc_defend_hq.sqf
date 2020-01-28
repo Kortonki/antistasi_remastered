@@ -127,6 +127,9 @@ private _fnc_spawn = {
 			diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
 		};
 
+		//Spawn the target, FIA HQ in this case:
+		["fia_hq", true] call AS_location_fnc_spawn;
+
 
 
 	[_mission, "resources", [_task, _groups, _vehiculos, [_patrolMarker]]] call AS_spawn_fnc_set;
@@ -185,7 +188,7 @@ private _fnc_run = {
 
 		//private _origin = getMarkerPos "spawnCSAT";
 
-		{_x doMove _originPos} forEach _soldiers;
+		//{_x doMove _originPos} forEach _soldiers;
 
 		{
 
@@ -205,6 +208,8 @@ private _fnc_run = {
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
+
+	["fia_hq", true] call AS_location_fnc_despawn;
 
 };
 

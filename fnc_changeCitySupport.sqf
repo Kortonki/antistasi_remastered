@@ -71,7 +71,12 @@ AS_cityIsSupportChanging = nil;
 if _notify then {
 	private _sign = "+";
 	if (_blufor < 0) then {_sign = "";};
-	private _text = format ["%1 <t color='#0000bb'>FIA Support</t><br>%2%3 -> %4", _city, _sign,_blufor,_FIAsupport];
+	private _text = "";
+	if (_FIAsupport > _AAFsupport) then {
+		_text = format ["<t color='#0000bb'>%1</t><t color='#ffffff'> FIA Support<br/>%2%3<br/>%4 -> %5</t>", _city, _sign,_blufor,_FIAsupport - _blufor, _FIAsupport];
+	} else {
+		_text = format ["<t color='#00bb00'>%1</t><t color='#ffffff'> FIA Support<br/>%2%3<br/>%4 -> %5</t>", _city, _sign,_blufor,_FIAsupport - _blufor, _FIAsupport];
+	};
 	[petros, "income", _text, 5] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 };
 

@@ -5,7 +5,7 @@ AS_SERVER_ONLY("AS_mission_fnc_updateAvailable");
 // maximum distance from HQ for a mission to be available
 #define AS_missions_MAX_DISTANCE 5000
 // maximum number of missions available or active.
-#define AS_missions_MAX_MISSIONS 10
+#define AS_missions_MAX_MISSIONS 15
 
 diag_log format ["[AS]: Updating missions list: Time %1", time];
 
