@@ -2,26 +2,30 @@
 AS_SERVER_ONLY("AS_database_fnc_persistents_start");
 
 // modify map items consequent of the persistents
+private _towerIndex = 0;
 {
     private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 1;
 
-    private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
+    private _marker = createMarker [format ["radioTower_%1", _towerIndex], _x];
+    _towerIndex = _towerIndex + 1;
     _marker setmarkerType "hd_destroy";
+    _marker setMarkerColor "ColorRed";
     _marker setMarkerText "Radio Tower";
-    _antenna setVariable ["marker", _marker]; //This so marker can be manipulated in destruction
+
 } forEach AS_P("antenasPos_dead");
 {
     private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 0;
-    _antenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];
 
-    private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
+    private _marker = createMarker [format ["radioTower_%1", _towerIndex], _x];
+    _towerIndex = _towerIndex + 1;
     _marker setmarkerType "loc_Transmitter";
     _marker setMarkerText "Radio Tower";
-    _antenna setVariable ["marker", _marker]; //This so marker can be manipulated in destruction
+    _antenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];
+
 } forEach AS_P("antenasPos_alive");
 
 {

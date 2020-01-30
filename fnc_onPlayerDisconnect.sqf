@@ -73,7 +73,7 @@ private _group = group _unit;
 private _units = units _group;
 
 //If no other players in the group, dismiss rest of the group. checking for leadership didn't work for some reason (discoed plyer can't be leader?)
-if (count (_units select {!(isPlayer _x)}) > 0 and {count (_units select {isPlayer _x}) == 0}) then {
+if (count (_units select {!(isPlayer _x)}) > 1 and {count (_units select {isPlayer _x}) == 0}) then {
 	[_units] remoteExec ["AS_fnc_dismissFIAunits", _group];
 	_text = _text + format ["AIs dismissed. Group %1, unitcount: %2 players %3. ", _group, count _units, count (_units select {isPlayer _x})];
 };
@@ -100,9 +100,13 @@ private _wholder = nearestObjects [_pos, ["weaponHolderSimulated", "weaponHolder
 
 diag_log _text;
 
-//wait until all dead or in dismissgroup
-waitUntil {sleep 10; _units = units _group; count _units == 0};
+[_group] spawn {
+	//wait until all dead or in dismissgroup
+	params ["_group"];
+	private _units = units _group;
+	waitUntil {sleep 10; _units = units _group; count _units == 0};
 
-[_group] remoteExec ["deleteGroup", groupOwner _group];
+	[_group] remoteExec ["deleteGroup", groupOwner _group];
 
-diag_log format ["[AS] onPlayerdisconnect: Group %1 deleted", _group];
+	diag_log format ["[AS] onPlayerdisconnect: Group %1 deleted", _group];
+};

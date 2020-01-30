@@ -19,14 +19,15 @@ params [["_commander_score", 0],
 */
 
 if (_type == "kill_traitor") exitWith {
-    [-10, 0, [0, 0], [-2, -2000], [0, 0, []], -10*60, [
+    [-10, 0, [0, 0], [0,0], [0, 0, []], -10*60, [
       ["Traitor can reveal our locations or worsen our relations with foreign operators", {
         private _locations = ("FIA" call AS_location_fnc_S) select {(_x call AS_location_fnc_type) in ["watchpost", "roadblock", "camp", "fia_hq"]};
-        if (count _locations > 0) then {
+        if (count _locations > (random 2)) then {
           private _reveal = selectRandom _locations;
           [_reveal] call AS_location_fnc_knownLocations;
         } else {
           [-5, 5] remoteExec ["AS_fnc_changeForeignSupport", 2];
+          [-2, 0.2*(AS_P("resourcesFIA"))] remoteExec ["AS_fnc_changeFIAMoney", 2];
         };
       }]
     ]]
@@ -113,17 +114,32 @@ if (_type == "pamphlets") exitWith {
 };
 if (_type == "repair_antenna") exitWith {
     _args params [["_antennaPos", [0,0,0]]];
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], -10*60,
+    [-10, 0, [0, 0], [0, 0], [5, 0, _position], -10*60,
         [[(["AAF", "name"] call AS_fnc_getEntity) + " antenna is repaired", {
             params ["_antennaPos"];
             AS_Pset("antenasPos_alive", AS_P("antenasPos_alive") + [_antennaPos]);
             AS_Pset("antenasPos_dead", AS_P("antenasPos_dead") - [_antennaPos]);
-            private _antenna = (nearestobjects [_antennaPos, AS_antenasTypes, 25]) select 0;
-            _antenna setDammage 0;
-            _antenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];
 
-            private _marker = _antenna getVariable ["marker", ""];
+
+            private _marker = [allMapMarkers select {markerType _x == "hd_destroy"}, _antennaPos] call BIS_fnc_nearestPosition;
             _marker setMarkerType "loc_Transmitter";
+            _marker setMarkerColor "ColorWhite";
+            private _typeVarName = format ["%1_type", _marker];
+            private _type = missionNameSpace getVariable [_typeVarName, AS_antenasTypes select 0];
+
+            private _antenna = (nearestobjects [_antennaPos, AS_antenasTypes, 25]) select 0;
+            //if (isnull _antenna) then {
+          //    _antenna = (_antennaPos nearObjects [_type, 25]) select 0;
+          //  };
+
+            //new _antenna and hide the old one
+            private _newAntenna = createVehicle [_type, (getpos _antenna), [], 0, "CAN_COLLIDE"];
+            _newAntenna setdir (getDir _antenna);
+            _newAntenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];
+            _antenna hideobjectGlobal true;
+
+
+
         }, [_antennaPos]]]
     ];
 };

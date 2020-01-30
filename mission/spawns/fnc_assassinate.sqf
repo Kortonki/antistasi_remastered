@@ -59,7 +59,6 @@ private _fnc_spawn = {
 			private _mrkfin = createMarker [_mission,_position];
 			_mrkfin setMarkerShapeLocal "RECTANGLE";
 			_mrkfin setMarkerSizeLocal [300,300];
-			_mrkfin setMarkerTypeLocal "hd_warning";
 			_mrkfin setMarkerColorLocal "ColorRed";
 			_mrkfin setMarkerBrushLocal "DiagGrid";
 			_mrkfin setMarkerAlphaLocal 0;
@@ -94,7 +93,7 @@ private _fnc_run = {
 
 	private _fnc_missionSuccessfulCondition = {not alive _target};
 	if (typeName _target == "GROUP") then {
-	    _fnc_missionSuccessfulCondition = {{alive _x} count units _target == 0 or {!(_x getVariable ["surrendered", false])} count units _target == 0};
+	    _fnc_missionSuccessfulCondition = {{alive _x} count units _target == 0 or {!(_x getVariable ["surrendered", false])} count (units _target) == 0};
 	};
 
 	private _fnc_missionSuccessful = {

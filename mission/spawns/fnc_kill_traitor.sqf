@@ -117,16 +117,16 @@ private _fnc_wait = {
 		_mission remoteExec ["AS_mission_fnc_fail", 2];
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
-		[_mission, "state_index", 3] call AS_spawn_fnc_set;
+		[_mission, "state_index", 4] call AS_spawn_fnc_set;
 	};
 	if (call _fnc_missionSuccessfulCondition) exitWith {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		_mission remoteExec ["AS_mission_fnc_success", 2];
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
-		[_mission, "state_index", 3] call AS_spawn_fnc_set;
+		//EDIT changed to 4 so missin_fnc_fail or success isn't run twice
+		[_mission, "state_index", 4] call AS_spawn_fnc_set;
 	};
-	([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 };
 
 private _fnc_run = {
@@ -141,14 +141,17 @@ private _fnc_run = {
 	private _base = [_arraybases, _position] call BIS_Fnc_nearestPosition;
 	private _posBase = _base call AS_location_fnc_position;
 
-	{_x enableAI "MOVE"} forEach units group _target;
+	{
+		_x enableAI "MOVE";
+		_x setUnitPos "AUTO";
+	} forEach units group _target;
 	_target assignAsDriver _getAwayVeh;
 	[_target] orderGetin true;
 	private _wp0 = (group _target) addWaypoint [position _getAwayVeh, 0];
 	_wp0 setWaypointType "GETIN";
 	private _wp1 = (group _target) addWaypoint [_posBase,1];
 	_wp1 setWaypointType "MOVE";
-	_wp1 setWaypointBehaviour "CARELESS";
+	_wp1 setWaypointBehaviour "SAFE";
 	_wp1 setWaypointSpeed "FULL";
 
 	private _fnc_missionFailed = {
@@ -156,7 +159,7 @@ private _fnc_run = {
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 	};
 
-	private _fnc_missionFailedCondition = {dateToNumber date > _max_date or _target distance _posBase < 100};
+	private _fnc_missionFailedCondition = {dateToNumber date > _max_date or _target distance2D _posBase < 100};
 
 	private _fnc_missionSuccessfulCondition = {not alive _target};
 

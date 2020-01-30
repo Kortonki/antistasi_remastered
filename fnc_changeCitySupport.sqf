@@ -3,15 +3,18 @@ AS_SERVER_ONLY("AS_fnc_changeCitySupport.sqf");
 params ["_opfor","_blufor",["_pos", [0,0,0]], ["_notify", false]];
 
 waitUntil {sleep 0.5; isNil "AS_cityIsSupportChanging"};
-AS_cityIsSupportChanging = true;
+
 
 
 private _city = "";
 if (typeName _pos == typeName "") then {
-	_city = _pos
+	_city = _pos;
 } else {
 	_city = [call AS_location_fnc_cities, _pos] call BIS_fnc_nearestPosition;
 };
+
+//moved here from above as failsafe to not lock the whole mission for a nil position.
+AS_cityIsSupportChanging = true;
 
 private _FIAsupport = [_city, "FIAsupport"] call AS_location_fnc_get;
 private _AAFsupport = [_city, "AAFsupport"] call AS_location_fnc_get;

@@ -17,6 +17,18 @@ AS_sandbag_type_round = "Land_BagFence_01_round_green_F";
 AS_camonet_type = "CamoNet_BLUFOR_big_F";
 AS_h_barrier_type = "Land_HBarrier_01_line_5_green_F";
 
+AS_antenasTypes = [
+"Land_TTowerBig_1_F",
+"Land_TTowerBig_2_F",
+"Land_Com_tower_ep1",
+"Land_Telek1",
+"Land_Vysilac_vez",
+"Land_TTowerBig_1_ruins_F",
+"Land_TTowerBig_2_ruins_F",
+"Land_Telek1_ruins",
+"Land_Com_tower_ruins_EP1"
+];
+
 // tower buiuldings where MGs are placed. If no towers, no MGs are placed.
 AS_MGbuildings = [
     "Land_Cargo_Tower_V1_F",
@@ -39,13 +51,7 @@ AS_destroyable_buildings = AS_MGbuildings + [
     "Land_HelipadSquare_F",
     "Land_Cargo_Tower_V1_ruins_F",
     "Land_Cargo_Tower_V2_ruins_F",
-    "Land_Cargo_Tower_V3_ruins_F",
-    "Land_TTowerBig_1_F",
-    "Land_TTowerBig_2_F",
-    "Land_Com_tower_ep1",
-    "Land_Telek1",
-    "Land_Vysilac_vez",
-    "Land_Communication_F"
+    "Land_Cargo_Tower_V3_ruins_F"
 ] - ["Land_BagBunker_01_small_green_F","Land_BagBunker_Small_F"];
 
 // these are the lamps that are shut-off when the city loses power.
@@ -99,15 +105,15 @@ publicVariable "AS_enemyDist";
 {
     private _antenaProv = nearestObjects [_x, AS_antenasTypes, 25];
     if (count _antenaProv > 0) then {
+      private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
+      _marker setmarkerType "loc_Transmitter";
+      _marker setMarkerText "Radio Tower";
         (_antenaProv select 0) addEventHandler ["Killed", AS_fnc_antennaKilledEH];
     } else {
         AS_antenasPos_alive = AS_antenasPos_alive - [_x];
     };
 
-    private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
-    _marker setmarkerType "loc_Transmitter";
-    _marker setMarkerText "Radio Tower";
-    (_antenaProv select 0) setVariable ["marker", _marker]; //This so marker can be manipulated in destruction
+
 } forEach +AS_antenasPos_alive;
 
 AS_Pset("antenasPos_alive", AS_antenasPos_alive);

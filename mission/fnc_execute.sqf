@@ -6,7 +6,7 @@ params [["_commander_score", 0],
         ["_players_score", 0],
         ["_prestige", [0, 0]],
         ["_resourcesFIA", [0, 0]],
-        ["_citySupport", [0, 0, [], false]],
+        ["_citySupport", [0, 0, []]],
         ["_changeAAFattack", 0],
         ["_custom", []],
         ["_increaseBusy", ["", 0]]
@@ -34,7 +34,7 @@ if not (_prestige IsEqualTo [0, 0]) then {
 if not (_resourcesFIA IsEqualTo [0, 0]) then {
     _resourcesFIA call AS_fnc_changeFIAmoney;
 };
-if not (_citySupport IsEqualTo [0, 0, [], false]) then {
+if not (_citySupport IsEqualTo [0, 0, []]) then {
     _citySupport call AS_fnc_changeCitySupport;
 };
 if not (_changeAAFattack == 0) then {

@@ -66,7 +66,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 							{_coeffSurrConstant + _coeffSurr*(random ({alive _x and {!([_x] call AS_fnc_isDog) and {!(_x getVariable ["surrendered", false])}}} count units _group))*(_x skill "courage") < count ([50, _x, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
 							then {
 								if (_x == leader group _x) then {
-									{[_x] spawn AS_AI_fnc_surrender} foreach (units group _x); 	//If squad leader surrenders, everybody in the group surrender as well
+									{[_x] spawn AS_AI_fnc_surrender} foreach (units group _x select {!(_x getVariable ["surrendered", false])}); 	//If squad leader surrenders, everybody in the group surrender as well
 								} else {
 									[_x] spawn AS_AI_fnc_surrender;
 								};

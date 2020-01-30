@@ -115,13 +115,17 @@ private _FIAResIncomeMultiplier = 1;
           //If city is spawned, do not spawn mission there. random new location
           if (_city call AS_location_fnc_spawned) then {
             private _maxdist = 2500;
+            private _cities = (["city"] call AS_location_fnc_T);
             while {private _distance = (_city call AS_location_fnc_position) distance2D ("fia_hq" call AS_location_fnc_position);
                   _distance > _maxdist or _distance < AS_P("spawnDistance") or _city call AS_location_fnc_spawned} do {
-            _city = selectRandom (["city"] call AS_location_fnc_T);
+            _cities = _cities - [_city];
+            if (count _cities == 0) exitWith {_city == ""};
+            _city = selectRandom _cities;
             _maxdist = _maxdist + 500;
             sleep 1;
             };
           };
+          if (_city == "") exitWith {diag_log "[AS] updateAll: No traitor mission possible, no valid cities"};
           private _mission = ["kill_traitor", _city] call AS_mission_fnc_add;
           _mission call AS_mission_fnc_activate;
         };
