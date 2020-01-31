@@ -32,6 +32,11 @@ call AS_location_fnc_deinitialize;
         };
     };
 
+    //For legacy saves without combatmode setup
+    if (_x call AS_location_fnc_side == "FIA" and {isnil{_x call AS_location_fnc_combatMode}}) then {
+      [_x, "combatMode", "YELLOW"] call AS_location_fnc_set;
+    };
+
     // create hidden marker if it does not exist.
     if (getMarkerColor _x == "") then {
         createmarker [_x, _x call AS_location_fnc_position];

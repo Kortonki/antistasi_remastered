@@ -41,6 +41,7 @@ class AS_location {
         FNC(location,forced_spawned);
         FNC(location,respawnGarrison);
         FNC(location,side);
+        FNC(location,combatMode)
         // Iterators
         FNC(location,all);
         FNC(location,nearest);

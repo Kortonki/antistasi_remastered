@@ -9,6 +9,7 @@ private _size = _location call AS_location_fnc_size;
 private _type = _location call AS_location_fnc_type;
 private _estaticas = AS_P("vehicles") select {(typeOf _x) in AS_allStatics and {_x distance2D _position < _size}};
 private _garrison = _location call AS_location_fnc_garrison;
+private _combatmode = _location call AS_location_fnc_combatMode;
 
 private _grupoMort = grpNull;
 private _grupoEst = grpNull;

@@ -34,6 +34,7 @@ switch (_location call AS_location_fnc_type) do {
 };
 if ("garrison" in ((_location call AS_location_fnc_type) call AS_location_fnc_properties)) then {
     [_location,"garrison",[], false] call AS_location_fnc_set;
+    [_location,"combatMode", "GREEN", false] call AS_location_fnc_set;
 };
 [_location,"spawned",false, false] call AS_location_fnc_set;
 [_location,"forced_spawned",false, false] call AS_location_fnc_set;
