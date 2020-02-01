@@ -156,7 +156,7 @@ unlockeditems pushback "Chemlight_blue";
 	"ffp_susi_sa420_fuel",
 	"ffp_susi_sa420_repair",
 	"I_E_Quadbike_01_F",
-	"B_G_Offroad_01_F"
+	"B_G_Offroad_01_F",
 	"C_Offroad_01_F",
 	"C_Offroad_02_unarmed_F",
 	"C_Van_02_transport_F",
