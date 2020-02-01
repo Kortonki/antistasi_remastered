@@ -111,17 +111,17 @@ private _fnc_wait = {
 
 	private _fnc_missionSuccessfulCondition = {not alive _target};
 
-	waitUntil {sleep 5; ({_target knowsAbout _x > 1.4} count ([500, _target, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0) or _fnc_missionFailedCondition or _fnc_missionSuccessfulCondition};
+	waitUntil {sleep 5; ({not (captive _x) and {_target knowsAbout _x > 1.4}} count ([500, _target, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0) or _fnc_missionFailedCondition or _fnc_missionSuccessfulCondition};
 	if (call _fnc_missionFailedCondition) exitWith {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		_mission remoteExec ["AS_mission_fnc_fail", 2];
+		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
 		[_mission, "state_index", 4] call AS_spawn_fnc_set;
 	};
 	if (call _fnc_missionSuccessfulCondition) exitWith {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		_mission remoteExec ["AS_mission_fnc_success", 2];
+		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
 		//EDIT changed to 4 so missin_fnc_fail or success isn't run twice

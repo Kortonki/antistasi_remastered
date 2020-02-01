@@ -17,7 +17,7 @@ _unit allowFleeing 0;
 _unit setVariable ["BLUFORSpawn",true,true];
 
 _unit addEventHandler ["killed", {
-	private _unit = _this select 0;
+	params ["_unit", "_killer"];
 	[0.25,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 	[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 	_unit removeAllEventHandlers "HandleDamage";
@@ -30,6 +30,18 @@ _unit addEventHandler ["killed", {
 		_unit call AS_fnc_emptyUnit;
 	};
 
+
+	if (_killer call AS_fnc_getSide == "FIA") then {
+
+		//Stats
+		if (isPlayer _killer) then {
+			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "friendlyKills", 1] call AS_players_fnc_change;
+		};
+
+		[0,-1,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
+		[-2, 0] remoteExec ["AS_fnc_changeForeignSupport", 2];
+	};
 
 
 }];

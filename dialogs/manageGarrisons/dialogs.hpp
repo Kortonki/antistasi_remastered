@@ -24,9 +24,14 @@ class AS_manageGarrisons_orders
 
 	class controls
 	{
-		AS_DIALOG(3,"Manage garrison orders", "closeDialog 0; createDialog ""AS_manageGarrisons"";");
+		AS_DIALOG(4,"Manage garrison orders", "closeDialog 0; createDialog ""AS_manageGarrisons"";");
 
-		BTN_L(1, -1, "Open Fire", "Open fire", "[1] call AS_fnc_UI_manageGarrisons_orders;");
-		BTN_R(1, -1, "Hold Fire", "Hold fire", "[0] call AS_fnc_UI_manageGarrisons_orders;");
+		BTN_L(1, -1, "Open Fire", "Open fire", "[""YELLOW""] call AS_fnc_UI_manageGarrisons_orders;");
+		BTN_R(1, -1, "Hold Fire", "Hold fire", "[""GREEN""] call AS_fnc_UI_manageGarrisons_orders;");
+
+		BTN_L(3, -1, "Safe", "Safe", "[""SAFE""] call AS_fnc_UI_manageGarrisons_orders;");
+		BTN_R(3, -1, "Aware", "Aware", "[""AWARE""] call AS_fnc_UI_manageGarrisons_orders;");
+		BTN_L(4, -1, "Combat", "Combat", "[""COMBAT""] call AS_fnc_UI_manageGarrisons_orders;");
+		BTN_R(4, -1, "Stealth", "Stealth", "[""STEALTH""] call AS_fnc_UI_manageGarrisons_orders;");
 	};
 };

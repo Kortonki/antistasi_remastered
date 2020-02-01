@@ -41,7 +41,7 @@ private _fnc_run = {
 
 	private _soldados = [_location, "soldiers"] call AS_spawn_fnc_get;
 
-	waitUntil {sleep 1;
+	waitUntil {sleep AS_spawnLoopTime;
 		!(_location call AS_location_fnc_spawned) or
 		({_x call AS_fnc_canFight} count _soldados == 0)
 	};

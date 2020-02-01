@@ -20,10 +20,10 @@ private _towerIndex = 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 0;
 
-    private _marker = createMarker [format ["radioTower_%1", _towerIndex], _x];
+    private _marker2 = createMarker [format ["radioTower_%1", _towerIndex], _x];
     _towerIndex = _towerIndex + 1;
-    _marker setmarkerType "loc_Transmitter";
-    _marker setMarkerText "Radio Tower";
+    _marker2 setmarkerType "loc_Transmitter";
+    _marker2 setMarkerText "Radio Tower";
     _antenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];
 
 } forEach AS_P("antenasPos_alive");

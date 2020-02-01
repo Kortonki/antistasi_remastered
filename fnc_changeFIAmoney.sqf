@@ -41,5 +41,5 @@ if ((_hr != 0) and (_resourcesFIA != 0)) then {
 };
 
 if (_texto != "") then {
-	[petros,"income",_texto] remoteExec ["AS_fnc_localCommunication", AS_commander]
+	[petros,"income",_texto] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 };

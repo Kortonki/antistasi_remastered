@@ -293,6 +293,7 @@ class AS {
 };
 
 class AS_AI {
+
     class common {
         FNC(AI,activateSmokeCoverAI);
         FNC(AI,smokeCover);
@@ -305,7 +306,10 @@ class AS_AI {
         FNC(ai,autoCombatCallOFF);
         FNC(ai,rearmCall);
         FNC(ai,dangerOnApproach);
+        FNC(AI,setOrders);
+
     };
+
 };
 
 class AS_tactics {

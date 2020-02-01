@@ -2,7 +2,7 @@
 
 // one parameter, the location type
 private _properties = ["type", "position", "size", "side", "garrison",
-                       "spawned", "forced_spawned", "despawning"];
+                       "spawned", "forced_spawned", "despawning", "combatMode", "behaviour"];
 switch (_this) do {
     case "city": {
         _properties append ["population","FIAsupport","AAFsupport","roads"];
@@ -19,7 +19,7 @@ switch (_this) do {
     };
     case "minefield": {
         _properties append ["mines", "found"];  // [[type, pos, dir], bool]
-        _properties = _properties - ["garrison"];
+        _properties = _properties - ["garrison", "combatMode", "behaviour"];
     };
     case "roadblock": {
         _properties append ["location"];  // the associated location of the roadblock

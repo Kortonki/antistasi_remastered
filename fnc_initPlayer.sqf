@@ -127,6 +127,14 @@ player addEventHandler ["killed", {
 			[_vehicle, _magazineRemains] call AS_fnc_addMagazineRemains;
 	    _unit call AS_fnc_emptyUnit;
 		};
+
+	private _group = group _unit;
+	if (count (units _group select {alive _x}) == 0) then {
+		deleteGroup _group;
+	};
+	//Stats
+	[_unit, "deaths", 1] call AS_players_fnc_change;
+
 	}];
 
 //Eventhandler to increase City support for healing CIVS
@@ -167,7 +175,14 @@ player addEventhandler ["handleHeal", {
 					_unit stop false;
 				};
 			_return = true;
+
+			[_healer, "civHealed", 1] call AS_players_fnc_change;
+		} else {
+			[_healer, "healed", 1] call AS_players_fnc_change;
 		};
+
+		//Stats
+
 
 
 		_return

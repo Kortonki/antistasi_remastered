@@ -22,6 +22,8 @@ if isMultiplayer then {
 	[_x] remoteExec ["AS_fnc_activateVehicleCleanup", _x];
 } foreach AS_HQ_placements;
 
+AS_HQ_placements = [];
+
 AS_HQ_moving = true;
 publicVariable "AS_HQ_moving"; //This is used to check for group dismission which ar erun locally
 

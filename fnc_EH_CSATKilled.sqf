@@ -31,14 +31,18 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 	if ((vehicle _killed == _killed) and {count weapons _killed < 1}) then { //if manning a driver/commander, non-weapon position, do not penalize
 		[-1,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 		[1,-1,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2];
+		//Stats
 		if (isPlayer _killer) then {
 			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "unarmedKills", 1] call AS_players_fnc_change;
 		};
 	} else {
 		// otherwise, it decreases by -1.
 		[-1,0,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2]; //Double city support loss compared to AAF
+		//Stats
 		if (isPlayer _killer) then {
 			[_killer, "score", 4, false] remoteExec ["AS_players_fnc_change", 2]; //Double points compared to AAF soldiers
+			[_killer, "kills", 1] call AS_players_fnc_change;
 		};
 	};
 

@@ -16,9 +16,15 @@ private _fnc_initialize = {
 		(["AAF", "name"] call AS_fnc_getEntity)
 	];
 
+	[_mission, [_tskDesc,_tskTitle,_location], _position, "Destroy"] call AS_mission_spawn_fnc_saveTask;
+
+	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
+
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, "position", _position] call AS_spawn_fnc_set;
-	[_mission, [_tskDesc,_tskTitle,_location], _position, "Destroy"] call AS_mission_spawn_fnc_saveTask;
+
+	[_mission, "resources", [_task, [], [], []]] call AS_spawn_fnc_set;
+
 };
 
 private _fnc_wait_spawn = {
@@ -64,6 +70,7 @@ private _fnc_spawn = {
 
 	private _task = ([_mission, "resources"] call AS_spawn_fnc_get) select 0;
 	[_mission, "resources", [_task, [[_group], [_veh], []]]] call AS_spawn_fnc_set;
+
 };
 
 private _fnc_run = {

@@ -30,7 +30,6 @@ _unit call AS_fnc_equipDefault;
 
 //Make player undercover on respawn (ability to escape conquered hq for example)
 _unit forceAddUniform (selectRandom CIVUniforms);
-_unit setcaptive true;
 //sleep for good measure to account for uniform change
 sleep 1;
 [false] spawn AS_fnc_activateUndercover;

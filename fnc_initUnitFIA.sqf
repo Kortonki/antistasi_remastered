@@ -73,11 +73,18 @@ _unit allowFleeing 0;	//Experminet with this: way to make garrison stay in area,
 if (isPlayer(leader _unit)) then {
 	if (captive player and {!(captive _unit)}) then {[_unit] remoteExec ["AS_fnc_activateUndercoverAI", _unit]};
 	_unit addEventHandler ["killed", {
-		params ["_unit"];
+		params ["_unit", "_killer"];
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
 		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 		_unit setVariable ["BLUFORSpawn",nil,true];
+
+		//Stats
+		if (isPlayer _killer) then {
+			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "friendlyKills", 1] call AS_players_fnc_change;
+		};
+
 	}];
 
 	_unit setVariable ["rearming",false];
@@ -120,9 +127,11 @@ if (isPlayer(leader _unit)) then {
 
 		private _group = group _unit;
 
+		//Stats
 		// player team-kill
 		if (isPlayer _killer) then {
-			[player, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "friendlyKills", 1] call AS_players_fnc_change;
 		};
 		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 		["death"] remoteExec ["fnc_be_XP", 2];

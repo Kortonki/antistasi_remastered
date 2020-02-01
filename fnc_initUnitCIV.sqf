@@ -28,9 +28,7 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 	if (_unit == _killer) then {
 		[-1,-1,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 	} else {
-		if (isPlayer _killer) then {
-			[_killer, "score", -20] remoteExec ["AS_players_fnc_change", 2];
-		};
+
 		private _coeff = 1;
 		if (typeOf _unit == "C_journalist_F") then {_coeff = 10};
 		if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {
@@ -38,6 +36,18 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 			[0,-5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2]; //Civ killing penalties hardened
 			//Journalist kills lower city support everywhere %5, civs not
 			{[0,floor(-0.5*_coeff),_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
+
+			if (isPlayer _killer) then {
+
+					if (typeOf _unit == "C_journalist_F") then {
+						[_killer, "score", -40] remoteExec ["AS_players_fnc_change", 2];
+						[_killer, "journalistKills", 1] remoteExec ["AS_players_fnc_change", 2];
+					} else {
+						[_killer, "score", -20] remoteExec ["AS_players_fnc_change", 2];
+						[_killer, "civKills", 1] remoteExec ["AS_players_fnc_change", 2];
+					};
+			};
+
 		} else {
 			if (side _killer == ("AAF" call AS_fnc_getFactionSide)) then {
 				[1*_coeff,0] remoteExec ["AS_fnc_changeForeignSupport",2];

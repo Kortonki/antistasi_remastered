@@ -53,3 +53,9 @@ if isMultiplayer then {
 } else {
 	{_x hideObject false} forEach AS_permanent_HQplacements;
 };
+
+{
+	[_x] remoteExec ["AS_fnc_activateVehicleCleanup", _x];
+} foreach AS_HQ_placements;
+
+AS_HQ_placements = [];

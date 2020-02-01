@@ -10,12 +10,14 @@ private _type = _location call AS_location_fnc_type;
 private _estaticas = AS_P("vehicles") select {(typeOf _x) in AS_allStatics and {_x distance2D _position < _size}};
 private _garrison = _location call AS_location_fnc_garrison;
 private _combatmode = _location call AS_location_fnc_combatMode;
+private _behaviour = _location call AS_location_fnc_behaviour;
 
 private _grupoMort = grpNull;
 private _grupoEst = grpNull;
 
 private _grupo = createGroup ("FIA" call AS_fnc_getFactionSide);
-_grupos = _grupos + [_grupo];
+_grupos pushBack _grupo;
+_grupo setGroupId [format ["Garr_%1_%2", _location, count _grupos]];
 {
 	if !(_location call AS_location_fnc_spawned) exitWith {};
 	private _unit = objNull;
@@ -57,21 +59,22 @@ _grupos = _grupos + [_grupo];
 	if (count units _grupo == 8) then {
 		_grupo = createGroup ("FIA" call AS_fnc_getFactionSide);
 		_grupos pushBack _grupo;
+		_grupo setGroupId [format ["Garr_%1_%2", _location, count _grupos]];
 	};
 } forEach _garrison;
 
 // give orders to the groups
 //UPSMON doesn't support setting combatmode, so done manually
-private _behaviour = "SAFE";
+//Saved to locatio data, commented out
+/*private _behaviour = "SAFE";
 private _combatMode = "YELLOW";
 if (_type == "watchpost") then {
 	_behaviour = "STEALTH";
-	_combatmode = "GREEN";
 };
 
 if (_type in  ["camp", "fia_hq"]) then {
 	_combatmode = "GREEN";
-};
+};*/
 
 
 
@@ -84,7 +87,7 @@ _patrolMarker setMarkerAlpha 0;
 
 
 {
-	[leader _x, _patrolMarker, _behaviour,"SPAWNED","RANDOM","NOVEH","NOFOLLOW","LIMITED"] spawn UPSMON; //Changed NOVEH2 to NOVEH to allow manning of statics in combat
+	[leader _x, _patrolMarker, _behaviour,"SPAWNED","RANDOM","NOVEH","NOFOLLOW","LIMITED"] spawn UPSMON; //Changed NOVEH2 to NOVEH to allow manning of vehicles in combat
 	_x setcombatMode _combatMode;
 } forEach _grupos;
 

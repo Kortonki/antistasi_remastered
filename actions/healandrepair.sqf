@@ -13,7 +13,7 @@ if ([position player, AS_enemyDist*2] call AS_fnc_enemiesNearby) then {
 
 
 {
-	if ((side _x == ("FIA" call AS_fnc_getFactionSide)) and {_x distance2D _posHQ < 100}) then {
+	if ((side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x distance2D _posHQ < 100}) then {
 
 
 		if (_slow) then {[cajaVeh, _posHQ, (damage _x * 20), {true}, {_x distance2D cajaVeh < 100}, "Stay close to the box to heal", ""] call AS_fnc_wait_or_fail;};
