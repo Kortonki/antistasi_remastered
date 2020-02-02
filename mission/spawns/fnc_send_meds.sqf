@@ -80,7 +80,7 @@ private _fnc_run = {
 		// The condition to allow loading the crates into the truck
 		(_crate distance2D _position < 100) and {not(_crate getVariable ["asCargo", false]) or (isNull attachedTo _crate)} and
 		{{alive _x and not (_x call AS_medical_fnc_isUnconscious)} count ([50, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0} and
-		{{!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x distance _crate < 50} and {!(_x call AS_medical_fnc_isUnconscious)}} count allUnits == 0}
+		{{!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {!(_x call AS_fnc_isDog)} and {_x distance _crate < 50} and {!(_x call AS_medical_fnc_isUnconscious)}} count allUnits == 0}
 	};
 
 	private _str_unloadStopped = "Have someone close to the crate and no enemies around";

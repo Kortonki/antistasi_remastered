@@ -41,6 +41,6 @@ params ["_groups", "_vehicles", "_markers"];
       [_x] remoteExecCall ["deletevehicle", _x];
     } else {
       //Sleep to avoid despawn while players are spawning
-      [_x] spawn AS_fnc_activateVehicleCleanup;
+      [_x] remoteExec  ["AS_fnc_activateVehicleCleanup", _x];
     };
 } forEach _vehicles;

@@ -20,7 +20,16 @@ for "_i" from 1 to _amount do {
 
     [leader _group,_location,"SAFE","SPAWNED",_stance,"NOVEH","NOFOLLOW"] spawn UPSMON;
     _groups pushBack _group;
-    {[_x, false] call AS_fnc_initUnitAAF; _units pushBack _x} forEach units _group;
     sleep 1;
 };
+
+{
+private _group = _x;
+  {
+    [_x, false] call AS_fnc_initUnitAAF;
+    _units pushBack _x;
+  } forEach units _group;
+} foreach _groups;
+
+
 [_units, _groups]

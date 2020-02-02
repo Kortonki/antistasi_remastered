@@ -92,7 +92,7 @@ private _fnc_run = {
 	if !(_type in ["fia_hq","city"]) then {
 		_location call AS_location_spawn_fnc_FIAwait_capture;
 	} else {
-		waitUntil {sleep 1; !(_location call AS_location_fnc_spawned)};
+		waitUntil {AS_spawnLoopTime; !(_location call AS_location_fnc_spawned)};
 	};
 };
 

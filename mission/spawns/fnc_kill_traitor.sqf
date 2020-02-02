@@ -117,7 +117,7 @@ private _fnc_wait = {
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
-		[_mission, "state_index", 4] call AS_spawn_fnc_set;
+		[_mission, "state_index", 3] call AS_spawn_fnc_set;
 	};
 	if (call _fnc_missionSuccessfulCondition) exitWith {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -125,7 +125,7 @@ private _fnc_wait = {
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
 		//EDIT changed to 4 so missin_fnc_fail or success isn't run twice
-		[_mission, "state_index", 4] call AS_spawn_fnc_set;
+		[_mission, "state_index", 3] call AS_spawn_fnc_set;
 	};
 };
 

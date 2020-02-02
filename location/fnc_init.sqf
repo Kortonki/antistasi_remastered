@@ -28,6 +28,13 @@ switch (_location call AS_location_fnc_type) do {
         [_location,"side","AAF", false] call AS_location_fnc_set;
         [_location, "location", "", false] call AS_location_fnc_set;
     };
+    case "hillAA": {
+      [_location,"side","CSAT", false] call AS_location_fnc_set;
+    };
+
+    case "hill": {
+      [_location,"side","CSAT", false] call AS_location_fnc_set;
+    };
     default {
         [_location,"side","AAF", false] call AS_location_fnc_set;
     };

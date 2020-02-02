@@ -3,7 +3,7 @@ private _killed = _this select 0;
 
 _killed setVariable ["inDespawner", true, true]; //this to make so activaVehicleCleanup doesn't activate for mission vehicles
 if (_killed isKindof "AllVehicles") then {
-	diag_log format ["ActivateCleanup activated for vehicle %1, location %2", _killed, (position _killed) call AS_location_fnc_nearest];
+	diag_log format ["ActivateCleanup activated for vehicle %1, Group %2 location %3", _killed, group _killed, (position _killed) call AS_location_fnc_nearest];
 };
 
 [_killed] call AS_debug_fnc_initDead;

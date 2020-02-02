@@ -25,9 +25,11 @@ if (_type == "kill_traitor") exitWith {
         if (count _locations > (random 2)) then {
           private _reveal = selectRandom _locations;
           [_reveal] call AS_location_fnc_knownLocations;
+          diag_log format ["[AS] Traitor fail: Added %1 to knownlocations", _reveal];
         } else {
           [-5, 5] remoteExec ["AS_fnc_changeForeignSupport", 2];
           [-2, 0.2*(AS_P("resourcesFIA"))] remoteExec ["AS_fnc_changeFIAMoney", 2];
+          diag_log format ["[AS] Traitor fail: Resources deducted"];
         };
       }]
     ]]

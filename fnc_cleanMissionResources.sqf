@@ -39,6 +39,7 @@ params ["_groups", "_vehicles", "_markers"];
       [_x] remoteExecCall ["deletevehicle", _x];
     } else {
       //Sleep to avoid despawn while players are spawning
-      [_x] spawn AS_fnc_activateMissionVehicleCleanup;
+      //vehicle cleanup where vehicle is local to avoid possible bug where remote veh is not detected as same vehicle
+      [_x] remoteExec  ["AS_fnc_activateVehicleCleanup", _x];
     };
 } forEach _vehicles;

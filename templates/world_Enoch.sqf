@@ -6,7 +6,7 @@
 // 0: exclude below this size
 // 1: minimun radius for a city
 // 2: exclude these cities
-[200,100,[]] call AS_location_fnc_addCities;
+[200,100, 1000, []] call AS_location_fnc_addCities;
 
 // These have to be names in the map. Be careful on putting names that are also cities (consider excludeing them above)
 private _hillsAA = [];

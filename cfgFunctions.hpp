@@ -172,6 +172,7 @@ class AS {
         FNC_BASE(activateCleanup);
         FNC_BASE(activateVehicleCleanup);
         FNC_BASE(activateMissionVehicleCleanup);
+        FNC_BASE(sendAwayFromBlufor);
         FNC_BASE(localCommunication);
         FNC_BASE(hasRadioCoverage);
         FNC_BASE(sellVehicle);

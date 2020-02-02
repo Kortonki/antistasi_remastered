@@ -2,7 +2,7 @@
 // sagonisi and hill12 are excluded for an unknown reason.
 // todo: document why these are excluded.
 //the last element is EXCLUDED cities from the map
-[200,300,[]] call AS_location_fnc_addCities;
+[200,300, 700, []] call AS_location_fnc_addCities;
 
 // These have to be names in the map. Be careful on putting names that are also cities (consider excludeing them above)
 private _hillsAA = [];
