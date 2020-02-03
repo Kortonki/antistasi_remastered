@@ -2,6 +2,13 @@
 AS_SERVER_ONLY("AS_database_fnc_persistents_start");
 
 // modify map items consequent of the persistents
+
+//First clear radiotower markers:
+
+{
+  deleteMarker _x;
+} foreach ((allMapMarkers) select {_x find "radioTower" == 0});
+
 private _towerIndex = 0;
 {
     private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;

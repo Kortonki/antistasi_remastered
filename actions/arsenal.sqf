@@ -4,6 +4,14 @@ params ["_box", "_unit"];
 if (AS_S("lockArsenal")) exitWith {hint "Another player is using the Arsenal. Wait."};
 if (not(isnil "AS_savingServer")) exitWith {hint "Server saving in progress. Wait."};
 
+//Here wait until arsenal has synced with the client so client doesn't read partial arsenal and then update arsenal with partial cargo (arsenal items disappear MAJOR BUG!)
+
+[] call AS_fnc_waitArsenalSync;
+
+//Double check so two clients don't race across the check at the sime time (variable syncing might cause this)
+if (AS_S("lockArsenal")) exitWith {hint "Another player is using the Arsenal. Wait."};
+if (not(isnil "AS_savingServer")) exitWith {hint "Server saving in progress. Wait."};
+
 AS_Sset("lockArsenal", true);
 
 // if the box is not "caja", then transfer everything to caja.
@@ -218,5 +226,7 @@ waitUntil {sleep 0.1; isNil "AS_savingServer"};
 
 [caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] remoteExecCall ["AS_fnc_populateBox", 2];
 
+//Failsafe here to let arsenal synch with clients
+sleep 0.2;
 
 AS_Sset("lockArsenal", false);

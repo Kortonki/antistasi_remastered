@@ -71,7 +71,7 @@ if (_FIAsupport < 1) then {_FIAsupport = 1};
 
 AS_cityIsSupportChanging = nil;
 
-if _notify then {
+if (_notify and {_blufor != 0}) then {
 	private _sign = "+";
 	if (_blufor < 0) then {_sign = "";};
 	private _text = "";

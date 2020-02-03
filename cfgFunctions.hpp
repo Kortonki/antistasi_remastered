@@ -218,6 +218,7 @@ class AS {
         FNC(arsenal,unlockedCargoList);
         FNC(arsenal,addMagazineRemains);
         FNC(arsenal,showUnlocked);
+        FNC(arsenal,waitArsenalSync);
 
         FNC_BASE(initPlayerPosition);
         FNC_BASE(initVehicle);

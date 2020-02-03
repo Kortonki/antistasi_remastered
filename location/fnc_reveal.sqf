@@ -5,6 +5,8 @@ diag_log format ["AS_fnc_reveal started. Parameters: _veh: %1 _location %2", _ve
 if (isNil "_veh") exitWith {diag_log format ["AS Error: nil vehicle passed to AS_location_fnc_reveal. Location: %1", _location]};
 if (_location in ([] call AS_location_fnc_knownLocations)) exitWith {}; //No need for checks if locations is already known
 
+private _enemySide = ["AAF"] call AS_fnc_getFactionSide;
+
 while {sleep AS_spawnLoopTime; (alive _veh) and {!(isNil{_veh getVariable "marcador"} or _veh == petros) and {!(_location in ([] call AS_location_fnc_knownLocations))}}} do {
   {
 
@@ -32,6 +34,6 @@ while {sleep AS_spawnLoopTime; (alive _veh) and {!(isNil{_veh getVariable "marca
               };
           };
 
-  } forEach (allUnits select {(_x call AS_fnc_getSide) in ["AAF","CSAT"]});
+  } forEach (allUnits select {side _x == _enemySide});
 };
 diag_log format ["AS_fnc_reveal ended. Parameters: _veh: %1 _location %2", _veh, _location];

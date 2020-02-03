@@ -58,7 +58,7 @@ if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {
     };
   };
   if (_citySupportEffect != 0) then {
-    [-_citySupportEffect,_citySupportEffect,position _veh] remoteExec ["AS_fnc_changeCitySupport",2];
+    [-_citySupportEffect,_citySupportEffect,position _veh, true] remoteExec ["AS_fnc_changeCitySupport",2];
   };
   if (_xpEffect != "") then {[_xpEffect] remoteExec ["fnc_BE_XP", 2]};
 };

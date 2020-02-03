@@ -87,13 +87,7 @@ private _magazineRemains = [];
 
  _count = _count + 1;
 
-
-
 } foreach _magazineTypes;
-
-
-
-
 
 // restrict to locked equipment.
 if (_restrict) then {

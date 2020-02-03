@@ -74,10 +74,14 @@ if (_binoculars != "") then {
 
 //All arsenal removal and adding happens on server: EXPERIMENT
 // remove from box stuff that was used.
+//Added check if player is using the Arsenal (probably unnecessary, arsenal fiddling is done all in server)
+
 private _cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 
-waitUntil {sleep 0.1; isNil "AS_savingServer"};
+waitUntil {sleep 0.1; isNil "AS_savingServer" and {!(AS_S("lockArsenal"))}};
 
 [_cargo] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
+
+
 
 _unit selectWeapon (primaryWeapon _unit);

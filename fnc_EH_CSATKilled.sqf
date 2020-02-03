@@ -28,9 +28,9 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 	_group = group _killed;
 
 	// if dead has no weapons, it is an unlawful kill
-	if ((vehicle _killed == _killed) and {count weapons _killed < 1}) then { //if manning a driver/commander, non-weapon position, do not penalize
+	if ((vehicle _killed == _killed) and {count weapons _killed < 1} and {typeof _killed != (["CSAT", "traitor"] call AS_fnc_getEntity)}) then { //if manning a driver/commander, non-weapon position, do not penalize + exception for traitor
 		[-1,0] remoteExec ["AS_fnc_changeForeignSupport",2];
-		[1,-1,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2];
+		[1,-1,getPos _killed, true] remoteExec ["AS_fnc_changeCitySupport",2];
 		//Stats
 		if (isPlayer _killer) then {
 			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
@@ -38,7 +38,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 		};
 	} else {
 		// otherwise, it decreases by -1.
-		[-1,0,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2]; //Double city support loss compared to AAF
+		[-1,0,getPos _killed, true] remoteExec ["AS_fnc_changeCitySupport",2]; //Double city support loss compared to AAF
 		//Stats
 		if (isPlayer _killer) then {
 			[_killer, "score", 4, false] remoteExec ["AS_players_fnc_change", 2]; //Double points compared to AAF soldiers

@@ -286,7 +286,7 @@ private _fnc_spawn = {
 
 		params ["_startTime", "_group", "_position","_mainVehicle","_speed", "_vehicles"];
 
-		waitUntil {sleep 10; (dateToNumber date > _startTime)};
+		waitUntil {sleep 10; (dateToNumber date >= _startTime)};
 
 		_wp0 = _group addWaypoint [_position, 0];
 		_group setCurrentWaypoint _wp0;
@@ -387,7 +387,7 @@ private _fnc_run = {
 		};
 
 		if (_missionType == "convoy_fuel") then {
-			[_mainVehicle , 0, 0.3] call AS_fuel_fnc_randomFuelCargo;
+			[_mainVehicle, 0, 0.3] call AS_fuel_fnc_randomFuelCargo;
 			_mainVehicle setFuelCargo 0.3;
 		};
 
@@ -429,8 +429,7 @@ private _fnc_run = {
 			{
 				private _fnc_missionFailedCondition = {not(alive _mainVehicle) or (dateToNumber date > _max_date and {_mainVehicle call AS_fnc_getSide == "AAF"})};
 				if (_missionType in ["convoy_money", "convoy_supplies"]) then {
-					//Money convoy doesn't expire so FIA can deliver it to the base
-					_fnc_missionFailedCondition = {not(alive _crate) or (dateToNumber date > _max_date and {_missionType == "convoy_supplies"})};
+					_fnc_missionFailedCondition = {not(alive _crate) or dateToNumber date > _max_date};
 				};
 				private _fnc_missionFailed = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -438,14 +437,27 @@ private _fnc_run = {
 					if (_missionType in ["convoy_supplies", "convoy_money"]) then {
 						if (not(alive _crate)) then {
 							//Crate was destroyed by FIA
-							[-10,-5, _position] remoteExec ["AS_fnc_changeCitySupport",2];
+							[-10,-5, _position, true] remoteExec ["AS_fnc_changeCitySupport",2];
 							if (_missionType == "convoy_money") then {
 								[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];
 							};
 						} else {
 							//The AAF delivery is late
 							[-10, 0, _position] remoteExec ["AS_fnc_changeCitySupport",2];
+
+							//Money is recoverable if delivery is late
+							if (_missionType == "convoy_money") then {
+								[_crate] spawn {
+									params ["_crate"];
+									private _pos = "fia_hq" call AS_location_fnc_position;
+									waitUntil {sleep 1; not(alive _crate) or (!(_crate getvariable ["asCargo", false]) and {isNil "AS_HQ_moving" and {_crate distance2D _pos < 100}})};
+									if (!(alive _crate)) exitWith {};
+
+									[0, 5000] remoteExec ["AS_fnc_changeFIAmoney", 2];
+								};
+							} else {
 							_crate setVariable ["dest", "Empty", true];
+							};
 						};
 					};
 					//Killing the convoy is always better than it being late
@@ -478,7 +490,11 @@ private _fnc_run = {
 					_destination = _position;
 				};
 
-				private _fnc_missionSuccessfulCondition = {(_mainVehicle distance2D _destination < 50) and {speed _mainVehicle < 1}};
+				private _fnc_missionSuccessfulCondition = {(_mainVehicle distance2D _destination < 100) and {speed _mainVehicle < 1}};
+
+				if (_missionType in ["convoy_supplies", "convoy_money"]) then {
+					_fnc_missionSuccessfulCondition = {!(_crate getvariable ["asCargo", false]) and {_crate distance2D _destination < 100 and {isnil "AS_HQ_moving" or _missionType == "convoy_supplies"}}};
+				};
 				private _fnc_missionSuccessful = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
@@ -567,12 +583,21 @@ private _fnc_clean = {
 	private _group = [_mission, "mainGroup"] call AS_spawn_fnc_get;
 	private _origin = [_mission, "origin"] call AS_spawn_fnc_get;
 	private _posbase = _origin call AS_location_fnc_positionConvoy;
+	private _vehicles = ([_mission, "resources"] call AS_spawn_fnc_get) select 2;
 
 	private _wp0 = _group addWaypoint [_posbase, 0];
 	_wp0 setWaypointType "MOVE";
 	_wp0 setWaypointBehaviour "SAFE";
 	_wp0 setWaypointSpeed "NORMAL";
 	_wp0 setWaypointFormation "COLUMN";
+	_group setCurrentWaypoint _wp0;
+
+	{
+		[_x, "ConvoyReturn", _posbase] spawn AS_fnc_setConvoyImmune;
+	} foreach _vehicles;
+
+
+
 
 	// before calling cleanResources
 	//Consider is this necessary? Clean resources will not delete vehs immediately
