@@ -64,7 +64,7 @@ private _fnc_allPossibleMissions = {
             // needs a base around
             private _base = [_location call AS_location_fnc_position] call AS_fnc_getBasesForConvoy;
 
-            private _base_condition = {_base != "" and {not(_base call AS_location_fnc_spawned) and {("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3}}};
+            private _base_condition = {_base != "" and {not(_base call AS_location_fnc_spawned) and {!(_base call AS_location_busy) and {("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3 and }}}};
             private _condition = if (_missionType == "convoy_armor") then {
                 // there is a base and a tank
                 {True and _base_condition and {"tanks" call AS_AAFarsenal_fnc_countAvailable > 0}}

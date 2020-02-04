@@ -22,7 +22,7 @@ private _dist = _spawnDist;
 if (!isNull(_closest)) then {
 
   private _dir = _closest getDir _position;
-  private _newPos = _position getRelpos [_spawnDist, _dir];
+  private _newPos = _closest getRelpos [_spawnDist*2, _dir];
 
   //Make sure they retreat
   {

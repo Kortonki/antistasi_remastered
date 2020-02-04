@@ -11,6 +11,8 @@ private _fnc_initialize = {
 	if (_origin == "") exitWith {
 		[petros, "hint", "mission is no longer available"] call AS_fnc_localCommunication;
 
+		diag_log format ["[AS] Error mission %1 canceled, no valid bases for convoy", _mission];
+		[_mission] remoteExecCall ["AS_mission_fnc_cancel", 2];
 		[_mission, "state_index", 100] call AS_spawn_fnc_set; // terminate everything
 		[_mission, "delete", true] call AS_spawn_fnc_set;
 	};
