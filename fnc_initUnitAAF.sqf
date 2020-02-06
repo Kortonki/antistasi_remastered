@@ -7,7 +7,7 @@ if(!(local _unit)) exitWith {
 		[_unit, _spawned] remoteExecCall ["AS_fnc_initUnitAAF", _unit];
 };
 
-if (!isNil{_unit getVariable "init"}) exitWith {diag_log format ["Unit %1 attempting to init but already initing", _unit]};
+if (!isNil{_unit getVariable "init"}) exitWith {diag_log format ["[AS] Warning: Unit %1 attempting to init but already initing", _unit]};
 
 _unit setVariable ["init", true, false];
 

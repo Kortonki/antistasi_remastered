@@ -20,6 +20,11 @@ waitUntil {
 	not([AS_P("spawnDistance"), _vehicle, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)
 };
 
+//Double check this. Might have changed during waitUntil
+if (_vehicle in AS_P("vehicles")) exitWith {
+	diag_log format ["Persistent vehicle attempt to delete via AS_fnc_activateVehicleCleanup. Vehicle %1, location %2", _vehicle, (position _vehicle) call AS_location_fnc_nearest];
+};
+
 if (alive _vehicle and {_vehicle call AS_fnc_getSide == "AAF"}) then {
 	//Deduct from spawned vehicles. Killed vehicles are deducted from arsenal elsewhere
 	private _vehicleType = typeof _vehicle;

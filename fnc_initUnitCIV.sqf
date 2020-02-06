@@ -24,6 +24,12 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 	private _unit = _this select 0;
 	private _killer = _this select 1;
 
+	//ACE might make the killed eventhandler fire twice. Prevent it.
+	if (!(isnil{_unit getVariable "k"})) exitWith {
+		diag_log format ["[AS] InitUnitCIV: Killed eventhandler fired twice. Killed %1", _unit];
+	};
+	_unit setVariable ["k", true, false];
+
 	if (hasACE) then {
 		if ((isNull _killer) || (_killer == _unit)) then {
 			_killer = _unit getVariable ["ace_medical_lastDamageSource", _killer];
@@ -120,5 +126,3 @@ if (typeOf _unit == "C_Journalist_F") then {
 		};
  	}];
 };
-
-//TODO handleheal to increase support of FIA heals civilians

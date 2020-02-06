@@ -51,6 +51,7 @@ if (_side != "NATO") then {
 	_veh addEventHandler ["GetIn", {
 		params ["_vehicle", "_position", "_unit"];
 
+
 		if (isNil{_vehicle getVariable "boxCargo"}) then {_vehicle setVariable ["boxCargo",[], true];};
 
 		private _side = _vehicle call AS_fnc_getSide;
@@ -61,7 +62,14 @@ if (_side != "NATO") then {
 		if (_side != "FIA" and {_sideunit == "FIA"}) then {
 
 				//Make persistent to avoid cleanup for captured vehicles
-				[_vehicle] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+				//Attempt to fix vehicle parameter being the player unit and not properly added to persistents when vehicle not local
+				//Wait until no-one inside so the vehicle returns the correct vehicle
+				[_vehicle] spawn {
+					params ["_vehicle"];
+					waitUntil {sleep 0.5; count (crew _vehicle) == 0};
+					[_vehicle] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+				};
+
 
 				//After capturing fuel truck, make it FIA fuel system compatible
 				//TODO Improve this to revert to FIA fuel system to prevent cheating. For AI must have vanilla fuel cargo system

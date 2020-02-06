@@ -63,7 +63,7 @@ diag_log "[AS] Client: waiting for the admin to choose sides...";
 
 waitUntil {sleep 1;
 
-    if (player call AS_fnc_isAdmin and {not (isNil "AS_server_variables_initialized")}) exitWith {
+    if (player call AS_fnc_isAdmin and {not (isNil "AS_server_variables_initialized")}) then {
         hint "You are the current administrator.";
 
         if (isNil {AS_P("player_side")} and {not(_isJip)}) then {

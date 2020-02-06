@@ -40,7 +40,6 @@ params ["_groups", "_vehicles", "_markers"];
     if (!(_x isKindOf "AllVehicles") and {!(_x isKindof "ReammoBox_F")}) then {
       [_x] remoteExecCall ["deletevehicle", _x];
     } else {
-      //Sleep to avoid despawn while players are spawning
       [_x] remoteExec  ["AS_fnc_activateVehicleCleanup", _x];
     };
 } forEach _vehicles;

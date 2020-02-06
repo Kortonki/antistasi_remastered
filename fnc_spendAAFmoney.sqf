@@ -13,7 +13,7 @@ private _AAFresAdj = _resourcesAAF / _AAFlocCount; //Consider this also as it af
 
 private _debug_prefix = "[AS] Debug AS_fnc_spendAAFmoney: ";
 private _debug_message = format ["buying with %1", _resourcesAAF];
-AS_ISDEBUG(_debug_prefix + _debug_message);
+diag_log (_debug_prefix + _debug_message);
 
 //////////////// try to restore cities ////////////////
 if (_resourcesAAF > 5000 and {_AAFresAdj > 1000}) then {
@@ -88,7 +88,7 @@ _extra_conditions setVariable ["planes", _FIAcontrolledBases >= 1];
 
 	_debug_message = format ["bought %1 '%2' (%3,%4), remaining money: %5",
 			_debug_bought_count, _x, _x call AS_AAFarsenal_fnc_canAdd, _extra_condition, _resourcesAAF];
-	AS_ISDEBUG(_debug_prefix + _debug_message);
+	diag_log (_debug_prefix + _debug_message);
 } forEach AS_AAFarsenal_buying_order;
 
 deleteVehicle _extra_conditions;

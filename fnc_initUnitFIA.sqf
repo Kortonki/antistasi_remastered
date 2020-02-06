@@ -59,6 +59,11 @@ _unit addEventHandler ["killed", {
 	params ["_unit"];
 	private _vehicle = vehicle _unit;
 	//_unit removeAllEventHandlers "HandleDamage"; //These are no longer needed //IMPORTANT: this also removes "killed" eventhNdlers!
+	//ACE might make the killed eventhandler fire twice. Prevent it.
+	if (!(isnil{_unit getVariable "k_v"})) exitWith {
+		diag_log format ["[AS] initUnitFIA: Killed eventhandler fired twice. Killed %1", _unit];
+	};
+	_unit setVariable ["k_v", true, false];
 
 		if (_vehicle != _unit and {!(_vehicle isKindOf "StaticWeapon")}) then {
 			([_unit, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_magazineRemains"];
@@ -74,6 +79,13 @@ if (isPlayer(leader _unit)) then {
 	if (captive player and {!(captive _unit)}) then {[_unit] remoteExec ["AS_fnc_activateUndercoverAI", _unit]};
 	_unit addEventHandler ["killed", {
 		params ["_unit", "_killer"];
+
+		//ACE might make the killed eventhandler fire twice. Prevent it.
+		if (!(isnil{_unit getVariable "k"})) exitWith {
+			diag_log format ["[AS] initUnitFIA: Killed eventhandler fired twice. Killed %1", _unit];
+		};
+		_unit setVariable ["k", true, false];
+
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
 		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
@@ -123,6 +135,13 @@ if (isPlayer(leader _unit)) then {
 } else {
 	_unit addEventHandler ["killed", {
 		params ["_unit", "_killer"];
+
+		//ACE might make the killed eventhandler fire twice. Prevent it.
+		if (!(isnil{_unit getVariable "k"})) exitWith {
+			diag_log format ["[AS] initUnitFIA: Killed eventhandler fired twice. Killed %1", _unit];
+		};
+		_unit setVariable ["k", true, false];
+
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
 		private _group = group _unit;

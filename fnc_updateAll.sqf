@@ -138,6 +138,8 @@ private _FIAResIncomeMultiplier = 1;
 // control the airport and have majority => win game.
 //Edited: must have twice as much influence as AAF:: 66% against 33%
 //TODO: consider having a world spesific win locations instead of the airfield
+//TODO: Not end the mission here straight, but make AAF offer peace treaty
+//If player declines, able to conquer rest of the island, but with a loss of NATO support
 if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_side == "FIA")) exitWith {
     "end1" call BIS_fnc_endMissionServer;
 };

@@ -23,6 +23,13 @@ _unit setVariable ["BLUFORSpawn",true,true];
 
 _unit addEventHandler ["killed", {
 	params ["_unit", "_killer"];
+
+	//ACE might make the killed eventhandler fire twice. Prevent it.
+	if (!(isnil{_unit getVariable "k"})) exitWith {
+		diag_log format ["[AS] InitUnitNATO: Killed eventhandler fired twice. Killed %1", _unit];
+	};
+	_unit setVariable ["k", true, false];
+
 	[0.25,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 	[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 	_unit removeAllEventHandlers "HandleDamage";

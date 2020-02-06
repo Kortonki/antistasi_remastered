@@ -1,6 +1,13 @@
 private ["_killed","_killer","_cost","_enemy","_group"];
 _killed = _this select 0;
 _killer = _this select 1;
+
+//ACE might make the killed eventhandler fire twice. Prevent it.
+if (!(isnil{_killed getVariable "k"})) exitWith {
+	diag_log format ["[AS] EH_AAFKilled: Killed eventhandler fired twice. Killed %1", _killed];
+};
+_killed setVariable ["k", true, false];
+
 if (_killed getVariable ["OPFORSpawn",false]) then {_killed setVariable ["OPFORSpawn",nil,true]};
 _unit removeAllEventHandlers "HandleDamage";
 
