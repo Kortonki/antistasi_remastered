@@ -186,7 +186,7 @@ private _player_count = count (allPlayers - entities "HeadlessClient_F");
 
 
 _hr_cum = _hr_cum + _FIAnewHR - (floor _FIAnewHR);
-if (_player_count < 5) then {
+if (_player_count < 5 and {_player_count > 0}) then {
   _hr_cum = _hr_cum + (0.5/_player_count); //TODO: balance this out. Now it's 1 HR every two updates for single player
 };
 
@@ -223,7 +223,9 @@ _FIAnewFuel = AS_P("fuelFIA") + _FIAnewFuel;
 //Share money among FIA members TODO: adjustment to the share value? make it persistent then
 //Share is the percentage or FIA income whichever is smaller
 
-[round(((AS_players_share/100)*_FIAnewMoney) min (_FIAnewMoney - AS_P("resourcesFIA")))] call AS_players_fnc_shareMoney;
+if (_player_count > 0) then {
+  [round(((AS_players_share/100)*_FIAnewMoney) min (_FIAnewMoney - AS_P("resourcesFIA")))] call AS_players_fnc_shareMoney;
+};
 
 //Commander gets score every update
 

@@ -17,7 +17,7 @@ if ("trucks" call AS_AAFarsenal_fnc_countAvailable > 0) then {
         private _p2 = getPos ((roadsConnectedto _p1) select 0);
         _dir = [_p1, _p2] call BIS_fnc_DirTo;
       };
-      _pos = [_p1, 3, _dir + 90] call BIS_Fnc_relPos;
+      _pos = [_p1, 2, _dir + 90] call BIS_Fnc_relPos;
     } else {
       _pos = [_position, 0, 50, 8, 0, 0.5, 0,[], [_position, _position]] call BIS_Fnc_findSafePos;
     };

@@ -125,7 +125,7 @@ if (!(_truck iskindOf "Truck_F")) then {
 };
 
 if ((_boxcount + 1) == 1) then {
-  [_truck, "unloadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+  [_truck, "unloadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 };
 
 private _text = "Cargo loaded into the truck";

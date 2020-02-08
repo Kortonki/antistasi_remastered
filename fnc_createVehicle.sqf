@@ -56,8 +56,13 @@ if (_crew in [4,5,6,7]) then {
 _vehicleGroup addVehicle _vehicle;
 
 [_vehicle, _side] call AS_fnc_initVehicle;
-_vehicle allowDamage true;
 [_vehicle, true] remoteExecCall ["enablesimulationGlobal", 2];
+
+[_vehicle] spawn {
+  params ["_vehicle"];
+  sleep 2;
+  _vehicle allowDamage true;
+};
 
 //Counter for AAF spawned vehicles to avoid more vehs than in arsenal
 if (_side == "AAF") then {

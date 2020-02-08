@@ -7,7 +7,7 @@ if (_location in ([] call AS_location_fnc_knownLocations)) exitWith {}; //No nee
 
 private _enemySide = ["AAF"] call AS_fnc_getFactionSide;
 
-while {sleep AS_spawnLoopTime; (alive _veh) and {!(isNil{_veh getVariable "marcador"} or _veh == petros) and {!(_location in ([] call AS_location_fnc_knownLocations))}}} do {
+while {sleep AS_spawnLoopTime; (alive _veh) and {(!(isNil{_veh getVariable "marcador"}) or _veh == petros) and {!(_location in ([] call AS_location_fnc_knownLocations))}}} do {
   {
 
     //Only reveal to location if there's radio coverage and the leader is alive after the contact for some.

@@ -24,13 +24,13 @@ while {isNull _flag} do {
 	_dist = _dist + 10;
 	_flag = (nearestObjects [_posicion, ["FlagCarrier"], _dist]) select 0;
 };
-[[_flag,"remove"],"AS_fnc_addAction"] call BIS_fnc_MP;
+[_flag,"remove"] remoteExecCall ["AS_fnc_addAction", AS_CLIENTS];
 _flag setFlagTexture "\A3\Data_F\Flags\Flag_FIA_CO.paa";
 
 sleep 5;
-[[_flag,"unit"],"AS_fnc_addAction"] call BIS_fnc_MP;
-[[_flag,"vehicle"],"AS_fnc_addAction"] call BIS_fnc_MP;
-[[_flag,"garage"],"AS_fnc_addAction"] call BIS_fnc_MP;
+[_flag,"unit"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
+[_flag,"vehicle"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
+[_flag,"garage"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
 
 [_location,"side","FIA"] call AS_location_fnc_set;
 
@@ -38,13 +38,13 @@ sleep 5;
 
 if (_type == "airfield") then {
 	[0,10,_posicion] call AS_fnc_changeCitySupport;
-	[["TaskSucceeded", ["", "Airport Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+	["TaskSucceeded", ["", "Airport Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[20,10] call AS_fnc_changeForeignSupport;
    	["con_bas"] call fnc_BE_XP;
 };
 if (_type == "base") then {
 	[0,10,_posicion] call AS_fnc_changeCitySupport;
-	[["TaskSucceeded", ["", "Base Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+	["TaskSucceeded", ["", "Base Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[20,10] call AS_fnc_changeForeignSupport;
 	["con_bas"] call fnc_BE_XP;
 
@@ -57,7 +57,7 @@ if (_type == "base") then {
 };
 
 if (_type == "powerplant") then {
-	[["TaskSucceeded", ["", "Powerplant Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+	["TaskSucceeded", ["", "Powerplant Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[0,5] call AS_fnc_changeForeignSupport;
 	[-10, 10, _posicion] call AS_fnc_changeCitySupport;
 	["con_ter"] call fnc_BE_XP;
@@ -65,25 +65,25 @@ if (_type == "powerplant") then {
 };
 if (_type == "outpost") then {
 	[-10,10,_posicion] call AS_fnc_changeCitySupport;
-	[["TaskSucceeded", ["", "Outpost Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+	["TaskSucceeded", ["", "Outpost Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	["con_ter"] call fnc_BE_XP;
 };
 if (_type == "seaport") then {
-	[["TaskSucceeded", ["", "Seaport Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+	["TaskSucceeded", ["", "Seaport Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[-10,10,_posicion] call AS_fnc_changeCitySupport;
 	["con_ter"] call fnc_BE_XP;
 	[[_flag,"seaport"],"AS_fnc_addAction"] call BIS_fnc_MP;
 };
 if (_type in ["factory", "resource"]) then {
-	if (_type == "factory") then {[["TaskSucceeded", ["", "Factory Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;};
-	if (_type == "resource") then {[["TaskSucceeded", ["", "Resource Taken"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;};
+	if (_type == "factory") then {["TaskSucceeded", ["", "Factory Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];};
+	if (_type == "resource") then {["TaskSucceeded", ["", "Resource Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];};
 	["con_ter"] call fnc_BE_XP;
 	[0,5] call AS_fnc_changeForeignSupport;
 	[-10, 10, _posicion] call AS_fnc_changeCitySupport;
 	private _powerpl = ["powerplant" call AS_location_fnc_T, _posicion] call BIS_fnc_nearestPosition;
 	if (_powerpl call AS_location_fnc_side == "AAF") then {
 		sleep 5;
-		[["TaskFailed", ["", "Resource out of Power"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskFailed", ["", "Resource out of Power"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 		[_location, false] spawn AS_fnc_changeStreetLights;
 	} else {
 		[_location, true] spawn AS_fnc_changeStreetLights;

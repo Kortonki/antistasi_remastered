@@ -89,13 +89,13 @@ _box setVariable ["asCargo", false, true];
 _truck setVariable ["boxCargo", (_truck getVariable "boxCargo") - [_box], true];
 if ((_boxcount - 1) == 0) then {
   //Reset actions: Removing doesn't quite work reliably, different clients have different ids
-  [_truck, "remove"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+  [_truck, "remove"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
   if (_truck isKindof "Truck_F" and {!((_truck call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
     [_truck] spawn {
         params ["_truck"];
         sleep 2;
-		    [_truck, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
-		    [_truck, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		    [_truck, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+		    [_truck, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
       };
 	  };
 };

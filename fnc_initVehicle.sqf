@@ -77,8 +77,8 @@ if (_side != "NATO") then {
 
 					if (_vehicle call AS_fuel_fnc_getfuelCargoSize > 0) then {
 						_vehicle setFuelCargo 0;
-						[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-						[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+						[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+						[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 					};
 		};
 
@@ -206,8 +206,8 @@ if (_side == "FIA") then {
 
 				if (_veh call AS_fuel_fnc_getfuelCargoSize > 0) then {
 
-					[_veh, "refuel_truck"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-					[_veh, "refuel_truck_check"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+					[_veh, "refuel_truck"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
+					[_veh, "refuel_truck_check"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
 					};
 				};
 			} else {

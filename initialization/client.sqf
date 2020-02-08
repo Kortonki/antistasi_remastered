@@ -92,6 +92,11 @@ if not isServer then {
 
 [] spawn AS_fnc_activatePlayerRankLoop;
 
+
+/////////////////////////
+///// JIP STUFF /////////
+/////////////////////////
+
 if _isJip then {
 	{
 	if (_x isKindOf "FlagCarrier") then {
@@ -104,6 +109,23 @@ if _isJip then {
 			};
 		};
 	};
+  if (_x isKindof "Truck_F" and {!((_x call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
+    [_x, "recoverEquipment"] call AS_fnc_addAction;
+    [_x, "transferTo"] call AS_fnc_addAction;
+
+    //TODO somehow to check that boxcargo has synced? is it even necessary?
+    if (count(_x getVariable ["boxCargo",[]]) > 0) then {
+      [_x, "unloadCargo"] call AS_fnc_addAction;
+      };
+
+    };
+
+  if (_x isKindof "Truck_F" and {_x call AS_fnc_getSide == "FIA" and {_x call AS_fuel_fnc_getfuelCargoSize > 0}}) then {
+    [_x, "refuel_truck"] call AS_fnc_addAction;
+    [_x, "refuel_truck_check"] call AS_fnc_addAction;
+    };
+
+
 	} forEach vehicles - [bandera,fuego,caja,cajaVeh];
 
 	{
