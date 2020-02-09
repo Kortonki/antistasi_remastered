@@ -94,7 +94,10 @@ if (_side != "NATO") then {
 
 		};
 
-		[_vehicle, _sideunit] call AS_fnc_setSide;
+		//To avoid setting unknown side to a vehicle when a unit boarding hasn't inited yet
+		if (_sideunit != "") then {
+			[_vehicle, _sideunit] call AS_fnc_setSide;
+		};
 
 
 	}];

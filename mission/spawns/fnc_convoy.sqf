@@ -7,10 +7,14 @@ private _fnc_initialize = {
 
 	private _missionType = _mission call AS_mission_fnc_type;
 
-	private _originTypes = ["base"];
+	private _originTypes = ["base", "airfield"];
 	if (_missionType == "convoy_money") then {
-		_originTypes append ["resource", "seaport", "factory", "airfield"];
+		_originTypes append ["resource", "seaport", "factory"];
 	};
+	if (_missionType == "convoy_armor") then {
+		_originTypes = _originTypes - ["airfield"];
+	};
+
   private _origin = [_position, _originTypes] call AS_fnc_getBasesForConvoy;
 
 	if (_origin == "") exitWith {
@@ -56,8 +60,10 @@ private _fnc_initialize = {
 			_tskIcon = "destroy";
 			private _type = "tanks";
 			if (_type call AS_AAFarsenal_fnc_countAvailable == 0) then {
-				_type = "apcs";
-				diag_log format ["[AS] Error: convoy: tanks requested but not available", _mission];
+				diag_log format ["[AS] Error: convoy: tanks requested but not available. AAF bought one", _mission];
+				private _cost = "tanks" call AS_AAFarsenal_fnc_cost;
+				"tanks" call AS_AAFarsenal_fnc_addVehicle;
+				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 			_mainVehicleType = selectRandom (_type call AS_AAFarsenal_fnc_valid);
 		};
@@ -92,6 +98,9 @@ private _fnc_initialize = {
 			_mainVehicleType = selectRandom ("trucks" call AS_AAFarsenal_fnc_valid);
 			if ("trucks" call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				diag_log format ["[AS] Error: convoy: truck requested but not available", _mission];
+				private _cost = "trucks" call AS_AAFarsenal_fnc_cost;
+				"trucks" call AS_AAFarsenal_fnc_addVehicle;
+				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 		};
 	};

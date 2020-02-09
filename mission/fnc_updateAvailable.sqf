@@ -67,28 +67,33 @@ private _fnc_allPossibleMissions = {
         // checks whether a given (mission type, location) is available given the current state
         params ["_missionType", "_location"];
 
-        private _base = [_location call AS_location_fnc_position] call AS_fnc_getBasesForConvoy;
-
-        private _lead_condition = ("cars_transport" call AS_AAFarsenal_fnc_countAvailable) > 1; //One for lead and one for possible HVT
-        private _truck_condition = ("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3;
-        private _armor_condition = ("tanks" call AS_AAFarsenal_fnc_countAvailable) > 0;
-        private _base_condition = _base != "" and {not(_base call AS_location_fnc_spawned) and {!(_base call AS_location_fnc_busy)}};
-        private _logistics_condition = count ((([_logisticsLocations + ["resource"], "AAF"] call AS_location_fnc_TS) select {!(_x call AS_location_fnc_spawned)}) - [_location]) > 0; //Must have one valid origin which is not the location itself
-
         //The actual check
 
         False or
-        {not (_missionType in ["convoy_money", "convoy_supplies", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel"])} or
-        (_missionType in ["convoy_supplies", "convoy_fuel", "convoy_ammo", "convoy_prisoners", "convoy_hvt"] and {
-            private _condition = {false or (_base_condition and {_truck_condition and {_lead_condition}})};
-            call _condition
-        }) or
-        (_missionType == "convoy_money" and {
-          private _condition = {false or (_logistics_condition and {_lead_condition and {_truck_condition}})};
+        (not (_missionType in ["convoy_money", "convoy_supplies", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel"])) or
+        (_missionType in ["convoy_supplies", "convoy_fuel", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_money"] and {
+
+          private _locs = ["base", "airfield"];
+          if (_missionType == "convoy_money") then {
+            _locs = _logisticsLocations + ["resource"];
+          };
+          private _lead_condition = ("cars_transport" call AS_AAFarsenal_fnc_countAvailable) > 1; //One for lead and one for possible HVT
+          private _truck_condition = ("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3;
+          private _base = [_location call AS_location_fnc_position, _locs] call AS_fnc_getBasesForConvoy;
+          private _base_condition = _base != "" and {!(_base call AS_location_fnc_busy)};
+
+          private _condition = {false or (_base_condition and {_lead_condition and {_truck_condition}})};
           call _condition
         }) or
         (_missionType == "convoy_armor" and {
-          private _condition = {false or (_armor_condition and {_lead_condition and {_base_condition}})};
+
+          private _lead_condition = ("cars_transport" call AS_AAFarsenal_fnc_countAvailable) > 0;
+          private _truck_condition = ("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3;
+          private _armor_condition = ("tanks" call AS_AAFarsenal_fnc_countAvailable) > 0;
+          private _base = [_location call AS_location_fnc_position, ["base"]] call AS_fnc_getBasesForConvoy;
+          private _base_condition = _base != "" and {!(_base call AS_location_fnc_busy)};
+
+          private _condition = {false or (_armor_condition and {_lead_condition and {_base_condition and {_truck_condition}}})};
           call _condition
         })
 
