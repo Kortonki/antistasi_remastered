@@ -20,6 +20,18 @@ switch (_location call AS_location_fnc_type) do {
         [_location,"side","AAF", false] call AS_location_fnc_set;
         [_location,"busy",dateToNumber date, false] call AS_location_fnc_set;
     };
+    case "resource": {
+        [_location,"side","AAF", false] call AS_location_fnc_set;
+        [_location,"busy",dateToNumber date, false] call AS_location_fnc_set;
+    };
+    case "factory": {
+        [_location,"side","AAF", false] call AS_location_fnc_set;
+        [_location,"busy",dateToNumber date, false] call AS_location_fnc_set;
+    };
+    case "seaport": {
+        [_location,"side","AAF", false] call AS_location_fnc_set;
+        [_location,"busy",dateToNumber date, false] call AS_location_fnc_set;
+    };
     case "minefield": {
         [_location, "mines", [], false] call AS_location_fnc_set;  // [type, pos, dir]
         [_location, "found", false, false] call AS_location_fnc_set;

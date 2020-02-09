@@ -8,11 +8,11 @@ class EditorData
 	toggles=65;
 	class ItemIDProvider
 	{
-		nextID=2528;
+		nextID=2536;
 	};
 	class MarkerIDProvider
 	{
-		nextID=133;
+		nextID=140;
 	};
 	class LayerIndexProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={1195.4766,161.94858,5881.4365};
-		dir[]={0.6122694,-0.52203375,-0.59383309};
-		up[]={0.37474805,0.85290974,-0.36346528};
-		aside[]={-0.69622773,-2.4118344e-007,-0.71784061};
+		pos[]={7401.0571,34.27042,5313.6431};
+		dir[]={-0.022823596,-0.98693073,-0.15972176};
+		up[]={-0.13960588,0.16123192,-0.97699094};
+		aside[]={-0.98997498,-6.086193e-007,0.14146252};
 	};
 };
 binarizationWanted=0;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.20";
+		briefingName="Antistasi Remastered V0.99.21";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +183,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=113;
+		items=120;
 		class Item0
 		{
 			dataType="Marker";
@@ -2545,16 +2545,17 @@ class Mission
 		class Item104
 		{
 			dataType="Marker";
-			position[]={2833.4722,12.076551,1017.2174};
-			name="AS_base_convoy";
+			position[]={2833.4719,12.077,1017.217};
+			name="as_base_convoy";
 			type="Empty";
 			id=2244;
+			atlOffset=0.00044441223;
 		};
 		class Item105
 		{
 			dataType="Marker";
 			position[]={6941.564,48.912998,1148.209};
-			name="AS_airfield_convoy";
+			name="as_airfield_convoy";
 			type="Empty";
 			id=2246;
 			atlOffset=0.00037002563;
@@ -2562,10 +2563,11 @@ class Mission
 		class Item106
 		{
 			dataType="Marker";
-			position[]={7596.2515,22.178314,6562.689};
-			name="AS_base_1_convoy";
+			position[]={7596.251,22.177999,6562.689};
+			name="as_base_1_convoy";
 			type="Empty";
 			id=2247;
+			atlOffset=-0.00031280518;
 		};
 		class Item107
 		{
@@ -2648,6 +2650,68 @@ class Mission
 			angle=216.7132;
 			id=2523;
 			atlOffset=-1.3062115;
+		};
+		class Item113
+		{
+			dataType="Marker";
+			position[]={665.34399,19.146,3410.7009};
+			name="as_resource_4_convoy";
+			type="Empty";
+			id=2528;
+			atlOffset=0.00011253357;
+		};
+		class Item114
+		{
+			dataType="Marker";
+			position[]={930.23199,20.764999,1922.797};
+			name="as_resource_1_convoy";
+			type="Empty";
+			id=2529;
+			atlOffset=-0.00010871887;
+		};
+		class Item115
+		{
+			dataType="Marker";
+			position[]={5191.7822,15.74,2117.1179};
+			name="as_factory_convoy";
+			type="Empty";
+			id=2530;
+		};
+		class Item116
+		{
+			dataType="Marker";
+			position[]={4442.5952,4.2740002,4397.7979};
+			name="as_resource_2_convoy";
+			type="Empty";
+			id=2531;
+			atlOffset=-0.00049448013;
+		};
+		class Item117
+		{
+			dataType="Marker";
+			position[]={3411.156,33.167999,7056.8359};
+			name="as_resource_3_convoy";
+			type="Empty";
+			id=2532;
+			atlOffset=-0.00035858154;
+		};
+		class Item118
+		{
+			dataType="Marker";
+			position[]={5508.1411,13.705,6331.356};
+			name="as_factory_4_convoy";
+			type="Empty";
+			id=2533;
+			atlOffset=-0.00038146973;
+		};
+		class Item119
+		{
+			dataType="Marker";
+			position[]={7400.6279,22.462999,5309.0801};
+			name="as_factory_7_convoy";
+			type="Empty";
+			id=2534;
+			atlOffset=0.00029945374;
 		};
 	};
 	class Connections

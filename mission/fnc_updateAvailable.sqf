@@ -30,12 +30,20 @@ private _fnc_allPossibleMissions = {
     private _cityMissions = [
         "kill_specops",
         "help_meds","rescue_refugees",
-        "convoy_money", "convoy_supplies"
+        "convoy_supplies"
     ];
     private _baseMissions = [
         "destroy_vehicle", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel",
         "kill_officer", "rescue_prisioners", "steal_ammo", "steal_fuel"
     ];
+    private _logisticsMissions = [
+      "convoy_money"
+    ];
+
+    private _logisticsLocations = [
+      "factory", "base", "airfield", "seaport"
+    ];
+
     private _conquerableLocations = [
         "outpost", "base", "airfield", "powerplant",
         "resource", "factory", "seaport", "outpostAA"
@@ -47,6 +55,7 @@ private _fnc_allPossibleMissions = {
         private _type = _location call AS_location_fnc_type;
 
         false or
+        {_type in _logisticsLocations and {_missionType == "convoy_money"}} or
         {_type == "outpost" and {_missionType in ["rescue_prisioners", "steal_ammo", "steal_fuel"]}} or
         {_type == "city" and {_missionType in _cityMissions}} or
         {_type == "base" and {_missionType in _baseMissions}} or
@@ -58,21 +67,31 @@ private _fnc_allPossibleMissions = {
         // checks whether a given (mission type, location) is available given the current state
         params ["_missionType", "_location"];
 
+        private _base = [_location call AS_location_fnc_position] call AS_fnc_getBasesForConvoy;
+
+        private _lead_condition = ("cars_transport" call AS_AAFarsenal_fnc_countAvailable) > 1; //One for lead and one for possible HVT
+        private _truck_condition = ("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3;
+        private _armor_condition = ("tanks" call AS_AAFarsenal_fnc_countAvailable) > 0;
+        private _base_condition = _base != "" and {not(_base call AS_location_fnc_spawned) and {!(_base call AS_location_fnc_busy)}};
+        private _logistics_condition = count ((([_logisticsLocations + ["resource"], "AAF"] call AS_location_fnc_TS) select {!(_x call AS_location_fnc_spawned)}) - [_location]) > 0; //Must have one valid origin which is not the location itself
+
+        //The actual check
+
         False or
         {not (_missionType in ["convoy_money", "convoy_supplies", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel"])} or
-        (_missionType in ["convoy_money", "convoy_supplies", "convoy_fuel","convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt"] and {
-            // needs a base around
-            private _base = [_location call AS_location_fnc_position] call AS_fnc_getBasesForConvoy;
-
-            private _base_condition = {_base != "" and {not(_base call AS_location_fnc_spawned) and {!(_base call AS_location_fnc_busy) and {("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3}}}};
-            private _condition = if (_missionType == "convoy_armor") then {
-                // there is a base and a tank
-                {True and _base_condition and {"tanks" call AS_AAFarsenal_fnc_countAvailable > 0}}
-            } else {
-                _base_condition
-            };
+        (_missionType in ["convoy_supplies", "convoy_fuel", "convoy_ammo", "convoy_prisoners", "convoy_hvt"] and {
+            private _condition = {false or (_base_condition and {_truck_condition and {_lead_condition}})};
             call _condition
+        }) or
+        (_missionType == "convoy_money" and {
+          private _condition = {false or (_logistics_condition and {_lead_condition and {_truck_condition}})};
+          call _condition
+        }) or
+        (_missionType == "convoy_armor" and {
+          private _condition = {false or (_armor_condition and {_lead_condition and {_base_condition}})};
+          call _condition
         })
+
     };
 
     {
@@ -83,7 +102,7 @@ private _fnc_allPossibleMissions = {
                 _possible pushBack _mission;
             };
             //"conquer", "destroy_antenna" removed for now, they don't need to be as missions
-        } forEach _cityMissions + _baseMissions + [
+        } forEach _cityMissions + _baseMissions + _logisticsMissions + [
             "destroy_helicoper", "rob_bank"
         ];
     } forEach _locations;

@@ -6,12 +6,20 @@ private _properties = ["type", "position", "size", "side", "garrison",
 switch (_this) do {
     case "city": {
         _properties append ["population","FIAsupport","AAFsupport","roads"];
-
         };
     case "base": {
         _properties append ["busy"];
     };
     case "airfield": {
+        _properties append ["busy"];
+    };
+    case "seaport": {
+        _properties append ["busy"];
+    };
+    case "resource": {
+        _properties append ["busy"];
+    };
+    case "factory": {
         _properties append ["busy"];
     };
     case "camp": {  // the camp has a name
@@ -25,7 +33,6 @@ switch (_this) do {
         _properties append ["location"];  // the associated location of the roadblock
     };
     default {
-        []
     };
 };
 _properties

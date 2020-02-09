@@ -101,7 +101,10 @@ call {
 	};
 
 	if (_type == "AA") exitWith {
-		_item = selectRandom AAFLaunchers;
+    ["weapon", 3, 2, 5] call _fnc_gear;
+    ["magazine", 5, 5] call _fnc_gear;
+    ["item", 5, 5] call _fnc_gear;
+    _item = selectRandom AAFLaunchers;
 		_crate addWeaponCargoGlobal [_item, 5];
 		_crate addMagazineCargoGlobal [([_item] call _getWeaponMags) select 0, 10];
 	};
@@ -122,7 +125,5 @@ for "_i" from 0 to count (_miscItems select 0) - 1 do {
 };
 
 if hasTFAR then {
-    if (2 < random 3) then {
         _crate addBackpackCargoGlobal [(["AAF", "tfar_lr_radio"] call AS_fnc_getEntity), 4];
-    };
 };

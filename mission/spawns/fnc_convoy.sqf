@@ -3,15 +3,20 @@
 private _fnc_initialize = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
-	private _position = _location call AS_location_fnc_position;
+	private _position = _location call AS_location_fnc_positionConvoy;
 
 	private _missionType = _mission call AS_mission_fnc_type;
 
-	private _origin = [_position] call AS_fnc_getBasesForConvoy;
+	private _originTypes = ["base"];
+	if (_missionType == "convoy_money") then {
+		_originTypes append ["resource", "seaport", "factory", "airfield"];
+	};
+  private _origin = [_position, _originTypes] call AS_fnc_getBasesForConvoy;
+
 	if (_origin == "") exitWith {
 		[petros, "hint", "mission is no longer available"] call AS_fnc_localCommunication;
 
-		diag_log format ["[AS] Error mission %1 canceled, no valid bases for convoy", _mission];
+		diag_log format ["[AS] Error mission %1 canceled, no valid basses for convoy", _mission];
 		[_mission] remoteExecCall ["AS_mission_fnc_cancel", 2];
 		[_mission, "state_index", 100] call AS_spawn_fnc_set; // terminate everything
 		[_mission, "delete", true] call AS_spawn_fnc_set;
@@ -136,14 +141,25 @@ private _fnc_spawn = {
 		_escortSize = (round random 2) + 1
 	};
 
+	private _leadCategory = ["cars_transport", "cars_armed"] select (["cars_armed"] call AS_AAFarsenal_fnc_countAvailable > 0);
+
 	// spawn escorts
 	for "_i" from 1 to _escortSize do {
-		private _category = [
+
+		private _escortVehicleType = "";
+		//Lead vehicle is a car, armed if possible. This to ensure proper pathfinding among roads (not an apc)
+		if (_i == 1) then {
+			_escortVehicleType = selectRandom (_leadCategory call AS_AAFarsenal_fnc_valid);
+		} else {
+
+			private _category = [
 			["trucks", "apcs"],
 			["trucks" call AS_AAFarsenal_fnc_countAvailable,
 			 "apcs" call AS_AAFarsenal_fnc_countAvailable]
 			] call BIS_fnc_selectRandomWeighted;
-		private _escortVehicleType = selectRandom (_category call AS_AAFarsenal_fnc_valid);
+			_escortVehicleType = selectRandom (_category call AS_AAFarsenal_fnc_valid);
+		};
+
 
 		([_escortVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_vehicle", "_vehicleGroup"];
 		_posRoad = [(_posRoad select 0) - (15*(sin _dir )), (_posRoad select 1) - (15*(cos _dir)), 0]; //next one is 15m behind
@@ -157,14 +173,13 @@ private _fnc_spawn = {
 		_vehicles pushBack _vehicle;
 
 		private _tipoGrupo = "";
-		if (_escortVehicleType call AS_AAFarsenal_fnc_category == "apcs") then {
+		if (_escortVehicleType call AS_AAFarsenal_fnc_category in ["cars_transport", "cars_armed"]) then {
 			_tipoGrupo = [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
-			_separation = 20;
 		} else {
 			_tipoGrupo = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		};
 
-		//_vehicle setConvoySeparation _separation; //Experiment not using this if it's causing AI to freeze in convoy
+		_vehicle setConvoySeparation _separation; //Experiment not using this if it's causing AI to freeze in convoy. atm the freezes happen for some other reason
 
 		//Updated to make sure the group fits in the vehicle
 		//private _grupoEsc = [_posbase, ("AAF" call AS_fnc_getFactionSide), _tipoGrupo] call BIS_Fnc_spawnGroup;
@@ -346,14 +361,14 @@ private _fnc_run = {
 
 	//Trigger distance increased so last vehicle of convoy which is usually the mainvehicle can trigger fail
 	private _fnc_missionFailedCondition = call {
-		if (_missionType in ["convoy_money","convoy_supplies"]) exitWith {
+		if (_missionType in ["convoy_supplies"]) exitWith {
 			{
 				private _hasArrived = {
-					_crate distance2D _position < 200 and {!([_crate, 50] call AS_fnc_friendlyNearby)}}; //Check if blufor is not near
+					_crate distance2D _position < 200 and {!([_position, 200] call AS_fnc_friendlyNearby)}}; //Check if blufor is not near
 				(false) or _hasArrived
 			}
 		};
-		if (_missionType in ["convoy_armor", "convoy_ammo", "convoy_fuel"]) exitWith {
+		if (_missionType in ["convoy_armor", "convoy_ammo", "convoy_fuel", "convoy_money"]) exitWith {
 			{
 				private _hasArrived = {((driver _mainVehicle) call AS_fnc_getSide == "AAF") and
 					{_mainVehicle distance2D _position < 200 and {!([_mainVehicle, 50] call AS_fnc_friendlyNearby)}}}; //Check if blufor is not near
@@ -379,7 +394,7 @@ private _fnc_run = {
 		};
 	};
 
-	//MAJOR FAIL
+	//MAJOR FAIL: CONVOY REACHES TEH DESTINATION
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
@@ -398,6 +413,7 @@ private _fnc_run = {
 		};
 	};
 
+	//CONVOY IS EITHER LATE, DESTROYED OR CAPTURED
 	private _fnc_missionSuccessfulCondition = call {
 		if (_missionType in ["convoy_money","convoy_supplies"]) exitWith {
 			{
@@ -433,35 +449,42 @@ private _fnc_run = {
 				if (_missionType in ["convoy_money", "convoy_supplies"]) then {
 					_fnc_missionFailedCondition = {not(alive _crate) or dateToNumber date > _max_date};
 				};
+				//CONVOY LATE OR DESTROYED
 				private _fnc_missionFailed = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
-					if (_missionType in ["convoy_supplies", "convoy_money"]) then {
+					if (_missionType == "convoy_supplies") then {
 						if (not(alive _crate)) then {
 							//Crate was destroyed by FIA
-							[-10,-5, _position, true] remoteExec ["AS_fnc_changeCitySupport",2];
-							if (_missionType == "convoy_money") then {
-								[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];
-							};
-						} else {
+								[-10, -5, _position, true] remoteExec ["AS_fnc_changeCitySupport",2];
+							} else {
 							//The AAF delivery is late
-							[-10, 0, _position] remoteExec ["AS_fnc_changeCitySupport",2];
+								[-10, 0, _position, true] remoteExec ["AS_fnc_changeCitySupport",2];
 
-							//Money is recoverable if delivery is late
-							if (_missionType == "convoy_money") then {
+								_crate setVariable ["dest", "Empty", true];
+
+						};
+					};
+
+					if (_missionType == "convoy_money") then {
+							[-5, 0, _position, true] remoteExec ["AS_fnc_changeCitySupport",2];
+							if (not(alive _crate)) then {
+							[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];
+
+						} else {
+								//Money is recoverable if delivery is late
 								[_crate] spawn {
-									params ["_crate"];
-									private _pos = "fia_hq" call AS_location_fnc_position;
-									waitUntil {sleep 1; not(alive _crate) or (!(_crate getvariable ["asCargo", false]) and {isNil "AS_HQ_moving" and {_crate distance2D _pos < 100}})};
-									if (!(alive _crate)) exitWith {};
+								params ["_crate"];
+								private _pos = "fia_hq" call AS_location_fnc_position;
+								waitUntil {sleep 1; not(alive _crate) or (!(_crate getvariable ["asCargo", false]) and {isNil "AS_HQ_moving" and {_crate distance2D _pos < 100}})};
+								if (!(alive _crate)) exitWith {};
 
 									[0, 5000] remoteExec ["AS_fnc_changeFIAmoney", 2];
-								};
-							} else {
-							_crate setVariable ["dest", "Empty", true];
+									[-5000] remoteExec ["AS_fnc_changeAAFmoney", 2];
 							};
 						};
 					};
+
 					//Killing the convoy is always better than it being late
 					if (_missionType == "convoy_fuel") then {
 						if (not(alive _mainVehicle)) then {
@@ -497,6 +520,7 @@ private _fnc_run = {
 				if (_missionType in ["convoy_supplies", "convoy_money"]) then {
 					_fnc_missionSuccessfulCondition = {!(_crate getvariable ["asCargo", false]) and {_crate distance2D _destination < 100 and {isnil "AS_HQ_moving" or _missionType == "convoy_supplies"}}};
 				};
+				//CONVOY CAPTURED
 				private _fnc_missionSuccessful = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 

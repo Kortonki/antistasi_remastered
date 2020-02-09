@@ -90,6 +90,8 @@ private _vehicles = [];
 {
     private _type = typeOf _x;
     private _pos = getPos _x;
+    //To make sure objects won't sink
+    if ((_pos select 2) < 0) then {_pos set [2, 0];};
     private _dir = getDir _x;
 
     private _fuel = fuel _x;
