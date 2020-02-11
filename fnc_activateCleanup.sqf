@@ -1,5 +1,7 @@
 #include "macros.hpp"
 private _killed = _this select 0;
+private _group = group _killed;
+
 
 _killed setVariable ["inDespawner", true, true]; //this to make so activaVehicleCleanup doesn't activate for mission vehicles
 if (_killed isKindof "AllVehicles") then {
@@ -14,7 +16,7 @@ if (_killed in (AS_P("vehicles"))) then {
 };
 
 sleep AS_P("cleantime");
-waitUntil {sleep 20; not([AS_P("spawnDistance"), _killed, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)};
+waitUntil {sleep 20; not([AS_P("spawnDistance"), _killed, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) or isnull _killed};
 
 //This happens in killed eventhandler
 /*if (_killed call AS_fnc_getSide == "AAF") then {
@@ -22,8 +24,9 @@ waitUntil {sleep 20; not([AS_P("spawnDistance"), _killed, "BLUFORSpawn", "boolea
 	[_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
 };*/
 
-private _group = group _killed;
-_killed call AS_fnc_safeDelete;
+if (!(isNull _killed)) then {
+	_killed call AS_fnc_safeDelete;
+};
 
 
 

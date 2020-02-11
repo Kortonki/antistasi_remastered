@@ -36,14 +36,16 @@ private _fuelReserves = AS_P("fuelFIA");
 // money and fuel for FIA vehicles TODO: vehicles to garages?
 {
     private _pos = getpos _x;
+    private _type = typeOf _x;
     private _closest = _pos call AS_location_fnc_nearest;
+    private _size = _closest call AS_location_fnc_size;
     private _closest_pos = _closest call AS_location_fnc_position;
 
-    //Vehicles closer than 200m and owned by FIA will become persistent
+    //Vehicles closer than size and owned by FIA will become persistent
     if (alive _x and
         {not(_x in AS_P("vehicles")) and
         {(_closest call AS_location_fnc_side) == "FIA" and
-        {_closest_pos distance2D _pos <= 200 and
+        {_closest_pos distance2D _pos <= _size and
         {(_x call AS_fnc_getSide) == "FIA"}}}})
     then {
       [_x] call AS_fnc_changePersistentVehicles;
@@ -76,7 +78,7 @@ private _fuelReserves = AS_P("fuelFIA");
       [_x, false] call AS_fnc_changePersistentVehicles;
       diag_log format ["AS: Savegame, FIA vehicle (%1) removed from persistents. Location: %2", _x,  _closest];
     };
-} forEach vehicles;
+} forEach (vehicles select {typeOf _x != "WeaponHolderSimulated" and {typeOf _x != "ReammoBox_F"}});
 
 // convert vehicles to positional information
 //if motor vehicle, get vehicle fuel

@@ -43,7 +43,7 @@ class AS {
 
         FNC(fia_recruitment,recruitFIAunit);
 
-        FNC(arsenal,collectDroppedEquipment);
+
 
         FNC_BASE(refreshArsenal);
         FNC_BASE(resetPetrosPosition);
@@ -219,6 +219,7 @@ class AS {
         FNC(arsenal,addMagazineRemains);
         FNC(arsenal,showUnlocked);
         FNC(arsenal,waitArsenalSync);
+        FNC(arsenal,collectDroppedEquipment);
 
         FNC_BASE(initPlayerPosition);
         FNC_BASE(initVehicle);

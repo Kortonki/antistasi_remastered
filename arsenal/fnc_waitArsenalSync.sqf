@@ -11,7 +11,7 @@
   while {_a != _b or diag_Ticktime > _time} do {
 
     _a = count ((([caja, true] call AS_fnc_getBoxArsenal) select _x) select 1);
-    sleep 0.2;
+    sleep 0.1; //Experiment here what is enough
     _b = count ((([caja, true] call AS_fnc_getBoxArsenal) select _x) select 1);
   };
 

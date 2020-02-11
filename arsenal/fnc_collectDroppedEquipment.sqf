@@ -1,12 +1,22 @@
 #include "../macros.hpp"
-AS_SERVER_ONLY("fnc_collectDroppedEquipment");
-params ["_position", "_size", "_box"]; //_box appears to be caja for all the calls
+params ["_location","_box"]; //_box appears to be caja for all the calls
+private _size = _location call AS_location_fnc_size;
+private _position = _location call AS_location_fnc_position;
+private _side = _location call AS_location_fnc_side;
+
+if (_side == "FIA") then {
+
+//Weapons and stuff laying on the ground
+
 {
     ([_x, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
     [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
     [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
     [_x] RemoteExec ["deleteVehicle", _x];
+
 } forEach nearestObjects [_position, ["WeaponHolderSimulated", "WeaponHolder"], _size];
+
+//Dead soldiers. Activatecleanup overridden with this
 
 {
     if not (alive _x) then {
@@ -14,5 +24,77 @@ params ["_position", "_size", "_box"]; //_box appears to be caja for all the cal
         [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
         [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
         _x call AS_fnc_emptyUnit;
+        [_x] RemoteExec ["deleteVehicle", _x];
     };
 } forEach (_position nearObjects ["Man", _size]);
+
+
+//Loot boxes and vehicles
+{
+    private _veh = _x;
+
+    if (_veh isKindOf "AllVehicles" and {!(_veh in AS_P("vehicles"))}) then {
+          [_veh] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+          [_veh, "FIA"] call AS_fnc_setSide;
+
+          //IF vehicle is left there with cargo, it will looted in savegame at the latest
+    };
+
+    if (_veh isKindOf "ReammoBox_F") then {
+
+      ([_veh, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
+      [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+      [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
+      [_veh] RemoteExec ["deleteVehicle", _x];
+
+    };
+
+
+} foreach (vehicles select {(typeOf _x) != "WeaponHolderSimulated" and {_x distance2D _position <= _size}});
+
+//AAF Locations
+
+} else {
+
+  //Remove and clean FIA persistents from AAF location. Return to aafarsenal or refund
+
+  {
+      private _veh = _x;
+      private _type = typeOf _veh;
+
+      if (_type isEqualTo "WeaponHolderSimulated") then {[_veh] remoteExec ["deleteVehicle", _veh];};
+
+      if (_veh in AS_P("vehicles")) then {
+        [_veh, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+      //If possible, return to AAFarsenal
+
+        private _vehicleCategory = _type call AS_AAFarsenal_fnc_category;
+
+        if (_vehicleCategory != "") then {
+
+          if (_vehicleCategory call AS_AAFarsenal_fnc_canAdd) then {
+            [_vehicleCategory] remoteExec ["AS_AAFarsenal_fnc_addVehicle", 2];
+          } else {
+            [_vehicleCategory call AS_AAFarsenal_fnc_cost] remoteExec ["AS_fnc_changeAAFmoney", 2];
+          };
+
+        };
+        {
+          detach _x;
+        } foreach (attachedObjects _veh);
+        [_veh] remoteExec ["deleteVehicle", _veh];
+
+      };
+
+  } forEach (vehicles select {_x distance2D _position <= _size});
+
+  //Dead soldiers. Activatecleanup overridden with this
+
+  {
+      if not (alive _x) then {
+          [_x] RemoteExec ["deleteVehicle", _x];
+      };
+  } forEach (_position nearObjects ["Man", _size]);
+
+
+};

@@ -72,7 +72,7 @@ if (_type == "seaport") then {
 	["TaskSucceeded", ["", "Seaport Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[-10,10,_posicion] call AS_fnc_changeCitySupport;
 	["con_ter"] call fnc_BE_XP;
-	[[_flag,"seaport"],"AS_fnc_addAction"] call BIS_fnc_MP;
+	[_flag, "seaport"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
 };
 if (_type in ["factory", "resource"]) then {
 	if (_type == "factory") then {["TaskSucceeded", ["", "Factory Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];};
@@ -99,5 +99,4 @@ if (_location call AS_location_fnc_spawned) then {
 	[_location] spawn AS_fnc_lose_location;
 } else {
 	_location call AS_location_fnc_removeRoadblocks;
-	[_posicion, _size, caja] call AS_fnc_collectDroppedEquipment;
 };

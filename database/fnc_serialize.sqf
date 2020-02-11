@@ -16,11 +16,13 @@ diag_log "[AS] Server: serializing locations...";
 diag_log "[AS] Server: serializing fia_hq...";
 [_dict, "AS_fia_hq", call AS_database_fnc_hq_toDict] call DICT_fnc_setGlobal;
 
-diag_log "[AS] Server: serializing FIA arsenal...";
-[_dict, "AS_fia_arsenal", call AS_FIAarsenal_fnc_toDict] call DICT_fnc_setGlobal;
+//Persistents before arsenal incase new persistents come up for loot
 
 diag_log "[AS] Server: serializing persistents...";
 [_dict, "AS_persistent", call AS_database_fnc_persistents_toDict] call DICT_fnc_setGlobal;
+
+diag_log "[AS] Server: serializing FIA arsenal...";
+[_dict, "AS_fia_arsenal", call AS_FIAarsenal_fnc_toDict] call DICT_fnc_setGlobal;
 
 diag_log "[AS] Server: serializing missions...";
 [_dict, "AS_mission", call AS_mission_fnc_toDict] call DICT_fnc_setGlobal;

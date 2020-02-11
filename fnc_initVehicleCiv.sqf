@@ -49,7 +49,7 @@ _veh addEventHandler ["Getin", {
 
 						//Penalties here
 						[-1,0] remoteExec ["AS_fnc_changeForeignSupport",2];
-						[0,-1,getPos _vehicle] remoteExec ["AS_fnc_changeCitySupport",2]; //For comparison killing a civ it's -5%
+						[0,-1,getPos _vehicle, true] remoteExec ["AS_fnc_changeCitySupport",2]; //For comparison killing a civ it's -5%
 
 						[_vehicle] spawn {
 							params ["_vehicle"];

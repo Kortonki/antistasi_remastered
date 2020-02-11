@@ -11,7 +11,7 @@ AS_SERVER_ONLY("AS_database_fnc_persistents_start");
 
 private _towerIndex = 0;
 {
-    private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;
+    private _antenna = (nearestObjects [_x, AS_antenasTypes, 50]) select 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 1;
 
@@ -23,7 +23,7 @@ private _towerIndex = 0;
 
 } forEach AS_P("antenasPos_dead");
 {
-    private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;
+    private _antenna = (nearestObjects [_x, AS_antenasTypes, 50]) select 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 0;
 

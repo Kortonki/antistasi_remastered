@@ -57,6 +57,11 @@ if (!(_veh isKindof "StaticWeapon")) then {
 	if (_veh call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_veh call AS_fuel_fnc_getFuelCargo)};
 	[_fuel] remoteExec ["AS_fuel_fnc_changeFIAfuelReserves", 2];
 };
+
+{
+	detach _x;
+} foreach (attachedobjects _veh);
+
 deleteVehicle _veh;
 
 hint "Vehicle Sold";
