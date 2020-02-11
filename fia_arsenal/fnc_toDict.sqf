@@ -89,6 +89,10 @@ params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 //Clean doubleloot preventing variable "l":
 
 {
+  private _location = _x;
+  private _size = _location call AS_location_fnc_size;
+  private _position = _location call AS_location_fnc_position;
+  
   {
     _x setVariable ["l", nil, false];
   } foreach nearestObjects [_position, ["WeaponHolder"], _size];
