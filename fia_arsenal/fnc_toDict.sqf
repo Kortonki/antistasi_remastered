@@ -29,7 +29,7 @@ private _fnc_getVehiclesEquipment = {
         private _closest = (getPos _x) call AS_location_fnc_nearest;
         private _size = _closest call AS_location_fnc_size;
         if ((_closest call AS_location_fnc_side == "FIA") and
-                {(_x in (AS_permanent_HQplacements - [caja])) or (_x call AS_fnc_getSide) == "FIA" or (_x isKindOf "ReammoBox_F")} and
+                {(_x in AS_permanent_HQplacements) or (_x call AS_fnc_getSide) == "FIA" or (_x isKindOf "ReammoBox_F")} and
                 {alive _x} and
                 {_x distance2D (_closest call AS_location_fnc_position) <= _size} and
                 {private _invalid = weaponsItemsCargo _x; not isNil "_invalid"}) then {
@@ -92,7 +92,7 @@ params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
   private _location = _x;
   private _size = _location call AS_location_fnc_size;
   private _position = _location call AS_location_fnc_position;
-  
+
   {
     _x setVariable ["l", nil, false];
   } foreach nearestObjects [_position, ["WeaponHolder"], _size];
