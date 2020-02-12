@@ -62,6 +62,15 @@ if (_side == "AAF") then {
     };
 };
 
+if (_side == "CSAT") then {
+  _spawn_type = call {
+    if (_type in ["hill", "hillAA"]) exitWith {
+      "AAF" + _type;
+    };
+  ""
+  };
+};
+
 if (_spawn_type == "AAFgeneric") exitWith {
     [AS_spawn_createAAFgeneric_states, AS_spawn_createAAFgeneric_state_functions]
 };

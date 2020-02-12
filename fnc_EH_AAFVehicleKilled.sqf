@@ -37,11 +37,11 @@ if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {
       _xpEffect = "des_arm";
     };
     case "boats" : {
-      _xpEffect = "_des_veh";
+      _xpEffect = "des_veh";
       _citySupportEffect = 1;
     };
     case "cars_armed" : {
-      _xpEffect = "_des_veh";
+      _xpEffect = "des_veh";
       _citySupportEffect = 1;
     };
     case "trucks" : {

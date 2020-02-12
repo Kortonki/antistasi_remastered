@@ -72,7 +72,7 @@ private _fnc_run = {
 		};
 
 		private _posHQ = getMarkerPos "FIA_HQ";
-		_potentialLocations select {_posHQ distance (_x call AS_location_fnc_position) < 3000}
+		_potentialLocations select {_posHQ distance2D (_x call AS_location_fnc_position) < 5000}
 	};
 
 	private _arraydestinos = call _fnc_destinations;
@@ -88,13 +88,13 @@ private _fnc_run = {
 	};
 
 	private _destino = selectRandom _arraydestinos;
-	private _posdestino = _destino call AS_location_fnc_position;
+	private _posdestino = _destino call AS_location_fnc_positionConvoy;
 	private _Vwp0 = _grupoVeh addWaypoint [_posdestino, 0];
 	_grupoVeh setcurrentWaypoint _Vwp0;
 	_Vwp0 setWaypointType "MOVE";
 	_Vwp0 setWaypointBehaviour "SAFE";
 	_Vwp0 setWaypointSpeed "LIMITED";
-	[_veh,"Patrol"] spawn AS_fnc_setConvoyImmune;
+	[_veh,"RoadPatrol"] spawn AS_fnc_setConvoyImmune;
 
 	private _AAFresAdj = [] call AS_fnc_getAAFresourcesAdj;
 	private _min = (0.3*(_AAFresAdj / 1500)) min 0.3; //TODO: make this an external function
@@ -102,6 +102,7 @@ private _fnc_run = {
 
 	[_veh, _min, _max] call AS_fuel_fnc_randomFuelCargo;
 
+	//Conisder if this kind of target sharing is necessary. OTOH the patrol doesn't use UPSMON to share info
 	while {(_veh distance _posdestino > _distancia) and _continue_condition} do {
 		sleep 20;
 		{
@@ -110,7 +111,7 @@ private _fnc_run = {
 				private _nivel = (driver _veh) knowsAbout _arevelar;
 				if (_nivel > 1.4) then {
 					{
-						if (leader _x distance _veh < AS_P("spawnDistance")) then {_x reveal [_arevelar,_nivel]};
+						if (leader _x distance2D _veh < AS_P("spawnDistance")) then {_x reveal [_arevelar,_nivel]};
 					} forEach allGroups;
 				};
 			};
@@ -121,7 +122,7 @@ private _fnc_run = {
 		_arrayDestinos = "AAF" call AS_location_fnc_S;
 	} else {
 		if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) then {
-			_arraydestinos = ([["searport"], "AAF"] call AS_location_fnc_TS) select {(_x call AS_location_fnc_position) distance (position _veh) < 2500};
+			_arraydestinos = ([["searport"], "AAF"] call AS_location_fnc_TS) select {(_x call AS_location_fnc_position) distance2D (position _veh) < 2500};
 		} else {
 			_arraydestinos = call _fnc_destinations;
 		};

@@ -33,7 +33,7 @@ if (_side == "FIA") then {
 {
     private _veh = _x;
 
-    if (_veh isKindOf "AllVehicles" and {!(_veh in AS_P("vehicles"))}) then {
+    if (_veh isKindOf "AllVehicles" and {_veh call AS_fnc_getside != "CIV" and {!(_veh in AS_P("vehicles"))}}) then {
           [_veh] remoteExec ["AS_fnc_changePersistentVehicles", 2];
           [_veh, "FIA"] call AS_fnc_setSide;
 
@@ -64,7 +64,7 @@ if (_side == "FIA") then {
 
       if (_type isEqualTo "WeaponHolderSimulated") then {[_veh] remoteExec ["deleteVehicle", _veh];};
 
-      if (_veh in AS_P("vehicles")) then {
+      if (_veh call AS_fnc_getSide in ["FIA", "NATO"]) then {
         [_veh, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
       //If possible, return to AAFarsenal
 
@@ -75,7 +75,8 @@ if (_side == "FIA") then {
           if (_vehicleCategory call AS_AAFarsenal_fnc_canAdd) then {
             [_vehicleCategory] remoteExec ["AS_AAFarsenal_fnc_addVehicle", 2];
           } else {
-            [_vehicleCategory call AS_AAFarsenal_fnc_cost] remoteExec ["AS_fnc_changeAAFmoney", 2];
+            private _count = 0.5+(0.1*(count ["seaport", "AAF"] call AS_location_fnc_TS));
+            [(_vehicleCategory call AS_AAFarsenal_fnc_cost)*_count] remoteExec ["AS_fnc_changeAAFmoney", 2];
           };
 
         };

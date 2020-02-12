@@ -230,6 +230,8 @@ if (_side == "FIA") then {
 					[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 				};
 				//Here anything related to FIA vehicles being captured
+
+				[_vehicle, _side] call AS_fnc_setSide;
 			};
 
 		}];

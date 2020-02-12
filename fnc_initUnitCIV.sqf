@@ -86,7 +86,7 @@ if (typeOf _unit == "C_Journalist_F") then {
 
 		[_unit, _source] spawn {
 		params ["_unit", "_source"];
-		sleep 1;
+		sleep 5;
 
 		if (!(alive _unit)) exitWith {}; //If unit was killed, then only kill penalty
 
@@ -120,7 +120,8 @@ if (typeOf _unit == "C_Journalist_F") then {
 			//Civilian INJURY penalties
  			if (side _source == ("FIA" call AS_fnc_getFactionSide)) then {
 					[0,-2,getPos _unit, true] remoteExec ["AS_fnc_changeCitySupport",2];
- 			} else {
+ 			};
+			if (side _source == ("AAF" call AS_fnc_getFactionSide)) then {
 					[-2,0,getPos _unit, true] remoteExec ["AS_fnc_changeCitySupport",2];
  			};
 		};

@@ -26,7 +26,7 @@ private _spawningOPFORunits = [];
     private _isSpawned = _x call AS_location_fnc_spawned;
     private _deSpawning = _x call AS_location_fnc_despawning;
 
-    if (_x call AS_location_fnc_side == "AAF") then {
+    if (_x call AS_location_fnc_side in ["AAF", "CSAT"]) then {
         private _spawnCondition = (_x call AS_location_fnc_forced_spawned) or ({(_x distance2D _position < AS_P("spawnDistance"))} count _spawningBLUFORunits > 0);
         //Added a condition here to check last spawn has finished before starting a new one. Rare but can happen because of scheduling
         if (!_isSpawned and {!(_x call AS_spawn_fnc_exists) and {_spawnCondition}}) then {
