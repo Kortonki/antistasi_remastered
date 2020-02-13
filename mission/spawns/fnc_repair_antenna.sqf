@@ -69,7 +69,7 @@ private _fnc_spawn = {
 	};
 
 	private _task = ([_mission, "resources"] call AS_spawn_fnc_get) select 0;
-	[_mission, "resources", [_task, [[_group], [_veh], []]]] call AS_spawn_fnc_set;
+	[_mission, "resources", [_task, [_group], [_veh], []]] call AS_spawn_fnc_set;
 
 };
 
