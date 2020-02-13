@@ -40,7 +40,7 @@ if (_side == "FIA") then {
           //IF vehicle is left there with cargo, it will looted in savegame at the latest
     };
 
-    if (_veh isKindOf "ReammoBox_F") then {
+    if (_veh isKindOf "ReammoBox_F" and {_veh != caja}) then {
 
       ([_veh, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
       [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
