@@ -43,12 +43,13 @@ private _fuelReserves = AS_P("fuelFIA");
 
     //Vehicles closer than size and owned by FIA will become persistent
     if (alive _x and
+        {_x isKindof "AllVehicles" and
         {not(_x in AS_P("vehicles")) and
         {not(_x in AS_permanent_HQplacements) and
         {(_closest call AS_location_fnc_side) == "FIA" and
         {_closest_pos distance2D _pos <= _size and
         {(_x call AS_fnc_getSide) != "CIV" and
-        {count (crew _x) == 0}}}}}})
+        {count (crew _x) == 0}}}}}}})
     then {
       [_x] call AS_fnc_changePersistentVehicles;
       diag_log format ["AS: Savegame, FIA vehicle (%1) added as persistent. Location: %2", _x,  _closest];
