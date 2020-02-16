@@ -25,10 +25,10 @@ if (_type == "kill_traitor") exitWith {
     [5, [_size, _position, 10], [0, -2]]
 };
 if (_type == "kill_officer") exitWith {
-    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 0, _position, true], 90*60, [], [_location, 60]]
+    [5, [_size, _position, 10], [0, -10], [0, 0], [-5, 10, _position, true], 60*60, [], [_location, 60]]
 };
 if (_type == "kill_specops") exitWith {
-    [5, [_size, _position, 10], [0, -5], [0, 200], [0, 5, _position, true], 10*60]
+    [5, [_size, _position, 10], [0, -5], [0, 0], [0, 5, _position, true], 10*60]
 };
 if (_type == "aaf_attack_hq") exitWith {
     [0, [500, _position, 10], [0, 3], [0, 300]]

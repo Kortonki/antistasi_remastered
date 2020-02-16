@@ -175,7 +175,7 @@ if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_
 } forEach ("resource" call AS_location_fnc_T);
 
 //Addition: Unused HR will earn money for FIA. Consider them working for supplies etc. //TODO: probably needs balancing
-private _resCount = {(_x call AS_location_fnc_side) == "FIA"} count (["resource", "seaport"] call AS_location_fnc_T);
+private _resCount = {(_x call AS_location_fnc_side) == "FIA"} count (["resource", "factory", "seaport"] call AS_location_fnc_T);
 _FIAnewMoney = _FIAnewMoney + (_resCount+1)*_FIAResIncomeMultiplier*(AS_P("hr"));
 
 

@@ -19,7 +19,7 @@ params [["_commander_score", 0],
 */
 
 if (_type == "kill_traitor") exitWith {
-    [-10, 0, [0, 0], [0,0], [0, 0, []], -10*60, [
+    [-10, 0, [0, 0], [0,0], [0, 0, []], -30*60, [
       ["Traitor can reveal our locations or worsen our relations with foreign operators", {
         private _locations = ("FIA" call AS_location_fnc_S) select {(_x call AS_location_fnc_type) in ["watchpost", "roadblock", "camp", "fia_hq"]};
         if (count _locations > (random 2)) then {
@@ -35,7 +35,7 @@ if (_type == "kill_traitor") exitWith {
     ]]
 };
 if (_type == "kill_officer") exitWith {
-    [-10, 0, [0, 0], [0, 0], [5, 0, _position], -10*60, [], [_location,-30]]
+    [-10, 0, [0, 5], [0, 0], [5, 0, _position], -10*60, [], [_location,-30]]
 };
 if (_type == "kill_specops") exitWith {
     [-10, 0, [0, 0], [0, 0], [5, 0, _position], -10*60]

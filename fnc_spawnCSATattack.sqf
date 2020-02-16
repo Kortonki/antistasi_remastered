@@ -1,4 +1,6 @@
-params ["_patrolMarker", "_count", "_threatEvalAir"];
+#include "macros.hpp"
+params ["_patrolMarker", "_maxcount", "_threatEvalAir"];
+//count here is the max count for csat choppers, otherwise depends on csatsupport
 
 private _position = getMarkerPos _patrolMarker;
 
@@ -9,6 +11,10 @@ private _vehicles = [];
 
 private _transportHelis = ["CSAT", "helis_transport"] call AS_fnc_getEntity;
 private _attackHelis = (["CSAT", "helis_armed"] call AS_fnc_getEntity) + (["CSAT", "helis_attack"] call AS_fnc_getEntity);
+
+[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2]; //CSAT support lowered each attack
+
+private _count = (1 + floor (AS_P("CSATsupport")/25)) min _maxcount;
 
 for "_i" from 1 to _count do {
     private _waveType = selectRandom ["fastrope", "disembark", "paradrop"];

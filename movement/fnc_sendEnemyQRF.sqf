@@ -41,7 +41,7 @@ if not (_origin isEqualTo "spawnCSAT") then {
 	_method = "disembark";
 	_faction = "AAF";
 	if (_size == "small") then {
-		[_origin,5] call AS_location_fnc_increaseBusy;
+
 		if (_origin in _bases) then {
 			if ("cars_armed" call AS_AAFarsenal_fnc_countAvailable < 2 or "trucks" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
 			_type = "land";
@@ -49,19 +49,21 @@ if not (_origin isEqualTo "spawnCSAT") then {
 			_transportVehicle = selectRandom ("trucks" call AS_AAFarsenal_fnc_valid);
 			_dismountGroup = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		} else {
-			if ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
+			if ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2 or (_composition in ["mixed", "destroy"] and {"helis_armed" call AS_AAFarsenal_fnc_countAvailable < 2})) exitWith {_noArsenal = true;};
+			_attackVehicle = selectRandom (["AAF", "helis_armed"] call AS_fnc_getEntity);
 			_transportVehicle = selectRandom (["AAF", "helis_transport"] call AS_fnc_getEntity);
 			_dismountGroup = [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		};
 	} else {
-		[_origin,10] call AS_location_fnc_increaseBusy;
+
 		if (_origin in _bases) then {
 			if ("apcs" call AS_AAFarsenal_fnc_countAvailable < 2 or "trucks" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
 			_type = "land";
 			_attackVehicle = selectRandom ("apcs" call AS_AAFarsenal_fnc_valid);
 			_transportVehicle = selectRandom ("trucks" call AS_AAFarsenal_fnc_valid);
 		} else {
-			if ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2) exitWith {_noArsenal = true;};
+			if ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2 or (_composition in ["mixed", "destroy"] and {"helis_armed" call AS_AAFarsenal_fnc_countAvailable < 2})) exitWith {_noArsenal = true;};
+			_attackVehicle = selectRandom (["AAF", "helis_armed"] call AS_fnc_getEntity);
 			_transportVehicle = selectRandom (["AAF", "helis_transport"] call AS_fnc_getEntity);
 			_dismountGroup = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 			_method = "fastrope";
@@ -72,6 +74,12 @@ if not (_origin isEqualTo "spawnCSAT") then {
 };
 
 if (_noArsenal) exitWith {diag_log "[AS]: Not enough vehicles, cancelling QRF";};
+
+if (_size == "small") then {
+	[_origin,5] call AS_location_fnc_increaseBusy;
+} else {
+	[_origin,10] call AS_location_fnc_increaseBusy;
+};
 
 // get the position of the target marker
 if (typeName _origin != "ARRAY") then {

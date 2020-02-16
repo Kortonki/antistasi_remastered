@@ -31,6 +31,7 @@ private _fnc_spawn = {
 	//Transport choppers. They will come regardless of support
 
 	for "_i" from 1 to (1 + round random 2) do {
+		[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2]; //CSAT support lowered each attack
 		private _pos = [_origin, 300, random 360] call BIS_Fnc_relPos;
 		private _type = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);
 		([_type, _pos, random 360, "CSAT", "pilot", 300, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoHeli", "_pilot"];

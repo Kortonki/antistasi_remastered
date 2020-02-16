@@ -37,6 +37,8 @@ private _fnc_spawn = {
 
 	//CSAT Air Attack
 
+	[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2]; //CSAT support lowered each attack
+
 	for "_i" from 1 to 3 do {
 		private _tipoveh = selectRandom _csatAir;
 		private _timeOut = 0;
