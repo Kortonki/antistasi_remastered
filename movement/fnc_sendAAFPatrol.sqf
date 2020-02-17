@@ -3,10 +3,8 @@ AS_SERVER_ONLY("fnc_sendAAFpatrol");
 params ["_location", ["_fromBase", ""], ["_threatEval_Land", 0], ["_threatEval_Air", 0], ["_start", false]];
 
 private _debug_prefix = format ["sendAAFPatrol from '%1' to '%2' cancelled: ", _fromBase, _location];
-if AS_S("blockCSAT") exitWith {
-	private _message = " blocked";
-	diag_log (_debug_prefix + _message);
-};
+
+private _FIAbases = [["base","airfield"], "FIA"] call AS_location_fnc_TS;
 
 private _isDirectAttack = false;
 private _base = "";
@@ -76,9 +74,18 @@ if (!_isDirectAttack) then {
 };
 
 // check if CSAT will help.
+//Changed to same condition as in sendAAFattack
 private _hayCSAT = false;
-if ((_base == "") and {(_aeropuerto == "") and {(random 100 < AS_P("CSATsupport"))}}) then {
+if (count _FIAbases > 0 and {random 100 < AS_P("CSATsupport") and {!(AS_S("blockCSAT"))}}) then {
 	_hayCSAT = true;
+};
+
+//Will not block all comms
+//Moved from beginnig of the script here to prevent CSAT
+if AS_S("blockCSAT") then {
+	private _message = " blocked";
+	diag_log (_debug_prefix + _message);
+	_hayCSAT = false;
 };
 
 if ((_base == "") and {(_aeropuerto == "") and {(!_hayCSAT)}}) exitWith {

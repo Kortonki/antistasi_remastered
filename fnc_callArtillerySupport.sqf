@@ -196,8 +196,7 @@ if !(_location call AS_location_fnc_forced_spawned) then {
 };
 
 _texto = format ["Requesting fire support on Grid %1. %2 Rounds", mapGridPosition _posicionTel, round _rounds];
-[[AS_commander,"sideChat",_texto],"AS_fnc_localCommunication"] call BIS_fnc_MP;
-
+[AS_commander,"sideChat",_texto] remoteExec ["AS_fnc_localCommunication", [0, -2] select isDedicated];
 if (_tipoArty == "BARRAGE") then
 	{
 	_mrkfin2 = createMarker [format ["Arty%1", random 100], _posicionTel2];

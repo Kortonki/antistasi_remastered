@@ -57,7 +57,7 @@ private _fnc_spawn = {
 		_vehicles append _vehicles1;
 
 		// drop artillery at bases or airfields
-		[["TaskSucceeded", ["", format ["%1 under artillery fire",[_location] call AS_fnc_location_name]]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskSucceeded", ["", format ["%1 under artillery fire",[_location] call AS_fnc_location_name]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 		[_location] spawn {
 			params ["_location"];
 			if ((AS_P("CSATSupport")) >= 50) then {

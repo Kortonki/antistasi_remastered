@@ -161,7 +161,7 @@ if (count _objectives > 0) then {
 			_alarm = [] call AS_mission_fnc_createDefendHQ; //If mission creation fails, no alarm
 
 		};
-		_location call AS_mission_fnc_createDefendLocation;
+		[_location, _useCSAT] call AS_mission_fnc_createDefendLocation;
 		_alarm = true;
 	};
 

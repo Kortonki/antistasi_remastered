@@ -112,16 +112,16 @@ private _fnc_wait_for_destruction = {
 
 		switch _type do {
 			case "roadblock": {
-				[["TaskFailed", ["", "Roadblock Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+				["TaskFailed", ["", "Roadblock Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 			case "watchpost": {
-				[["TaskFailed", ["", "Watchpost Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+				["TaskFailed", ["", "Watchblock Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 			case "camp": {
-				[["TaskFailed", ["", "Camp Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+				["TaskFailed", ["", "Camp Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 			default {
-				[["TaskFailed", ["", "Location Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+				["TaskFailed", ["", "Location Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 		};
 	};
@@ -190,7 +190,7 @@ private _fnc_clean = {
 			([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
 			[_groups,  _vehicles, _markers] call AS_fnc_cleanResources;
 			[_location, false] call AS_location_fnc_knownLocations;
-			
+
 			//Set the side to empty to trigger possible defend location mission fail so below waituntil can finish
 			[_location, "side", "EMPTY"] call AS_location_fnc_set;
 			//Check for active defence missions before removing location.
