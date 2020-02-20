@@ -106,6 +106,7 @@ call {
 	_result = [_result, [], {_x select 1}, "DESC"] call BIS_fnc_sortBy;
 
 	// assign cost based on relative cost: cheapest is 10, most expensive 30
+	//CHANGED: cheapeast is 50 as in FIA, 250 most expensive
 	private _min = (_result select (count _result - 1)) select 1;
 	private _max = (_result select 0) select 1;
 	if (_max == _min) then {
@@ -113,7 +114,7 @@ call {
 	};
 	{
 		private _cost = _x select 1;
-		_cost = 10 + 20 * (_cost - _min)/(_max - _min);
+		_cost = 50 + 200 * (_cost - _min)/(_max - _min);
 		AS_data_allCosts setVariable [_x select 0, _cost];
 	} forEach _result;
 };

@@ -102,12 +102,12 @@ private _fnc_spawn = {
 			_vehicles append _vehicles1;
 			sleep 5;
 		};
-		diag_log format ["[AS] DefendLocation: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
+		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};
 
 	if (_airfield != "") then {
 		[_airfield,60] call AS_location_fnc_increaseBusy;
-		if (_base != "") then {sleep ((_originPos distance _position)/16)};
+		if (_base != "") then {sleep ((_originPos distance2D _position)/16)};
 
 		_originPos = _airfield call AS_location_fnc_position;
 		_originPos set [2,300];
@@ -128,7 +128,10 @@ private _fnc_spawn = {
 			_uwp0 setWaypointType "LOITER";
 		};
 
-		for "_i" from 1 to 3 do {
+		private _arsenalCount = (["helis_transport", "helis_armed", "planes"] call AS_AAFarsenal_fnc_countAvailable);
+		private _nVeh = (round((_threatEvalAir/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min 10);
+
+		for "_i" from 1 to _nVeh do {
 			private _toUse = "helis_transport";  // last attack is always a transport
 
 			// first 2 rounds can be any unit, stronger the higher the treat
@@ -145,6 +148,7 @@ private _fnc_spawn = {
 			_vehicles append _vehicles1;
 			sleep 15;
 		};
+		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};
 
 	private _soldiers = [];

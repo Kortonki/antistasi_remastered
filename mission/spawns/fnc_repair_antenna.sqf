@@ -52,13 +52,7 @@ private _fnc_spawn = {
 	private _position = [_mission, "position"] call AS_spawn_fnc_get;
 
 	private _vehicleType = ["AAF", "truck_repair"] call AS_fnc_getEntity;
-
-	private _pos = _position findEmptyPosition [10,60,_vehicleType];
-	private _veh = createVehicle [_vehicleType, _pos, [], 0, "NONE"];
-	_veh allowdamage false;
-	_veh setDir random 360;
-	_veh allowDamage true;
-	[_veh, "AAF"] call AS_fnc_initVehicle;
+	private _veh = [_vehicleType, _position, "AAF", random 360, "NONE", 50] call AS_fnc_createEmptyVehicle;
 
 	// repair soldiers
 	//TODO: change this so there are actual repairmen

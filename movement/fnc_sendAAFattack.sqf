@@ -93,7 +93,8 @@ if (_useCSAT) then {
 			diag_log(_debug_prefix + _debug_message);
 
 			// decide to attack or not depending on the scores
-			if (_scoreNeededLand > _scoreLand) then {
+			//don't make them send nonexistant vehicle or the last one, just for a good measure
+			if (_scoreNeededLand > _scoreLand or ("trucks" call AS_AAFarsenal_fnc_countAvailable < 2)) then {
 				_base = "";
 			} else {  // if it is easy,
 				if (_isEasy and {_base != ""}) then {
@@ -104,7 +105,8 @@ if (_useCSAT) then {
 					};
 				};
 			};
-			if (_scoreNeededAir > _scoreAir) then {
+			//don't make them send nonexistant vehicle or the last one, just for a good measure
+			if (_scoreNeededAir > _scoreAir or ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2)) then {
 				_aeropuerto = "";
 			}
 			else {

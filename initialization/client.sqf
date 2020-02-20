@@ -137,7 +137,8 @@ if _isJip then {
 	} forEach allUnits;
 
 	// sync the inventory content to the JIP.
-	[false] remoteExec ["AS_fnc_refreshArsenal", 2];
+  //Unnecessary, done below
+	//[false] remoteExec ["AS_fnc_refreshArsenal", 2];
 };
 
 [] spawn {
@@ -146,7 +147,6 @@ if _isJip then {
 };
 
 player enablesimulation true;
-player setcaptive false;
 cutText ["","BLACK IN", 1];
 
 

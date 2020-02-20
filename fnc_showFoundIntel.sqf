@@ -28,12 +28,12 @@ if (random 100 < _chance) then {
 	private _AAFresAdj = call AS_fnc_getAAFresourcesAdj;
 	if (_AAFresAdj <= 2000) then {
 		if (_AAFresADj <= 1000) then {
-			_texto = format ["%1 %2 Funds: Poor (low ammo and fuel)<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity)]
+			_texto = format ["%1 %2 Funds: Poor (low ammo and fuel)<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity)];
 		} else {
-			_texto = format ["%1 %2 Funds: Inadequate (low fuel)<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity)]
+			_texto = format ["%1 %2 Funds: Inadequate (low fuel)<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity)];
 		};
 	} else {
-		_texto = format ["%1 %2 Funds: %3 €<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), _resourcesAAF]
+		_texto = format ["%1 %2 Funds: %3 €<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), AS_P("resourcesAAF")];
 	};
 };
 

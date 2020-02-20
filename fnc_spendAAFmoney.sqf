@@ -109,7 +109,11 @@ if ((_skillAAF < (_skillFIA + 4)) && (_skillAAF < AS_maxSkill)) then {
 //////////////// try to build a minefield ////////////////
 if (_resourcesAAF > 2000 and {_AAFresAdj > 1000} and {count (["minefield","AAF"] call AS_location_fnc_TS) < 3}) then {
 	private _minefieldDeployed = call AS_fnc_deployAAFminefield;
-	if (_minefieldDeployed) then {_resourcesAAF = _resourcesAAF - 2000};
+	if (_minefieldDeployed) then {
+    _resourcesAAF = _resourcesAAF - 2000;
+    private _debug_message = "AAF minefield deployed";
+    diag_log (_debug_prefix + _debug_message);
+  };
 };
 AS_Pset("resourcesAAF",round _resourcesAAF);
 

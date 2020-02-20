@@ -228,8 +228,11 @@ if (_player_count > 0) then {
 };
 
 //Commander gets score every update
+if (not(isNull AS_commander)) then {
 
-[AS_commander, "score", 1] call AS_players_fnc_change;
+  [AS_commander, "score", 1] call AS_players_fnc_change;
+
+};
 
 //Set next update time:
 

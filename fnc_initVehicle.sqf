@@ -103,8 +103,8 @@ if (_side != "NATO") then {
 	}];
 
 	if (_tipo isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
-		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
-		[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+		[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		};
 
 };
@@ -192,7 +192,7 @@ if (_side == "NATO") then {
     // lose support when vehicle is destroyed
     _veh addEventHandler ["Killed", {
         [-2,0] remoteExec ["AS_fnc_changeForeignSupport",2];
-        [2,-2,position (_this select 0)] remoteExec ["AS_fnc_changeCitySupport",2];
+        [0,-2,position (_this select 0)] remoteExec ["AS_fnc_changeCitySupport",2];
     }];
 };
 

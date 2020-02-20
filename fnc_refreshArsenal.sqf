@@ -18,12 +18,18 @@ if _clean then {
 
     unlockedBackpacks = unlockedBackpacks arrayIntersect unlockedBackpacks;
     publicVariable "unlockedBackpacks";
-};
+
+AS_Sset("lockArsenal", false); //This to relieve the lock if it's let on
 
 [caja, getWeaponCargo caja, getMagazineCargo caja, getItemCargo caja, getBackpackCargo caja, true, true] call AS_fnc_populateBox;
 
+};
+
+//Above put in to clean function to avoid out sync arsenal shenanigans. AddweaponcargoGlobal etc. are already jip compatible so no need to do above in jip
+
 //FAILSAFE to enable arsenal again
-AS_Sset("lockArsenal", false);
+//Make repair action elsewhere. This is run on every client init so commented out
+//
 
 [caja, "remove"] remoteExecCall ["AS_fnc_addAction", [0,-2] select isDedicated];
 
