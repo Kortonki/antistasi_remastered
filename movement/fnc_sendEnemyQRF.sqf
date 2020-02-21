@@ -47,7 +47,7 @@ if not (_origin isEqualTo "spawnCSAT") then {
 			_type = "land";
 			_attackVehicle = selectRandom (["AAF", "cars_armed"] call AS_fnc_getEntity);
 			_transportVehicle = selectRandom ("trucks" call AS_AAFarsenal_fnc_valid);
-			_dismountGroup = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
+			_dismountGroup = [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		} else {
 			if ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2 or (_composition in ["mixed", "destroy"] and {"helis_armed" call AS_AAFarsenal_fnc_countAvailable < 2})) exitWith {_noArsenal = true;};
 			_attackVehicle = selectRandom (["AAF", "helis_armed"] call AS_fnc_getEntity);
@@ -61,6 +61,7 @@ if not (_origin isEqualTo "spawnCSAT") then {
 			_type = "land";
 			_attackVehicle = selectRandom ("apcs" call AS_AAFarsenal_fnc_valid);
 			_transportVehicle = selectRandom ("trucks" call AS_AAFarsenal_fnc_valid);
+			_dismountGroup = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		} else {
 			if ("helis_transport" call AS_AAFarsenal_fnc_countAvailable < 2 or (_composition in ["mixed", "destroy"] and {"helis_armed" call AS_AAFarsenal_fnc_countAvailable < 2})) exitWith {_noArsenal = true;};
 			_attackVehicle = selectRandom (["AAF", "helis_armed"] call AS_fnc_getEntity);

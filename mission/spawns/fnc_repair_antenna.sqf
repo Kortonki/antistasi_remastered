@@ -58,7 +58,7 @@ private _fnc_spawn = {
 	//TODO: change this so there are actual repairmen
 	private _group = createGroup ("AAF" call AS_fnc_getFactionSide);
 	for "_i" from 1 to 3 do {
-		private _unit = ([_pos, 0, ["AAF", "crew"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;
+		private _unit = ([position _veh, 0, ["AAF", "crew"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;
 		[_unit] call AS_fnc_initUnitAAF;
 	};
 
@@ -75,7 +75,7 @@ private _fnc_run = {
 	private _max_date = [_mission, "max_date"] call AS_spawn_fnc_get;
 	private _veh = (([_mission, "resources"] call AS_spawn_fnc_get) select 2) select 0;
 
-	private _fnc_missionSuccessfulCondition = {not alive _veh or (_location call AS_location_fnc_side == "FIA")};
+	private _fnc_missionSuccessfulCondition = {not(alive _veh) or ((_veh call AS_fnc_getSide) in ["FIA", "NATO"]) or (_location call AS_location_fnc_side == "FIA")};
 
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;

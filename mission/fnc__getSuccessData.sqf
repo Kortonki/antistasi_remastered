@@ -126,7 +126,7 @@ if (_type == "broadcast") exitWith {
     [5, [500, _position, 10], [0, 0], [0, 0], [0, 0, []], 0, [
         ["City support per minute spent", {
             params ["_prestige", "_location"];
-            [0, _prestige, _location, true] remoteExec ["AS_fnc_changeCitySupport",2];
+            [-_prestige, _prestige, _location, true] remoteExec ["AS_fnc_changeCitySupport",2];
         }, [_prestige, _location]]]
     ]
 };

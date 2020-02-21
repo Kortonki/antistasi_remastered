@@ -75,8 +75,8 @@ petros setSkill 1;
         _dam
         }];*/
 
-petros addMPEventHandler ["mpkilled", {
-    removeAllActions petros;
+petros addEventHandler ["killed", {
+    [petros, "remove"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
     private _killer = _this select 1;
         diag_log format ["[AS] INFO: Petros died. Killer: %1", _killer];
         [] remoteExec ["AS_fnc_petrosDeath", 2];
