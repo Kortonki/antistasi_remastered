@@ -72,6 +72,19 @@ if not (_origin isEqualTo "spawnCSAT") then {
 	};
 } else {
 	_origin = getMarkerPos "spawnCSAT";
+
+	if (_side == "small") then {
+
+		if (AS_P("CSATsupport") < 5) exitWith {
+			_noArsenal = true;
+		};
+		[0,-5] remoteExec ["AS_fnc_changeForeignSupport", 2];
+	} else {
+		if (AS_P("CSATsupport") < 10) exitWith {
+			_noArsenal = true;
+		};
+		[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2];
+	};
 };
 
 if (_noArsenal) exitWith {diag_log "[AS]: Not enough vehicles, cancelling QRF";};
