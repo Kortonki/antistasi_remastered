@@ -4,15 +4,15 @@ AS_SERVER_ONLY("AS_AAFarsenal_fnc_initialize");
 [AS_container, "aaf_arsenal", call DICT_fnc_create] call DICT_fnc_setGlobal;
 
 // AAF will only buy and use vehicles of the types added here. See template.
-private _names = [
+private _names = ["MG statics", "AT statics", "Mortars", "AA statics",
     "Trucks", "Cars", "Armed cars", "APCs", "Boats",
     "Transport Helicopters", "Tanks", "Armed Helicopters", "Planes"
 ];
 // The list of all categories.
 private _categories = [
-    "trucks", "cars_transport", "cars_armed", "apcs", "boats", "helis_transport", "tanks", "helis_armed", "planes"
+  "static_mg", "static_at", "static_mortar", "static_aa", "trucks", "cars_transport", "cars_armed", "apcs", "boats", "helis_transport", "tanks", "helis_armed", "planes"
 ];
-private _costs = [600, 150, 300, 5000, 600, 10000, 6000, 20000, 20000];
+private _costs = [300, 600, 600, 1200, 600, 400, 1000, 5000, 600, 10000, 10000, 20000, 20000];
 
 {
     [call AS_AAFarsenal_fnc_dictionary, _x, call DICT_fnc_create] call DICT_fnc_setGlobal;

@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={2725.1145,245.73444,1165.6211};
-		dir[]={-0.28490329,-0.60273707,0.74551022};
-		up[]={-0.21520613,0.79782933,0.56312227};
-		aside[]={0.93421936,-1.2181008e-006,0.35702997};
+		pos[]={3378.7312,52.810253,7007.1855};
+		dir[]={-0.4520672,-0.27290452,-0.84927952};
+		up[]={-0.12824158,0.96202874,-0.24092335};
+		aside[]={-0.88277978,2.6506314e-007,0.46990106};
 	};
 };
 binarizationWanted=0;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.37";
+		briefingName="Antistasi Remastered V0.99.38";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +183,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=146;
+		items=145;
 		class Item0
 		{
 			dataType="Marker";
@@ -2870,22 +2870,6 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={-561.82568,53.552185,-189.30029};
-				angles[]={0,1.42421,0};
-			};
-			side="Empty";
-			class Attributes
-			{
-			};
-			id=2575;
-			type="CUP_A2_Road_mud_25";
-			atlOffset=34.402184;
-		};
-		class Item133
-		{
-			dataType="Object";
-			class PositionInfo
-			{
 				position[]={2626.2456,6.5503488,1028.7157};
 				angles[]={6.2581916,1.42421,0.010000871};
 			};
@@ -2897,7 +2881,7 @@ class Mission
 			id=2576;
 			type="CUP_A2_Road_mud_25";
 		};
-		class Item134
+		class Item133
 		{
 			dataType="Object";
 			class PositionInfo
@@ -2913,7 +2897,7 @@ class Mission
 			id=2578;
 			type="CUP_A2_Road_mud_30_25";
 		};
-		class Item135
+		class Item134
 		{
 			dataType="Object";
 			class PositionInfo
@@ -2930,7 +2914,7 @@ class Mission
 			type="CUP_A2_Road_mud_10_75";
 			atlOffset=-1.4305115e-006;
 		};
-		class Item136
+		class Item135
 		{
 			dataType="Object";
 			class PositionInfo
@@ -2946,7 +2930,7 @@ class Mission
 			id=2580;
 			type="CUP_A2_Road_mud_25";
 		};
-		class Item137
+		class Item136
 		{
 			dataType="Object";
 			class PositionInfo
@@ -2962,7 +2946,7 @@ class Mission
 			id=2581;
 			type="CUP_A2_Road_mud_30_25";
 		};
-		class Item138
+		class Item137
 		{
 			dataType="Object";
 			class PositionInfo
@@ -2978,7 +2962,7 @@ class Mission
 			id=2582;
 			type="CUP_A2_Road_mud_30_25";
 		};
-		class Item139
+		class Item138
 		{
 			dataType="Object";
 			class PositionInfo
@@ -2994,7 +2978,7 @@ class Mission
 			id=2583;
 			type="CUP_A2_Road_mud_25";
 		};
-		class Item140
+		class Item139
 		{
 			dataType="Object";
 			class PositionInfo
@@ -3010,7 +2994,7 @@ class Mission
 			id=2584;
 			type="CUP_A2_Road_mud_30_25";
 		};
-		class Item141
+		class Item140
 		{
 			dataType="Object";
 			class PositionInfo
@@ -3026,7 +3010,7 @@ class Mission
 			type="CUP_A2_Road_mud_1_1000";
 			atlOffset=0.40988779;
 		};
-		class Item142
+		class Item141
 		{
 			dataType="Object";
 			class PositionInfo
@@ -3042,7 +3026,7 @@ class Mission
 			id=2587;
 			type="CUP_A2_Road_mud_6konec";
 		};
-		class Item143
+		class Item142
 		{
 			dataType="Object";
 			class PositionInfo
@@ -3058,7 +3042,7 @@ class Mission
 			id=2588;
 			type="CUP_A2_Road_mud_25";
 		};
-		class Item144
+		class Item143
 		{
 			dataType="Trigger";
 			position[]={2690.79,1.8161165,1026.75};
@@ -3074,7 +3058,7 @@ class Mission
 			type="EmptyDetector";
 			atlOffset=1.1920929e-007;
 		};
-		class Item145
+		class Item144
 		{
 			dataType="Trigger";
 			position[]={2725.646,7.5205245,998.245};

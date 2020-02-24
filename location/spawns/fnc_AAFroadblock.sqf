@@ -10,49 +10,53 @@ private _fnc_spawn = {
 	(_posicion call AS_fnc_roadAndDir) params ["_road", "_dirveh"];
 
 	// create bunker on one side
-	private _pos = [getPos _road, 8, _dirveh + 270] call BIS_Fnc_relPos;
-	private _bunker = AS_small_bunker_type createVehicle _pos;
-	_bunker setDir _dirveh;
-	_vehiculos pushBack _bunker;
+	private _pos1 = [getPos _road, 8, _dirveh + 270] call BIS_Fnc_relPos;
+	private _bunker1 = AS_small_bunker_type createVehicle _pos1;
+	_bunker1 setDir _dirveh;
+	_vehiculos pushBack _bunker1;
 
-	private _static_mg = selectRandom(["AAF", "static_mg"] call AS_fnc_getEntity);
+	// create bunker on the other side
+	private _pos2 = [getPos _road, 8, _dirveh + 90] call BIS_Fnc_relPos;
+	private _bunker2 = AS_small_bunker_type createVehicle _pos2;
+	_vehiculos pushBack _bunker2;
+	_bunker2 setDir _dirveh + 180;
+
+	private _static_mg = (["AAF", "static_mg"] call AS_fnc_getEntity) select 0;
 	private _gunner = ["AAF", "gunner"] call AS_fnc_getEntity;
-
-	private _veh = _static_mg createVehicle _posicion;
-	_veh setPosATL (getPosATL _bunker);
-	_veh setDir _dirVeh;
-	_vehiculos pushBack _veh;
 
 	private _grupoE = createGroup ("AAF" call AS_fnc_getFactionSide);  // temp group
 
-	private _unit = ([_posicion, 0, _gunner, _grupoE] call bis_fnc_spawnvehicle) select 0;
-	_unit moveInGunner _veh;
-	sleep 1;
+	//If low on mgs, (25%) save them for bases and such
+	if (["static_mg", 1/4] call AS_fnc_vehicleAvailability) then {
 
-	// create bunker on the other side
-	private _pos = [getPos _road, 8, _dirveh + 90] call BIS_Fnc_relPos;
-	private _bunker = AS_small_bunker_type createVehicle _pos;
-	_vehiculos pushBack _bunker;
-	_bunker setDir _dirveh + 180;
+				private _mg1 = [_static_mg, _pos1, "AAF", _dirVeh, "CAN_COLLIDE"] call AS_fnc_createEmptyVehicle;
+				_mg1 setPosATL (getPosATL _bunker1);
+				_vehiculos pushBack _mg1;
 
-	_pos = getPosATL _bunker;
-	private _veh = _static_mg createVehicle _posicion;
-	_veh setPosATL _pos;
-	_veh setDir _dirVeh;
-	_vehiculos pushBack _veh;
+				private _unit1 = ([_posicion, 0, _gunner, _grupoE] call bis_fnc_spawnvehicle) select 0;
+				_soldados pushBack _unit1;
+				[_unit1, false] call AS_fnc_initUnitAAF;
+				_unit1 moveInGunner _mg1;
+				sleep 1;
 
-	_unit = ([_posicion, 0, _gunner, _grupoE] call bis_fnc_spawnvehicle) select 0;
-	_unit moveInGunner _veh;
+				private _mg2 = [_static_mg, _pos2, "AAF", _dirVeh + 180, "CAN_COLLIDE"] call AS_fnc_createEmptyVehicle;
+				_mg2 setPosATL (getPosATL _bunker2);
+				_vehiculos pushback _mg2;
+
+				private _unit2 = ([_posicion, 0, _gunner, _grupoE] call bis_fnc_spawnvehicle) select 0;
+				_soldados pushBack _unit2;
+				[_unit2, false] call AS_fnc_initUnitAAF;
+				_unit2 moveInGunner _mg2;
+	};
 
 	// Create flag
-	_pos = [getPos _bunker, 6, getDir _bunker] call BIS_fnc_relPos;
-	_veh = createVehicle [["AAF", "flag"] call AS_fnc_getEntity, _pos, [],0, "CAN_COLLIDE"];
-	_vehiculos pushBack _veh;
-
-	{[_x, "AAF"] call AS_fnc_initVehicle} forEach _vehiculos;
+	private _pos = [getPos _bunker2, 6, getDir _bunker2] call BIS_fnc_relPos;
+	private _flag = createVehicle [["AAF", "flag"] call AS_fnc_getEntity, _pos, [],0, "CAN_COLLIDE"];
+	_vehiculos pushBack _flag;
 
 	// create the patrol group
 	private _grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
+	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 	{[_x] join _grupo} forEach units _grupoE;
 	deleteGroup _grupoE;
 
@@ -60,7 +64,6 @@ private _fnc_spawn = {
 	if (random 10 < 2.5) then {
 		[_grupo] call AS_fnc_spawnDog;
 	};
-	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 
 	private _mrk = createMarkerLocal [format ["%1patrolarea", (diag_tickTime)], _pos];
 	_mrk setMarkerShapeLocal "RECTANGLE";
@@ -89,7 +92,7 @@ private _fnc_run = {
 
 	if (_location call AS_location_fnc_spawned) then {
 		[-5,0,_posicion] remoteExec ["AS_fnc_changeCitySupport",2];
-		[["TaskSucceeded", ["", "Roadblock Cleared"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskSucceeded", ["", "Roadblock Cleared"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 		[[_posicion], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
 		[_location] remoteExec ["AS_location_fnc_remove", 2];
 
@@ -109,11 +112,13 @@ private _fnc_clean = {
 
 	[_location, _groups] spawn AS_fnc_sendAwayFromBlufor;
 
-	[_groups,  [], _markers] call AS_fnc_cleanResources; //Vehicles aren't deleted immediately because the whole spawn disappears
+	[_groups,  _vehicles, _markers] call AS_fnc_cleanResources; //Vehicles aren't deleted immediately because the whole spawn disappears
 
+	//EXPERIMENT despawning normally to avoid duplicate vehicles
+	/*
 	{
 		[_x] spawn AS_fnc_activateVehicleCleanup;
-	} foreach _vehicles;
+	} foreach _vehicles;*/
 
 	[_location, "delete", true] call AS_spawn_fnc_set;
 

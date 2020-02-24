@@ -4,7 +4,7 @@ private _vehicles = [];
 private _units = [];
 
 (_position call AS_fnc_roadAndDir) params ["_road", "_dir"];
-if (!isNull _road) then {
+if (!isNull _road and {["static_at", 1/4] call AS_fnc_vehicleAvailability}) then {
     //spg can't fire over the bunker wall -> todo: sandbags to the side?
     private _pos = [getPos _road, 7, _dir + 270] call BIS_Fnc_relPos;
     //private _bunker = "Land_BagBunker_Small_F" createVehicle _pos;
@@ -12,10 +12,7 @@ if (!isNull _road) then {
     //_pos = getPosATL _bunker;
     //_vehicles pushBack _bunker;
 
-    private _veh = (selectrandom(["AAF", "static_at"] call AS_fnc_getEntity)) createVehicle _position;
-    _veh setPos _pos;
-    _veh setDir _dir + 180;
-    [_veh, "AAF"] call AS_fnc_initVehicle;
+    private _veh = [(["AAF", "static_at"] call AS_fnc_getEntity) select 0, _pos, "AAF", _dir + 180, "NONE"] call AS_fnc_createEmptyVehicle;
     _vehicles pushBack _veh;
 
     private _unit = ([_position, 0, ["AAF", "gunner"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;

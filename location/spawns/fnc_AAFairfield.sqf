@@ -30,6 +30,7 @@ private _fnc_spawn = {
 		_vehiculos pushBack _bunker;
 	};
 
+
 	// spawn AT road block
 	private _grupo = createGroup ("AAF" call AS_fnc_getFactionSide);
 	_grupos pushBack _grupo;
@@ -38,6 +39,13 @@ private _fnc_spawn = {
 		_soldados append _units1;
 		_vehiculos append _vehicles1;
 	};
+
+	//Populate mil buildings and add choppers to pads
+
+	([_location, "AAF", _grupo, true] call AS_fnc_populateMilBuildings) params ["_gunners2", "_vehicles2"];
+	{[_x, false] call AS_fnc_initUnitAAF} forEach _gunners2;
+	_soldados append _gunners2;
+	_vehiculos append _vehicles2;
 
 	// spawn 4 patrols
 	// _mrk => to be deleted at the end

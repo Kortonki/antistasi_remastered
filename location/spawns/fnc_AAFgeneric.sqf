@@ -22,6 +22,16 @@ private _fnc_spawn = {
 		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
 		_vehiculos pushBack _bunker;
 	};
+
+	private _groupStatics = createGroup ("AAF" call AS_fnc_getFactionSide);
+	_grupos pushBack _groupStatics;
+
+	([_location, "AAF", _groupStatics] call AS_fnc_populateMilBuildings) params ["_gunners", "_vehicles"];
+	{[_x, false] call AS_fnc_initUnitAAF} forEach _gunners;
+	_soldados append _gunners;
+	_vehiculos append _vehicles;
+
+
 	// spawn 2 patrols
 	// _mrk => to be deleted at the end
 	([_location, 2] call AS_fnc_spawnAAF_patrol) params ["_units1", "_groups1", "_mrk"];

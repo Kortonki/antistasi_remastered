@@ -100,6 +100,7 @@ class AS {
         FNC_BASE(createVehicle);
         FNC_BASE(createEmptyVehicle);
         FNC_BASE(safeDelete);
+        FNC_BASE(vehicleAvailability);
 
         FNC(Scripts,spawnAttackWaves);
 

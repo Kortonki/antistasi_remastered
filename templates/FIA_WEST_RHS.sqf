@@ -181,13 +181,13 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 
 
 [_costs, "rhsgref_cdf_b_reg_uaz_dshkm", 600] call DICT_fnc_set;
-[_costs, "rhsgref_cdf_b_reg_uaz_spg9", 1200] call DICT_fnc_set;
+[_costs, "rhsgref_cdf_b_reg_uaz_spg9", 900] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_gaz66_zu23", 1600] call DICT_fnc_set;
 
 //Static costs. Will override the one from initSides.sqf
 
 [_costs, "rhsgref_cdf_b_ZU23", 1200] call DICT_fnc_set;
-[_costs, "rhsgref_cdf_SPG9", 900] call DICT_fnc_set;
+[_costs, "rhsgref_cdf_SPG9", 600] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_DSHKM", 300] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_reg_M252", 600] call DICT_fnc_set;
 
