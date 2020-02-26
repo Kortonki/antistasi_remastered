@@ -19,20 +19,37 @@ params [["_commander_score", 0],
 */
 
 if (_type == "kill_traitor") exitWith {
+  _args params [["_possibleLocations", []], ["_fiaHQpos", [0,0,0]]];
     [-10, 0, [0, 0], [0,0], [0, 0, []], -30*60, [
       ["Traitor can reveal our locations or worsen our relations with foreign operators", {
-        private _locations = ("FIA" call AS_location_fnc_S) select {(_x call AS_location_fnc_type) in ["watchpost", "roadblock", "camp", "fia_hq"]};
+        params ["_possibleLocations", "_fiaHQpos"];
+        private _newFIAHQpos = "fia_hq" call AS_location_fnc_position;
+
+        private _debug = "[AS] Traitor fail:";
+
+        _debug = format ["%1 possibleLocations: %2, fiaHQpos: %3,", _debug, _possibleLocations, _fiaHQpos];
+
+        //remove FIA HQ from possible locations if it has been moved or is moving
+        if (not(isnil "AS_HQ_moving") or _fiaHQpos distance2D _newFIAHQpos >= 500) then {_possibleLocations = _possibleLocations - ["fia_hq"]};
+        //remove already knownLocations from revealable locations
+        private _locations = _possibleLocations - ([] call AS_location_fnc_knownLocations);
+
+        _debug = format ["%1 revealable locations: %2", _debug, _locations];
+        //private _locations = ("FIA" call AS_location_fnc_S) select {(_x call AS_location_fnc_type) in ["watchpost", "roadblock", "camp", "fia_hq"]};
         if (count _locations > (random 2)) then {
           private _reveal = selectRandom _locations;
           [_reveal] call AS_location_fnc_knownLocations;
-          diag_log format ["[AS] Traitor fail: Added %1 to knownlocations", _reveal];
+          _debug = format ["%1 Added %2 to knownlocations", _debug, _reveal];
         } else {
           [-5, 5] remoteExec ["AS_fnc_changeForeignSupport", 2];
           [-2, 0.2*(AS_P("resourcesFIA"))] remoteExec ["AS_fnc_changeFIAMoney", 2];
-          diag_log format ["[AS] Traitor fail: Resources deducted"];
+          _debug = format ["%1 Resources deducted", _debug];
         };
-      }]
-    ]]
+        diag_log _debug;
+        //[AS_commander, "hint", _debug] remoteExec ["AS_fnc_localCommunication", AS_commander];
+      }, [_possibleLocations, _fiaHQpos]]
+    ]
+  ];
 };
 if (_type == "kill_officer") exitWith {
     [-10, 0, [0, 5], [0, 0], [5, 0, _position], -10*60, [], [_location,-30]]

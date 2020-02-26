@@ -85,26 +85,31 @@ private _fnc_run = {
 
 	private _soldados = [_location, "soldiers"] call AS_spawn_fnc_get;
 
-	waitUntil {sleep 1;
+	waitUntil {sleep AS_spawnLoopTime;
 		!(_location call AS_location_fnc_spawned) or
 		{_x call AS_fnc_canFight} count _soldados == 0
 	};
 
+	private _wasDestroyed = false;
+
 	if (_location call AS_location_fnc_spawned) then {
+
+		_wasDestroyed = true;
 		[-5,0,_posicion] remoteExec ["AS_fnc_changeCitySupport",2];
 		["TaskSucceeded", ["", "Roadblock Cleared"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 		[[_posicion], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
-		[_location] remoteExec ["AS_location_fnc_remove", 2];
-
 		["cl_loc"] remoteExec ["fnc_BE_XP", 2];
+
 	};
 
+	[_location, "wasDestroyed", _wasDestroyed] call AS_spawn_fnc_set;
 };
 
 private _fnc_clean = {
 	params ["_location"];
 
 	([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
+	private _wasDestroyed = [_location, "wasDestroyed"] call AS_spawn_fnc_get;
 
 	//Send each soldier away from closest BLUFORspawn to avoid soldier multiplying when location despawns and spawns while
 	//soldiers do not (individually checked for spawn condition). OTOH removing them immediately might make them
@@ -112,7 +117,13 @@ private _fnc_clean = {
 
 	[_location, _groups] spawn AS_fnc_sendAwayFromBlufor;
 
-	[_groups,  _vehicles, _markers] call AS_fnc_cleanResources; //Vehicles aren't deleted immediately because the whole spawn disappears
+	waitUntil {sleep AS_spawnLoopTime; not(_location call AS_location_fnc_spawned)};
+
+	if (_wasDestroyed) then {
+			[_location] remoteExec ["AS_location_fnc_remove", 2];
+	};
+
+	[_groups,  _vehicles, _markers] call AS_fnc_cleanResources;
 
 	//EXPERIMENT despawning normally to avoid duplicate vehicles
 	/*

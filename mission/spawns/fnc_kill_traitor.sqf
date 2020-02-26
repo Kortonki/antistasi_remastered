@@ -27,6 +27,14 @@ private _fnc_initialize = {
 		numberToDate [2035,dateToNumber _fechalim] select 4
 	];
 
+	//Check all FIA locations now for possible mission failure. Check hq pos now and compare it to detect if it has changed
+
+	private _possibleLocations = ("FIA" call AS_location_fnc_S) select {(_x call AS_location_fnc_type) in ["watchpost", "roadblock", "camp", "fia_hq"]};
+	private _fiaHQpos = "fia_hq" call AS_location_fnc_position;
+
+	[_mission, "possibleLocations", _possibleLocations] call AS_spawn_fnc_set;
+	[_mission, "fiaHQpos", _fiaHQpos] call AS_spawn_fnc_set;
+
 	[_mission, "house", _casa] call AS_spawn_fnc_set;
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, [_tskDesc,_tskTitle,_location], _posTsk, "Kill"] call AS_mission_spawn_fnc_saveTask;
@@ -106,6 +114,8 @@ private _fnc_wait = {
 	params ["_mission"];
 	private _max_date = [_mission, "max_date"] call AS_spawn_fnc_get;
 	private _target = [_mission, "target"] call AS_spawn_fnc_get;
+	private _possibleLocations = [_mission, "possibleLocations"] call AS_spawn_fnc_get;
+	private _fiaHQpos = [_mission, "fiaHQpos"] call AS_spawn_fnc_get;
 
 	private _fnc_missionFailedCondition = {dateToNumber date > _max_date};
 
@@ -114,7 +124,7 @@ private _fnc_wait = {
 	waitUntil {sleep 5; ({not (captive _x) and {_target knowsAbout _x > 1.4}} count ([500, _target, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0) or _fnc_missionFailedCondition or _fnc_missionSuccessfulCondition};
 	if (call _fnc_missionFailedCondition) exitWith {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+		[_mission, [_possibleLocations, _fiaHQpos]] remoteExec ["AS_mission_fnc_fail", 2];
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
 		[_mission, "state_index", 3] call AS_spawn_fnc_set;
@@ -140,6 +150,8 @@ private _fnc_run = {
 	private _arraybases = ["base", "AAF"] call AS_location_fnc_TS;
 	private _base = [_arraybases, _position] call BIS_Fnc_nearestPosition;
 	private _posBase = _base call AS_location_fnc_position;
+	private _possibleLocations = [_mission, "possibleLocations"] call AS_spawn_fnc_get;
+	private _fiaHQpos = [_mission, "fiaHQpos"] call AS_spawn_fnc_get;
 
 	{
 		_x enableAI "MOVE";
@@ -156,7 +168,7 @@ private _fnc_run = {
 
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+		[_mission, [_possibleLocations, _fiaHQpos]] remoteExec ["AS_mission_fnc_fail", 2];
 	};
 
 	private _fnc_missionFailedCondition = {dateToNumber date > _max_date or _target distance2D _posBase < 100};

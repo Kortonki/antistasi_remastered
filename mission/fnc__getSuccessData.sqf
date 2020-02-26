@@ -131,7 +131,7 @@ if (_type == "broadcast") exitWith {
     ]
 };
 if (_type == "pamphlets") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [-10, 10, _position, true]]
+    [5, [500, _position, 10], [0, -5], [0, 0], [-10, 10, _position, true]]
 };
 if (_type == "repair_antenna") exitWith {
     [5, [500, _position, 10], [2, 0], [0, 0], [0, 0, []], 20*60,
