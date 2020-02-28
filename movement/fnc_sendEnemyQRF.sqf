@@ -37,7 +37,7 @@ private _side = "CSAT" call AS_fnc_getFactionSide;
 private _attackVehicle = selectRandom (["CSAT", "helis_armed"] call AS_fnc_getEntity);
 private _transportVehicle = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);
 private _dismountGroup = [["CSAT", "recon_team"] call AS_fnc_getEntity, "CSAT"] call AS_fnc_pickGroup;
-if not (_origin isEqualTo "spawnCSAT") then {
+if (not (_origin isEqualTo "spawnCSAT")) then {
 	_method = "disembark";
 	_faction = "AAF";
 	if (_size == "small") then {

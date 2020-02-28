@@ -2,7 +2,7 @@
 AS_SERVER_ONLY("fnc_sendAAFroadPatrol");
 private _validCategories = ["cars_armed", "helis_armed", "boats"];
 
-private _max_patrols = 3*(count allPlayers);
+private _max_patrols = floor ((count ([["base", "airfield", "outpost", "outpostAA", "resource", "factory", "seaport"], "AAF"] call AS_location_fnc_TS)) / 3); //1 patrol for 3 aaf locations
 if (AS_S("AAFpatrols") >= _max_patrols) exitWith {
     AS_ISDEBUG("[AS] Debug: AAFroadPatrol: max patrols reached");
 };
@@ -24,7 +24,7 @@ private _category = "";
     _validOrigins = [_validOrigins, "AAF"] call AS_location_fnc_TS;
 
     _validOrigins = _validOrigins select {!(_x call AS_location_fnc_spawned)};
-    if (count _validOrigins > 0 and {_x call AS_AAFarsenal_fnc_countAvailable > 0}) exitWith {
+    if (count _validOrigins > 0 and {_x call AS_AAFarsenal_fnc_countAvailable >= 2}) exitWith {
         _origin = [_validOrigins, getMarkerPos "FIA_HQ"] call BIS_fnc_nearestPosition;
         _type = selectRandom (_x call AS_AAFarsenal_fnc_valid);
         _category = _x;

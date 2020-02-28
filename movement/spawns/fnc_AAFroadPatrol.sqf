@@ -6,15 +6,16 @@ private _fnc_spawn = {
 	private _type = [_spawnName, "type"] call AS_spawn_fnc_get;
 	private _isFlying = [_spawnName, "isFlying"] call AS_spawn_fnc_get;
 	private _origin = [_spawnName, "origin"] call AS_spawn_fnc_get;
-	private _posbase = _origin call AS_location_fnc_positionConvoy;
+	private _posbase = _origin call AS_location_fnc_position;
 	private _dir = 0;
+	private _special = ["NONE", "FLY"] select _isFlying;
 
 	if not _isFlying then {
 		if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) then {
 			_posbase = [_posbase,50,150,10,2,0,0] call BIS_Fnc_findSafePos;
 		} else {
 
-			private _posdir = [_posbase, getmarkerpos "FIA_HQ"] call AS_fnc_findSpawnSpots;
+			private _posdir = [_origin call AS_location_fnc_positionConvoy, getmarkerpos "FIA_HQ"] call AS_fnc_findSpawnSpots;
 			_posbase = _posdir select 0;
 			_dir = _posdir select 1;
 
@@ -30,7 +31,8 @@ private _fnc_spawn = {
 		};
 	};
 
-	([_type, _posbase, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_veh", "_grupoVeh"];
+	([_type, _posbase, _dir, "AAF", "any", 0, _special] call AS_fnc_createVehicle) params ["_veh", "_grupoVeh"];
+
 
 	if (_type isKindOf "Car") then {
 		private _groupType = [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
@@ -65,6 +67,7 @@ private _fnc_run = {
 				"AAF" call AS_location_fnc_S
 			};
 			if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) exitWith {
+				//TODO: implement seamarkers here
 				[["searport"], "AAF"] call AS_location_fnc_TS
 			};
 			[["base", "airfield", "resource", "factory", "powerplant", "outpost", "outpostAA"],
@@ -72,11 +75,12 @@ private _fnc_run = {
 		};
 
 		private _posHQ = getMarkerPos "FIA_HQ";
-		_potentialLocations select {_posHQ distance2D (_x call AS_location_fnc_position) < 5000}
+		private _distance = [5000, 20000] select _isFlying;
+		_potentialLocations select {_posHQ distance2D (_x call AS_location_fnc_position) < _distance}
 	};
 
 	private _arraydestinos = call _fnc_destinations;
-	private _distancia = 200;
+	private _distancia = [200, 1000] select _isFlying; //to avoid choppers getting stuck
 
 	if (count _arraydestinos < 1) exitWith {
 		AS_ISDEBUG("[AS] debug: fnc_createRoadPatrol cancelled: no valid destinations");
@@ -103,7 +107,7 @@ private _fnc_run = {
 	[_veh, _min, _max] call AS_fuel_fnc_randomFuelCargo;
 
 	//Conisder if this kind of target sharing is necessary. OTOH the patrol doesn't use UPSMON to share info
-	while {(_veh distance _posdestino > _distancia) and _continue_condition} do {
+	while {(_veh distance2D _posdestino > _distancia) and _continue_condition} do {
 		sleep 20;
 		{
 			if (_x select 2 == ("FIA" call AS_fnc_getFactionSide)) then {
