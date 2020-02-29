@@ -33,7 +33,7 @@ if (_maxHeight > 3) then {
 };
 
 
-if (position _vehicle distance _position > _distance) exitWith {hint "Asset is too far (>200m) from the flag."};
+if (position _vehicle distance2d _position > _distance) exitWith {hint "Asset is too far (>200m) from the flag."};
 
 _vehicle removeAction _EHid;
 [_vehicle, false] remoteExecCall ["enableSimulationGlobal", 2]; //don't wreck anything

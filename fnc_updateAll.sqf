@@ -95,7 +95,7 @@ private _FIAResIncomeMultiplier = 1;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
 
         //Release garrison if spawned, otherwise refund garrison
-        if (_city call AS_location_fnc_spawned) then {
+        if (_city call AS_spawn_fnc_exists) then {
           _city call AS_fnc_garrisonRelease;
         } else {
           [_city, "garrison", []] call AS_location_fnc_set;

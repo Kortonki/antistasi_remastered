@@ -31,5 +31,6 @@ sleep 5;
 
 [petros, "buildHQ"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
 petros setVariable ["pos", position petros, true];
-
-["fia_hq"] call AS_fnc_garrisonRelease;
+if ("fia_hq" call AS_spawn_fnc_exists) then {
+	["fia_hq"] call AS_fnc_garrisonRelease;
+};

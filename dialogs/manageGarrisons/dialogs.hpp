@@ -11,7 +11,8 @@ LIST_L(0,1,1,4,"");
 
 BTN_L(5,-1,"Recruit selected", "Recruit the unit selected above", "call AS_fnc_UI_manageGarrisons_recruit;");
 BTN_R(1,2,"Select location", "Select the location", "[] spawn AS_fnc_UI_manageGarrisons_selectOnMap;");
-BTN_M(6,-1, "Garrison orders", "Garrison orders", "closeDialog 0; createDialog ""AS_manageGarrisons_orders"";");
+BTN_R(6,-1, "Garrison orders", "Garrison orders", "closeDialog 0; createDialog ""AS_manageGarrisons_orders"";");
+BTN_L(6,-1, "Release Garrison", "Release garrison as HC squad", "closeDialog 0; [map_location] spawn AS_fnc_garrisonRelease;");
 LIST_L(1,2,3,3,"");
 BTN_R(5,-1,"Dismiss selected", "Dismiss the unit selected above", "call AS_fnc_UI_manageGarrisons_dismiss;");
 	};

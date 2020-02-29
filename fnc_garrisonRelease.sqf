@@ -1,10 +1,21 @@
 params ["_location"];
 
-//Only do this if the garrison is spawned
-if(!(_location call AS_spawn_fnc_exists)) exitWith {};
+if (isnil "_location") exitWith {
+  diag_log "[AS] Warning: garrisonRelease executed for nil location. Aborted";
+};
+
+//Only do this if the garrison is spawned. if not, spawn it
+if(!(_location call AS_spawn_fnc_exists)) then {
+  _location call AS_location_fnc_spawn;
+
+  [_location, "location"] call AS_spawn_fnc_add;
+  [[_location], "AS_spawn_fnc_execute"] call AS_scheduler_fnc_execute;
+};
 
 //This might be run while the spawning has yet finished even tough spawned returns true (updateALl city flip)
 //Thus wait until spawn state has finished (location/spawns/FIAgeneric.sqf)
+
+waitUntil {sleep 0.2; _location call AS_spawn_fnc_exists};
 
 waitUntil {sleep 0.2; ([_location, "state_index"] call AS_spawn_fnc_get) >= 1};
 

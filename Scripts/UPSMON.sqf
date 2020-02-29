@@ -318,7 +318,7 @@ if (_initpos!="ORIGINAL") then
 	};
 };
 
-_combatmode = "YELLOW";
+_combatmode = combatMode _npc; //This keeps the default mode for player side units which are set elsewhere. "YELLOW" is default anyway
 // AMBUSH
 If (_ambush) then
 {

@@ -34,7 +34,7 @@ publicVariable "petros";
 [petros,"mission"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
 
 grupoPetros setGroupId ["Petros","GroupColor4"];
-petros setName "Petros";
+[petros, ["Petros", "Petros", "Petros"]] remoteExec ["setName", AS_CLIENTS];
 petros disableAI "MOVE";
 
 removeHeadgear petros;

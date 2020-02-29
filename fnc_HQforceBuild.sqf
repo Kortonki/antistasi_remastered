@@ -26,8 +26,9 @@ deleteVehicle petros;
 deletegroup grupoPetros;
 
 //Release garrison
-
-["fia_hq"] call AS_fnc_garrisonRelease;
+if ("fia_hq" call AS_spawn_fnc_exists) then {
+  ["fia_hq"] call AS_fnc_garrisonRelease;
+};
 
 //TODO: Need to check if new HQ is too close to enemy location?
 

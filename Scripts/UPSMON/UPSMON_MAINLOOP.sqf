@@ -54,7 +54,7 @@ while {true} do
 
 			_speedmode = speedmode _npc;
 			_behaviour = behaviour _npc;
-			_combatmode = "YELLOW";
+			_combatmode = combatmode _npc; //[AS] Changed from YELLOW to unit combatMode to accomodate for antistasi combatmode setup
 
 
 			// current position
