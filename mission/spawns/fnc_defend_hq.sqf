@@ -107,22 +107,32 @@ private _fnc_spawn = {
 		private _threat = [_position] call AS_fnc_getLandThreat;
 
 		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
-		private _nVeh = (round((_threat/2)*(_arsenalCount/30)) max 1) min (_arsenalCount min 10);
+		private _max = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of trucks if choosing to not use apcs or tanks
+		private _nVeh = (round((_threat/2)*(_arsenalCount/30)) max 1) min (_arsenalCount min _max);
 
+		//Group for vehicles (tanks)
+		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
+		_groups pushback _vehGroup;
 
 		// spawn them
 		for "_i" from 1 to _nveh do {
 			private _toUse = "trucks";
-			if (_threat > 3 and ("apcs" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+			if (_threat > 3 and {["apcs", 0.3] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "apcs";
 				};
-			if (_threat > 5 and ("tanks" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+			if (_threat > 5 and {["tanks", 0.3] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "tanks";
 				};
 			([_toUse, _originPos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
-			_groups append _groups1;
-			_vehiculos append _vehicles1;
+			//Tanks make one group
 			{_soldiers append (units _x)} foreach _groups1;
+			if (_toUse == "tanks") then {
+				(units (_groups1 select 0)) join _vehGroup;
+				deletegroup (_groups1 select 0);
+			} else {
+				_groups append _groups1;
+			};
+			_vehiculos append _vehicles1;
 			sleep 5;
 			};
 			diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];

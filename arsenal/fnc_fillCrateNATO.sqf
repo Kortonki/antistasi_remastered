@@ -1,7 +1,7 @@
 params ["_crate", "_NATOSupp"];
 private ["_intNATOSupp", "_weapons","_magazines","_items","_backpacks","_addWeapon"];
 
-_intNATOSupp = floor (_NATOSupp/10);
+_intNATOSupp = round (_NATOSupp/10);
 _intNATOSupp = _intNATOSupp max 1;
 
 _weapons = [[],[]];

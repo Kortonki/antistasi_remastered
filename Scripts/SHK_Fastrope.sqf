@@ -129,7 +129,7 @@ SHK_Fastrope_fnc_AIs = {
       };
     } forEach _units;
 
-    waitUntil {sleep 2; (speed _heli) < 5 and {((velocity _heli) select 2) * 3.6 < 0.5}};
+    waitUntil {sleep 3; (speed _heli) < 5 and {(getpos _heli select 2) < MAX_ALTITUDE_ROPES_AVAIL and {((velocity _heli) select 2) * 3.6 < 0.5}}};
     sleep 2;
 
     {

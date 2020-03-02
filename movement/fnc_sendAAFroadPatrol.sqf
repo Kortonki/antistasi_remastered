@@ -2,7 +2,7 @@
 AS_SERVER_ONLY("fnc_sendAAFroadPatrol");
 private _validCategories = ["cars_armed", "helis_armed", "boats"];
 
-private _max_patrols = floor ((count ([["base", "airfield", "outpost", "outpostAA", "resource", "factory", "seaport"], "AAF"] call AS_location_fnc_TS)) / 3); //1 patrol for 3 aaf locations
+private _max_patrols = round((count ([["base", "airfield", "outpost", "outpostAA", "resource", "factory", "seaport"], "AAF"] call AS_location_fnc_TS)) / 3); //1 patrol for 3 aaf locations
 if (AS_S("AAFpatrols") >= _max_patrols) exitWith {
     AS_ISDEBUG("[AS] Debug: AAFroadPatrol: max patrols reached");
 };

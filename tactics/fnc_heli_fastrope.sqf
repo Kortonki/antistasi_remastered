@@ -10,7 +10,7 @@ private _dir = [_heli, _safePosition] call bis_fnc_dirTo;
 private _movePosition = [_safePosition, 500, _dir] call bis_fnc_relPos;
 
 (leader _crew_group) domove _movePosition;
-_heli flyinHeight 40;
+_heli flyinHeight 50;
 _heli setBehaviour "SAFE";
 _heli setSpeedMode "NORMAL";
 

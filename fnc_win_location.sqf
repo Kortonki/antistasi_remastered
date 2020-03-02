@@ -90,7 +90,7 @@ if (_type in ["factory", "resource"]) then {
 	};
 };
 
-waitUntil {sleep 1;
+waitUntil {sleep AS_spawnLoopTime;
 	(not (_location call AS_location_fnc_spawned)) or
 	(({(not(vehicle _x isKindOf "Air")) and (alive _x) and (!fleeing _x)} count ([_size, _posicion, "OPFORSpawn"] call AS_fnc_unitsAtDistance)) >
 	 3*({(alive _x)} count ([_size, _posicion, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)))};

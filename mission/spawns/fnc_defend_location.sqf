@@ -83,22 +83,34 @@ private _fnc_spawn = {
 		//Attack size is dependent on how much arsenal AAF has and threat evaluation TODO: prolly NEEDS BALANCING,
 		//private _nVeh = (round (_size/30)) max 1;
 		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
-		private _nVeh = (round((_threatEvalLand/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min 10);
+		private _max = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of trucks if choosing to not use armed helis. (see below)
+		private _nVeh = (round((_threatEvalLand/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min _max);
 
 
 
+		//Make a group for vehicles
+		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
+		_groups pushback _vehGroup;
 
 		// spawn them
 		for "_i" from 1 to _nVeh do {
+			//Only use at most 50% of heavy equipment for attack
 			private _toUse = "trucks";
-			if (_threatEvalLand > 3 and ("apcs" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+			if (_threatEvalLand > 3 and {["apcs", 0.5] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "apcs";
 			};
-			if (_threatEvalLand > 5 and ("tanks" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+			if (_threatEvalLand > 5 and {["tanks", 0.5] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "tanks";
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
-			_groups append _groups1;
+
+			//Tanks make one group
+			if (_toUse == "tanks") then {
+				(units (_groups1 select 0)) join _vehGroup;
+				deletegroup (_groups1 select 0);
+			} else {
+				_groups append _groups1;
+			};
 			_vehicles append _vehicles1;
 			sleep 5;
 		};
@@ -129,17 +141,19 @@ private _fnc_spawn = {
 		};
 
 		private _arsenalCount = (["helis_transport", "helis_armed", "planes"] call AS_AAFarsenal_fnc_countAvailable);
-		private _nVeh = (round((_threatEvalAir/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min 10);
+		private _max = ("helis_transport" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of helis if choosing to not use armed helis. (see below)
+		private _nVeh = (round((_threatEvalAir/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min _max);
 
 		for "_i" from 1 to _nVeh do {
 			private _toUse = "helis_transport";  // last attack is always a transport
 
 			// first 2 rounds can be any unit, stronger the higher the treat
 			if (_i < 3) then {
-				if ("helis_armed" call AS_AAFarsenal_fnc_countAvailable > 0) then {
+				//Here they can use the last ones as they're not good on defense
+				if (["helis_armed", 0.2] call AS_fnc_vehicleAvailability) then {
 					_toUse = "helis_armed";
 				};
-				if (_threatEvalAir > 15 and ("planes" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+				if (_threatEvalAir > 15 and {["planes", 0.2] call AS_fnc_vehicleAvailability) then {
 					_toUse = "planes";
 				};
 			};

@@ -94,8 +94,9 @@ if (!_isHCfastTravel) then {
 	sleep 5; // wait some time
 };
 
+//Force spawn the location for a while to start the process.
 private _forcedSpawn = false;
-if !(_location call AS_location_fnc_forced_spawned) then {
+if !(_location call AS_location_fnc_spawned) then {
 	_forcedSpawn = true;
 	[_location,true] call AS_location_fnc_spawn;
 	sleep 5; // wait for spawn of location
@@ -123,6 +124,7 @@ if (!_isHCfastTravel) then {
 	hint format ["Group %1 arrived to destination",groupID _group]
 };
 
+//This toggles the forced spawn parameter. Normal spawn systems have taken over.
 if (_forcedSpawn) then {
 	[_location,true] call AS_location_fnc_despawn;
 };
