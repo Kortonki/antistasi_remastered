@@ -63,9 +63,6 @@ private _fnc_run = {
 	private _fnc_destinations = {
 
 		private _potentialLocations = call {
-			if _isFlying exitWith {
-				"AAF" call AS_location_fnc_S
-			};
 			if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) exitWith {
 				//TODO: implement seamarkers here
 				[["searport"], "AAF"] call AS_location_fnc_TS
@@ -108,29 +105,28 @@ private _fnc_run = {
 
 	//Conisder if this kind of target sharing is necessary. OTOH the patrol doesn't use UPSMON to share info
 	while {(_veh distance2D _posdestino > _distancia) and _continue_condition} do {
-		sleep 20;
+		sleep 30;
+		private _sideFIA = ("FIA" call AS_fnc_getFactionSide);
+		private _sideAAF = ("AAF" call AS_fnc_getFactionSide);
 		{
-			if (_x select 2 == ("FIA" call AS_fnc_getFactionSide)) then {
+			if (_x select 2 == _side) then {
 				private _arevelar = _x select 4;
 				private _nivel = (driver _veh) knowsAbout _arevelar;
 				if (_nivel > 1.4) then {
 					{
 						if (leader _x distance2D _veh < AS_P("spawnDistance")) then {_x reveal [_arevelar,_nivel]};
-					} forEach allGroups;
+					} forEach (allGroups select {side _x isEqualTo _sideAAF});
 				};
 			};
 		} forEach (driver _veh nearTargets AS_P("spawnDistance"));
 	};
 
-	if _isFlying then {
-		_arrayDestinos = "AAF" call AS_location_fnc_S;
+	if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) then {
+		_arraydestinos = ([["searport"], "AAF"] call AS_location_fnc_TS) select {(_x call AS_location_fnc_position) distance2D (position _veh) < 2500};
 	} else {
-		if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) then {
-			_arraydestinos = ([["searport"], "AAF"] call AS_location_fnc_TS) select {(_x call AS_location_fnc_position) distance2D (position _veh) < 2500};
-		} else {
-			_arraydestinos = call _fnc_destinations;
-		};
+		_arraydestinos = call _fnc_destinations;
 	};
+
 
 	if (call _continue_condition) then {
 		// repeat this state

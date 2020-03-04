@@ -17,22 +17,17 @@ if (vehicle _unit == _unit or vehicle _unit isKindOf "StaticWeapon") then {
 	//ALSO obsolote, and for optimisations sake, don't use as has only minor effect
 	};*/
 
-
+	if (_dam > 5) exitWith {};
 
 	if not (_part in ["hand_l","hand_r","leg_l","leg_r","arms"]) then {
-	if (_dam > 0.90) exitWith {
+
+		if (_dam > 0.95) exitWith {
 		//private _sameHit = ((_unit getVariable ["firstHitTime", _currentTime]) + 0.1) >= _currentTime; OBSOLETE, probably useless check
-		if (_dam < 5) then { //Tweak this
+
 
 			if (not (_unit call AS_medical_fnc_isUnconscious)) then {
 				[_unit,true] call AS_medical_fnc_setUnconscious;
-				_dam = 0.90; //If unconscious, damage is as is. Moved from parent scope
-			};
-		} else {
-			// very high damage (the unit is killed regardless)
-			_unit setDamage 1;
-			//_unit removeAllEventHandlers "HandleDamage"; //These are already in killed eventhandler
-
+				_dam = 0.95; //If unconscious, damage is as is. Moved from parent scope
 			};
 		};
 	};
