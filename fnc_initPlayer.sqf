@@ -133,6 +133,9 @@ player addEventHandler ["killed", {
 		deleteGroup _group;
 	};
 	//Stats
+
+	["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
 	[_unit, "deaths", 1] call AS_players_fnc_change;
 
 	}];
@@ -143,6 +146,8 @@ player addEventhandler ["handleHeal", {
 
 		private _return = false; //Use normal heal if not healing a civilian
 		if ((_unit call AS_fnc_getSide) isEqualTo "CIV") then {
+
+				["civHealed", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
 
 				//Maximum support from healing single CIV = 1.5 < 2 (penalty of wounding a CIV)
 				//Thus, no possibility to exploit

@@ -31,6 +31,7 @@ _unit addEventHandler ["killed", {
 	_unit setVariable ["k", true, false];
 
 	[0.25,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
+	["NATO", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
 	[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 	_unit removeAllEventHandlers "HandleDamage";
 

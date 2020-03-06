@@ -139,13 +139,11 @@ AS_Sset("AS_vehicleOrientation", 0);
 } foreach (call AS_AAFarsenal_fnc_all);
 
 //Set some vehicles
-for "_i" from 0 to (3 + round(random 8)) do {
-	"cars_transport" call AS_AAFarsenal_fnc_addVehicle;
-	"cars_transport" call AS_AAFarsenal_fnc_addVehicle;
-	"cars_armed" call AS_AAFarsenal_fnc_addVehicle;
-	"trucks" call AS_AAFarsenal_fnc_addVehicle;
-	"boats" call AS_AAFarsenal_fnc_addVehicle;
-};
+{
+	private _max = _x call AS_AAFarsenal_fnc_max;
+	private _amount =  round((0.25 + random 0.75)*_max);
+	[_x, "count", _amount] call AS_AAFarsenal_fnc_set;
+} foreach ["cars_transport", "cars_armed", "trucks", "boats", "static_mg", "static_at", "static_aa", "static_mortar", "apcs"];
 
 
 AS_AAF_attackLock = nil;
@@ -161,3 +159,5 @@ AS_players_share = 5;
 
 // BE_modul handles all the permissions e.g. to build roadblocks, skill, etc.
 #include "..\Scripts\BE_modul.sqf"
+
+[] call AS_stats_fnc_initialize;

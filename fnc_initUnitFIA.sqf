@@ -71,6 +71,8 @@ _unit addEventHandler ["killed", {
 			[_vehicle, _magazineRemains] call AS_fnc_addMagazineRemains;
 	    _unit call AS_fnc_emptyUnit;
 		};
+
+
 	}];
 
 _unit allowFleeing 0;	//Experminet with this: way to make garrison stay in area,or detect fleeing and do things like disband etc.
@@ -89,9 +91,13 @@ if (isPlayer(leader _unit)) then {
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
 		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
+		["death"] remoteExec ["fnc_be_XP", 2];
 		_unit setVariable ["BLUFORSpawn",nil,true];
 
 		//Stats
+
+		["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
 		if (isPlayer _killer) then {
 			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
 			[_killer, "friendlyKills", 1] call AS_players_fnc_change;
@@ -147,6 +153,9 @@ if (isPlayer(leader _unit)) then {
 		private _group = group _unit;
 
 		//Stats
+
+		["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
 		// player team-kill
 		if (isPlayer _killer) then {
 			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
@@ -185,6 +194,8 @@ _unit addEventhandler ["handleHeal", {
 
 		private _return = false; //Use normal heal if not healing a civilian
 		if ((_unit call AS_fnc_getSide) isEqualTo "CIV") then {
+
+			["civHealed", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
 
 				//Maximum support from healing single CIV = 1.5 < 2 (penalty of wounding a CIV)
 				//Thus, no possibility to exploit

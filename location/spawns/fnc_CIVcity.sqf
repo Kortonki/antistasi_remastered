@@ -42,7 +42,7 @@ private _fnc_spawn = {
 			if (!surfaceIsWater _pos) exitWith {};
 		};
 		private _civ = _grupo createUnit [selectRandom (["CIV", "units"] call AS_fnc_getEntity), _pos, [],0, "NONE"];
-		[_civ] spawn AS_fnc_initUnitCIV;
+		[_civ, _location] spawn AS_fnc_initUnitCIV;
 	};
 
 	// spawn parked cars
@@ -86,7 +86,7 @@ private _fnc_spawn = {
 
 		// spawn driver
 		private _civ = _grupoP createUnit [selectRandom (["CIV", "units"] call AS_fnc_getEntity), _p1, [],0, "NONE"];
-		[_civ] spawn AS_fnc_initUnitCIV;
+		[_civ, _location] spawn AS_fnc_initUnitCIV;
 		_civ moveInDriver _veh;
 		_grupoP addVehicle _veh;
 

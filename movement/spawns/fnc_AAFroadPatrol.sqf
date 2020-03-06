@@ -109,7 +109,7 @@ private _fnc_run = {
 		private _sideFIA = ("FIA" call AS_fnc_getFactionSide);
 		private _sideAAF = ("AAF" call AS_fnc_getFactionSide);
 		{
-			if (_x select 2 == _side) then {
+			if (_x select 2 == _sideFIA) then {
 				private _arevelar = _x select 4;
 				private _nivel = (driver _veh) knowsAbout _arevelar;
 				if (_nivel > 1.4) then {

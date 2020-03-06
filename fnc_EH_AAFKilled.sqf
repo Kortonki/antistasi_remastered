@@ -50,6 +50,8 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 		[-0.5,0,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2];
 
 		//Stats
+		["AAF", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
 		if (isPlayer _killer) then {
 			[_killer, "score", 2, false] remoteExec ["AS_players_fnc_change", 2];
 			[_killer, "kills", 1] call AS_players_fnc_change;

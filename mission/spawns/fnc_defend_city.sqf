@@ -96,7 +96,7 @@ private _fnc_spawn = {
 			};
 		};
 		_civilians pushBack _civ;
-		[_civ] spawn AS_fnc_initUnitCIV;
+		[_civ, _location] spawn AS_fnc_initUnitCIV;
 		sleep 1;
 	};
 

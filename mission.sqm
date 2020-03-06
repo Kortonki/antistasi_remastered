@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={3367.5798,296.23563,7245.0454};
-		dir[]={0.2228218,-0.83378035,-0.50530189};
-		up[]={0.33641469,0.55207098,-0.76290458};
-		aside[]={-0.91506225,8.9750392e-007,-0.40351287};
+		pos[]={3227.8291,79.031174,2031.1563};
+		dir[]={0.81361467,-0.51967263,-0.26115635};
+		up[]={0.49483219,0.85434425,-0.15883289};
+		aside[]={-0.3056587,9.1985567e-007,-0.95225936};
 	};
 };
 binarizationWanted=0;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.43";
+		briefingName="Antistasi Remastered V0.99.44";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -2761,11 +2761,11 @@ class Mission
 		class Item125
 		{
 			dataType="Marker";
-			position[]={6530.5869,46.334,1667.181};
+			position[]={6650.8457,46.513184,1757.3798};
 			name="as_powerplant_convoy";
 			type="Empty";
 			id=2547;
-			atlOffset=0.00046539307;
+			atlOffset=-1.4533005;
 		};
 		class Item126
 		{
@@ -3045,7 +3045,7 @@ class Mission
 		class Item143
 		{
 			dataType="Trigger";
-			position[]={2690.79,1.8161165,1026.75};
+			position[]={2695.2891,0.82331604,1023.9149};
 			angle=3.6951587;
 			class Attributes
 			{
@@ -3056,12 +3056,11 @@ class Mission
 			};
 			id=2589;
 			type="EmptyDetector";
-			atlOffset=1.1920929e-007;
 		};
 		class Item144
 		{
 			dataType="Trigger";
-			position[]={2725.646,7.5205245,998.245};
+			position[]={2720.6934,4.8272314,1002.1284};
 			angle=3.6951587;
 			class Attributes
 			{

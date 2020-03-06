@@ -8,7 +8,7 @@ if captive _player then {
 };
 sleep 1;
 
-
+["rescued", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
 
 _unit sideChat "Thank you. I owe you my life!";
 

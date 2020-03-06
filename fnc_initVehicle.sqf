@@ -32,8 +32,24 @@ if (_tipo == (["CSAT", "box"] call AS_fnc_getEntity) and _side == "CSAT") then {
 
 //Cargo release on destruction
 
-_veh addEventHandler ["Killed", {
+_veh addEventHandler ["killed", {
 	private _veh = _this select 0;
+
+	//Stats
+
+	[_veh call AS_fnc_getSide, 1, "d_vehicles"] remoteExec ["AS_stats_fnc_change", 2];
+
+	private _type = typeOf _veh;
+	private _category = "";
+	if (_type in BE_class_MBT) then {_category = "d_tanks"};
+	if (_type in BE_class_APC) then {_category = "d_apcs"};
+	if (_type in BE_class_Heli) then {_category = "d_helis"};
+	if (_veh isKindOf "Plane") then {_category = "d_planes"};
+
+	if (_category != "") then {
+		[_veh call AS_fnc_getSide, 1, _category] remoteExec ["AS_stats_fnc_change", 2];
+	};
+
 	[_veh] spawn AS_fnc_activateCleanup;
 	if (!isNil{_veh getVariable "boxCargo"}) then {
 		 {
@@ -41,6 +57,9 @@ _veh addEventHandler ["Killed", {
 			 _x setdammage 1;
 		 } foreach (_veh getVariable "boxCargo");
 		};
+
+
+
 
 	}];
 
@@ -70,6 +89,21 @@ if (_side != "NATO") then {
 					[_vehicle] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 				};
 
+				["vehsCaptured", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
+
+				private _type = typeOf _vehicle;
+				private _category = "";
+				//This is different category than above because now it can be any side instead of AAF
+				if (_type in BE_class_MBT) then {_category = "tanksCaptured"};
+				if (_type in BE_class_APC) then {_category = "apcsCaptured"};
+				if (_type in BE_class_Heli) then {_category = "helisCaptured"};
+				if (_veh isKindOf "Plane") then {_category = "planesCaptured"};
+
+				if (_category != "") then {
+					[_category, 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
+				};
+
+
 
 				//After capturing fuel truck, make it FIA fuel system compatible
 				//TODO Improve this to revert to FIA fuel system to prevent cheating. For AI must have vanilla fuel cargo system
@@ -84,7 +118,7 @@ if (_side != "NATO") then {
 
 		if (_side == "AAF" and {_vehicleCategory != "" and {_sideunit == "FIA"}}) then {
 
-					[_vehicle, _unit] call AS_fnc_EH_AAFVehicleKilled; // this must be called before changing sides
+				[_vehicle, _unit] call AS_fnc_EH_AAFVehicleKilled; // this must be called before changing sides
 
 		};
 

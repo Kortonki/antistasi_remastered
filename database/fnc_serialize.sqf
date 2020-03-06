@@ -30,6 +30,9 @@ diag_log "[AS] Server: serializing missions...";
 diag_log "[AS] Server: serializing players...";
 [_dict, "AS_player", call AS_players_fnc_toDict] call DICT_fnc_setGlobal;
 
+diag_log "[AS] Server: serializing stats...";
+[_dict, "AS_stats", call AS_stats_fnc_toDict] call DICT_fnc_setGlobal;
+
 private _string = _dict call DICT_fnc_serialize;
 diag_log "[AS] Server: serialization completed.";
 _string
