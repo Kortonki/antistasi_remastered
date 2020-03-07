@@ -44,8 +44,7 @@ class AS {
         FNC(fia_recruitment,recruitFIAunit);
 
 
-
-        FNC(arsenal, pollServerArsenal);
+        FNC(arsenal,pollServerArsenal);
         FNC_BASE(refreshArsenal);
         FNC_BASE(resetPetrosPosition);
 
@@ -194,6 +193,8 @@ class AS {
         FNC_BASE(dropArtilleryShellsNATO);
         FNC_BASE(changeStreetLights);
 
+        FNC(arsenal,checkArsenal);
+        FNC(arsenal,openArsenal);
         FNC(arsenal,buyGear);
         FNC(arsenal,listUniqueEquipment);
         FNC(arsenal,getWeaponItemsCargo);

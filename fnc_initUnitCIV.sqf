@@ -39,7 +39,7 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 	//Decrease population
 	private _location = _unit getvariable ["location", ""];
 	if (_location != "") then {
-		[_location, "population", ([_location, "population"] call AS_location_fnc_get) - 1] call AS_location_fnc_set;
+		[_location, "population", (([_location, "population"] call AS_location_fnc_get) - 1) max 0] call AS_location_fnc_set;
 	};
 
 	if (_unit == _killer) then {
@@ -53,7 +53,9 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 		};
 		private _sideKiller = side _killer;
 
-		[_killer call AS_fnc_getSide, 1, "civKills"] remoteExec ["AS_stats_fnc_change", 2];
+		if (_killer call AS_fnc_getSide in ["AAF", "NATO", "CSAT", "FIA"]) then {
+			[_killer call AS_fnc_getSide, 1, "civKills"] remoteExec ["AS_stats_fnc_change", 2];
+		};
 
 		if (_sideKiller == ("FIA" call AS_fnc_getFactionSide)) then {
 			[-1*_coeff,0] remoteExec ["AS_fnc_changeForeignSupport",2];

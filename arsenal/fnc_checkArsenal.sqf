@@ -1,81 +1,8 @@
-#include "../macros.hpp"
-params ["_box", "_unit"];
+params ["_arsenal", "_unit"];
 
-if (not(isnil "AS_savingServer")) exitWith {hint "Server saving in progress. Wait."};
+_arsenal params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 
-if (_box != caja) then {
-    [_box, caja] call AS_fnc_transferToBox;
-};
-
-private _old_cargo = [_unit, true] call AS_fnc_getUnitArsenal;
-_unit setVariable ["old_Cargo", _old_cargo, false];
-
-[_unit, "open", _box] remoteExec ["AS_fnc_pollServerArsenal", 2];
-
-//COMMENTED OUT: EXPERIMENTING SIMULTANEOUS NEW ARSENAL!
-
-//Here wait until arsenal has synced with the client so client doesn't read partial arsenal and then update arsenal with partial cargo (arsenal items disappear MAJOR BUG!)
-/*
-[] call AS_fnc_waitArsenalSync;
-
-//Double check so two clients don't race across the check at the sime time (variable syncing might cause this)
-if (AS_S("lockArsenal")) exitWith {hint "Another player is using the Arsenal. Wait."};
-if (not(isnil "AS_savingServer")) exitWith {hint "Server saving in progress. Wait."};
-
-AS_Sset("lockArsenal", true);
-
-// if the box is not "caja", then transfer everything to caja.
-// This guarantees that the player still has access to everything.
-
-// Get all stuff in the unit before going to the arsenal
-
-
-// specify what is available in the arsenal.
-([caja, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
-
-// add allowed stuff.
-_box setvariable ["bis_addVirtualWeaponCargo_cargo",nil,true];  // see http://stackoverflow.com/a/43194611/7808917
-[_box,(_cargo_w select 0) + unlockedWeapons, true] call BIS_fnc_addVirtualWeaponCargo;
-[_box,(_cargo_m select 0) + unlockedMagazines, true] call BIS_fnc_addVirtualMagazineCargo;
-[_box,(_cargo_i select 0) + unlockedItems, true] call BIS_fnc_addVirtualItemCargo;
-[_box,(_cargo_b select 0) + unlockedBackpacks, true] call BIS_fnc_addVirtualBackpackCargo;
-
-//["Open",[nil,_box,_unit]] call BIS_fnc_arsenal;
-
-["Open", [nil, _box, _unit]] call BIS_fnc_arsenal;
-
-
-// BIS_fnc_arsenal creates a new action. We remove it so the only arsenal available is this one
-waitUntil {!isnil{_box getVariable "bis_fnc_arsenal_action"}};
-
-//Remove and add actions to avoid bug where actual Arsenal action disappears in multiplayer (action index differs between clients?)
-[_box, "remove"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
-
-
-
-// wait for the arsenal to close.
-//failsafe
-private _time = time;
-waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal") or not(alive _unit)};
-
-if (not(alive _unit)) exitWith {AS_Sset("lockArsenal", false);};
-
-sleep 0.5;
-
-if (_box == caja) then {
-
-  [_box, "arsenal"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
-  [_box, "transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-  [_box, "emptyPlayer"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-  [_box, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-} else {
-  [_box,"heal_camp"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
-  [_box,"arsenal"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-  [_box,"transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-};
-
-
-
+private _old_cargo = _unit getVariable "old_Cargo";
 
 private _new_cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 
@@ -231,10 +158,7 @@ for "_i" from 0 to (count (_cargo_i select 0) - 1) do {
 
 waitUntil {sleep 0.1; isNil "AS_savingServer"};
 
+//Populate with new cargo, called so no simultaneous calcs
 [caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] remoteExecCall ["AS_fnc_populateBox", 2];
 
-//Failsafe here to let arsenal synch with clients
-sleep 0.2;
-
-AS_Sset("lockArsenal", false);
-*/
+_unit setVariable ["old_Cargo", nil, false];
