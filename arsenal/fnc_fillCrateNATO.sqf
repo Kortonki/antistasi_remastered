@@ -10,15 +10,15 @@ _items = [[],[]];
 _backpacks = [[],[]];
 
 _addWeapon = {
-	params ["_weapon", "_amount", "_mags"];
+	params ["_weapon", "_amount", "_magsAmount"];
 	if (_amount < 1) exitWith {};
-	private _mags = (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select {getText (configFile >> "CfgMagazines" >> _x >> "ammo") find "blank" == -1}; //exclude blanks TODO: other ways to detect blanks
+	private _mags = (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select {(getText (configFile >> "CfgMagazines" >> _x >> "ammo")) find "blank" == -1}; //exclude blanks TODO: other ways to detect blanks
 	private _mag = selectRandom _mags;
 
 	(_weapons select 0) pushBack _weapon;
 	(_weapons select 1) pushBack _amount;
 	(_magazines select 0) pushBack _mag;
-	(_magazines select 1) pushBack _mags;
+	(_magazines select 1) pushBack _magsAmount;
 };
 
 // Handguns and submachine guns

@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={3227.8291,79.031174,2031.1563};
-		dir[]={0.81361467,-0.51967263,-0.26115635};
-		up[]={0.49483219,0.85434425,-0.15883289};
-		aside[]={-0.3056587,9.1985567e-007,-0.95225936};
+		pos[]={3242.2605,8.3359365,2071.0759};
+		dir[]={0.60634351,-0.75087494,-0.26223215};
+		up[]={0.68916392,0.66046166,-0.2980507};
+		aside[]={-0.39699313,8.6333603e-007,-0.91794467};
 	};
 };
 binarizationWanted=0;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.44";
+		briefingName="Antistasi Remastered V0.99.45";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -3056,6 +3056,7 @@ class Mission
 			};
 			id=2589;
 			type="EmptyDetector";
+			atlOffset=-5.3048134e-006;
 		};
 		class Item144
 		{
@@ -3071,6 +3072,7 @@ class Mission
 			};
 			id=2590;
 			type="EmptyDetector";
+			atlOffset=1.6689301e-005;
 		};
 	};
 	class Connections
