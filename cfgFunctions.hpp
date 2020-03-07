@@ -45,6 +45,7 @@ class AS {
 
 
 
+        FNC(arsenal, pollServerArsenal);
         FNC_BASE(refreshArsenal);
         FNC_BASE(resetPetrosPosition);
 
