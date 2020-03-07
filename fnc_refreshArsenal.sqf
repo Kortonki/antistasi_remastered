@@ -28,7 +28,6 @@ if _clean then {
     unlockedBackpacks = unlockedBackpacks arrayIntersect unlockedBackpacks;
     publicVariable "unlockedBackpacks";
 
-AS_Sset("lockArsenal", false); //This to relieve the lock if it's let on
 
 [caja, getWeaponCargo caja, _magazineCargo, getItemCargo caja, getBackpackCargo caja, true, true] call AS_fnc_populateBox;
 

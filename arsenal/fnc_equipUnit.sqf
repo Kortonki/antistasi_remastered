@@ -78,9 +78,9 @@ if (_binoculars != "") then {
 
 private _cargo = [_unit, true] call AS_fnc_getUnitArsenal;
 
-waitUntil {sleep 0.1; isNil "AS_savingServer" and {!(AS_S("lockArsenal"))}};
+waitUntil {sleep 0.1; isNil "AS_savingServer"};
 
-[_cargo] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
+[_cargo] remoteExec ["AS_fnc_removeFromArsenal", 2];
 
 
 

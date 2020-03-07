@@ -164,9 +164,10 @@ private _actualMagCount = 0;
 {_actualMagCount = _actualMagCount + _x}
 foreach (_primaryMags select 1);
 
-if  ((not (_type in ["Grenadier","Autorifleman", "Sniper"]) and {_primaryWeapon == ""})
+if  (_primaryWeapon == ""
     or (_actualMagCount < _primaryMagCount))
     then {
+    [petros, "sideChat", format ["%1 recruited: No weapons or ammo for %1, takes default weapon", _type]] remoteExec ["AS_fnc_localCommunication", [0, -2] select isDedicated];
   if (not(isNil {(_unlockedCargoWeapons select 0) select 0})) then {_primaryWeapon = ((_unlockedCargoWeapons select 0) select 0);};
   _primaryMags = ([caja, _primaryWeapon, 10] call AS_fnc_getBestMagazines);
 };

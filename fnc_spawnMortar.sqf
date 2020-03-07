@@ -21,7 +21,7 @@ private _mortarType = selectRandom([_faction, "static_mortar"] call AS_fnc_getEn
 private _gunnerType = [_faction, "gunner"] call AS_fnc_getEntity;
 
 private _group = createGroup (_faction call AS_fnc_getFactionSide);
-private _veh = [_mortarType, _position, _faction, random 360, "NONE"];
+private _veh = [_mortarType, _position, _faction, random 360, "CAN_COLLIDE"] call AS_fnc_createEmptyVehicle;
 _vehicles pushBack _veh;
 [_veh] execVM "scripts\UPSMON\MON_artillery_add.sqf";
 private _unit = ([_position, 0, _gunnerType, _group] call bis_fnc_spawnvehicle) select 0;

@@ -120,7 +120,6 @@ AS_Sset("AAFpatrols", 0);
 
 // Used to make a transfer to `caja` atomic
 AS_Sset("lockTransfer", false);
-AS_Sset("lockArsenal", false);
 
 // This sets whether the CSAT can attack or not. The FIA has an option to block
 // attacks by jamming radio signals (close to flags with towers)
@@ -156,6 +155,8 @@ publicVariable "AS_maxSkill";
 
 //Percentage how much FIA funds are given to players each update
 AS_players_share = 5;
+
+lockArsenal = false;
 
 // BE_modul handles all the permissions e.g. to build roadblocks, skill, etc.
 #include "..\Scripts\BE_modul.sqf"

@@ -1,10 +1,10 @@
 #include "../macros.hpp"
 params ["_container", "_unit"];
 
+//OBSOLETE if no arsenal waiting
+
 //Run where unit is local
 if (!local _unit) exitWith {[_container, _unit] remoteExec ["AS_fnc_showUnlocked", _unit]};
-
-waitUntil {not(AS_S("lockArsenal"))}; //Don't fiddle while arsenal is accessed
 
 //Check whether unlockeds are already accessible vi ainventory
 

@@ -53,14 +53,15 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 ] call DICT_fnc_set;
 
 [_dict, "unlockedWeapons", [
-	"Binocular",
 	"hgun_PDW2000_F",
-	"hgun_ACPC2_F"]
+	"hgun_ACPC2_F",
+	"Binocular"]
 ] call DICT_fnc_set;
 
 [_dict, "unlockedMagazines", [
-	"9Rnd_45ACP_Mag",
-	"30Rnd_9x21_Mag"]
+	"30Rnd_9x21_Mag",
+	"9Rnd_45ACP_Mag"
+	]
 ] call DICT_fnc_set;
 
 [_dict, "unlockedBackpacks", ["B_TacticalPack_blk"]] call DICT_fnc_set;

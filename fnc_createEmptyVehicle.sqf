@@ -15,7 +15,7 @@ if (_side isEqualto "CIV") then {
 
 [_vehicle] spawn {
   params ["_vehicle"];
-  sleep 2;
+  sleep 3;
   _vehicle allowDamage true;
 };
 
