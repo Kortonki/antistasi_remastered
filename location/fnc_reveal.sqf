@@ -6,6 +6,8 @@ if (isNil "_veh") exitWith {diag_log format ["AS Error: nil vehicle passed to AS
 if (_location in ([] call AS_location_fnc_knownLocations)) exitWith {}; //No need for checks if locations is already known
 
 private _enemySide = ["AAF"] call AS_fnc_getFactionSide;
+private _position = _location call AS_location_fnc_position;
+_position = [_position select 0, _position select 1, 2];
 
 while {sleep AS_spawnLoopTime; (alive _veh) and {(!(isNil{_veh getVariable "marcador"}) or _veh == petros) and {!(_location in ([] call AS_location_fnc_knownLocations))}}} do {
   {
@@ -13,7 +15,8 @@ while {sleep AS_spawnLoopTime; (alive _veh) and {(!(isNil{_veh getVariable "marc
     //Only reveal to location if there's radio coverage and the leader is alive after the contact for some.
 
       if (_x knowsAbout _veh > 1.4) then {
-        if (leader _x == _x and {(position _x) call AS_fnc_hasRadioCoverage  and {!(_x getVariable ["revealing", false])}}) then {
+        private _leader = leader _x;
+        if (_leader == _x and {(position _x) call AS_fnc_hasRadioCoverage  and {!(_x getVariable ["revealing", false])  and {([_x, "VIEW"] checkVisibility [eyepos _x, _position]) > 0.5}}}) then {
 
            [_x, _location] spawn {
              params ["_unit","_location"];

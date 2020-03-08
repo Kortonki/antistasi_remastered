@@ -153,7 +153,7 @@ private _fnc_spawn = {
 				if (["helis_armed", 0.2] call AS_fnc_vehicleAvailability) then {
 					_toUse = "helis_armed";
 				};
-				if (_threatEvalAir > 15 and {["planes", 0.2] call AS_fnc_vehicleAvailability) then {
+				if (_threatEvalAir > 15 and ["planes", 0.2] call AS_fnc_vehicleAvailability) then {
 					_toUse = "planes";
 				};
 			};

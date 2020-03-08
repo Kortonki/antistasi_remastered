@@ -83,7 +83,7 @@ if (speed _truck > 10) exitWith {
 };
 
 detach _box;
-_box setpos _pos;
+_box setVehicleposition [_pos, [], 1, "NONE"];
 
 _box setVariable ["asCargo", false, true];
 _truck setVariable ["boxCargo", (_truck getVariable "boxCargo") - [_box], true];

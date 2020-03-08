@@ -48,6 +48,16 @@ private _fnc_spawn = {
 		[_veh] spawn AS_AI_fnc_activateUnloadUnderSmoke;
 	};
 
+	if (_isFlying) then {
+		_veh flyInHeight 700;
+	};
+
+	private _AAFresAdj = [] call AS_fnc_getAAFresourcesAdj;
+	private _min = (0.3*(_AAFresAdj / 1500)) min 0.3; //TODO: make this an external function
+	private _max = (_AAFresAdj / 2000) min 1;
+
+	[_veh, _min, _max] call AS_fuel_fnc_randomFuelCargo;
+
 	[_spawnName, "resources", [taskNull, [_grupoVeh], [_veh], []]] call AS_spawn_fnc_set;
 };
 
@@ -76,6 +86,26 @@ private _fnc_run = {
 		_potentialLocations select {_posHQ distance2D (_x call AS_location_fnc_position) < _distance}
 	};
 
+	private _combat_init = {
+
+		params ["_vehicle", "_target", "_isFlying"];
+		if (_vehicle getvariable ["combatInit", false]) exitWith {};
+
+		private _size = [300, 1000] select _isFlying;
+		private _leader = leader (driver _vehicle);
+		(group _leader) setSpeedMode "NORMAL";
+
+		private _patrolMarker = createMarker [format ["roadpatrol_%1", diag_tickTime], position _target];
+		_patrolMarker setMarkerShape "RECTANGLE";
+		_patrolMarker setMarkerSize [_size,_size];
+		_patrolMarker setMarkerAlpha 0;
+
+		[_leader, _patrolMarker, "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
+
+		_vehicle setVariable ["combatInit", true, true];
+
+	};
+
 	private _arraydestinos = call _fnc_destinations;
 	private _distancia = [200, 1000] select _isFlying; //to avoid choppers getting stuck
 
@@ -85,7 +115,7 @@ private _fnc_run = {
 
 	private _continue_condition = {
 		(canMove _veh) and {alive _veh} and {count _arraydestinos > 0} and
-		{{_x call AS_fnc_canFight} count _soldados != 0}
+		{{_x call AS_fnc_canFight} count _soldados != 0} and {fuel _veh > 0.2}
 	};
 
 	private _destino = selectRandom _arraydestinos;
@@ -97,17 +127,14 @@ private _fnc_run = {
 	_Vwp0 setWaypointSpeed "LIMITED";
 	[_veh,"RoadPatrol"] spawn AS_fnc_setConvoyImmune;
 
-	private _AAFresAdj = [] call AS_fnc_getAAFresourcesAdj;
-	private _min = (0.3*(_AAFresAdj / 1500)) min 0.3; //TODO: make this an external function
-	private _max = (_AAFresAdj / 2000) min 1;
 
-	[_veh, _min, _max] call AS_fuel_fnc_randomFuelCargo;
+
+	private _sideFIA = ("FIA" call AS_fnc_getFactionSide);
+	private _sideAAF = ("AAF" call AS_fnc_getFactionSide);
 
 	//Conisder if this kind of target sharing is necessary. OTOH the patrol doesn't use UPSMON to share info
 	while {(_veh distance2D _posdestino > _distancia) and _continue_condition} do {
 		sleep 30;
-		private _sideFIA = ("FIA" call AS_fnc_getFactionSide);
-		private _sideAAF = ("AAF" call AS_fnc_getFactionSide);
 		{
 			if (_x select 2 == _sideFIA) then {
 				private _arevelar = _x select 4;
@@ -116,13 +143,14 @@ private _fnc_run = {
 					{
 						if (leader _x distance2D _veh < AS_P("spawnDistance")) then {_x reveal [_arevelar,_nivel]};
 					} forEach (allGroups select {side _x isEqualTo _sideAAF});
+					[_veh, _x, _isFlying] call _combat_init;
 				};
 			};
 		} forEach (driver _veh nearTargets AS_P("spawnDistance"));
 	};
 
 	if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) then {
-		_arraydestinos = ([["searport"], "AAF"] call AS_location_fnc_TS) select {(_x call AS_location_fnc_position) distance2D (position _veh) < 2500};
+		_arraydestinos = ([["seaport"], "AAF"] call AS_location_fnc_TS) select {(_x call AS_location_fnc_position) distance2D (position _veh) < 2500};
 	} else {
 		_arraydestinos = call _fnc_destinations;
 	};
@@ -130,7 +158,7 @@ private _fnc_run = {
 
 	if (call _continue_condition) then {
 		// repeat this state
-		[_spawnName, "state_index", 1] call AS_spawn_fnc_set;
+		[_spawnName, "state_index", 0] call AS_spawn_fnc_set;
 	};
 };
 
