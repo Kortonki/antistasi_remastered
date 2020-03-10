@@ -16,7 +16,7 @@ if (_salir) exitWith {hint "You cannot dismiss player led, Watchpost, Roadblocks
 	if (leader _x call AS_fnc_getSide == "NATO") exitwith {_salir = true};
 } forEach _groups;
 
-if (_salir) exitWith {hint format ["You cannot dismiss %1 groups", (["NATO", "name"] call AS_fnc_getEntity)]};
+if (_salir) exitWith {hint format ["You cannot dismiss %1 groups", (["NATO", "shortname"] call AS_fnc_getEntity)]};
 
 if (!(isNil "AS_HQ_moving")) exitWith {hint format "You can't dismiss groups while HQ is not in place"};
 

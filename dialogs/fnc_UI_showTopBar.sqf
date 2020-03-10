@@ -14,7 +14,7 @@ private _texto = "";
 if (isMultiplayer) then {
 	while {showStatistics} do {
 		waitUntil {sleep 0.5; not (player call AS_fnc_controlsAI)};
-		private _natoSupport = format ["%1 Support: %2", (["NATO", "name"] call AS_fnc_getEntity), AS_P("NATOsupport")];
+		private _natoSupport = format ["%1 Support: %2", (["NATO", "shortname"] call AS_fnc_getEntity), AS_P("NATOsupport")];
 		if (player != AS_commander) then {
 			private _commanderName = "NONE";
 			if (isPlayer AS_commander) then {_commanderName = name AS_commander};
@@ -52,7 +52,7 @@ if (isMultiplayer) then {
 } else {
 	while {showStatistics} do {
 		waitUntil {sleep 0.5; not (player call AS_fnc_controlsAI)};
-		private _natoSupport = format ["%1 Support: %2", (["NATO", "name"] call AS_fnc_getEntity), AS_P("NATOsupport")];
+		private _natoSupport = format ["%1 Support: %2", (["NATO", "shortname"] call AS_fnc_getEntity), AS_P("NATOsupport")];
 		_texto = format ["<t size='0.55'>" + "HR: %1 | FIA Money: %2 € | Fuel: %3 l | %4 | %5 | %6",
 			AS_P("hr"),
 			AS_P("resourcesFIA"),

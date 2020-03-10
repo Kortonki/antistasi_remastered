@@ -4,7 +4,7 @@
 		if not ([AS_entities, _faction, _x] call DICT_fnc_exists) then {
 			diag_log format ["[AS] Error: Attribute '%1' not defined for faction '%2'", _x, _faction];
 		};
-	} forEach ["name", "side", "roles"];
+	} forEach ["name", "shortname", "side", "roles"];
 } forEach allVariables AS_entities;
 
 private _common_attributes = [

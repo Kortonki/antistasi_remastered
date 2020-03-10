@@ -1,6 +1,7 @@
 private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy;
 [_dict, "side", str west] call DICT_fnc_set;
 [_dict, "name", "FDF Summer (FFP)"] call DICT_fnc_set;
+[_dict, "shortname", "FDF"] call DICT_fnc_set;
 [_dict, "flag", "ffp_flagcarrier_finland"] call DICT_fnc_set;
 
 [_dict, "soldier", "B_G_Soldier_F"] call DICT_fnc_set;

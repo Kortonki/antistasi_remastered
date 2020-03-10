@@ -13,7 +13,7 @@ private _fnc_initialize = {
 		[_location] call AS_fnc_location_name,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
 		numberToDate [2035,dateToNumber _fechalim] select 4,
-		(["AAF", "name"] call AS_fnc_getEntity)
+		(["AAF", "shortname"] call AS_fnc_getEntity)
 	];
 
 	[_mission, [_tskDesc,_tskTitle,_location], _position, "Destroy"] call AS_mission_spawn_fnc_saveTask;

@@ -18,28 +18,28 @@ if (_location_or_unit isEqualType "") then {
 private _texto = format ["<t size='0.6' color='#C1C0BB'>Intel Found.<br/> <t size='0.5' color='#C1C0BB'><br/>"];
 
 if (random 100 < _chance) then {
-	_texto = format ["%1 %2 Troop Skill Level: %3<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), AS_P("skillAAF")];
+	_texto = format ["%1 %2 Troop Skill Level: %3<br/>",_texto, (["AAF", "shortname"] call AS_fnc_getEntity), AS_P("skillAAF")];
 };
 if (random 100 < _chance) then {
 	private _minutes = (numberToDate [2035, (AS_P("nextAttack") - (datetoNumber date))]) select 4;
-	_texto = format ["%1 %2 Next possible counterattack: %3 minutes<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), _minutes];
+	_texto = format ["%1 %2 Next possible counterattack: %3 minutes<br/>",_texto, (["AAF", "shortname"] call AS_fnc_getEntity), _minutes];
 };
 if (random 100 < _chance) then {
 	private _AAFresAdj = call AS_fnc_getAAFresourcesAdj;
 	if (_AAFresAdj <= 2000) then {
 		if (_AAFresADj <= 1000) then {
-			_texto = format ["%1 %2 Funds: Poor (low ammo and fuel)<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity)];
+			_texto = format ["%1 %2 Funds: Poor (low ammo and fuel)<br/>",_texto, (["AAF", "shortname"] call AS_fnc_getEntity)];
 		} else {
-			_texto = format ["%1 %2 Funds: Inadequate (low fuel)<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity)];
+			_texto = format ["%1 %2 Funds: Inadequate (low fuel)<br/>",_texto, (["AAF", "shortname"] call AS_fnc_getEntity)];
 		};
 	} else {
-		_texto = format ["%1 %2 Funds: %3 €<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), AS_P("resourcesAAF")];
+		_texto = format ["%1 %2 Funds: %3 €<br/>",_texto, (["AAF", "shortname"] call AS_fnc_getEntity), AS_P("resourcesAAF")];
 	};
 };
 
 if (random 100 < _chance) then {
 	private _csatSupport = AS_P("CSATsupport");
-		_texto = format ["%1 %2 Support: %3<br/>",_texto, (["CSAT", "name"] call AS_fnc_getEntity), _csatSupport];
+		_texto = format ["%1 %2 Support: %3<br/>",_texto, (["CSAT", "shortname"] call AS_fnc_getEntity), _csatSupport];
 };
 
 {
@@ -48,13 +48,13 @@ if (random 100 < _chance) then {
 		if (_count < 1) then {
 			_count = "None";
 		};
-		_texto = format ["%1 %2 %3: %4<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), _x call AS_AAFarsenal_fnc_name, _count];
+		_texto = format ["%1 %2 %3: %4<br/>",_texto, (["AAF", "shortname"] call AS_fnc_getEntity), _x call AS_AAFarsenal_fnc_name, _count];
 	};
 } forEach call AS_AAFarsenal_fnc_all;
 
 {
 	if (random 100 < _chance) then {
-		_texto = format ["%1 %2 knows about %3 near %4<br/>",_texto, (["AAF", "name"] call AS_fnc_getEntity), _x call AS_location_fnc_type, ["city" call AS_location_fnc_T, _x call AS_location_fnc_position] call BIS_fnc_nearestPosition];
+		_texto = format ["%1 %2 knows about %3 near %4<br/>",_texto, (["AAF", "shortname"] call AS_fnc_getEntity), _x call AS_location_fnc_type, ["city" call AS_location_fnc_T, _x call AS_location_fnc_position] call BIS_fnc_nearestPosition];
 	};
 
 } foreach ([] call AS_location_fnc_knownLocations);

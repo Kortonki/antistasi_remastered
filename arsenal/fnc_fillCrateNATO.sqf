@@ -43,8 +43,8 @@ private _bestScope = [NATOItems arrayIntersect AS_allOptics, "sniperScope"] call
 (_items select 0) pushBack _bestScope;
 (_items select 1) pushBack _intNATOSupp;
 
-[selectRandom NATOLaunchers, _intNATOSupp, 3*_intNATOSupp] call _addWeapon;
-[selectRandom NATOLaunchers, _intNATOSupp, 3*_intNATOSupp] call _addWeapon;
+[selectRandom NATOLaunchers, _intNATOSupp, 2*_intNATOSupp] call _addWeapon;
+[selectRandom NATOLaunchers, _intNATOSupp, 2*_intNATOSupp] call _addWeapon;
 
 for "_i" from 1 to 5 do {
 	(_magazines select 0) pushBack (selectRandom NATOThrowGrenades);
@@ -68,8 +68,28 @@ for "_i" from 1 to 3 do {
 
 	for "_i" from 1 to 5 do {
 
-	(_backpacks select 0) pushback (selectRandom (NatoBackpacks));
-	(_backpacks select 1) pushback _intNATOSupp;
+		(_backpacks select 0) pushback (selectRandom NatoBackpacks);
+		(_backpacks select 1) pushback _intNATOSupp;
+};
+
+//Add static bags
+
+if (_intNATOSupp > random 10) then {
+
+	private _staticpack = selectRandom (NatoBackpacks select {_x isEqualType []});
+	if (isNil _staticpack) exitWith {};
+	//This means its a static bag
+	{
+		//Is the uav terminal
+		if (_x isKindOf "Item_Base_F") then {
+			(_items select 0) pushback _x;
+			(_items select 1) pushback 1;
+		} else {
+			(_backpacks select 0) pushback _x;
+			(_backpacks select 1) pushback 1;
+		};
+	} foreach _staticpack;
+
 };
 
 //Add some mines + explosives

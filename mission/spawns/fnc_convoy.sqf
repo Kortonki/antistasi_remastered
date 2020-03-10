@@ -110,7 +110,7 @@ private _fnc_initialize = {
 		[_location] call AS_fnc_location_name, _location,
 		numberToDate [2035,dateToNumber _startTime] select 3,
 		numberToDate [2035,dateToNumber _startTime] select 4];
-	_tskTitle = format [_tskTitle, (["AAF", "name"] call AS_fnc_getEntity)];
+	_tskTitle = format [_tskTitle, (["AAF", "shortname"] call AS_fnc_getEntity)];
 
 	[_mission, "origin", _origin] call AS_spawn_fnc_set;
 	[_mission, "mainVehicleType", _mainVehicleType] call AS_spawn_fnc_set;

@@ -18,7 +18,7 @@ private _fnc_initialize = {
 			]
 		};
 		if (_missionType == "rescue_refugees") exitWith {
-			format [localize "STR_tskDesc_resRefugees", [_location] call AS_fnc_location_name, (["AAF", "name"] call AS_fnc_getEntity)]
+			format [localize "STR_tskDesc_resRefugees", [_location] call AS_fnc_location_name, (["AAF", "shortname"] call AS_fnc_getEntity)]
 		};
 		""
 	};

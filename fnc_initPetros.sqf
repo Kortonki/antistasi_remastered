@@ -36,6 +36,7 @@ publicVariable "petros";
 grupoPetros setGroupId ["Petros","GroupColor4"];
 [petros, ["Petros", "Petros", "Petros"]] remoteExec ["setName", AS_CLIENTS];
 petros disableAI "MOVE";
+publicVariable "petros";
 
 removeHeadgear petros;
 removeGoggles petros;

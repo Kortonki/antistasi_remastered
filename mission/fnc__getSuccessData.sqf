@@ -80,7 +80,7 @@ if (_type == "convoy_prisoners") exitWith {
 
 if (_type == "defend_city") exitWith {
     [50, [500, _position, 10], [10, 5], [0, 0], [-10, 20, _position, true], 120*60, [
-        [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities, FIA gains 5", {{[-5,5,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)}]
+        [(["AAF", "shortname"] call AS_fnc_getEntity) + " loses 5 support in all cities, FIA gains 5", {{[-5,5,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)}]
     ]]
 };
 if (_type == "defend_camp") exitWith {
@@ -91,7 +91,7 @@ if (_type == "defend_location") exitWith {
 };
 if (_type == "defend_hq") exitWith {
     [10, [500, _position, 20], [0, 10], [0, 0], [-5, 10, _position], 90*60, [
-        [(["AAF", "name"] call AS_fnc_getEntity) + " loses 5 support in all cities", {{[-5,0,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)}]
+        [(["AAF", "shortname"] call AS_fnc_getEntity) + " loses 5 support in all cities", {{[-5,0,_x] call AS_fnc_changeCitySupport} forEach (call AS_location_fnc_cities)}]
     ]]
 };
 
@@ -135,7 +135,7 @@ if (_type == "pamphlets") exitWith {
 };
 if (_type == "repair_antenna") exitWith {
     [5, [500, _position, 10], [2, 0], [0, 0], [0, 0, []], 20*60,
-        [[(["AAF", "name"] call AS_fnc_getEntity) + " antenna continues disabled", {}]]
+        [[(["AAF", "shortname"] call AS_fnc_getEntity) + " antenna continues disabled", {}]]
     ]
 };
 if (_type == "rescue_prisioners") exitWith {

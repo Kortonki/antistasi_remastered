@@ -17,7 +17,7 @@ private _grupoEst = grpNull;
 
 private _grupo = createGroup ("FIA" call AS_fnc_getFactionSide);
 _grupos pushBack _grupo;
-_grupo setGroupId [format ["Garr_%1_%2", _location, count _grupos]];
+_grupo setGroupId [format ["Garr_%1_%2", _location, floor (diag_tickTime)]];
 {
 	if !(_location call AS_location_fnc_spawned) exitWith {};
 	private _unit = objNull;

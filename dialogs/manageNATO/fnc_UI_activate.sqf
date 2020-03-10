@@ -4,7 +4,7 @@ params ["_missionType"];
 #define MIN_DISTANCE_FOR_SELECTION 200
 
 if (count (_missionType call AS_mission_fnc_active_missions) != 0) exitWith {
-	hint ((["NATO", "name"] call AS_fnc_getEntity) + " is already busy with this kind of mission");
+	hint ((["NATO", "shortname"] call AS_fnc_getEntity) + " is already busy with this kind of mission");
 };
 if (!([player] call AS_fnc_hasRadio)) exitWith {
 	hint "You need a radio in your inventory to be able to give orders to other squads";
@@ -18,7 +18,7 @@ if (_missionType in ["nato_artillery", "nato_armor", "nato_roadblock"] and (coun
 };
 
 if (_missionType == "nato_uav" and (count (["NATO", "uavs_attack"] call AS_fnc_getEntity) == 0)) exitWith {
-	hint ((["NATO", "name"] call AS_fnc_getEntity) + " has no UAVs");
+	hint ((["NATO", "shortname"] call AS_fnc_getEntity) + " has no UAVs");
 };
 
 private _get_mapPosition = {
@@ -42,7 +42,7 @@ switch _missionType do {
 	};
 	case "nato_attack": {
 		_requiredSupport = 30;
-		_textohint = format ["Click on location you want %1 to attack", (["NATO", "name"] call AS_fnc_getEntity)];
+		_textohint = format ["Click on location you want %1 to attack", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	};
 	case "nato_armor": {
 		_requiredSupport = 30;
@@ -58,20 +58,20 @@ switch _missionType do {
 	};
 	case "nato_cas": {
 		_requiredSupport = 10;
-		_textohint = format ["Click on the airport from which you want %1 to attack", (["NATO", "name"] call AS_fnc_getEntity)];
+		_textohint = format ["Click on the airport from which you want %1 to attack", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	};
 	case "nato_roadblock": {
 		_requiredSupport = 10;
-		_textohint = format ["Click on the spot where you want %1 to setup a roadblock", (["NATO", "name"] call AS_fnc_getEntity)];
+		_textohint = format ["Click on the spot where you want %1 to setup a roadblock", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	};
 	case "nato_qrf": {
 		_requiredSupport = 10;
-		_textohint = format ["Click on the airport from which you want %1 to dispatch a QRF", (["NATO", "name"] call AS_fnc_getEntity)];
+		_textohint = format ["Click on the airport from which you want %1 to dispatch a QRF", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	};
 };
 
 if (AS_P("NATOsupport") < _requiredSupport) exitWith {
-	hint format ["We lack %1 Support for this request (%2 needed)", (["NATO", "name"] call AS_fnc_getEntity), _requiredSupport];
+	hint format ["We lack %1 Support for this request (%2 needed)", (["NATO", "shortname"] call AS_fnc_getEntity), _requiredSupport];
 };
 
 if (_missionType == "nato_uav") exitWith {
@@ -116,7 +116,7 @@ if (_missionType == "nato_cas") exitWith {
 if (_missionType == "nato_qrf") exitWith {
 	// default origin
 	if not (_location in (_airfields + ["spawnNATO"])) exitWith {
-		hint ((["NATO", "name"] call AS_fnc_getEntity) + " QRF must start from an airfield");
+		hint ((["NATO", "shortname"] call AS_fnc_getEntity) + " QRF must start from an airfield");
 	};
 	hint format ["QRF departing from %1. Mark the target for the QRF.", [_location] call AS_fnc_location_name];
 	private _destination = call _get_mapPosition;
@@ -141,7 +141,7 @@ if (_missionType == "nato_attack") then {
 	};
 	if !(_type in ["base", "outpost", "airfield", "outpostAA"]) exitWith {
 		_exit = true;
-		hint ((["NATO", "name"] call AS_fnc_getEntity) + " will not attack this type of location.");
+		hint ((["NATO", "shortname"] call AS_fnc_getEntity) + " will not attack this type of location.");
 	};
 };
 if _exit exitWith {};
@@ -152,7 +152,7 @@ if (_missionType == "nato_attack" and (count _airfields + count _bases == 0)) th
 	_origin = "spawnNATO";
 	_posicionTel = getMarkerPos _origin;
 } else {
-	hint format ["Click on a location for the %1 to start from", (["NATO", "name"] call AS_fnc_getEntity)];
+	hint format ["Click on a location for the %1 to start from", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	_posicionTel = call _get_mapPosition;
 	if (count _posicionTel != 0 and {_posicionTel distance2D (getMarkerPos "spawnNATO") < MIN_DISTANCE_FOR_SELECTION}) then {
 		_origin = "spawnNATO";

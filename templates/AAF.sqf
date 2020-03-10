@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str east] call DICT_fnc_set;
 [_dict, "roles", ["state"]] call DICT_fnc_set;
 [_dict, "name", "AAF"] call DICT_fnc_set;
+[_dict, "shortname", "AAF"] call DICT_fnc_set;
 [_dict, "flag", "Flag_AAF_F"] call DICT_fnc_set;
 [_dict, "box", "I_supplyCrate_F"] call DICT_fnc_set;
 

@@ -73,13 +73,13 @@ if (_type == "convoy_supplies") exitWith {
     [-10, 0, [0, 5], [0, 0], [20, 0, _position], 0]
 };
 if (_type == "convoy_money") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], 0, [[(["AAF", "name"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
+    [-10, 0, [0, 0], [0, 0], [0, 0, []], 0, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
 };
 if (_type == "convoy_ammo") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], -10*60, [[(["AAF", "name"] call AS_fnc_getEntity) + " gains money", {[10000] call AS_fnc_changeAAFmoney}]]]
+    [-10, 0, [0, 0], [0, 0], [0, 0, []], -10*60, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[10000] call AS_fnc_changeAAFmoney}]]]
 };
 if (_type == "convoy_fuel") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, _position], -10*60, [[(["AAF", "name"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
+    [-10, 0, [0, 0], [0, 0], [0, 0, _position], -10*60, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
 
 
 };
@@ -134,7 +134,7 @@ if (_type == "pamphlets") exitWith {
 if (_type == "repair_antenna") exitWith {
     _args params [["_antennaPos", [0,0,0]]];
     [-10, 0, [0, 0], [0, 0], [5, 0, _position], -10*60,
-        [[(["AAF", "name"] call AS_fnc_getEntity) + " antenna is repaired", {
+        [[(["AAF", "shortname"] call AS_fnc_getEntity) + " antenna is repaired", {
             params ["_antennaPos"];
             AS_Pset("antenasPos_alive", AS_P("antenasPos_alive") + [_antennaPos]);
             AS_Pset("antenasPos_dead", AS_P("antenasPos_dead") - [_antennaPos]);

@@ -86,7 +86,7 @@ private _FIAResIncomeMultiplier = 1;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
     };
     if ((_AAFsupport > _FIAsupport) and (_side == "FIA")) then {
-        ["TaskFailed", ["", format ["%1 joined %2", _city, ["AAF", "name"] call AS_fnc_getEntity ]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+        ["TaskFailed", ["", format ["%1 joined %2", _city, ["AAF", "shortname"] call AS_fnc_getEntity ]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 
         [_city, "side", "AAF"] call AS_location_fnc_set;
         _city call AS_location_fnc_updateMarker;

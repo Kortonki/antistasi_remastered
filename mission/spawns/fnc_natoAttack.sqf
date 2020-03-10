@@ -4,14 +4,14 @@ private _fnc_initialize = {
 	private _destination = [_mission, "destination"] call AS_mission_fnc_get;
 
 	private _destPos = _destination call AS_location_fnc_position;
-	private _origname = format ["the %1 Carrier", (["NATO", "name"] call AS_fnc_getEntity)];
+	private _origname = format ["the %1 Carrier", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	if (_origin != "spawnNATO") then {
 		_origname = [_origin] call AS_fnc_location_name;
 	};
 
-	private _tskTitle = (["NATO", "name"] call AS_fnc_getEntity) + " Attack";
+	private _tskTitle = (["NATO", "shortname"] call AS_fnc_getEntity) + " Attack";
 	private _tskDesc = format ["Our Commander asked %1 for an attack on %2. Help them in order to have success in this operation. The attack will depart from %3 and will include artillery fire.",
-		(["NATO", "name"] call AS_fnc_getEntity),
+		(["NATO", "shortname"] call AS_fnc_getEntity),
 		[_destination] call AS_fnc_location_name,
 		_origname];
 

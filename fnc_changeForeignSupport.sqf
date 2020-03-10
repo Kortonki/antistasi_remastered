@@ -39,7 +39,7 @@ private _getSign = {
 };
 
 private _text = "<t size='0.6' color='#C1C0BB'>Foreign support change:<br/> <t size='0.5' color='#C1C0BB'><br/>";
-_text = _text + format["%1: %2%3", (["NATO", "name"] call AS_fnc_getEntity), _nato call _getSign, _nato];
+_text = _text + format["%1: %2%3", (["NATO", "shortname"] call AS_fnc_getEntity), _nato call _getSign, _nato];
 [petros,"income",_text,5] remoteExec ["AS_fnc_localCommunication",AS_commander];
 
 //CSAT support info is through intel

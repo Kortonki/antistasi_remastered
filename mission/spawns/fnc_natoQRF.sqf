@@ -13,14 +13,14 @@ private _fnc_initialize = {
 	_mrk setMarkerShape "ICON";
 	_mrk setMarkerSize [100,100];
 	_mrk setMarkerType "b_support";
-	_mrk setMarkerText ((["NATO", "name"] call AS_fnc_getEntity) + " QRF");
+	_mrk setMarkerText ((["NATO", "shortname"] call AS_fnc_getEntity) + " QRF");
 
 	private _tiempolim = 30;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 
-	private _tskTitle = ((["NATO", "name"] call AS_fnc_getEntity) + " QRF");
+	private _tskTitle = ((["NATO", "shortname"] call AS_fnc_getEntity) + " QRF");
 	private _tskDesc = format ["Our Commander asked %1 for reinforcements near %2. Their troops will depart from %3.",
-		(["NATO", "name"] call AS_fnc_getEntity),
+		(["NATO", "shortname"] call AS_fnc_getEntity),
 		[_destPos call AS_location_fnc_nearest] call AS_fnc_location_name,
 		[_origin] call AS_fnc_location_name];
 
