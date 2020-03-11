@@ -10,7 +10,7 @@ call AS_AAFarsenal_fnc_deinitialize;
   private _category = _x select 0;
   private _name = _x select 1;
   private _cost = _x select 2;
-  if (_category call AS_AAFarsenal_fnc_category == "") then {
+  if (!([call AS_AAFarsenal_fnc_dictionary, _category] call DICT_fnc_exists)) then {
     [call AS_AAFarsenal_fnc_dictionary, _category, call DICT_fnc_create] call DICT_fnc_setGlobal;
     [_category, "name", _name] call AS_AAFarsenal_fnc_set;
     [_category, "count", floor((_category call AS_AAFarsenal_fnc_max)/2)] call AS_AAFarsenal_fnc_set;

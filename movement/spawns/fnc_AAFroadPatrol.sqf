@@ -68,6 +68,7 @@ private _fnc_run = {
 
 	private _grupoveh = ([_spawnName, "resources"] call AS_spawn_fnc_get) select 1 select 0;
 	private _veh = ([_spawnName, "resources"] call AS_spawn_fnc_get) select 2 select 0;
+	private _markers = ([_spawnName, "resources"] call AS_spawn_fnc_get) select 3;
 	private _soldados = units _grupoveh;
 
 	private _fnc_destinations = {
@@ -103,6 +104,7 @@ private _fnc_run = {
 		[_leader, _patrolMarker, "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
 
 		_vehicle setVariable ["combatInit", true, true];
+		_patrolMarker
 
 	};
 
@@ -143,7 +145,8 @@ private _fnc_run = {
 					{
 						if (leader _x distance2D _veh < AS_P("spawnDistance")) then {_x reveal [_arevelar,_nivel]};
 					} forEach (allGroups select {side _x isEqualTo _sideAAF});
-					[_veh, _x, _isFlying] call _combat_init;
+					private _marker = [_veh, _x, _isFlying] call _combat_init;
+					_markers pushback _marker;
 				};
 			};
 		} forEach (driver _veh nearTargets AS_P("spawnDistance"));
@@ -159,6 +162,9 @@ private _fnc_run = {
 	if (call _continue_condition) then {
 		// repeat this state
 		[_spawnName, "state_index", 0] call AS_spawn_fnc_set;
+	} else {
+		//Cleanup, so update markers
+		[_spawnName, "resources", [taskNull, [_grupoVeh], [_veh], _markers]] call AS_spawn_fnc_set;
 	};
 };
 

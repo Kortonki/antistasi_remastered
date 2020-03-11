@@ -3,6 +3,9 @@ params ["_vehicleType","_pos", ["_dir", 0], "_side", ["_type", "any"], ["_radius
 
 
 private _vehicle = createVehicle [_vehicleType, _pos, [], _radius, _special];
+if (isNull _vehicle) exitWith {
+  diag_log format ["[AS] CreateVehicle, classname doesn't exist: %1. Vehicle not created", _vehicleType];
+};
 _vehicle allowDamage false;
 [_vehicle, false] remoteExecCall ["enablesimulationGlobal", 2];
 _vehicle setdir _dir;

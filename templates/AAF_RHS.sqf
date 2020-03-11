@@ -34,7 +34,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 // 1. vehicle must exist.
 // 2. each vehicle must belong to only one category.
 [_dict, "planes", ["rhs_Su25SM_vvsc"]] call DICT_fnc_set;
-[_dict, "helis_armed", ["rhs_Mi24V_vdv","rhs_Mi24P_vdv"]] call DICT_fnc_set;
+[_dict, "helis_armed", ["RHS_Mi24V_vdv","RHS_Mi24P_vdv"]] call DICT_fnc_set;
 [_dict, "helis_transport", ["RHS_Mi8mt_vdv","RHS_Mi8MTV3_vdv"]] call DICT_fnc_set;
 [_dict, "tanks", ["rhs_t72ba_tv","rhs_t72bb_tv","rhs_t72bc_tv","rhs_t80a","rhs_t80b","rhs_t90_tv"]] call DICT_fnc_set;
 [_dict, "boats", ["I_Boat_Armed_01_minigun_F"]] call DICT_fnc_set;

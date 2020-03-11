@@ -11,4 +11,5 @@ if (_vehicleClass != "") then {
       _count = _count - 1;
     };
     AS_Sset(_name, _count);
+    diag_log format ["[AS] AAF arsenal fnc_spawnCounter: type: %1 to add: %2 final count: %3", _vehicleClass, _toAdd, _count];
 };
