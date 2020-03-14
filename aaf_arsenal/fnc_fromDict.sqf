@@ -4,6 +4,9 @@ params ["_dict"];
 call AS_AAFarsenal_fnc_deinitialize;
 [AS_container, "aaf_arsenal", _dict call DICT_fnc_copyGlobal] call DICT_fnc_setGlobal; //Changed to copyGlobal
 
+
+
+
 //LEGACY STUFF for saves without statics in AAF arsenal
 
 {
@@ -19,3 +22,11 @@ call AS_AAFarsenal_fnc_deinitialize;
     [_category, "valid", ["AAF", _category] call AS_fnc_getEntity] call AS_AAFarsenal_fnc_set;
   };
 } foreach [["static_mg", "MG statics", 300], ["static_at", "AT statics", 600], ["static_mortar", "Mortars", 600], ["static_aa", "AA statics", 1200]];
+
+//Check for new valid vehicles if classnames are updated
+//Done after legacy stuff to avoid no key dict errors
+
+{
+  private _category = _x;
+  [_category, "valid", ["AAF", _category] call AS_fnc_getEntity] call AS_AAFarsenal_fnc_set;
+} foreach AS_AAFarsenal_buying_order;

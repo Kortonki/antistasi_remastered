@@ -75,7 +75,7 @@ if (_side == "FIA") then {
           if (_vehicleCategory call AS_AAFarsenal_fnc_canAdd) then {
             [_vehicleCategory] remoteExecCall ["AS_AAFarsenal_fnc_addVehicle", 2];
           } else {
-            private _count = 0.5+(0.1*(count ["seaport", "AAF"] call AS_location_fnc_TS));
+            private _count = 0.5+(0.1*(count (["seaport", "AAF"] call AS_location_fnc_TS)));
             [(_vehicleCategory call AS_AAFarsenal_fnc_cost)*_count] remoteExec ["AS_fnc_changeAAFmoney", 2];
           };
 

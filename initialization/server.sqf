@@ -56,7 +56,7 @@ if isMultiplayer then {
     // after game start because disconnects before have no influence
     addMissionEventHandler ["HandleDisconnect", {
         [_this select 0] call AS_fnc_onPlayerDisconnect;
-        false
+        true
     }];
 
     // for the spawns

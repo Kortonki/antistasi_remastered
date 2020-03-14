@@ -221,5 +221,6 @@ private _costs = createSimpleObject ["Static", [0, 0, 0]];
 [_costs, "B_G_Offroad_01_armed_F", 600] call DICT_fnc_set;
 [_costs, "B_G_Offroad_01_AT_F", 1200] call DICT_fnc_set;
 [_costs, "B_G_Van_01_transport_F", 400] call DICT_fnc_set;
+[_costs, "B_G_Boat_Transport_01_F", 200] call DICT_fnc_set;
 
 _dict

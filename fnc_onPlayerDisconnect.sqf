@@ -72,20 +72,34 @@ if (_unit == AS_commander) then {
 private _group = group _unit;
 private _units = units _group;
 
-//If no other players in the group, dismiss rest of the group. checking for leadership didn't work for some reason (discoed plyer can't be leader?)
-if (count (_units select {!(isPlayer _x)}) > 1 and {count (_units select {isPlayer _x}) == 0}) then {
-	[_units] remoteExec ["AS_fnc_dismissFIAunits", _group];
-	_text = _text + format ["AIs dismissed. Group %1, unitcount: %2 players %3. ", _group, count _units, count (_units select {isPlayer _x})];
-};
+//assuming isplayer still returns true for the disconnecting unit
 
-if (count (_units select {isPlayer _x}) > 0) then {
-		private _newLeader = ((_units select {isPlayer _x}) select 0);
+
+if (count (_units select {isPlayer _x}) > 1) then {
+		private _newLeader = ((_units select {isPlayer _x and {_x != _unit}}) select 0);
 		_group selectLeader _newLeader;
 		_text = _text + format ["New leader %1", _newLeader];
 };
 
+[_group, _units] spawn {
 
-if (alive _unit and {!(_unit call AS_medical_fnc_isUnconscious)}) then {
+params ["_group", "_units"];
+
+//wait for 5 mins if the player comes back (should not be deleted)
+//After the delay isPlayer should NOT return the disconnected player
+
+sleep (5*60);
+
+//If no other players in the group, dismiss rest of the group. checking for leadership didn't work for some reason (discoed plyer can't be leader?)
+	if (count (_units select {!(isPlayer _x)}) > 0 and {!(count (_units select {isPlayer _x}) > 0)}) then {
+		[_units] remoteExec ["AS_fnc_dismissFIAunits", groupowner _group];
+		_text = _text + format ["AIs dismissed. Group %1, unitcount: %2 players %3. ", _group, count _units, count (_units select {isPlayer _x})];
+	};
+
+
+	//If not yet reconnected: refund and delete
+
+	if (alive _unit and {!(isPlayer _unit) and {!(_unit call AS_medical_fnc_isUnconscious)}}) then {
 
 		[1, 50] remoteExec ["AS_fnc_changeFIAMoney", 2];
 		// store the player arsenal in the box.
@@ -94,18 +108,14 @@ if (alive _unit and {!(_unit call AS_medical_fnc_isUnconscious)}) then {
 		[cajaVeh, (_cargoArray select 4)] call AS_fnc_addMagazineRemains;
 	};
 
-private _pos = getPosATL _unit;
-private _wholder = nearestObjects [_pos, ["weaponHolderSimulated", "weaponHolder"], 2];
-{deleteVehicle _x;} forEach _wholder + [_unit];
+	private _pos = getPosATL _unit;
+	private _wholder = nearestObjects [_pos, ["weaponHolderSimulated", "weaponHolder"], 2];
+	{deleteVehicle _x;} forEach _wholder + [_unit];
 
-diag_log _text;
+	diag_log _text;
 
-[_group] spawn {
-	//wait until all dead or in dismissgroup
-	params ["_group"];
-	private _units = units _group;
-	waitUntil {sleep 10; _units = units _group; count _units == 0};
 
+	waitUntil {sleep 10; _units = (units _group) select {alive _x}; count _units == 0};
 	[_group] remoteExec ["deleteGroup", groupOwner _group];
 
 	diag_log format ["[AS] onPlayerdisconnect: Group %1 deleted", _group];

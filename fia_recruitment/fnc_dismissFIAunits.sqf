@@ -1,18 +1,10 @@
-if (player != leader group player) exitWith {hint "You cannot dismiss anyone if you are not the squad leader"};
+if (!(isServer) and {player != leader group player}) exitWith {hint "You cannot dismiss anyone if you are not the squad leader"};
 
 private _units = _this select 0;
 
-player globalChat "You are no longer needed in this group.";
+private _groupToDelete = createGroup ("FIA" call AS_fnc_getFactionSide);
+_groupToDelete setGroupid [format ["Dismissed-%1", count allGroups]];
 
-private _ai = false;
-private _groupToDelete = grpNull;
-
-// if only 1 player in the group.
-if ({isPlayer _x} count units group player == 1) then {
-	_ai = true;
-	_groupToDelete = createGroup ("FIA" call AS_fnc_getFactionSide);
-	_groupToDelete setGroupid [format ["Dismissed-%1", count allGroups]];
-};
 
 {
 	if (!isPlayer _x) then {
@@ -20,14 +12,12 @@ if ({isPlayer _x} count units group player == 1) then {
 			{
 			[_x] join _groupToDelete;
 			};
-	}
-	else {
+	}	else {
 		// send the player to a new group.
 		[_x] join (createGroup ("FIA" call AS_fnc_getFactionSide));
 	};
 } forEach _units;
 
-if (_ai) then {
 	// order units to return to the HQ.
 	{_x domove getMarkerPos "FIA_HQ"} forEach units _groupToDelete;
 
@@ -82,4 +72,3 @@ if (_ai) then {
 		[player, "money", _resourcesFIA] remoteExec ["AS_players_fnc_change", 2];
 		[_hr,0] remoteExec ["AS_fnc_changeFIAmoney",2];
 	};
-};

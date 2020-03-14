@@ -3,7 +3,7 @@ disableSerialization;
 private _cbo = ((findDisplay 1602) displayCtrl 0);
 lbCLear _cbo;
 
-private _buyable = (["FIA", "land_vehicles"] call AS_fnc_getEntity) + (["FIA", "air_vehicles"] call AS_fnc_getEntity);
+private _buyable = (["FIA", "land_vehicles"] call AS_fnc_getEntity) + (["FIA", "air_vehicles"] call AS_fnc_getEntity) + (["FIA", "water_vehicles"] call AS_fnc_getEntity);
 _buyable append (["FIA", "static_mg"] call AS_fnc_getEntity);
 _buyable append (["FIA", "static_at"] call AS_fnc_getEntity);
 _buyable append (["FIA", "static_aa"] call AS_fnc_getEntity);

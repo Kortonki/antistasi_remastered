@@ -17,7 +17,7 @@ _box setvariable ["bis_addVirtualWeaponCargo_cargo",nil,true];  // see http://st
 // BIS_fnc_arsenal creates a new action. We remove it so the only arsenal available is this one
 waitUntil {!isnil{_box getVariable "bis_fnc_arsenal_action"}};
 
-[_box, "remove"] call AS_fnc_addAction;
+[_box, "remove"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated];
 
 if (_box == caja) then {
 

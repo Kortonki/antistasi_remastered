@@ -43,4 +43,14 @@ if (_vehicle isKindOf "test_EmptyObjectForSmoke") then {
 	_x setvariable ["asCargo", false, true];
 } foreach attachedobjects _vehicle;
 
+//delete crew as well to not kill crew of flying isVehicleSensorEnabled
+
+{
+	private _group = group _x;
+	_x call AS_fnc_safeDelete;
+	if ({alive _x} count units _group == 0) then {
+		deleteGroup _group;
+	};
+} foreach (crew _vehicle);
+
 [_vehicle] RemoteExecCall ["deleteVehicle", _vehicle];

@@ -42,7 +42,7 @@ private _reportedVehs = AS_S("reportedVehs");
 
 //Todo consider what vehicles to set persistent
 //Repair and ream only when empty to avoid setting 0 ammo to FFV positions. TODO: check turrets and load them manually
-		if (["vehicle", typeOf _x, _x] call fnc_BE_permission and {count (crew _x select {alive _x}) == 0}) then {
+		if (["vehicle", typeOf _x, _x] call fnc_BE_permission and {count (crew _x select {alive _x}) == 0 and {alive _x}}) then {
 
 			if (alive _x and {!(_x in (AS_P("vehicles"))) and {_x call AS_fnc_getSide == "FIA"}}) then {[_x] remoteExec ["AS_fnc_changePersistentVehicles", 2]};
 
