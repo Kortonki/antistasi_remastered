@@ -78,18 +78,17 @@ private _units = units _group;
 if (count (_units select {isPlayer _x}) > 1) then {
 		private _newLeader = ((_units select {isPlayer _x and {_x != _unit}}) select 0);
 		_group selectLeader _newLeader;
-		_text = _text + format ["New leader %1", _newLeader];
+		_text = _text + format ["New leader: %1 ", _newLeader];
 };
 
-[_group, _units] spawn {
+[_group, _units, _text, _unit] spawn {
 
-params ["_group", "_units"];
+params ["_group", "_units", "_text", "_unit"];
 
 //wait for 5 mins if the player comes back (should not be deleted)
 //After the delay isPlayer should NOT return the disconnected player
 
-sleep (5*60);
-
+	sleep 30;
 //If no other players in the group, dismiss rest of the group. checking for leadership didn't work for some reason (discoed plyer can't be leader?)
 	if (count (_units select {!(isPlayer _x)}) > 0 and {!(count (_units select {isPlayer _x}) > 0)}) then {
 		[_units] remoteExec ["AS_fnc_dismissFIAunits", groupowner _group];
@@ -106,11 +105,15 @@ sleep (5*60);
 		private _cargoArray = [_unit, true] call AS_fnc_getUnitArsenal;
 		[caja, _cargoArray select 0, _cargoArray select 1, _cargoArray select 2, _cargoArray select 3] call AS_fnc_populateBox;
 		[cajaVeh, (_cargoArray select 4)] call AS_fnc_addMagazineRemains;
+
+		//Player unit is not killed thus no weaponholder
+		//private _pos = getPosATL _unit;
+		//private _wholder = nearestObjects [_pos, ["weaponHolderSimulated", "weaponHolder"], 2];
+		//{deleteVehicle _x;} forEach _wholder + [_unit];
+		_unit call AS_fnc_safeDelete;
 	};
 
-	private _pos = getPosATL _unit;
-	private _wholder = nearestObjects [_pos, ["weaponHolderSimulated", "weaponHolder"], 2];
-	{deleteVehicle _x;} forEach _wholder + [_unit];
+
 
 	diag_log _text;
 

@@ -49,20 +49,17 @@ private _fnc_spawn = {
 		};
 	};
 
+	private _crew = "pilot";
+
 	private _grupoHeli = createGroup ("NATO" call AS_fnc_getFactionSide);
-	_grupoHeli setGroupId ["CAS"];
+	_grupoHeli setGroupId (format ["NATO_CAS_%1", round(diag_ticktime)]);
 	_groups pushBack _grupoHeli;
 
 	for "_i" from 1 to 3 do {
-		private _helifn = [_position, 0, _tipoVeh, ("NATO" call AS_fnc_getFactionSide)] call bis_fnc_spawnvehicle;
-		private _heli = _helifn select 0;
+		([_tipoVeh, _position, 0, "NATO", _crew, 200, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoheliTmp"];
 		_vehicles pushBack _heli;
-		private _heliCrew = _helifn select 1;
-		private _grupoheliTmp = _helifn select 2;
-		{[_x] spawn AS_fnc_initUnitNATO; [_x] join _grupoHeli} forEach _heliCrew;
+		{[_x] join _grupoHeli} forEach (units _grupoheliTmp);
 		deleteGroup _grupoheliTmp;
-		[_heli, "NATO"] call AS_fnc_initVehicle;
-		_heli setPosATL [getPosATL _heli select 0, getPosATL _heli select 1, 100];
 		_heli flyInHeight 300;
 		sleep 10;
 	};

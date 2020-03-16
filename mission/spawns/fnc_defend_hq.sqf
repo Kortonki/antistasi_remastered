@@ -104,7 +104,7 @@ private _fnc_spawn = {
 		// compute number of trucks based on the marker size
 		//private _nVeh = (round (_size/30)) max 1;
 
-		private _threat = [_position] call AS_fnc_getLandThreat;
+		private _threat = [_position, "FIA"] call AS_fnc_getLandThreat;
 
 		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
 		private _max = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of trucks if choosing to not use apcs or tanks

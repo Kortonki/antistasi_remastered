@@ -109,9 +109,9 @@ if (_aeropuerto != "") then {
 
 	// decide to not send air units if treat of AA is too high.
 	if (_aeropuerto != "" and !_isDirectAttack) then {
-		_threatEval = _threatEval_Air + ([_position] call AS_fnc_getAirThreat);
+		_threatEval = _threatEval_Air max ([_position, "FIA"] call AS_fnc_getAirThreat);
 
-		if (_threatEval > 15 and _planes == 0) then {
+		if (_threatEval > 5 and _planes == 0) then {
 			_aeropuerto = "";
 		};
 	};
@@ -119,14 +119,14 @@ if (_aeropuerto != "") then {
 
 // decide to not send if treat is too high.
 if (_base != "") then {
-	_threatEval = _threatEval_Land + ([_position] call AS_fnc_getLandThreat);
+	_threatEval = _threatEval_Land max ([_position] call AS_fnc_getLandThreat);
 	private _trucks = "trucks" call AS_AAFarsenal_fnc_countAvailable;
 	private _apcs = "apcs" call AS_AAFarsenal_fnc_countAvailable;
 	private _tanks = "tanks" call AS_AAFarsenal_fnc_countAvailable;
 
 	if (!_isDirectAttack) then {
-		if ((_threatEval > 15 and _tanks == 0) or
-			(_threatEval > 5 and (_tanks + _apcs == 0)) or
+		if ((_threatEval > 10 and {_tanks < 2}) or
+			(_threatEval > 5 and {_tanks + _apcs < 2}) or
 			(_tanks + _apcs + _trucks == 0)) then {
 			_base = "";
 

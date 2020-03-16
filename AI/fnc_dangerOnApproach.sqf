@@ -27,7 +27,9 @@ private _leader = leader _group;
 while {{alive _x} count units _group > 0} do {
 
   if (_leader distance2D _position < _distance or behaviour _leader == "COMBAT" or vehicle _leader == _leader) exitWith {
-    _group setBehaviour "AWARE";
+    //This to let dismount on danger fire, stay in combat mode for dismount, then aware
+    _group setBehaviour "COMBAT";
+    sleep 20;
     [_leader, _patrolMarker, "AWARE", "SPAWNED", "NOFOLLOW", "NOVEH"] spawn UPSMON;
   };
   sleep 1;

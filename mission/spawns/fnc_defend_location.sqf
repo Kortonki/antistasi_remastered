@@ -38,7 +38,7 @@ private _fnc_spawn = {
 
 
 	private _threatEvalAir = 0;
-	if (_airfield != "" or _useCSAT) then {_threatEvalAir = [_position] call AS_fnc_getAirThreat};
+	if (_airfield != "" or _useCSAT) then {_threatEvalAir = [_position, "FIA"] call AS_fnc_getAirThreat};
 
 	private _threatEvalLand = 0;
 	if (_base != "") then {_threatEvalLand = [_position] call AS_fnc_getLandThreat};

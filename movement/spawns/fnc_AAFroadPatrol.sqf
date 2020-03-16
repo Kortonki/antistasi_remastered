@@ -9,10 +9,12 @@ private _fnc_spawn = {
 	private _posbase = _origin call AS_location_fnc_position;
 	private _dir = 0;
 	private _special = ["NONE", "FLY"] select _isFlying;
+	private _crew = ["crew", "pilot"] select _isFlying;
 
 	if not _isFlying then {
 		if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) then {
 			_posbase = [_posbase,50,150,10,2,0,0] call BIS_Fnc_findSafePos;
+			_crew = "gunner";
 		} else {
 
 			private _posdir = [_origin call AS_location_fnc_positionConvoy, getmarkerpos "FIA_HQ"] call AS_fnc_findSpawnSpots;
@@ -31,7 +33,7 @@ private _fnc_spawn = {
 		};
 	};
 
-	([_type, _posbase, _dir, "AAF", "any", 0, _special] call AS_fnc_createVehicle) params ["_veh", "_grupoVeh"];
+	([_type, _posbase, _dir, "AAF", _crew , 0, _special] call AS_fnc_createVehicle) params ["_veh", "_grupoVeh"];
 
 
 	if (_type isKindOf "Car") then {
@@ -76,7 +78,7 @@ private _fnc_run = {
 		private _potentialLocations = call {
 			if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) exitWith {
 				//TODO: implement seamarkers here
-				[["searport"], "AAF"] call AS_location_fnc_TS
+				[["seaport"], "AAF"] call AS_location_fnc_TS
 			};
 			[["base", "airfield", "resource", "factory", "powerplant", "outpost", "outpostAA"],
 			"AAF"] call AS_location_fnc_TS
