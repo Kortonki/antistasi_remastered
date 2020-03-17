@@ -6,6 +6,15 @@ private _fnc_spawn = {
 	private _posicion = _location call AS_location_fnc_position;
 	private _size = _location call AS_location_fnc_size;
 
+	private _markers = [];
+
+	private _patrolMarker = createMarker [format ["%1_gar", _posicion], _posicion];
+	_patrolMarker setMarkerShape "ELLIPSE";
+	_patrolMarker setMarkerSize [_size,_size];
+	_patrolMarker setMarkerAlpha 0;
+
+	_markers pushback _patrolMarker;
+
 	private _AAFsupport = [_location, "AAFsupport"] call AS_location_fnc_get;
 
 	private _num = round (_size / 100); // [200, 800] -> [2, 8]
@@ -27,11 +36,11 @@ private _fnc_spawn = {
 		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 
 		// put then on patrol.
-		[leader _grupo, _location, "SAFE", "RANDOM", "SPAWNED","NOVEH", "NOFOLLOW"] spawn UPSMON;
+		[leader _grupo, _patrolMarker, "SAFE", "RANDOM", "SPAWNED","NOVEH", "NOFOLLOW"] spawn UPSMON;
 		_grupos pushBack _grupo;
 	};
 
-	[_location, "resources", [taskNull, _grupos, [], []]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _grupos, [], _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 };
 

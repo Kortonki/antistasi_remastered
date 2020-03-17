@@ -28,10 +28,11 @@ private _staticsRemoved = [];
 [_staticsRemoved, false] call AS_fnc_changePersistentVehicles;
 */
 
-if (_type in ["outpost", "seaport"]) then {
+if (_type in ["outpost", "outpostAA", "seaport"]) then {
 	[10,-10,_posicion] call AS_fnc_changeCitySupport;
-	if (_type == "outpost") then {
+	if (_type in ["outpost", "outpostAA"]) then {
 		["TaskFailed", ["", "Outpost Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+		{[5, -5,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	} else {
 		["TaskFailed", ["", "Seaport Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	};
@@ -54,6 +55,7 @@ if (_type in ["resource", "factory"]) then {
 };
 if (_type in ["base", "airfield"]) then {
 	[20,-20,_posicion] call AS_fnc_changeCitySupport;
+	{[10, -10,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	[0,-10] call AS_fnc_changeForeignSupport;
 	[_location,60] call AS_location_fnc_increaseBusy;
 

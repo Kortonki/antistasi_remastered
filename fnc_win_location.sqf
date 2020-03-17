@@ -25,7 +25,11 @@ while {isNull _flag} do {
 	_flag = (nearestObjects [_posicion, ["FlagCarrier"], _dist]) select 0;
 };
 [_flag,"remove"] remoteExecCall ["AS_fnc_addAction", AS_CLIENTS];
-_flag setFlagTexture "\A3\Data_F\Flags\Flag_FIA_CO.paa";
+
+private _dummy = (["FIA", "flag"] call AS_fnc_getEntity) createVehicle [0,0,0];
+private _texture = flagTexture _dummy;
+_flag setFlagTexture _texture;
+deletevehicle _dummy;
 
 sleep 5;
 [_flag,"unit"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
@@ -37,13 +41,15 @@ sleep 5;
 [[_posicion], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
 
 if (_type == "airfield") then {
-	[0,10,_posicion] call AS_fnc_changeCitySupport;
+	[-20,20,_posicion] call AS_fnc_changeCitySupport;
+	{[-10, 10,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	["TaskSucceeded", ["", "Airport Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[20,10] call AS_fnc_changeForeignSupport;
    	["con_bas"] call fnc_BE_XP;
 };
 if (_type == "base") then {
-	[0,10,_posicion] call AS_fnc_changeCitySupport;
+	[-20,20,_posicion] call AS_fnc_changeCitySupport;
+	{[-10, 10,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	["TaskSucceeded", ["", "Base Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[20,10] call AS_fnc_changeForeignSupport;
 	["con_bas"] call fnc_BE_XP;
@@ -63,8 +69,10 @@ if (_type == "powerplant") then {
 	["con_ter"] call fnc_BE_XP;
 	[_location] call AS_fnc_recomputePowerGrid;
 };
-if (_type == "outpost") then {
+if (_type in ["outpost", "outpostAA"]) then {
 	[-10,10,_posicion] call AS_fnc_changeCitySupport;
+	//City support changes everywhere
+	{[-5, 5,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	["TaskSucceeded", ["", "Outpost Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	["con_ter"] call fnc_BE_XP;
 };

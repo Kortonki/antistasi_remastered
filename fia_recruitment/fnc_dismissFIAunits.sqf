@@ -38,7 +38,7 @@ _groupToDelete setGroupid [format ["Dismissed-%1", count allGroups]];
 	private _cargo_b = [[], []];
 	{
 		private _unit = _x;
-		if ((alive _unit) and {not(_unit call AS_medical_fnc_isUnconscious) or _unit distance getMarkerPos "FIA_HQ" < 50}) then {
+		if ((alive _unit) and {not(_unit call AS_medical_fnc_isUnconscious) or _unit distance2D getMarkerPos "FIA_HQ" < 50}) then {
 
 
 			//Wait unit to lose undercover and get weapons back
@@ -57,7 +57,8 @@ _groupToDelete setGroupid [format ["Dismissed-%1", count allGroups]];
 			_cargo_b = [_cargo_b, _arsenal select 3] call AS_fnc_mergeCargoLists;
 			[cajaVeh, (_arsenal select 4)]; call AS_fnc_addMagazineRemains;
 
-			[_unit] RemoteExecCall ["deleteVehicle", _unit];
+			//TODO consider what to do if inside vehicle. ATM the vehicle is left there
+			[_unit] RemoteExecCall ["AS_fnc_safeDelete", _unit];
 		} else {
 			_unit setdamage 1; //Make sure the unit is dead, if still unconscious
 		};

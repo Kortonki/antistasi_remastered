@@ -110,7 +110,7 @@ private _FIAResIncomeMultiplier = 1;
 
         //Small chance for a traitor mission depending on natoSupport
 
-        if ((AS_P("NATOsupport")) < random 50) then {
+        if ((AS_P("NATOsupport") + 50)  < random 100) then {
 
           //If city is spawned, do not spawn mission there. random new location
           if (_city call AS_location_fnc_spawned) then {

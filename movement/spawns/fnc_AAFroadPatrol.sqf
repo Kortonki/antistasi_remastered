@@ -91,21 +91,24 @@ private _fnc_run = {
 
 	private _combat_init = {
 
-		params ["_vehicle", "_target", "_isFlying"];
+		params ["_vehicle", "_targetpos", "_isFlying"];
 		if (_vehicle getvariable ["combatInit", false]) exitWith {};
 
 		private _size = [300, 1000] select _isFlying;
 		private _leader = leader (driver _vehicle);
 		(group _leader) setSpeedMode "NORMAL";
 
-		private _patrolMarker = createMarker [format ["roadpatrol_%1", diag_tickTime], position _target];
+		private _patrolMarker = createMarker [format ["roadpatrol_%1", diag_tickTime], _targetpos];
 		_patrolMarker setMarkerShape "RECTANGLE";
 		_patrolMarker setMarkerSize [_size,_size];
 		_patrolMarker setMarkerAlpha 0;
 
-		[_leader, _patrolMarker, "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH2"] spawn UPSMON;
+		[_leader, _patrolMarker, "COMBAT", "SPAWNED", "NOFOLLOW", "NOVEH"] spawn UPSMON;
 
 		_vehicle setVariable ["combatInit", true, true];
+
+		[[_targetpos], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+
 		_patrolMarker
 
 	};
@@ -143,11 +146,11 @@ private _fnc_run = {
 			if (_x select 2 == _sideFIA) then {
 				private _arevelar = _x select 4;
 				private _nivel = (driver _veh) knowsAbout _arevelar;
-				if (_nivel > 1.4) then {
+				if (!(_veh getVariable ["combatInit", false]) and {_nivel > 1.4}) then {
 					{
 						if (leader _x distance2D _veh < AS_P("spawnDistance")) then {_x reveal [_arevelar,_nivel]};
 					} forEach (allGroups select {side _x isEqualTo _sideAAF});
-					private _marker = [_veh, _x, _isFlying] call _combat_init;
+					private _marker = [_veh, _x select 0, _isFlying] call _combat_init;
 					_markers pushback _marker;
 				};
 			};

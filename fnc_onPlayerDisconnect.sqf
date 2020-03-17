@@ -90,9 +90,16 @@ params ["_group", "_units", "_text", "_unit"];
 
 	sleep 30;
 //If no other players in the group, dismiss rest of the group. checking for leadership didn't work for some reason (discoed plyer can't be leader?)
-	if (count (_units select {!(isPlayer _x)}) > 0 and {!(count (_units select {isPlayer _x}) > 0)}) then {
-		[_units] remoteExec ["AS_fnc_dismissFIAunits", groupowner _group];
-		_text = _text + format ["AIs dismissed. Group %1, unitcount: %2 players %3. ", _group, count _units, count (_units select {isPlayer _x})];
+//Firstly try to set group as HC, if no commander,  dismiss
+	if (count (_units select {!(isPlayer _x or _x == _unit)}) > 0 and {!(count (_units select {isPlayer _x}) > 0)}) then {
+		if (isNull AS_commander or !(isPlayer AS_commander)) then {
+			[_units] remoteExec ["AS_fnc_dismissFIAunits", groupowner _group];
+			_text = _text + format ["AIs dismissed. Group %1, unitcount: %2 players %3. ", _group, count _units, count (_units select {isPlayer _x})];
+			petros sidechat (format ["I'm sending %1's group back to base", name _unit]);
+		} else {
+			AS_commander hcSetGroup [_group];
+			_group setVariable ["isHCgroup", true, true];
+		};
 	};
 
 
