@@ -18,11 +18,12 @@ params ["_dict"];
                 private _vehicle = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
 
 
-
+                _vehicle setDir _dir;
                 _vehicle allowDamage false;
                 _vehicle enableSimulationGlobal false;
-                _vehicle setDir _dir;
-                _vehicle setVectorUp [0,0,1];
+
+
+                _vehicle setVectorUp surfaceNormal (position _vehicle);
 
                 if (_type isKindOf "StaticWeapon") then {
                 	[_vehicle,"moveObject"] remoteExec ["AS_fnc_addaction", [0,-2] select isDedicated];
@@ -53,10 +54,10 @@ params ["_dict"];
                   //After init, enable simulation
                   sleep 5;
                   _vehicle enableSimulationGlobal true;
-                  _vehicle setVectorUp [0,0,1];
+                  _vehicle setVectorUp surfaceNormal (position _vehicle);
                   _vehicle allowDamage true;
                   sleep 5;
-                  _vehicle setVectorUp [0,0,1];
+                  _vehicle setVectorUp surfaceNormal (position _vehicle);
               };
                 _vehicles pushBack _vehicle;
             } forEach _value;

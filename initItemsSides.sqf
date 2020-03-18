@@ -11,6 +11,8 @@ AAFItems = _result select 2;
 AAFItems append (["AAF", "additionalItems"] call AS_fnc_getEntity);
 AAFBackpacks = _result select 3;
 AAFBackpacks append (["AAF", "additionalBackpacks"] call AS_fnc_getEntity);
+AAFBinoculars = _result select 5;
+AAFBinoculars append (["AAF", "additionalBinoculars"] call AS_fnc_getEntity);
 
 AAFLaunchers = AAFWeapons arrayIntersect ((AS_weapons select 8) + (AS_weapons select 10));
 AAFLaunchers append (["AAF", "additionalLaunchers"] call AS_fnc_getEntity);
@@ -35,6 +37,8 @@ NATOItems = _result select 2;
 NATOItems append (["NATO", "additionalItems"] call AS_fnc_getEntity);
 NATOBackpacks = _result select 3;
 NATOBackpacks append (["NATO", "additionalBackpacks"] call AS_fnc_getEntity);
+NATOBinoculars = _result select 5;
+NATOBinoculars append (["NATO", "additionalBinoculars"] call AS_fnc_getEntity);
 
 NATOLaunchers = NATOWeapons arrayIntersect ((AS_weapons select 8) + (AS_weapons select 10));
 NATOLaunchers append (["NATO", "additionalLaunchers"] call AS_fnc_getEntity);
@@ -58,6 +62,8 @@ CSATItems = _result select 2;
 CSATItems append (["CSAT", "additionalItems"] call AS_fnc_getEntity);
 CSATBackpacks = _result select 3;
 CSATBackpacks append (["CSAT", "additionalBackpacks"] call AS_fnc_getEntity);
+CSATBinoculars = _result select 5;
+CSATBinoculars append (["CSAT", "additionalBinoculars"] call AS_fnc_getEntity);
 
 CSATLaunchers = CSATWeapons arrayIntersect ((AS_weapons select 8) + (AS_weapons select 10));
 CSATLaunchers append (["CSAT", "additionalLaunchers"] call AS_fnc_getEntity);

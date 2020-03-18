@@ -71,6 +71,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 ["B_UAV_06_backpack_F", "Item_B_UavTerminal"]
 ]] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["APERSMine", "APERSTripMine", "APERSBoundingMine"]] call DICT_fnc_set;

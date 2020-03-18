@@ -69,7 +69,7 @@
 	if (_type == "static_mg") then {
 		AS_allMGstatics = +_statics;
 	};
-	if (_type == "statit_mg_low") then {
+	if (_type == "static_mg_low") then {
 		AS_allMGstatics append _statics;
 	};
 	if (_type == "static_mortar") then {

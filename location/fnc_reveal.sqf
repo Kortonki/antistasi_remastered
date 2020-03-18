@@ -7,7 +7,7 @@ if (_location in ([] call AS_location_fnc_knownLocations)) exitWith {}; //No nee
 
 private _enemySide = ["AAF"] call AS_fnc_getFactionSide;
 private _position = _location call AS_location_fnc_position;
-_position = [_position select 0, _position select 1, 2];
+_position set [2, (getTerrainHeightASL _position) + 2.5];
 
 while {sleep AS_spawnLoopTime; (alive _veh) and {(!(isNil{_veh getVariable "marcador"}) or _veh == petros) and {!(_location in ([] call AS_location_fnc_knownLocations))}}} do {
   {

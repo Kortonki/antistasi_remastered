@@ -6,7 +6,7 @@ _neverUsed = ["ACE_Banana", "ACE_SpraypaintBlack", "ACE_SpraypaintRed", "ACE_Spr
 unlockedItems append [
     "ACE_wirecutter", "ACE_Sandbag_empty",
     "ACE_MapTools", "ACE_EntrenchingTool", "ACE_Tripod",
-    "ACE_SpottingScope", "ACE_Cellphone", "ACE_RangeCard", "ACE_RangeTable_82mm"
+    "ACE_SpottingScope", "ACE_Cellphone", "ACE_RangeCard", "ACE_RangeTable_82mm", "ACE_DeadManSwitch"
 ];
 
 if (ace_medical_level >= 1) then {

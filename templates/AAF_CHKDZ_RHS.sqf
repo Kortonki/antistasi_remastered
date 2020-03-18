@@ -22,6 +22,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // These groups are used in different spawns (locations, patrols, missions)
 [_dict, "patrols", ["rhsgref_group_chdkz_infantry_patrol", "rhsgref_group_chdkz_infantry_mg", "rhsgref_group_chdkz_infantry_at"]] call DICT_fnc_set;

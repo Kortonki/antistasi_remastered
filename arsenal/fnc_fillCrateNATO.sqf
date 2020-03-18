@@ -22,7 +22,7 @@ _addWeapon = {
 };
 
 // Handguns and submachine guns
-[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 2*_intNATOSupp, 18*2*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 3*_intNATOSupp, 18*2*_intNATOSupp] call _addWeapon;
 // Rifles
 [selectRandom (NATOweapons arrayIntersect (AS_weapons select 0)), 3*_intNATOSupp, 18*3*_intNATOSupp] call _addWeapon;
 // Machine guns
@@ -76,7 +76,7 @@ for "_i" from 1 to 3 do {
 
 if (_intNATOSupp > random 10) then {
 
-	private _staticpack = selectRandom (NatoBackpacks select {_x isEqualType []});
+	private _staticpack = selectRandom (NATOBackpacks select {_x isEqualType []});
 	if (isNil _staticpack) exitWith {};
 	//This means its a static bag
 	{
@@ -84,6 +84,12 @@ if (_intNATOSupp > random 10) then {
 		if (_x isKindOf "Item_Base_F") then {
 			(_items select 0) pushback _x;
 			(_items select 1) pushback 1;
+
+			if (hasACE) then {
+				(_items select 0) pushback "ACE_UAVBattery";
+				(_items select 1) pushback 2;
+			};
+
 		} else {
 			(_backpacks select 0) pushback _x;
 			(_backpacks select 1) pushback 1;
@@ -96,16 +102,17 @@ if (_intNATOSupp > random 10) then {
 
 {
 	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
-	(_magazines select 1) pushBack 4*_intNatoSupp;
+	(_magazines select 1) pushBack 2*_intNatoSupp;
 } foreach (["NATO", "ap_mines"] call AS_fnc_getEntity);
 
 {
 	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
-	(_magazines select 1) pushBack 2*_intNatoSupp;
+	(_magazines select 1) pushBack 1*_intNatoSupp;
 } foreach ((["NATO", "at_mines"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity));
 
 //TODO check if RHS has equivalents?
-if (hasACE and !hasRHS) then {
+//TODO should be something in template
+if (hasACE) then {
 	(_magazines select 0) pushBack "ACE_HuntIR_M203";
 	(_magazines select 1) pushBack 3*_intNATOSupp;
 
@@ -122,6 +129,17 @@ if (hasACE and !hasRHS) then {
 	(_items select 1) pushBack _intNATOSupp;
 
 	(_items select 0) pushBack "ACE_Kestrel4500";
+	(_items select 1) pushBack _intNATOSupp;
+
+	(_items select 0) pushBack "ACE_Clacker";
+	(_items select 1) pushBack _intNATOSupp;
+
+} else {
+
+	(_items select 0) pushBack "ItemGPS";
+	(_items select 1) pushBack _intNATOSupp;
+
+	(_items select 0) pushBack selectRandom (NATOBinoculars);
 	(_items select 1) pushBack _intNATOSupp;
 };
 

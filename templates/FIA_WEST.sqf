@@ -166,6 +166,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 
 

@@ -146,6 +146,7 @@ unlockeditems pushback "Chemlight_blue";
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // FIA minefield uses first of this list
 [_dict, "land_vehicles", [
