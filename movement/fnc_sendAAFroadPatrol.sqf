@@ -35,7 +35,7 @@ if (_type == "") exitWith {
     AS_ISDEBUG("[AS] debug: fnc_createRoadPatrol cancelled: no valid types");
 };
 
-private _spawnName = format ["aaf_road_patrol_%1", floor random 100];
+private _spawnName = format ["aaf_road_patrol_%1_%2", floor random 100, round(diag_tickTime)];
 [_spawnName, "AAFroadPatrol"] call AS_spawn_fnc_add;
 [_spawnName, "type", _type] call AS_spawn_fnc_set;
 [_spawnName, "isFlying", _category == "helis_armed"] call AS_spawn_fnc_set;

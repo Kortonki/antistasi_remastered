@@ -66,79 +66,87 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 
 
 
-	private _coeffSurr = 8; //TODO experiment this: 4 is in the ballpark for 1 vs 1 surrender inside 50 meters and 0.5 courage => 50% chance for surrendering
-	private _coeffSurrConstant = -0.7; //TODO experiment this. Setting this to 1 and 1 vs 1 never surrenders, but 1 vs 2 has 50% chance if coeffSurr = 4
+
 
 
 	//TODO Figure a way to increase surrender probability when squadmates surrender
 	//TODO optimise by declaring a variable for the group and group count
+	//TODO Consider if this needed only for the leader (optimization, makes sense ?)
 	{
 		if (alive _x) then {
-			if (fleeing _x) then {
-				if !(_x getVariable ["surrendered",false]) then {
-					if (([200, _x, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) and
-							{_coeffSurrConstant + _coeffSurr*(random ({alive _x and {!([_x] call AS_fnc_isDog) and {!(_x getVariable ["surrendered", false])}}} count units _group))*(_x skill "courage") < count ([50, _x, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
-							then {
-								if (_x == leader group _x) then {
-									{[_x] spawn AS_AI_fnc_surrender} foreach (units group _x select {!(_x getVariable ["surrendered", false])}); 	//If squad leader surrenders, everybody in the group surrender as well
+			//OPTIMISATION: following checks can be done unscheduled so spawn. Lag has been when vehicles full of soldiers have been killed:
+			[_x] spawn {
+				params ["_unit"];
+				if (fleeing _unit) then {
+					if !(_unit getVariable ["surrendered",false]) then {
+
+						private _coeffSurr = 8; //TODO experiment this: 4 is in the ballpark for 1 vs 1 surrender inside 50 meters and 0.5 courage => 50% chance for surrendering
+						private _coeffSurrConstant = -0.7; //TODO experiment this. Setting this to 1 and 1 vs 1 never surrenders, but 1 vs 2 has 50% chance if coeffSurr = 4
+
+						if (([200, _unit, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) and
+								{_coeffSurrConstant + _coeffSurr*(random ({alive _unit and {!([_unit] call AS_fnc_isDog) and {!(_unit getVariable ["surrendered", false])}}} count units _group))*(_unit skill "courage") < count ([50, _unit, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
+								then {
+									if (_unit == leader group _unit) then {
+										{[_unit] spawn AS_AI_fnc_surrender} foreach (units group _unit select {!(_unit getVariable ["surrendered", false])}); 	//If squad leader surrenders, everybody in the group surrender as well
+									} else {
+										[_unit] spawn AS_AI_fnc_surrender;
+									};
+
 								} else {
-									[_x] spawn AS_AI_fnc_surrender;
+									[_unit,_unit] spawn AS_AI_fnc_smokeCover;
 								};
-
-							} else {
-								[_x,_x] spawn AS_AI_fnc_smokeCover;
-							};
+					};
+				} else {
+					if (random 1 < 0.5) then {_unit allowFleeing (0.5 -(_unit skill "courage") + (({(!alive _unit) or (_unit getVariable ["surrendered",false]) or ([_unit] call AS_fnc_isDog)} count units _group)/(count units _group)))};
 				};
-			} else {
-				if (random 1 < 0.5) then {_x allowFleeing (0.5 -(_x skill "courage") + (({(!alive _x) or (_x getVariable ["surrendered",false]) or ([_x] call AS_fnc_isDog)} count units _group)/(count units _group)))};
-			};
 
-			if (_x == leader group _x and {!([_x] call AS_fnc_isDog) and {(position _x) call AS_fnc_hasRadioCoverage}}) then {
-				if (random 1 < 0.5) then { //This was increased from 0.1 to 0.5 and moved to be used if AAF unit killed, doesn't require fleeing
-					_enemy = _x findNearestEnemy _x;
-					if (!isNull _enemy) then {
-						([_x] call AS_fnc_getContactThreat) params ["_threatEval_Land", "_threatEval_Air"];
-						private _position = position _enemy;
-						diag_log format ["AS: AAF taking casualties, sending patrol to: %1 ThreatEval Land/Air %2 / %3", _position, _threatEval_Land, _threatEval_Air];
-						[_position,"", _threatEval_Land, _threatEval_Air] remoteExec ["AS_movement_fnc_sendAAFpatrol", 2];
-						private _threat = _threatEval_Land + _threatEval_Air;
-						//Consider vehicle availabilty so AAF doesn't throw it's last vehicles into enemy //TODO prolly needs BALANCING
-						private _arsenalCount = ["cars_armed", "apcs", "tanks", "helis_transport", "helis_armed", "planes"] call AS_AAFarsenal_fnc_countAvailable;
-						if (_threat > ((random 20) - (_arsenalCount/20))) then {
-							//Bases first if one's close enough
-							private _origin = [_position] call AS_fnc_getBasesForCA;
+				if (_unit == leader group _unit and {!([_unit] call AS_fnc_isDog) and {(position _unit) call AS_fnc_hasRadioCoverage}}) then {
+					if (random 1 < 0.5) then { //This was increased from 0.1 to 0.5 and moved to be used if AAF unit killed, doesn't require fleeing
+						_enemy = _unit findNearestEnemy _unit;
+						if (!isNull _enemy) then {
+							([_unit] call AS_fnc_getContactThreat) params ["_threatEval_Land", "_threatEval_Air"];
+							private _position = position _enemy;
+							diag_log format ["AS: AAF taking casualties, sending patrol to: %1 ThreatEval Land/Air %2 / %3", _position, _threatEval_Land, _threatEval_Air];
+							[_position,"", _threatEval_Land, _threatEval_Air] remoteExec ["AS_movement_fnc_sendAAFpatrol", 2];
+							private _threat = _threatEval_Land + _threatEval_Air;
+							//Consider vehicle availabilty so AAF doesn't throw it's last vehicles into enemy //TODO prolly needs BALANCING
+							private _arsenalCount = ["cars_armed", "apcs", "tanks", "helis_transport", "helis_armed", "planes"] call AS_AAFarsenal_fnc_countAvailable;
+							if (_threat > ((random 20) - (_arsenalCount/20))) then {
+								//Bases first if one's close enough
+								private _origin = [_position] call AS_fnc_getBasesForCA;
 
-							if (_origin == "") then {
-								_origin = [_position] call AS_fnc_getAirportsForCA;
-							} else {
-								if ((_origin call AS_location_fnc_position) distance2D _position > 3000 or _threatEval_Land > (_threatEval_Air + random 10)) then {
+								if (_origin == "") then {
 									_origin = [_position] call AS_fnc_getAirportsForCA;
+								} else {
+									if ((_origin call AS_location_fnc_position) distance2D _position > 3000 or _threatEval_Land > (_threatEval_Air + random 10)) then {
+										_origin = [_position] call AS_fnc_getAirportsForCA;
+									};
 								};
+
+								if (_origin != "") then {
+									private _size = "small";
+									private _type = "random";
+									if (random 20 < _threat) then {_size = "large"};
+									if (random 20 < _threatEval_Land) then {_type = selectRandom ["destroy", "mixed"]};
+									[_origin, _position, "", 30, _type, _size] remoteExec ["AS_movement_fnc_sendEnemyQRF", 2];
+									diag_log format ["AS: AAF taking casualties, sending QRF to: %1 ThreatEval Land/Air %2 / %3, size: %4, type: %5 Origin: %6", _position, _threatEval_Land, _threatEval_Air, _size, _type, _origin];
+								};
+
+
 							};
-
-							if (_origin != "") then {
-								private _size = "small";
-								private _type = "random";
-								if (random 20 < _threat) then {_size = "large"};
-								if (random 20 < _threatEval_Land) then {_type = selectRandom ["destroy", "mixed"]};
-								[_origin, _position, "", 30, _type, _size] remoteExec ["AS_movement_fnc_sendEnemyQRF", 2];
-								diag_log format ["AS: AAF taking casualties, sending QRF to: %1 ThreatEval Land/Air %2 / %3, size: %4, type: %5 Origin: %6", _position, _threatEval_Land, _threatEval_Air, _size, _type, _origin];
-							};
-
-
 						};
 					};
 				};
-			};
 
-			if (count (magazines _x) < 1) then {
+				if (count (magazines _unit) < 1) then {
 
-				if (count ([50, _x, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0) then {
-					[_x] spawn AS_AI_fnc_surrender;
-				}	else {
-					_x allowFleeing 1;
+					if (count ([100, _unit, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0) then {
+						[_unit] spawn AS_AI_fnc_surrender;
+					}	else {
+						_unit allowFleeing 1;
+					};
+
 				};
-
 			};
 		};
 	} forEach units _group;

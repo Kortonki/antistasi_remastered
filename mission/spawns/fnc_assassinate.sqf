@@ -57,11 +57,11 @@ private _fnc_spawn = {
 		};
 		if (_missionType == "kill_specops") exitWith {
 			private _mrkfin = createMarker [_mission,_position];
-			_mrkfin setMarkerShapeLocal "RECTANGLE";
-			_mrkfin setMarkerSizeLocal [300,300];
-			_mrkfin setMarkerColorLocal "ColorRed";
-			_mrkfin setMarkerBrushLocal "DiagGrid";
-			_mrkfin setMarkerAlphaLocal 0;
+			_mrkfin setMarkerShape"RECTANGLE";
+			_mrkfin setMarkerSize [300,300];
+			_mrkfin setMarkerColor "ColorRed";
+			_mrkfin setMarkerBrush "DiagGrid";
+			_mrkfin setMarkerAlpha 0;
 
 			private _group = [_position, ("CSAT" call AS_fnc_getFactionSide), [["CSAT", "recon_team"] call AS_fnc_getEntity, "CSAT"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
 			[leader _group, _mrkfin, "RANDOM", "SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
