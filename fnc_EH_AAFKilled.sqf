@@ -1,6 +1,7 @@
-private ["_killed","_killer","_cost","_enemy","_group"];
+private ["_killed","_killer","_cost","_enemy", "_group"];
 _killed = _this select 0;
 _killer = _this select 1;
+_group = group _killed;
 
 //ACE might make the killed eventhandler fire twice. Prevent it.
 if (!(isnil{_killed getVariable "k"})) exitWith {
@@ -30,9 +31,13 @@ if (hasACE) then {
 	};
 };
 
+//NATO killing AAF triggers CSAT attacks, save the date for the record
+if (_killer call AS_fnc_getSide == "NATO" and {isNil{["NATO_killAAF_date"] call AS_stats_fnc_get}}) then {
+	["NATO_killAAF_date", date] call AS_stats_fnc_set;
+};
+
 if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) then { //Investigate if this triggers for civilians
 	["kill"] remoteExec ["fnc_BE_XP", 2];
-	_group = group _killed;
 
 	// if dead has no weapons, it is an unlawful kill
 	if ((vehicle _killed == _killed) and {count weapons _killed < 1}) then { //if manning a driver/commander, non-weapon position, do not penalize
@@ -60,6 +65,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 
 
 
+
 	// surrender and fleeing updates.
 
 	//Bigger values = less chance for surrender
@@ -72,11 +78,13 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 	//TODO Figure a way to increase surrender probability when squadmates surrender
 	//TODO optimise by declaring a variable for the group and group count
 	//TODO Consider if this needed only for the leader (optimization, makes sense ?)
+	private _units = units _group;
 	{
 		if (alive _x) then {
 			//OPTIMISATION: following checks can be done unscheduled so spawn. Lag has been when vehicles full of soldiers have been killed:
-			[_x] spawn {
-				params ["_unit"];
+			[_x, _group, _units] spawn {
+				params ["_unit", "_group", "_units"];
+
 				if (fleeing _unit) then {
 					if !(_unit getVariable ["surrendered",false]) then {
 
@@ -84,10 +92,10 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 						private _coeffSurrConstant = -0.7; //TODO experiment this. Setting this to 1 and 1 vs 1 never surrenders, but 1 vs 2 has 50% chance if coeffSurr = 4
 
 						if (([200, _unit, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) and
-								{_coeffSurrConstant + _coeffSurr*(random ({alive _unit and {!([_unit] call AS_fnc_isDog) and {!(_unit getVariable ["surrendered", false])}}} count units _group))*(_unit skill "courage") < count ([50, _unit, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
+								{_coeffSurrConstant + _coeffSurr*(random ({alive _unit and {!([_unit] call AS_fnc_isDog) and {!(_unit getVariable ["surrendered", false])}}} count _units))*(_unit skill "courage") < count ([50, _unit, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
 								then {
-									if (_unit == leader group _unit) then {
-										{[_unit] spawn AS_AI_fnc_surrender} foreach (units group _unit select {!(_unit getVariable ["surrendered", false])}); 	//If squad leader surrenders, everybody in the group surrender as well
+									if (_unit == leader _group) then {
+										{[_unit] spawn AS_AI_fnc_surrender} foreach (_units select {!(_unit getVariable ["surrendered", false])}); 	//If squad leader surrenders, everybody in the group surrender as well
 									} else {
 										[_unit] spawn AS_AI_fnc_surrender;
 									};
@@ -97,7 +105,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 								};
 					};
 				} else {
-					if (random 1 < 0.5) then {_unit allowFleeing (0.5 -(_unit skill "courage") + (({(!alive _unit) or (_unit getVariable ["surrendered",false]) or ([_unit] call AS_fnc_isDog)} count units _group)/(count units _group)))};
+					if (random 1 < 0.5) then {_unit allowFleeing (0.5 -(_unit skill "courage") + (({(!alive _unit) or (_unit getVariable ["surrendered",false]) or ([_unit] call AS_fnc_isDog)} count _units)/(count _units)))};
 				};
 
 				if (_unit == leader group _unit and {!([_unit] call AS_fnc_isDog) and {(position _unit) call AS_fnc_hasRadioCoverage}}) then {
@@ -149,5 +157,5 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 				};
 			};
 		};
-	} forEach units _group;
+	} forEach _units;
 };

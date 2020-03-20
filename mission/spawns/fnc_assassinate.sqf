@@ -56,7 +56,7 @@ private _fnc_spawn = {
 			_resources = [_task, [_group], [], []];
 		};
 		if (_missionType == "kill_specops") exitWith {
-			private _mrkfin = createMarker [_mission,_position];
+			private _mrkfin = createMarker [format ["kill_specops_%1_%2", round(diag_tickTime), random 100],_position];
 			_mrkfin setMarkerShape"RECTANGLE";
 			_mrkfin setMarkerSize [300,300];
 			_mrkfin setMarkerColor "ColorRed";

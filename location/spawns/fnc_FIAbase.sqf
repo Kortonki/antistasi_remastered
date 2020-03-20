@@ -31,6 +31,11 @@ private _fnc_spawn = {
 	//[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 	_vehiculos pushBack _veh;
 
+	//Record first major NATO involvement
+	if (isnil{["NATO_capAirfield_date"] call AS_stats_fnc_get}) then {
+		["NATO_capAirfield_date", date] call AS_stats_fnc_set;
+	};
+
 	//create _bunker, only if there's no preset composition
 	//Commented, more trouble than worth
 	/*if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {

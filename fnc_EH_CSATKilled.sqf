@@ -30,6 +30,12 @@ if (hasACE) then {
 	};
 };
 
+//NATO killing AAF triggers CSAT attacks, save the date for the record
+if (_killer call AS_fnc_getSide == "NATO" and {isNil{["NATO_killCSAT_date"] call AS_stats_fnc_get}}) then {
+	["NATO_killCSAT_date", date] call AS_stats_fnc_set;
+};
+
+
 if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) then {
 	["killCSAT"] remoteExec ["fnc_BE_XP", 2];
 	_group = group _killed;

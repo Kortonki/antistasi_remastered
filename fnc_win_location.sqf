@@ -45,7 +45,7 @@ if (_type == "airfield") then {
 	{[-10, 10,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	["TaskSucceeded", ["", "Airport Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[20,10] call AS_fnc_changeForeignSupport;
-   	["con_bas"] call fnc_BE_XP;
+  ["con_bas"] call fnc_BE_XP;
 };
 if (_type == "base") then {
 	[-20,20,_posicion] call AS_fnc_changeCitySupport;
@@ -53,7 +53,6 @@ if (_type == "base") then {
 	["TaskSucceeded", ["", "Base Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[20,10] call AS_fnc_changeForeignSupport;
 	["con_bas"] call fnc_BE_XP;
-
 	// discover nearby minefields
 	{
 		if ((_x call AS_location_fnc_position) distance _posicion < 400) then {

@@ -107,6 +107,11 @@ private _fnc_spawn = {
 
 	};
 
+	//Record first major involvement
+	if (isnil{["NATO_capBase_date"] call AS_stats_fnc_get}) then {
+		["NATO_capBase_date", date] call AS_stats_fnc_set;
+	};
+
 	// Create FIA garrison
 	(_location call AS_fnc_createFIAgarrison) params ["_soldados1", "_grupos1", "_marker1"];
 	_soldadosFIA append _soldados1;
