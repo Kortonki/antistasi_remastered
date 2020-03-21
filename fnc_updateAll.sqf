@@ -234,13 +234,7 @@ if (not(isNull AS_commander)) then {
 
 };
 
-//Set next update time:
 
-private _upFreq = AS_P("upFreq");
-private _nextUpdate = [date select 0, date select 1, date select 2, date select 3, (date select 4) + (_upFreq/60)];
-_nextUpdate = dateToNumber _nextUpdate;
-
-AS_Pset("nextUpdate", _nextUpdate);
 AS_Pset("hr",_FIAnewHR);
 AS_Pset("hr_cum", _hr_cum);
 AS_Pset("resourcesFIA",_FIAnewMoney);

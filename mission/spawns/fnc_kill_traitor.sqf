@@ -24,7 +24,8 @@ private _fnc_initialize = {
 	private _tskDesc = format [localize "STR_tskDesc_ASSTraitor",
 		[_location] call AS_fnc_location_name,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4
+		numberToDate [2035,dateToNumber _fechalim] select 4,
+		["CSAT", "shortname"] call AS_fnc_getEntity
 	];
 
 	//Check all FIA locations now for possible mission failure. Check hq pos now and compare it to detect if it has changed

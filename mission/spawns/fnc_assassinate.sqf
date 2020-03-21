@@ -22,7 +22,8 @@ private _fnc_initialize = {
 	_tskDesc = format [_tskDesc,
 		[_location] call AS_fnc_location_name,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4
+		numberToDate [2035,dateToNumber _fechalim] select 4,
+		["CSAT", "shortname"] call AS_fnc_getEntity
 	];
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;

@@ -4,6 +4,7 @@ private _fnc_initialize = {
 	params ["_mission"];
 	private _tskTitle = localize "STR_tsk_HQAttack";
 	private _tskDesc = localize "STR_tskDesc_HQAttack";
+	_tskDesc = format [_tskDesc, ["AAF", "shortname"] call AS_fnc_getEntity, ["CSAT", "shortname"] call AS_fnc_getEntity];
 
 	private _location = "fia_hq";
 	private _position = _location call AS_location_fnc_position;

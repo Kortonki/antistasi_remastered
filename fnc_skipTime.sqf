@@ -26,16 +26,16 @@ sleep (2*AS_spawnLoopTime);
 
 while {!(_attack) and {_skippedTime < _skipTimeMax}} do {
 
-  while {private _date = dateToNumber date; !(_skippedTime > _skipTimeMax or _date > AS_P("nextUpdate") or _date > AS_P("nextAttack"))} do {
+  while {private _date = dateToNumber date; !(_skippedTime >= _skipTimeMax or _date >= AS_P("nextUpdate") or _date >= AS_P("nextAttack"))} do {
     skiptime (1/60); //Skip one minute at a time
     _skippedTime = _skippedTime + 1;
   };
 
-  if ((dateTonumber date) > AS_P("nextAttack")) then {
+  if ((dateTonumber date) >= AS_P("nextAttack")) then {
       _attack = [true] call AS_movement_fnc_sendAAFattack;
   };
 
-  if ((dateToNumber date) > AS_P("nextUpdate")) then {
+  if ((dateToNumber date) >= AS_P("nextUpdate")) then {
       [true] call AS_fnc_resourcesUpdate;
   };
 };
