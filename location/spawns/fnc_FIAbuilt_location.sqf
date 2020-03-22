@@ -56,7 +56,6 @@ private _fnc_spawn = {
 			call {
 				if (typeof _x == "Box_NATO_Equip_F") exitWith {_campBox = _x;};
 				if (typeof _x == "Land_MetalBarrel_F") exitWith {[_x,"refuel"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];};
-				if (typeof _x == "Land_Campfire_F") exitWith {_x inflame true;};
 			};
 			_x setVectorUp (surfaceNormal (position _x));
 		} forEach _objs;

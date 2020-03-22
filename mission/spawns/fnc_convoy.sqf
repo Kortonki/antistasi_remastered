@@ -32,6 +32,7 @@ private _fnc_initialize = {
 	private _startTime = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _startAfter];
 
 	private _tskTitle = _mission call AS_mission_fnc_title;
+	_tskTitle = format ["%1 (%2)", _tskTitle, _location];
 	private _tskDesc = "";
 	private _tskIcon = "";
 	private _mainVehicleType = "";

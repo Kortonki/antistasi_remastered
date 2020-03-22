@@ -12,17 +12,13 @@ if (_missionType == "convoy_armor") exitWith {localize "STR_tsk_CVY_Armor"};
 if (_missionType == "convoy_ammo") exitWith {localize "STR_tsk_CVY_Ammo"};
 if (_missionType == "convoy_money") exitWith {localize "STR_tsk_CVY_Money"};
 if (_missionType == "convoy_fuel") exitWith {localize "STR_tsk_CVY_Fuel"};
-if (_missionType == "convoy_supplies") exitWith {
-  format [localize "STR_tsk_CVY_Supply", _mission call AS_mission_fnc_location]
-};
+if (_missionType == "convoy_supplies") exitWith {localize "STR_tsk_CVY_Supply"};
 if (_missionType == "convoy_prisoners") exitWith {localize "STR_tsk_CVY_Pris"};
 if (_missionType == "convoy_hvt") exitWith {localize "STR_tsk_CVY_HVT"};
 if (_missionType == "rescue_prisioners") exitWith {localize "STR_tsk_resPrisoners"};
 if (_missionType == "rescue_refugees") exitWith {localize "STR_tsk_resRefugees"};
 if (_missionType == "rob_bank") exitWith {localize "STR_tsk_logBank"};
-if (_missionType == "help_meds") exitWith {
-  format [localize "STR_tsk_logMedical", _mission call AS_mission_fnc_location]
-};
+if (_missionType == "help_meds") exitWith {localize "STR_tsk_logMedical"};
 if (_missionType == "send_meds") exitWith {
   format [localize "STR_tsk_logSupply", _mission call AS_mission_fnc_location]
 };

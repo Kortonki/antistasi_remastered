@@ -29,9 +29,10 @@ if (!(isNull _killed)) then {
 };
 
 
-
+// COMMENTED OUT for now. Groups are deleted elsewhere, so not via this function to avoid errors in locations and mission spawns where groups are parameters
+/*
 if (!isNull _group) then {
 	if ({alive _x} count units _group == 0) then {
 		_group remoteExec ["deleteGroup", groupOwner _group];
 	};
-};
+};*/

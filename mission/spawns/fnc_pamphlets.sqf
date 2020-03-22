@@ -258,7 +258,8 @@ private _fnc_deliver = {
 		// if there are sites to go, inform player and repeat this call
 		if (_currentDropCount < DROP_COUNT) then {
 
-			[petros,"sidechat","Head to the next location."] remoteExec ["AS_fnc_localCommunication", 2];
+
+			[petros,"sidechat","Drop succesful. Head to the next location."] remoteExec ["AS_fnc_localCommunication", 2];
 
 			[_mission, "buildings", _buildings] call AS_spawn_fnc_set;
 			[_mission, "currentDrop", _currentDropCount] call AS_spawn_fnc_set;

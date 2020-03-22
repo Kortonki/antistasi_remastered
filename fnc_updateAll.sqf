@@ -95,7 +95,9 @@ private _FIAResIncomeMultiplier = 1;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
 
         //Release garrison if spawned, otherwise refund garrison
-        if (_city call AS_spawn_fnc_exists) then {
+        //Changed to check location spawned instead of if spawn exist. Reason: Spawn exists for some time after deletion even though things are deleted
+        //spawned parameter is changed to false when despawning process starts
+        if (_city call AS_location_fnc_spawned) then {
           _city call AS_fnc_garrisonRelease;
         } else {
           [_city, "garrison", []] call AS_location_fnc_set;
