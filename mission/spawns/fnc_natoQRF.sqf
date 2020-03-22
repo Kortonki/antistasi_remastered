@@ -10,10 +10,9 @@ private _fnc_initialize = {
 
 	// marker on the map, required for the UPS script
 	private _mrk = createMarker ["NATOQRF", _destPos];
-	_mrk setMarkerShape "ICON";
-	_mrk setMarkerSize [100,100];
-	_mrk setMarkerType "b_support";
-	_mrk setMarkerText ((["NATO", "shortname"] call AS_fnc_getEntity) + " QRF");
+	_mrk setMarkerShape "ELLIPSE";
+	_mrk setMarkerSize [200,200];
+	_mrk setMarkerAlpha 0;
 
 	private _tiempolim = 30;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];

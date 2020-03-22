@@ -31,10 +31,14 @@ while {visibleMap} do {
 		private _side = _location call AS_location_fnc_side;
 		private _texto = "Click on a location";
 		if (_location == "FIA_HQ") then {
-			_texto = format ["%2 HQ%1",[_location] call AS_fnc_getGarrisonAsText, ["FIA", "shortname"] call AS_fnc_getEntity];
+			_texto = format ["%2 HQ\n%1",[_location] call AS_fnc_getGarrisonAsText, ["FIA", "shortname"] call AS_fnc_getEntity];
 		};
 		if (_side == "FIA" and {_type in ["camp", "watchpost", "roadblock"]}) then {
-			_texto = format ["%1\n%2",_type, [_location] call AS_fnc_getGarrisonAsText];
+			if (_type == "camp") then {
+				_texto = format ["Camp %1\n%2", [_location, "name"] call AS_location_fnc_get, [_location] call AS_fnc_getGarrisonAsText];
+			} else {
+				_texto = format ["%1\n%2",_type, [_location] call AS_fnc_getGarrisonAsText];
+			};
 		};
 		if (_type == "city") then {
 			_texto = format ["%1\nPopulation: %2\n%6 Support: %3 %5\n%7 Support: %4 %5",

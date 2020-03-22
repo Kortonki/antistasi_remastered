@@ -48,7 +48,7 @@ private _vehicles = [];
 					_vehicles pushback _veh;
 				};
 
-				if (((_side == "AAF" and {["static_mg", _minimumSharee] call AS_fnc_vehicleAvailability}) or _side != "AAF") and {_buildingType in ["Land_Cargo_Tower_V1_F", "Land_Cargo_Tower_V2_F", "Land_Cargo_Tower_V3_F"]}) exitWith {
+				if (((_side == "AAF" and {["static_mg", _minimumShare] call AS_fnc_vehicleAvailability}) or _side != "AAF") and {_buildingType in ["Land_Cargo_Tower_V1_F", "Land_Cargo_Tower_V2_F", "Land_Cargo_Tower_V3_F"]}) exitWith {
 				private _veh = [_staticMG, (_building buildingPos 13), _side, random 360, "CAN_COLLIDE"] call AS_fnc_createEmptyVehicle;
 				private _unit = _grupo createUnit [_gunnerCrew, _posicion, [], 0, "NONE"];
 				_unit moveInGunner _veh;

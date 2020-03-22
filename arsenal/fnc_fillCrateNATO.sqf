@@ -22,7 +22,7 @@ _addWeapon = {
 };
 
 // Handguns and submachine guns
-[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 3*_intNATOSupp, 18*2*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 3*_intNATOSupp, 18*3*_intNATOSupp] call _addWeapon;
 // Rifles
 [selectRandom (NATOweapons arrayIntersect (AS_weapons select 0)), 3*_intNATOSupp, 18*3*_intNATOSupp] call _addWeapon;
 // Machine guns
@@ -77,7 +77,7 @@ for "_i" from 1 to 3 do {
 if (_intNATOSupp > random 10) then {
 
 	private _staticpack = selectRandom (NATOBackpacks select {_x isEqualType []});
-	if (isNil _staticpack) exitWith {};
+	if (isNil "_staticpack") exitWith {};
 	//This means its a static bag
 	{
 		//Is the uav terminal
@@ -107,7 +107,7 @@ if (_intNATOSupp > random 10) then {
 
 {
 	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
-	(_magazines select 1) pushBack 1*_intNatoSupp;
+	(_magazines select 1) pushBack _intNatoSupp;
 } foreach ((["NATO", "at_mines"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity));
 
 //TODO check if RHS has equivalents?
