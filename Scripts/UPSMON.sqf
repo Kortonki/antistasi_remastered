@@ -379,7 +379,7 @@ _grp setvariable ["UPSMON_GrpMission",_grpmission];
 _grp setvariable ["UPSMON_OrgGrpMission",_grpmission];
 _grp setvariable ["UPSMON_Lastinfos",[[0,0,0],[0,0,0]]];
 _grp setvariable ["UPSMON_NOWP",_nowpType];
-_grp setvariable ["UPSMON_Removegroup",false];
+_grp setvariable ["UPSMON_Remove",false];
 
 //Assign the current group in the array of UPSMON Groups
 If (_side != civilian) then

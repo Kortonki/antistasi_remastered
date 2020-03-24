@@ -10,6 +10,7 @@ params ["_excludeBelow", "_minSize", "_maxSize", ["_excluded", []]];
     private _position = getPos _x;
     private _size = [_city, _minSize] call AS_location_fnc_getNameSize;
     _size = _size min _maxSize;
+    //Exclude below doesn't work atm, and is obsolete as most maps don't define location sizes
     if (_city != "" and !(_city in _excluded) and _size >= _excludeBelow) then {
         private _roads = [_position, _size] call AS_location_fnc_getCityRoads;
 

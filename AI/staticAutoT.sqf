@@ -15,7 +15,7 @@ if ((typeOf _static in AS_allMortarStatics) and (isMultiPlayer)) exitWith {hint 
 if (_grupo getVariable "staticAutoT") exitWith
 	{
 	_grupo setVariable ["staticAutoT",false,true];
-	if (typeOf _static in AS_allMortarStatics) then {_grupo setvariable ["UPSMON_Removegroup",true]};
+	if (typeOf _static in AS_allMortarStatics) then {_grupo setvariable ["UPSMON_Remove",true]};
 	sleep 5;
 	hint format ["Mounted Static Squad %1 set to Auto Target Mode OFF", groupID _grupo];
 	};

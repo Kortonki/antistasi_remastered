@@ -31,8 +31,7 @@ private _fnc_initialize = {
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 	private _startTime = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _startAfter];
 
-	private _tskTitle = _mission call AS_mission_fnc_title;
-	_tskTitle = format ["%1 (%2)", _tskTitle, _location];
+	private _tskTitle = format ["%1 (%2 near %3)", _mission call AS_mission_fnc_title, _location call AS_location_fnc_type, [call AS_location_fnc_cities, _position] call BIS_fnc_nearestPosition];
 	private _tskDesc = "";
 	private _tskIcon = "";
 	private _mainVehicleType = "";
@@ -48,6 +47,7 @@ private _fnc_initialize = {
 		};
 		if (_missionType == "convoy_supplies") exitWith {
 			_tskDesc = localize "STR_tskDesc_CVY_Supply";
+			_tskTitle = format ["%1 (%2)", _mission call AS_mission_fnc_title, _location];
 			_tskIcon = "heal";
 			_mainVehicleType = selectRandom (["FIA", "vans"] call AS_fnc_getEntity);
 		};
@@ -111,7 +111,6 @@ private _fnc_initialize = {
 		[_location] call AS_fnc_location_name, _location,
 		numberToDate [2035,dateToNumber _startTime] select 3,
 		numberToDate [2035,dateToNumber _startTime] select 4];
-	_tskTitle = format [_tskTitle, (["AAF", "shortname"] call AS_fnc_getEntity)];
 
 	[_mission, "origin", _origin] call AS_spawn_fnc_set;
 	[_mission, "mainVehicleType", _mainVehicleType] call AS_spawn_fnc_set;

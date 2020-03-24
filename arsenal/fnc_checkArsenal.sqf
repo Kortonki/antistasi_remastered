@@ -14,10 +14,20 @@ _cargo_b = [_cargo_b, _old_cargo select 3] call AS_fnc_mergeCargoLists;
 
 //[_old_cargo] remoteExec ["AS_fnc_addtoArsenal", 2];
 
+//Deduct new cargo (after using arsenal) from arsenal
 _cargo_w = [_cargo_w, _new_cargo select 0, false] call AS_fnc_mergeCargoLists;
 _cargo_m = [_cargo_m, _new_cargo select 1, false] call AS_fnc_mergeCargoLists;
 _cargo_i = [_cargo_i, _new_cargo select 2, false] call AS_fnc_mergeCargoLists;
 _cargo_b = [_cargo_b, _new_cargo select 3, false] call AS_fnc_mergeCargoLists;
+
+//TODO Remove non-existants (above function doesn't) by creating them and making their amount zero in _cargo's ->
+//Doesn't effect populate function, loops won't run for 0s
+
+_cargo_w = [_cargo_w, _new_cargo select 0] call AS_fnc_createCargoLists;
+_cargo_m = [_cargo_m, _new_cargo select 1] call AS_fnc_createCargoLists;
+_cargo_i = [_cargo_i, _new_cargo select 2] call AS_fnc_createCargoLists;
+_cargo_b = [_cargo_b, _new_cargo select 3] call AS_fnc_createCargoLists;
+
 
 
 
@@ -59,7 +69,7 @@ for "_i" from 0 to (count (_cargo_i select 0) - 1) do {
 for "_i" from 0 to (count (_cargo_w select 0) - 1) do {
 	private _name = (_cargo_w select 0) select _i;
 	private _amount = (_cargo_w select 1) select _i;
-	if (_amount <= 0) then {
+	if (_amount < 0) then {
 		for "_j" from 0 to (-_amount - 1) do {  // _amount == 0 means this does nothing, which is fine.
             private _items = [];
             private _mags = [];

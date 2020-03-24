@@ -213,14 +213,14 @@
 			</Key>
 
 			<Key ID="STR_tsk_CVY_Money">
-				<Original>Attack Money Convoy</Original>
+				<Original>Attack money convoy</Original>
 			</Key>
 			<Key ID="STR_tskDesc_CVY_Money">
 				<Original>A money convoy is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Steal that truck and bring it to HQ. There aren't many better opportunities to acquire the funds we will need to build up our army, don't screw up! The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes which is at %5:%6.</Original>
 			</Key>
 
 			<Key ID="STR_tsk_CVY_Supply">
-				<Original>Attack supply convoy heading to %1</Original>
+				<Original>Attack supply convoy</Original>
 			</Key>
 			<Key ID="STR_tskDesc_CVY_Supply">
 				<Original>A supply convoy is departing from &lt;marker name='%2'&gt;%1&lt;/marker&gt; to &lt;marker name='%4'&gt;%3&lt;/marker&gt;. Steal the truck and bring it to %4. Let the people there know of the FIA's 'benevolence'.The convoy leaves &lt;marker name='%2'&gt;%1&lt;/marker&gt; in 10 minutes which is at %5:%6.</Original>

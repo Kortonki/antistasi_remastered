@@ -21,7 +21,7 @@ _puf = _grp getvariable ["UPSMON_Origin",[[0,0,0],"NORMAL","WEDGE",[objNull],("A
 _side = _puf select 5;
 if (isNil "_side") then {_side = ("AAF" call AS_fnc_getFactionSide)};//by Barbolani to avoid some unknown bugs
 _grpid = _grp getvariable ["UPSMON_Grpid",0];
-_removeunit = _grp getvariable ["UPSMON_Removegroup",false];
+_removeunit = _grp getvariable ["UPSMON_Remove",false];
 
 _dist = 1000;
 _respawnmax = 0;

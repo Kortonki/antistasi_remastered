@@ -6,7 +6,7 @@ params ["_location", "_groups"];
 //despawn far away from location but close to a player or FIA soldiers (UPSMON can send them away and otherwise)
 
 private _spawnDist =  AS_P("spawnDistance");
-private _position = (_location call AS_location_fnc_position);
+private _position = _location call AS_location_fnc_position;
 private _blufors = [_spawnDist, _position, "BLUFORSpawn", "array"] call AS_fnc_unitsAtDistance;
 
 //Determine closest blufor
@@ -22,11 +22,16 @@ private _dist = _spawnDist;
 if (!isNull(_closest)) then {
 
   private _dir = _closest getDir _position;
-  private _newPos = _closest getRelpos [_spawnDist*2, _dir];
+  private _newPos = _closest getRelpos [_spawnDist*1.5, _dir];
+  _newpos = [_newpos, 0, _spawnDist/2, 1, 0] call Bis_fnc_findSafePos;
+  //UBER-FAILSAFE
+  if (count _newPos == 0) then {_newPos = _position};
 
   //Make sure they retreat
   {
     _x setVariable ["UPSMON_Remove", true];
+    //Give time for UPSMON to do its things
+    sleep 10;
     _x move _newPos;
     _x setCombatMode "GREEN";
     _x setSpeedMode "FULL";

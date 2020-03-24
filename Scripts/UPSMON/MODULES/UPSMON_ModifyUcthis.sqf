@@ -6,7 +6,7 @@ _grp = group _npc;
 
 If (!IsNull _npc && alive _npc && _grp in UPSMON_NPCs) then
 {
-	_grp setvariable ["UPSMON_Removegroup",true];
+	_grp setvariable ["UPSMON_Remove",true];
 
 	waituntil {!alive _npc || !(_grp in UPSMON_NPCs)};
 
