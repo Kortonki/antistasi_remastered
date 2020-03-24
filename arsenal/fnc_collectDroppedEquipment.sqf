@@ -40,12 +40,13 @@ if (_side == "FIA") then {
           //IF vehicle is left there with cargo, it will looted in savegame at the latest
     };
 
-    if (_veh isKindOf "ReammoBox_F" and {!(_veh in [caja, cajaVeh])}) then {
+    if (_veh isKindOf "ReammoBox_F" and {!(_veh in [caja, cajaVeh]) and {isnull(attachedTo _veh)}}) then {
 
       ([_veh, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
       [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
       [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
-      [_veh] RemoteExec ["deleteVehicle", _x];
+      //[_veh] RemoteExec ["deleteVehicle", _x];
+      //Do not delete, let it be done via normal ways. (Supply box was deleted while respawning FIA location)
 
     };
 

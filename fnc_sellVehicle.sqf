@@ -41,7 +41,7 @@ call {
 
 if (_cost == 0) exitWith {hint "The vehicle you are looking at is not sellable."};
 
-_cost = _cost * (1 - damage _veh);
+_cost = round (_cost * (1 - damage _veh));
 
 [0,_cost] remoteExec ["AS_fnc_changeFIAmoney", 2];
 

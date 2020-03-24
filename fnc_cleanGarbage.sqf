@@ -11,7 +11,7 @@ private _toDelete = nearestObjects [markerPos "AS_base", ["WeaponHolderSimulated
 	//Recover equipment if near FIA location
 	//OPTIMIZATION: consider here to only check for FIA locations
 	private _nearest = [[] call AS_location_fnc_all, position _x] call BIS_fnc_nearestPosition;
-	if (_nearest call AS_location_fnc_side == "FIA" and {_nearest distance2D _x <= (_nearest call AS_location_fnc_size)}) then {
+	if (_nearest call AS_location_fnc_side == "FIA" and {(_nearest call AS_location_fnc_position)  distance2D (position _x) <= (_nearest call AS_location_fnc_size)}) then {
 		([_x, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
 		[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
 		[cajaVeh, _remains] call AS_fnc_addMagazineRemains;
@@ -25,7 +25,7 @@ private _toDelete = nearestObjects [markerPos "AS_base", ["WeaponHolderSimulated
 
 {
 	private _nearest = [[] call AS_location_fnc_all, position _x] call BIS_fnc_nearestPosition;
-	if (_nearest call AS_location_fnc_side == "FIA" and {_nearest distance2D _x <= (_nearest call AS_location_fnc_size)}) then {
+	if (_nearest call AS_location_fnc_side == "FIA" and {(_nearest call AS_location_fnc_position) distance2D (position _x) <= (_nearest call AS_location_fnc_size)}) then {
 		([_x, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
 		[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
 		[cajaVeh, _remains] call AS_fnc_addMagazineRemains;
@@ -38,7 +38,7 @@ private _deleteVehicles = vehicles select {!(alive _x)};
 
 {
 	private _nearest = [[] call AS_location_fnc_all, position _x] call BIS_fnc_nearestPosition;
-	if (_nearest call AS_location_fnc_side == "FIA" and {_nearest distance2D _x <= (_nearest call AS_location_fnc_size)}) then {
+	if (_nearest call AS_location_fnc_side == "FIA" and {(_nearest call AS_location_fnc_position) distance2D (position _x) <= (_nearest call AS_location_fnc_size)}) then {
 		([_x, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
 		[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
 		[cajaVeh, _remains] call AS_fnc_addMagazineRemains;

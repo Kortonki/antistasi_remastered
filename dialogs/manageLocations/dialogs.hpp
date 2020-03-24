@@ -28,7 +28,7 @@ class AS_manageLocations_rename
     class controls
     {
 AS_DIALOG(1,"Rename camp", "closeDialog 0;");
-WRITE(1,1,1,"camp name");
-BTN_R(1,-1,"Save", "closeDialog 0;");
+WRITE(1,1,1,"Camp name");
+BTN_R(1,-1,"Save", "Save", "closeDialog 0;");
 	};
 };

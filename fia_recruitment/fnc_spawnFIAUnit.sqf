@@ -1,5 +1,5 @@
 params ["_type", "_position", "_group", ["_recruit", false], ["_unitParams", []]];
-private _unit = _group createUnit [_type call AS_fnc_getFIAUnitClass, _position, [], 0, "NONE"]; //Unit is local where this line is run
+private _unit = _group createUnit [_type call AS_fnc_getFIAUnitClass, _position, [], 50, "NONE"]; //Unit is local where this line is run
 _unit setVariable ["AS_type", _type, true];
 
 //AI for players group are created and inited locally
