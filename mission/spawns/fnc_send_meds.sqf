@@ -74,7 +74,11 @@ private _fnc_run = {
 	private _crate = (([_mission, "resources"] call AS_spawn_fnc_get) select 2) select 0;
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = [_mission, "position"] call AS_spawn_fnc_get;
-	[[_position], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+
+	//Random chance for AAF patrol to be called by the civilians
+	if (([_location, "AAFsupport"] call AS_location_fnc_get / [_location, "FIAsupport"] call AS_location_fnc_get) > (random 2)) then {
+		[[_position], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+	};
 
 	private _fnc_unloadCondition = {
 		// The condition to allow loading the crates into the truck
@@ -87,12 +91,18 @@ private _fnc_run = {
 	private _str_unloadStart = "Guard the crate!";
 
 	// make all FIA around the truck non-captive
-	{
-		private _soldierFIA = _x;
-		if (captive _soldierFIA) then {
-			[_soldierFIA,false] remoteExec ["setCaptive",_soldierFIA];
+	[_mission, _crate] spawn {
+		params ["_mission", "_crate"];
+		while {([_mission, "state_index"] call AS_spawn_fnc_get) == 3} do {
+			{
+				private _soldierFIA = _x;
+				if (captive _soldierFIA) then {
+					[_soldierFIA,false] remoteExec ["setCaptive",_soldierFIA];
+				};
+			} forEach ([300, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
+			sleep 10;
 		};
-	} forEach ([300, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
+	};
 
 	{
 		// make all enemies around notice the truck

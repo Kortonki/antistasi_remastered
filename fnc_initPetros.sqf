@@ -24,7 +24,7 @@ if (!isNil "petros") then {
 };
 
 grupoPetros = createGroup ("FIA" call AS_fnc_getFactionSide);
-petros = ["Squad Leader", getMarkerPos "FIA_HQ", grupoPetros] call AS_fnc_spawnFIAunit;
+petros = ["Squad Leader", getMarkerPos "FIA_HQ", grupoPetros, false, [], 0] call AS_fnc_spawnFIAunit;
 [petros, "FIA"] call AS_fnc_setSide;
 grupoPetros setCombatMode "GREEN";
 

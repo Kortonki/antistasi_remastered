@@ -259,7 +259,7 @@ private _fnc_deliver = {
 		if (_currentDropCount < DROP_COUNT) then {
 
 
-			[petros,"sidechat","Drop succesful. Head to the next location."] remoteExec ["AS_fnc_localCommunication", 2];
+			[petros,"sidechat","Drop succesful. Head to the next location."] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 
 			[_mission, "buildings", _buildings] call AS_spawn_fnc_set;
 			[_mission, "currentDrop", _currentDropCount] call AS_spawn_fnc_set;
