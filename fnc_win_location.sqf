@@ -13,7 +13,7 @@ private _size = _location call AS_location_fnc_size;
 	if (isPlayer _x) then {
 		[_x, "score", 5] call AS_players_fnc_change;
 		//[_x, "money", 100] call AS_players_fnc_change; //Presence doesn't mean contribution and otherwise stupid to reward players
-		[_location] remoteExec ["AS_fnc_showFoundIntel", _x];
+		[_location] remoteExec ["AS_fnc_showFoundIntel", 2];
 		if (captive _x) then {[_x,false] remoteExec ["setCaptive",_x]};
 	}
 } forEach ([_size*2, _posicion, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);

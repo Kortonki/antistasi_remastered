@@ -51,6 +51,7 @@ class AS {
         FNC_BASE(spendAAFmoney);
         FNC_BASE(updateAll);
         FNC_BASE(revealFromAAFRadio);
+        FNC_BASE(globalMessage);
 
         FNC_BASE(win_location);
         FNC_BASE(lose_location);
@@ -178,6 +179,7 @@ class AS {
         FNC_BASE(hasRadioCoverage);
         FNC_BASE(sellVehicle);
         FNC_BASE(skipTime);
+        FNC_BASE(showFoundIntel);
 
         FNC_BASE(populateMilBuildings);
         FNC_BASE(createFIAgarrison);
@@ -244,7 +246,6 @@ class AS {
         FNC_BASE(showProgressBar);
         FNC_BASE(respawnPlayer);
         FNC_BASE(spawnPlayer);
-        FNC_BASE(showFoundIntel);
         FNC_BASE(fastTravel);
         FNC_BASE(unlockVehicle);
         FNC_BASE(revealToPlayer);

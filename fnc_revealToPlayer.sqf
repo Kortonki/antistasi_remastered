@@ -1,6 +1,6 @@
 #include "macros.hpp"
 while {AS_S("revealFromRadio")} do {
-	["radio"] remoteExec ["AS_fnc_showFoundIntel", AS_commander];
+	["radio"] remoteExec ["AS_fnc_showFoundIntel", 2];
 	if ((player == leader group player) and ([player] call AS_fnc_hasRadio)) then {
 		{
 			private _lider = leader _x;

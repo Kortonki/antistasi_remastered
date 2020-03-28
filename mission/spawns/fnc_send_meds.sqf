@@ -76,7 +76,7 @@ private _fnc_run = {
 	private _position = [_mission, "position"] call AS_spawn_fnc_get;
 
 	//Random chance for AAF patrol to be called by the civilians
-	if (([_location, "AAFsupport"] call AS_location_fnc_get / [_location, "FIAsupport"] call AS_location_fnc_get) > (random 2)) then {
+	if ((([_location, "AAFsupport"] call AS_location_fnc_get) / ([_location, "FIAsupport"] call AS_location_fnc_get)) > (random 2)) then {
 		[[_position], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
 	};
 

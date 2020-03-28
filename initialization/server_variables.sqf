@@ -162,3 +162,5 @@ lockArsenal = false;
 #include "..\Scripts\BE_modul.sqf"
 
 [] call AS_stats_fnc_initialize;
+
+AS_active_messages = [];

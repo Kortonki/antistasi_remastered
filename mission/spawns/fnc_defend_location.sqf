@@ -148,7 +148,7 @@ private _fnc_spawn = {
 			private _toUse = "helis_transport";  // last attack is always a transport
 
 			// first 2 rounds can be any unit, stronger the higher the treat
-			if (_i < 3) then {
+			if (_i < _nVeh) then {
 				//Here they can use the last ones as they're not good on defense
 				if (["helis_armed", 0.2] call AS_fnc_vehicleAvailability) then {
 					_toUse = "helis_armed";
@@ -160,7 +160,7 @@ private _fnc_spawn = {
 			([_toUse, _originPos, _position, _patrolMarker] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
-			sleep 15;
+			sleep 10;
 		};
 		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};
