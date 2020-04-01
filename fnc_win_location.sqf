@@ -97,6 +97,11 @@ if (_type in ["factory", "resource"]) then {
 	};
 };
 
+//Recalculate AAF arsenal
+{
+	[_x, "max", _x call AS_AAFarsenal_fnc_updateMax] call AS_AAFarsenal_fnc_set;
+} forEach ([] call AS_AAFarsenal_fnc_all);
+
 waitUntil {sleep AS_spawnLoopTime;
 	(not (_location call AS_location_fnc_spawned)) or
 	(({(not(vehicle _x isKindOf "Air")) and (alive _x) and (!fleeing _x)} count ([_size, _posicion, "OPFORSpawn"] call AS_fnc_unitsAtDistance)) >

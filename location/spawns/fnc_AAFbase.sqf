@@ -41,8 +41,11 @@ private _fnc_spawn = {
 		_vehiculos pushBack _bunker;
 	};
 
-	// spawn up to 4 mortars
-	for "_i" from 1 to ((round (_size / 30)) min 4) do {
+	//Amount of vehicles is same propoprtion of location max as there are vehicles in total compared to allowed total
+	private _mortarAmount = ["static_mortar", "base"] call AS_location_fnc_vehicleAmount;
+
+	// spawn up to available mortars (failsafe, above calc should already limit it)
+	for "_i" from 1 to (_mortarAmount min ("static_mortar" call AS_AAFarsenal_fnc_countAvailable)) do {
 		if !(_location call AS_location_fnc_spawned) exitWith {};
 		([_posicion, "AAF"] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
 		_soldados append _mortar_units;
@@ -51,48 +54,101 @@ private _fnc_spawn = {
 		sleep 1;
 	};
 
+	//spawn at
+	private _atAmount = ["static_at", "base"] call AS_location_fnc_vehicleAmount;
+
 	// spawn AT road checkpoint
-	if ((_location call AS_location_fnc_spawned) and _frontera) then {
-		([_posicion, _grupo] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
-		_soldados append _units1;
-		_vehiculos append _vehicles1;
-	};
-
-	// spawn parked vehicles
-	private _groupCount = (round (_size/30)) max 1;
-
-	if (!_busy) then {
-		private _count_vehicles = ["trucks", "cars_armed", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable;
-		private _vehClasses = ["trucks", "cars_armed", "apcs", "tanks"];
-
-		for "_i" from 0 to (_groupCount min _count_vehicles) - 1 do {
-			if !(_location call AS_location_fnc_spawned) exitWith {};
-			private _vehClass = selectRandom _vehClasses;
-			//TODO: improve checking for availability (spawned vehs and such). if multiple spawned with vehicles able to get vehicle count negative
-			if ((_vehClass call AS_AAFarsenal_fnc_countAvailable) > 0) then {
-
-				private _tipoVeh = selectRandom ([_vehClass] call AS_AAFarsenal_fnc_valid);
-				private _pos = [];
-				if (_size > 40) then {
-					_pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0, [], [_posicion, [0,0,0]]] call BIS_Fnc_findSafePos;
-					} else {
-					_pos = _posicion findEmptyPosition [10,60,_tipoVeh];
-				};
-				if (random 10 < 5 or (_tipoVeh in (["AAF", "trucks"] call AS_fnc_getEntity))) then {
-					([_tipoVeh,_pos,"AAF", random 360] call AS_fnc_createEmptyVehicle) params ["_veh"];
-					_vehiculos pushBack _veh;
-					} else {
-						([_tipoVeh, _location, "AAF"] call AS_fnc_spawnVehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
-						_vehiculos pushback _veh2;
-						_grupos pushBack _group2;
-						_markers pushback _patrolMarker2;
-					};
-				};
-			sleep 1;
+	for "_i" from 1 to (_atAmount min ("static_at" call AS_AAFarsenal_fnc_countAvailable)) do {
+		if ((_location call AS_location_fnc_spawned)) then {
+			([_posicion, _grupo, 0] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
+			_soldados append _units1;
+			_vehiculos append _vehicles1;
 		};
 	};
 
+	//Spawn some AA	private _atAmount = round((("static_at" call AS_AAFarsenal_fnc_count) / ("static_at" call AS_AAFarsenal_fnc_max)) * (["static_at", "base"] call AS_location_fnc_vehicles));
+
+	private _aaAmount = ["static_aa", "base"] call AS_location_fnc_vehicleAmount;
+
+		// spawn AA
+		for "_i" from 1 to (_aaAmount min ("static_aa" call AS_AAFarsenal_fnc_countAvailable)) do {
+			if ((_location call AS_location_fnc_spawned)) then {
+
+				([_posicion, _grupo, _size, 0] call AS_fnc_spawnAAF_AA) params ["_units1", "_vehicles1"];
+				_soldados append _units1;
+				_vehiculos append _vehicles1;
+			};
+		};
+
+	// spawn parked vehicles
+
+
+	private _vehClasses = ("base" call AS_location_fnc_vehicleClasses) arrayIntersect ["cars_transport", "cars_armed", "trucks", "apcs", "tanks"];
+
+	{
+		if !(_location call AS_location_fnc_spawned) exitWith {};
+		private _vehCount = [_x, "base"] call AS_location_fnc_vehicleAmount;
+
+		private _pos_dir = [_location, _vehCount] call AS_location_fnc_vehicleParking;
+
+		for "_i" from 0 to ((_vehCount min (_x call AS_AAFarsenal_fnc_countAvailable)) -1) do {
+
+			//TODO: improve checking for availability (spawned vehs and such). if multiple spawned with vehicles able to get vehicle count negative
+			private _tipoVeh = selectRandom ([_x] call AS_AAFarsenal_fnc_valid);
+			private _pos = [];
+			private _dir = random 360;
+
+			if (count (_pos_dir select 0) > 0) then {
+				_pos = (_pos_dir select 0) select _i;
+				_dir = (_pos_dir select 1) select _i;
+			} else {
+				if (_size > 40) then {
+					_pos = [_posicion, 5, _size, 10, 0, 0.3, 0, [], [_posicion, [0,0,0]]] call BIS_Fnc_findSafePos;
+					} else {
+					_pos = _posicion findEmptyPosition [10,60,_tipoVeh];
+				};
+			};
+			//In frontilne no parked combat vehicles
+			if ((!(_frontera) and {random 10 < 5}) or (_x in (["trucks", "cars_transport"]))) then {
+				([_tipoVeh,_pos,"AAF", _dir] call AS_fnc_createEmptyVehicle) params ["_veh"];
+				_vehiculos pushBack _veh;
+
+				if (!(_x in ["trucks", "cars_transport"])) then {
+					([_veh, "AAF", "crew"] call AS_fnc_createVehicleGroup) params ["_crewGroup", "_units"];
+
+					private _patrolMarker = [_crewGroup, _veh, _location, _size*0.5] call AS_tactics_fnc_crew_sentry;
+
+					_soldados append _units;
+					_grupos pushback _crewGroup;
+					_markers pushback _patrolMarker;
+				};
+
+				} else {
+					([_tipoVeh, _location, "AAF"] call AS_fnc_spawnVehiclePatrol) params ["_veh2", "_group2", "_patrolMarker2"];
+					_vehiculos pushback _veh2;
+					_grupos pushBack _group2;
+					_markers pushback _patrolMarker2;
+				};
+			sleep 1;
+		};
+	} foreach _vehClasses;
+
+	//Create support vehicles, own group for each type
+
+	private _support_pos_dir = [_location, 3] call AS_location_fnc_vehicleParking;
+
+	{
+		private _pos = (_support_pos_dir select 0) select _forEachIndex;
+		private _dir = (_support_pos_dir select 1) select _forEachIndex;
+		([_pos, _dir, _pos, "AAF", [_x]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
+
+		_vehiculos append _supVehs;
+		_grupos pushback _supGroup;
+		_soldados append _supUnits;
+	} foreach ["ammo", "fuel", "repair"];
+
 	// spawn patrols
+	private _groupCount = (round (_size/30)) max 1;
 	// _mrk => to be deleted at the end
 	([_location, _groupCount] call AS_fnc_spawnAAF_patrol) params ["_units1", "_groups1", "_mrk"];
 	_spatrol append _units1;

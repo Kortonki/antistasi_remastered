@@ -42,7 +42,7 @@ if (_unpreparedVehicles) exitWith {
 
 {
 		if ([_x, nil] call AS_fnc_enemiesNearby) exitWith {_enemiesNearby = true};
-} foreach units _group;
+} foreach ((units _group) select {vehicle _x == _x and {_x distance2D _leader <= 100}});
 
 if (_enemiesNearby) exitWith {Hint "You cannot use fast travel with enemies near the group fast traveling"};
 

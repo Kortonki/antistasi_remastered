@@ -189,3 +189,30 @@ private _allFuelStations = ([0,0,0] nearObjects 150000) select {getFuelCargo _x 
 if (!isNil "ace_common_settingFeedbackIcons") then {
   {[_x, 0] call ace_refuel_fnc_setFuel} foreach _allFuelStations;
 };
+
+//Maximum amount for AAF vehicles
+//Location(s), Types, amounts
+//Differs from persistent variable which is updated every update
+AS_maxAmounts = [
+[["roadblock"],
+  ["static_mg"],
+  [2]],
+[["outpost"],
+["static_mg", "static_at", "cars_transport", "trucks"],
+[4,1,1,1]],
+[["outpostAA"],
+["static_mg", "static_at", "static_aa", "cars_transport", "trucks"],
+[4,1,2,1,1]],
+[["factory", "resource", "powerplant"],
+["static_mg", "static_at", "trucks"],
+[4,1,1]],
+[["seaport"],
+["static_mg", "trucks", "boats"],
+[4,1,4]],
+[["base"],
+["static_mg", "static_at", "static_aa", "static_mortar", "cars_transport", "cars_armed", "trucks", "apcs", "tanks"],
+[8, 4, 4, 4, 2, 4, 4, 4, 4]],
+[["airfield"],
+["static_mg", "static_at", "static_aa", "cars_transport", "cars_armed", "trucks", "apcs", "helis_transport", "helis_armed", "planes"],
+[8, 4, 4, 2, 4, 4, 4, 4, 4, 4]]
+];

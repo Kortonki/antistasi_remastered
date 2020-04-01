@@ -1,6 +1,6 @@
 params ["_origin", "_destination", "_crew_group", "_marker", ["_threat", 0]];
 
-private _safePosition = [_destination, _origin, _threat] call AS_fnc_getSafeRoadToUnload;
+private _safePosition = [_destination, _origin, _threat*2] call AS_fnc_getSafeRoadToUnload; //Threat multiplied, tank battles are more long range
 private _wp1 = _crew_group addWaypoint [_safePosition, 0];
 _wp1 setWaypointType "MOVE";
 _wp1 setWaypointSpeed "NORMAL";
@@ -16,7 +16,7 @@ _wp2 setWaypointBehaviour "AWARE";
 _crew_group setVariable ["AS_patrol_marker", _marker, true];
 
 private _statement = {
-    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED"] spawn UPSMON;
+    [this, group this getVariable "AS_patrol_marker", "COMBAT", "SPAWNED"] spawn UPSMON;
 };
 
 _wp1 setWaypointStatements ["true", _statement call AS_fnc_codeToString];

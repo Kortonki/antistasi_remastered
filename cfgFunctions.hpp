@@ -98,6 +98,8 @@ class AS {
         FNC_BASE(spawnVehiclePatrol);
         FNC_BASE(spawnAAF_roadAT);
         FNC_BASE(spawnAAF_truck);
+        FNC_BASE(spawnAAF_AA);
+        FNC_BASE(spawnAAF_support);
         FNC_BASE(createVehicle);
         FNC_BASE(createEmptyVehicle);
         FNC_BASE(safeDelete);
@@ -154,7 +156,9 @@ class AS {
         FNC_BASE(accessGarage);
 
         FNC_BASE(availableSeats);
+        FNC_BASE(otherTurrets);
         FNC_BASE(createGroup);
+        FNC_BASE(createVehicleGroup);
         FNC_BASE(groupCfgToComposition);
 
         FNC_BASE(EH_handleDamage);
@@ -329,5 +333,6 @@ class AS_tactics {
         FNC(tactics,ground_disembark);
         FNC(tactics,ground_attack);
         FNC(tactics,ground_combined);
+        FNC(tactics,crew_sentry);
     };
 };

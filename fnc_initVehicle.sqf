@@ -14,7 +14,7 @@ if(!(local _veh)) exitWith {
 [_veh, _side] call AS_fnc_setSide;
 
 if ((_veh isKindOf "FlagCarrier") or (_veh isKindOf "Building")) exitWith {};
-if (_veh isKindOf "ReammoBox_F" and _side == "AAF") exitWith {[_veh,"Watchpost"] call AS_fnc_fillCrateAAF};
+if (_veh isKindOf "B_supplyCrate_F" and _side == "AAF") exitWith {[_veh,"Watchpost"] call AS_fnc_fillCrateAAF};
 
 // So the vehicle appears in debug mode. Does nothing otherwise.
 [_veh] call AS_debug_fnc_initVehicle;

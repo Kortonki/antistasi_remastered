@@ -8,7 +8,15 @@ params ["_groups", "_vehicles", "_markers"];
 
 {
     private _group = _x;
+
+
     private _units = (units _group) select {alive _x};
+    //Civilian group get deleted immediately -> no gameplay involvement
+    if (side _group == civilian) then {
+      {
+        [_x] remoteExec ["AS_fnc_safeDelete", _x];
+      } foreach (_units select {vehicle _x == _x}); //Exclude civilian vehicles, which might be far away from location
+    };
     {
         [_x] spawn {
             params ["_unit"];
@@ -37,7 +45,8 @@ params ["_groups", "_vehicles", "_markers"];
     //[_x] spawn AS_fnc_activateVehicleCleanup;
     //Addition why wait if cleanResources is triggered only after away for spawn distance?
     //TODO consider what happes to towed vehicles, are they deleted when location despawns?
-    if (!(_x isKindOf "AllVehicles") and {!(_x isKindof "ReammoBox_F")}) then {
+    //ReammoBox_F changed to supplycrate class: location objects such as barrels on pallet had also ReammoBox_F parent class
+    if (!(_x isKindOf "AllVehicles") and {!(_x isKindof "B_supplyCrate_F")}) then {
       [_x] remoteExecCall ["deletevehicle", _x];
     } else {
       [_x] remoteExec  ["AS_fnc_activateVehicleCleanup", _x];

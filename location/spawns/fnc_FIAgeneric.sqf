@@ -54,8 +54,8 @@ private _fnc_spawn = {
 	if (_type == "outpost") then {
 		// if close to an antenna, add jam option
 		private _antennaPos = [AS_P("antenasPos_alive"),_posicion] call BIS_fnc_nearestPosition;
-		if (_antennaPos distance _posicion < 200) then {
-			[[(nearestObjects [_antennaPos, AS_antenasTypes, 25]) select 0,"jam"],"AS_fnc_addAction"] call BIS_fnc_MP;
+		if (_antennaPos distance2d _posicion <= _size) then {
+			[(nearestObjects [_antennaPos, AS_antenasTypes, 25]) select 0, "jam"] remoteExec ["AS_fnc_addAction", AS_CLIENTS, true];
 		};
 	};
 

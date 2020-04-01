@@ -25,8 +25,10 @@ call AS_AAFarsenal_fnc_deinitialize;
 
 //Check for new valid vehicles if classnames are updated
 //Done after legacy stuff to avoid no key dict errors
+//also update maximum amounts
 
 {
   private _category = _x;
   [_category, "valid", ["AAF", _category] call AS_fnc_getEntity] call AS_AAFarsenal_fnc_set;
+  [_category, "max", _category call AS_AAFarsenal_fnc_updateMax] call AS_AAFarsenal_fnc_set;
 } foreach AS_AAFarsenal_buying_order;

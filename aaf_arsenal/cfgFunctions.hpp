@@ -28,6 +28,7 @@ class AS_AAFarsenal {
         // setters
 
         FNC(aaf_arsenal,addVehicle);
+        FNC(aaf_arsenal,updateMax);
 
 
         // serialize

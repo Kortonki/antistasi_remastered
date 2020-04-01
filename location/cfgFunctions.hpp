@@ -53,6 +53,10 @@ class AS_location {
         FNC(location,knownLocations);
         FNC(location,reveal);
         FNC(location,revealLoc);
+        FNC(location,vehicles);
+        FNC(location,vehicleClasses);
+        FNC(location,vehicleAmount);
+        FNC(location,vehicleParking);
         // auxiliar
         FNC(location,getNameSize);
 

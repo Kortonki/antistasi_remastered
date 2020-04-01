@@ -8,7 +8,7 @@ if !(_location call AS_spawn_fnc_exists) exitWith {};
 
 
 //This will end the run state of locations and start the cleanup and deletion of the spawn. Then it will respawn after a delay.
-//forced_spawned not added so garrison can't be increased when attack is on its way 
+//forced_spawned not added so garrison can't be increased when attack is on its way
 [_location, "spawned", false] call AS_location_fnc_set;
 //[_location, "forced_spawned", false] call AS_location_fnc_set;
 
@@ -21,4 +21,4 @@ if !(_location call AS_spawn_fnc_exists) exitWith {};
 
 {
  [_x] remoteExec ["deleteVehicle", _x];
-} foreach (_vehicles select {!(_x isKindof "ReammoBox_F") and {!(_x isKindof "AllVehicles")}});
+} foreach (_vehicles select {!(_x isKindof "B_supplyCrate_F") and {!(_x isKindof "AllVehicles")}});
