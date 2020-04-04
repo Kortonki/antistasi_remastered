@@ -16,7 +16,7 @@ private _threat = 0;
 if ((_location call AS_location_fnc_side) in _friendlySides) then {
 	{
 			private _positionOther = _x call AS_location_fnc_position;
-			if (_positionOther distance2D _position < (AS_P("spawnDistance"))) then {
+			if (_positionOther distance2D _position < 1000) then {
 				if ((_x call AS_location_fnc_type) in ["base", "airfield"]) then {
 					_threat = _threat - 3;
 				} else {
@@ -29,16 +29,17 @@ if ((_location call AS_location_fnc_side) in _friendlySides) then {
 if (_enemySide == "FIA") then {
 	{
 		private _positionOther = _x call AS_location_fnc_position;
-		private _garrison = _x call AS_location_fnc_garrison;
-		private _size = _x call AS_location_fnc_size;
-		if (_positionOther distance _position < AS_P("spawnDistance")) then {
+
+		if (_positionOther distance2D _position < 1500) then {
+			private _garrison = _x call AS_location_fnc_garrison;
+			private _size = _x call AS_location_fnc_size;
 			_threat = _threat + (floor((count _garrison)/4)) + (2*({(_x == "AA Specialist")} count _garrison));
-			private _estaticas = AS_P("vehicles") select {_x distance _positionOther < _size};
+			private _estaticas = AS_P("vehicles") select {_x distance2D _positionOther < _size};
 			if (count _estaticas > 0) then {
 				_threat = _threat + ({typeOf _x in AS_allMGstatics} count _estaticas) + (5*({typeOf _x in AS_allAAstatics} count _estaticas));
 			};
 		};
-	} forEach (([["base", "airfield", "outpost", "outpostAA"], "FIA"] call AS_location_fnc_TS) + (([["watchpost", "roadblock", "fia_hq", "camp"], "FIA"] call AS_location_fnc_TS) arrayIntersect ([] call AS_location_fnc_knownLocations)));
+	} forEach (([["base", "airfield", "outpost", "outpostAA", "resource", "factory", "powerplant", "seaport"], "FIA"] call AS_location_fnc_TS) + (([["watchpost", "roadblock", "fia_hq", "camp"], "FIA"] call AS_location_fnc_TS) arrayIntersect ([] call AS_location_fnc_knownLocations)));
 } else {
 	{
 		if ((_x call AS_location_fnc_side) in _enemySides and {(_x call AS_location_fnc_position) distance2D _position < 2000}) then {
@@ -49,7 +50,7 @@ if (_enemySide == "FIA") then {
 			};
 		};
 
-	} foreach (["base", "airfield", "outpost", "outpostAA","roadblock", "hillAA"] call AS_location_fnc_T);
+	} foreach (["base", "airfield", "outpost", "outpostAA","roadblock", "hillAA",  "resource", "factory", "powerplant", "seaport"] call AS_location_fnc_T);
 
 };
 
@@ -134,6 +135,6 @@ if (_enemySide == "FIA") then {
 	  	};
 		};
 
-} foreach (vehicles select {!((typeof _x) isEqualTo "WeaponHolderSimulated") and {side _x == _enemyside_short and {_x distance2D _position < 1500}}});
+} foreach (vehicles select {!((typeof _x) isEqualTo "WeaponHolderSimulated") and {(_x call AS_fnc_getSide) in _enemySides and {_x distance2D _position < 1500}}});
 
 _threat

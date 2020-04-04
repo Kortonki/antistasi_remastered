@@ -25,6 +25,7 @@ private _fnc_spawn = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
+	private _size = _location call AS_location_fnc_size;
 	private _base = [_mission, "base"] call AS_mission_fnc_get;
 	private _airfield = [_mission, "airfield"] call AS_mission_fnc_get;
 	private _useCSAT = [_mission, "useCSAT"] call AS_mission_fnc_get;
@@ -33,7 +34,7 @@ private _fnc_spawn = {
 
 	private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
 	_patrolMarker setMarkerShape "ELLIPSE";
-	_patrolMarker setMarkerSize [50,50];
+	_patrolMarker setMarkerSize [_size*1.5 min 200, _size*1.5 min 200];
 	_patrolMarker setMarkerAlpha 0;
 
 
@@ -41,7 +42,12 @@ private _fnc_spawn = {
 	if (_airfield != "" or _useCSAT) then {_threatEvalAir = [_position, "FIA"] call AS_fnc_getAirThreat};
 
 	private _threatEvalLand = 0;
-	if (_base != "") then {_threatEvalLand = [_position] call AS_fnc_getLandThreat};
+	if (_base != "") then {_threatEvalLand = [_position, "FIA"] call AS_fnc_getLandThreat};
+
+	if (_location call AS_location_fnc_type in ["base", "airfield"]) then {
+			_threatEvalLand = _threatEvalLand + (AS_P("NATOsupport")/10);
+			_threatEvalAir = _threatEvalAir + (AS_P("NATOsupport")/10);
+	};
 
 	private _groups = [];
 	private _vehicles = [];

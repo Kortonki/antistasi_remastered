@@ -15,35 +15,37 @@ private _threat = 0;
 if ((_location call AS_location_fnc_side) in _friendlySides) then {
 	{
 			private _positionOther = _x call AS_location_fnc_position;
-			if (_positionOther distance2D _position < (AS_P("spawnDistance"))) then {
+			if (_positionOther distance2D _position < 1000) then {
 				if ((_x call AS_location_fnc_type) in ["base", "airfield"]) then {
 					_threat = _threat - 3;
 				} else {
 					_threat = _threat - 1;
 				};
 			};
-	} forEach ([["base", "airfield", "outpost", "outpostAA","roadblock", "watchpost", "fia_hq", "camp"], _friendlySides select 0]call AS_location_fnc_TS);
+	} forEach ([["base", "airfield", "outpost", "outpostAA","roadblock", "watchpost", "fia_hq", "camp"], _friendlySides select 0] call AS_location_fnc_TS);
 };
 
 // roadblocks
 if (_enemySide == "FIA") then {
 
 	_threat = _threat + 2 * (
-		{(_x call AS_location_fnc_position) distance2D _position < AS_P("spawnDistance")} count (([["roadblock", "watchpost", "fia_hq"], "FIA"] call AS_location_fnc_TS) arrayIntersect ([] call AS_location_fnc_knownLocations)));
+		{(_x call AS_location_fnc_position) distance2D _position < 1000} count (([["roadblock", "watchpost", "fia_hq"], "FIA"] call AS_location_fnc_TS) arrayIntersect ([] call AS_location_fnc_knownLocations)));
 
 	// bases
 	{
 		private _otherPosition = _x call AS_location_fnc_position;
-		private _size = _x call AS_location_fnc_size;
-		private _garrison = _x call AS_location_fnc_garrison;
-		if (_otherPosition distance _position < AS_P("spawnDistance")) then {
+
+		if (_otherPosition distance2D _position < 1000) then {
+			private _garrison = _x call AS_location_fnc_garrison;
+			private _size = _x call AS_location_fnc_size;
+
 			_threat = _threat + (2*({(_x == "AT Specialist")} count _garrison)) + (floor((count _garrison)/8)); //Ammo bearer here changed to AT spesialist (wtf)
 			private _estaticas = AS_P("vehicles") select {_x distance2D _otherPosition < _size};
 			if (count _estaticas > 0) then {
 				_threat = _threat + ({typeOf _x in AS_allMortarStatics} count _estaticas) + (2*({typeOf _x in AS_allATstatics} count _estaticas));
 			};
 		};
-	} forEach (([["base", "airfield", "outpost", "outpostAA"], "FIA"]call AS_location_fnc_TS) + (([["watchpost", "roadblock", "fia_hq"], "FIA"] call AS_location_fnc_TS) arrayIntersect ([] call AS_location_fnc_knownLocations)));
+	} forEach (([["base", "airfield", "outpost", "outpostAA", "resource", "factory", "seaport", "powerplant"], "FIA"]call AS_location_fnc_TS) + (([["watchpost", "roadblock", "fia_hq"], "FIA"] call AS_location_fnc_TS) arrayIntersect ([] call AS_location_fnc_knownLocations)));
 
 } else {
 	{
@@ -55,7 +57,7 @@ if (_enemySide == "FIA") then {
 			};
 		};
 
-	} foreach (["base", "airfield", "outpost", "outpostAA","roadblock", "hillAA"] call AS_location_fnc_T);
+	} foreach (["base", "airfield", "outpost", "outpostAA","roadblock", "hillAA", "resource", "factory", "seaport", "powerplant"] call AS_location_fnc_T);
 };
 //Other vehicles
 //ATM it's randomised which units presence is known to AAF when calculating threat
@@ -136,7 +138,7 @@ if (_enemySide == "FIA") then {
 
 
 
-} foreach (vehicles select {!((typeof _x) isEqualTo "WeaponHolderSimulated") and {side _x == _enemyside_short and {_x distance2D _position < 1000}}}); //Changed to side so undercover (side civilian) don't affect this
+} foreach (vehicles select {!((typeof _x) isEqualTo "WeaponHolderSimulated") and {(_x call AS_fnc_getSide) in _enemySides and {_x distance2D _position < 1000}}}); //Changed to side so undercover (side civilian) don't affect this
 
 
 _threat

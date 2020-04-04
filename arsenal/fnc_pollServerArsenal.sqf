@@ -5,7 +5,11 @@ params ["_unit", "_phase", "_box"];
 
 private _owner = owner _unit;
 
-waitUntil {not(lockArsenal)};
+while {lockArsenal} do {
+  ["Arsenal is busy, wait"] remoteExec ["hint", _unit];
+  sleep 0.5;
+};
+
 private _arsenal = ([caja, true] call AS_fnc_getBoxArsenal);
 
 if (_phase == "open") exitWith {

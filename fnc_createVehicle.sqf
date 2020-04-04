@@ -55,13 +55,13 @@ if (_crew in [2,3,6,7]) then {
     _unit moveInGunner _vehicle;
   };
 
-  //Other turrets
+  //Other turrets. This must be done last because otherTurrets checks for empty turrets
 
   {
     private _unit = _vehicleGroup createUnit [[_side, _type] call AS_fnc_getEntity, _pos, [], 0, "NONE"];
     [_unit, _side, _spawn] call AS_fnc_initUnit;
-    _unit assignAsTurret _x;
-    _unit moveinTurret _x;
+    _unit assignAsTurret [_vehicle, _x];
+    _unit moveinTurret [_vehicle, _x];
   } foreach ([_vehicle] call AS_fnc_otherTurrets);
 
 };
