@@ -11,9 +11,9 @@ if hasACEmedical then {
 
 		private _medicalItems = AS_aceBasicMedical;
 
-		if (ace_medical_level == 2) then {_medicalItems append AS_aceAdvMedical};
+		if (ace_medical_level == 2 or (isnil "ace_medical_level")) then {_medicalItems append AS_aceAdvMedical}; //Nil checked for new ace medical where there's no med. level (investigate)
 
-		if (hasACEsplint) then {_medicalItems pushBack "adv_aceSplint_splint"};
+		if (hasACEsplint) then {_medicalItems pushBack "ACE_splint"};
 
 		{
 
@@ -31,7 +31,7 @@ if hasACEmedical then {
             if (_item == "ACE_atropine") exitWith {2};
 						if (_item == "ACE_personalAidKit") exitWith {0.5};
 						if (_item == "ACE_surgicalKit") exitWith {0.5};
-						if (_item == "adv_aceSplint_splint") exitWith {2};
+						if (_item == "ACE_splint") exitWith {2};
 						if ((_item find "saline") > -1) exitWith {2};
             if ((_item find "plasma") > -1) exitWith {1};
 						if ((_item find "blood") > -1) exitWith {0.5};

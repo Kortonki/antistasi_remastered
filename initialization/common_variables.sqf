@@ -59,11 +59,10 @@ if (!isNil "ace_common_settingFeedbackIcons") then {
 	if (isClass (configFile >> "CfgSounds" >> "ACE_EarRinging_Weak")) then {
 		hasACEhearing = true;
 	};
-	if (isClass (ConfigFile >> "CfgSounds" >> "ACE_heartbeat_fast_3") and
-        (ace_medical_level != 0)) then {
+	if (isClass (ConfigFile >> "CfgSounds" >> "ACE_heartbeat_fast_3")) then {
 		hasACEMedical = true;
 	};
-	if ("adv_aceSplint_splint" in AS_allItems) then {
+	if ("ACE_splint" in AS_allItems) then {
 		hasACEsplint = true;
 	};
 	// Lists of items used by ACE medical system. These are used

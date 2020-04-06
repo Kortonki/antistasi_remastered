@@ -50,16 +50,22 @@ private _sideBinoculars = [];
 
 // populate items with relevant meds.
 if (hasACE) then {
-    if (ace_medical_level == 0) then {
+    if (!(isnil "ace_medical_level")) then {
+      if (ace_medical_level == 0) then {
         _sideItems append ["FirstAidKit","Medikit"];
-    } else {
+      } else {
         _sideItems = _sideItems - ["FirstAidKit","Medikit"];
-    };
-    if (ace_medical_level >= 1) then {
-        _sideItems append AS_aceBasicMedical;
-    };
-    if (ace_medical_level == 2) then {
-        _sideItems append AS_aceAdvMedical;
+      };
+      if (ace_medical_level >= 1) then {
+          _sideItems append AS_aceBasicMedical;
+      };
+      if (ace_medical_level == 2) then {
+          _sideItems append AS_aceAdvMedical;
+      };
+    } else {
+      _sideItems append AS_aceBasicMedical;
+      _sideItems append AS_aceAdvMedical;
+      _sideItems = _sideItems - ["FirstAidKit","Medikit"];
     };
 } else {
     _sideItems append ["FirstAidKit","Medikit"];

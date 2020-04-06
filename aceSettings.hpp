@@ -91,45 +91,6 @@
             force = 1;
     };
 
-    class ace_medical_level { //This needs to match an ace_setting, this one is a "SCALAR"(number)
-            title = "Medical Level"; // Name that is shown
-            ACE_setting = 1; //Marks param to be read as an ace setting, without this nothing will happen!
-            values[] = {1, 2}; //Values that ace_medical_level can be set to
-            texts[] =  {"Basic", "Advanced"}; //Text names to show for values (Basic will set level to 1, Advanced will set level to 2)
-            default = 2; //Default value used - Value should be in the values[] list
-    };
-
-    class ace_medical_increaseTrainingInLocations {
-        title = "Locations boost medical training?";
-            ACE_setting = 1;
-            values[] = {0,1};
-            texts[] = {"Off","On"};
-            default = 1;
-            typeName = "BOOL";
-            force = 1;
-    };
-
-    class ace_medical_enableRevive {
-        title = "Medical, enable revive?";
-            ACE_setting = 1;
-            values[] = {0,2};
-            texts[] = {"0","2"};
-            default = 0;
-            typeName = "SCALAR";
-            force = 1;
-    };
-
-
-    class ace_medical_medicSetting_basicEpi {
-        title = "Full heal on epi injection restricted to medic?";
-            ACE_setting = 1;
-            values[] = {0,1};
-            texts[] = {"Off","On"};
-            default = 1;
-            typeName = "SCALAR";
-            force = 1;
-    };
-
     class ace_microdagr_mapDataAvailable {
         title = "MicroDAGR map fill";
             ACE_setting = 1;

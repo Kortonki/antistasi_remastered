@@ -19,7 +19,7 @@ if ([position player, AS_enemyDist*2] call AS_fnc_enemiesNearby) then {
 		if (_slow) then {[cajaVeh, _posHQ, (damage _x * 20), {true}, {_x distance2D cajaVeh < 100}, "Stay close to the box to heal", ""] call AS_fnc_wait_or_fail;};
 
 		if (hasACE) then {
-					 		[_x, _x] call ace_medical_fnc_treatmentAdvanced_fullHeal;
+					 		[_x] remoteExec ["ace_medical_treatment_fnc_fullHealLocal", _x];
     	} else {
       		_x setDamage 0;
 		};

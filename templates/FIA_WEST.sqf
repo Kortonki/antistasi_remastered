@@ -76,7 +76,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 ["Medikit", 2],
 ["ToolKit", 2],
-["adv_aceSplint_splint", 10],
+["ACE_splint", 10],
 ["ACE_salineIV_250", 8],
 ["ACE_epinephrine", 10],
 ["ACE_morphine", 10],
@@ -192,7 +192,7 @@ unlockedItems = unlockedItems - [
 "ACE_adenosine",
 "ACE_personalAidKit",
 "ACE_surgicalKit",
-"adv_aceSplint_splint"
+"ACE_splint"
 ];
 
 [_dict, "addBackpacks", [

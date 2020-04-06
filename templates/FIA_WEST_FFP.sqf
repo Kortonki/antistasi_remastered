@@ -78,7 +78,7 @@ unlockeditems pushback "Chemlight_blue";
 
 ["Medikit", 2],
 ["ToolKit", 2],
-["adv_aceSplint_splint", 10],
+["ACE_splint", 10],
 ["ACE_salineIV_250", 8],
 ["ACE_epinephrine", 10],
 ["ACE_morphine", 10],

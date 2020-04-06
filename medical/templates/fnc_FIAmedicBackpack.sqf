@@ -5,7 +5,7 @@ private _countList = _availableItems select 1;
 
 
 if hasACEmedical then {
-    if (ace_medical_level == 1) then {
+    if (!(isnil "ace_medical_level") and {ace_medical_level == 1}) then {
         // order matters: items will be add sequentially until bag is full.
 
         _return = [["ACE_tourniquet", 5], ["ACE_fieldDressing", 30], ["ACE_morphine", 20], ["ACE_epinephrine", 10], ["ACE_bloodIV", 1],  ["ACE_bloodIV_250", 4],  ["ACE_bloodIV_500", 4]];
@@ -13,7 +13,7 @@ if hasACEmedical then {
 
         _return = [["ACE_tourniquet", 5], ["ACE_fieldDressing", 20], ["ACE_morphine", 20], ["ACE_epinephrine", 10], ["ACE_packingBandage", 10], ["ACE_quikclot", 10],["ACE_elasticBandage", 10],["ACE_adenosine", 10]];
 
-        if (hasACEsplint) then {_return pushBack ["adv_aceSplint_splint", 5];};
+        if (hasACEsplint) then {_return pushBack ["ACE_splint", 5];};
 
         //Check whether there's saline or blood. Prioritize blood.
         private _bloods = [];
