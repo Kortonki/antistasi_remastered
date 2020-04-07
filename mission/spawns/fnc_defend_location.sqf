@@ -159,7 +159,7 @@ private _fnc_spawn = {
 				if (["helis_armed", 0.2] call AS_fnc_vehicleAvailability) then {
 					_toUse = "helis_armed";
 				};
-				if (_threatEvalAir > 15 and ["planes", 0.2] call AS_fnc_vehicleAvailability) then {
+				if (_threatEvalAir > 15 and {["planes", 0.2] call AS_fnc_vehicleAvailability}) then {
 					_toUse = "planes";
 				};
 			};
@@ -170,6 +170,24 @@ private _fnc_spawn = {
 		};
 		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};
+
+	//Support vehicles here. //Choose support position from AAF locations whice are close to the target & the base
+	//TODO improve this to search from farther
+	//TODO consider when to spawn which support. eg trucks don't need ammo
+
+	private _supDest = _originPos;
+	private _supLoc	= ["AAF" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
+	private _supLocPos = _supLoc call AS_location_fnc_position;
+	if (_supLocPos distance2D _originPos < _position distance2D _originPos) then {
+		_supDest = _supLocPos;
+	};
+
+
+	([_originPos, _supDest] call AS_fnc_findSpawnSpots) params ["_supPos", "_supDir"];
+
+	([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
+	_vehicles append _supVehs;
+	_groups pushback _supGroup;
 
 	private _soldiers = [];
 	{_soldiers append (units _x)} forEach _groups;

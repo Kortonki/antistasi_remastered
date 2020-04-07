@@ -19,7 +19,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 // used in roadblock mission
 [_dict, "trucks", ["rhsusf_M1083A1P2_WD_fmtv_usarmy","rhsusf_M1083A1P2_B_WD_fmtv_usarmy","rhsusf_M1078A1P2_WD_fmtv_usarmy"]] call DICT_fnc_set;
-[_dict, "apcs", ["rhsusf_m113_usarmy_unarmed","rhsusf_m113_usarmy","rhsusf_m113_usarmy_M240","rhsusf_m113_usarmy_MK19","RHS_M2A2_wd","RHS_M2A2_BUSKI_WD","RHS_M2A3_wd","RHS_M2A3_BUSKI_wd","RHS_M2A3_BUSKIII_wd"]] call DICT_fnc_set;
+[_dict, "apcs", ["rhsusf_m113_usarmy_unarmed","rhsusf_m113_usarmy","rhsusf_m113_usarmy_M240","rhsusf_m113_usarmy_MK19","RHS_M2A2_wd","RHS_M2A2_BUSKI_WD"]] call DICT_fnc_set;
 
 // used in traitor mission
 [_dict, "cars_transport", ["rhsusf_m1025_w_s","rhsusf_m1043_w_s","rhsusf_m998_w_s_2dr_halftop",

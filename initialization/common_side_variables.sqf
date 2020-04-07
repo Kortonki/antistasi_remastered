@@ -1,3 +1,5 @@
+#include "../macros.hpp"
+
 //Side stuff here
 
 
@@ -7,6 +9,16 @@ call compile preprocessFileLineNumbers "initSides.sqf";
 // Initializes all AAF/NATO/CSAT items (e.g. weapons, mags) from the global variables
 // in the templates above. Only non-public globals defined.
 call compile preprocessFileLineNumbers "initItemsSides.sqf";
+
+//Keys depending on player side
+
+if (hasACE) then {
+  if (AS_P("player_side") == "west") then {
+    unlockedItems pushback "ACE_key_west";
+  } else {
+    unlockedItems pushback "ACE_key_east";
+  };
+};
 
 AS_Arsenal_initialized = true;
 //publicVariable "AS_Arsenal_initialized"; //Commented out, everyone runs this clients and server
