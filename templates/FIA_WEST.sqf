@@ -90,7 +90,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "engineer", "B_G_engineer_F"] call DICT_fnc_set;
 [_dict, "medic", "B_G_medic_F"] call DICT_fnc_set;
 
-//These are used for AAF convoy missions
+//These are used for propaganda missions
 [_dict, "vans", [
 "C_IDAP_Truck_02_F"
 ]] call DICT_fnc_set;

@@ -108,7 +108,8 @@ private _fnc_allPossibleMissions = {
             };
             //"conquer", "destroy_antenna" removed for now, they don't need to be as missions
         } forEach _cityMissions + _baseMissions + _logisticsMissions + [
-            "destroy_helicoper", "rob_bank"
+            "destroy_helicoper"
+            //, "rob_bank" //Commented for until mission developed
         ];
     } forEach _locations;
 
@@ -122,7 +123,8 @@ private _fnc_allPossibleMissions = {
         };
     } forEach AS_P("antenasPos_alive");*/
 
-    {
+    //Bank robberies deactivated until improved
+    /*{
         private _position = _x call AS_location_fnc_position;
         private _mission = ["rob_bank", _x];
         if (not (_mission in _possible) and {_position distance (getMarkerPos "FIA_HQ") < AS_missions_MAX_DISTANCE} and
@@ -133,7 +135,7 @@ private _fnc_allPossibleMissions = {
             {not(_x call AS_location_fnc_spawned)}) then {
             _possible pushBack _mission;
         };
-    } forEach (call AS_location_fnc_cities);
+    } forEach (call AS_location_fnc_cities);*/
 
     {
         private _location = _x;

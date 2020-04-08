@@ -66,7 +66,7 @@ private _fnc_initialize = {
 		(["AAF", "shortname"] call AS_fnc_getEntity)
 	];
 
-	private _vehicleType = selectRandom (["FIA", "vans"] call AS_fnc_getEntity);
+	private _vehicleType = selectRandom (["AAF", "vans"] call AS_fnc_getEntity);
 	private _crateType = (["CIV", "box"] call AS_fnc_getEntity);
 
 

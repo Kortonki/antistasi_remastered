@@ -43,6 +43,10 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "cars_armed", ["UK3CB_ANA_B_M1025","UK3CB_ANA_B_Dshkm","UK3CB_ANA_B_Pkm","UK3CB_ANA_B_Spg9","UK3CB_ANA_B_Zu23","UK3CB_ANA_B_M1025_MK19","UK3CB_ANA_B_M1025_M2","UK3CB_ANA_B_MaxxPro_M2","UK3CB_ANA_B_MaxxPro_MK19","UK3CB_ANA_B_Offroad_M2"]] call DICT_fnc_set;
 [_dict, "apcs", ["UK3CB_ANA_B_BMP1","UK3CB_ANA_B_BMP2","UK3CB_ANA_B_BMP2K","UK3CB_ANA_B_M1117","UK3CB_ANA_B_M113_M2","UK3CB_ANA_B_M113_M240","UK3CB_ANA_B_M113_MK19"]] call DICT_fnc_set;
 [_dict, "trucks", ["UK3CB_ANA_B_Ural","UK3CB_ANA_B_Ural_Open"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
 
 [_dict, "other_vehicles", [
 "UK3CB_ANA_B_Ural_Ammo", "UK3CB_ANA_B_Ural_Fuel", "UK3CB_ANA_B_M113_AMB", "UK3CB_ANA_B_Ural_Repair"

@@ -8,5 +8,7 @@ if (isNil "_categories") then {
     _categories = call AS_AAFarsenal_fnc_all;
 };
 private _all = [];
-{_all append ([_x, "valid"] call AS_AAFarsenal_fnc_get)} forEach _categories;
+{
+  _all append ([_x, "valid"] call AS_AAFarsenal_fnc_get);
+} forEach _categories;
 _all

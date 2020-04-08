@@ -28,6 +28,7 @@ call {
 	if (_tipoVeh in (["CIV", "vehicles"] call AS_fnc_getEntity)) exitWith {
 		_cost = 25
 	};
+
 	if (_tipoVeh in (["FIA", "vans"] call AS_fnc_getEntity)) exitWith {
 		_cost = "trucks" call AS_AAFarsenal_fnc_value;
 	};

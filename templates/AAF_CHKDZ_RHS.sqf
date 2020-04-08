@@ -43,6 +43,10 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "cars_armed", ["rhsgref_BRDM2_ins_g"," rhsgref_BRDM2_ATGM_ins_g", "rhsgref_BRDM2_HQ_ins_g", "rhsgref_ins_uaz_ags", "rhsgref_ins_uaz_dshkm", "rhsgref_ins_uaz_spg9"]] call DICT_fnc_set;
 [_dict, "apcs", ["rhsgref_ins_g_btr60", "rhsgref_ins_g_btr70", "rhsgref_ins_g_bmd1", "rhsgref_ins_g_bmp1"," rhsgref_ins_g_bmp1p", "rhsgref_ins_g_bmp2e"]] call DICT_fnc_set;
 [_dict, "trucks", ["rhsgref_ins_g_gaz66o", "rhsgref_ins_g_gaz66"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
 
 [_dict, "other_vehicles", [
 "rhsgref_ins_g_gaz66_ammo", "I_Truck_02_fuel_F", "rhsgref_ins_g_gaz66_ap2", "rhsgref_ins_g_gaz66_repair"

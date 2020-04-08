@@ -4,7 +4,7 @@ private _size = _location call AS_location_fnc_size;
 private _position = _location call AS_location_fnc_position;
 private _side = _location call AS_location_fnc_side;
 
-if (_side == "FIA") then {
+if (_side == "FIA" or _location == "fia_hq") then {
 
 //Weapons and stuff laying on the ground
 
@@ -24,7 +24,7 @@ if (_side == "FIA") then {
         [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
         [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
         _x call AS_fnc_emptyUnit;
-        [_x] RemoteExec ["deleteVehicle", _x];
+        [_x] RemoteExec ["AS_fnc_safeDelete", _x]; //this changed to safe delete in case below picks up dead vehicle crew -> deleteVehicle would delete vehicle also
     };
 } forEach (_position nearObjects ["Man", _size]);
 
@@ -40,7 +40,7 @@ if (_side == "FIA") then {
           //IF vehicle is left there with cargo, it will looted in savegame at the latest
     };
 
-    if (_veh isKindOf "ReammoBox_F" and {!(_veh in [caja, cajaVeh]) and {isnull(attachedTo _veh)}}) then {
+    if (_veh isKindOf "B_supplyCrate_F" and {!(_veh in [caja, cajaVeh]) and {isnull(attachedTo _veh)}}) then { //Changed reammobox to supplycrate
 
       ([_veh, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
       [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
@@ -95,7 +95,7 @@ if (_side == "FIA") then {
 
   {
       if not (alive _x) then {
-          [_x] RemoteExec ["deleteVehicle", _x];
+          [_x] RemoteExec ["AS_fnc_safeDelete", _x];
       };
   } forEach (_position nearObjects ["Man", _size]);
 

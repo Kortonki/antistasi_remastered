@@ -3,10 +3,10 @@ if ((_veh call AS_fnc_getSide) != "AAF") exitWith {diag_log "[AS] Warning: EH_AA
   //Deduct from AAF arsenal regardless of killers side
   //Also remove from spawn counter so new one can spawn
 private _vehicleType = typeOf _veh;
-[_vehicleType] call AS_AAFarsenal_fnc_deleteVehicle;
 [_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
 
 private _vehicleCategory = _vehicleType call AS_AAFarsenal_fnc_category;
+[_vehicleCategory] call AS_AAFarsenal_fnc_deleteVehicle;
 
 
 
