@@ -11,7 +11,7 @@ if hasACEmedical then {
 
 		private _medicalItems = AS_aceBasicMedical;
 
-		if (ace_medical_level == 2 or (isnil "ace_medical_level")) then {_medicalItems append AS_aceAdvMedical}; //Nil checked for new ace medical where there's no med. level (investigate)
+		if ((!(isnil "ace_medical_level") and {ace_medical_level == 2}) or (isnil "ace_medical_level")) then {_medicalItems append AS_aceAdvMedical}; //Nil checked for new ace medical where there's no med. level (investigate)
 
 		if (hasACEsplint) then {_medicalItems pushBack "ACE_splint"};
 

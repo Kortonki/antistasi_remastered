@@ -20,10 +20,16 @@ private _fnc_spawn = {
 	private _grupo = createGroup ("AAF" call AS_fnc_getFactionSide);
 	_grupos pushBack _grupo;
 
-	([_location, "AAF", _grupo] call AS_fnc_populateMilBuildings) params ["_gunners", "_vehicles"];
-	{[_x, false] call AS_fnc_initUnitAAF} forEach _gunners;
-	_soldados append _gunners;
-	_vehiculos append _vehicles;
+	([_location, "AAF", _grupo] call AS_fnc_populateMilBuildings) params ["_gunners2", "_vehicles2", "_groups2", "_markers2"];
+	{[_x, false] call AS_fnc_initUnitAAF} forEach _gunners2;
+	_soldados append _gunners2;
+	_vehiculos append _vehicles2;
+	_grupos append _groups2;
+	_markers append _markers2;
+
+	{
+		_soldados append (units _x);
+	} foreach _groups2;
 
 	// spawn flag and crate
 	private _bandera = createVehicle [["AAF", "flag"] call AS_fnc_getEntity, _posicion, [],0, "CAN_COLLIDE"];

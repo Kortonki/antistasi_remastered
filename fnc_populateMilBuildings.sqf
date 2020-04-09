@@ -5,7 +5,7 @@ private _size = _location call AS_location_fnc_size;
 private _buildings = nearestObjects [_posicion, AS_destroyable_buildings, _size*1.5];
 private _addChopper = !(_airfield) and {_side == "AAF"} and
 	{!([_location] call AS_fnc_location_isFrontline)} and
-	{"helis_transport" call AS_AAFarsenal_fnc_countAvailable > 0};
+	{["helis_transport", 0.7] call AS_fnc_vehicleAvailability}; //Lowish priority for non airfield helis
 
 private _minimumShare = 1/4; //This is how much surplus AAF needs to allow spawning vehicles to location. Higher number, lower priority location.
 
@@ -19,6 +19,8 @@ private _gunnerCrew = [_side, "gunner"] call AS_fnc_getEntity;
 
 private _soldiers = [];
 private _vehicles = [];
+private _groups = [];
+private _markers = [];
 
 {
 	private _building = _x;
@@ -76,13 +78,19 @@ private _vehicles = [];
 		};
 	};
 	if (_addChopper and (_buildingType == "Land_HelipadSquare_F")) then {
-		private _veh = createVehicle [selectRandom ("helis_transport" call AS_AAFarsenal_fnc_valid), position _building, [],0, "CAN_COLLIDE"];
-		_veh setDir (getDir _building);
+		private _vehType = selectRandom ("helis_transport" call AS_AAFarsenal_fnc_valid);
+	  private _veh = [_vehType, position _building, getDir _building, "CAN_COLLIDE"] call AS_fnc_createEmptyvehicle;
 		_vehicles pushback _veh;
+
+		([_veh, _side, "pilot"] call AS_fnc_createVehicleGroup) params ["_pilotGroup", "_units"];
+
+		private _patrolMarker = [_pilotGroup, _veh, [([["base", "airfield"], "AAF"] call AS_location_fnc_TS) + "spawnCSAT", _posicion] call bis_fnc_nearestPosition, _size*0.5] call AS_tactics_fnc_crew_sentry; //TODO figure a way if situation is such that there's no aaf baeses/airfield?
+
+		_groups pushback _pilotGroup;
+		_markers pushback _patrolMarker;
+		//Soldiers are added later, to avoid double init in location spawn
 	};
-
-
 
 } forEach _buildings;
 
-[_soldiers, _vehicles]
+[_soldiers, _vehicles, _groups, _markers]

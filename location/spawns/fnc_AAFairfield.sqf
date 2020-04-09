@@ -74,10 +74,16 @@ private _fnc_spawn = {
 
 	//Populate mil buildings and add choppers to pads
 
-	([_location, "AAF", _grupo, true] call AS_fnc_populateMilBuildings) params ["_gunners2", "_vehicles2"];
+	([_location, "AAF", _grupo, true] call AS_fnc_populateMilBuildings) params ["_gunners2", "_vehicles2", "_groups2", "_markers2"];
 	{[_x, false] call AS_fnc_initUnitAAF} forEach _gunners2;
 	_soldados append _gunners2;
 	_vehiculos append _vehicles2;
+	_grupos append _groups2;
+	_markers append _markers2;
+
+	{
+		_soldados append (units _x);
+	} foreach _groups2;
 
 	// spawn 4 patrols
 	// _mrk => to be deleted at the end
