@@ -41,7 +41,7 @@ private _fnc_spawn = {
 		private _prisioners = 5 + round random 10;
 
 		for "_i" from 1 to _prisioners do {
-			private _unit = ["Survivor", [_position, 5, random 360] call BIS_Fnc_relPos, _grpPOW] call AS_fnc_spawnFIAUnit;
+			private _unit = ["Survivor", [_position, 5, random 360] call BIS_Fnc_relPos, _grpPOW, false, [], 0] call AS_fnc_spawnFIAUnit;
 			_unit call AS_fnc_initUnitSurvivor;
 			[_unit, "prisionero"] remoteExec ["AS_fnc_addaction", [0, -2] select isDedicated];
 		};
@@ -72,7 +72,7 @@ private _fnc_spawn = {
 
 		private _num = ((count _house_positions)/2) min 8; //Note: this edited so there's at least 2 positions per refugee
 		for "_i" from 0 to _num - 1 do {
-			private _unit = ["Survivor", _house_positions select _i, _grpPOW] call AS_fnc_spawnFIAUnit;
+			private _unit = ["Survivor", _house_positions select _i, _grpPOW, false, [], 0] call AS_fnc_spawnFIAUnit;
 			_unit call AS_fnc_initUnitSurvivor;
 			[_unit, "refugiado"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		};

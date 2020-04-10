@@ -115,3 +115,7 @@ leader _grupo assignAsDriver _vehicle;
 } forEach units _grupo;
 hint "Vehicle purchased for the squad";
 petros directSay "SentGenBaseAS_fnc_unlockVehicle";
+
+//This to activate target sharing in UPSMON and between garrison groups
+
+[leader _grupo, "fia_hq", "NOWP3", "NOVEH2"] spawn UPSMON; //FIA HQ there just to not throw error

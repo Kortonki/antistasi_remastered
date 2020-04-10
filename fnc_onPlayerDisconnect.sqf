@@ -99,6 +99,7 @@ params ["_group", "_units", "_text", "_unit"];
 		} else {
 			AS_commander hcSetGroup [_group];
 			_group setVariable ["isHCgroup", true, true];
+			[leader _group, "fia_hq", "NOWP3", "NOVEH2"] spawn UPSMON; //_location passed as patrolmarker for upsmon to work: with nowp3 it won't be used
 		};
 	};
 

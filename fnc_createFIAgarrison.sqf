@@ -60,6 +60,7 @@ _grupo setGroupId [format ["Garr_%1_%2_%3", _location, floor (diag_tickTime), co
 		_grupo = createGroup ("FIA" call AS_fnc_getFactionSide);
 		_grupos pushBack _grupo;
 		_grupo setGroupId [format ["Garr_%1_%2_%3", _location, floor (diag_tickTime), count _grupos]];
+
 	};
 } forEach _garrison;
 
@@ -85,17 +86,18 @@ _patrolMarker setMarkerShape "ELLIPSE";
 _patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;
 
-
-{
-	[leader _x, _patrolMarker, _behaviour,"SPAWNED","RANDOM","NOVEH","NOFOLLOW","LIMITED"] spawn UPSMON; //Changed NOVEH2 to NOVEH to allow manning of vehicles in combat
-	_x setcombatMode _combatMode;
-} forEach _grupos;
-
 if !(isNull _grupoMort) then {
 	_grupos pushBack _grupoMort;
 };
 if !(isNull _grupoEst) then {
 	_grupos pushBack _grupoEst;
 };
+
+//this moved from above to here to init upsmon for statics as well (target sharing)
+
+{
+	[leader _x, _patrolMarker, _behaviour,"SPAWNED","RANDOM","NOVEH","NOFOLLOW","LIMITED"] spawn UPSMON; //Changed NOVEH2 to NOVEH to allow manning of vehicles in combat
+	_x setcombatMode _combatMode;
+} forEach _grupos;
 
 [_soldados, _grupos, _patrolMarker]

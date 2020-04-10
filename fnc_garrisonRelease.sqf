@@ -47,7 +47,8 @@ if (isPlayer AS_commander) then {
 };
 
 
-_group setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes
+
+
 
 //Remove new HC squad from the garrison and the spawn but preserve NATO soldiers in the spawn
 
@@ -60,3 +61,10 @@ private _locName = text (nearestLocation [_location call AS_location_fnc_positio
 
 private _text = format ["%1 near 2% garrison is now under your command", _locType, _locName];
 [leader _group, "sideChat", _text] call AS_fnc_localCommunication;
+
+[_group,{_this setvariable ["UPSMON_NOWP", 3]}] remoteExec ["call", groupowner _group]; //This will prevent UPSMON for creating waypoints for HC squad, target sharing remains. TODO: consider NOVEH2 parameter here
+
+/*_group setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes
+sleep 20;
+[leader _group, _location, "NOWP3", "NOVEH2"] spawn UPSMON; //_location passed as patrolmarker for upsmon to work: with nowp3 it won't be used
+*/

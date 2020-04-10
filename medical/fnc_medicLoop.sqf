@@ -1,7 +1,7 @@
 params ["_unit"];
 private _wasUnconscious = false;
 while {alive _unit} do {
-    sleep 2;
+    sleep AS_spawnlooptime*2;
 
 
 
@@ -17,14 +17,18 @@ while {alive _unit} do {
         _wasUnconscious = true;
     };
 
-    //This check added for rest of the medic assigning stuff when using ACE. Newest ace seems to have some kind of medical AI
-    if (not(hasACEmedical)) then {
+    //below is not needed for non-ace: clearing assigns is done via heal_action
+
+      if (hasACEmedical) then {
 
         private _medic = (_unit call AS_medical_fnc_getAssignedMedic);
         if (not isNull _medic and {not alive _medic or _medic call AS_medical_fnc_isUnconscious}) then {
+
             _unit setVariable ["ace_medical_ai_assignedMedic", objNull];
             _medic setVariable ["ace_medical_ai_healQueue", []];
         };
+      };
+
 
         if (_isUnconscious and {isNull (_unit call AS_medical_fnc_getAssignedMedic)}) then {
             // Choose a medic.
@@ -54,22 +58,25 @@ while {alive _unit} do {
                   _medic = _x;
                   _bestDistance = _x distance2D _unit;
                 };
-              } foreach (allUnits select {alive _x and {side _x == side _unit and {_x distance2D _unit < 50}}});
+              } foreach (allUnits select {alive _x and {side (group _x) == side (group _unit) and {_x distance2D _unit < 50}}});
             };
 
             if not isNull _medic then {
                 [_medic, _unit] call AS_medical_fnc_healUnit;
             };
         };
-        if _isUnconscious then {
-            _unit setHit ["body",((_unit getHit "body") + 0.0005)];  //Bleedout, test & tweak
-              if (_unit call AS_medical_fnc_isHealed) then {
-                  sleep (5 + random 15);
 
-                  if (([_unit] call AS_medical_fnc_isUnconscious)) then {[_unit, false] call AS_medical_fnc_setUnconscious;};
+        if (not(hasACEmedical)) then {
+
+          if _isUnconscious then {
+              _unit setHit ["body",((_unit getHit "body") + 0.0005)];  //Bleedout, test & tweak
+                if (_unit call AS_medical_fnc_isHealed) then {
+                    sleep (5 + random 15);
+
+                    if (([_unit] call AS_medical_fnc_isUnconscious)) then {[_unit, false] call AS_medical_fnc_setUnconscious;};
 
 
-              };
+                };
 
            /*else {
                 // Commented out for now, to work with newest ace med

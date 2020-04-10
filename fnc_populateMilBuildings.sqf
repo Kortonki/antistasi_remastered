@@ -79,7 +79,7 @@ private _markers = [];
 	};
 	if (_addChopper and (_buildingType == "Land_HelipadSquare_F")) then {
 		private _vehType = selectRandom ("helis_transport" call AS_AAFarsenal_fnc_valid);
-	  private _veh = [_vehType, position _building, getDir _building, "CAN_COLLIDE"] call AS_fnc_createEmptyvehicle;
+	  private _veh = [_vehType, position _building, _side, getDir _building, "CAN_COLLIDE"] call AS_fnc_createEmptyvehicle;
 		_vehicles pushback _veh;
 
 		([_veh, _side, "pilot"] call AS_fnc_createVehicleGroup) params ["_pilotGroup", "_units"];

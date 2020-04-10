@@ -11,7 +11,7 @@ if _isCommander then {_default_score = 25}; // so the commander does not lose th
 private _group = createGroup ("FIA" call AS_fnc_getFactionSide);
 
 private _old_player = player;
-private _position = position player;
+private _position = ((getMarkerPos "FIA_HQ") findEmptyPosition [1, 50, "C_Offroad_01_F"]);
 private _compromised = player getvariable ["compromised", 0];
 private _punish = player getVariable ["punish", 0];
 
@@ -31,7 +31,7 @@ _unit call AS_fnc_equipDefault;
 //Make player undercover on respawn (ability to escape conquered hq for example)
 _unit forceAddUniform (selectRandom CIVUniforms);
 //sleep for good measure to account for uniform change
-sleep 1;
+waitUntil {player == _unit};
 [false] spawn AS_fnc_activateUndercover;
 
 
@@ -114,6 +114,8 @@ if (_oldFate == "delete") then {
 if (_oldFate == "kill") then {
     {[_x] joinsilent group player} forEach (units group _old_player);
     group player selectLeader player;
+		[player, {(group _this) setgroupOwner (owner _this)}] remoteExec ["call", 2]; //This here an attempt to fix bug where arma crashes when player team members enter vehicles after player death or disconnect
+		deletegroup (group _old_player);
 		deleteVehicle _old_player;
 };
 
