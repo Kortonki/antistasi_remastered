@@ -84,7 +84,7 @@ private _markers = [];
 
 		([_veh, _side, "pilot"] call AS_fnc_createVehicleGroup) params ["_pilotGroup", "_units"];
 
-		private _patrolMarker = [_pilotGroup, _veh, [([["base", "airfield"], "AAF"] call AS_location_fnc_TS) + "spawnCSAT", _posicion] call bis_fnc_nearestPosition, _size*0.5] call AS_tactics_fnc_crew_sentry; //TODO figure a way if situation is such that there's no aaf baeses/airfield?
+		private _patrolMarker = [_pilotGroup, _veh, [([["base", "airfield"], "AAF"] call AS_location_fnc_TS) + ["spawnCSAT"], _posicion] call bis_fnc_nearestPosition, _size*0.5] call AS_tactics_fnc_crew_sentry; //TODO figure a way if situation is such that there's no aaf baeses/airfield?
 
 		_groups pushback _pilotGroup;
 		_markers pushback _patrolMarker;

@@ -32,7 +32,7 @@ if (_resourcesFIA < _cost) exitWith {hint format ["You do not have enough money 
 
 [- _costHR, - _cost] remoteExec ["AS_fnc_changeFIAmoney",2];
 
-private _pos = getMarkerPos "FIA_HQ";
+private _pos = getPos vehiclePad;
 
 private _tam = 10;
 private ["_roads", "_road"];

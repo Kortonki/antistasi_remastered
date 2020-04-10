@@ -25,7 +25,8 @@ while {alive _unit} do {
         if (not isNull _medic and {not alive _medic or _medic call AS_medical_fnc_isUnconscious}) then {
 
             _unit setVariable ["ace_medical_ai_assignedMedic", objNull];
-            _medic setVariable ["ace_medical_ai_healQueue", []];
+            //_medic setVariable ["ace_medical_ai_healQueue", [], true];
+            [[_medic], {params ["_medic"]; _medic setVariable ["ace_medical_ai_healQueue", []];}] remoteExec ["call", _medic]; //Do it where medic is local
         };
       };
 

@@ -88,7 +88,7 @@ if AS_S("blockCSAT") then {
 	_hayCSAT = false;
 };
 
-if ((_base == "") and {(_aeropuerto == "") and {(!_hayCSAT)}}) exitWith {
+if ((_base == "") and {(_aeropuerto == "") and {!(_hayCSAT)}}) exitWith {
 	private _message = "no bases close to attack";
 	diag_log (_debug_prefix + _message);
 };  // if no way to create patrol, exit.
@@ -135,7 +135,7 @@ if (_base != "") then {
 };
 
 if ((_base == "") and (_aeropuerto == "") and (!_hayCSAT)) exitWith {
-	private _message = "threat too high or no arsenal";
+	private _message = format ["threat too high or no arsenal. Threat: %1, hasCSAT: %2", _threatEval, _hayCSAT];
 	diag_log (_debug_prefix + _message);
 };
 
