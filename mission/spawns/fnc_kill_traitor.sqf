@@ -24,8 +24,17 @@ private _fnc_initialize = {
 	private _tskDesc = format [localize "STR_tskDesc_ASSTraitor",
 		[_location] call AS_fnc_location_name,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4
+		numberToDate [2035,dateToNumber _fechalim] select 4,
+		["CSAT", "shortname"] call AS_fnc_getEntity
 	];
+
+	//Check all FIA locations now for possible mission failure. Check hq pos now and compare it to detect if it has changed
+
+	private _possibleLocations = ("FIA" call AS_location_fnc_S) select {(_x call AS_location_fnc_type) in ["watchpost", "roadblock", "camp", "fia_hq"]};
+	private _fiaHQpos = "fia_hq" call AS_location_fnc_position;
+
+	[_mission, "possibleLocations", _possibleLocations] call AS_spawn_fnc_set;
+	[_mission, "fiaHQpos", _fiaHQpos] call AS_spawn_fnc_set;
 
 	[_mission, "house", _casa] call AS_spawn_fnc_set;
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
@@ -94,7 +103,7 @@ private _fnc_spawn = {
 	if (random 10 < 2.5) then {
 		[_grupo] call AS_fnc_spawnDog;
 	};
-	[leader _grupo, _mrk, "SAFE","SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON;
+	[leader _grupo, _mrk, "SAFE","SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
 	{[_x, false] call AS_fnc_initUnitAAF} forEach units _grupo;
 
 	[_mission, "target", _target] call AS_spawn_fnc_set;
@@ -106,27 +115,29 @@ private _fnc_wait = {
 	params ["_mission"];
 	private _max_date = [_mission, "max_date"] call AS_spawn_fnc_get;
 	private _target = [_mission, "target"] call AS_spawn_fnc_get;
+	private _possibleLocations = [_mission, "possibleLocations"] call AS_spawn_fnc_get;
+	private _fiaHQpos = [_mission, "fiaHQpos"] call AS_spawn_fnc_get;
 
 	private _fnc_missionFailedCondition = {dateToNumber date > _max_date};
 
 	private _fnc_missionSuccessfulCondition = {not alive _target};
 
-	waitUntil {sleep 5; ({_target knowsAbout _x > 1.4} count ([500, _target, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0) or _fnc_missionFailedCondition or _fnc_missionSuccessfulCondition};
+	waitUntil {sleep 5; ({not (captive _x) and {_target knowsAbout _x > 1.4}} count ([500, _target, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0) or _fnc_missionFailedCondition or _fnc_missionSuccessfulCondition};
 	if (call _fnc_missionFailedCondition) exitWith {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		_mission remoteExec ["AS_mission_fnc_fail", 2];
+		[_mission, [_possibleLocations, _fiaHQpos]] remoteExec ["AS_mission_fnc_fail", 2];
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
 		[_mission, "state_index", 3] call AS_spawn_fnc_set;
 	};
 	if (call _fnc_missionSuccessfulCondition) exitWith {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		_mission remoteExec ["AS_mission_fnc_success", 2];
+		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
+		//EDIT changed to 4 so missin_fnc_fail or success isn't run twice
 		[_mission, "state_index", 3] call AS_spawn_fnc_set;
 	};
-	([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 };
 
 private _fnc_run = {
@@ -140,29 +151,35 @@ private _fnc_run = {
 	private _arraybases = ["base", "AAF"] call AS_location_fnc_TS;
 	private _base = [_arraybases, _position] call BIS_Fnc_nearestPosition;
 	private _posBase = _base call AS_location_fnc_position;
+	private _possibleLocations = [_mission, "possibleLocations"] call AS_spawn_fnc_get;
+	private _fiaHQpos = [_mission, "fiaHQpos"] call AS_spawn_fnc_get;
 
-	{_x enableAI "MOVE"} forEach units group _target;
+	{
+		_x enableAI "MOVE";
+		_x setUnitPos "AUTO";
+	} forEach units group _target;
 	_target assignAsDriver _getAwayVeh;
 	[_target] orderGetin true;
 	private _wp0 = (group _target) addWaypoint [position _getAwayVeh, 0];
 	_wp0 setWaypointType "GETIN";
 	private _wp1 = (group _target) addWaypoint [_posBase,1];
 	_wp1 setWaypointType "MOVE";
-	_wp1 setWaypointBehaviour "CARELESS";
+	_wp1 setWaypointBehaviour "SAFE";
 	_wp1 setWaypointSpeed "FULL";
 
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+		[_mission, [_possibleLocations, _fiaHQpos]] remoteExec ["AS_mission_fnc_fail", 2];
 	};
 
-	private _fnc_missionFailedCondition = {dateToNumber date > _max_date or _target distance _posBase < 100};
+	private _fnc_missionFailedCondition = {dateToNumber date > _max_date or _target distance2D _posBase < 100};
 
 	private _fnc_missionSuccessfulCondition = {not alive _target};
 
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
+		["traitorsKilled", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;

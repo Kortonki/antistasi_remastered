@@ -42,7 +42,7 @@ if (_unpreparedVehicles) exitWith {
 
 {
 		if ([_x, nil] call AS_fnc_enemiesNearby) exitWith {_enemiesNearby = true};
-} foreach units _group;
+} foreach ((units _group) select {alive _x and {!(_x call AS_medical_fnc_isUnconscious) and {vehicle _x == _x and {_x distance2D _leader < 100}}}});;
 
 if (_enemiesNearby) exitWith {Hint "You cannot use fast travel with enemies near the group fast traveling"};
 
@@ -94,8 +94,9 @@ if (!_isHCfastTravel) then {
 	sleep 5; // wait some time
 };
 
+//Force spawn the location for a while to start the process.
 private _forcedSpawn = false;
-if !(_location call AS_location_fnc_forced_spawned) then {
+if !(_location call AS_location_fnc_spawned) then {
 	_forcedSpawn = true;
 	[_location,true] call AS_location_fnc_spawn;
 	sleep 5; // wait for spawn of location
@@ -112,9 +113,9 @@ if !(_location call AS_location_fnc_forced_spawned) then {
 			if (isPlayer leader _unit) then {_unit setVariable ["rearming",false]};
 			_unit doWatch objNull;
 			_unit doFollow leader _unit;
-};
+		};
 
-} forEach ((units _group) select {vehicle _x == _x and {_x distance2D _leader < 100}}); //Move only units who are  on foot near the leader
+} forEach ((units _group) select {alive _x and {!(_x call AS_medical_fnc_isUnconscious) and {vehicle _x == _x and {_x distance2D _leader < 100}}}}); //Move only units who are  on foot near the leader
 
 if (!_isHCfastTravel) then {
 	disableUserInput false;
@@ -123,6 +124,7 @@ if (!_isHCfastTravel) then {
 	hint format ["Group %1 arrived to destination",groupID _group]
 };
 
+//This toggles the forced spawn parameter. Normal spawn systems have taken over.
 if (_forcedSpawn) then {
 	[_location,true] call AS_location_fnc_despawn;
 };

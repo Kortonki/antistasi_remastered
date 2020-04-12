@@ -2,26 +2,37 @@
 AS_SERVER_ONLY("AS_database_fnc_persistents_start");
 
 // modify map items consequent of the persistents
+
+//First clear radiotower markers:
+
 {
-    private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;
+  deleteMarker _x;
+} foreach ((allMapMarkers) select {_x find "radioTower" == 0});
+
+private _towerIndex = 0;
+{
+    private _antenna = (nearestObjects [_x, AS_antenasTypes, 50]) select 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 1;
 
-    private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
+    private _marker = createMarker [format ["radioTower_%1", _towerIndex], _x];
+    _towerIndex = _towerIndex + 1;
     _marker setmarkerType "hd_destroy";
+    _marker setMarkerColor "ColorRed";
     _marker setMarkerText "Radio Tower";
-    _antenna setVariable ["marker", _marker]; //This so marker can be manipulated in destruction
+
 } forEach AS_P("antenasPos_dead");
 {
-    private _antenna = (nearestObjects [_x, AS_antenasTypes, 25]) select 0;
+    private _antenna = (nearestObjects [_x, AS_antenasTypes, 50]) select 0;
     _antenna removeAllEventHandlers "Killed";
     _antenna setDamage 0;
+
+    private _marker2 = createMarker [format ["radioTower_%1", _towerIndex], _x];
+    _towerIndex = _towerIndex + 1;
+    _marker2 setmarkerType "loc_Transmitter";
+    _marker2 setMarkerText "Radio Tower";
     _antenna addEventHandler ["Killed", AS_fnc_antennaKilledEH];
 
-    private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
-    _marker setmarkerType "loc_Transmitter";
-    _marker setMarkerText "Radio Tower";
-    _antenna setVariable ["marker", _marker]; //This so marker can be manipulated in destruction
 } forEach AS_P("antenasPos_alive");
 
 {
@@ -48,9 +59,9 @@ AS_SERVER_ONLY("AS_database_fnc_persistents_start");
 [] spawn {
    sleep 25;
    {
-    [[_x], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
+    [[_x, "", 0, 0, true], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
    } forEach AS_P("patrollingLocations");
 {
-    [[_x], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
+    [[_x, "", 0, 0, true], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
    } forEach AS_P("patrollingPositions");
 };

@@ -12,13 +12,13 @@ private _fnc_initialize = {
 	private _tiempolim = _support;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 
-	private _nombreorig = format ["the %1 Carrier", (["NATO", "name"] call AS_fnc_getEntity)];
+	private _nombreorig = format ["the %1 Carrier", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	if (_origin != "spawnNATO") then {
 		_nombreorig = [_origin] call AS_fnc_location_name
 	};
 
-	private _tskTitle = (["NATO", "name"] call AS_fnc_getEntity) + " CAS";
-	private _tskDesc = format [(["NATO", "name"] call AS_fnc_getEntity) + " is providing air support from %1. They will be under our command in 30s and until %2:%3.",
+	private _tskTitle = (["NATO", "shortname"] call AS_fnc_getEntity) + " CAS";
+	private _tskDesc = format [(["NATO", "shortname"] call AS_fnc_getEntity) + " is providing air support from %1. They will be under our command in 30s and until %2:%3.",
 		_nombreorig,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
 		numberToDate [2035,dateToNumber _fechalim] select 4
@@ -49,20 +49,17 @@ private _fnc_spawn = {
 		};
 	};
 
+	private _crew = "pilot";
+
 	private _grupoHeli = createGroup ("NATO" call AS_fnc_getFactionSide);
-	_grupoHeli setGroupId ["CAS"];
+	_grupoHeli setGroupId (format ["NATO_CAS_%1", round(diag_ticktime)]);
 	_groups pushBack _grupoHeli;
 
 	for "_i" from 1 to 3 do {
-		private _helifn = [_position, 0, _tipoVeh, ("NATO" call AS_fnc_getFactionSide)] call bis_fnc_spawnvehicle;
-		private _heli = _helifn select 0;
+		([_tipoVeh, _position, 0, "NATO", _crew, 200, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoheliTmp"];
 		_vehicles pushBack _heli;
-		private _heliCrew = _helifn select 1;
-		private _grupoheliTmp = _helifn select 2;
-		{[_x] spawn AS_fnc_initUnitNATO; [_x] join _grupoHeli} forEach _heliCrew;
+		{[_x] join _grupoHeli} forEach (units _grupoheliTmp);
 		deleteGroup _grupoheliTmp;
-		[_heli, "NATO"] call AS_fnc_initVehicle;
-		_heli setPosATL [getPosATL _heli select 0, getPosATL _heli select 1, 100];
 		_heli flyInHeight 300;
 		sleep 10;
 	};

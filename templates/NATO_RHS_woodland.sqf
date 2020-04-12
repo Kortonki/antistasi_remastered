@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str west] call DICT_fnc_set;
 [_dict, "roles", ["state", "foreign"]] call DICT_fnc_set;
 [_dict, "name", "USMC Woodland camo (RHS)"] call DICT_fnc_set;
+[_dict, "shortname", "USMC"] call DICT_fnc_set;
 [_dict, "flag", "Flag_US_F"] call DICT_fnc_set;
 [_dict, "flag_marker", "rhs_flag_USA"] call DICT_fnc_set;
 
@@ -17,8 +18,12 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "boats", ["B_Boat_Armed_01_minigun_F"]] call DICT_fnc_set;
 
 // used in roadblock mission
-[_dict, "trucks", ["rhsusf_M1083A1P2_WD_fmtv_usarmy","rhsusf_M1083A1P2_B_WD_fmtv_usarmy","rhsusf_M1083A1P2_WD_flatbed_fmtv_usarmy","rhsusf_M1083A1P2_B_WD_flatbed_fmtv_usarmy","rhsusf_M1078A1P2_WD_fmtv_usarmy","rhsusf_M1078A1P2_WD_flatbed_fmtv_usarmy"]] call DICT_fnc_set;
-[_dict, "apcs", ["rhsusf_m113_usarmy_unarmed","rhsusf_m113_usarmy","rhsusf_m113_usarmy_M240","rhsusf_m113_usarmy_MK19","RHS_M2A2_wd","RHS_M2A2_BUSKI_WD","RHS_M2A3_wd","RHS_M2A3_BUSKI_wd","RHS_M2A3_BUSKIII_wd"]] call DICT_fnc_set;
+[_dict, "trucks", ["rhsusf_M1083A1P2_WD_fmtv_usarmy","rhsusf_M1083A1P2_B_WD_fmtv_usarmy","rhsusf_M1078A1P2_WD_fmtv_usarmy"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
+[_dict, "apcs", ["rhsusf_m113_usarmy_unarmed","rhsusf_m113_usarmy","rhsusf_m113_usarmy_M240","rhsusf_m113_usarmy_MK19","RHS_M2A2_wd","RHS_M2A2_BUSKI_WD"]] call DICT_fnc_set;
 
 // used in traitor mission
 [_dict, "cars_transport", ["rhsusf_m1025_w_s","rhsusf_m1043_w_s","rhsusf_m998_w_s_2dr_halftop",
@@ -81,6 +86,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["rhsusf_mine_m14"]] call DICT_fnc_set;

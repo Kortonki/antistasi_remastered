@@ -41,6 +41,8 @@ class AS_location {
         FNC(location,forced_spawned);
         FNC(location,respawnGarrison);
         FNC(location,side);
+        FNC(location,combatMode);
+        FNC(location,behaviour);
         // Iterators
         FNC(location,all);
         FNC(location,nearest);
@@ -51,6 +53,10 @@ class AS_location {
         FNC(location,knownLocations);
         FNC(location,reveal);
         FNC(location,revealLoc);
+        FNC(location,vehicles);
+        FNC(location,vehicleClasses);
+        FNC(location,vehicleAmount);
+        FNC(location,vehicleParking);
         // auxiliar
         FNC(location,getNameSize);
 

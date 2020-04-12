@@ -1,5 +1,6 @@
 #include "../../macros.hpp"
 
+//THIS MISSION OBSOLOTE: NOT AVAILABLE, NEEDS DEVELOPMENT FIRST
 private _fnc_initialize = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
@@ -20,7 +21,7 @@ private _fnc_initialize = {
 		_location,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
 		numberToDate [2035,dateToNumber _fechalim] select 4,
-		(["AAF", "name"] call AS_fnc_getEntity)
+		(["AAF", "shortname"] call AS_fnc_getEntity)
 	];
 
 	[_mission, [_taskDesc,_taskTitle,_mrkfin], _position, "Interact"] call AS_mission_spawn_fnc_saveTask;
@@ -65,7 +66,7 @@ private _fnc_spawn = {
 	private _tipoGrupo = [["AAF", "squads"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 	private _group = [_bankPosition, "AAF" call AS_fnc_getFactionSide, _tipogrupo] call BIS_Fnc_spawnGroup;
 	sleep 1;
-	[leader _group, _mrk, "SAFE","SPAWNED", "NOVEH2", "FORTIFY"] spawn UPSMON;
+	[leader _group, _mrk, "SAFE","SPAWNED", "NOVEH", "FORTIFY"] spawn UPSMON;
 	{[_x, false] call AS_fnc_initUnitAAF} forEach units _group;
 
 	[_mission, "resources", [_task, [_group], [_truck], _markers]] call AS_spawn_fnc_set;

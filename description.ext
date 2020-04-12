@@ -505,6 +505,7 @@ class cfgFunctions {
     #include "fia_arsenal\cfgFunctions.hpp"
     #include "fuel\cfgFunctions.hpp"
     #include "weather\cfgFunctions.hpp"
+    #include "stats\cfgFunctions.hpp"
 
     #include "cfgFunctions.hpp"
 };

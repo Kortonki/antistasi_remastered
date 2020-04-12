@@ -59,6 +59,11 @@ _unit addEventHandler ["killed", {
 	params ["_unit"];
 	private _vehicle = vehicle _unit;
 	//_unit removeAllEventHandlers "HandleDamage"; //These are no longer needed //IMPORTANT: this also removes "killed" eventhNdlers!
+	//ACE might make the killed eventhandler fire twice. Prevent it.
+	if (!(isnil{_unit getVariable "k_v"})) exitWith {
+		diag_log format ["[AS] initUnitFIA: Killed eventhandler fired twice. Killed %1", _unit];
+	};
+	_unit setVariable ["k_v", true, false];
 
 		if (_vehicle != _unit and {!(_vehicle isKindOf "StaticWeapon")}) then {
 			([_unit, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_magazineRemains"];
@@ -66,6 +71,8 @@ _unit addEventHandler ["killed", {
 			[_vehicle, _magazineRemains] call AS_fnc_addMagazineRemains;
 	    _unit call AS_fnc_emptyUnit;
 		};
+
+
 	}];
 
 _unit allowFleeing 0;	//Experminet with this: way to make garrison stay in area,or detect fleeing and do things like disband etc.
@@ -73,11 +80,29 @@ _unit allowFleeing 0;	//Experminet with this: way to make garrison stay in area,
 if (isPlayer(leader _unit)) then {
 	if (captive player and {!(captive _unit)}) then {[_unit] remoteExec ["AS_fnc_activateUndercoverAI", _unit]};
 	_unit addEventHandler ["killed", {
-		params ["_unit"];
+		params ["_unit", "_killer"];
+
+		//ACE might make the killed eventhandler fire twice. Prevent it.
+		if (!(isnil{_unit getVariable "k"})) exitWith {
+			diag_log format ["[AS] initUnitFIA: Killed eventhandler fired twice. Killed %1", _unit];
+		};
+		_unit setVariable ["k", true, false];
+
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
 		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
+		["death"] remoteExec ["fnc_be_XP", 2];
 		_unit setVariable ["BLUFORSpawn",nil,true];
+
+		//Stats
+
+		["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
+		if (isPlayer _killer) then {
+			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "friendlyKills", 1] call AS_players_fnc_change;
+		};
+
 	}];
 
 	_unit setVariable ["rearming",false];
@@ -116,13 +141,25 @@ if (isPlayer(leader _unit)) then {
 } else {
 	_unit addEventHandler ["killed", {
 		params ["_unit", "_killer"];
+
+		//ACE might make the killed eventhandler fire twice. Prevent it.
+		if (!(isnil{_unit getVariable "k"})) exitWith {
+			diag_log format ["[AS] initUnitFIA: Killed eventhandler fired twice. Killed %1", _unit];
+		};
+		_unit setVariable ["k", true, false];
+
 		[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 
 		private _group = group _unit;
 
+		//Stats
+
+		["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
 		// player team-kill
 		if (isPlayer _killer) then {
-			[player, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "friendlyKills", 1] call AS_players_fnc_change;
 		};
 		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 		["death"] remoteExec ["fnc_be_XP", 2];
@@ -157,6 +194,8 @@ _unit addEventhandler ["handleHeal", {
 
 		private _return = false; //Use normal heal if not healing a civilian
 		if ((_unit call AS_fnc_getSide) isEqualTo "CIV") then {
+
+			["civHealed", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
 
 				//Maximum support from healing single CIV = 1.5 < 2 (penalty of wounding a CIV)
 				//Thus, no possibility to exploit

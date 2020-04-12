@@ -38,8 +38,8 @@ switch (_type) do {
     case "watchpost": {_markerType = "loc_ruin"; _locationName = "Watchpost"};
     case "camp": {_markerType = "hd_flag"; _locationName = ([_location,"name"] call AS_location_fnc_get)};
     case "seaport": {_markerType = "b_naval"; _locationName = "Sea Port"};
-    case "hill": {_markerType = "loc_rock"; _locationName = "Hill"};
-    case "hillAA": {_markerType = "loc_rock"; _locationName = "Hill"};
+    case "hill": {_markerType = "loc_ruin"; _locationName = "Hill"};
+    case "hillAA": {_markerType = "loc_ruin"; _locationName = "AA"};
     case "minefield": {_markerType = "hd_warning"; _locationName = "Minefield"};
     default {diag_log format ["[AS] Error: location_updateMarker with undefined type '%1'", _type]};
 };
@@ -75,7 +75,7 @@ if (_side == "AAF") then {
     } else {
       _mrk setMarkerText "";
     };
-    if (_type in ["roadblock","hill","hillAA"]) then {
+    if (_type == "roadblock") then {
         _mrk setMarkerAlpha 0;
     };
     if (_type == "minefield") then {
@@ -85,4 +85,17 @@ if (_side == "AAF") then {
     };
     _mrk setMarkerColor "ColorGUER";
     // AAF does not show names
+};
+
+if (_side == "CSAT") then {
+  _mrk setMarkerColor "ColorEAST";
+
+  if (_type == "hillAA") then {
+    _mrk setMarkerText format ["%1", _locationName];
+  };
+
+  if (_type == "hill") then {
+    _mrk setMarkerText format ["%1", _locationName];
+  };
+
 };

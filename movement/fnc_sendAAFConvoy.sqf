@@ -34,12 +34,13 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
       {
         if (_x find _loc != -1) exitwith {_mission = _x};
 
-      } foreach (_missions select {_x find "supplies" != -1 or _x find "money" != -1});
+      } foreach (_missions select {_x find "supplies" != -1});
       if (_mission != "") exitWith  {};
 
     } foreach (["city", "FIA"] call AS_location_fnc_TS);
 
-    if (_mission == "") then {_mission = selectRandom _missions;};
+    //random component added to not always send to FIA location first
+    if (_mission == "" or (random 1 > 0.75)) then {_mission = selectRandom _missions;};
     _mission call AS_mission_fnc_activate;
     diag_log "[AS] sendAAFConvoy: Valid convoy mission found, starting mission";
   } else {

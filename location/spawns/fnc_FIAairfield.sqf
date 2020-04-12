@@ -40,7 +40,7 @@ private _fnc_spawn = {
 			_pos = [_pos, 20,_ang] call BIS_fnc_relPos;
 			sleep 1;
 			};
-		[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH2"] spawn UPSMON;
+		[leader _grupo, _location, "SAFE","SPAWNED","NOFOLLOW","NOVEH"] spawn UPSMON;
 	};
 
 	// create flag
@@ -89,7 +89,7 @@ private _fnc_spawn = {
 		private _grupo = [_pos, ("NATO" call AS_fnc_getFactionSide), [["NATO", "squads"] call AS_fnc_getEntity, "NATO"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
 		_grupos pushBack _grupo;
 		{[_x] call AS_fnc_initUnitNATO; _soldados pushBack _x} forEach units _grupo;
-		[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH2", "NOFOLLOW"] spawn UPSMON;
+		[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH", "NOFOLLOW"] spawn UPSMON;
 		sleep 1;
 	};
 
@@ -105,6 +105,11 @@ private _fnc_spawn = {
 		_grupos pushBack _group2;
 		_markers pushback _patrolMarker2;
 
+	};
+
+	//Record first major involvement
+	if (isnil{["NATO_capAirfield_date"] call AS_stats_fnc_get}) then {
+		["NATO_capAirfield_date", date] call AS_stats_fnc_set;
 	};
 
 	// Create FIA garrison

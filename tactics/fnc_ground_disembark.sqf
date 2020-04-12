@@ -26,12 +26,12 @@ _wp2 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 
 
 //Failsafe if vehicle fucks up
-[_cargo_group, _safePosition, _crew_group] spawn {
+[_cargo_group, _safePosition, _crew_group, _destination] spawn {
 
-    params ["_group", "_safePosition", "_crew_group"];
+    params ["_group", "_safePosition", "_crew_group", "_destination"];
     private _leader = leader _group;
 
-    waitUntil {sleep 5; _leader = leader _group; vehicle _leader == _leader or {alive _x} count (units _group) == 0 or _leader distance2D _safePosition < 70};
+    waitUntil {sleep 5; _leader = leader _group; vehicle _leader == _leader or {alive _x} count (units _group) == 0 or _leader distance2D _safePosition < 70 or _leader distance2D _destination < 400};
     if ({alive _x} count units _group == 0) exitWith {};
 
     private _marker = _group getVariable "AS_patrol_marker";
@@ -48,7 +48,7 @@ _wp2 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
       [_x] allowGetin false;
       [_x] orderGetin false;
     } foreach units _group;
-    [_leader, _marker, "AWARE", "SPAWNED", "NOVEH2"] spawn UPSMON;
+    [_leader, _marker, "AWARE", "SPAWNED", "NOVEH"] spawn UPSMON;
     sleep 10;
     _crew_group setCurrentWaypoint [_crew_group, 2];
 

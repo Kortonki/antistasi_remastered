@@ -32,6 +32,7 @@ private _fnc_spawn = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
+	private _buildings = [_mission, "buildings"] call AS_spawn_fnc_get;
 
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
@@ -44,30 +45,43 @@ private _fnc_spawn = {
 	[0,-100] remoteExec ["AS_fnc_changeFIAMoney", 2];
 	private _crateType = "Land_WoodenCrate_01_F";
 
-	private _crate3 = createVehicle [_crateType, ("FIA_HQ" call AS_location_fnc_position), [], 0, "NONE"];
+	private _pos = (getMarkerPos "FIA_HQ") findEmptyPosition [1,50,_crateType];
+	if (!(isnull vehiclePad)) then  {_pos = getpos vehiclePad};
+
+	private _crate3 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate3, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-	_crate3 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "C_Offroad_01_F"], true];
+	_crate3 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate3 setVariable ["asCargo", false, true];
+	_crate3 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate3;
 
+	sleep 1;
 
-	private _crate2 = createVehicle [_crateType, ("FIA_HQ" call AS_location_fnc_position), [], 0, "NONE"];
+
+	private _crate2 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate2, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-	_crate2 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "C_Offroad_01_F"], true];
+	_crate2 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate2 setVariable ["asCargo", false, true];
+	_crate2 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate2;
 
-	private _crate1 = createVehicle [_crateType, ("FIA_HQ" call AS_location_fnc_position), [], 0, "NONE"];
+	sleep 1;
+
+	private _crate1 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate1, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-	_crate1 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "C_Offroad_01_F"], true];
+	_crate1 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
 	_crate1 setVariable ["asCargo", false, true];
+	_crate1 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate1;
 
+	//Commented out: No reason for AAF to know about the thing and send patrol?
+	/*
 		for "_i" from 0 to 1 do {
 		private _tipoGrupo = [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup;
 		private _grupo = [_position, "AAF" call AS_fnc_getFactionSide, _tipogrupo] call BIS_Fnc_spawnGroup;
 		[_grupo] call AS_fnc_spawnDog;
-		[leader _grupo, _location, "SAFE", "RANDOM", "SPAWNED","NOVEH2", "NOFOLLOW"] spawn UPSMON;
+
+		[leader _grupo, _location, "SAFE", "RANDOM", "SPAWNED", "NOFOLLOW"] spawn UPSMON;
 		_grupos pushBack _grupo;
 	};
 
@@ -76,10 +90,22 @@ private _fnc_spawn = {
 		{
 			[_x, false] call AS_fnc_initUnitAAF;
 		} forEach units _grp;
-	} forEach _grupos;
+	} forEach _grupos;*/
+
+	private _markers = [];
+	{
+		private _marker = createMarker [format ["%1_%2", _mission, _forEachIndex], position _x];
+		_marker setMarkerShape "ICON";
+		_marker setMarkerType "hd_dot";
+		_marker setMarkerText "Leaflet drop";
+		_marker setMarkerColor "ColorBlack";
+		_markers pushback _marker;
+		_x setvariable ["taskMarker", _marker, true];
+	} foreach _buildings;
+
 	[_mission, "crates", [_crate1, _crate2, _crate3]] call AS_spawn_fnc_set;
 	[_mission, "crateType", _crateType] call AS_spawn_fnc_set;
-	[_mission, "resources", [_task, _grupos, _vehicles, []]] call AS_spawn_fnc_set;
+	[_mission, "resources", [_task, _grupos, _vehicles, _markers]] call AS_spawn_fnc_set;
 };
 
 private _fnc_wait_arrival = {
@@ -94,7 +120,7 @@ private _fnc_wait_arrival = {
 	// wait until the vehicle enters the target area
 	waitUntil {sleep 5;
 		private _close = {
-			if (_x distance _position < 500) exitWith {true};
+			if (_x distance2D _position < 500) exitWith {true};
 			false
 		} foreach _crates;
 		_close or _fnc_missionFailedCondition
@@ -112,12 +138,13 @@ private _fnc_wait_arrival = {
 private _fnc_deliver = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
+	private _position = _location call AS_location_fnc_position;
 	private _crates = [_mission, "crates"] call AS_spawn_fnc_get;
 	private _crateType = [_mission, "crateType"] call AS_spawn_fnc_get;
 	private _max_date = [_mission, "max_date"] call AS_spawn_fnc_get;
 	private _currentDropCount = [_mission, "currentDrop"] call AS_spawn_fnc_get;
 	private _buildings = [_mission, "buildings"] call AS_spawn_fnc_get;
-	private _currentDrop = _buildings select _currentDropCount;
+	//private _currentDrop = _buildings select _currentDropCount;
 	private _resources = [_mission, "resources"] call AS_spawn_fnc_get;
 
 	// eye candy
@@ -134,10 +161,10 @@ private _fnc_deliver = {
 
 	// refresh task
 	private _tskDesc_drop = format [localize "STR_tskDesc_PRPamphlet_drop", [_location] call AS_fnc_location_name];
-	([_mission, "ASSIGNED", _tskDesc_drop, position _currentDrop] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
+	([_mission, "ASSIGNED", _tskDesc_drop, _position] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
 	// send patrol to the location
-	{
+	/*{
 		if (alive leader _x) then {
 			private _wp101 = _x addWaypoint [position _currentDrop, 20];
 			_wp101 setWaypointType "SAD";
@@ -145,7 +172,7 @@ private _fnc_deliver = {
 			_x setCombatMode "RED";
 			_x setCurrentWaypoint _wp101;
 		};
-	} forEach (_resources select 1);
+	} forEach (_resources select 1);*/
 
 	private _droppedCrate = objNull;
 
@@ -159,12 +186,34 @@ private _fnc_deliver = {
 
 	waitUntil {sleep 5;
 		private _close = {
-			if (_x distance (position _currentDrop) < 20 and !(_x getVariable ["asCargo", false])) exitWith {
-				_droppedCrate = _x;
-				true
-			};
+			private _crate = _x;
+
+			private _return = {
+
+				if (!(_crate getVariable ["asCargo", false]) and {_crate distance (position _x) < 20}) exitWith {
+					_droppedCrate = _crate;
+					_buildings = _buildings - [_x];
+
+					private _mrk = _x getvariable ["taskMarker", ""];
+					_mrk setMarkerColor "ColorRed";
+					_mrk setMarkerType "hd_destroy";
+
+					//Make close friendlies lose undercover
+					{
+						private _soldierFIA = _x;
+						if (captive _soldierFIA) then {
+							[_soldierFIA,false] remoteExec ["setCaptive",_soldierFIA];
+						};
+					} forEach ([300, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
+					true
+				};
+				false
+			} foreach _buildings;
+			if _return exitWith {true};
 			false
 		} foreach _crates;
+
+
 
 		_close or _fnc_missionFailedCondition
 	};
@@ -177,10 +226,29 @@ private _fnc_deliver = {
 		private _tskDesc_fail = format [localize "STR_tskDesc_PRPamphlet_fail", [_location] call AS_fnc_location_name];
 		([_mission, "FAILED", _tskDesc_fail] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+		{
+			_x setVariable ["dest", "Empty", true];
+		} foreach _crates;
 	} else {
 		private _drop = ([position _droppedCrate, random 360, _leaflets] call BIS_fnc_ObjectsMapper);
 		(_resources select 2) append _drop;
 		_crates = _crates - [_droppedCrate];
+
+
+
+		//Random chance for enemy to notice:
+
+		if (random 100 < ([_location, "AAFsupport"] call AS_location_fnc_get)) then {
+
+			{
+				if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x == (leader _x)} and {_x distance2D (position _droppedCrate) < 500}) then {
+					_x move position _droppedCrate;
+				};
+			} forEach allUnits;
+
+			[[position _droppedCrate], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+		};
+
 		_droppedCrate remoteExecCall ["deleteVehicle", _droppedCrate];
 		[_mission, "crates", _crates] call AS_spawn_fnc_set;
 
@@ -189,10 +257,11 @@ private _fnc_deliver = {
 
 		// if there are sites to go, inform player and repeat this call
 		if (_currentDropCount < DROP_COUNT) then {
-			{
-				if (isPlayer _x) then {[petros,"hint","Head to the next location."] remoteExec ["AS_fnc_localCommunication",_x]};
-			} forEach ([150, (position _currentDrop), "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
 
+
+			[petros,"sidechat","Drop succesful. Head to the next location."] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
+
+			[_mission, "buildings", _buildings] call AS_spawn_fnc_set;
 			[_mission, "currentDrop", _currentDropCount] call AS_spawn_fnc_set;
 			[_mission, "state_index", 2] call AS_spawn_fnc_set;
 		} else {

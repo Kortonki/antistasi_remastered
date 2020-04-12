@@ -24,12 +24,12 @@ if _was_captured then {
     //TODO: make this qwork iwth upsmon
     {
 
-      if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x == (leader _x)} and {_x distance _position < 1000}) then {
-        if (_x distance _position < 300) then {
+      if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x == (leader _x)} and {_x distance2D _position < 1000}) then {
+        if (_x distance2D _position < 300) then {
           _x move _position;
         } else {
           //Farther groups have probability to move based on their distance. Farther units have less probability, 300m away are sure to come.
-          if ((random 1) < (300/(_x distance _position))) then {
+          if ((random 1) < (300/(_x distance2D _position))) then {
 
             if (vehicle _x != _x) then {
                 private _wp0 = (group _x) addWaypoint [_position, 500]; //TODO: improve this to consider the direction of approach

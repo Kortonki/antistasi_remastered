@@ -13,8 +13,8 @@ private _fnc_initialize = {
 	_mrk setMarkerSize [50,50];
 	_mrk setMarkerAlpha 0;
 
-	private _tskTitle = (["NATO", "name"] call AS_fnc_getEntity) + " Roadblock Deployment";
-	private _tskDesc = format [(["NATO", "name"] call AS_fnc_getEntity) + " is dispatching a team from %1 to establish a temporary Roadblock. Send and cover the team until reaches its destination.",
+	private _tskTitle = (["NATO", "shortname"] call AS_fnc_getEntity) + " Roadblock Deployment";
+	private _tskDesc = format [(["NATO", "shortname"] call AS_fnc_getEntity) + " is dispatching a team from %1 to establish a temporary Roadblock. Send and cover the team until reaches its destination.",
 		[_origin] call AS_fnc_location_name];
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;

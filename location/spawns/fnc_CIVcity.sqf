@@ -17,6 +17,14 @@ private _fnc_spawn = {
 
 	private _grupos = [];
 	private _vehiculos = [];
+	private _markers = [];
+
+	private _patrolMarker = createMarker [format ["%1_civ", _posicion], _posicion];
+	_patrolMarker setMarkerShape "ELLIPSE";
+	_patrolMarker setMarkerSize [_size,_size];
+	_patrolMarker setMarkerAlpha 0;
+
+	_markers pushback _patrolMarker;
 
 	if (_location in AS_P("destroyedLocations")) then {
 		_numCiv = _numCiv / 10;
@@ -42,7 +50,7 @@ private _fnc_spawn = {
 			if (!surfaceIsWater _pos) exitWith {};
 		};
 		private _civ = _grupo createUnit [selectRandom (["CIV", "units"] call AS_fnc_getEntity), _pos, [],0, "NONE"];
-		[_civ] spawn AS_fnc_initUnitCIV;
+		[_civ, _location] spawn AS_fnc_initUnitCIV;
 	};
 
 	// spawn parked cars
@@ -65,7 +73,7 @@ private _fnc_spawn = {
 
 	[_location, _grupos] call AS_fnc_spawnJournalist;
 
-	[leader _grupo, _location, "SAFE", "SPAWNED","NOFOLLOW", "NOVEH2","NOSHARE","DoRelax"] spawn UPSMON;
+	[leader _grupo, _patrolMarker, "SAFE", "SPAWNED","NOFOLLOW", "LIMITED", "NOVEH2","NOSHARE","DoRelax"] spawn UPSMON;
 
 	private _patrolCiudades = _location call AS_fnc_getCitiesToCivPatrol;
 
@@ -86,7 +94,7 @@ private _fnc_spawn = {
 
 		// spawn driver
 		private _civ = _grupoP createUnit [selectRandom (["CIV", "units"] call AS_fnc_getEntity), _p1, [],0, "NONE"];
-		[_civ] spawn AS_fnc_initUnitCIV;
+		[_civ, _location] spawn AS_fnc_initUnitCIV;
 		_civ moveInDriver _veh;
 		_grupoP addVehicle _veh;
 
@@ -104,7 +112,7 @@ private _fnc_spawn = {
 		_wp1 synchronizeWaypoint [_wp];
 	};
 
-	[_spawnName, "resources", [taskNull, _grupos, _vehiculos, []]] call AS_spawn_fnc_set;
+	[_spawnName, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;
 };
 
 private _fnc_clean = {

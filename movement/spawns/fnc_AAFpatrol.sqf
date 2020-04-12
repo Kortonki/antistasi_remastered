@@ -18,6 +18,12 @@ private _fnc_spawn = {
 		_position = _location;
 	};
 
+	if _isLocation then {
+		AS_Pset("patrollingLocations", AS_P("patrollingLocations") + [_location]);
+	} else {
+		AS_Pset("patrollingPositions", AS_P("patrollingPositions") + [_position]);
+	};
+
 	// lists of spawned stuff to delete in the end.
 	private _vehiculos = [];
 	private _grupos = [];
@@ -25,7 +31,7 @@ private _fnc_spawn = {
 
 	// save the marker or position
 	//Location needs a patrol marker for good measure as well
-	private _patrolMarker = createMarkerLocal [format ["%1patrolarea", (diag_tickTime/60)], _position];
+	private _patrolMarker = createMarkerLocal [format ["patrol_%1_%2", (diag_tickTime), round(random 100)], _position];
 	_patrolMarker setMarkerShapeLocal "RECTANGLE";
 	_patrolMarker setMarkerSizeLocal [200, 200];
 	_patrolMarker setMarkerAlpha 0;
@@ -33,16 +39,12 @@ private _fnc_spawn = {
 
 	private _origin = [];
 
-	if _isLocation then {
-		AS_Pset("patrollingLocations", AS_P("patrollingLocations") + [_location]);
-	} else {
-		AS_Pset("patrollingPositions", AS_P("patrollingPositions") + [_position]);
-	};
+
 
 	if (_base != "") then {
 		_origin = _base call AS_location_fnc_positionConvoy;
 		_aeropuerto = "";
-		if (!_isDirectAttack) then {[_base,20] call AS_location_fnc_increaseBusy;};
+		if (!_isDirectAttack) then {[_base,15] call AS_location_fnc_increaseBusy;};
 
 		private _toUse = "trucks";
 		if (_threatEval > 3 and {"apcs" call AS_AAFarsenal_fnc_countAvailable > 0}) then {
@@ -58,7 +60,7 @@ private _fnc_spawn = {
 	};
 
 	if (_aeropuerto != "") then {
-		if (!_isDirectAttack) then {[_aeropuerto,20] call AS_location_fnc_increaseBusy;};
+		if (!_isDirectAttack) then {[_aeropuerto,15] call AS_location_fnc_increaseBusy;};
 		_origin = _aeropuerto call AS_location_fnc_position;
 		private _cuenta = 1;
 		if (_isLocation) then {_cuenta = 2};
@@ -113,13 +115,12 @@ private _fnc_run = {
 	} forEach _groups;
 
 	if _isLocation then {
-		private _tiempo = time + 3600;
+		private _tiempo = time + 3600; // 60 minutes
 
 		waitUntil {sleep 10;
-			(({not (captive _x)} count _soldados) < ({captive _x} count _soldados)) or
-			{{_x call AS_fnc_canFight} count _soldados == 0} or
-			{_location call AS_location_fnc_side == "AAF"} or
-			{time > _tiempo}
+			({_x call AS_fnc_canFight} count _soldados) < ({!(_x call AS_fnc_canFight)} count _soldados) or
+			_location call AS_location_fnc_side == "AAF" or
+			time > _tiempo
 		};
 
 		AS_Pset("patrollingLocations", AS_P("patrollingLocations") - [_location]);
@@ -128,10 +129,29 @@ private _fnc_run = {
 		private _tiempo = time + 1800; //30 minutes
 		//TODO: arrange pickup for the troops
 
-		waitUntil {sleep 10; time > _tiempo and {!([AS_P("spawnDistance"), _position, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}};
+		waitUntil {sleep 10; time > _tiempo or ({_x call AS_fnc_canFight} count _soldados) < ({!(_x call AS_fnc_canFight)} count _soldados)};
+
 
 		AS_Pset("patrollingPositions", AS_P("patrollingPositions") - [_position]);
 	};
+
+	//RTB
+	{
+			[_x, "AWARE"] remoteExec ["setBehaviour", _x];
+			[_x, "GREEN"] remoteExec ["setCombatmode", _x];
+			[_x, _origin]  remoteExec ["move", _x];
+	} foreach (_groups select {(leader _x) call AS_fnc_getSide == "AAF"});
+
+	//This leaves quite a lot of groups retreating and costs perfomance vise
+	//Also throws undefined error for _return (empty foreach loop? = nil)
+	/*waitUntil {sleep 10;
+	private _return = true;
+	_return = {
+		if ((position _x) distance2D _origin > 300) exitWith {false};
+		true
+		} foreach (_soldados select {alive _x and {!(_x call AS_medical_fnc_isUnconscious)}});
+	_return
+	};*/
 };
 
 private _fnc_clean = {
@@ -139,7 +159,10 @@ private _fnc_clean = {
 	private _groups = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 1);
 	private _vehicles = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 2);
 	private _markers = (([_spawnName, "resources"] call AS_spawn_fnc_get) select 3);
-	[_groups, _vehicles, _markers] call AS_fnc_cleanResources;
+
+	//Choose only alive for cleanup -> dead are handled already by other function and bodies lootable
+
+	[_groups, _vehicles, _markers] call AS_fnc_cleanMissionResources;
 	[_spawnName, "delete", true] call AS_spawn_fnc_set;
 };
 

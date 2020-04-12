@@ -7,7 +7,7 @@ private _modoD = "SAFE";
 
 while {{alive _x} count units _grupo > 0} do
 	{
-	sleep 3;
+	sleep 1;
 	_modo = behaviour leader _grupo;
 	if (isNull(driver _veh) or not(alive driver _veh)) then {
 	_modoD = "COMBAT";

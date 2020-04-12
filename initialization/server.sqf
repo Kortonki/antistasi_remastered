@@ -40,7 +40,8 @@ publicVariable "AS_server_variables_initialized";
 {if not isPlayer _x then {deleteVehicle _x}} forEach allUnits;
 
 diag_log "[AS] Server: waiting for side...";
-waitUntil {not isNil {AS_P("player_side")}};
+waitUntil {sleep 0.1; not isNil {AS_P("player_side")}};
+sleep 0.2;
 
 
 call compile preprocessFileLineNumbers "initialization\common_side_variables.sqf";
@@ -55,7 +56,7 @@ if isMultiplayer then {
     // after game start because disconnects before have no influence
     addMissionEventHandler ["HandleDisconnect", {
         [_this select 0] call AS_fnc_onPlayerDisconnect;
-        false
+        true
     }];
 
     // for the spawns

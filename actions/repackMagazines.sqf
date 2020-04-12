@@ -2,9 +2,9 @@ private _unit = _this select 0;
 
 
 
-[_unit, (position _unit), (count magazines _unit)*2, {true}, {speed _unit > 1}, "", "Keep still"] call AS_fnc_wait_or_fail;
+[_unit, (position _unit), (count magazines _unit), {speed _unit <= 1}, {speed _unit > 1}, "", ""] call AS_fnc_wait_or_fail;
 
-if (speed _unit > 1) exitWith {};
+if (speed _unit > 1) exitWith {hint "Keep still"};
 
 
 private _magazineTypes = [];

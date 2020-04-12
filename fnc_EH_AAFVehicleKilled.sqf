@@ -3,10 +3,10 @@ if ((_veh call AS_fnc_getSide) != "AAF") exitWith {diag_log "[AS] Warning: EH_AA
   //Deduct from AAF arsenal regardless of killers side
   //Also remove from spawn counter so new one can spawn
 private _vehicleType = typeOf _veh;
-[_vehicleType] call AS_AAFarsenal_fnc_deleteVehicle;
 [_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
 
 private _vehicleCategory = _vehicleType call AS_AAFarsenal_fnc_category;
+[_vehicleCategory] call AS_AAFarsenal_fnc_deleteVehicle;
 
 
 
@@ -37,11 +37,11 @@ if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {
       _xpEffect = "des_arm";
     };
     case "boats" : {
-      _xpEffect = "_des_veh";
+      _xpEffect = "des_veh";
       _citySupportEffect = 1;
     };
     case "cars_armed" : {
-      _xpEffect = "_des_veh";
+      _xpEffect = "des_veh";
       _citySupportEffect = 1;
     };
     case "trucks" : {
@@ -58,7 +58,7 @@ if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {
     };
   };
   if (_citySupportEffect != 0) then {
-    [-_citySupportEffect,_citySupportEffect,position _veh] remoteExec ["AS_fnc_changeCitySupport",2];
+    [-_citySupportEffect,_citySupportEffect,position _veh, true] remoteExec ["AS_fnc_changeCitySupport",2];
   };
   if (_xpEffect != "") then {[_xpEffect] remoteExec ["fnc_BE_XP", 2]};
 };

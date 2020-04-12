@@ -14,7 +14,7 @@ if(!(local _veh)) exitWith {
 [_veh, _side] call AS_fnc_setSide;
 
 if ((_veh isKindOf "FlagCarrier") or (_veh isKindOf "Building")) exitWith {};
-if (_veh isKindOf "ReammoBox_F" and _side == "AAF") exitWith {[_veh,"Watchpost"] call AS_fnc_fillCrateAAF};
+if (_veh isKindOf "B_supplyCrate_F" and _side == "AAF") exitWith {[_veh,"Watchpost"] call AS_fnc_fillCrateAAF};
 
 // So the vehicle appears in debug mode. Does nothing otherwise.
 [_veh] call AS_debug_fnc_initVehicle;
@@ -32,8 +32,24 @@ if (_tipo == (["CSAT", "box"] call AS_fnc_getEntity) and _side == "CSAT") then {
 
 //Cargo release on destruction
 
-_veh addEventHandler ["Killed", {
+_veh addEventHandler ["killed", {
 	private _veh = _this select 0;
+
+	//Stats
+
+	[_veh call AS_fnc_getSide, 1, "d_vehicles"] remoteExec ["AS_stats_fnc_change", 2];
+
+	private _type = typeOf _veh;
+	private _category = "";
+	if (_type in BE_class_MBT) then {_category = "d_tanks"};
+	if (_type in BE_class_APC) then {_category = "d_apcs"};
+	if (_type in BE_class_Heli) then {_category = "d_helis"};
+	if (_veh isKindOf "Plane") then {_category = "d_planes"};
+
+	if (_category != "") then {
+		[_veh call AS_fnc_getSide, 1, _category] remoteExec ["AS_stats_fnc_change", 2];
+	};
+
 	[_veh] spawn AS_fnc_activateCleanup;
 	if (!isNil{_veh getVariable "boxCargo"}) then {
 		 {
@@ -41,6 +57,9 @@ _veh addEventHandler ["Killed", {
 			 _x setdammage 1;
 		 } foreach (_veh getVariable "boxCargo");
 		};
+
+
+
 
 	}];
 
@@ -50,6 +69,7 @@ if (_side != "NATO") then {
 	// vehicle is stolen (NATO vehicles cannot be entered)
 	_veh addEventHandler ["GetIn", {
 		params ["_vehicle", "_position", "_unit"];
+
 
 		if (isNil{_vehicle getVariable "boxCargo"}) then {_vehicle setVariable ["boxCargo",[], true];};
 
@@ -61,7 +81,29 @@ if (_side != "NATO") then {
 		if (_side != "FIA" and {_sideunit == "FIA"}) then {
 
 				//Make persistent to avoid cleanup for captured vehicles
-				[_vehicle] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+				//Attempt to fix vehicle parameter being the player unit and not properly added to persistents when vehicle not local
+				//Wait until no-one inside so the vehicle returns the correct vehicle
+				[_vehicle] spawn {
+					params ["_vehicle"];
+					waitUntil {sleep 0.5; count (crew _vehicle) == 0};
+					[_vehicle] remoteExec ["AS_fnc_changePersistentVehicles", 2];
+				};
+
+				["vehsCaptured", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
+
+				private _type = typeOf _vehicle;
+				private _category = "";
+				//This is different category than above because now it can be any side instead of AAF
+				if (_type in BE_class_MBT) then {_category = "tanksCaptured"};
+				if (_type in BE_class_APC) then {_category = "apcsCaptured"};
+				if (_type in BE_class_Heli) then {_category = "helisCaptured"};
+				if (_veh isKindOf "Plane") then {_category = "planesCaptured"};
+
+				if (_category != "") then {
+					[_category, 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
+				};
+
+
 
 				//After capturing fuel truck, make it FIA fuel system compatible
 				//TODO Improve this to revert to FIA fuel system to prevent cheating. For AI must have vanilla fuel cargo system
@@ -69,14 +111,14 @@ if (_side != "NATO") then {
 
 					if (_vehicle call AS_fuel_fnc_getfuelCargoSize > 0) then {
 						_vehicle setFuelCargo 0;
-						[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-						[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+						[_vehicle, "refuel_truck"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+						[_vehicle, "refuel_truck_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 					};
 		};
 
 		if (_side == "AAF" and {_vehicleCategory != "" and {_sideunit == "FIA"}}) then {
 
-					[_vehicle, _unit] call AS_fnc_EH_AAFVehicleKilled; // this must be called before changing sides
+				[_vehicle, _unit] call AS_fnc_EH_AAFVehicleKilled; // this must be called before changing sides
 
 		};
 
@@ -86,14 +128,17 @@ if (_side != "NATO") then {
 
 		};
 
-		[_vehicle, _sideunit] call AS_fnc_setSide;
+		//To avoid setting unknown side to a vehicle when a unit boarding hasn't inited yet
+		if (_sideunit != "") then {
+			[_vehicle, _sideunit] call AS_fnc_setSide;
+		};
 
 
 	}];
 
 	if (_tipo isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
-		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
-		[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+		[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		};
 
 };
@@ -181,7 +226,7 @@ if (_side == "NATO") then {
     // lose support when vehicle is destroyed
     _veh addEventHandler ["Killed", {
         [-2,0] remoteExec ["AS_fnc_changeForeignSupport",2];
-        [2,-2,position (_this select 0)] remoteExec ["AS_fnc_changeCitySupport",2];
+        [0,-2,position (_this select 0)] remoteExec ["AS_fnc_changeCitySupport",2];
     }];
 };
 
@@ -198,8 +243,8 @@ if (_side == "FIA") then {
 
 				if (_veh call AS_fuel_fnc_getfuelCargoSize > 0) then {
 
-					[_veh, "refuel_truck"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-					[_veh, "refuel_truck_check"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+					[_veh, "refuel_truck"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
+					[_veh, "refuel_truck_check"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
 					};
 				};
 			} else {
@@ -219,6 +264,8 @@ if (_side == "FIA") then {
 					[_vehicle, false] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 				};
 				//Here anything related to FIA vehicles being captured
+
+				[_vehicle, _side] call AS_fnc_setSide;
 			};
 
 		}];

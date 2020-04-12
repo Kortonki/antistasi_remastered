@@ -21,7 +21,7 @@ if (not isNil "AS_savingServer") exitWith {
     };
 };
 // lock double saving a game and accessing arsenal to avoid errors
-waitUntil {sleep 0.1; not(AS_S("lockArsenal"))};
+waitUntil {sleep 0.1; not(lockArsenal)};
 
 AS_savingServer = true;
 publicVariable "AS_savingServer";

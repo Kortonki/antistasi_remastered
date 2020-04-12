@@ -48,5 +48,5 @@ _text = format ["The fuel cargo wasn't topped up because of low fuel reserves\n\
 
 };
 
-[_vehicle, "refuel_truck"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-[_vehicle, "refuel_truck_check"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+[_vehicle, "refuel_truck"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];
+[_vehicle, "refuel_truck_check"] remoteExecCall ["AS_fnc_addAction", [0, -2] select isDedicated];

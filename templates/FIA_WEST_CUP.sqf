@@ -31,6 +31,7 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // costs of **land vehicle**. Every vehicle in `"land_vehicles"` must be here.
 private _costs = [_dict, "costs"] call DICT_fnc_get; //Baseline so no missing for HC squads etc.

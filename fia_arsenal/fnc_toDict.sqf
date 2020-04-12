@@ -9,7 +9,7 @@ private _fnc_getUnitsEquipment = {
     params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 
     {
-        if ((_x call AS_fnc_getSide == "FIA") and {alive _x}) then {
+        if ((_x call AS_fnc_getSide == "FIA") and {alive _x and {!(_x call AS_medical_fnc_isUnconscious)}}) then {
             private _arsenal = [_x, true] call AS_fnc_getUnitArsenal;
             _cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
             _cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
@@ -29,9 +29,9 @@ private _fnc_getVehiclesEquipment = {
         private _closest = (getPos _x) call AS_location_fnc_nearest;
         private _size = _closest call AS_location_fnc_size;
         if ((_closest call AS_location_fnc_side == "FIA") and
-                {(_x in AS_permanent_HQplacements) or (_x call AS_fnc_getSide) == "FIA"} and
+                {(_x in AS_permanent_HQplacements) or (_x call AS_fnc_getSide) == "FIA" or (_x isKindOf "ReammoBox_F")} and
                 {alive _x} and
-                {_x distance2D (_closest call AS_location_fnc_position) < _size} and
+                {_x distance2D (_closest call AS_location_fnc_position) <= _size} and
                 {private _invalid = weaponsItemsCargo _x; not isNil "_invalid"}) then {
 
             private _arsenal = [_x, true] call AS_fnc_getBoxArsenal;
@@ -43,7 +43,7 @@ private _fnc_getVehiclesEquipment = {
               _allMagazineRemains pushback _x; //Get array of partial mags with [type, ammo] to allmagsremains
             } foreach (_arsenal select 4);
         };
-    } forEach vehicles;
+    } forEach (vehicles select {(typeOf _x) != "WeaponHolderSimulated"});
     [_cargo_w, _cargo_m, _cargo_i, _cargo_b]
 };
 
@@ -57,6 +57,7 @@ params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
   private _position = _location call AS_location_fnc_position;
 
   {
+    if (isnil{_x getVariable "l"}) then {
     private _arsenal = [_x, true] call AS_fnc_getBoxArsenal;
     _cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
     _cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
@@ -65,11 +66,12 @@ params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
     {
       _allMagazineRemains pushback _x; //Get array of partial mags with [type, ammo] to allmagsremains
     } foreach (_arsenal select 4);
-
-  } forEach nearestObjects [_position, ["WeaponHolder"], _size]; // No weaponholder simulated because it's included in vehicles
+    _x setVariable ["l", true, false]; //This to prevent looting twice
+    };
+  } forEach nearestObjects [_position, ["WeaponHolder", "WeaponHolderSimulated"], _size];
 
   {
-      if not (alive _x) then {
+      if (not (alive _x) and {isnil{_x getVariable "l"}}) then {
         private _arsenal = [_x, true] call AS_fnc_getUnitArsenal;
         _cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
         _cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
@@ -78,9 +80,28 @@ params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
         {
           _allMagazineRemains pushback _x; //Get array of partial mags with [type, ammo] to allmagsremains
         } foreach (_arsenal select 4);
+        _x setVariable ["l", true, false];
       };
   } forEach (_position nearObjects ["Man", _size]);
+
 } foreach ("FIA" call AS_location_fnc_S);
+
+//Clean doubleloot preventing variable "l":
+
+{
+  private _location = _x;
+  private _size = _location call AS_location_fnc_size;
+  private _position = _location call AS_location_fnc_position;
+
+  {
+    _x setVariable ["l", nil, false];
+  } foreach nearestObjects [_position, ["WeaponHolder"], _size];
+
+  {
+    _x setVariable ["l", nil, false];
+  } forEach (_position nearObjects ["Man", _size]);
+} foreach ("FIA" call AS_location_fnc_S);
+
 [_cargo_w, _cargo_m, _cargo_i, _cargo_b]
 };
 

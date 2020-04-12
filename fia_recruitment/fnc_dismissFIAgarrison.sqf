@@ -10,3 +10,4 @@ if ([_location call AS_location_fnc_position, nil] call AS_fnc_enemiesNearby) ex
 private _garrison = [_location, "garrison"] call AS_location_fnc_get;
 _garrison deleteAt (_garrison find _type);
 [_location, "garrison", _garrison] call AS_location_fnc_set;
+garrisonUpdated = true;

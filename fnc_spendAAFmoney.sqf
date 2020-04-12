@@ -13,7 +13,7 @@ private _AAFresAdj = _resourcesAAF / _AAFlocCount; //Consider this also as it af
 
 private _debug_prefix = "[AS] Debug AS_fnc_spendAAFmoney: ";
 private _debug_message = format ["buying with %1", _resourcesAAF];
-AS_ISDEBUG(_debug_prefix + _debug_message);
+diag_log (_debug_prefix + _debug_message);
 
 //////////////// try to restore cities ////////////////
 if (_resourcesAAF > 5000 and {_AAFresAdj > 1000}) then {
@@ -35,7 +35,7 @@ if (_resourcesAAF > 5000 and {_AAFresAdj > 1000}) then {
 				if (_type == "city") then {[40,0,_position] call AS_fnc_changeCitySupport;};
 				[-5,0] call AS_fnc_changeForeignSupport;
 				if (_type == "powerplant") then {[_destroyed] call AS_fnc_recomputePowerGrid};
-				[["TaskFailed", ["", format ["%1 rebuilt by %2",_nombre, (["AAF", "name"] call AS_fnc_getEntity)]]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+        ["TaskFailed", ["", format ["%1 rebuilt by %2",_nombre, (["AAF", "shortname"] call AS_fnc_getEntity)]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 		} forEach _destroyedCities;
 		AS_Pset("destroyedLocations", _destroyedCities - _repaired);
@@ -88,7 +88,7 @@ _extra_conditions setVariable ["planes", _FIAcontrolledBases >= 1];
 
 	_debug_message = format ["bought %1 '%2' (%3,%4), remaining money: %5",
 			_debug_bought_count, _x, _x call AS_AAFarsenal_fnc_canAdd, _extra_condition, _resourcesAAF];
-	AS_ISDEBUG(_debug_prefix + _debug_message);
+	diag_log (_debug_prefix + _debug_message);
 } forEach AS_AAFarsenal_buying_order;
 
 deleteVehicle _extra_conditions;
@@ -109,7 +109,11 @@ if ((_skillAAF < (_skillFIA + 4)) && (_skillAAF < AS_maxSkill)) then {
 //////////////// try to build a minefield ////////////////
 if (_resourcesAAF > 2000 and {_AAFresAdj > 1000} and {count (["minefield","AAF"] call AS_location_fnc_TS) < 3}) then {
 	private _minefieldDeployed = call AS_fnc_deployAAFminefield;
-	if (_minefieldDeployed) then {_resourcesAAF = _resourcesAAF - 2000};
+	if (_minefieldDeployed) then {
+    _resourcesAAF = _resourcesAAF - 2000;
+    private _debug_message = "AAF minefield deployed";
+    diag_log (_debug_prefix + _debug_message);
+  };
 };
 AS_Pset("resourcesAAF",round _resourcesAAF);
 

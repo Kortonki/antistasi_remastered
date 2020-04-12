@@ -4,6 +4,7 @@ private _sideMagazines = [];
 private _sideItems = [];
 private _sideBackbacks = [];
 private _sideUniforms = [];
+private _sideBinoculars = [];
 
 {
     // _x is a soldier class
@@ -49,22 +50,29 @@ private _sideUniforms = [];
 
 // populate items with relevant meds.
 if (hasACE) then {
-    if (ace_medical_level == 0) then {
+    if (!(isnil "ace_medical_level")) then {
+      if (ace_medical_level == 0) then {
         _sideItems append ["FirstAidKit","Medikit"];
-    } else {
+      } else {
         _sideItems = _sideItems - ["FirstAidKit","Medikit"];
-    };
-    if (ace_medical_level >= 1) then {
-        _sideItems append AS_aceBasicMedical;
-    };
-    if (ace_medical_level == 2) then {
-        _sideItems append AS_aceAdvMedical;
+      };
+      if (ace_medical_level >= 1) then {
+          _sideItems append AS_aceBasicMedical;
+      };
+      if (ace_medical_level == 2) then {
+          _sideItems append AS_aceAdvMedical;
+      };
+    } else {
+      _sideItems append AS_aceBasicMedical;
+      _sideItems append AS_aceAdvMedical;
+      _sideItems = _sideItems - ["FirstAidKit","Medikit"];
     };
 } else {
     _sideItems append ["FirstAidKit","Medikit"];
 };
 
 // clean duplicates and non-interesting equipment
+_sideBinoculars = (_sideItems + _sideWeapons) arrayIntersect AS_allBinoculars;
 _sideWeapons = (_sideWeapons arrayIntersect _sideWeapons)  - ["", "Throw", "Put"] - AS_allBinoculars;
 _sideWeapons = _sideWeapons arrayIntersect AS_allWeapons;
 _sideMagazines = (_sideMagazines arrayIntersect _sideMagazines) - [""];
@@ -75,4 +83,4 @@ _sideBackbacks = (_sideBackbacks arrayIntersect _sideBackbacks) - [""];
 _sideBackbacks = _sideBackbacks arrayIntersect AS_allBackpacks;
 _sideUniforms = (_sideUniforms arrayIntersect _sideUniforms) - [""];
 
-[_sideWeapons, _sideMagazines, _sideItems, _sideBackbacks, _sideUniforms]
+[_sideWeapons, _sideMagazines, _sideItems, _sideBackbacks, _sideUniforms, _sideBinoculars]

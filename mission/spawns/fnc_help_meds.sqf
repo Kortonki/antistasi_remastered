@@ -5,6 +5,7 @@ private _fnc_initialize = {
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
 	private _tskTitle = _mission call AS_mission_fnc_title;
+	_tskTitle = format ["%1 to %2", _tskTitle, _location];
 
 	private _tiempolim = 240;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
@@ -62,10 +63,10 @@ private _fnc_initialize = {
 		[_base] call AS_fnc_location_name, _base,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
 		numberToDate [2035,dateToNumber _fechalim] select 4,
-		(["AAF", "name"] call AS_fnc_getEntity)
+		(["AAF", "shortname"] call AS_fnc_getEntity)
 	];
 
-	private _vehicleType = selectRandom (["FIA", "vans"] call AS_fnc_getEntity);
+	private _vehicleType = selectRandom (["AAF", "vans"] call AS_fnc_getEntity);
 	private _crateType = (["CIV", "box"] call AS_fnc_getEntity);
 
 
@@ -164,7 +165,7 @@ private _fnc_spawn = {
 	_Vwp0 setWaypointType "GETOUT";
 	_Vwp0 setWaypointBehaviour "SAFE";
 
-	private _patrolMarker = createMarker [format ["help_meds_%1", round (diag_tickTime/60)], _position];
+	private _patrolMarker = createMarker [format ["help_meds_%1", round (diag_tickTime/60)], _crashPosition];
 	_patrolMarker setMarkerShape "ELLIPSE";
 	_patrolMarker setMarkerSize [100,100];
 	_patrolMarker setMarkerAlpha 0;
@@ -179,7 +180,7 @@ private _fnc_spawn = {
 	_Vwp0 setWaypointStatements ["true", _statement call AS_fnc_codeToString];
 
 	[_grupo, _veh] spawn AS_AI_fnc_dismountOnDanger;
-	[_grupo, _position] spawn AS_AI_fnc_dangerOnApproach;
+	[_grupo, _crashPosition] spawn AS_AI_fnc_dangerOnApproach;
 
 	[_veh, "AAF Reinforcements", _crashPosition] spawn AS_fnc_setConvoyImmune;
 
@@ -329,7 +330,7 @@ private _fnc_wait_to_deliver = {
 
 	} else {
 		if (not(alive _crate)) then {
-			[-10,-10, _position] remoteExec ["AS_fnc_changeCitySupport",2]; // No one delivers the crate: both lose support
+			[-10,-5, _position, true] remoteExec ["AS_fnc_changeCitySupport",2]; // No one delivers the crate: both lose support
 		} else {
 			[20,0, _position] remoteExec ["AS_fnc_changeCitySupport", 2]; // AAF manages to deliver the crate
 		};

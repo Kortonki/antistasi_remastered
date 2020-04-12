@@ -13,7 +13,7 @@ if (not AS_resourcing and _on) then {
 	[] spawn {
 		while {AS_resourcing} do {
 
-			waitUntil {sleep AS_spawnLoopTime; private _date = dateToNumber date; _date > (AS_P("nextUpdate")) or _date > (AS_P("nextAttack"))};
+			waitUntil {sleep AS_spawnLoopTime; private _date = dateToNumber date; _date >= (AS_P("nextUpdate")) or _date >= (AS_P("nextAttack"))};
 			if (!(AS_resourcing)) exitWith {}; //This in case loop was stopped while waiting for Waituntil condition eg. when skipping time
 			if (dateToNumber date >= (AS_P("nextUpdate"))) then {
 					diag_log format ["[AS] ResourcesUpdate: Update started at %1", date];

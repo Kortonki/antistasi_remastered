@@ -1,5 +1,6 @@
 #include "macros.hpp"
 while {AS_S("revealFromRadio")} do {
+	["radio"] remoteExec ["AS_fnc_showFoundIntel", 2];
 	if ((player == leader group player) and ([player] call AS_fnc_hasRadio)) then {
 		{
 			private _lider = leader _x;
@@ -11,5 +12,5 @@ while {AS_S("revealFromRadio")} do {
 			};
 		} forEach allGroups;
 	};
-	sleep 10;
+	sleep (random (AS_P("upFreq")/2));
 };

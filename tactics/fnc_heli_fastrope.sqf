@@ -1,7 +1,8 @@
 params ["_origin", "_destination", "_crew_group", "_patrol_marker", "_cargo_group", ["_threat", 0]];
 
 private _heli = vehicle (leader _crew_group);
-private _safePosition = [_destination, (100 + 50*_threat) min 1000, 1100, 5, 0, 0.3, 0] call BIS_Fnc_findSafePos;
+private _distance = (300 + 50*_threat);
+private _safePosition = [_destination, _distance min 1000, _distance + 100, 5, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 
 //HERE make waypoint past the actual position to avoid ARMA 3 feature of completing air waypoints too early
 
@@ -9,7 +10,7 @@ private _dir = [_heli, _safePosition] call bis_fnc_dirTo;
 private _movePosition = [_safePosition, 500, _dir] call bis_fnc_relPos;
 
 (leader _crew_group) domove _movePosition;
-_heli flyinHeight 40;
+_heli flyinHeight 50;
 _heli setBehaviour "SAFE";
 _heli setSpeedMode "NORMAL";
 
@@ -72,7 +73,7 @@ _wp4 setWaypointBehaviour "AWARE";
 
 _cargo_group setVariable ["AS_patrol_marker", _patrol_marker, true];
 private _statement2 = {
-    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED", "NOVEH2"] spawn UPSMON;
+    [this, group this getVariable "AS_patrol_marker", "AWARE", "SPAWNED", "NOVEH"] spawn UPSMON;
 };
 _wp2 setWaypointStatements ["true", _statement2 call AS_fnc_codeToString];
 

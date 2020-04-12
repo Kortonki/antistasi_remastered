@@ -102,8 +102,9 @@ getText ( _x >> ""simulation"" ) isEqualTo ""weapon""
 
 private _allMagazines = "(
 getNumber ( _x >> ""scope"" ) isEqualTo 2 && {
-getText ( _x >> ""simulation"" ) isEqualTo ""ProxyMagazines""
-})" configClasses ( configFile >> "CfgMagazines" );
+getText ( _x >> ""simulation"" ) isEqualTo ""ProxyMagazines"" && {
+(getText ( _x >> ""ammo"")) find ""blank"" == -1
+}})" configClasses ( configFile >> "CfgMagazines" );
 
 
 AS_allItems = [];

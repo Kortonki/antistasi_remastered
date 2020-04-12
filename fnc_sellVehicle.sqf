@@ -28,6 +28,7 @@ call {
 	if (_tipoVeh in (["CIV", "vehicles"] call AS_fnc_getEntity)) exitWith {
 		_cost = 25
 	};
+
 	if (_tipoVeh in (["FIA", "vans"] call AS_fnc_getEntity)) exitWith {
 		_cost = "trucks" call AS_AAFarsenal_fnc_value;
 	};
@@ -41,7 +42,7 @@ call {
 
 if (_cost == 0) exitWith {hint "The vehicle you are looking at is not sellable."};
 
-_cost = _cost * (1 - damage _veh);
+_cost = round (_cost * (1 - damage _veh));
 
 [0,_cost] remoteExec ["AS_fnc_changeFIAmoney", 2];
 
@@ -57,6 +58,11 @@ if (!(_veh isKindof "StaticWeapon")) then {
 	if (_veh call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_veh call AS_fuel_fnc_getFuelCargo)};
 	[_fuel] remoteExec ["AS_fuel_fnc_changeFIAfuelReserves", 2];
 };
+
+{
+	detach _x;
+} foreach (attachedobjects _veh);
+
 deleteVehicle _veh;
 
 hint "Vehicle Sold";

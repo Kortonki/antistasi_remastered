@@ -22,7 +22,8 @@ private _fnc_initialize = {
 	_tskDesc = format [_tskDesc,
 		[_location] call AS_fnc_location_name,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4
+		numberToDate [2035,dateToNumber _fechalim] select 4,
+		["CSAT", "shortname"] call AS_fnc_getEntity
 	];
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
@@ -56,16 +57,15 @@ private _fnc_spawn = {
 			_resources = [_task, [_group], [], []];
 		};
 		if (_missionType == "kill_specops") exitWith {
-			private _mrkfin = createMarker [_mission,_position];
-			_mrkfin setMarkerShapeLocal "RECTANGLE";
-			_mrkfin setMarkerSizeLocal [300,300];
-			_mrkfin setMarkerTypeLocal "hd_warning";
-			_mrkfin setMarkerColorLocal "ColorRed";
-			_mrkfin setMarkerBrushLocal "DiagGrid";
-			_mrkfin setMarkerAlphaLocal 0;
+			private _mrkfin = createMarker [format ["kill_specops_%1_%2", round(diag_tickTime), random 100],_position];
+			_mrkfin setMarkerShape"RECTANGLE";
+			_mrkfin setMarkerSize [300,300];
+			_mrkfin setMarkerColor "ColorRed";
+			_mrkfin setMarkerBrush "DiagGrid";
+			_mrkfin setMarkerAlpha 0;
 
 			private _group = [_position, ("CSAT" call AS_fnc_getFactionSide), [["CSAT", "recon_team"] call AS_fnc_getEntity, "CSAT"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
-			[leader _group, _mrkfin, "RANDOM", "SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON;
+			[leader _group, _mrkfin, "RANDOM", "SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
 			{_x call AS_fnc_initUnitCSAT; _x allowFleeing 0} forEach units _group;
 
 			([_position, _mrkfin] call AS_fnc_spawnCSATuav) params ["_groups", "_vehicles"];
@@ -94,7 +94,7 @@ private _fnc_run = {
 
 	private _fnc_missionSuccessfulCondition = {not alive _target};
 	if (typeName _target == "GROUP") then {
-	    _fnc_missionSuccessfulCondition = {{alive _x} count units _target == 0 or {!(_x getVariable ["surrendered", false])} count units _target == 0};
+	    _fnc_missionSuccessfulCondition = {{alive _x} count units _target == 0 or {!(_x getVariable ["surrendered", false])} count (units _target) == 0};
 	};
 
 	private _fnc_missionSuccessful = {

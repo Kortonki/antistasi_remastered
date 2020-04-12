@@ -4,7 +4,7 @@ private _itemList = _availableItems select 0;
 private _countList = _availableItems select 1;
 
 if hasACEmedical then {
-    if (ace_medical_level == 1) then {
+    if (!(isnil "ace_medical_level") and {ace_medical_level == 1}) then {
         _return = [["ACE_tourniquet", 1], ["ACE_fieldDressing", 8], ["ACE_morphine", 2], ["ACE_epinephrine", 1]];
     } else {
 

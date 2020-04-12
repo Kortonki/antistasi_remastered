@@ -4,7 +4,7 @@
 		if not ([AS_entities, _faction, _x] call DICT_fnc_exists) then {
 			diag_log format ["[AS] Error: Attribute '%1' not defined for faction '%2'", _x, _faction];
 		};
-	} forEach ["name", "side", "roles"];
+	} forEach ["name", "shortname", "side", "roles"];
 } forEach allVariables AS_entities;
 
 private _common_attributes = [
@@ -28,7 +28,7 @@ private _anti_state_attributes = [
 "costs"
 ];
 
-private _state_attributes = _common_attributes + ["cars_armed", "truck_ammo", "truck_repair","truck_fuel", "teamsAA", "patrols", "explosives", "ap_mines", "at_mines"];
+private _state_attributes = _common_attributes + ["vans","cars_armed", "truck_ammo", "truck_repair","truck_fuel", "teamsAA", "patrols", "explosives", "ap_mines", "at_mines"];
 if hasTFAR then {
 	_state_attributes = _state_attributes + ["tfar_lr_radio", "tfar_radio"];
 };

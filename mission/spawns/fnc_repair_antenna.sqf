@@ -13,12 +13,18 @@ private _fnc_initialize = {
 		[_location] call AS_fnc_location_name,
 		numberToDate [2035,dateToNumber _fechalim] select 3,
 		numberToDate [2035,dateToNumber _fechalim] select 4,
-		(["AAF", "name"] call AS_fnc_getEntity)
+		(["AAF", "shortname"] call AS_fnc_getEntity)
 	];
+
+	[_mission, [_tskDesc,_tskTitle,_location], _position, "Destroy"] call AS_mission_spawn_fnc_saveTask;
+
+	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, "position", _position] call AS_spawn_fnc_set;
-	[_mission, [_tskDesc,_tskTitle,_location], _position, "Destroy"] call AS_mission_spawn_fnc_saveTask;
+
+	[_mission, "resources", [_task, [], [], []]] call AS_spawn_fnc_set;
+
 };
 
 private _fnc_wait_spawn = {
@@ -46,24 +52,19 @@ private _fnc_spawn = {
 	private _position = [_mission, "position"] call AS_spawn_fnc_get;
 
 	private _vehicleType = ["AAF", "truck_repair"] call AS_fnc_getEntity;
-
-	private _pos = _position findEmptyPosition [10,60,_vehicleType];
-	private _veh = createVehicle [_vehicleType, _pos, [], 0, "NONE"];
-	_veh allowdamage false;
-	_veh setDir random 360;
-	_veh allowDamage true;
-	[_veh, "AAF"] call AS_fnc_initVehicle;
+	private _veh = [_vehicleType, _position, "AAF", random 360, "NONE", 50] call AS_fnc_createEmptyVehicle;
 
 	// repair soldiers
 	//TODO: change this so there are actual repairmen
 	private _group = createGroup ("AAF" call AS_fnc_getFactionSide);
 	for "_i" from 1 to 3 do {
-		private _unit = ([_pos, 0, ["AAF", "crew"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;
+		private _unit = ([position _veh, 0, ["AAF", "crew"] call AS_fnc_getEntity, _group] call bis_fnc_spawnvehicle) select 0;
 		[_unit] call AS_fnc_initUnitAAF;
 	};
 
 	private _task = ([_mission, "resources"] call AS_spawn_fnc_get) select 0;
-	[_mission, "resources", [_task, [[_group], [_veh], []]]] call AS_spawn_fnc_set;
+	[_mission, "resources", [_task, [_group], [_veh], []]] call AS_spawn_fnc_set;
+
 };
 
 private _fnc_run = {
@@ -74,7 +75,7 @@ private _fnc_run = {
 	private _max_date = [_mission, "max_date"] call AS_spawn_fnc_get;
 	private _veh = (([_mission, "resources"] call AS_spawn_fnc_get) select 2) select 0;
 
-	private _fnc_missionSuccessfulCondition = {not alive _veh or (_location call AS_location_fnc_side == "FIA")};
+	private _fnc_missionSuccessfulCondition = {not(alive _veh) or ((_veh call AS_fnc_getSide) in ["FIA", "NATO"]) or (_location call AS_location_fnc_side == "FIA")};
 
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;

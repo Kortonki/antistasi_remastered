@@ -21,6 +21,8 @@ AS_Pset("NATOsupport", _nato);
 [[], {"Petros is Dead" hintC "Petros has been killed. You lot part of your influence. You can respawn Petros when there's no enemies nearby HQ"}] remoteExec ["call", AS_commander];
 {hint "Petros is Dead"} remoteExec ["bis_fnc_call", [0,-2] select isDedicated];
 
+petros removeAllEventHandlers "killed";
+
 //This is unnecessary. Petros death' no longer forces player to move HQ
 //waitUntil {sleep 5; isPlayer AS_commander};
 //[] remoteExec ["AS_fnc_selectNewHQ", AS_commander];

@@ -50,7 +50,7 @@ else
 _retreatPos = [_npc,_AttackPos,_dir,_dist] call UPSMON_SrchRetreatPos;
 
 _behaviour = "CARELESS";
-_CombatMode = "BLUE";
+_CombatMode = "GREEN";
 if (UPSMON_Debug>0) then {player sidechat format["%1 All Retreat!!!",_npc]};
 _wpformation = "LINE";
 _speedmode = "FULL";

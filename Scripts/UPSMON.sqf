@@ -318,11 +318,11 @@ if (_initpos!="ORIGINAL") then
 	};
 };
 
-_combatmode = "YELLOW";
+_combatmode = combatMode _npc; //This keeps the default mode for player side units which are set elsewhere. "YELLOW" is default anyway
 // AMBUSH
 If (_ambush) then
 {
-	[_grp,[0,0],"HOLD","LINE","LIMITED","STEALTH","BLUE",1] call UPSMON_DocreateWP;
+	[_grp,[0,0],"HOLD","LINE","LIMITED","STEALTH","GREEN",1] call UPSMON_DocreateWP;
 	_grp setvariable ["UPSMON_AMBUSHFIRE",false];
 
 	{
@@ -338,7 +338,7 @@ If (_ambush) then
 	_grp setvariable ["UPSMON_LINKED",_linkdistance];
 
 	_Behaviour = "STEALTH";
-	_combatmode = "BLUE";
+	_combatmode = "GREEN";
 };
 
 if (_fortify) then
@@ -379,7 +379,7 @@ _grp setvariable ["UPSMON_GrpMission",_grpmission];
 _grp setvariable ["UPSMON_OrgGrpMission",_grpmission];
 _grp setvariable ["UPSMON_Lastinfos",[[0,0,0],[0,0,0]]];
 _grp setvariable ["UPSMON_NOWP",_nowpType];
-_grp setvariable ["UPSMON_Removegroup",false];
+_grp setvariable ["UPSMON_Remove",false];
 
 //Assign the current group in the array of UPSMON Groups
 If (_side != civilian) then

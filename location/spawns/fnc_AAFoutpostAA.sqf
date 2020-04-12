@@ -6,6 +6,7 @@ private _fnc_spawn = {
 	private _soldados = [];
 	private _grupos = [];
 	private _vehiculos = [];
+	private _markers = [];
 
 	_vehiculos append (_location call AS_fnc_spawnComposition);
 
@@ -16,11 +17,16 @@ private _fnc_spawn = {
 	private _grupo = createGroup ("AAF" call AS_fnc_getFactionSide);
 	_grupos pushBack _grupo;
 
-	([_location, "AAF", _grupo] call AS_fnc_populateMilBuildings) params ["_gunners", "_vehicles"];
-	{[_x, false] call AS_fnc_initUnitAAF} forEach _gunners;
-	{[_x, "AAF"] call AS_fnc_initVehicle} forEach _vehicles;
-	_soldados append _gunners;
-	_vehiculos append _vehicles;
+	([_location, "AAF", _grupo] call AS_fnc_populateMilBuildings) params ["_gunners2", "_vehicles2", "_groups2", "_markers2"];
+	{[_x, false] call AS_fnc_initUnitAAF} forEach _gunners2;
+	_soldados append _gunners2;
+	_vehiculos append _vehicles2;
+	_grupos append _groups2;
+	_markers append _markers2;
+
+	{
+		_soldados append (units _x);
+	} foreach _groups2;
 
 	// flag and crate
 	private _bandera = createVehicle [["AAF", "flag"] call AS_fnc_getEntity, _posicion, [],0, "CAN_COLLIDE"];
@@ -59,7 +65,7 @@ private _fnc_spawn = {
 	_grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "teamsAA"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
 	_grupos pushBack _grupo;
 	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x;} forEach units _grupo;
-	[leader _grupo, _location, "SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] spawn UPSMON;
+	[leader _grupo, _location, "SAFE","SPAWNED","RANDOM","NOVEH","NOFOLLOW"] spawn UPSMON;
 
 	private _groupsCount = (round (_size/50)) max 1;
 	if (_frontera) then {_groupsCount = _groupsCount * 2};
@@ -70,14 +76,14 @@ private _fnc_spawn = {
 		_grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
 		private _stance = "RANDOM";
 		if (_i == 1) then {_stance = "RANDOMUP"};
-		[leader _grupo, _location, "SAFE","SPAWNED",_stance,"NOVEH2","NOFOLLOW"] spawn UPSMON;
+		[leader _grupo, _location, "SAFE","SPAWNED",_stance,"NOVEH","NOFOLLOW"] spawn UPSMON;
 		_grupos pushBack _grupo;
 		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 	};
 
 	[_location, _grupos] call AS_fnc_spawnJournalist;
 
-	[_location, "resources", [taskNull, _grupos, _vehiculos, []]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 };
 

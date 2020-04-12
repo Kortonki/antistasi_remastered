@@ -43,14 +43,15 @@ class AS {
 
         FNC(fia_recruitment,recruitFIAunit);
 
-        FNC(arsenal,collectDroppedEquipment);
 
+        FNC(arsenal,pollServerArsenal);
         FNC_BASE(refreshArsenal);
         FNC_BASE(resetPetrosPosition);
 
         FNC_BASE(spendAAFmoney);
         FNC_BASE(updateAll);
         FNC_BASE(revealFromAAFRadio);
+        FNC_BASE(globalMessage);
 
         FNC_BASE(win_location);
         FNC_BASE(lose_location);
@@ -97,9 +98,12 @@ class AS {
         FNC_BASE(spawnVehiclePatrol);
         FNC_BASE(spawnAAF_roadAT);
         FNC_BASE(spawnAAF_truck);
+        FNC_BASE(spawnAAF_AA);
+        FNC_BASE(spawnAAF_support);
         FNC_BASE(createVehicle);
         FNC_BASE(createEmptyVehicle);
         FNC_BASE(safeDelete);
+        FNC_BASE(vehicleAvailability);
 
         FNC(Scripts,spawnAttackWaves);
 
@@ -152,7 +156,9 @@ class AS {
         FNC_BASE(accessGarage);
 
         FNC_BASE(availableSeats);
+        FNC_BASE(otherTurrets);
         FNC_BASE(createGroup);
+        FNC_BASE(createVehicleGroup);
         FNC_BASE(groupCfgToComposition);
 
         FNC_BASE(EH_handleDamage);
@@ -172,10 +178,12 @@ class AS {
         FNC_BASE(activateCleanup);
         FNC_BASE(activateVehicleCleanup);
         FNC_BASE(activateMissionVehicleCleanup);
+        FNC_BASE(sendAwayFromBlufor);
         FNC_BASE(localCommunication);
         FNC_BASE(hasRadioCoverage);
         FNC_BASE(sellVehicle);
         FNC_BASE(skipTime);
+        FNC_BASE(showFoundIntel);
 
         FNC_BASE(populateMilBuildings);
         FNC_BASE(createFIAgarrison);
@@ -191,6 +199,8 @@ class AS {
         FNC_BASE(dropArtilleryShellsNATO);
         FNC_BASE(changeStreetLights);
 
+        FNC(arsenal,checkArsenal);
+        FNC(arsenal,openArsenal);
         FNC(arsenal,buyGear);
         FNC(arsenal,listUniqueEquipment);
         FNC(arsenal,getWeaponItemsCargo);
@@ -203,6 +213,7 @@ class AS {
         FNC(arsenal,getBestMagazines);
         FNC(arsenal,listToCargoList);
         FNC(arsenal,mergeCargoLists);
+        FNC(arsenal,createCargoLists);
         FNC(arsenal,addToArsenal);
         FNC(arsenal,removeFromArsenal);
         FNC(arsenal,populateBox);
@@ -217,6 +228,8 @@ class AS {
         FNC(arsenal,unlockedCargoList);
         FNC(arsenal,addMagazineRemains);
         FNC(arsenal,showUnlocked);
+        FNC(arsenal,waitArsenalSync);
+        FNC(arsenal,collectDroppedEquipment);
 
         FNC_BASE(initPlayerPosition);
         FNC_BASE(initVehicle);
@@ -237,7 +250,6 @@ class AS {
         FNC_BASE(showProgressBar);
         FNC_BASE(respawnPlayer);
         FNC_BASE(spawnPlayer);
-        FNC_BASE(showFoundIntel);
         FNC_BASE(fastTravel);
         FNC_BASE(unlockVehicle);
         FNC_BASE(revealToPlayer);
@@ -293,6 +305,7 @@ class AS {
 };
 
 class AS_AI {
+
     class common {
         FNC(AI,activateSmokeCoverAI);
         FNC(AI,smokeCover);
@@ -305,7 +318,10 @@ class AS_AI {
         FNC(ai,autoCombatCallOFF);
         FNC(ai,rearmCall);
         FNC(ai,dangerOnApproach);
+        FNC(AI,setOrders);
+
     };
+
 };
 
 class AS_tactics {
@@ -317,5 +333,6 @@ class AS_tactics {
         FNC(tactics,ground_disembark);
         FNC(tactics,ground_attack);
         FNC(tactics,ground_combined);
+        FNC(tactics,crew_sentry);
     };
 };

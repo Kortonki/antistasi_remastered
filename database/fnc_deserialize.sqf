@@ -55,6 +55,9 @@ diag_log "[AS] Server: loading players...";
 // depends on `AS_FIAarsenal_fnc_fromDict`
 ([_dict, "AS_player"] call DICT_fnc_get) call AS_players_fnc_fromDict;
 
+diag_log "[AS] Server: loading stats...";
+([_dict, "AS_stats"] call DICT_fnc_get) call AS_stats_fnc_fromDict;
+
 diag_log "[AS] Server: loading missions...";
 ([_dict, "AS_mission"] call DICT_fnc_get) call AS_mission_fnc_fromDict;
 

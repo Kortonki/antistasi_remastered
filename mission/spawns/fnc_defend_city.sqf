@@ -37,6 +37,8 @@ private _fnc_spawn = {
 
 	//CSAT Air Attack
 
+	[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2]; //CSAT support lowered each attack
+
 	for "_i" from 1 to 3 do {
 		private _tipoveh = selectRandom _csatAir;
 		private _timeOut = 0;
@@ -94,7 +96,7 @@ private _fnc_spawn = {
 			};
 		};
 		_civilians pushBack _civ;
-		[_civ] spawn AS_fnc_initUnitCIV;
+		[_civ, _location] spawn AS_fnc_initUnitCIV;
 		sleep 1;
 	};
 
@@ -165,6 +167,7 @@ private _fnc_run = {
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
+
 };
 
 private _fnc_clean = {

@@ -1,9 +1,11 @@
 #include "macros.hpp"
 private _killed = _this select 0;
+private _group = group _killed;
+
 
 _killed setVariable ["inDespawner", true, true]; //this to make so activaVehicleCleanup doesn't activate for mission vehicles
 if (_killed isKindof "AllVehicles") then {
-	diag_log format ["ActivateCleanup activated for vehicle %1, location %2", _killed, (position _killed) call AS_location_fnc_nearest];
+	diag_log format ["ActivateCleanup activated for vehicle %1, Group %2 location %3", _killed, group _killed, (position _killed) call AS_location_fnc_nearest];
 };
 
 [_killed] call AS_debug_fnc_initDead;
@@ -14,7 +16,7 @@ if (_killed in (AS_P("vehicles"))) then {
 };
 
 sleep AS_P("cleantime");
-waitUntil {sleep 20; not([AS_P("spawnDistance"), _killed, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)};
+waitUntil {sleep 20; not([AS_P("spawnDistance"), _killed, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) or isnull _killed};
 
 //This happens in killed eventhandler
 /*if (_killed call AS_fnc_getSide == "AAF") then {
@@ -22,13 +24,15 @@ waitUntil {sleep 20; not([AS_P("spawnDistance"), _killed, "BLUFORSpawn", "boolea
 	[_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
 };*/
 
-private _group = group _killed;
-_killed call AS_fnc_safeDelete;
+if (!(isNull _killed)) then {
+	_killed call AS_fnc_safeDelete;
+};
 
 
-
+// COMMENTED OUT for now. Groups are deleted elsewhere, so not via this function to avoid errors in locations and mission spawns where groups are parameters
+/*
 if (!isNull _group) then {
 	if ({alive _x} count units _group == 0) then {
 		_group remoteExec ["deleteGroup", groupOwner _group];
 	};
-};
+};*/

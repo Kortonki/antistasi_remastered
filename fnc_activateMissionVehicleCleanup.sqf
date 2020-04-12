@@ -17,8 +17,12 @@ _vehicle setVariable ["inDespawner", true, true];
 
 waitUntil {
 	sleep AS_spawnLoopTime;
-	not ([_vehicle, AS_P("spawnDistance")] call AS_fnc_friendlyNearby)
+	not([_vehicle, AS_P("spawnDistance")] call AS_fnc_friendlyNearby) or _vehicle call AS_fnc_getSide == "FIA"
 };
+
+//This to check that FIA captured vehicles have not been deleted if this function was activated
+
+if (_vehicle call AS_fnc_getSide == "FIA") exitWith {_vehicle setVariable ["inDespawner", false, true]};
 
 if (alive _vehicle and {_vehicle call AS_fnc_getSide == "AAF"}) then {
 	//Deduct from spawned vehicles. Killed vehicles are deducted from arsenal elsewhere

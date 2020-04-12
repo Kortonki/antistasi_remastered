@@ -86,7 +86,7 @@ private _FIAResIncomeMultiplier = 1;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
     };
     if ((_AAFsupport > _FIAsupport) and (_side == "FIA")) then {
-        ["TaskFailed", ["", format ["%1 joined %2", _city, ["AAF", "name"] call AS_fnc_getEntity ]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+        ["TaskFailed", ["", format ["%1 joined %2", _city, ["AAF", "shortname"] call AS_fnc_getEntity ]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 
         [_city, "side", "AAF"] call AS_location_fnc_set;
         _city call AS_location_fnc_updateMarker;
@@ -95,6 +95,8 @@ private _FIAResIncomeMultiplier = 1;
         [_city, !_power] spawn AS_fnc_changeStreetLights;
 
         //Release garrison if spawned, otherwise refund garrison
+        //Changed to check location spawned instead of if spawn exist. Reason: Spawn exists for some time after deletion even though things are deleted
+        //spawned parameter is changed to false when despawning process starts
         if (_city call AS_location_fnc_spawned) then {
           _city call AS_fnc_garrisonRelease;
         } else {
@@ -110,7 +112,22 @@ private _FIAResIncomeMultiplier = 1;
 
         //Small chance for a traitor mission depending on natoSupport
 
-        if ((AS_P("NATOsupport")) < random 50) then {
+        if ((AS_P("NATOsupport") + 50)  < random 100) then {
+
+          //If city is spawned, do not spawn mission there. random new location
+          if (_city call AS_location_fnc_spawned) then {
+            private _maxdist = 2500;
+            private _cities = (["city"] call AS_location_fnc_T);
+            while {private _distance = (_city call AS_location_fnc_position) distance2D ("fia_hq" call AS_location_fnc_position);
+                  _distance > _maxdist or _distance < AS_P("spawnDistance") or _city call AS_location_fnc_spawned} do {
+            _cities = _cities - [_city];
+            if (count _cities == 0) exitWith {_city == ""};
+            _city = selectRandom _cities;
+            _maxdist = _maxdist + 500;
+            sleep 1;
+            };
+          };
+          if (_city == "") exitWith {diag_log "[AS] updateAll: No traitor mission possible, no valid cities"};
           private _mission = ["kill_traitor", _city] call AS_mission_fnc_add;
           _mission call AS_mission_fnc_activate;
         };
@@ -123,6 +140,8 @@ private _FIAResIncomeMultiplier = 1;
 // control the airport and have majority => win game.
 //Edited: must have twice as much influence as AAF:: 66% against 33%
 //TODO: consider having a world spesific win locations instead of the airfield
+//TODO: Not end the mission here straight, but make AAF offer peace treaty
+//If player declines, able to conquer rest of the island, but with a loss of NATO support
 if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_side == "FIA")) exitWith {
     "end1" call BIS_fnc_endMissionServer;
 };
@@ -158,7 +177,7 @@ if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_
 } forEach ("resource" call AS_location_fnc_T);
 
 //Addition: Unused HR will earn money for FIA. Consider them working for supplies etc. //TODO: probably needs balancing
-private _resCount = {(_x call AS_location_fnc_side) == "FIA"} count (["resource", "seaport"] call AS_location_fnc_T);
+private _resCount = {(_x call AS_location_fnc_side) == "FIA"} count (["resource", "factory", "seaport"] call AS_location_fnc_T);
 _FIAnewMoney = _FIAnewMoney + (_resCount+1)*_FIAResIncomeMultiplier*(AS_P("hr"));
 
 
@@ -169,7 +188,7 @@ private _player_count = count (allPlayers - entities "HeadlessClient_F");
 
 
 _hr_cum = _hr_cum + _FIAnewHR - (floor _FIAnewHR);
-if (_player_count < 5) then {
+if (_player_count < 5 and {_player_count > 0}) then {
   _hr_cum = _hr_cum + (0.5/_player_count); //TODO: balance this out. Now it's 1 HR every two updates for single player
 };
 
@@ -204,20 +223,20 @@ _FIAnewMoney = AS_P("resourcesFIA") + round _FIAnewMoney;
 _FIAnewFuel = AS_P("fuelFIA") + _FIAnewFuel;
 
 //Share money among FIA members TODO: adjustment to the share value? make it persistent then
+//Share is the percentage or FIA income whichever is smaller
 
-[round((AS_players_share/100)*_FIAnewMoney)] call AS_players_fnc_shareMoney;
+if (_player_count > 0) then {
+  [round(((AS_players_share/100)*_FIAnewMoney) min (_FIAnewMoney - AS_P("resourcesFIA")))] call AS_players_fnc_shareMoney;
+};
 
 //Commander gets score every update
+if (not(isNull AS_commander)) then {
 
-[AS_commander, "score", 1] call AS_players_fnc_change;
+  [AS_commander, "score", 1] call AS_players_fnc_change;
 
-//Set next update time:
+};
 
-private _upFreq = AS_P("upFreq");
-private _nextUpdate = [date select 0, date select 1, date select 2, date select 3, (date select 4) + (_upFreq/60)];
-_nextUpdate = dateToNumber _nextUpdate;
 
-AS_Pset("nextUpdate", _nextUpdate);
 AS_Pset("hr",_FIAnewHR);
 AS_Pset("hr_cum", _hr_cum);
 AS_Pset("resourcesFIA",_FIAnewMoney);

@@ -1,6 +1,13 @@
 private ["_killed","_killer","_cost","_enemy","_group"];
 _killed = _this select 0;
 _killer = _this select 1;
+
+//ACE might make the killed eventhandler fire twice. Prevent it.
+if (!(isnil{_killed getVariable "k"})) exitWith {
+	diag_log format ["[AS] EH_CSATKilled: Killed eventhandler fired twice. Killed %1", _killed];
+};
+_killed setVariable ["k", true, false];
+
 if (_killed getVariable ["OPFORSpawn",false]) then {_killed setVariable ["OPFORSpawn",nil,true]};
 _unit removeAllEventHandlers "HandleDamage";
 
@@ -23,22 +30,35 @@ if (hasACE) then {
 	};
 };
 
+//NATO killing AAF triggers CSAT attacks, save the date for the record
+if (_killer call AS_fnc_getSide == "NATO" and {isNil{["NATO_killCSAT_date"] call AS_stats_fnc_get}}) then {
+	["NATO_killCSAT_date", date] call AS_stats_fnc_set;
+};
+
+
 if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) then {
 	["killCSAT"] remoteExec ["fnc_BE_XP", 2];
 	_group = group _killed;
 
 	// if dead has no weapons, it is an unlawful kill
-	if ((vehicle _killed == _killed) and {count weapons _killed < 1}) then { //if manning a driver/commander, non-weapon position, do not penalize
+	if ((vehicle _killed == _killed) and {count weapons _killed < 1} and {typeof _killed != (["CSAT", "traitor"] call AS_fnc_getEntity)}) then { //if manning a driver/commander, non-weapon position, do not penalize + exception for traitor
 		[-1,0] remoteExec ["AS_fnc_changeForeignSupport",2];
-		[1,-1,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2];
+		[1,-1,getPos _killed, true] remoteExec ["AS_fnc_changeCitySupport",2];
+		//Stats
 		if (isPlayer _killer) then {
 			[_killer, "score", -20, false] remoteExec ["AS_players_fnc_change", 2];
+			[_killer, "unarmedKills", 1] call AS_players_fnc_change;
 		};
 	} else {
 		// otherwise, it decreases by -1.
-		[-1,0,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2]; //Double city support loss compared to AAF
+		[-1,0,getPos _killed, true] remoteExec ["AS_fnc_changeCitySupport",2]; //Double city support loss compared to AAF
+		//Stats
+
+		["CSAT", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
 		if (isPlayer _killer) then {
 			[_killer, "score", 4, false] remoteExec ["AS_players_fnc_change", 2]; //Double points compared to AAF soldiers
+			[_killer, "kills", 1] call AS_players_fnc_change;
 		};
 	};
 
@@ -63,7 +83,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 							{_coeffSurrConstant + _coeffSurr*(random ({alive _x and {!([_x] call AS_fnc_isDog) and {!(_x getVariable ["surrendered", false])}}} count units _group))*(_x skill "courage") < count ([50, _x, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
 							then {
 								if (_x == leader group _x) then {
-									{[_x] spawn AS_AI_fnc_surrender} foreach (units group _x); 	//If squad leader surrenders, everybody in the group surrender as well
+									{[_x] spawn AS_AI_fnc_surrender} foreach ((units group _x) select {!(_x getVariable ["surrendered", false])}); 	//If squad leader surrenders, everybody in the group surrender as well
 								} else {
 									[_x] spawn AS_AI_fnc_surrender;
 								};

@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str west] call DICT_fnc_set;
 [_dict, "roles", ["state", "foreign"]] call DICT_fnc_set;
 [_dict, "name", "USMC (CUP)"] call DICT_fnc_set;
+[_dict, "shortname", "USMC"] call DICT_fnc_set;
 [_dict, "flag", "Flag_US_F"] call DICT_fnc_set;
 [_dict, "flag_marker", "flag_USA"] call DICT_fnc_set;
 
@@ -18,6 +19,10 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 // used in roadblock mission
 [_dict, "trucks", ["CUP_B_MTVR_USMC"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
 [_dict, "apcs", ["CUP_B_LAV25M240_desert_USMC", "CUP_B_LAV25_desert_USMC"]] call DICT_fnc_set;
 
 // used in traitor mission
@@ -65,6 +70,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["CUP_MineE"]] call DICT_fnc_set;

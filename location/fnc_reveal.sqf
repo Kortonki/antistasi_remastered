@@ -5,13 +5,18 @@ diag_log format ["AS_fnc_reveal started. Parameters: _veh: %1 _location %2", _ve
 if (isNil "_veh") exitWith {diag_log format ["AS Error: nil vehicle passed to AS_location_fnc_reveal. Location: %1", _location]};
 if (_location in ([] call AS_location_fnc_knownLocations)) exitWith {}; //No need for checks if locations is already known
 
-while {sleep AS_spawnLoopTime; (alive _veh) and {!(isNil{_veh getVariable "marcador"} or _veh == petros) and {!(_location in ([] call AS_location_fnc_knownLocations))}}} do {
+private _enemySide = ["AAF"] call AS_fnc_getFactionSide;
+private _position = _location call AS_location_fnc_position;
+_position set [2, (getTerrainHeightASL _position) + 2.5];
+
+while {sleep AS_spawnLoopTime; (alive _veh) and {(!(isNil{_veh getVariable "marcador"}) or _veh == petros) and {!(_location in ([] call AS_location_fnc_knownLocations))}}} do {
   {
 
     //Only reveal to location if there's radio coverage and the leader is alive after the contact for some.
 
       if (_x knowsAbout _veh > 1.4) then {
-        if (leader _x == _x and {(position _x) call AS_fnc_hasRadioCoverage  and {!(_x getVariable ["revealing", false])}}) then {
+        private _leader = leader _x;
+        if (_leader == _x and {(position _x) call AS_fnc_hasRadioCoverage  and {!(_x getVariable ["revealing", false])  and {([_x, "VIEW"] checkVisibility [eyepos _x, _position]) > 0.5}}}) then {
 
            [_x, _location] spawn {
              params ["_unit","_location"];
@@ -32,6 +37,6 @@ while {sleep AS_spawnLoopTime; (alive _veh) and {!(isNil{_veh getVariable "marca
               };
           };
 
-  } forEach (allUnits select {(_x call AS_fnc_getSide) in ["AAF","CSAT"]});
+  } forEach (allUnits select {side _x == _enemySide});
 };
 diag_log format ["AS_fnc_reveal ended. Parameters: _veh: %1 _location %2", _veh, _location];

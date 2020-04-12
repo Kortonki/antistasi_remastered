@@ -10,8 +10,14 @@ if (_side isEqualto "CIV") then {
 } else {
   [_vehicle, _side] call AS_fnc_initVehicle;
 };
-_vehicle allowDamage true;
+
 [_vehicle, true] remoteExecCall ["enablesimulationGlobal", 2];
+
+[_vehicle] spawn {
+  params ["_vehicle"];
+  sleep 3;
+  _vehicle allowDamage true;
+};
 
 //Counter for AAF spawned vehicles to avoid more vehs than in arsenal
 if (_side == "AAF") then {

@@ -54,7 +54,12 @@ private _moneyLeft = _money; //This is what is left of the share = pot
         if (_x == AS_commander) then {_commanderIndex = (count _playerIncomes) - 1};
 
       } foreach _sameRank;
-      _moneyLeft = floor(_moneyLeft + _share mod (floor (_share/_count))); //Leftovers from rounding are sent back to the pot -> to commander or FIA later
+      if (floor (_share/_count) != 0)
+      then {
+        _moneyLeft = floor(_moneyLeft + _share mod (floor (_share/_count))); //Leftovers from rounding are sent back to the pot -> to commander or FIA later
+      } else {
+        _moneyLeft = floor(_moneyLeft + _share); //If no money shared, they go back to the pot
+      };
     };
     //_shares pushback _share; //Now the order of shares is same as the order of ranks: no need to reverse
 } foreach _list;

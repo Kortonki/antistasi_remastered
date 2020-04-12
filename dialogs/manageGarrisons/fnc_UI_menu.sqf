@@ -8,7 +8,7 @@ createDialog "AS_manageGarrisons";
 
 //If exited the dialog, check if garrison changed:
 
-waitUntil {sleep 1; isNull(findDisplay 1602)};
+waitUntil {sleep 1; isNull(findDisplay 1602) and {isNull(findDisplay 1702)}};
 
 if (not(isNil "garrisonUpdated")) then {
   [map_location] spawn AS_location_fnc_respawnGarrison;

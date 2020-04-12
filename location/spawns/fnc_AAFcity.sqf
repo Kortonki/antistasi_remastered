@@ -6,6 +6,15 @@ private _fnc_spawn = {
 	private _posicion = _location call AS_location_fnc_position;
 	private _size = _location call AS_location_fnc_size;
 
+	private _markers = [];
+
+	private _patrolMarker = createMarker [format ["%1_gar", _posicion], _posicion];
+	_patrolMarker setMarkerShape "ELLIPSE";
+	_patrolMarker setMarkerSize [_size,_size];
+	_patrolMarker setMarkerAlpha 0;
+
+	_markers pushback _patrolMarker;
+
 	private _AAFsupport = [_location, "AAFsupport"] call AS_location_fnc_get;
 
 	private _num = round (_size / 100); // [200, 800] -> [2, 8]
@@ -19,17 +28,19 @@ private _fnc_spawn = {
 		private _grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
 
 		// generate dog with some probability.
-		private _dog = [_grupo] call AS_fnc_spawnDog;
+		if (random 10 < 2.5) then {
+			private _dog = [_grupo] call AS_fnc_spawnDog;
+		};
 		//_soldados pushBack _dog; //Dog shouldn't be counted as a soldier
 
 		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
 
 		// put then on patrol.
-		[leader _grupo, _location, "SAFE", "RANDOM", "SPAWNED","NOVEH2", "NOFOLLOW"] spawn UPSMON;
+		[leader _grupo, _patrolMarker, "SAFE", "RANDOM", "SPAWNED","NOVEH", "NOFOLLOW"] spawn UPSMON;
 		_grupos pushBack _grupo;
 	};
 
-	[_location, "resources", [taskNull, _grupos, [], []]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _grupos, [], _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 };
 
@@ -39,7 +50,7 @@ private _fnc_run = {
 
 	private _soldados = [_location, "soldiers"] call AS_spawn_fnc_get;
 
-	waitUntil {sleep 1;
+	waitUntil {sleep AS_spawnLoopTime;
 		!(_location call AS_location_fnc_spawned) or
 		({_x call AS_fnc_canFight} count _soldados == 0)
 	};

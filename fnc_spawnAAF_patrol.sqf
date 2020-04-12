@@ -2,6 +2,7 @@
 params ["_location", "_amount"];
 
 private _position = _location call AS_location_fnc_position;
+private _size = _location call AS_location_fnc_size;
 
 private _units = [];
 private _groups = [];
@@ -9,7 +10,7 @@ private _groups = [];
 // marker used to set the patrol area
 private _mrk = createMarkerLocal [format ["%1patrolarea", random 100], _position];
 _mrk setMarkerShapeLocal "RECTANGLE";
-_mrk setMarkerSizeLocal [(AS_P("spawnDistance")/2),(AS_P("spawnDistance")/2)];
+_mrk setMarkerSizeLocal [_size*1.5,_size*1.5];
 _mrk setMarkerTypeLocal "hd_warning";
 _mrk setMarkerColorLocal "ColorRed";
 _mrk setMarkerBrushLocal "DiagGrid";
@@ -33,6 +34,14 @@ for "_i" from 1 to _amount do {
     [leader _group, _mrk, "SAFE","SPAWNED", "NOVEH"] spawn UPSMON;
 
     _groups pushBack _group;
-    {[_x, false] call AS_fnc_initUnitAAF; _units pushBack _x} forEach units _group;
+
 };
+{
+private _group = _x;
+  {
+    [_x, false] call AS_fnc_initUnitAAF;
+    _units pushBack _x;
+  } forEach units _group;
+} foreach _groups;
+
 [_units, _groups, _mrk]

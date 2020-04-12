@@ -25,7 +25,9 @@ private _cargo_b = [[], []];
 if (_location call AS_location_fnc_side == "FIA") then {
   {
 
-        //Recover units arsenal
+        //Recover units arsenal. Dead units will be collected via AS_fnc_collectDroppedEquipment
+
+        if (alive _x) then {
 
         private _arsenal = [_x, true] call AS_fnc_getUnitArsenal;  // restricted to locked weapons
   			_cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
@@ -35,7 +37,7 @@ if (_location call AS_location_fnc_side == "FIA") then {
   			[cajaVeh, (_arsenal select 4)] call AS_fnc_addMagazineRemains;
 
 
-      if (alive _x) then {
+
           if (!(isNull objectParent _x)) then {
             objectParent _x deletevehicleCrew _x;
           } else { //This was added so vehicle soldier is in is not deleted
@@ -44,6 +46,8 @@ if (_location call AS_location_fnc_side == "FIA") then {
       };
     } forEach _soldadosFIA;
 };
+
+[_location, caja] call AS_fnc_collectDroppedEquipment;
 
 //add everything
 

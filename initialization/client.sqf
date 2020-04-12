@@ -63,7 +63,7 @@ diag_log "[AS] Client: waiting for the admin to choose sides...";
 
 waitUntil {sleep 1;
 
-    if (player call AS_fnc_isAdmin and {not (isNil "AS_server_variables_initialized")}) exitWith {
+    if (player call AS_fnc_isAdmin and {not (isNil "AS_server_variables_initialized")}) then {
         hint "You are the current administrator.";
 
         if (isNil {AS_P("player_side")} and {not(_isJip)}) then {
@@ -77,6 +77,7 @@ waitUntil {sleep 1;
 };
 
 if not isServer then {
+    waitUntil {not isNil ({AS_P("player_side")})};
     call compile preprocessFileLineNumbers "initialization\common_side_variables.sqf";
     waitUntil {not isNil "AS_dataInitialized"};
     call AS_scheduler_fnc_initialize;
@@ -91,6 +92,11 @@ if not isServer then {
 
 [] spawn AS_fnc_activatePlayerRankLoop;
 
+
+/////////////////////////
+///// JIP STUFF /////////
+/////////////////////////
+
 if _isJip then {
 	{
 	if (_x isKindOf "FlagCarrier") then {
@@ -103,6 +109,23 @@ if _isJip then {
 			};
 		};
 	};
+  if (_x isKindof "Truck_F" and {!((_x call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
+    [_x, "recoverEquipment"] call AS_fnc_addAction;
+    [_x, "transferTo"] call AS_fnc_addAction;
+
+    //TODO somehow to check that boxcargo has synced? is it even necessary?
+    if (count(_x getVariable ["boxCargo",[]]) > 0) then {
+      [_x, "unloadCargo"] call AS_fnc_addAction;
+      };
+
+    };
+
+  if (_x isKindof "Truck_F" and {_x call AS_fnc_getSide == "FIA" and {_x call AS_fuel_fnc_getfuelCargoSize > 0}}) then {
+    [_x, "refuel_truck"] call AS_fnc_addAction;
+    [_x, "refuel_truck_check"] call AS_fnc_addAction;
+    };
+
+
 	} forEach vehicles - [bandera,fuego,caja,cajaVeh];
 
 	{
@@ -114,7 +137,8 @@ if _isJip then {
 	} forEach allUnits;
 
 	// sync the inventory content to the JIP.
-	[false] remoteExec ["AS_fnc_refreshArsenal", 2];
+  //Unnecessary, done below
+	//[false] remoteExec ["AS_fnc_refreshArsenal", 2];
 };
 
 [] spawn {
@@ -123,7 +147,6 @@ if _isJip then {
 };
 
 player enablesimulation true;
-player setcaptive false;
 cutText ["","BLACK IN", 1];
 
 
@@ -132,7 +155,8 @@ removeAllActions caja;
 [caja,"transferFrom"] call AS_fnc_addAction;
 [caja,"emptyPlayer"] call AS_fnc_addAction;
 
-caja addEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}];
+//OBSOLETE if no arsenal waiting
+//caja addEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}];
 
 removeAllActions mapa;
 mapa addAction [localize "str_act_gameOptions", {CreateDialog "game_options";},nil,0,false,true,"","(isPlayer _this) and {_this call AS_fnc_isAdmin}"];

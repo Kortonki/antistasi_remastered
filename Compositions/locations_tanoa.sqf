@@ -597,7 +597,8 @@ _objects = [
 [_dict, "AS_powerplant_5", "center", _center] call DICT_fnc_set;
 [_dict, "AS_powerplant_5", "objects", _objects] call DICT_fnc_set;
 
-_center = [12481.2, 7841.83];
+//Removed from map
+/*_center = [12481.2, 7841.83];
 _objects = [
 	["Land_Cargo_Tower_V4_F",[-4.54883,-5.53857,0],179.251,1,0,[0,-0],"","",true,false],
 	["Land_IRMaskingCover_02_F",[21.4727,-20.2104,0.0138531],357.293,1,0,[4.30924,-2.50369],"","",true,false],
@@ -619,6 +620,7 @@ _objects = [
 [_dict, "AS_outpost_5", call DICT_fnc_create] call DICT_fnc_set;
 [_dict, "AS_outpost_5", "center", _center] call DICT_fnc_set;
 [_dict, "AS_outpost_5", "objects", _objects] call DICT_fnc_set;
+*/
 
 _center = [12646.6, 6663.15];
 _objects = [
@@ -1019,9 +1021,9 @@ _objects = [
 	["Land_Razorwire_F",[-6.96484,-229.752,1.43847],347.833,1,0,[-15.0208,14.631],"","",true,false],
 	["Land_CzechHedgehog_01_F",[-13.0596,-229.109,0],173.281,1,0,[0,-0],"","",true,false]
 ];
-[_dict, "AS_base_4", call DICT_fnc_create] call DICT_fnc_set;
-[_dict, "AS_base_4", "center", _center] call DICT_fnc_set;
-[_dict, "AS_base_4", "objects", _objects] call DICT_fnc_set;
+[_dict, "AS_outpost_5", call DICT_fnc_create] call DICT_fnc_set;
+[_dict, "AS_outpost_5", "center", _center] call DICT_fnc_set;
+[_dict, "AS_outpost_5", "objects", _objects] call DICT_fnc_set;
 
 _center = [11009, 4198.38];
 _objects = [

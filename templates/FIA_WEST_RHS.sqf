@@ -132,6 +132,7 @@ unlockeditems pushback "Chemlight_blue";
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // FIA minefield uses first of this list
 [_dict, "land_vehicles", [
@@ -139,6 +140,7 @@ unlockeditems pushback "Chemlight_blue";
 	"RHS_Ural_Civ_01",
 	"rhsgref_cdf_b_ural",
 	"B_G_Quadbike_01_F",
+	"B_G_Offroad_01_F",
 	"C_Offroad_01_F",
 	"C_Offroad_02_unarmed_F",
 	"C_Van_02_transport_F",
@@ -180,13 +182,13 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 
 
 [_costs, "rhsgref_cdf_b_reg_uaz_dshkm", 600] call DICT_fnc_set;
-[_costs, "rhsgref_cdf_b_reg_uaz_spg9", 1200] call DICT_fnc_set;
+[_costs, "rhsgref_cdf_b_reg_uaz_spg9", 900] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_gaz66_zu23", 1600] call DICT_fnc_set;
 
 //Static costs. Will override the one from initSides.sqf
 
 [_costs, "rhsgref_cdf_b_ZU23", 1200] call DICT_fnc_set;
-[_costs, "rhsgref_cdf_SPG9", 900] call DICT_fnc_set;
+[_costs, "rhsgref_cdf_SPG9", 600] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_DSHKM", 300] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_reg_M252", 600] call DICT_fnc_set;
 

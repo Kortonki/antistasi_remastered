@@ -46,9 +46,9 @@ if (_startFuel == -1) then {_startFuel = round(10000*((random 1)^3.32))};
 if (_startNS == -1) then {_startNS = round(100*((random 1)^4.322))};
 
 
-AS_Pset("hr",_startHr); //initial HR value
+AS_Pset("hr",_startHr + count (allPlayers - (entities "HeadlessClient_F"))); //initial HR value
 AS_Pset("hr_cum", 0); //Cumulative hr buildup for resource updates
-AS_Pset("resourcesFIA",_startMoney); //Initial FIA money pool value
+AS_Pset("resourcesFIA",_startMoney + (50 * count (allPlayers - (entities "HeadlessClient_F")))); //Initial FIA money pool value
 AS_Pset("fuelFIA", _startFuel); //Initial FIA fuel reserves
 
 //AAF money
@@ -120,7 +120,6 @@ AS_Sset("AAFpatrols", 0);
 
 // Used to make a transfer to `caja` atomic
 AS_Sset("lockTransfer", false);
-AS_Sset("lockArsenal", false);
 
 // This sets whether the CSAT can attack or not. The FIA has an option to block
 // attacks by jamming radio signals (close to flags with towers)
@@ -139,13 +138,11 @@ AS_Sset("AS_vehicleOrientation", 0);
 } foreach (call AS_AAFarsenal_fnc_all);
 
 //Set some vehicles
-for "_i" from 0 to (3 + round(random 8)) do {
-	"cars_transport" call AS_AAFarsenal_fnc_addVehicle;
-	"cars_transport" call AS_AAFarsenal_fnc_addVehicle;
-	"cars_armed" call AS_AAFarsenal_fnc_addVehicle;
-	"trucks" call AS_AAFarsenal_fnc_addVehicle;
-	"boats" call AS_AAFarsenal_fnc_addVehicle;
-};
+{
+	private _max = _x call AS_AAFarsenal_fnc_max;
+	private _amount =  round((0.75+(random 0.25))*_max);
+	[_x, "count", _amount] call AS_AAFarsenal_fnc_set;
+} foreach ["cars_transport", "cars_armed", "trucks", "boats", "static_mg", "static_at", "static_aa", "static_mortar", "apcs"];
 
 
 AS_AAF_attackLock = nil;
@@ -159,5 +156,11 @@ publicVariable "AS_maxSkill";
 //Percentage how much FIA funds are given to players each update
 AS_players_share = 5;
 
+lockArsenal = false;
+
 // BE_modul handles all the permissions e.g. to build roadblocks, skill, etc.
 #include "..\Scripts\BE_modul.sqf"
+
+[] call AS_stats_fnc_initialize;
+
+AS_active_messages = [];

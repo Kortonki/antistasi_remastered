@@ -13,13 +13,13 @@ if ([position player, AS_enemyDist*2] call AS_fnc_enemiesNearby) then {
 
 
 {
-	if ((side _x == ("FIA" call AS_fnc_getFactionSide)) and {_x distance2D _posHQ < 100}) then {
+	if ((side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x distance2D _posHQ < 100}) then {
 
 
 		if (_slow) then {[cajaVeh, _posHQ, (damage _x * 20), {true}, {_x distance2D cajaVeh < 100}, "Stay close to the box to heal", ""] call AS_fnc_wait_or_fail;};
 
 		if (hasACE) then {
-					 		[_x, _x] call ace_medical_fnc_treatmentAdvanced_fullHeal;
+					 		[_x] remoteExec ["ace_medical_treatment_fnc_fullHealLocal", _x];
     	} else {
       		_x setDamage 0;
 		};
@@ -41,7 +41,8 @@ private _reportedVehs = AS_S("reportedVehs");
 //For now only rearm buyable FIA armed cars and unlocked aaf vehicle types. Avoid FFV vehicles during rearm.
 
 //Todo consider what vehicles to set persistent
-		if (["vehicle", typeOf _x, _x] call fnc_BE_permission) then {
+//Repair and ream only when empty to avoid setting 0 ammo to FFV positions. TODO: check turrets and load them manually
+		if (["vehicle", typeOf _x, _x] call fnc_BE_permission and {count (crew _x select {alive _x}) == 0 and {alive _x}}) then {
 
 			if (alive _x and {!(_x in (AS_P("vehicles"))) and {_x call AS_fnc_getSide == "FIA"}}) then {[_x] remoteExec ["AS_fnc_changePersistentVehicles", 2]};
 

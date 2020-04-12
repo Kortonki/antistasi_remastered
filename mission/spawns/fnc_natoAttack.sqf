@@ -4,14 +4,14 @@ private _fnc_initialize = {
 	private _destination = [_mission, "destination"] call AS_mission_fnc_get;
 
 	private _destPos = _destination call AS_location_fnc_position;
-	private _origname = format ["the %1 Carrier", (["NATO", "name"] call AS_fnc_getEntity)];
+	private _origname = format ["the %1 Carrier", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	if (_origin != "spawnNATO") then {
 		_origname = [_origin] call AS_fnc_location_name;
 	};
 
-	private _tskTitle = (["NATO", "name"] call AS_fnc_getEntity) + " Attack";
+	private _tskTitle = (["NATO", "shortname"] call AS_fnc_getEntity) + " Attack";
 	private _tskDesc = format ["Our Commander asked %1 for an attack on %2. Help them in order to have success in this operation. The attack will depart from %3 and will include artillery fire.",
-		(["NATO", "name"] call AS_fnc_getEntity),
+		(["NATO", "shortname"] call AS_fnc_getEntity),
 		[_destination] call AS_fnc_location_name,
 		_origname];
 
@@ -30,7 +30,7 @@ private _fnc_spawn = {
 	private _groups = [];
 	private _vehicles = [];
 
-	private _threatEval = [_destPos] call AS_fnc_getAirThreat;
+	private _threatEval = [_destPos, "AAF"] call AS_fnc_getAirThreat;
 
 	private _origPos = getMarkerPos "spawnNATO";
 	private _isAirfield = true;
@@ -78,12 +78,12 @@ private _fnc_spawn = {
 					[_origPos, _destPos, _groupheli, _destination, _group, _threatEval] spawn AS_tactics_fnc_heli_fastrope;
 				};
 				if ((_destination call AS_location_fnc_type) in ["resource","factory", "powerplant"]) then {
-					_vehicles append ([_origPos, _destPos, _groupheli, _group, _destination] call AS_tactics_fnc_heli_disembark);
+					_vehicles append ([_origPos, _destPos, _groupheli, _group, _destination, "AAF"] call AS_tactics_fnc_heli_disembark);
 				};
 			};
 		};
 		if (_method == "disembark") then {
-			_vehicles append ([_origPos, _destPos, _groupheli, _group, _destination] call AS_tactics_fnc_heli_disembark);
+			_vehicles append ([_origPos, _destPos, _groupheli, _group, _destination, "AAF"] call AS_tactics_fnc_heli_disembark);
 		};
 		if (_method == "fastrope") then {
 			if ((_destination call AS_location_fnc_type) in ["airfield","base", "watchpost"] or (random 10 < _threatEval)) then {

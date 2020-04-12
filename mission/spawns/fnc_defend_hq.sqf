@@ -4,6 +4,7 @@ private _fnc_initialize = {
 	params ["_mission"];
 	private _tskTitle = localize "STR_tsk_HQAttack";
 	private _tskDesc = localize "STR_tskDesc_HQAttack";
+	_tskDesc = format [_tskDesc, ["AAF", "shortname"] call AS_fnc_getEntity, ["CSAT", "shortname"] call AS_fnc_getEntity];
 
 	private _location = "fia_hq";
 	private _position = _location call AS_location_fnc_position;
@@ -31,6 +32,7 @@ private _fnc_spawn = {
 	//Transport choppers. They will come regardless of support
 
 	for "_i" from 1 to (1 + round random 2) do {
+		[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2]; //CSAT support lowered each attack
 		private _pos = [_origin, 300, random 360] call BIS_Fnc_relPos;
 		private _type = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);
 		([_type, _pos, random 360, "CSAT", "pilot", 300, "FLY"] call AS_fnc_createVehicle) params ["_heli", "_grupoHeli", "_pilot"];
@@ -103,29 +105,61 @@ private _fnc_spawn = {
 		// compute number of trucks based on the marker size
 		//private _nVeh = (round (_size/30)) max 1;
 
-		private _threat = [_position] call AS_fnc_getLandThreat;
+		private _threat = [_position, "FIA"] call AS_fnc_getLandThreat;
 
 		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
-		private _nVeh = (round((_threat/2)*(_arsenalCount/30)) max 1) min (_arsenalCount min 10);
+		private _max = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of trucks if choosing to not use apcs or tanks
+		private _nVeh = (round((_threat/2)*(_arsenalCount/30)) max 1) min (_arsenalCount min _max);
 
+		//Group for vehicles (tanks)
+		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
+		_groups pushback _vehGroup;
 
 		// spawn them
 		for "_i" from 1 to _nveh do {
 			private _toUse = "trucks";
-			if (_threat > 3 and ("apcs" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+			if (_threat > 3 and {["apcs", 0.3] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "apcs";
 				};
-			if (_threat > 5 and ("tanks" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+			if (_threat > 5 and {["tanks", 0.3] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "tanks";
 				};
 			([_toUse, _originPos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
-			_groups append _groups1;
-			_vehiculos append _vehicles1;
+			//Tanks make one group
 			{_soldiers append (units _x)} foreach _groups1;
+			if (_toUse == "tanks") then {
+				(units (_groups1 select 0)) join _vehGroup;
+				deletegroup (_groups1 select 0);
+			} else {
+				_groups append _groups1;
+			};
+			_vehiculos append _vehicles1;
 			sleep 5;
 			};
 			diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
+
+			//Support vehicles here. //Choose support position from AAF locations whice are close to the target & the base
+			//TODO improve this to search from farther
+
+			private _supDest = _originPos;
+			private _supLoc	= ["AAF" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
+			private _supLocPos = _supLoc call AS_location_fnc_position;
+			if (_supLocPos distance2D _originPos < _position distance2D _originPos) then {
+				_supDest = _supLocPos;
+			};
+
+
+			([_originPos, _supDest] call AS_fnc_findSpawnSpots) params ["_supPos", "_supDir"];
+
+			([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
+			_vehiculos append _supVehs;
+			_soldiers append _supUnits;
+			_groups pushback _supGroup;
+
 		};
+
+		//Spawn the target, FIA HQ in this case:
+		["fia_hq", true] call AS_location_fnc_spawn;
 
 
 
@@ -185,7 +219,7 @@ private _fnc_run = {
 
 		//private _origin = getMarkerPos "spawnCSAT";
 
-		{_x doMove _originPos} forEach _soldiers;
+		//{_x doMove _originPos} forEach _soldiers;
 
 		{
 
@@ -205,6 +239,8 @@ private _fnc_run = {
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
+
+	["fia_hq", true] call AS_location_fnc_despawn;
 
 };
 

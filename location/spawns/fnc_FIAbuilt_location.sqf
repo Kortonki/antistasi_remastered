@@ -56,7 +56,6 @@ private _fnc_spawn = {
 			call {
 				if (typeof _x == "Box_NATO_Equip_F") exitWith {_campBox = _x;};
 				if (typeof _x == "Land_MetalBarrel_F") exitWith {[_x,"refuel"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];};
-				if (typeof _x == "Land_Campfire_F") exitWith {_x inflame true;};
 			};
 			_x setVectorUp (surfaceNormal (position _x));
 		} forEach _objs;
@@ -69,6 +68,9 @@ private _fnc_spawn = {
 		[_campBox,"heal_camp"] RemoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		[_campBox,"arsenal"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 		[_campBox,"transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+
+		//OBSOLETE if no arsenal waiting
+		//_campBox addEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}];
 
 		[_location, "campBox", _campBox] call AS_spawn_fnc_set;
 	};
@@ -92,33 +94,39 @@ private _fnc_wait_for_destruction = {
 
 	private _soldiers = [_location, "FIAsoldiers"] call AS_spawn_fnc_get;
 
-	private _wasDestroyed = false;
-	private _wasAbandoned = ({alive _x} count _soldiers) == 0;  // abandoned when it has no garrison
+	//is _wasabondoned obsolete as abandonfialocation abandons on its own?
+	private _wasAbandoned = ({!(isnil{_x getVariable "marcador"})} count _soldiers == 0);  // abandoned when it has no garrison
+	private _wasDestroyed = ({alive _x} count _soldiers) == 0;
+
+	private _destroyed = false;
+
 	waitUntil {sleep AS_spawnLoopTime;
-		_wasDestroyed = !_wasAbandoned and ({_x call AS_fnc_canFight} count _soldiers == 0);
+ _wasAbandoned = ({!(isnil{_x getVariable "marcador"})} count _soldiers == 0);  // abandoned when it has no garrison
+ _wasDestroyed = ({alive _x} count _soldiers) == 0;
 		_wasAbandoned or !(_location call AS_location_fnc_spawned) or _wasDestroyed
 	};
 
 	if _wasDestroyed then {
 		[5,-5,_position] remoteExec ["AS_fnc_changeCitySupport",2];
+		_destroyed = true;
 
 		switch _type do {
 			case "roadblock": {
-				[["TaskFailed", ["", "Roadblock Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+				["TaskFailed", ["", "Roadblock Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 			case "watchpost": {
-				[["TaskFailed", ["", "Watchpost Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+				["TaskFailed", ["", "Watchblock Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 			case "camp": {
-				[["TaskFailed", ["", "Camp Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+				["TaskFailed", ["", "Camp Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 			default {
-				[["TaskFailed", ["", "Location Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+				["TaskFailed", ["", "Location Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 			};
 		};
 	};
 
-	[_location, "wasDestroyed", _wasDestroyed] call AS_spawn_fnc_set;
+	[_location, "destroyed", _destroyed] call AS_spawn_fnc_set;
 };
 
 private _fnc_wait_to_abandon = {
@@ -126,20 +134,20 @@ private _fnc_wait_to_abandon = {
 	private _type = _location call AS_location_fnc_type;
 
 	private _soldiers = [_location, "FIAsoldiers"] call AS_spawn_fnc_get;
-	private _wasDestroyed = [_location, "wasDestroyed"] call AS_spawn_fnc_get;
+	private _destroyed = [_location, "destroyed"] call AS_spawn_fnc_get;
 
 	private _wasAbandoned = ({!(isnil{_x getVariable "marcador"})} count _soldiers == 0);  // abandoned when garrison is released
 	private _toRemove = false; //This is passed to the clean function
 
 	waitUntil {sleep AS_spawnLoopTime;
-		_wasAbandoned or _wasDestroyed or !(_location call AS_location_fnc_spawned)
+		_wasAbandoned or _destroyed or !(_location call AS_location_fnc_spawned)
 	};
 
-	if (_wasAbandoned or _wasDestroyed) then {
+	if (_wasAbandoned or _destroyed) then {
 		_toRemove = true;
 	};
 
-	if _wasDestroyed then {
+	if _destroyed then {
 		if (_type == "camp") then {
 			// remove 10% of every item (rounded up) from caja
 			//waitUntil {not AS_S("lockTransfer")};
@@ -182,7 +190,10 @@ private _fnc_clean = {
 			([_location, "resources"] call AS_spawn_fnc_get) params ["_task", "_groups", "_vehicles", "_markers"];
 			[_groups,  _vehicles, _markers] call AS_fnc_cleanResources;
 			[_location, false] call AS_location_fnc_knownLocations;
-			//Check for active defence missions before removing location
+
+			//Set the side to empty to trigger possible defend location mission fail so below waituntil can finish
+			[_location, "side", "EMPTY"] call AS_location_fnc_set;
+			//Check for active defence missions before removing location.
 			waitUntil {sleep AS_spawnLoopTime; (call AS_mission_fnc_active_missions) find (format ["defend_location_%1", _location]) == -1};
 			[_location] remoteExec ["AS_location_fnc_remove", 2];
 			[_location, "delete", true] call AS_spawn_fnc_set;

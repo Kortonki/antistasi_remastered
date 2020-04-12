@@ -12,9 +12,9 @@ private _fnc_initialize = {
 	private _name = [_location] call AS_fnc_location_name;
 
 	private _tskTitle = "Defend " + _name;
-	private _tskDesc = (["AAF", "name"] call AS_fnc_getEntity) + " is attacking %1. Defend it or we lose it";
+	private _tskDesc = (["AAF", "shortname"] call AS_fnc_getEntity) + " is attacking %1. Defend it or we lose it";
 	if _useCSAT then {
-		_tskDesc = (format ["%1 and %2", (["AAF", "name"] call AS_fnc_getEntity), ["CSAT", "name"] call AS_fnc_getEntity]) + " are attacking %1. Defend it or we lose it";
+		_tskDesc = (format ["%1 and %2", (["AAF", "shortname"] call AS_fnc_getEntity), ["CSAT", "shortname"] call AS_fnc_getEntity]) + " are attacking %1. Defend it or we lose it";
 	};
 	_tskDesc = format [_tskDesc,_name];
 
@@ -25,6 +25,7 @@ private _fnc_spawn = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
+	private _size = _location call AS_location_fnc_size;
 	private _base = [_mission, "base"] call AS_mission_fnc_get;
 	private _airfield = [_mission, "airfield"] call AS_mission_fnc_get;
 	private _useCSAT = [_mission, "useCSAT"] call AS_mission_fnc_get;
@@ -33,15 +34,20 @@ private _fnc_spawn = {
 
 	private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
 	_patrolMarker setMarkerShape "ELLIPSE";
-	_patrolMarker setMarkerSize [50,50];
+	_patrolMarker setMarkerSize [_size*1.5 min 200, _size*1.5 min 200];
 	_patrolMarker setMarkerAlpha 0;
 
 
 	private _threatEvalAir = 0;
-	if (_airfield != "" or _useCSAT) then {_threatEvalAir = [_position] call AS_fnc_getAirThreat};
+	if (_airfield != "" or _useCSAT) then {_threatEvalAir = [_position, "FIA"] call AS_fnc_getAirThreat};
 
 	private _threatEvalLand = 0;
-	if (_base != "") then {_threatEvalLand = [_position] call AS_fnc_getLandThreat};
+	if (_base != "") then {_threatEvalLand = [_position, "FIA"] call AS_fnc_getLandThreat};
+
+	if (_location call AS_location_fnc_type in ["base", "airfield"]) then {
+			_threatEvalLand = _threatEvalLand + (AS_P("NATOsupport")/10);
+			_threatEvalAir = _threatEvalAir + (AS_P("NATOsupport")/10);
+	};
 
 	private _groups = [];
 	private _vehicles = [];
@@ -49,17 +55,15 @@ private _fnc_spawn = {
 	//CSAT attack
 
 	if (_useCSAT) then {
-
-		[5,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 		private _cuenta = 3;
-		if ((_base == "") or (_airfield == "")) then {_cuenta = 6};
+		//if ((_base == "") and (_airfield == "")) then {_cuenta = 6}; //TODO make count depend on CSAT support
 
 		([_location, _cuenta, _threatEvalAir] call AS_fnc_spawnCSATattack) params ["_groups1", "_vehicles1"];
 		_groups append _groups1;
 		_vehicles append _vehicles1;
 
 		// drop artillery at bases or airfields
-		[["TaskSucceeded", ["", format ["%1 under artillery fire",[_location] call AS_fnc_location_name]]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskSucceeded", ["", format ["%1 under artillery fire",[_location] call AS_fnc_location_name]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 		[_location] spawn {
 			params ["_location"];
 			if ((AS_P("CSATSupport")) >= 50) then {
@@ -85,31 +89,43 @@ private _fnc_spawn = {
 		//Attack size is dependent on how much arsenal AAF has and threat evaluation TODO: prolly NEEDS BALANCING,
 		//private _nVeh = (round (_size/30)) max 1;
 		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
-		private _nVeh = (round((_threatEvalLand/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min 10);
+		private _max = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of trucks if choosing to not use armed helis. (see below)
+		private _nVeh = (round((_threatEvalLand/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min _max);
 
 
 
+		//Make a group for vehicles
+		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
+		_groups pushback _vehGroup;
 
 		// spawn them
 		for "_i" from 1 to _nVeh do {
+			//Only use at most 50% of heavy equipment for attack
 			private _toUse = "trucks";
-			if (_threatEvalLand > 3 and ("apcs" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+			if (_threatEvalLand > 3 and {["apcs", 0.5] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "apcs";
 			};
-			if (_threatEvalLand > 5 and ("tanks" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+			if (_threatEvalLand > 5 and {["tanks", 0.5] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "tanks";
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
-			_groups append _groups1;
+
+			//Tanks make one group
+			if (_toUse == "tanks") then {
+				(units (_groups1 select 0)) join _vehGroup;
+				deletegroup (_groups1 select 0);
+			} else {
+				_groups append _groups1;
+			};
 			_vehicles append _vehicles1;
 			sleep 5;
 		};
-		diag_log format ["[AS] DefendLocation: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
+		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};
 
 	if (_airfield != "") then {
 		[_airfield,60] call AS_location_fnc_increaseBusy;
-		if (_base != "") then {sleep ((_originPos distance _position)/16)};
+		if (_base != "") then {sleep ((_originPos distance2D _position)/16)};
 
 		_originPos = _airfield call AS_location_fnc_position;
 		_originPos set [2,300];
@@ -130,27 +146,54 @@ private _fnc_spawn = {
 			_uwp0 setWaypointType "LOITER";
 		};
 
-		for "_i" from 1 to 3 do {
+		private _arsenalCount = (["helis_transport", "helis_armed", "planes"] call AS_AAFarsenal_fnc_countAvailable);
+		private _max = ("helis_transport" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of helis if choosing to not use armed helis. (see below)
+		private _nVeh = (round((_threatEvalAir/2)*(_arsenalCount/50)) max 1) min (_arsenalCount min _max);
+
+		for "_i" from 1 to _nVeh do {
 			private _toUse = "helis_transport";  // last attack is always a transport
 
 			// first 2 rounds can be any unit, stronger the higher the treat
-			if (_i < 3) then {
-				if ("helis_armed" call AS_AAFarsenal_fnc_countAvailable > 0) then {
+			if (_i < _nVeh) then {
+				//Here they can use the last ones as they're not good on defense
+				if (["helis_armed", 0.2] call AS_fnc_vehicleAvailability) then {
 					_toUse = "helis_armed";
 				};
-				if (_threatEvalAir > 15 and ("planes" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+				if (_threatEvalAir > 15 and {["planes", 0.2] call AS_fnc_vehicleAvailability}) then {
 					_toUse = "planes";
 				};
 			};
 			([_toUse, _originPos, _position, _patrolMarker] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
-			sleep 15;
+			sleep 10;
 		};
+		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};
+
+	//Support vehicles here. //Choose support position from AAF locations whice are close to the target & the base
+	//TODO improve this to search from farther
+	//TODO consider when to spawn which support. eg trucks don't need ammo
+
+	private _supDest = _originPos;
+	private _supLoc	= ["AAF" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
+	private _supLocPos = _supLoc call AS_location_fnc_position;
+	if (_supLocPos distance2D _originPos < _position distance2D _originPos) then {
+		_supDest = _supLocPos;
+	};
+
+
+	([_originPos, _supDest] call AS_fnc_findSpawnSpots) params ["_supPos", "_supDir"];
+
+	([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
+	_vehicles append _supVehs;
+	_groups pushback _supGroup;
 
 	private _soldiers = [];
 	{_soldiers append (units _x)} forEach _groups;
+
+	//Spawn the target location
+	[_location, true] call AS_location_fnc_spawn;
 
 	private _task = ([_mission, "CREATED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 	[_mission, "originPos", _originPos] call AS_spawn_fnc_set;
@@ -186,7 +229,7 @@ private _fnc_run = {
 
 		private _originPos = [_mission, "originPos"] call AS_spawn_fnc_get;
 
-		{_x doMove _originPos} forEach _soldiers;
+		//{_x doMove _originPos} forEach _soldiers;
 		{
 			_x setVariable ["UPSMON_Remove", true]; //UPSMON no longer interferes
 			private _wpRTB = _x addWaypoint [_originPos, 0];
@@ -195,6 +238,8 @@ private _fnc_run = {
 	};
 
 	[_fnc_missionFailedCondition, _fnc_missionFailed, _fnc_missionSuccessfulCondition, _fnc_missionSuccessful] call AS_fnc_oneStepMission;
+
+	[_location, false] call AS_location_fnc_despawn;
 };
 
 private _fnc_clean = {

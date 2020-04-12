@@ -1,15 +1,14 @@
 params ["_unit", "_player"];
 
-//[[_unit, "remove"],"AS_fnc_addAction"] call BIS_fnc_MP;
 [_unit, "remove"] remoteExec ["AS_fnc_addaction", [0, -2] select isDedicated];
 
-_player globalChat "You are free. Come with us!";
+_player groupChat "You are free. Come with us!";
 if captive _player then {
 	[_player, false] remoteExec ["setCaptive", _player];
 };
 sleep 1;
 
-
+["rescued", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
 
 _unit sideChat "Thank you. I owe you my life!";
 

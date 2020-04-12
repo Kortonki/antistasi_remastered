@@ -50,3 +50,5 @@ for "_i" from 0 to (count (_cargo_b select 0) - 1) do {
 		_box addBackpackCargoGlobal [_name,_amount max 0];
 	};
 };
+
+lockArsenal = false;

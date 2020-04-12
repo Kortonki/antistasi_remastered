@@ -6,14 +6,13 @@ if (_position distance (_location call AS_location_fnc_position) > 100 or
     _location call AS_location_fnc_side != "FIA") exitWith {
     hint "No FIA camp selected";
 };
-if !(_type != "camp") exitWith {
+if (_type != "camp") exitWith {
     hint "Only camps can be renamed";
 };
 
-private _oldName = [_location,"name"] call AS_location_fnc_get;
-((findDisplay 1602) displayCtrl 1) ctrlSetText _oldName;
-
+private _oldName = [_location, "name"] call AS_location_fnc_get;
 createDialog "AS_manageLocations_rename";
+((findDisplay 1602) displayCtrl 1) ctrlSetText _oldName;
 waitUntil {dialog};
 waitUntil {!dialog};
 

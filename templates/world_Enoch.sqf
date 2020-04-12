@@ -6,7 +6,7 @@
 // 0: exclude below this size
 // 1: minimun radius for a city
 // 2: exclude these cities
-[200,100,[]] call AS_location_fnc_addCities;
+[200,100, 1000, []] call AS_location_fnc_addCities;
 
 // These have to be names in the map. Be careful on putting names that are also cities (consider excludeing them above)
 private _hillsAA = [];
@@ -21,8 +21,7 @@ seaMarkers = [];
 
 // you can modify AS_antenasTypes
 
-AS_antenasTypes = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F", "Land_Com_tower_ep1", "Land_Telek1", "Land_Vysilac_vez",
-"Land_TTowerBig_1_ruins_F","Land_TTowerBig_2_ruins_F", "Land_Telek1_ruins", "Land_Com_tower_ruins_EP1"];
+
 AS_antenasPos_alive = [[2382.54,11479.9,0], [7866.52,10102.7,0], [7775.75,10081.1,0], [3831.21,1827.58,0], [8895.02,2049.55,0]];
 
 AS_bankPositions = [[1730.61,7320.9,0]];//same as RT for Bank buildings, select the biggest buildings in your island, and make a DB with their positions.

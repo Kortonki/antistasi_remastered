@@ -20,6 +20,18 @@ switch (_location call AS_location_fnc_type) do {
         [_location,"side","AAF", false] call AS_location_fnc_set;
         [_location,"busy",dateToNumber date, false] call AS_location_fnc_set;
     };
+    case "resource": {
+        [_location,"side","AAF", false] call AS_location_fnc_set;
+        [_location,"busy",dateToNumber date, false] call AS_location_fnc_set;
+    };
+    case "factory": {
+        [_location,"side","AAF", false] call AS_location_fnc_set;
+        [_location,"busy",dateToNumber date, false] call AS_location_fnc_set;
+    };
+    case "seaport": {
+        [_location,"side","AAF", false] call AS_location_fnc_set;
+        [_location,"busy",dateToNumber date, false] call AS_location_fnc_set;
+    };
     case "minefield": {
         [_location, "mines", [], false] call AS_location_fnc_set;  // [type, pos, dir]
         [_location, "found", false, false] call AS_location_fnc_set;
@@ -28,12 +40,21 @@ switch (_location call AS_location_fnc_type) do {
         [_location,"side","AAF", false] call AS_location_fnc_set;
         [_location, "location", "", false] call AS_location_fnc_set;
     };
+    case "hillAA": {
+      [_location,"side","CSAT", false] call AS_location_fnc_set;
+    };
+
+    case "hill": {
+      [_location,"side","CSAT", false] call AS_location_fnc_set;
+    };
     default {
         [_location,"side","AAF", false] call AS_location_fnc_set;
     };
 };
 if ("garrison" in ((_location call AS_location_fnc_type) call AS_location_fnc_properties)) then {
     [_location,"garrison",[], false] call AS_location_fnc_set;
+    [_location,"combatMode", "GREEN", false] call AS_location_fnc_set;
+    [_location,"behaviour", "SAFE", false] call AS_location_fnc_set;
 };
 [_location,"spawned",false, false] call AS_location_fnc_set;
 [_location,"forced_spawned",false, false] call AS_location_fnc_set;

@@ -4,3 +4,4 @@ FNC_UI_PREFIX(dialogs,manageGarrisons,selectOnMap);
 FNC_UI_PREFIX(dialogs,manageGarrisons,onMapClick);
 FNC_UI_PREFIX(dialogs,manageGarrisons,recruit);
 FNC_UI_PREFIX(dialogs,manageGarrisons,dismiss);
+FNC_UI_PREFIX(dialogs,manageGarrisons,orders);

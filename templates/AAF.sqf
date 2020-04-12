@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str east] call DICT_fnc_set;
 [_dict, "roles", ["state"]] call DICT_fnc_set;
 [_dict, "name", "AAF"] call DICT_fnc_set;
+[_dict, "shortname", "AAF"] call DICT_fnc_set;
 [_dict, "flag", "Flag_AAF_F"] call DICT_fnc_set;
 [_dict, "box", "I_supplyCrate_F"] call DICT_fnc_set;
 
@@ -34,6 +35,10 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "cars_armed", ["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F"]] call DICT_fnc_set;
 [_dict, "apcs", ["I_APC_Wheeled_03_cannon_F", "I_APC_tracked_03_cannon_F"]] call DICT_fnc_set;
 [_dict, "trucks", ["I_Truck_02_covered_F","I_Truck_02_transport_F"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
 
 [_dict, "truck_ammo", "I_Truck_02_ammo_F"] call DICT_fnc_set;
 [_dict, "truck_repair", "I_Truck_02_box_F"] call DICT_fnc_set;
@@ -56,6 +61,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["APERSMine", "APERSTripMine", "APERSBoundingMine"]] call DICT_fnc_set;

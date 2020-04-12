@@ -5,17 +5,16 @@ params ["_unit", "_player"];
 
 if (!alive _unit) exitWith {};
 
-_player globalChat "You *&%#¤! Tell me what you know!";
+//_player globalChat "You *&%#¤! Tell me what you know!";
 
-private _chance = AS_P("NATOsupport") - AS_P("CSATsupport");
+private _chance = 100 -  4*(AS_P("skillAAF")) -  0.5*((AS_P("CSATsupport")) - (AS_P("NATOsupport")));
 
-_chance = _chance + 20;
 
-if (_chance < 20) then {_chance = 20};
+_chance = (_chance max 20) min 95;
 
 if (floor random 100 < _chance) then {
-	_unit globalChat "Okay, I'll tell you everything I know";
+	["Suprprisingly he told you something valuable"] remoteExec ["hint", _player];
 	[_unit] call AS_fnc_showFoundIntel;
 } else {
-	_unit globalChat "Screw you!";
+	["He doesn't want to co-operate"] remoteExec ["hint", _player];
 };

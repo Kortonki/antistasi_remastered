@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str west] call DICT_fnc_set;
 [_dict, "roles", ["state", "foreign"]] call DICT_fnc_set;
 [_dict, "name", "USMC Desert Camo (RHS)"] call DICT_fnc_set;
+[_dict, "shortname", "USMC"] call DICT_fnc_set;
 [_dict, "flag", "Flag_US_F"] call DICT_fnc_set;
 [_dict, "flag_marker", "rhs_flag_USA"] call DICT_fnc_set;
 
@@ -17,8 +18,12 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "boats", ["B_Boat_Armed_01_minigun_F"]] call DICT_fnc_set;
 
 // used in roadblock mission
-[_dict, "trucks", ["rhsusf_M1083A1P2_D_fmtv_usarmy","rhsusf_M1083A1P2_B_D_fmtv_usarmy","rhsusf_M1083A1P2_D_flatbed_fmtv_usarmy","rhsusf_M1083A1P2_B_D_flatbed_fmtv_usarmy","rhsusf_M1078A1P2_D_fmtv_usarmy","rhsusf_M1078A1P2_D_flatbed_fmtv_usarmy"]] call DICT_fnc_set;
-[_dict, "apcs", ["rhsusf_m113d_usarmy_unarmed","rhsusf_m113d_usarmy","rhsusf_m113d_usarmy_M240","rhsusf_m113d_usarmy_MK19","RHS_M2A2","RHS_M2A2_BUSKI","RHS_M2A3","RHS_M2A3_BUSKI","RHS_M2A3_BUSKIII"]] call DICT_fnc_set;
+[_dict, "trucks", ["rhsusf_M1083A1P2_D_fmtv_usarmy","rhsusf_M1083A1P2_B_D_fmtv_usarmy", "rhsusf_M1078A1P2_D_fmtv_usarmy"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
+[_dict, "apcs", ["rhsusf_m113d_usarmy_unarmed","rhsusf_m113d_usarmy","rhsusf_m113d_usarmy_M240","rhsusf_m113d_usarmy_MK19","RHS_M2A2","RHS_M2A2_BUSKI"]] call DICT_fnc_set;
 
 // used in traitor mission
 [_dict, "cars_transport", ["rhsusf_m1025_d_s","rhsusf_m1043_d_s","rhsusf_m998_d_s_2dr_halftop",
@@ -27,7 +32,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 "rhsusf_m998_d_s_4dr_halftop",
 "rhsusf_m998_d_s_4dr",
 "rhsusf_m998_d_s_4dr_fulltop"]] call DICT_fnc_set;
-[_dict, "cars_armed", ["rhsusf_m1025_d_s_m2",
+[_dict, "cars_armed", [
+"rhsusf_m1025_d_s_m2",
 "rhsusf_m1025_d_s_Mk19",
 "rhsusf_m1025_d_s_m2",
 "rhsusf_m1043_d_s_mk19",
@@ -86,6 +92,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 if hasTFAR then {
     [_dict, "tfar_lr_radio", "TFAR_rt1523g_rhs"] call DICT_fnc_set;

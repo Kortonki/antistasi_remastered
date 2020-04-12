@@ -24,8 +24,9 @@ if (!isNil "petros") then {
 };
 
 grupoPetros = createGroup ("FIA" call AS_fnc_getFactionSide);
-petros = ["Squad Leader", getMarkerPos "FIA_HQ", grupoPetros] call AS_fnc_spawnFIAunit;
+petros = ["Squad Leader", getMarkerPos "FIA_HQ", grupoPetros, false, [], 0] call AS_fnc_spawnFIAunit;
 [petros, "FIA"] call AS_fnc_setSide;
+grupoPetros setCombatMode "GREEN";
 
 publicVariable "grupoPetros";
 publicVariable "petros";
@@ -33,8 +34,9 @@ publicVariable "petros";
 [petros,"mission"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
 
 grupoPetros setGroupId ["Petros","GroupColor4"];
-petros setName "Petros";
+[petros, ["Petros", "Petros", "Petros"]] remoteExec ["setName", AS_CLIENTS];
 petros disableAI "MOVE";
+publicVariable "petros";
 
 removeHeadgear petros;
 removeGoggles petros;
@@ -74,8 +76,8 @@ petros setSkill 1;
         _dam
         }];*/
 
-petros addMPEventHandler ["mpkilled", {
-    removeAllActions petros;
+petros addEventHandler ["killed", {
+    [petros, "remove"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
     private _killer = _this select 1;
         diag_log format ["[AS] INFO: Petros died. Killer: %1", _killer];
         [] remoteExec ["AS_fnc_petrosDeath", 2];

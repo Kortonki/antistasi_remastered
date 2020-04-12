@@ -1,0 +1,36 @@
+This file is for documentation for statistics variables and story related events
+
+"Story"
+
+startDate
+NATO_killAAF_date
+NATO_killCSAT_date
+
+
+Cities:
+key:    startcitypops
+
+startpop
+
+Sides:
+Common:
+keys:   casualties
+        civKills
+        journalistKills
+
+Destroyed vehicles
+keys:   d_vehicles
+        d_tanks
+        d_apcs
+        d_helis
+        d_planes
+
+FIA:
+rescued
+civHealed
+vehsCaptured
+apcsCaptured
+tanksCaptured
+helisCaptured
+planesCaptured
+traitorsKilled

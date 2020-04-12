@@ -8,6 +8,9 @@ if (_location in AS_P("patrollingLocations")) then {
   AS_Pset("patrollingLocations", (AS_P("patrollingLocations") - [_location]));
 };
 
+//This is done elsewhere but just for a good measure
+[_location, false] call AS_location_fnc_knownLocations;
+
 // the hidden marker
 deleteMarker _location;
 

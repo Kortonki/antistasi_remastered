@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str west] call DICT_fnc_set;
 [_dict, "roles", ["state", "foreign"]] call DICT_fnc_set;
 [_dict, "name", "NATO"] call DICT_fnc_set;
+[_dict, "shortname", "NATO"] call DICT_fnc_set;
 [_dict, "flag", "Flag_NATO_F"] call DICT_fnc_set;
 [_dict, "flag_marker", "flag_NATO"] call DICT_fnc_set;
 
@@ -18,6 +19,10 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 // used in roadblock mission
 [_dict, "trucks", ["B_Truck_01_covered_F", "B_Truck_01_transport_F"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
 [_dict, "apcs", ["B_APC_Wheeled_01_cannon_F"]] call DICT_fnc_set;
 
 // used in traitor mission
@@ -64,9 +69,13 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 // To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
 [_dict, "additionalWeapons", []] call DICT_fnc_set;
 [_dict, "additionalMagazines", []] call DICT_fnc_set;
-[_dict, "additionalItems", []] call DICT_fnc_set;
-[_dict, "additionalBackpacks", []] call DICT_fnc_set;
+[_dict, "additionalItems", ["Item_B_UavTerminal"]] call DICT_fnc_set;
+[_dict, "additionalBackpacks", [
+["B_UAV_01_backpack_F", "Item_B_UavTerminal"],
+["B_UAV_06_backpack_F", "Item_B_UavTerminal"]
+]] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["APERSMine", "APERSTripMine", "APERSBoundingMine"]] call DICT_fnc_set;

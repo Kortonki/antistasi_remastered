@@ -32,8 +32,8 @@ private _fnc_spawn = {
 	private _bases = [];
 	{
 		private _posbase = _x call AS_location_fnc_position;
-		if ((_position distance _posbase < 7500) and
-		    (_position distance _posbase > 1500) and !(_x call AS_location_fnc_spawned)) then {
+		if ((_position distance2D _posbase < 7500) and
+		    (_position distance2D _posbase > 1500) and !(_x call AS_location_fnc_spawned)) then {
 			_bases pushBack _x;
 		};
 	} forEach (["base", "AAF"] call AS_location_fnc_TS);
@@ -46,8 +46,8 @@ private _fnc_spawn = {
 	private _airports = [];
 	{
 		private _posAirport = _x call AS_location_fnc_position;
-		if ((_position distance _posAirport < 20000) and
-		    (_position distance _posAirport > 3000) and
+		if ((_position distance2D _posAirport < 20000) and
+		    (_position distance2D _posAirport > 3000) and
 			!(_x call AS_location_fnc_spawned)) then {
 			_airports pushBack _x;
 		};
@@ -58,7 +58,8 @@ private _fnc_spawn = {
 	};
 
 	// spawn mission vehicle
-	private _propTruck =  (selectRandom (["FIA", "vans"] call AS_fnc_getEntity)) createVehicle ((getMarkerPos "FIA_HQ") findEmptyPosition [10,50,"C_Truck_02_box_F"]);
+	private _propTruck = [selectRandom (["FIA", "vans"] call AS_fnc_getEntity), getpos vehiclePad, "FIA"] call AS_fnc_createEmptyVehicle;
+	[_propTruck] remoteExec ["AS_fnc_changePersistentVehicles", 2];
 	[0,-600] remoteExec ["AS_fnc_changeFIAMoney", 2];
 	//publicVariable "_propTruck";
 
@@ -85,7 +86,6 @@ private _fnc_spawn = {
 	_grafArray pushBack _graf4;
 
 	// initialize mission vehicle
-	[_propTruck, "FIA"] call AS_fnc_initVehicle;
 	{_x reveal _propTruck} forEach (allPlayers - (entities "HeadlessClient_F"));
 	_propTruck setVariable ["destino", [_location] call AS_fnc_location_name, true];
 	_propTruck addEventHandler ["GetIn", {
@@ -214,8 +214,8 @@ private _fnc_spawn_activator = {
 			[_amigo,false] remoteExec ["setCaptive",_amigo];
 		};
 		{
-			if ((side _x == ("AAF" call AS_fnc_getFactionSide)) and (_x distance _propTruck < AS_P("spawnDistance"))) then {
-				if (_x distance _propTruck < 300) then {_x doMove position _propTruck} else {_x reveal [_amigo,4]};
+			if ((side _x == ("AAF" call AS_fnc_getFactionSide)) and (_x distance2D _propTruck < AS_P("spawnDistance"))) then {
+				if (_x distance2D _propTruck < 300) then {_x doMove position _propTruck}; //Reveal removed, unrealistic
 			};
 		} forEach allUnits;
 	} forEach ([300, _propTruck, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
@@ -229,16 +229,9 @@ private _fnc_spawn_activator = {
 
 	default setting based on number of players online
 	*/
-	private _timing = [5,10,16];
-	private _comp = ["QRF_air_mixed_small", "QRF_land_mixed_small", "CSAT_small"];
-	if (isMultiplayer) then {
-		_timing = [0,5,10,20];
-		_comp = ["QRF_air_mixed_small", "QRF_land_mixed_large", "QRF_land_transport_large","CSAT_small"];
-		if (count (allPlayers - entities "HeadlessClient_F") > 3) then {
-			_timing = [0,1,4,8,15,16,25];
-			_comp = ["QRF_land_mixed_large", "QRF_air_mixed_small", "QRF_land_transport_large", "QRF_air_transport_large", "QRF_land_mixed_large", "QRF_air_mixed_large","CSAT_large"];
-		};
-	};
+	private	_timing = [0,5,10,20];
+	private _comp = ["QRF_air_mixed_small", "QRF_land_mixed_large", "QRF_land_transport_large","CSAT_small"];
+
 	[_location, 30, _timing, _comp] spawn AS_fnc_spawnAttackWaves;
 
 	([_mission, "ASSIGNED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -281,7 +274,7 @@ private _fnc_run = {
 			// activate the timer
 			if !(_active) then {
 				_active = true;
-				[[petros,"globalChat","Hold this position for as long as you can! They will throw a lot at you, so be prepared!"],"AS_fnc_localCommunication"] call BIS_fnc_MP;
+				[petros,"globalChat","Hold this position for as long as you can! They will throw a lot at you, so be prepared!"] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 			};
 
 			{
@@ -301,7 +294,7 @@ private _fnc_run = {
 			_active = false;
 
 			if (not call _fnc_missionFailedCondition) then {
-				[[petros,"globalChat","Hostile forces near the position"],"AS_fnc_localCommunication"] call BIS_fnc_MP
+				[petros,"globalChat","Hostile forces near the position"] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 			};
 
 			waitUntil {sleep 1; call _fnc_increaseCounterCondition or {not call _fnc_continueCounterCondition}};

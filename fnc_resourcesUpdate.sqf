@@ -5,6 +5,17 @@ params [["_skipping", false]]; //this is for not spawning patrols while skipping
 
 //Xomment this out: is it really necessary? This function gets called as well
 //if (isMultiplayer) then {waitUntil {sleep 10; isPlayer AS_commander}};
+
+//Set next update time:
+
+private _upFreq = AS_P("upFreq");
+private _nextUpdate = [date select 0, date select 1, date select 2, date select 3, (date select 4) + (_upFreq/60)];
+_nextUpdate = dateToNumber _nextUpdate;
+
+AS_Pset("nextUpdate", _nextUpdate);
+
+diag_log format ["[AS] ResourcesUpdate: new update time set: %1", _nextUpdate];
+
 diag_log format ["[AS] ResourcesUpdate: updateAll started at %1", date];
 [_skipping] call AS_fnc_updateAll;
 diag_log format ["[AS] ResourcesUpdate: updateAll finished at %1", date];

@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str west] call DICT_fnc_set;
 [_dict, "roles", ["anti_state"]] call DICT_fnc_set;
 [_dict, "name", "FIA"] call DICT_fnc_set;
+[_dict, "shortname", "FIA"] call DICT_fnc_set;
 [_dict, "flag", "Flag_FIA_F"] call DICT_fnc_set;
 
 [_dict, "vests", ["V_BandollierB_oli"]] call DICT_fnc_set;
@@ -53,14 +54,15 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 ] call DICT_fnc_set;
 
 [_dict, "unlockedWeapons", [
-	"Binocular",
 	"hgun_PDW2000_F",
-	"hgun_ACPC2_F"]
+	"hgun_ACPC2_F",
+	"Binocular"]
 ] call DICT_fnc_set;
 
 [_dict, "unlockedMagazines", [
-	"9Rnd_45ACP_Mag",
-	"30Rnd_9x21_Mag"]
+	"30Rnd_9x21_Mag",
+	"9Rnd_45ACP_Mag"
+	]
 ] call DICT_fnc_set;
 
 [_dict, "unlockedBackpacks", ["B_TacticalPack_blk"]] call DICT_fnc_set;
@@ -74,7 +76,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 ["Medikit", 2],
 ["ToolKit", 2],
-["adv_aceSplint_splint", 10],
+["ACE_splint", 10],
 ["ACE_salineIV_250", 8],
 ["ACE_epinephrine", 10],
 ["ACE_morphine", 10],
@@ -88,7 +90,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "engineer", "B_G_engineer_F"] call DICT_fnc_set;
 [_dict, "medic", "B_G_medic_F"] call DICT_fnc_set;
 
-//These are used for AAF convoy missions
+//These are used for propaganda missions
 [_dict, "vans", [
 "C_IDAP_Truck_02_F"
 ]] call DICT_fnc_set;
@@ -158,12 +160,13 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "static_mg", ["B_HMG_01_high_F"]] call DICT_fnc_set;
 [_dict, "static_mortar", ["B_G_Mortar_01_F"]] call DICT_fnc_set; //first one is used by squads
 
-// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
+// To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above: if side FIA, these are buyable by irishman
 [_dict, "additionalWeapons", []] call DICT_fnc_set;
 [_dict, "additionalMagazines", []] call DICT_fnc_set;
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 
 
@@ -189,7 +192,7 @@ unlockedItems = unlockedItems - [
 "ACE_adenosine",
 "ACE_personalAidKit",
 "ACE_surgicalKit",
-"adv_aceSplint_splint"
+"ACE_splint"
 ];
 
 [_dict, "addBackpacks", [
@@ -197,25 +200,28 @@ unlockedItems = unlockedItems - [
 ]] call DICT_fnc_set;
 
 // FIA minefield uses first of this list
-[_dict, "land_vehicles", ["C_Offroad_01_F","C_Van_01_transport_F","B_G_Quadbike_01_F","B_G_Offroad_01_armed_F"]] call DICT_fnc_set;
+[_dict, "land_vehicles", ["C_Offroad_01_F","C_Van_01_transport_F","B_G_Quadbike_01_F","B_G_Offroad_01_armed_F", "B_G_Offroad_01_F"]] call DICT_fnc_set;
 [_dict, "water_vehicles", ["B_G_Boat_Transport_01_F"]] call DICT_fnc_set;
 // First helicopter of this list is undercover
 [_dict, "air_vehicles", ["C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
 
-[_dict, "cars_armed", ["B_G_Offroad_01_armed_F"]] call DICT_fnc_set;
+[_dict, "cars_armed", ["B_G_Offroad_01_armed_F", "B_G_Offroad_01_AT_F"]] call DICT_fnc_set;
 //This is new addition: used to evaluate threat
 [_dict, "cars_aa", []] call DICT_fnc_set;
-[_dict, "cars_at", []] call DICT_fnc_set;
+[_dict, "cars_at", ["B_G_Offroad_01_AT_F"]] call DICT_fnc_set;
 
 
 // costs of **land vehicle**. Every vehicle in `"land_vehicles"` must be here.
 private _costs = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "costs", _costs] call DICT_fnc_set;
 [_costs, "C_Offroad_01_F", 300] call DICT_fnc_set;
+[_costs, "B_G_Offroad_01_F", 300] call DICT_fnc_set;
 [_costs, "C_Van_01_box_F", 300] call DICT_fnc_set;  // defined on "vans"
 [_costs, "C_Van_01_transport_F", 600] call DICT_fnc_set;
 [_costs, "B_G_Quadbike_01_F", 50] call DICT_fnc_set;
-[_costs, "B_G_Offroad_01_armed_F", 700] call DICT_fnc_set;
+[_costs, "B_G_Offroad_01_armed_F", 600] call DICT_fnc_set;
+[_costs, "B_G_Offroad_01_AT_F", 1200] call DICT_fnc_set;
 [_costs, "B_G_Van_01_transport_F", 400] call DICT_fnc_set;
+[_costs, "B_G_Boat_Transport_01_F", 200] call DICT_fnc_set;
 
 _dict

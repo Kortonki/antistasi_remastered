@@ -44,10 +44,11 @@ player addEventHandler ["WeaponAssembled", {
     [_EHobj, "FIA"] call AS_fnc_initVehicle;
 }];
 
-player addEventHandler ["WeaponDisassembled", {
+//Any reason why the backpacks need an init? More important worry is that former static get removed from persistents
+/*player addEventHandler ["WeaponDisassembled", {
     [_this select 1, "FIA"] call AS_fnc_initVehicle;
 	[_this select 2, "FIA"] call AS_fnc_initVehicle;
-}];
+}];*/
 
 /*
 if (isMultiplayer) then {
@@ -126,6 +127,17 @@ player addEventHandler ["killed", {
 			[_vehicle, _magazineRemains] call AS_fnc_addMagazineRemains;
 	    _unit call AS_fnc_emptyUnit;
 		};
+
+	private _group = group _unit;
+	if (count (units _group select {alive _x}) == 0) then {
+		deleteGroup _group;
+	};
+	//Stats
+
+	["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
+	[_unit, "deaths", 1] call AS_players_fnc_change;
+
 	}];
 
 //Eventhandler to increase City support for healing CIVS
@@ -134,6 +146,8 @@ player addEventhandler ["handleHeal", {
 
 		private _return = false; //Use normal heal if not healing a civilian
 		if ((_unit call AS_fnc_getSide) isEqualTo "CIV") then {
+
+				["civHealed", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
 
 				//Maximum support from healing single CIV = 1.5 < 2 (penalty of wounding a CIV)
 				//Thus, no possibility to exploit
@@ -166,7 +180,14 @@ player addEventhandler ["handleHeal", {
 					_unit stop false;
 				};
 			_return = true;
+
+			[_healer, "civHealed", 1] call AS_players_fnc_change;
+		} else {
+			[_healer, "healed", 1] call AS_players_fnc_change;
 		};
+
+		//Stats
+
 
 
 		_return

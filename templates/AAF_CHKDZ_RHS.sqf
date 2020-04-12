@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str east] call DICT_fnc_set;
 [_dict, "roles", ["state"]] call DICT_fnc_set;
 [_dict, "name", "ChDKZ (RHS)"] call DICT_fnc_set;
+[_dict, "shortname", "ChDKZ"] call DICT_fnc_set;
 [_dict, "flag", "Flag_Red_F"] call DICT_fnc_set;
 [_dict, "box", "I_supplyCrate_F"] call DICT_fnc_set;
 
@@ -21,6 +22,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // These groups are used in different spawns (locations, patrols, missions)
 [_dict, "patrols", ["rhsgref_group_chdkz_infantry_patrol", "rhsgref_group_chdkz_infantry_mg", "rhsgref_group_chdkz_infantry_at"]] call DICT_fnc_set;
@@ -41,6 +43,10 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "cars_armed", ["rhsgref_BRDM2_ins_g"," rhsgref_BRDM2_ATGM_ins_g", "rhsgref_BRDM2_HQ_ins_g", "rhsgref_ins_uaz_ags", "rhsgref_ins_uaz_dshkm", "rhsgref_ins_uaz_spg9"]] call DICT_fnc_set;
 [_dict, "apcs", ["rhsgref_ins_g_btr60", "rhsgref_ins_g_btr70", "rhsgref_ins_g_bmd1", "rhsgref_ins_g_bmp1"," rhsgref_ins_g_bmp1p", "rhsgref_ins_g_bmp2e"]] call DICT_fnc_set;
 [_dict, "trucks", ["rhsgref_ins_g_gaz66o", "rhsgref_ins_g_gaz66"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
 
 [_dict, "other_vehicles", [
 "rhsgref_ins_g_gaz66_ammo", "I_Truck_02_fuel_F", "rhsgref_ins_g_gaz66_ap2", "rhsgref_ins_g_gaz66_repair"

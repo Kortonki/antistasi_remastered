@@ -1,7 +1,7 @@
 params ["_crate", "_NATOSupp"];
 private ["_intNATOSupp", "_weapons","_magazines","_items","_backpacks","_addWeapon"];
 
-_intNATOSupp = floor (_NATOSupp/10);
+_intNATOSupp = round (_NATOSupp/10);
 _intNATOSupp = _intNATOSupp max 1;
 
 _weapons = [[],[]];
@@ -10,18 +10,19 @@ _items = [[],[]];
 _backpacks = [[],[]];
 
 _addWeapon = {
-	params ["_weapon", "_amount", "_mags"];
+	params ["_weapon", "_amount", "_magsAmount"];
 	if (_amount < 1) exitWith {};
-	private _mag = selectRandom (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines"));
+	private _mags = (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) select {(getText (configFile >> "CfgMagazines" >> _x >> "ammo")) find "blank" == -1}; //exclude blanks TODO: other ways to detect blanks
+	private _mag = selectRandom _mags;
 
 	(_weapons select 0) pushBack _weapon;
 	(_weapons select 1) pushBack _amount;
 	(_magazines select 0) pushBack _mag;
-	(_magazines select 1) pushBack _mags;
+	(_magazines select 1) pushBack _magsAmount;
 };
 
 // Handguns and submachine guns
-[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 2*_intNATOSupp, 18*2*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 3*_intNATOSupp, 18*3*_intNATOSupp] call _addWeapon;
 // Rifles
 [selectRandom (NATOweapons arrayIntersect (AS_weapons select 0)), 3*_intNATOSupp, 18*3*_intNATOSupp] call _addWeapon;
 // Machine guns
@@ -42,8 +43,8 @@ private _bestScope = [NATOItems arrayIntersect AS_allOptics, "sniperScope"] call
 (_items select 0) pushBack _bestScope;
 (_items select 1) pushBack _intNATOSupp;
 
-[selectRandom NATOLaunchers, _intNATOSupp, 3*_intNATOSupp] call _addWeapon;
-[selectRandom NATOLaunchers, _intNATOSupp, 3*_intNATOSupp] call _addWeapon;
+[selectRandom NATOLaunchers, _intNATOSupp, 2*_intNATOSupp] call _addWeapon;
+[selectRandom NATOLaunchers, _intNATOSupp, 2*_intNATOSupp] call _addWeapon;
 
 for "_i" from 1 to 5 do {
 	(_magazines select 0) pushBack (selectRandom NATOThrowGrenades);
@@ -67,24 +68,51 @@ for "_i" from 1 to 3 do {
 
 	for "_i" from 1 to 5 do {
 
-	(_backpacks select 0) pushback (selectRandom (NatoBackpacks));
-	(_backpacks select 1) pushback _intNATOSupp;
+		(_backpacks select 0) pushback (selectRandom NatoBackpacks);
+		(_backpacks select 1) pushback _intNATOSupp;
+};
+
+//Add static bags
+
+if (_intNATOSupp > random 10) then {
+
+	private _staticpack = selectRandom (NATOBackpacks select {_x isEqualType []});
+	if (isNil "_staticpack") exitWith {};
+	//This means its a static bag
+	{
+		//Is the uav terminal
+		if (_x isKindOf "Item_Base_F") then {
+			(_items select 0) pushback _x;
+			(_items select 1) pushback 1;
+
+			if (hasACE) then {
+				(_items select 0) pushback "ACE_UAVBattery";
+				(_items select 1) pushback 2;
+			};
+
+		} else {
+			(_backpacks select 0) pushback _x;
+			(_backpacks select 1) pushback 1;
+		};
+	} foreach _staticpack;
+
 };
 
 //Add some mines + explosives
 
 {
 	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
-	(_magazines select 1) pushBack 4*_intNatoSupp;
+	(_magazines select 1) pushBack 2*_intNatoSupp;
 } foreach (["NATO", "ap_mines"] call AS_fnc_getEntity);
 
 {
 	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
-	(_magazines select 1) pushBack 2*_intNatoSupp;
+	(_magazines select 1) pushBack _intNatoSupp;
 } foreach ((["NATO", "at_mines"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity));
 
 //TODO check if RHS has equivalents?
-if (hasACE and !hasRHS) then {
+//TODO should be something in template
+if (hasACE) then {
 	(_magazines select 0) pushBack "ACE_HuntIR_M203";
 	(_magazines select 1) pushBack 3*_intNATOSupp;
 
@@ -101,6 +129,17 @@ if (hasACE and !hasRHS) then {
 	(_items select 1) pushBack _intNATOSupp;
 
 	(_items select 0) pushBack "ACE_Kestrel4500";
+	(_items select 1) pushBack _intNATOSupp;
+
+	(_items select 0) pushBack "ACE_Clacker";
+	(_items select 1) pushBack _intNATOSupp;
+
+} else {
+
+	(_items select 0) pushBack "ItemGPS";
+	(_items select 1) pushBack _intNATOSupp;
+
+	(_items select 0) pushBack selectRandom (NATOBinoculars);
 	(_items select 1) pushBack _intNATOSupp;
 };
 

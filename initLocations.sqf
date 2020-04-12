@@ -6,6 +6,9 @@ call AS_location_fnc_initialize;
 AS_antenasTypes = [];
 AS_antenasPos_alive = [];
 
+AS_RadioCoverage = 5000;
+
+//TODO: Make these part of of world template
 //Set sandbag and bunker classnames for roadblocks, locations and HQ fortifications. Set a proper camo for map type.
 
 AS_small_bunker_type = "Land_BagBunker_01_small_green_F";
@@ -13,6 +16,18 @@ AS_big_bunker_type = "Land_BagBunker_01_large_green_F";
 AS_sandbag_type_round = "Land_BagFence_01_round_green_F";
 AS_camonet_type = "CamoNet_BLUFOR_big_F";
 AS_h_barrier_type = "Land_HBarrier_01_line_5_green_F";
+
+AS_antenasTypes = [
+"Land_TTowerBig_1_F",
+"Land_TTowerBig_2_F",
+"Land_Com_tower_ep1",
+"Land_Telek1",
+"Land_Vysilac_vez",
+"Land_TTowerBig_1_ruins_F",
+"Land_TTowerBig_2_ruins_F",
+"Land_Telek1_ruins",
+"Land_Com_tower_ruins_EP1"
+];
 
 // tower buiuldings where MGs are placed. If no towers, no MGs are placed.
 AS_MGbuildings = [
@@ -36,13 +51,7 @@ AS_destroyable_buildings = AS_MGbuildings + [
     "Land_HelipadSquare_F",
     "Land_Cargo_Tower_V1_ruins_F",
     "Land_Cargo_Tower_V2_ruins_F",
-    "Land_Cargo_Tower_V3_ruins_F",
-    "Land_TTowerBig_1_F",
-    "Land_TTowerBig_2_F",
-    "Land_Com_tower_ep1",
-    "Land_Telek1",
-    "Land_Vysilac_vez",
-    "Land_Communication_F"
+    "Land_Cargo_Tower_V3_ruins_F"
 ] - ["Land_BagBunker_01_small_green_F","Land_BagBunker_Small_F"];
 
 // these are the lamps that are shut-off when the city loses power.
@@ -96,15 +105,15 @@ publicVariable "AS_enemyDist";
 {
     private _antenaProv = nearestObjects [_x, AS_antenasTypes, 25];
     if (count _antenaProv > 0) then {
+      private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
+      _marker setmarkerType "loc_Transmitter";
+      _marker setMarkerText "Radio Tower";
         (_antenaProv select 0) addEventHandler ["Killed", AS_fnc_antennaKilledEH];
     } else {
         AS_antenasPos_alive = AS_antenasPos_alive - [_x];
     };
 
-    private _marker = createMarker [format ["radioTower_%1", _forEachIndex], _x];
-    _marker setmarkerType "loc_Transmitter";
-    _marker setMarkerText "Radio Tower";
-    (_antenaProv select 0) setVariable ["marker", _marker]; //This so marker can be manipulated in destruction
+
 } forEach +AS_antenasPos_alive;
 
 AS_Pset("antenasPos_alive", AS_antenasPos_alive);
@@ -121,6 +130,8 @@ publicVariable "AS_small_bunker_type";
 publicVariable "AS_big_bunker_type";
 publicVariable "S_camonet_type";
 publicVariable "AS_h_barrier_type";
+publicVariable "AS_RadioCoverage";
+
 
 
 // This searches through all the markers in the mission.sqm and adds them.
@@ -174,3 +185,34 @@ AS_HQ_placements = []; // objects placed on HQ
 
 private _allFuelStations = ([0,0,0] nearObjects 150000) select {getFuelCargo _x > 0};
 {_x setFuelCargo 0} foreach _allFuelStations;
+
+if (!isNil "ace_common_settingFeedbackIcons") then {
+  {[_x, 0] call ace_refuel_fnc_setFuel} foreach _allFuelStations;
+};
+
+//Maximum amount for AAF vehicles
+//Location(s), Types, amounts
+//Differs from persistent variable which is updated every update
+AS_maxAmounts = [
+[["roadblock"],
+  ["static_mg"],
+  [2]],
+[["outpost"],
+["static_mg", "static_at", "cars_transport", "trucks"],
+[4,1,1,1]],
+[["outpostAA"],
+["static_mg", "static_at", "static_aa", "cars_transport", "trucks"],
+[4,1,2,1,1]],
+[["factory", "resource", "powerplant"],
+["static_mg", "static_at", "trucks"],
+[4,1,1]],
+[["seaport"],
+["static_mg", "trucks", "boats"],
+[4,1,4]],
+[["base"],
+["static_mg", "static_at", "static_aa", "static_mortar", "cars_transport", "cars_armed", "trucks", "apcs", "tanks"],
+[8, 4, 4, 4, 2, 4, 4, 4, 4]],
+[["airfield"],
+["static_mg", "static_at", "static_aa", "cars_transport", "cars_armed", "trucks", "apcs", "helis_transport", "helis_armed", "planes"],
+[8, 4, 4, 2, 4, 4, 4, 4, 4, 4]]
+];

@@ -12,7 +12,7 @@ if (_type == "Survivor") exitWith {
 private _primaryWeapons = (AS_weapons select 0) + (AS_weapons select 13) + (AS_weapons select 14); // Assault Rifles + Rifles + SubmachineGun + unlocked
 private _secondaryWeapons = [];
 private _useBinoculars = false;
-private _useBackpack = true;
+private _useBackpack = false;
 private _items = call AS_medical_fnc_FIAuniformMeds;
 private _scopeType = "rifleScope";  // "rifleScope" prefers as low zoom as possible
 private _primaryMagCount = 6 + 1;  // +1 for the weapon.
@@ -23,18 +23,20 @@ private _missingSmokes = 2;
 if (_type == "Squad Leader") then {
     _primaryWeapons = (AS_weapons select 0) + (AS_weapons select 13) + (AS_weapons select 14); // G. Launchers
     _useBinoculars = true;
-    _useBackpack = false;
     _missingGrenades = 1;
     _missingSmokes = 3;
     };
 
 if (_type == "Grenadier") then {
     _primaryWeapons = AS_weapons select 3; // G. Launchers
+    _useBackpack = true;
     // todo: check that secondary magazines exist.
 };
 if (_type == "Autorifleman") then {
     _primaryWeapons = AS_weapons select 6; // Machine guns
     _primaryMagCount = 2 + 1;  // because MG clips have more bullets.
+    _scopeType = "";
+    _useBackpack = true;
 };
 if (_type == "Sniper") then {
     _primaryWeapons = AS_weapons select 15;  // Snipers
@@ -45,19 +47,24 @@ if (_type == "Sniper") then {
 if (_type == "AT Specialist") then {
     // todo: this list includes AT and AA. Fix it.
     _secondaryWeapons = (AS_weapons select 10); // missile launchers
+    _useBackpack = true;
 };
 if (_type == "AA Specialist") then {
     // todo: this list includes AT and AA. Fix it.
     _secondaryWeapons = (AS_weapons select 8); // missile launchers
+    _useBackpack = true;
 };
 if (_type == "Medic") then {
     _items = call AS_medical_fnc_FIAmedicBackpack;
     _missingGrenades = 0;
     _missingSmokes = 4;
     _scopeType = "";
+    _useBackpack = true;
 };
 if (_type == "Engineer") then {
     _items = [["ToolKit", 1]];
+    _useBackpack = true;
+    _scopeType = "";
 };
 if (_type == "Crew") then {
     _scopeType = "";
@@ -157,9 +164,10 @@ private _actualMagCount = 0;
 {_actualMagCount = _actualMagCount + _x}
 foreach (_primaryMags select 1);
 
-if  ((not (_type in ["Grenadier","Autorifleman", "Sniper"]) and {_primaryWeapon == ""})
+if  (_primaryWeapon == ""
     or (_actualMagCount < _primaryMagCount))
     then {
+    [petros, "sideChat", format ["%1 recruited: No weapons or ammo for %1, takes default weapon", _type]] remoteExec ["AS_fnc_localCommunication", [0, -2] select isDedicated];
   if (not(isNil {(_unlockedCargoWeapons select 0) select 0})) then {_primaryWeapon = ((_unlockedCargoWeapons select 0) select 0);};
   _primaryMags = ([caja, _primaryWeapon, 10] call AS_fnc_getBestMagazines);
 };

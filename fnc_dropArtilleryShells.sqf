@@ -1,5 +1,6 @@
 params ["_location"];
 
+[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2]; //CSAT support lowered each artillery strike (same price as NATO)
 private _pos = _location call AS_location_fnc_position;
 private _cuenta = 0;
 while {(_cuenta < 50) and {!([300, _pos, "OPFORSpawn", "boolean"] call AS_fnc_unitsAtDistance)}} do {

@@ -2,6 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str east] call DICT_fnc_set;
 [_dict, "roles", ["state", "foreign"]] call DICT_fnc_set;
 [_dict, "name", "VVS (RHS)"] call DICT_fnc_set;
+[_dict, "shortname", "VVS"] call DICT_fnc_set;
 [_dict, "flag", "rhs_Flag_vdv_F"] call DICT_fnc_set;
 [_dict, "flag_marker", "rhs_flag_Russia"] call DICT_fnc_set;
 
@@ -18,6 +19,10 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 // used in roadblock mission
 [_dict, "trucks", ["rhs_kamaz5350_open_vdv","rhs_kamaz5350_vdv"]] call DICT_fnc_set;
+//These are used for AAF convoy missions
+[_dict, "vans", [
+"C_IDAP_Truck_02_F"
+]] call DICT_fnc_set;
 [_dict, "apcs", ["rhs_btr80_vdv","rhs_btr80a_vdv","rhs_bmp2d_vdv","rhs_bmp1p_vdv","rhs_bmd2m","rhs_bmd2k"]] call DICT_fnc_set;
 
 // used in traitor mission
@@ -67,6 +72,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalItems", []] call DICT_fnc_set;
 [_dict, "additionalBackpacks", []] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
+[_dict, "additionalBinoculars", []] call DICT_fnc_set;
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["rhs_mine_pmn2"]] call DICT_fnc_set;
@@ -74,7 +80,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 // These have to be CfgVehicles
 [_dict, "explosives", ["SatchelCharge_F","DemoCharge_F","Claymore_F"]] call DICT_fnc_set;
 
-[_dict, "box", "rhs_launcher_crate"] call DICT_fnc_set;
+[_dict, "box", "I_supplyCrate_F"] call DICT_fnc_set;
 
 if hasTFAR then {
     [_dict, "tfar_lr_radio", "TFAR_mr3000_rhs"] call DICT_fnc_set;

@@ -5,6 +5,7 @@ private _fnc_spawn = {
 	private _soldados = [];
 	private _grupos = [];
 	private _vehiculos = [];
+	private _markers = [];
 
 	private _posicion = _location call AS_location_fnc_position;
 	private _size = _location call AS_location_fnc_size;
@@ -22,11 +23,28 @@ private _fnc_spawn = {
 		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
 		_vehiculos pushBack _bunker;
 	};
+
+	private _groupStatics = createGroup ("AAF" call AS_fnc_getFactionSide);
+	_grupos pushBack _groupStatics;
+
+	([_location, "AAF", _groupStatics] call AS_fnc_populateMilBuildings) params ["_gunners2", "_vehicles2", "_groups2", "_markers2"];
+	{[_x, false] call AS_fnc_initUnitAAF} forEach _gunners2;
+	_soldados append _gunners2;
+	_vehiculos append _vehicles2;
+	_grupos append _groups2;
+	_markers append _markers2;
+
+	{
+		_soldados append (units _x);
+	} foreach _groups2;
+
+
 	// spawn 2 patrols
 	// _mrk => to be deleted at the end
 	([_location, 2] call AS_fnc_spawnAAF_patrol) params ["_units1", "_groups1", "_mrk"];
 	_soldados append _units1;
 	_grupos append _groups1;
+	_markers pushback _mrk;
 
 	// spawn workers
 	if !(_isDestroyed) then {
@@ -60,7 +78,7 @@ private _fnc_spawn = {
 
 	[_location, _grupos] call AS_fnc_spawnJournalist;
 
-	[_location, "resources", [taskNull, _grupos, _vehiculos, [_mrk]]] call AS_spawn_fnc_set;
+	[_location, "resources", [taskNull, _grupos, _vehiculos, _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 };
 

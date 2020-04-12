@@ -5,7 +5,7 @@ private _fnc_initialize = {
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
 
-	private _tiempolim = 120;
+	private _tiempolim = 720;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 
 	private _taskTitle = _mission call AS_mission_fnc_title;
@@ -30,6 +30,8 @@ private _fnc_spawn = {
 
 	private _crateType = ["CIV", "box"] call AS_fnc_getEntity;
 	private _pos = (getMarkerPos "FIA_HQ") findEmptyPosition [1,50,_crateType];
+
+	if (!(isnull vehiclePad)) then  {_pos = getpos vehiclePad};
 
 	private _crate = _crateType createVehicle _pos;
 	[0,-100] remoteExec ["AS_fnc_changeFIAMoney", 2];
@@ -72,30 +74,40 @@ private _fnc_run = {
 	private _crate = (([_mission, "resources"] call AS_spawn_fnc_get) select 2) select 0;
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = [_mission, "position"] call AS_spawn_fnc_get;
-	[[_position], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+
+	//Random chance for AAF patrol to be called by the civilians
+	if ((([_location, "AAFsupport"] call AS_location_fnc_get) / ([_location, "FIAsupport"] call AS_location_fnc_get)) > (random 2)) then {
+		[[_position], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+	};
 
 	private _fnc_unloadCondition = {
 		// The condition to allow loading the crates into the truck
 		(_crate distance2D _position < 100) and {not(_crate getVariable ["asCargo", false]) or (isNull attachedTo _crate)} and
 		{{alive _x and not (_x call AS_medical_fnc_isUnconscious)} count ([50, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance) > 0} and
-		{{!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x distance _crate < 50} and {!(_x call AS_medical_fnc_isUnconscious)}} count allUnits == 0}
+		{{!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {!(_x call AS_fnc_isDog)} and {_x distance _crate < 50} and {!(_x call AS_medical_fnc_isUnconscious)}} count allUnits == 0}
 	};
 
 	private _str_unloadStopped = "Have someone close to the crate and no enemies around";
 	private _str_unloadStart = "Guard the crate!";
 
 	// make all FIA around the truck non-captive
-	{
-		private _soldierFIA = _x;
-		if (captive _soldierFIA) then {
-			[_soldierFIA,false] remoteExec ["setCaptive",_soldierFIA];
+	[_mission, _crate] spawn {
+		params ["_mission", "_crate"];
+		while {([_mission, "state_index"] call AS_spawn_fnc_get) == 3} do {
+			{
+				private _soldierFIA = _x;
+				if (captive _soldierFIA) then {
+					[_soldierFIA,false] remoteExec ["setCaptive",_soldierFIA];
+				};
+			} forEach ([300, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
+			sleep 10;
 		};
-	} forEach ([300, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
+	};
 
 	{
 		// make all enemies around notice the truck
-		if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x == (leader _x)} and {_x distance _position < 1000}) then {
-			if (_x distance _position < 300) then {
+		if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {_x == (leader _x)} and {_x distance2D _position < 1000}) then {
+			if (_x distance2D _position < 300) then {
 				_x move position _crate;
 			} else {
 				//Farther groups have probability to move based on their distance. Farther units have less probability, 300m away are sure to come.

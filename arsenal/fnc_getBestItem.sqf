@@ -146,7 +146,9 @@ if (_type in ["rifleScope", "sniperScope"]) then {
         _result = 1/_zoomMin;
         if (_type == "sniperScope") then {
             _result = _zoomMax;
-        };
+        } else {
+					if (_zoomMin > 3 or _zoomMax > 3) then {_result = 0}; //Prevent riflescopes from using sniper scopes
+				};
         _w_factor*_result
     };
 };

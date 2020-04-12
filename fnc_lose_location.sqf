@@ -16,7 +16,8 @@ private _size = _location call AS_location_fnc_size;
 // todo: transfer alive garrison to FIA_HQ
 [_location, "garrison", []] call AS_location_fnc_set;
 
-// Remove all statics there
+// Remove all statics there. Commented, will be done via fcleanup funcition
+/* /
 private _staticsRemoved = [];
 {
 	if ((position _x) distance _posicion < _size) then {
@@ -25,20 +26,21 @@ private _staticsRemoved = [];
 	};
 } forEach AS_P("vehicles");
 [_staticsRemoved, false] call AS_fnc_changePersistentVehicles;
+*/
 
-
-if (_type in ["outpost", "seaport"]) then {
+if (_type in ["outpost", "outpostAA", "seaport"]) then {
 	[10,-10,_posicion] call AS_fnc_changeCitySupport;
-	if (_type == "outpost") then {
-		[["TaskFailed", ["", "Outpost Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+	if (_type in ["outpost", "outpostAA"]) then {
+		["TaskFailed", ["", "Outpost Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+		{[5, -5,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	} else {
-		[["TaskFailed", ["", "Sea Port Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskFailed", ["", "Seaport Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	};
 };
 if (_type == "powerplant") then {
 	[0,-5] call AS_fnc_changeForeignSupport;
 	[10,-10,_posicion] call AS_fnc_changeCitySupport;
-	[["TaskFailed", ["", "Powerplant Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+	["TaskFailed", ["", "Powerplant Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[_location] call AS_fnc_recomputePowerGrid;
 };
 if (_type in ["resource", "factory"]) then {
@@ -46,22 +48,28 @@ if (_type in ["resource", "factory"]) then {
 	[0,-5] call AS_fnc_changeForeignSupport;
 
 	if (_type == "resource") then {
-		[["TaskFailed", ["", "Resource Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskFailed", ["", "Resource Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	} else {
-		[["TaskFailed", ["", "Factory Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskFailed", ["", "Factory Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	};
 };
 if (_type in ["base", "airfield"]) then {
 	[20,-20,_posicion] call AS_fnc_changeCitySupport;
+	{[10, -10,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	[0,-10] call AS_fnc_changeForeignSupport;
 	[_location,60] call AS_location_fnc_increaseBusy;
 
 	if (_type == "base") then {
-		[["TaskFailed", ["", "Base Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskFailed", ["", "Base Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	} else {
-		[["TaskFailed", ["", "Airport Lost"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskFailed", ["", "Airport Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
     };
 };
+
+//Recalculate AAF arsenal
+{
+	[_x, "max", _x call AS_AAFarsenal_fnc_updateMax] call AS_AAFarsenal_fnc_set;
+} forEach ([] call AS_AAFarsenal_fnc_all);
 
 waitUntil {sleep 1;
 	(not (_location call AS_location_fnc_spawned)) or

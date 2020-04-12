@@ -15,13 +15,14 @@ if ((_part == "head") and not (_unit call AS_medical_fnc_isUnconscious)) then {
 };*/
 
 
-if not (_part in ["hand_l","hand_r","leg_l","leg_r","arms"]) then {
+//EXPERIMENT running ACE medical as vanilla. might have been source of the double killed eh?
+/*if not (_part in ["hand_l","hand_r","leg_l","leg_r","arms"]) then {
 	if (_dam > 1) exitWith {
 	//private _sameHit = (_unit getVariable ["firstHitTime", _currentTime]) + 0.5 >= _currentTime;
 	    if (not(isPlayer _unit)) then {
 					[_unit, true] call ACE_medical_fnc_setDead;
 				};
     };
-};
+};/*
 // this handler is only used to kill unconscious people
 _dam

@@ -10,17 +10,16 @@ private _fnc_initialize = {
 
 	// marker on the map, required for the UPS script
 	private _mrk = createMarker ["NATOQRF", _destPos];
-	_mrk setMarkerShape "ICON";
-	_mrk setMarkerSize [100,100];
-	_mrk setMarkerType "b_support";
-	_mrk setMarkerText ((["NATO", "name"] call AS_fnc_getEntity) + " QRF");
+	_mrk setMarkerShape "ELLIPSE";
+	_mrk setMarkerSize [200,200];
+	_mrk setMarkerAlpha 0;
 
 	private _tiempolim = 30;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 
-	private _tskTitle = ((["NATO", "name"] call AS_fnc_getEntity) + " QRF");
+	private _tskTitle = ((["NATO", "shortname"] call AS_fnc_getEntity) + " QRF");
 	private _tskDesc = format ["Our Commander asked %1 for reinforcements near %2. Their troops will depart from %3.",
-		(["NATO", "name"] call AS_fnc_getEntity),
+		(["NATO", "shortname"] call AS_fnc_getEntity),
 		[_destPos call AS_location_fnc_nearest] call AS_fnc_location_name,
 		[_origin] call AS_fnc_location_name];
 
@@ -45,12 +44,8 @@ private _fnc_spawn = {
 
 	// first chopper
 	private _vehicleType = selectRandom (["NATO", "helis_attack"] call AS_fnc_getEntity);
-	private _vehicle = [_posOrig, 0, _vehicleType, ("NATO" call AS_fnc_getFactionSide)] call bis_fnc_spawnvehicle;
-	private _heli1 = _vehicle select 0;
-	private _heliCrew1 = _vehicle select 1;
-	private _grpVeh1 = _vehicle select 2;
-	{[_x] spawn AS_fnc_initUnitNATO} forEach _heliCrew1;
-	[_heli1, "NATO"] call AS_fnc_initVehicle;
+	([_vehicleType, _posOrig, 0, "NATO", "pilot", 200, "FLY"] call AS_fnc_createVehicle) params ["_heli1", "_grpVeh1"];
+	private _heliCrew1 = units _grpVeh1;
 	_groups pushBack _grpVeh1;
 	_vehicles pushBack _heli1;
 
@@ -66,14 +61,13 @@ private _fnc_spawn = {
 
 	// spawn transport
 	private _tipoveh = selectRandom (["NATO", "helis_transport"] call AS_fnc_getEntity);
-	([_pos2, 0, _tipoveh, ("NATO" call AS_fnc_getFactionSide)] call bis_fnc_spawnvehicle) params ["_heli2", "_heliCrew2", "_grpVeh2"];
+	([_tipoVeh, _pos2, 0, "NATO", "pilot", 200, "FLY"] call AS_fnc_createVehicle) params ["_heli2", "_grpVeh2"];
+	private _heliCrew2 = units _grpVeh2;
 	{
-		[_x] spawn AS_fnc_initUnitNATO;
 		_x disableAI "TARGET";
 		_x disableAI "AUTOTARGET";
 		_x setBehaviour "CARELESS";
 	} forEach _heliCrew2;
-	[_heli2, "NATO"] call AS_fnc_initVehicle;
 	_groups pushBack _grpVeh2;
 	_vehicles pushBack _heli2;
 
@@ -89,7 +83,7 @@ private _fnc_spawn = {
 	_groups pushBack _grpDis2;
 
 	// spawn dismount script
-	_vehicles append ([_posOrig, _destPos, _grpVeh2, _grpDis2, _mrk] call AS_tactics_fnc_heli_disembark);
+	_vehicles append ([_posOrig, _destPos, _grpVeh2, _grpDis2, _mrk, "AAF"] call AS_tactics_fnc_heli_disembark);
 
 	[_mission, "resources", [_task, _groups, _vehicles, [_mrk]]] call AS_spawn_fnc_set;
 };

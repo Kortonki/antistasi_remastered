@@ -1,12 +1,10 @@
 #include "../macros.hpp"
 AS_SERVER_ONLY("fnc_sendAAFpatrol");
-params ["_location", ["_fromBase", ""], ["_threatEval_Land", 0], ["_threatEval_Air", 0]];
+params ["_location", ["_fromBase", ""], ["_threatEval_Land", 0], ["_threatEval_Air", 0], ["_start", false]];
 
 private _debug_prefix = format ["sendAAFPatrol from '%1' to '%2' cancelled: ", _fromBase, _location];
-if AS_S("blockCSAT") exitWith {
-	private _message = " blocked";
-	diag_log (_debug_prefix + _message);
-};
+
+private _FIAbases = [["base","airfield"], "FIA"] call AS_location_fnc_TS;
 
 private _isDirectAttack = false;
 private _base = "";
@@ -54,16 +52,17 @@ private _exit = false;
 if (!_isLocation) then {
 	// do not patrol closeby patrol locations.
 	private _closestPatrolPosition = [AS_P("patrollingPositions"), _position] call BIS_fnc_nearestPosition;
-	if (_closestPatrolPosition distance _position < (AS_P("spawnDistance")/2)) exitWith {_exit = true;};
+	if (_closestPatrolPosition distance2D _position < 500) exitWith {_exit = true;};
 
 	// do not patrol closeby to patrolled markers.
 	if (count AS_P("patrollingLocations") > 0) then {
 		private _closestPatrolMarker = [AS_P("patrollingLocations"), _position] call BIS_fnc_nearestPosition;
-		if ((_closestPatrolMarker call AS_location_fnc_position) distance _position < (AS_P("spawnDistance")/2)) then {_exit = true;};
+		if ((_closestPatrolMarker call AS_location_fnc_position) distance2D _position < 500) then {_exit = true;};
 	};
 };
 
-if (_exit) exitWith {
+//start is to skip this step in mission load where above check will fail
+if (_exit and {!(_start)}) exitWith {
 	private _message = "nearby being patrolled";
 	diag_log (_debug_prefix + _message);
 };
@@ -75,12 +74,21 @@ if (!_isDirectAttack) then {
 };
 
 // check if CSAT will help.
+//Changed to same condition as in sendAAFattack
 private _hayCSAT = false;
-if ((_base == "") and {(_aeropuerto == "") and {(random 100 < AS_P("CSATsupport"))}}) then {
+if (count _FIAbases > 0 and {random 100 < AS_P("CSATsupport") and {!(AS_S("blockCSAT"))}}) then {
 	_hayCSAT = true;
 };
 
-if ((_base == "") and {(_aeropuerto == "") and {(!_hayCSAT)}}) exitWith {
+//Will not block all comms
+//Moved from beginnig of the script here to prevent CSAT
+if AS_S("blockCSAT") then {
+	private _message = " blocked";
+	diag_log (_debug_prefix + _message);
+	_hayCSAT = false;
+};
+
+if ((_base == "") and {(_aeropuerto == "") and {!(_hayCSAT)}}) exitWith {
 	private _message = "no bases close to attack";
 	diag_log (_debug_prefix + _message);
 };  // if no way to create patrol, exit.
@@ -101,9 +109,9 @@ if (_aeropuerto != "") then {
 
 	// decide to not send air units if treat of AA is too high.
 	if (_aeropuerto != "" and !_isDirectAttack) then {
-		_threatEval = _threatEval_Air + ([_position] call AS_fnc_getAirThreat);
+		_threatEval = _threatEval_Air max ([_position, "FIA"] call AS_fnc_getAirThreat);
 
-		if (_threatEval > 15 and _planes == 0) then {
+		if (_threatEval > 5 and _planes == 0) then {
 			_aeropuerto = "";
 		};
 	};
@@ -111,14 +119,14 @@ if (_aeropuerto != "") then {
 
 // decide to not send if treat is too high.
 if (_base != "") then {
-	_threatEval = _threatEval_Land + ([_position] call AS_fnc_getLandThreat);
+	_threatEval = _threatEval_Land max ([_position] call AS_fnc_getLandThreat);
 	private _trucks = "trucks" call AS_AAFarsenal_fnc_countAvailable;
 	private _apcs = "apcs" call AS_AAFarsenal_fnc_countAvailable;
 	private _tanks = "tanks" call AS_AAFarsenal_fnc_countAvailable;
 
 	if (!_isDirectAttack) then {
-		if ((_threatEval > 15 and _tanks == 0) or
-			(_threatEval > 5 and (_tanks + _apcs == 0)) or
+		if ((_threatEval > 10 and {_tanks < 2}) or
+			(_threatEval > 5 and {_tanks + _apcs < 2}) or
 			(_tanks + _apcs + _trucks == 0)) then {
 			_base = "";
 
@@ -127,7 +135,7 @@ if (_base != "") then {
 };
 
 if ((_base == "") and (_aeropuerto == "") and (!_hayCSAT)) exitWith {
-	private _message = "threat too high or no arsenal";
+	private _message = format ["threat too high or no arsenal. Threat: %1, hasCSAT: %2", _threatEval, _hayCSAT];
 	diag_log (_debug_prefix + _message);
 };
 

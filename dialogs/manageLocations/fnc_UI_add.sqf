@@ -35,6 +35,7 @@ switch (_type) do {
   case "roadblock" : {
     private _crateType = "IG_supplyCrate_F";
     private _pos = (getMarkerPos "FIA_HQ") findEmptyPosition [1,50,_crateType];
+    	if (!(isnull vehiclePad)) then  {_pos = getpos vehiclePad};
     _crate = _crateType createVehicle _pos;
     [_crate, "build_roadblock"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
     _crate setVariable ["requiredVehs", ["Truck_F"], true];
@@ -42,6 +43,7 @@ switch (_type) do {
   case "watchpost" : {
     private _crateType = "Box_NATO_Equip_F";
     private _pos = (getMarkerPos "FIA_HQ") findEmptyPosition [1,50,_crateType];
+    	if (!(isnull vehiclePad)) then  {_pos = getpos vehiclePad};
     _crate = _crateType createVehicle _pos;
     [_crate, "build_watchpost"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
     _crate setVariable ["requiredVehs", ["Car"], true];
@@ -49,6 +51,7 @@ switch (_type) do {
   case "camp" : {
     private _crateType = "Box_NATO_Equip_F";
     private _pos = (getMarkerPos "FIA_HQ") findEmptyPosition [1,50,_crateType];
+    	if (!(isnull vehiclePad)) then  {_pos = getpos vehiclePad};
     _crate = _crateType createVehicle _pos;
     [_crate, "build_camp"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
     _crate setVariable ["requiredVehs", ["Car"], true];

@@ -21,7 +21,7 @@ while {true} do
 			_areamarker = _Ucthis select 1;
 			_surrended = false;
 
-			if (({alive _x && !(captive _x)} count units _grp) == 0 ||  _grp getvariable ["UPSMON_Removegroup",false]) exitwith
+			if (({alive _x && !(captive _x)} count units _grp) == 0 ||  _grp getvariable ["UPSMON_Remove",false]) exitwith
 			{
 				[_grp,_UCthis] call UPSMON_RESPAWN;
 			};
@@ -54,7 +54,7 @@ while {true} do
 
 			_speedmode = speedmode _npc;
 			_behaviour = behaviour _npc;
-			_combatmode = "YELLOW";
+			_combatmode = combatmode _npc; //[AS] Changed from YELLOW to unit combatMode to accomodate for antistasi combatmode setup
 
 
 			// current position
@@ -946,7 +946,7 @@ while {true} do
 				};
 			};// !NOWP
 
-			if (({alive _x && !(captive _x)} count units _grp) == 0 ||  _grp getvariable ["UPSMON_Removegroup",false]) exitwith
+			if (({alive _x && !(captive _x)} count units _grp) == 0 ||  _grp getvariable ["UPSMON_Remove",false]) exitwith
 			{
 				[_grp,_UCthis] call UPSMON_RESPAWN;
 			};

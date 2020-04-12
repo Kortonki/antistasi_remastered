@@ -18,11 +18,16 @@ private _fnc_spawn = {
 	private _grupo = createGroup ("NATO" call AS_fnc_getFactionSide);
 	_grupos pushBack _grupo;
 
-	([_location, "NATO", _grupo] call AS_fnc_populateMilBuildings) params ["_gunners", "_vehicles"];
-	{[_x, false] call AS_fnc_initUnitNATO} forEach _gunners;
-	{[_x, "NATO"] call AS_fnc_initVehicle} forEach _vehicles;
-	_soldados append _gunners;
-	_vehiculos append _vehicles;
+	([_location, "NATO", _grupo] call AS_fnc_populateMilBuildings) params ["_gunners2", "_vehicles2", "_groups2", "_markers2"];
+	{[_x, false] call AS_fnc_initUnitNATO} forEach _gunners2;
+	_soldados append _gunners2;
+	_vehiculos append _vehicles2;
+	_grupos append _groups2;
+	_markers append _markers2;
+
+	{
+		_soldados append (units _x);
+	} foreach _groups2;
 
 	// create flag
 	private _veh = createVehicle [(["NATO", "flag"] call AS_fnc_getEntity), _posicion, [],0, "CAN_COLLIDE"];
@@ -31,6 +36,11 @@ private _fnc_spawn = {
 	[_veh,"vehicle"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 	//[_veh,"garage"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 	_vehiculos pushBack _veh;
+
+	//Record first major NATO involvement
+	if (isnil{["NATO_capBase_date"] call AS_stats_fnc_get}) then {
+		["NATO_capBase_date", date] call AS_stats_fnc_set;
+	};
 
 	//create _bunker, only if there's no preset composition
 	//Commented, more trouble than worth
@@ -71,7 +81,7 @@ private _fnc_spawn = {
 
 	private _tipoGrupo = [["NATO", "squads"] call AS_fnc_getEntity, "NATO"] call AS_fnc_pickGroup;
 	private _grupo = [_posicion, ("NATO" call AS_fnc_getFactionSide), _tipoGrupo] call BIS_Fnc_spawnGroup;
-	[leader _grupo, _location, "SAFE", "RANDOMUP","SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON;
+	[leader _grupo, _location, "SAFE", "RANDOMUP","SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
 	_grupos pushBack _grupo;
 	{[_x] spawn AS_fnc_initUnitNATO; _soldados pushBack _x} forEach units _grupo;
 
@@ -85,9 +95,9 @@ private _fnc_spawn = {
 		_grupo = [_pos, ("NATO" call AS_fnc_getFactionSide), _tipoGrupo] call BIS_Fnc_spawnGroup;
 		sleep 1;
 		if (_i == 0) then {
-			[leader _grupo, _location, "SAFE","SPAWNED","FORTIFY","NOVEH2","NOFOLLOW"] spawn UPSMON;
+			[leader _grupo, _location, "SAFE","SPAWNED","FORTIFY","NOVEH","NOFOLLOW"] spawn UPSMON;
 		} else {
-			[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH2", "NOFOLLOW"] spawn UPSMON;
+			[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH", "NOFOLLOW"] spawn UPSMON;
 		};
 		_grupos pushBack _grupo;
 		{[_x] spawn AS_fnc_initUnitNATO; _soldados pushBack _x} forEach units _grupo;

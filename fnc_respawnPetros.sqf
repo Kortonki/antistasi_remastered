@@ -1,7 +1,7 @@
 #include "macros.hpp"
 
 if (alive petros) exitWith {
-  [AS_commander, "hint", "Petros is alive"] calL AS_fnc_localCommunication;
+  [AS_commander, "hint", "Petros is alive"] call AS_fnc_localCommunication;
 };
 
 //TODO: Consider making the nearby enemies check when there's other ways to force a new HQ

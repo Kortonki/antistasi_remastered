@@ -8,9 +8,9 @@ private _fnc_initialize = {
 	_mrkfin setMarkerShape "ICON";
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + 60];
 
-	private _tskTitle = format ["%1 Ammodrop", (["NATO", "name"] call AS_fnc_getEntity)];
+	private _tskTitle = format ["%1 Ammodrop", (["NATO", "shortname"] call AS_fnc_getEntity)];
 	private _tskDesc = format ["Our Commander has asked %1 for a supply drop. Command the transport with your HC module and bring it to the designated position. Once it has landed you are free to use the equipment or bring it back to HQ.",
-		(["NATO", "name"] call AS_fnc_getEntity)];
+		(["NATO", "shortname"] call AS_fnc_getEntity)];
 
 	[_mission, [_tskDesc,_tskTitle,_mrkfin], _position, "rifle"] call AS_mission_spawn_fnc_saveTask;
 	[_mission, "resources", [taskNull, [], [], [_mrkfin]]] call AS_spawn_fnc_set;
@@ -32,19 +32,15 @@ private _fnc_spawn = {
 	{
 		_heli pushBack [_x, getNumber (configfile >> "CfgVehicles" >> _x >> "transportSoldier")];
 	} forEach (["NATO", "helis_transport"] call AS_fnc_getEntity);
-	_heli = ([_heli, [], {_x select 1}, "DESC"] call BIS_fnc_sortBy) select 0 select 0;
+	_heli = (([_heli, [], {_x select 1}, "DESC"] call BIS_fnc_sortBy) select 0) select 0;
 
-	private _helifn = [_orig, 0, _heli, ("NATO" call AS_fnc_getFactionSide)] call bis_fnc_spawnvehicle;
-	private _heli = _helifn select 0;
-	private _grupoHeli = _helifn select 2;
+	([_heli, _orig, random 360, "NATO", "any", 0, "FLY"] call AS_fnc_createVehicle) params ["_heliVeh", "_grupoHeli"];
 	_groups pushBack _grupoHeli;
-	{[_x] spawn AS_fnc_initUnitNATO} forEach units _grupoHeli;
-	[_heli, "NATO"] call AS_fnc_initVehicle;
-	_vehicles pushBack _heli;
-	_heli setPosATL [getPosATL _heli select 0, getPosATL _heli select 1, 1000];
-	_heli disableAI "TARGET";
-	_heli disableAI "AUTOTARGET";
-	_heli flyInHeight 200;
+	_vehicles pushback _heliVeh;
+
+	_heliVeh disableAI "TARGET";
+	_heliVeh disableAI "AUTOTARGET";
+	_heliVeh flyInHeight 200;
 	_grupoHeli setCombatMode "BLUE";
 
 	AS_commander hcSetGroup [_grupoHeli];
@@ -82,12 +78,12 @@ private _fnc_run = {
 	    private _wp3 = _grupoHeli addWaypoint [getMarkerPos "spawnNATO", 0];
 		_wp3 setWaypointType "MOVE";
 		_wp3 setWaypointSpeed "FULL";
-		waitUntil {(position _crate select 2) < 1 || isNull _chute};
+		waitUntil {(position _crate select 2) < 2 || isNull _chute};
 		detach _crate;
 		[_crate, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
 		_crate setVariable ["requiredVehs", ["Truck_F"], true];
 		_crate setVariable ["asCargo", false, true];
-		private _humo = "SmokeShellBlue" createVehicle position _crate;
+		private _humo = "SmokeShellBlue" createVehicle (position _crate);
 		_vehicles pushBack _humo;
 
 
