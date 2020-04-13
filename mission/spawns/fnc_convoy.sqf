@@ -233,11 +233,11 @@ private _fnc_spawn = {
 		};
 		_crate setVariable ["dest", _manifest, true];
 		_crate setVariable ["requiredVehs", ["Truck_F"], true];
-		[_crate, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		[_crate, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 
 		_crate attachTo [_mainVehicle, [0, 0, 0], "trup"];
 		_mainVehicle setVariable ["boxCargo", [_crate], true];
-		[_mainVehicle, "unloadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		[_mainVehicle, "unloadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		_crate setvariable ["asCargo", true, true];
 	};
 

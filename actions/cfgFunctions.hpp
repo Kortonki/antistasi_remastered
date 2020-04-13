@@ -7,10 +7,11 @@ class AS_actions {
         FNC(actions,buyBoat);
         FNC(actions,emptyPlayer);
         FNC(actions,heal);
-        FNC(actions,healrepair);
+        FNC(actions,healandrepair);
         FNC(actions,interrogate);
         FNC(actions,jamLRRadio);
         FNC(actions,loadCargo);
+        FNC(actions,location_mapInfo);
         FNC(actions,moveObject);
         FNC(actions,offerToJoin);
         FNC(actions,radio);

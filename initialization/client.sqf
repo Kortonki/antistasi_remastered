@@ -131,7 +131,7 @@ if _isJip then {
 	{
 	if ([_x] call AS_fnc_getFIAUnitType == "Survivor") then {
 		if (!isPlayer (leader group _x)) then {
-			_x addAction [localize "STR_act_orderRefugee", "AI\liberaterefugee.sqf",nil,0,false,true];
+			_x addAction [localize "STR_act_orderRefugee", AS_actions_fnc_rescue,nil,0,false,true];
 		};
 	};
 	} forEach allUnits;
@@ -161,7 +161,7 @@ removeAllActions caja;
 removeAllActions mapa;
 mapa addAction [localize "str_act_gameOptions", {CreateDialog "game_options";},nil,0,false,true,"","(isPlayer _this) and {_this call AS_fnc_isAdmin}"];
 mapa addAction [localize "str_act_commanderMenu", {CreateDialog "commander_menu";},nil,0,false,true,"","(isPlayer _this) and (_this == AS_commander) and (_this == _this getVariable ['owner',_this])"];
-mapa addAction [localize "str_act_mapInfo", "actions\fnc_location_mapInfo.sqf",nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
+mapa addAction [localize "str_act_mapInfo", AS_actions_fnc_location_mapInfo,nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
 
 removeAllActions bandera;
 [bandera,"unit"] call AS_fnc_addAction;
@@ -172,11 +172,11 @@ bandera addAction [localize "str_act_hqOptions",AS_fnc_UI_manageHQ_menu,nil,0,fa
 bandera addAction [localize "STR_act_manageTraits",AS_fnc_UI_manageTraits_menu,nil,0,false,true,"","(isPlayer _this) and {not (player call AS_fnc_controlsAI)}"];
 
 removeAllActions cajaVeh;
-cajaVeh addAction [localize "str_act_healRepair", "actions\healandrepair.sqf",nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
-cajaVeh addAction [localize "STR_act_refuel", "actions\refuel.sqf",nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
+cajaVeh addAction [localize "str_act_healandRepair", AS_actions_fnc_healandrepair,nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
+cajaVeh addAction [localize "STR_act_refuel", AS_actions_fnc_refuel,nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
 
 removeAllActions fuego;
-fuego addAction [localize "str_act_rest", "actions\skiptime.sqf",nil,0,false,true,"","(_this == AS_commander)"];
+fuego addAction [localize "str_act_rest", AS_actions_fnc_skiptime,nil,0,false,true,"","(_this == AS_commander)"];
 
 {
     [_x,"moveObject"] call AS_fnc_addAction;

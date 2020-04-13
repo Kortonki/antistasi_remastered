@@ -27,7 +27,7 @@ if (_veh isKindOf "Car") then {
 
 if ((typeOf _veh) isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
 	[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
-	[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+	[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 	};
 
 //Randomise fuel and fuel cargo

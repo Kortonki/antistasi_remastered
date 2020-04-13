@@ -7,7 +7,7 @@ private _fnc_initialize = {
 	private _tskTitle = _mission call AS_mission_fnc_title;
 	_tskTitle = format ["%1 to %2", _tskTitle, _location];
 
-	private _tiempolim = 240;
+	private _tiempolim = 60;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 
 	private _posHQ = "FIA_HQ" call AS_location_fnc_position;

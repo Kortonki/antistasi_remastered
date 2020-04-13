@@ -28,7 +28,7 @@
 			<Key ID="STR_act_missionRequest">
 				<Original>&lt;img size='1.75' image='\A3\ui_f\data\GUI\cfg\CommunicationMenu\attack_ca.paa' /&gt; Mission Request</Original>
 			</Key>
-			<Key ID="STR_act_healRepair">
+			<Key ID="STR_act_healandRepair">
 				<Original>&lt;img size='1.75' image='\A3\ui_f\data\IGUI\RscTitles\MPProgress\respawn_ca.paa' /&gt; Heal, Repair and Rearm</Original>
 			</Key>
 			<Key ID="STR_act_useMed">

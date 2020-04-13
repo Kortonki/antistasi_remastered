@@ -179,7 +179,7 @@ private _fnc_spawn = {
 
 	// spawn parked land vehicles
 	//TODO check if the following functions check for arsenal availability for vehicles
-	private _groupCount = round (_size/60);
+	private _groupCount = round (_size/80);
 
 
 	// spawn parked vehicles
