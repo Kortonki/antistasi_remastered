@@ -4,10 +4,11 @@ AS_SERVER_ONLY("AS_database_fnc_persistents_toDict");
 private _money = AS_P("resourcesFIA");
 private _hr = AS_P("hr");
 private _fuelReserves = AS_P("fuelFIA");
+private _hqPos = getMarkerPos "FIA_HQ";
 
 // money for spawned units
 {
-    if ((alive _x) and {!(_x call AS_medical_fnc_isUnconscious)} and
+    if ((alive _x) and {!(_x call AS_medical_fnc_isUnconscious) or _x distance2D _hqPos <= 100} and
             {(_x call AS_fnc_getSide) == "FIA"} and
             {_x getVariable ["BLUFORSpawn", false]}// garrisons are already tracked by the garrison list
 

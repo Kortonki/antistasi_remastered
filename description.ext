@@ -491,6 +491,7 @@ class cfgRemoteExec {
 };
 
 class cfgFunctions {
+    #include "actions\cfgFunctions.hpp"
     #include "database\cfgFunctions.hpp"
     #include "dictionary\cfgFunctions.hpp"
     #include "location\cfgFunctions.hpp"

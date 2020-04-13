@@ -4,12 +4,13 @@ private _dict = call DICT_fnc_create;
 
 private _all = [[[], []], [[], []], [[], []], [[], []]];
 private _allMagazineRemains = [];
+private _hqPos = getMarkerPos "FIA_HQ";
 
 private _fnc_getUnitsEquipment = {
     params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 
     {
-        if ((_x call AS_fnc_getSide == "FIA") and {alive _x and {!(_x call AS_medical_fnc_isUnconscious)}}) then {
+        if ((_x call AS_fnc_getSide == "FIA") and {alive _x and {!(_x call AS_medical_fnc_isUnconscious) or _x distance2D _hqPos <= 100}}) then {
             private _arsenal = [_x, true] call AS_fnc_getUnitArsenal;
             _cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
             _cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;

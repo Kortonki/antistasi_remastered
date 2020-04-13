@@ -5,16 +5,28 @@ params ["_unit", "_phase", "_box"];
 
 private _owner = owner _unit;
 
-while {lockArsenal} do {
+if lockArsenal then {
   ["Arsenal is busy, wait"] remoteExec ["hint", _unit];
-  sleep 0.5;
+};
+
+private _time = time + 20;
+waitUntil {sleep 0.5; !lockArsenal or time > _time};
+
+if (time > _time) exitWith {
+  ["Arsenal is very busy or server overloaded. Arsenal request timed out. \n\nTry again or ask admin to fix arsenal by typing lockArsenal = false to console and run it for server. Be careful with this, there's a possibility to lose a lot of gear if it's done while AI is taking stuff from arsenal (Garrisons, unit recruits)"] remoteExec ["hint", _unit];
+  _unit setVariable ["arsenalPoll", nil];
 };
 
 private _arsenal = ([caja, true] call AS_fnc_getBoxArsenal);
+
+//Do not open if player has left
+if (_unit distance _box > 10 or not(alive _unit)) exitWith {};
 
 if (_phase == "open") exitWith {
   [_arsenal, _box, _unit] remoteExec ["AS_fnc_openArsenal", _owner, false];
 };
 //Arsenal is locked during the time player gear is checked and removed from ARSENAL
+waitUntil {sleep 0.1; isNil "AS_savingServer"};
 lockArsenal = true;
-[_arsenal, _unit] remoteExec ["AS_fnc_checkArsenal", _owner, false];
+//Changed to call to prevent player side slow processing to keep arsenal locked
+[_arsenal, _unit] remoteExecCall ["AS_fnc_checkArsenal", _owner, false];

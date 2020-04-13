@@ -10,6 +10,7 @@ private _vehicle = vehicle _player;
 
 if (captive _player) exitWith {hint "You are already undercover"};
 
+
 private _heli_spotters = [["base","airfield"], "AAF"] call AS_location_fnc_TS;
 private _all_spotters = [["base","airfield","outpost","seaport","hill", "hillAA"], "AAF"] call AS_location_fnc_TS; //Roadblock removed from here: there are dogs for spotting
 
@@ -47,17 +48,6 @@ private _isMilitaryDressed = {
 	_result
 };
 
-private _fnc_detected = {
-	private _detected = false;
-	{
-		if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {(_x distance2D _player < 5) or ((_x knowsAbout (vehicle _player) > 1.4) and {_x distance2D _player < 500})}) exitWith {
-			_detected = true;
-		};
-	} forEach allUnits;
-	_detected
-};
-
-
 
 ///// Check whether the player can become undercover
 if (_vehicle != _player) then {
@@ -67,7 +57,7 @@ if (_vehicle != _player) then {
 	if (vehicle _player in AS_S("reportedVehs")) then {
 		_reason = "You cannot go undercover because you are in a compromised vehicle. Change your vehicle or renew it in the Garage to become undercover.";
 	};
-	if (call _fnc_detected) then {
+	if ([_player] call AS_fnc_detected) then {
 		_reason = "You cannot go undercover because the enemy knows you.";
 	};
 
@@ -104,8 +94,10 @@ private _setUndercover = {
 
 	// set AI members to be undercovered.
 	if (_player == leader group _player) then {
-		{if (!isplayer _x and {!(captive _x)}) then {[_x] remoteExec ["AS_fnc_activateUndercoverAI", _x]}} forEach units group _player;
+		{if (!isplayer _x and {!(captive _x)}) then {[_x] remoteExec ["AS_fnc_activateUndercoverAI", _x]}} forEach (units group _player);
 			};
+
+	//Set everyone in same vehicle undercover
 	["<t color='#1DA81D'>Undercover</t>",0,0,4,0,0,4] spawn bis_fnc_dynamicText;
 };
 
@@ -130,7 +122,8 @@ while {_reason == ""} do {
 			};
 			if (not (_type in civHeli) and
 				{count (_veh nearRoads 50) == 0} and
-				_fnc_detected) exitWith {
+				{[_player] call AS_fnc_detected}
+				) exitWith {
 				// no roads within 50m and detected.
 				"awayFromRoad"
 			};
@@ -152,7 +145,7 @@ while {_reason == ""} do {
 				{false or
 					{((position _player nearObjects ["DemoCharge_Remote_Ammo", 5]) select 0) mineDetectedBy ("AAF" call AS_fnc_getFactionSide)} or
 					{((position _player nearObjects ["SatchelCharge_Remote_Ammo", 5]) select 0) mineDetectedBy ("AAF" call AS_fnc_getFactionSide)}} and
-				_fnc_detected) exitWith {
+					{[_player] call AS_fnc_detected}) exitWith {
 				"vehicleWithExplosives"
 			};
 
@@ -207,7 +200,7 @@ private _setPlayerCompromised = {
 
 	// the player only becomes compromised when he is detected
 	//
-	if (call _fnc_detected) then {
+	if ([_player] call AS_fnc_detected) then {
 		if (vehicle _player != _player) then {
 			AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
 			{

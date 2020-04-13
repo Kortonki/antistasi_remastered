@@ -112,6 +112,7 @@ class AS {
         FNC_BASE(deployFIAminefield);
 
         FNC_BASE(canFight);
+        FNC_BASE(detected);
 
         // auxiliars to missions
         FNC_BASE(oneStepMission);

@@ -82,7 +82,7 @@ if not isServer then {
     waitUntil {not isNil "AS_dataInitialized"};
     call AS_scheduler_fnc_initialize;
 } else {
-    waitUntil {sleep 0.1; not isNil "AS_server_side_variables_initialized"};
+    waitUntil {sleep 0.1; not isNil "AS_server_side_variables_initialized" and {not isNil "AS_dataInitialized"}};
 };
 
 [] execVM "reinitY.sqf";

@@ -36,6 +36,11 @@ if (_enemySide == "FIA") then {
 		private _otherPosition = _x call AS_location_fnc_position;
 
 		if (_otherPosition distance2D _position < 1000) then {
+
+			if (_location call AS_location_fnc_type in ["base", "airfield"]) then {
+					_threat = _threat + (AS_P("NATOsupport")/10);
+			};
+
 			private _garrison = _x call AS_location_fnc_garrison;
 			private _size = _x call AS_location_fnc_size;
 
@@ -65,7 +70,7 @@ if (_enemySide == "FIA") then {
 
 {
 	 if (random 1 < 0.5) then {
-	 	if ((secondaryWeapon _x) in (AS_weapons select 10)) then {_threat = _threat + 2;};
+	 	if ((secondaryWeapon _x) in (AS_weapons select 10)) then {_threat = _threat + 2;}; //Probably adjust this? threat of 10 prevents AAF sending patrol without tanks
 		_threat = _threat + 0.1;
 	};
 

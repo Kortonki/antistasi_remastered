@@ -115,6 +115,10 @@ private _fnc_spawn = {
 		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
 		_groups pushback _vehGroup;
 
+		private _origin_Pos_dir = [_originPos, _position] call AS_fnc_findSpawnSpots;
+		_originPos = _origin_Pos_dir select 0;
+		private _dir = _origin_Pos_dir select 1;
+
 		// spawn them
 		for "_i" from 1 to _nveh do {
 			private _toUse = "trucks";
@@ -125,6 +129,12 @@ private _fnc_spawn = {
 				_toUse = "tanks";
 				};
 			([_toUse, _originPos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+
+			_origin_Pos_dir = [[_originPos, 10, _dir] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+			_originPos = _origin_Pos_dir select 0;
+			_dir = _origin_Pos_dir select 1;
+
+
 			//Tanks make one group
 			{_soldiers append (units _x)} foreach _groups1;
 			if (_toUse == "tanks") then {
@@ -141,7 +151,7 @@ private _fnc_spawn = {
 			//Support vehicles here. //Choose support position from AAF locations whice are close to the target & the base
 			//TODO improve this to search from farther
 
-			private _supDest = _originPos;
+			private _supDest = +_originPos;
 			private _supLoc	= ["AAF" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
 			private _supLocPos = _supLoc call AS_location_fnc_position;
 			if (_supLocPos distance2D _originPos < _position distance2D _originPos) then {

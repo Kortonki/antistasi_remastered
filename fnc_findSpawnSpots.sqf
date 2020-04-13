@@ -17,7 +17,7 @@ private _posRoad = position _road;
 private _dist = _posRoad distance2D _dest;
 private _dir = getDir _road;
 
-if (count _conRoads > 0) then {
+if (count _conRoads > 0 and {count (nearestobjects [_posRoad, [], 5, true]) == 0}) then {
     {
         if ((position _x distance2D _dest) < _dist) then {
             _posRoad = position _x;

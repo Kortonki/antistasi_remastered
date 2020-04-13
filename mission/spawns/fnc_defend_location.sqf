@@ -44,11 +44,6 @@ private _fnc_spawn = {
 	private _threatEvalLand = 0;
 	if (_base != "") then {_threatEvalLand = [_position, "FIA"] call AS_fnc_getLandThreat};
 
-	if (_location call AS_location_fnc_type in ["base", "airfield"]) then {
-			_threatEvalLand = _threatEvalLand + (AS_P("NATOsupport")/10);
-			_threatEvalAir = _threatEvalAir + (AS_P("NATOsupport")/10);
-	};
-
 	private _groups = [];
 	private _vehicles = [];
 
@@ -98,6 +93,10 @@ private _fnc_spawn = {
 		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
 		_groups pushback _vehGroup;
 
+		private _origin_Pos_dir = [_originPos, _position] call AS_fnc_findSpawnSpots;
+		_originPos = _origin_Pos_dir select 0;
+		private _dir = _origin_Pos_dir select 1;
+
 		// spawn them
 		for "_i" from 1 to _nVeh do {
 			//Only use at most 50% of heavy equipment for attack
@@ -110,6 +109,10 @@ private _fnc_spawn = {
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 
+			_origin_Pos_dir = [[_originPos, 10, _dir] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+			_originPos = _origin_Pos_dir select 0;
+			_dir = _origin_Pos_dir select 1;
+
 			//Tanks make one group
 			if (_toUse == "tanks") then {
 				(units (_groups1 select 0)) join _vehGroup;
@@ -118,6 +121,8 @@ private _fnc_spawn = {
 				_groups append _groups1;
 			};
 			_vehicles append _vehicles1;
+
+
 			sleep 5;
 		};
 		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
@@ -175,7 +180,7 @@ private _fnc_spawn = {
 	//TODO improve this to search from farther
 	//TODO consider when to spawn which support. eg trucks don't need ammo
 
-	private _supDest = _originPos;
+	private _supDest = +_originPos;
 	private _supLoc	= ["AAF" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
 	private _supLocPos = _supLoc call AS_location_fnc_position;
 	if (_supLocPos distance2D _originPos < _position distance2D _originPos) then {

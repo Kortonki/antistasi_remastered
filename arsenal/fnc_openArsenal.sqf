@@ -15,7 +15,7 @@ _box setvariable ["bis_addVirtualWeaponCargo_cargo",nil,true];  // see http://st
 
 
 // BIS_fnc_arsenal creates a new action. We remove it so the only arsenal available is this one
-waitUntil {!isnil{_box getVariable "bis_fnc_arsenal_action"}};
+waitUntil {sleep 0.2; !isnil{_box getVariable "bis_fnc_arsenal_action"}};
 
 [_box, "remove"] remoteExecCall  ["AS_fnc_addAction", [0, -2] select isDedicated];
 //Delay to make sure remove is happening befor adding new actions
@@ -37,8 +37,7 @@ if (_box == caja) then {
 
 // wait for the arsenal to close.
 //failsafe
-waitUntil {isnull ( uinamespace getvariable "RSCDisplayArsenal") or not(alive _unit)};
+waitUntil {sleep 0.2; isnull ( uinamespace getvariable "RSCDisplayArsenal") or not(alive _unit)};
 
 if (not(alive _unit)) exitWith {};
-
 [_unit, "check", _box] remoteExec ["AS_fnc_pollServerArsenal", 2];

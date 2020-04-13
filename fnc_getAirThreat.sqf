@@ -31,6 +31,10 @@ if (_enemySide == "FIA") then {
 		private _positionOther = _x call AS_location_fnc_position;
 
 		if (_positionOther distance2D _position < 1500) then {
+			if (_location call AS_location_fnc_type in ["base", "airfield"]) then {
+					_threat = _threat + (AS_P("NATOsupport")/10);
+			};
+
 			private _garrison = _x call AS_location_fnc_garrison;
 			private _size = _x call AS_location_fnc_size;
 			_threat = _threat + (floor((count _garrison)/4)) + (2*({(_x == "AA Specialist")} count _garrison));
