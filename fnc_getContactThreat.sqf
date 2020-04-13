@@ -106,7 +106,7 @@ private _threatEval_Air = 0;
     //TODO: investigate possibility to do via units weapons arrayintersect AS_weapons?
     {
       if (_unit hasWeapon _x) exitWith {
-        if (_x in (AS_weapons select 10)) then {_threatEval_Land = _threatEval_Land + 2;};
+        if (_x in (AS_weapons select 10)) then {_threatEval_Land = _threatEval_Land + 1.5;};
         if (_x in (AS_weapons Select 8)) then {_threatEval_Air = _threatEval_Air + 2;};
         if (_x in (AS_weapons select 6)) then {_threatEval_Air = _threatEval_Air + 0.5;};
       };

@@ -39,5 +39,5 @@ if (_box == caja) then {
 //failsafe
 waitUntil {sleep 0.2; isnull ( uinamespace getvariable "RSCDisplayArsenal") or not(alive _unit)};
 
-if (not(alive _unit)) exitWith {};
+if (not(alive _unit)) exitWith {_unit setVariable ["arsenalPoll", nil, owner _unit]};
 [_unit, "check", _box] remoteExec ["AS_fnc_pollServerArsenal", 2];

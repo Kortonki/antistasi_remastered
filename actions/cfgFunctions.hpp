@@ -18,6 +18,7 @@ class AS_actions {
         FNC(actions,recoverEquipment);
         FNC(actions,refuel_truck_check);
         FNC(actions,refuel_truck);
+        FNC(actions,refuel);
         FNC(actions,repackMagazines);
         FNC(actions,rescue);
         FNC(actions,skiptime);

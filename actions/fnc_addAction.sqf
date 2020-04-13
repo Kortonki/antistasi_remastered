@@ -14,7 +14,7 @@ switch _type do {
 	case "unit": {_object addAction [localize "STR_act_recruitUnit", {call AS_fnc_UI_recruitUnit_menu},nil,0,false,true,"",IS_PLAYER]};
 	case "vehicle": {_object addAction [localize "STR_act_buyVehicle", {call AS_fnc_UI_buyVehicle_menu},nil,0,false,true,"",IS_PLAYER]};
 	case "mission": {removeAllActions petros; petros addAction [localize "STR_act_missionRequest", {call AS_fnc_UI_manageMissions_menu},nil,0,false,true,"",IS_COMMANDER]};
-	case "transferFrom": {_object addAction [localize "STR_act_unloadCargo", AS_actions_fnc_unloadCargo,nil,0,false,true,"",IS_PLAYER]};
+	case "transferFrom": {_object addAction [localize "STR_act_unloadCargo", AS_actions_fnc_transferFrom,nil,0,false,true,"",IS_PLAYER]};
 	case "transferTo": {_object addAction [localize "STR_act_loadCargo", AS_actions_fnc_transferFrom,nil,0,false,true,"",IS_PLAYER]};
 	case "recoverEquipment": {_object addAction [localize "STR_act_recoverEquipment", AS_actions_fnc_recoverEquipment,nil,0,false,true,"",IS_PLAYER]};
 	case "emptyPlayer": {_object addAction [localize "STR_act_emptyPlayer", AS_actions_fnc_emptyPlayer, nil, 0, false, true, "",IS_PLAYER]};

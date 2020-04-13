@@ -14,9 +14,9 @@ if (_objType == "delete") exitWith {
 
 //Check if player
 
-private _position = "FIA_HQ" call AS_location_fnc_position;
+private _position = getMarkerPos "FIA_HQ";
 
-if (position _player distance _position > 100) exitWith {
+if (position _player distance2D _position > 200) exitWith {
 	private _text = "This location is too far from HQ";
   [_player, "hint", _text] call AS_fnc_localCommunication;
 };
@@ -26,7 +26,7 @@ if (_objType == "pad") exitWith {
 		if (str typeof _x find "Land_Bucket_painted_F" > -1) then {
 			[_x, {deleteVehicle _this}] remoteExec ["call", 0];
 		};
-	} forEach nearestObjects [fuego, [], 100];
+	} forEach nearestObjects [fuego, [], 200];
 	private _padBag = "Land_Bucket_painted_F" createVehicle [0,0,0];
 	_padBag setPos ([getPos _player, 2, getDir _player] call BIS_Fnc_relPos);
 	[_padBag, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
