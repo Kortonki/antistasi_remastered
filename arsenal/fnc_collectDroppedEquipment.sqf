@@ -33,7 +33,7 @@ if (_side == "FIA" or _location == "fia_hq") then {
 {
     private _veh = _x;
 
-    if (_veh isKindOf "AllVehicles" and {_veh call AS_fnc_getside != "CIV" and {!(_veh in AS_P("vehicles"))}}) then {
+    if (_veh isKindOf "AllVehicles" and {_veh call AS_fnc_getside in ["AAF", "CSAT"] and {{alive _x} count (crew _veh) == 0 and {!(_veh in AS_P("vehicles"))}}}) then {
           [_veh] remoteExec ["AS_fnc_changePersistentVehicles", 2];
           [_veh, "FIA"] call AS_fnc_setSide;
 

@@ -109,8 +109,8 @@ private _fnc_spawn = {
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 
-			_origin_Pos_dir = [[_originPos, 10, _dir] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
-			_originPos = _origin_Pos_dir select 0;
+			_origin_Pos_dir = [[_originPos, 10, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+			_originPos = [_originPos, 10, _dir + 180] call bis_fnc_relPos;
 			_dir = _origin_Pos_dir select 1;
 
 			//Tanks make one group
@@ -171,7 +171,7 @@ private _fnc_spawn = {
 			([_toUse, _originPos, _position, _patrolMarker] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
-			sleep 10;
+			sleep 5;
 		};
 		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};

@@ -141,13 +141,16 @@ private _fnc_spawn = {
 	private _group = createGroup ("AAF" call AS_fnc_getFactionSide);
 	_groups pushBack _group;
 	//_posbase = _posbase findEmptyPosition [50, 100, _mainVehicleType];
-	([_posbase, _position] call AS_fnc_findSpawnSpots) params ["_posRoad", "_dir"];
+	private _origin_Pos_dir = [_posbase, _position] call AS_fnc_findSpawnSpots;
+	private _posRoad = _origin_Pos_dir select 0;
+	private _dir = _origin_Pos_dir select 1;
+
 	//_posbase = _posbase findEmptyPosition [0, 10, _mainVehicleType];
 	private _escortSize = 1;
 	private _frontLine = false;
 	if ([_location] call AS_fnc_location_isFrontline) then {
 		_frontLine = true;
-		_escortSize = (round random 2) + 1
+		_escortSize = (round random 1) + 2
 	};
 
 	private _leadCategory = ["cars_transport", "cars_armed"] select (["cars_armed"] call AS_AAFarsenal_fnc_countAvailable > 0);
@@ -171,7 +174,10 @@ private _fnc_spawn = {
 
 
 		([_escortVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_vehicle", "_vehicleGroup"];
-		_posRoad = [(_posRoad select 0) - (15*(sin _dir )), (_posRoad select 1) - (15*(cos _dir)), 0]; //next one is 15m behind
+
+		_origin_Pos_dir = [[_posRoad, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+		_posRoad = [_posRoad, 10, _dir + 180] call bis_fnc_relPos;
+		_dir = _origin_Pos_dir select 1;
 
 		{
 			if (_i == _escortSize and {_escortSize > 1}) then {_x setRank "PRIVATE";} else {_x setRank "SERGEANT";}; //Make one escort last of the convoy
@@ -210,7 +216,9 @@ private _fnc_spawn = {
 		};
 
 	};
-	_posRoad = [(_posRoad select 0) - (15*(sin _dir )), (_posRoad select 1) - (15*(cos _dir)), 0]; //next pos is 15m behing
+	_origin_Pos_dir = [[_posRoad, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+	_posRoad = [_posRoad, 10, _dir + 180] call bis_fnc_relPos;
+	_dir = _origin_Pos_dir select 1;
 
 	([_mainVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_mainVehicle","_mainVehicleGroup","_driver"];
 	_vehicles pushBack _mainVehicle;

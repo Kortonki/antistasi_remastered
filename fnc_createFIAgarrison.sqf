@@ -5,6 +5,7 @@ private _soldados = [];
 private _grupos = [];
 
 private _position = _location call AS_location_fnc_position;
+_position set [2, 0]; //Failsafe so marker z wont interfere
 private _size = _location call AS_location_fnc_size;
 private _type = _location call AS_location_fnc_type;
 private _estaticas = AS_P("vehicles") select {(typeOf _x) in AS_allStatics and {_x distance2D _position < _size}};
