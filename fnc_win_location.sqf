@@ -26,10 +26,8 @@ while {isNull _flag} do {
 };
 [_flag,"remove"] remoteExecCall ["AS_fnc_addAction", AS_CLIENTS];
 
-private _dummy = (["FIA", "flag"] call AS_fnc_getEntity) createVehicle [0,0,0];
-private _texture = flagTexture _dummy;
-_flag setFlagTexture _texture;
-deletevehicle _dummy;
+
+_flag setFlagTexture (["FIA"] call AS_fnc_getFlagTexture);
 
 sleep 5;
 [_flag,"unit"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];

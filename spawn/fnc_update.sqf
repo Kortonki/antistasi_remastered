@@ -65,9 +65,10 @@ private _spawningOPFORunits = [];
         if (!_isSpawned and {!(_x call AS_spawn_fnc_exists) and {_spawnCondition}}) then {
             _x call AS_location_fnc_spawn;
 
+            //All FIA locations go to Server because arsenal is local only to server
             [_x, "location"] call AS_spawn_fnc_add;
-            [[_x], "AS_spawn_fnc_execute"] call AS_scheduler_fnc_execute;
-
+            [_x] remoteExec ["AS_spawn_fnc_execute", 2];
+            
             private _type = _x call AS_location_fnc_type;
             if (_type == "city") then {
                 ["civ_" + _x, "location"] call AS_spawn_fnc_add;

@@ -30,6 +30,9 @@ publicVariable "AS_commander";
 AS_Pset("patrollingLocations", []);
 AS_Pset("patrollingPositions", []);
 
+//ARSENAL INIT
+[[[],[]],[[],[]],[[],[]],[[],[]]] call AS_fnc_setArsenal;
+
 // These are default values for the start.
 
 private _startHr = paramsArray select 0;

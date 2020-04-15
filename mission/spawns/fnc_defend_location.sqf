@@ -106,11 +106,12 @@ private _fnc_spawn = {
 			};
 			if (_threatEvalLand > 5 and {["tanks", 0.5] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "tanks";
+				_i = _i + 1; //tanks make up for more vehicles
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 
-			_origin_Pos_dir = [[_originPos, 10, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
-			_originPos = [_originPos, 10, _dir + 180] call bis_fnc_relPos;
+			_origin_Pos_dir = [[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+			_originPos = [_originPos, 15, _dir + 180] call bis_fnc_relPos;
 			_dir = _origin_Pos_dir select 1;
 
 			//Tanks make one group
@@ -123,7 +124,7 @@ private _fnc_spawn = {
 			_vehicles append _vehicles1;
 
 
-			sleep 5;
+			sleep 15;
 		};
 		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};

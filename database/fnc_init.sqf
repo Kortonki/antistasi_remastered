@@ -15,6 +15,7 @@ AS_database_persistents = [
 	"secondsForAAFAttack", "upFreq", "nextUpdate", "nextAttack", "destroyedLocations", "knownLocations", "vehiclesInGarage", "destroyedBuildings",
 	"antenasPos_alive", "antenasPos_dead", "date", "BE_module", "vehicles",
 	"patrollingLocations", "patrollingPositions",
+	"arsenal_w", "arsenal_m",  "arsenal_i", "arsenal_b",
 	"overcast", "rain", "windDir", "windSpeed", "gusts", "lightnings", "waves", "fog", "clear" //weather
 ];
 

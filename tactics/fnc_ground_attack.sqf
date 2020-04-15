@@ -1,6 +1,6 @@
 params ["_origin", "_destination", "_crew_group", "_marker", ["_threat", 0]];
 
-private _safePosition = [_destination, _origin, _threat*2] call AS_fnc_getSafeRoadToUnload; //Threat multiplied, tank battles are more long range
+private _safePosition = [_destination, _origin, _threat*1.5] call AS_fnc_getSafeRoadToUnload; //Threat multiplied, tank battles are more long range
 private _wp1 = _crew_group addWaypoint [_safePosition, 0];
 _wp1 setWaypointType "MOVE";
 _wp1 setWaypointSpeed "NORMAL";

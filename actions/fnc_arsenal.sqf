@@ -6,7 +6,7 @@ if (not(isnil {_unit getVariable "arsenalPoll"})) exitWith {hint "You're already
 _unit setVariable ["arsenalPoll", true];
 
 if (_box != caja) then {
-    [_box, caja] call AS_fnc_transferToBox;
+    [_box, caja] remoteExec ["AS_fnc_transferToBox", 2];
 };
 
 private _old_cargo = [_unit, true] call AS_fnc_getUnitArsenal;

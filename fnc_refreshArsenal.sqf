@@ -13,13 +13,13 @@ if _clean then {
     publicVariable "unlockedMagazines";
 
     //Remove blanks
-    private _magazineCargo = ([caja, true] call AS_fnc_getBoxArsenal) select 1;
+    /*private _magazineCargo = ([caja, true] call AS_fnc_getBoxArsenal) select 1;
     {
       private _ammo = getText (configFile >> "CfgMagazines" >> _x >> "ammo");
       if (_ammo find "blank" != -1) then {
         (_magazineCargo select 1) set [_forEachIndex, 0]; // no delete to keep foreachindex valid
       };
-    } foreach (_magazineCargo select 0);
+    } foreach (_magazineCargo select 0);*/
 
     unlockedItems = unlockedItems arrayIntersect unlockedItems;
     unlockedItems pushBackUnique "Binocular";
@@ -29,7 +29,7 @@ if _clean then {
     publicVariable "unlockedBackpacks";
 
 
-[caja, getWeaponCargo caja, _magazineCargo, getItemCargo caja, getBackpackCargo caja, true, true] call AS_fnc_populateBox;
+//[caja, getWeaponCargo caja, _magazineCargo, getItemCargo caja, getBackpackCargo caja, true, true] call AS_fnc_populateBox;
 
 };
 

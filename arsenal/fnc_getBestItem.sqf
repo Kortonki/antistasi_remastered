@@ -2,7 +2,11 @@ params ["_box", "_type", ["_as_list", False], ["_minAmount", 5]];
 
 private _availableItems = [[],[]];
 if (typename _box != "ARRAY") then {
-	_availableItems = getItemCargo _box;
+	if (_box == caja) then {
+		_availableItems = +((call AS_fnc_getArsenal) select 2);
+	} else {
+		_availableItems = getItemCargo _box;
+	};
 } else {
 	// it is a list of items.
 	_availableItems set [0, _box];

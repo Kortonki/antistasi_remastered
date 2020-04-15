@@ -81,8 +81,8 @@ if _useBinoculars then {
     _binoculars = [caja, "binoculars"] call AS_fnc_getBestItem;
 };
 
-private _availableWeapons = getWeaponCargo caja;
-private _availableMagazines = getMagazineCargo caja;
+private _availableWeapons = +(call AS_fnc_getArsenal) select 0;
+private _availableMagazines = +(call AS_fnc_getArsenal) select 1;
 
 // add unlocked stuff
 (call AS_fnc_unlockedCargoList) params ["_unlockedCargoWeapons", "_unlockedCargoMagazines"];

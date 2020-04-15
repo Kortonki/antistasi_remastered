@@ -199,7 +199,11 @@ class AS {
         FNC_BASE(dropArtilleryShells);
         FNC_BASE(dropArtilleryShellsNATO);
         FNC_BASE(changeStreetLights);
+        FNC_BASE(getFlagTexture);
 
+        FNC(arsenal,removeUnlocked);
+        FNC(arsenal,getArsenal);
+        FNC(arsenal,setArsenal);
         FNC(arsenal,checkArsenal);
         FNC(arsenal,openArsenal);
         FNC(arsenal,buyGear);

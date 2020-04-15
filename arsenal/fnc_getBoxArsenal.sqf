@@ -1,4 +1,9 @@
+#include "../macros.hpp"
 params ["_box", ["_restrict", false]];
+
+if (_box == caja) exitWith {
+	(call AS_fnc_getArsenal) // Does return value have to contain magremains?
+};
 
 private _weapons = [];
 private _magazinesCargo = magazinesAmmoCargo _box;

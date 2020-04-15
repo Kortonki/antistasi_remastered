@@ -2,7 +2,22 @@
 
 //This will add cargo array to arsenal without emptying it in the process
 
-params ["_cargo", ["_notify", false]];
+params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
+
+//Here unlocked are removed
+
+([_cargo_w, _cargo_m,_cargo_i,_cargo_b] call AS_fnc_removeUnlocked) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
+
+waitUntil {!lockArsenal};
+lockArsenal = true;
+private _arsenal = call AS_fnc_getArsenal;
+
+_cargo_w = [_arsenal select 0, _cargo_w] call AS_fnc_mergeCargoLists;
+_cargo_m = [_arsenal select 1, _cargo_m] call AS_fnc_mergeCargoLists;
+_cargo_i = [_arsenal select 2, _cargo_i] call AS_fnc_mergeCargoLists;
+_cargo_b = [_arsenal select 3, _cargo_b] call AS_fnc_mergeCargoLists;
+
+[_cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_setArsenal;
 
 /*waitUntil {sleep 0.1; not(AS_S("lockTransfer"))};
 AS_Sset("lockTransfer", true);*/
@@ -16,12 +31,15 @@ _cargo_b = [_cargo_b, _cargo select 3] call AS_fnc_mergeCargoLists;
 [caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
 */
 
+/*
 private _cargo_w = _cargo select 0;
 private _cargo_m = _cargo select 1;
 private _cargo_i = _cargo select 2;
 private _cargo_b = _cargo select 3;
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+
+
+[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;*/
 
 //Experiment for a more efficient mode for adding
 /*

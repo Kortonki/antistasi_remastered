@@ -2,7 +2,7 @@
 AS_SERVER_ONLY("AS_FIAarsenal_fnc_toDict");
 private _dict = call DICT_fnc_create;
 
-private _all = [[[], []], [[], []], [[], []], [[], []]];
+private _all = call AS_fnc_getArsenal; //Virtual arsenal is the baseline
 private _allMagazineRemains = [];
 private _hqPos = getMarkerPos "FIA_HQ";
 
@@ -33,7 +33,7 @@ private _fnc_getVehiclesEquipment = {
                 {(_x in AS_permanent_HQplacements) or (_x call AS_fnc_getSide) == "FIA" or (_x isKindOf "ReammoBox_F")} and
                 {alive _x} and
                 {_x distance2D (_closest call AS_location_fnc_position) <= _size} and
-                {private _invalid = weaponsItemsCargo _x; not isNil "_invalid"}) then {
+                {private _invalid = weaponsItemsCargo _x; not isNil "_invalid"}) then { //everything is counted, even the things at caja
 
             private _arsenal = [_x, true] call AS_fnc_getBoxArsenal;
             _cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;

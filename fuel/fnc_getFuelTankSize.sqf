@@ -7,8 +7,8 @@ if (not(isNil {_vehicle getVariable "fuelTankSize"})) exitWith {(_vehicle getVar
 private _type = typeOf _vehicle;
 
 private _fuelConsumptionRate = [configFile >> "CfgVehicles" >> _type, "fuelConsumptionRate"] call BIS_fnc_returnConfigEntry;
-private _fuelTankSize = [configFile >> "CfgVehicles" >> _type, "fuelCapacity"] call BIS_fnc_returnConfigEntry;
-if (not(_fuelConsumptionRate == 0.01) and {not(isNil "_fuelTankSize")}) exitWith {_fuelTankSize};
+private _fuelTankSize = ([configFile >> "CfgVehicles" >> _type, "fuelCapacity"] call BIS_fnc_returnConfigEntry); //additional check for UAVs to avoid divide by zero errors
+if (not(_fuelConsumptionRate == 0.01) and {not(isNil "_fuelTankSize")}) exitWith {_fuelTankSize max 1};
 
 //TODO if no reasonable value, base the fuel tank size on vehicle size and mass
 
@@ -52,7 +52,7 @@ _fuelTankSize = _vehicle call {
   100
 };
 
-if (_fuelTankSize < 0) then {
+if (_fuelTankSize <= 0) then {
   diag_log format["[AS] Error: AS_fnc_getFuelTankSize: Vehicle type %1, fuel tank size < 0: fallback fuel tank size used", _vehicle];
   _fuelTankSize = 100;
 };
