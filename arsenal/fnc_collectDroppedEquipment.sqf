@@ -10,7 +10,7 @@ if (_side == "FIA" or _location == "fia_hq") then {
 
 {
     ([_x, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
-    [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+    [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] remoteExec ["AS_fnc_populateBox", 2];
     [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
     [_x] RemoteExec ["deleteVehicle", _x];
 
@@ -21,7 +21,7 @@ if (_side == "FIA" or _location == "fia_hq") then {
 {
     if not (alive _x) then {
         ([_x, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
-        [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+        [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] remoteExec ["AS_fnc_populateBox", 2];
         [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
         _x call AS_fnc_emptyUnit;
         [_x] RemoteExec ["AS_fnc_safeDelete", _x]; //this changed to safe delete in case below picks up dead vehicle crew -> deleteVehicle would delete vehicle also
@@ -43,7 +43,7 @@ if (_side == "FIA" or _location == "fia_hq") then {
     if (_veh isKindOf "B_supplyCrate_F" and {!(_veh in [caja, cajaVeh]) and {isnull(attachedTo _veh)}}) then { //Changed reammobox to supplycrate
 
       ([_veh, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
-      [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+      [_box, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] remoteExec ["AS_fnc_populateBox", 2];
       [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
       //[_veh] RemoteExec ["deleteVehicle", _x];
       //Do not delete, let it be done via normal ways. (Supply box was deleted while respawning FIA location)

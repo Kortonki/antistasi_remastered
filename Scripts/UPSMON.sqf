@@ -364,7 +364,9 @@ If ("RELAX" in _Ucthis) then {_grpmission = "RELAX";_nowtype = 2;};
 If (_nowpType > 0 && _grpmission != "FORTIFY") then {_grpmission = "STATIC"};
 
 {_x allowfleeing 0;} foreach units _grp;
-_grp enableAttack false;
+if (_noWPType == 0) then {
+	_grp enableAttack false; //WTF is this
+};
 _npc setbehaviour _Behaviour;
 _npc setspeedmode _speed;
 _grp setformation _formation;

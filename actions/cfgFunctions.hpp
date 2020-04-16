@@ -24,5 +24,6 @@ class AS_actions {
         FNC(actions,skiptime);
         FNC(actions,transferFrom);
         FNC(actions,unloadCargo);
+        FNC(actions,vehicle_cargo_check);
     };
 };

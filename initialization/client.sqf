@@ -154,6 +154,7 @@ removeAllActions caja;
 [caja,"arsenal"] call AS_fnc_addAction;
 [caja,"transferFrom"] call AS_fnc_addAction;
 [caja,"emptyPlayer"] call AS_fnc_addAction;
+[caja, "vehicle_cargo_check"] call AS_fnc_addAction;
 
 //OBSOLETE if no arsenal waiting
 //caja addEventHandler ["ContainerOpened", {_this spawn AS_fnc_showUnlocked}];

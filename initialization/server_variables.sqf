@@ -167,3 +167,82 @@ lockArsenal = false;
 [] call AS_stats_fnc_initialize;
 
 AS_active_messages = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AS_aphorisms = [
+["If you know the enemy and know yourself you need not fear the results of a hundred battles.","Sun Tzu"],
+["A good commander is benevolent and unconcerned with fame.","Sun Tzu"],
+["Quickness is the essence of the war.","Sun Tzu"],
+["Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.","Sun Tzu"],
+["He will win who knows when to fight and when not to fight.","Sun Tzu"],
+["A clever General avoids an army when its spirit is keen, but attacks when it is sluggish and inclined to return. This is the art of studying moods. Disciplined and calm, he awaits the appearance of disorder and hubbub amongst the enemy - This is the art of retaining self-possession.","Sun Tzu"],
+["Move only if there is a real advantage to be gained","Sun Tzu"],
+
+["A single death is a tragedy; a million deaths is a statistic.","Joseph Stalin"],
+["At the end of the game, the king and the pawn go back in the same box.","Italian Proverb"],
+["Experience is a hard teacher because she gives the test first, the lesson afterward","Vernon Law"],
+["Mankind must put an end to war, or war will put an end to mankind.","John Fitzgerald Kennedy"],
+["Men are at war with each other because each man is at war with himself.","Francis Meehan"],
+["I am the one who knocks!","Walter White"],
+["The object of war is not to die for your country but to make the other bastard die for his","General G. C. Patton"],
+["War isn't about who's right, its about who's left.","Anders Russell"],
+["Much good work is lost for the lack of a little more.","Edward Harriman"],
+["Stay out of the road, if you want to grow old.","Pink Floyd"],
+["War is a series of disasters which result in a winner","Georges Clemenceau"],
+
+["You have to remember something: Everybody pities the weak; jealousy you have to earn.","Arnold Schwarzenegger"],
+["The mind is the limit. As long as the mind can envision the fact that you can do something, you can do it, as long as you really believe 100 percent.","Arnold Schwarzenegger"],
+["The more knowledge you have, the more you’re free to rely on your instincts.","Arnold Schwarzenegger"],
+
+["Sitten joukkueen pitää ottaa se pää pois perseestä ja lattaa ne taistelija toimimaan. Täällä nyt vaan nukutaan kokoaika","Blahh"],
+["Hei nyt ekanakin tehdään sillätavalla että, menkää vittuun siitä","Tonto"]
+
+
+];
+
+AS_Pset("aphorisms", AS_aphorisms);

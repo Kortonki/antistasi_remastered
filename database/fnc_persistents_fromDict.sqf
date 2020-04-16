@@ -98,6 +98,9 @@ if (isNil {AS_P("nextAttack")}) then {
   AS_Pset("nextAttack", _nextAttack);
 };
 
+if (isNil {AS_P("aphorisms")}) then {
+  AS_Pset("aphorisms", AS_aphorisms);
+};
 
 //Apply weather changes immediately if there is atan2
 private _clear = AS_P("clear");

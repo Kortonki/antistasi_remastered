@@ -28,6 +28,9 @@ private _fnc_remove = {
 			private _amount1 = (_cargo1 select 1 select _index);
 			(_cargo1 select 1) set [_index, _amount1 - _amount2];
 
+        } else { //Nonexistant are created for the returning list
+          (_cargo1 select 0) pushback _x;
+          (_cargo1 select 1) pushback -(_amount2);
         };
     } forEach (_cargo2 select 0);
 };

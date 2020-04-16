@@ -142,6 +142,7 @@ class AS {
         FNC_BASE(EH_CSATKilled);
         FNC_BASE(EH_AAFVehicleKilled);
         FNC_BASE(EH_CSATVehicleKilled);
+        FNC_BASE(EH_VehicleHit);
         FNC_BASE(getContactThreat);
         FNC_BASE(getLandThreat);
         FNC_BASE(getAirThreat);
@@ -233,7 +234,6 @@ class AS {
         FNC(arsenal,unlockedCargoList);
         FNC(arsenal,addMagazineRemains);
         FNC(arsenal,showUnlocked);
-        FNC(arsenal,waitArsenalSync);
         FNC(arsenal,collectDroppedEquipment);
 
         FNC_BASE(initPlayerPosition);
@@ -260,6 +260,11 @@ class AS {
         FNC_BASE(revealToPlayer);
 
         FNC(actions,addAction);
+
+        FNC(arsenal,countArsenal);
+        FNC(arsenal,getCargoAsText);
+
+        FNC_BASE(displayCargo_hint);
 
         FNC(ai_control,controlsAI);
         FNC(ai_control,setAIControl);

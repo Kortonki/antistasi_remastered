@@ -1,5 +1,12 @@
 params ["_veh", "_killer"];
 if ((_veh call AS_fnc_getSide) != "AAF") exitWith {diag_log "[AS] Warning: EH_AAF_VehicleKilled executed for non-AAF vehicle";}; //If vehicle was stolen, there's nothing to do here
+
+if ((isNull _killer) || (_killer == _veh)) then {
+  if (!(isnil {_veh getVariable "vehLastDamagesource"})) then {
+    _killer = _veh getVariable "vehLastDamagesource";
+  };
+};
+
   //Deduct from AAF arsenal regardless of killers side
   //Also remove from spawn counter so new one can spawn
 private _vehicleType = typeOf _veh;

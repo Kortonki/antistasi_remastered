@@ -26,7 +26,7 @@ _unit call AS_fnc_setAIControl;
 
 _unit addAction [localize "STR_act_returnControl",{selectPlayer leader (group (_this select 0))}];
 
-private _tiempo = 10;
+private _tiempo = 60;
 waitUntil {
     sleep 1; hint format ["Time to return control to AI: %1", _tiempo];
     _tiempo = _tiempo - 1; (_tiempo == -1) or {not (player call AS_fnc_controlsAI)}

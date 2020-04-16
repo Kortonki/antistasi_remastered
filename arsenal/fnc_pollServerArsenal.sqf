@@ -24,6 +24,18 @@ if (_phase == "open") then {
 
   private _arsenalOpen = +(call AS_fnc_getArsenal); //Copied not referenced to avoid unforeseen consequences with arrays as this copy is fiddled
   {
+    private _names = _x select 0;
+    private _counts = _x select 1;
+    /*
+    _names = _names select {_counts select (_names find _x) > 0};
+    _counts = _counts select {_x > 0};*/
+    private _index = _counts find 0;
+    while {_index != -1} do {
+      _names deleteAt _index;
+      _counts deleteAt _index;
+      _index = _counts find 0;
+    };
+
     //{
     // if ((_type select 1) select _foreachIndex <= 0) then {(_type select 0) = (_type select 0) - [_x]}; //Delete non-existants from the list.
     // } foreach (_type select 0);
@@ -35,7 +47,7 @@ if (_phase == "open") then {
   //Arsenal is locked during the time player gear is checked and removed from ARSENAL
   waitUntil {isNil "AS_savingServer" and {!(lockArsenal)}};
   lockArsenal = true;
-  private _arsenalCheck = call AS_fnc_getArsenal;
+  private _arsenalCheck = +(call AS_fnc_getArsenal);
   //Changed to call to prevent player side slow processing to keep arsenal locked
   [_arsenalCheck, _unit] remoteExecCall ["AS_fnc_checkArsenal", _owner, false];
 };

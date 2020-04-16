@@ -10,7 +10,11 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 
 [_dict, "unlockedWeapons", ["Binocular","CUP_arifle_AKS74U","CUP_hgun_Makarov"]] call DICT_fnc_set;
 
-[_dict, "unlockedMagazines", ["CUP_30Rnd_545x39_AK_M","CUP_8Rnd_9x18_Makarov_M"]] call DICT_fnc_set;
+[_dict, "unlockedMagazines", ["CUP_30Rnd_545x39_AK_M","CUP_8Rnd_9x18_Makarov_M",
+"IEDUrbanBig_Remote_Mag",
+"IEDLandBig_Remote_Mag",
+"IEDUrbanSmall_Remote_Mag",
+"IEDLandSmall_Remote_Mag"]] call DICT_fnc_set;
 
 [_dict, "unlockedBackpacks", ["CUP_B_CivPack_WDL"]] call DICT_fnc_set;
 

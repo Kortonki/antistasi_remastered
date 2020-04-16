@@ -27,8 +27,6 @@ AS_common_variables_initialized = true; //this moved here was common_variables b
 publicVariable "AS_common_variables_initialized";
 diag_log "[AS] Server: common variables initialized";
 
-
-
 call compile preprocessFileLineNumbers "initialization\server_variables.sqf";
 diag_log "[AS] Server: server variables initialized";
 

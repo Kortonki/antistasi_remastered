@@ -8,7 +8,7 @@ class EditorData
 	toggles=65;
 	class ItemIDProvider
 	{
-		nextID=2672;
+		nextID=2676;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={6814.3193,680.96521,1379.1121};
-		dir[]={0.079074949,-0.99469674,-0.066067472};
-		up[]={0.76332533,0.10290412,-0.63775897};
-		aside[]={-0.64117986,-2.9423973e-008,-0.76741564};
+		pos[]={2685.8916,83.359825,3229.439};
+		dir[]={-0.65072179,-0.42073005,0.63223982};
+		up[]={-0.30184254,0.90711939,0.29327199};
+		aside[]={0.69690633,-1.5179394e-006,0.71727055};
 	};
 };
 binarizationWanted=0;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.76";
+		briefingName="Antistasi Remastered V0.99.77";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +183,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=145;
+		items=148;
 		class Item0
 		{
 			dataType="Marker";
@@ -495,7 +495,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={1294.875,20.946842,5792.4292};
+						position[]={1295.043,20.93611,5792.6606};
 						angles[]={0,0.81944954,0};
 					};
 					side="West";
@@ -3071,6 +3071,54 @@ class Mission
 			id=2590;
 			type="EmptyDetector";
 			atlOffset=1.6689301e-005;
+		};
+		class Item145
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3380.4631,1.389452,2008.7195};
+				angles[]={5.8855572,2.4876664,6.0241394};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2672;
+			type="CUP_A2_Road_mud_25";
+		};
+		class Item146
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3396.6475,-1.310531,1988.2833};
+				angles[]={0,5.6086755,0};
+			};
+			side="Empty";
+			class Attributes
+			{
+			};
+			id=2673;
+			type="CUP_A2_Road_mud_25";
+			atlOffset=0.68090415;
+		};
+		class Item147
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2965.6274,1.39985,1466.6206};
+				angles[]={0.00084572798,2.2935965,6.2812634};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2674;
+			type="CUP_A2_Road_mud_25";
 		};
 	};
 	class Connections

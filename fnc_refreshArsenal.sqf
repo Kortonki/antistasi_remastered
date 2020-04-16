@@ -45,5 +45,6 @@ if _clean then {
 [caja, "transferFrom"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 [caja, "emptyplayer"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 [caja, "moveObject"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
+[caja, "vehicle_cargo_check"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 
 diag_log "[AS] Server: Arsenal resynchronised";

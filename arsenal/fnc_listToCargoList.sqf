@@ -1,4 +1,4 @@
-/* 
+/*
 	Given an array of _items with names and a optional "cargo" with [[name1, ...], [count1, ...]]
 	it adds "_value" to "_count" for each item with the name, or appends to both lists a new name and count.
 	E.g.
@@ -6,7 +6,7 @@
 	_cargo = [["a", "c"], [1, 1]];
 	_cargo = [["a", "b"], _cargo] call listToCargoList;
 	// _cargo == [["a", "b", "c"], [2, 1, 1]];
-	
+
 	_cargo = [["a", "b", "a"]] call listToCargoList;
 	// _cargo == [["a", "b"], [2, 1]]
 */

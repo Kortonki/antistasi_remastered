@@ -73,6 +73,12 @@
 			<Key ID="STR_act_refuel_truck_check">
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\refuel_ca.paa' /&gt; Check container fuel</Original>
 			</Key>
+			<Key ID="STR_act_vehicle_cargo_check">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\cfg\simpletasks\types\documents_ca.paa' /&gt; Examine container cargo</Original>
+			</Key>
+			<Key ID="STR_act_arsenal_cargo_check">
+				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\cfg\simpletasks\types\documents_ca.paa' /&gt; Examine FIA arsenal inventory</Original>
+			</Key>
 			<Key ID="STR_act_moveAsset">
 				<Original>&lt;img size='1.2' image='\A3\ui_f\data\IGUI\Cfg\Actions\VTOLVectoring_ca.paa' /&gt; Move this Asset</Original>
 			</Key>

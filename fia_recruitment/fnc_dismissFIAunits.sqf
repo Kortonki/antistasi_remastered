@@ -66,7 +66,7 @@ _groupToDelete setGroupid [format ["Dismissed-%1", count allGroups]];
 	} forEach units _groupToDelete;
 	[_groupToDelete] RemoteExec ["deleteGroup", _groupToDelete];
 
-	[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+	[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] remoteExec ["AS_fnc_populateBox", 2];
 
 	if (!isMultiplayer) then {
 		[_hr,_resourcesFIA] remoteExec ["AS_fnc_changeFIAmoney",2];

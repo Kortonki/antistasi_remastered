@@ -139,6 +139,7 @@ if (_side != "NATO") then {
 	if (_tipo isKindof "Truck_F" and {!((_veh call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
 		[_veh, "recoverEquipment"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated];
 		[_veh, "transferTo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+		[_veh, "vehicle_cargo_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		};
 
 };
@@ -147,10 +148,12 @@ if (_side != "NATO") then {
 
 if (_side == "CSAT") then {
 	_veh addeventHandler ["Killed", {_this call AS_fnc_EH_CSATVehicleKilled}];
+	_veh addeventHandler ["Hit", {_this call AS_fnc_EH_VehicleHit}];
 };
 
 if (_side == "AAF") then {
 	_veh addEventHandler ["Killed", {_this call AS_fnc_EH_AAFVehicleKilled}];
+	_veh addeventHandler ["Hit", {_this call AS_fnc_EH_VehicleHit}];
 };
 
 // UAV is not part of the AAF arsenal, so the killing of it is dealt separately
@@ -256,6 +259,10 @@ if (_side == "FIA") then {
 		_veh setVariable ["boxCargo",[], true];
 	};
 
+	if (_tipo in BE_mil_vehicles) then {
+		_veh forceflagTexture (["FIA"] call AS_fnc_getFlagTexture);
+	};
+
 	_veh addEventhandler ["Getin", {
 			params ["_vehicle", "_role", "_unit", "_turret"];
 			private _side = _unit call AS_fnc_getSide;
@@ -266,6 +273,7 @@ if (_side == "FIA") then {
 				//Here anything related to FIA vehicles being captured
 
 				[_vehicle, _side] call AS_fnc_setSide;
+				_veh forceFlagTexture  "";
 			};
 
 		}];

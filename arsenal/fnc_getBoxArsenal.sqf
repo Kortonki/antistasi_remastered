@@ -2,7 +2,7 @@
 params ["_box", ["_restrict", false]];
 
 if (_box == caja) exitWith {
-	(call AS_fnc_getArsenal) // Does return value have to contain magremains?
+		(call AS_fnc_getArsenal)
 };
 
 private _weapons = [];
