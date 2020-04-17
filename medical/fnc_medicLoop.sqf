@@ -20,18 +20,22 @@ while {alive _unit} do {
     //below is not needed for non-ace: clearing assigns is done via heal_action
 
       if (hasACEmedical) then {
-
+        //Black tagged or dead units or stabliisied units are cleared from healqueue
         private _medic = (_unit call AS_medical_fnc_getAssignedMedic);
-        if (not isNull _medic and {not alive _medic or _medic call AS_medical_fnc_isUnconscious}) then {
+        if (not isNull _medic and {
+          not alive _medic or
+          _medic call AS_medical_fnc_isUnconscious or
+          (!([_unit] call ace_medical_blood_fnc_isBleeding) and {not ([_unit] call AS_fnc_medical_isMedic)}) or //Medics can handle unconscious stabilised patients
+          (_unit getVariable ["ace_medical_triageLevel", -1]) == 4 or
+          not(alive _unit)})
 
-            _unit setVariable ["ace_medical_ai_assignedMedic", objNull];
-            //_medic setVariable ["ace_medical_ai_healQueue", [], true];
-            [[_medic], {params ["_medic"]; _medic setVariable ["ace_medical_ai_healQueue", []];}] remoteExec ["call", _medic]; //Do it where medic is local
+          then {
+            [_unit, _medic] call AS_medical_fnc_clearAssignedMedic;
         };
       };
 
         //If Has ACE medical, player can prevent AI healing hopeless cases by black triage card
-        if (_isUnconscious and {isNull (_unit call AS_medical_fnc_getAssignedMedic) and {!(hasACEmedical) or (_unit getVariable ["ace_medical_triageLevel", -1]) != 4}}) then {
+        if (_isUnconscious and {isNull (_unit call AS_medical_fnc_getAssignedMedic) and {!(hasACEmedical) or (_unit getVariable ["ace_medical_triageLevel", -1]) != 4 or (hasACEmedical and {[_unit] call ace_medical_blood_fnc_isBleeding})}}) then {
             // Choose a medic.
             private _bestDistance = 81; // best distance of the current medic (max distance for first medic)
 
@@ -47,6 +51,10 @@ while {alive _unit} do {
 
             private _medic = objNull;
             {
+                //Medic is always picked first
+                if ([_x] call AS_medical_fnc_isMedic) exitWith {
+                  _medic = _x;
+                };
                 if (_x call _canHeal) then {
                     _medic = _x;
                     _bestDistance = _x distance2D _unit;
@@ -55,6 +63,10 @@ while {alive _unit} do {
 
             if isNull _medic then {
               {
+                if ([_x] call AS_medical_fnc_isMedic) exitWith {
+                  _medic = _x;
+                };
+
                 if (_x call _canHeal) then {
                   _medic = _x;
                   _bestDistance = _x distance2D _unit;

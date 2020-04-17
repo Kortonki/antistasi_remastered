@@ -166,7 +166,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.78";
+		briefingName="Antistasi Remastered V0.99.79";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
