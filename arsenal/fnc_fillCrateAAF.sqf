@@ -127,3 +127,5 @@ for "_i" from 0 to count (_miscItems select 0) - 1 do {
 if hasTFAR then {
         _crate addBackpackCargoGlobal [(["AAF", "tfar_lr_radio"] call AS_fnc_getEntity), 4];
 };
+
+[_crate, "vehicle_cargo_check"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];

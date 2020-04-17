@@ -1,30 +1,19 @@
-params ["_vehicle", "_player"];
-
-private _arsenal = [_vehicle, false, true] call AS_fnc_getBoxArsenal;
-
-private _itemArray = _arsenal call AS_fnc_countArsenal;
-
-private _text ="CONTAINER CARGO:\n";
+params ["_vehicle", "_player", "_id", ["_args", []], ["_polled", false]];
 
 if (_vehicle == caja) then {
-  _text = "ARSENAL INVENTORY:\n";
 
-  //Consider displaying unlockeds via other ways
-  /*_text = format ["%1\nUNLOCKED WEAPONS\n", _text];
-  {
-    private _name = getText(configFile >> "cfgWeapons" >> _x >> "displayName");
-    _text = format ["%1\n%2", _text, _name];
-  } foreach unlockedWeapons;
+  if (!_polled) exitWith {
+    [_player, "inventory", _vehicle] remoteExec ["AS_fnc_pollServerArsenal", 2];
+  };
+  private _text = "ARSENAL INVENTORY:\n";
+  private _arsenal = _args;
+  private _itemArray = _arsenal call AS_fnc_countArsenal;
+  [_itemArray, _text, true] call AS_fnc_displayCargo_hint;
 
-  _text = format ["%1\nUNLOCKED MAGAZINES\n", _text];
+} else {
+  private _arsenal = [_vehicle, false, true] call AS_fnc_getBoxArsenal;
+  private _itemArray = _arsenal call AS_fnc_countArsenal;
+  private _text ="CONTAINER CARGO:\n";
+  [_itemArray, _text, true] call AS_fnc_displayCargo_hint;
 
-  {
-    private _name = getText(configfile >> "CfgMagazines" >> _x >> "displayName");
-    _text = format ["%1\n%2", _text, _name];
-  } foreach unlockedMagazines;
-
-  _text = format ["%1\nUNLOCKED MAGAZINES\n", _text];
-  */
 };
-
-[_itemArray, _text, true] call AS_fnc_displayCargo_hint;

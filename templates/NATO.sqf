@@ -71,8 +71,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalMagazines", []] call DICT_fnc_set;
 [_dict, "additionalItems", ["Item_B_UavTerminal"]] call DICT_fnc_set;
 [_dict, "additionalBackpacks", [
-["B_UAV_01_backpack_F", "Item_B_UavTerminal"],
-["B_UAV_06_backpack_F", "Item_B_UavTerminal"]
+["B_UAV_01_backpack_F", "B_UavTerminal"],
+["B_UAV_06_backpack_F", "B_UavTerminal"]
 ]] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
 [_dict, "additionalBinoculars", []] call DICT_fnc_set;

@@ -12,7 +12,7 @@ if (count (_itemArray select 0) == 0) exitWith {
       _aphorisms = _aphorisms - [_aphorism];
       AS_Pset("aphorisms", _aphorisms);
       ["con_bas"] remoteExec ["fnc_BE_XP", 2];
-      ("After taking a closer look, you find a piece of paper lying about. It says:\n\n""" + (_aphorism select 0) + """\n\n  - " + (_aphorism select 1) + "\n\nSuddenly a gust of wind rips the piece from your grasp and is forever lost. All you can do is to scold yourself for your sloppiness. Hopefully the person who had written the note didn't do it in vain and you managed to learn something.")
+      ("After taking a closer look, you find a piece of paper lying there. It says:\n\n""" + (_aphorism select 0) + """\n\n  - " + (_aphorism select 1) + "\n\nSuddenly a gust of wind rips the piece from your grasp and is forever lost. All you can do is to scold yourself for your sloppiness. Hopefully the person who had written the note didn't do it in vain and you managed to gain some wisdom.")
     } else {
       "A giant pile of absolutely nothing"
     };

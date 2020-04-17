@@ -5,7 +5,7 @@ params ["_unit", "_phase", "_box"];
 
 private _owner = owner _unit;
 
-if (_phase == "open") then {
+if (_phase == "open") exitWith {
 
   if lockArsenal then {
     ["Arsenal is busy, wait"] remoteExec ["hint", _unit];
@@ -43,7 +43,9 @@ if (_phase == "open") then {
   } foreach _arsenalOpen;
   [_arsenalOpen, _box, _unit] remoteExecCall ["AS_fnc_openArsenal", _owner, false];
 
-} else {
+};
+
+if (_phase == "check") exitWith {
   //Arsenal is locked during the time player gear is checked and removed from ARSENAL
   waitUntil {isNil "AS_savingServer" and {!(lockArsenal)}};
   lockArsenal = true;
@@ -51,3 +53,11 @@ if (_phase == "open") then {
   //Changed to call to prevent player side slow processing to keep arsenal locked
   [_arsenalCheck, _unit] remoteExecCall ["AS_fnc_checkArsenal", _owner, false];
 };
+
+if (_phase == "inventory") exitWith {
+
+  private _arsenalInventory = +(call AS_fnc_getArsenal);
+  [_box, _unit, nil, _arsenalInventory, true] remoteExec ["AS_actions_fnc_vehicle_cargo_check", _owner, false];
+};
+
+diag_log format ["[AS] error: AS_fnc_pollServerArsenal called with invalid phase: %1", _phase];

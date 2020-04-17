@@ -207,7 +207,7 @@ unlockedItems = unlockedItems - [
 [_dict, "land_vehicles", ["C_Offroad_01_F","C_Van_01_transport_F","B_G_Quadbike_01_F","B_G_Offroad_01_armed_F", "B_G_Offroad_01_F"]] call DICT_fnc_set;
 [_dict, "water_vehicles", ["B_G_Boat_Transport_01_F"]] call DICT_fnc_set;
 // First helicopter of this list is undercover
-[_dict, "air_vehicles", ["C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
+[_dict, "air_vehicles", []] call DICT_fnc_set;
 
 [_dict, "cars_armed", ["B_G_Offroad_01_armed_F", "B_G_Offroad_01_AT_F"]] call DICT_fnc_set;
 //This is new addition: used to evaluate threat

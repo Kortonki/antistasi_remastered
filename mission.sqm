@@ -8,7 +8,7 @@ class EditorData
 	toggles=65;
 	class ItemIDProvider
 	{
-		nextID=2676;
+		nextID=2680;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={2685.8916,83.359825,3229.439};
-		dir[]={-0.65072179,-0.42073005,0.63223982};
-		up[]={-0.30184254,0.90711939,0.29327199};
-		aside[]={0.69690633,-1.5179394e-006,0.71727055};
+		pos[]={2651.5957,40.891899,3278.6755};
+		dir[]={-0.55324036,-0.2515437,0.79425067};
+		up[]={-0.14385988,0.96779811,0.20653225};
+		aside[]={0.8206256,-2.2134191e-006,0.57160711};
 	};
 };
 binarizationWanted=0;
@@ -32,13 +32,14 @@ addons[]=
 	"A3_Ui_F",
 	"A3_Modules_F_Hc",
 	"A3_Characters_F",
-	"CUP_Editor_A2_Roads_Config"
+	"CUP_Editor_A2_Roads_Config",
+	"A3_Weapons_F"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=4;
+		items=5;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -64,6 +65,13 @@ class AddonsMetaData
 		{
 			className="CUP_Editor_A2_Roads_Config";
 			name="CUP_Editor_A2_Roads_Config";
+		};
+		class Item4
+		{
+			className="A3_Weapons_F";
+			name="Arma 3 Alpha - Weapons and Accessories";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
 		};
 	};
 };
@@ -158,7 +166,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.77";
+		briefingName="Antistasi Remastered V0.99.78";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +191,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=148;
+		items=149;
 		class Item0
 		{
 			dataType="Marker";
@@ -3119,6 +3127,23 @@ class Mission
 			};
 			id=2674;
 			type="CUP_A2_Road_mud_25";
+		};
+		class Item148
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2614.0234,16.749441,3289.2427};
+				angles[]={0.029989703,0,0.0075011365};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2677;
+			type="Item_B_UavTerminal";
+			atlOffset=0.00031280518;
 		};
 	};
 	class Connections

@@ -159,7 +159,7 @@ unlockeditems pushback "Chemlight_blue";
 
 [_dict, "water_vehicles", ["B_G_Boat_Transport_01_F"]] call DICT_fnc_set;
 // First helicopter of this list is undercover
-[_dict, "air_vehicles", ["rhs_Mi8amt_civilian","C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
+[_dict, "air_vehicles", []] call DICT_fnc_set;
 
 [_dict, "cars_armed", ["rhsgref_cdf_b_reg_uaz_dshkm","rhsgref_cdf_b_reg_uaz_spg9","rhsgref_cdf_b_gaz66_zu23"]] call DICT_fnc_set;
 //This is new addition: used to evaluate threat
@@ -198,7 +198,7 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 
 //Helos
 
-[_costs, "rhs_Mi8amt_civilian", 8000] call DICT_fnc_set;
+[_costs, "rhs_Mi8amt_civilian", 8000] call DICT_fnc_set; //Currently non-buyable
 [_costs, "C_Heli_Light_01_civil_F", 3000] call DICT_fnc_set;  // used in custom vehicles
 
 _dict

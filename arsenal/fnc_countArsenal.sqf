@@ -56,6 +56,8 @@ private _fnc_weapon_category = {
   private _count = (_cargo_w select 1) select _foreachIndex;
   call {
 
+    if (_count <= 0) exitWIth {};
+
     //Put binoculars to item array to be shown later
     if (_name in AS_allBinoculars) exitWith {
       //["Binocular", _count] call _fnc_addToArray;
@@ -111,6 +113,7 @@ _category
   private _name = _x;
   private _count = (_cargo_m select 1) select _foreachIndex;
   call {
+    if (_count <= 0) exitWIth {};
 
     if (_name in AS_allMagazines) exitWith {
       ["Magazine", _count] call _fnc_addToArray;
@@ -165,6 +168,8 @@ for "_i" from 0 to (count (_cargo_i select 0)) - 1 do {
   private _count = (_cargo_i select 1) select _foreachIndex;
 
   call {
+    if (_count <= 0) exitWIth {};
+
     ["Item", _count] call _fnc_addToArray;
 
     if (_name in AS_allVests) exitWith {
@@ -233,9 +238,11 @@ for "_i" from 0 to (count (_cargo_i select 0)) - 1 do {
   private _name = _x;
   private _count = (_cargo_b select 1) select _foreachIndex;
 
-  ["Bag", _count] call _fnc_addToArray;
-
   call {
+
+    if (_count <= 0) exitWIth {};
+
+    ["Bag", _count] call _fnc_addToArray;
 
     if (_name isKindof "UAV_06_backpack_base_F") exitWith {
       ["UAV bag", _count] call _fnc_addToArray;

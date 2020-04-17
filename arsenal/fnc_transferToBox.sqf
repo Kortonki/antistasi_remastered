@@ -15,7 +15,9 @@ if (_destination == caja) then {
 	//Publish arsenal update
 	//Arrays are copied and not referenced to because countArsenal fiddles with them
 	private _itemArray = [+_cargo_w, +_cargo_m, +_cargo_i, +_cargo_b, _magazineRemains] call AS_fnc_countArsenal;
-	[_itemArray, "ARSENAL SUPPLIED WITH NEW EQUIPMENT\n", false] remoteExec ["AS_fnc_displayCargo_hint", AS_CLIENTS];
+	if (count (_itemArray select 0) > 0) then {
+		[_itemArray, "ARSENAL SUPPLIED WITH NEW EQUIPMENT\n", false] remoteExec ["AS_fnc_displayCargo_hint", AS_CLIENTS];
+	};
 
 } else {
 		[_destination, _cargo_w, _cargo_m, _cargo_i, _cargo_b, _restrict_to_locked] call AS_fnc_populateBox;
