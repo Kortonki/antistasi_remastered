@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={2651.5957,40.891899,3278.6755};
-		dir[]={-0.55324036,-0.2515437,0.79425067};
-		up[]={-0.14385988,0.96779811,0.20653225};
-		aside[]={0.8206256,-2.2134191e-006,0.57160711};
+		pos[]={2672.2517,86.846161,3237.5977};
+		dir[]={-0.29132846,-0.5831154,0.75848341};
+		up[]={-0.20911013,0.81231326,0.54442793};
+		aside[]={0.93359029,-8.3105988e-007,0.35858184};
 	};
 };
 binarizationWanted=0;
@@ -32,14 +32,13 @@ addons[]=
 	"A3_Ui_F",
 	"A3_Modules_F_Hc",
 	"A3_Characters_F",
-	"CUP_Editor_A2_Roads_Config",
-	"A3_Weapons_F"
+	"CUP_Editor_A2_Roads_Config"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=5;
+		items=4;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -66,13 +65,6 @@ class AddonsMetaData
 			className="CUP_Editor_A2_Roads_Config";
 			name="CUP_Editor_A2_Roads_Config";
 		};
-		class Item4
-		{
-			className="A3_Weapons_F";
-			name="Arma 3 Alpha - Weapons and Accessories";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
 	};
 };
 class DynamicSimulation
@@ -83,7 +75,7 @@ class DynamicSimulation
 randomSeed=8109385;
 class ScenarioData
 {
-	author="Kortonki";
+	author="Kortonk";
 	saving=0;
 	respawn=3;
 	respawnDelay=60.000004;
@@ -166,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.79";
+		briefingName="Antistasi Remastered V0.99.80";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -191,7 +183,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=149;
+		items=148;
 		class Item0
 		{
 			dataType="Marker";
@@ -3127,23 +3119,6 @@ class Mission
 			};
 			id=2674;
 			type="CUP_A2_Road_mud_25";
-		};
-		class Item148
-		{
-			dataType="Object";
-			class PositionInfo
-			{
-				position[]={2614.0234,16.749441,3289.2427};
-				angles[]={0.029989703,0,0.0075011365};
-			};
-			side="Empty";
-			flags=4;
-			class Attributes
-			{
-			};
-			id=2677;
-			type="Item_B_UavTerminal";
-			atlOffset=0.00031280518;
 		};
 	};
 	class Connections
