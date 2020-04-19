@@ -69,8 +69,7 @@ private _fnc_weapon_category = {
     ["Weapon", _count] call _fnc_addtoArray;
 
     {
-      private _index = _x findif {_x == _name};
-      if (_index != -1) exitWith {
+      if (_name in _x) exitWith {
         private _category = [_forEachIndex] call _fnc_weapon_category;
         if (_category != "") then {
           [_category, _count] call _fnc_addToArray;
@@ -95,9 +94,8 @@ private _fnc_magazineType = {
     private _typeIndex = _forEachIndex;
     {
       private _weapon = _x;
-      private _index = (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines")) find _magazine;
 
-      if (_index != -1) exitWith {
+      if (_magazine in (getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines"))) exitWith {
          _category = [_typeIndex] call _fnc_weapon_category;
          _exit = true;
       };
@@ -113,14 +111,8 @@ _category
   private _name = _x;
   private _count = (_cargo_m select 1) select _foreachIndex;
   call {
-    if (_count <= 0) exitWIth {};
 
-    if (_name in AS_allMagazines) exitWith {
-      ["Magazine", _count] call _fnc_addToArray;
-      //TODO here a way to distinguish between mags. Consider if classed by usable weapons or caliber
-      private _category = [_name] call _fnc_magazineType;
-      [format ["%1 magazine", _category], _count] call _fnc_addToArray;
-    };
+    if (_count <= 0) exitWIth {};
 
     if (_name in AS_allThrowGrenades) exitWith {
       ["Hand grenade", _count] call _fnc_addToArray;
@@ -136,14 +128,23 @@ _category
 
     if (_name in AS_allMinesMags) exitWith {
       ["Explosive", _count] call _fnc_addToArray;
-      if (_name in (call AS_allATmines)) then {
+      if (_name in (call AS_fnc_allATmines)) then {
         ["AT mine", _count] call _fnc_addToArray;
       };
-      if (_name in (call AS_allAPmines)) then {
+      if (_name in (call AS_fnc_allAPmines)) then {
         ["AP mine", _count] call _fnc_addToArray;
       };
-
     };
+
+    //This moved to below so handgrenades are picked before as_allmagazine picks them
+    if (_name in AS_allMagazines) exitWith {
+      ["Magazine", _count] call _fnc_addToArray;
+      //TODO here a way to distinguish between mags. Consider if classed by usable weapons or caliber
+      private _category = [_name] call _fnc_magazineType;
+      private _ammotype = ["magazine", "ammo"] select (_category in ["Rocket launcher", "Missile launcher", "Bomb launcher"]);
+      [format ["%1 %2", _category, _ammotype], _count] call _fnc_addToArray;
+    };
+
   };
 } foreach (_cargo_m select 0);
 
@@ -151,17 +152,27 @@ _category
 
 //First sort out the items so medical items are last: The list looks sensible
 
+private _delIndex = [];
+
 for "_i" from 0 to (count (_cargo_i select 0)) - 1 do {
   private _name = (_cargo_i select 0) select _i;
   private _count = (_cargo_i select 1) select _i;
   if (_name in AS_allMedicalItems) then {
-    (_cargo_i select 0) deleteAT _i;
-    (_cargo_i select 1) deleteAT _i;
+
+    _delIndex pushback _i;
+
+    //(_cargo_i select 0) set [_i, objnull]; //Changed to set to nil to not fudge for loop count
+  //  (_cargo_i select 1) set [_i, objnull];
 
     (_cargo_i select 0) pushback _name;
     (_cargo_i select 1) pushback _count;
   };
 };
+
+{
+  (_cargo_i select 0) deleteAt _x;
+  (_cargo_i select 1) deleteAt _x;
+} foreach _delIndex;
 
 {
   private _name = _x;
@@ -203,13 +214,20 @@ for "_i" from 0 to (count (_cargo_i select 0)) - 1 do {
         };
       } else {
         call {
-          if (_name in ["ACE_fieldDressing", "ACE_quikclot", "ACE_elasticBandage", "ACE_packingBandage", "ACE_fieldDressing"]) exitWith {
+          if (_name in ["ACE_fieldDressing", "ACE_quikclot", "ACE_elasticBandage", "ACE_packingBandage"]) exitWith {
             ["Bandage", _count] call _fnc_addToArray;
           };
 
-          if (_name in ["ACE_morphine", "ACE_epinephrine", "ACE_adenosine", "ACE_atropine"]) exitWith {
-            ["Autoinjector", _count] call _fnc_addToArray;
+          if (_name in ["ACE_adenosine", "ACE_atropine"]) exitWith {
+            ["Other autoinjector", _count] call _fnc_addToArray;
           };
+          if (_name == "ACE_morphine") exitWith {
+            ["Morphine autoinjector", _count] call _fnc_addToArray;
+          };
+          if (_name == "ACE_epinephrine") exitWith {
+            ["Epinephrine autoinjector", _count] call _fnc_addToArray;
+          };
+
           if (_name find "blood" != -1 or _name find "saline" != -1 or _name find "plasma" != -1) exitWith {
             ["IV bag", _count] call _fnc_addToArray;
           };
@@ -226,7 +244,7 @@ for "_i" from 0 to (count (_cargo_i select 0)) - 1 do {
       };
     };
 
-    ["Misc item", _count] call _fnc_addToArray;
+    ["Miscellaneous item", _count] call _fnc_addToArray;
 
   };
 

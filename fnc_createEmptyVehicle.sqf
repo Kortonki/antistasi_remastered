@@ -21,7 +21,7 @@ if (_side isEqualto "CIV") then {
 
 //Counter for AAF spawned vehicles to avoid more vehs than in arsenal
 if (_side == "AAF") then {
-    [_vehicleType] call AS_AAFarsenal_fnc_spawnCounter;
+    [_vehicleType] RemoteExeccall ["AS_AAFarsenal_fnc_spawnCounter", 2];
 };
 
 

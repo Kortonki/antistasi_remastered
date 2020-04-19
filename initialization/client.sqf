@@ -173,8 +173,8 @@ bandera addAction [localize "str_act_hqOptions",AS_fnc_UI_manageHQ_menu,nil,0,fa
 bandera addAction [localize "STR_act_manageTraits",AS_fnc_UI_manageTraits_menu,nil,0,false,true,"","(isPlayer _this) and {not (player call AS_fnc_controlsAI)}"];
 
 removeAllActions cajaVeh;
-cajaVeh addAction [localize "str_act_healandRepair", AS_actions_fnc_healandrepair,nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
-cajaVeh addAction [localize "STR_act_refuel", AS_actions_fnc_refuel,nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',_this])"];
+[cajaVeh, "healandrepair"] call AS_fnc_addAction;
+[cajaVeh, "refuel"] call AS_fnc_addAction;
 
 removeAllActions fuego;
 fuego addAction [localize "str_act_rest", AS_actions_fnc_skiptime,nil,0,false,true,"","(_this == AS_commander)"];

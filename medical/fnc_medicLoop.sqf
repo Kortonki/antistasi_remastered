@@ -46,13 +46,14 @@ while {alive _unit} do {
                 {not (_candidate call AS_medical_fnc_isUnconscious)} and
                 {_candidate call AS_medical_fnc_canHeal} and
                 {vehicle _candidate == _candidate} and
-                {_candidate distance2D _unit < _bestDistance}
+                {_candidate distance2D _unit < _bestDistance} and
+                {unitReady _candidate} //EXPERIMENT this to not override eg. player issued commands
             };
 
             private _medic = objNull;
             {
                 //Medic is always picked first
-                if ([_x] call AS_medical_fnc_isMedic) exitWith {
+                if ([_x] call AS_medical_fnc_isMedic and {_x call _canHeal}) exitWith {
                   _medic = _x;
                 };
                 if (_x call _canHeal) then {
@@ -63,7 +64,7 @@ while {alive _unit} do {
 
             if isNull _medic then {
               {
-                if ([_x] call AS_medical_fnc_isMedic) exitWith {
+                if ([_x] call AS_medical_fnc_isMedic and {_x call _canHeal}) exitWith {
                   _medic = _x;
                 };
 
@@ -131,4 +132,9 @@ while {alive _unit} do {
             [_unit, true] call AS_medical_fnc_setUnconscious;
         };
     };
+};
+
+//For good measure when unit dead
+if (not isnull (_unit call AS_medical_fnc_getAssignedMedic)) then {
+  [_unit, _medic] call AS_medical_fnc_clearAssignedMedic;
 };

@@ -1,7 +1,10 @@
-_pos = _this select 0;
+params ["_pos", "_unit"];
+
+
+if ([_unit, nil] call AS_fnc_enemiesNearby) exitWith {Hint "You cannot heal with enemies nearby";};
 
 {
-	if ((side _x == ("FIA" call AS_fnc_getFactionSide)) and (_x distance _pos < 20)) then {
+	if (_x call AS_fnc_getSide == "FIA" and {_x distance _pos < 20}) then {
 		if (hasACE) then {
       		[_x] remoteExec ["ace_medical_treatment_fnc_fullHealLocal", _x];
     	} else {
@@ -10,4 +13,4 @@ _pos = _this select 0;
 	};
 } forEach allUnits;
 
-hint "Your stomach stopped growling.\n\n Get back in the fight, soldier!";
+hint "Your stomach stopped growling, and you feel youself healed and completely refreshed";

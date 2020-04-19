@@ -162,7 +162,7 @@ private _fnc_spawn = {
 
 		([_originPos, _supDest] call AS_fnc_findSpawnSpots) params ["_supPos", "_supDir"];
 
-		([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
+		([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair", "fuel"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
 		_vehiculos append _supVehs;
 		_soldiers append _supUnits;
 		_groups pushback _supGroup;

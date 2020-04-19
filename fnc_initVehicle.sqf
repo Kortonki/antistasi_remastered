@@ -273,7 +273,7 @@ if (_side == "FIA") then {
 				//Here anything related to FIA vehicles being captured
 
 				[_vehicle, _side] call AS_fnc_setSide;
-				_veh forceFlagTexture  "";
+				_vehicle forceFlagTexture  "";
 			};
 
 		}];

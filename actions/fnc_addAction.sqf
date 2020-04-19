@@ -9,6 +9,7 @@ params ["_object","_type"];
 #define IS_UNLOADED "not(_target getVariable 'asCargo')"
 #define NOT_MOVING "isNil {_this getVariable 'ObjAttached'}"
 #define NOT_IN_VEHICLE "(vehicle _this == _this)"
+#define IN_VEHICLE "(vehicle _this != _this)"
 
 
 switch _type do {
@@ -37,8 +38,9 @@ switch _type do {
 		};
 		_object addAction [localize "STR_act_FIAGarage", {[false] spawn AS_fnc_accessGarage},nil,0,false,true,"",IS_COMMANDER]
 	};
-	case "heal_camp": {_object addAction [localize "STR_act_useMed", AS_actions_fnc_heal,nil,0,false,true,"",IS_PLAYER, 10]};
-	case "refuel": {_object addAction [localize "STR_act_refuel", AS_actions_fnc_refuel,nil,0,false,false,"",IS_PLAYER_IN_VEHICLE, 20]};
+	case "heal_camp": {_object addAction [localize "STR_act_useMed", AS_actions_fnc_heal,nil,0,false,true,"","true", 10]};
+	case "healandrepair":{_object} addAction [localize "str_act_healandRepair", AS_actions_fnc_healandrepair,nil,0,false,true,"","true"];
+	case "refuel": {_object addAction [localize "STR_act_refuel", AS_actions_fnc_refuel,nil,0,false,false,"",IN_VEHICLE, 20]};
 	case "refuel_truck": {_object addAction [localize "STR_act_refuel_truck", AS_actions_fnc_refuel_truck,nil,0,false,false,"",IS_PLAYER, 10]};
 	case "refuel_truck_check": {_object addAction [localize "STR_act_refuel_truck_check", AS_actions_fnc_refuel_truck_check,nil,0,false,false,"",IS_PLAYER,10]};
 	case "vehicle_cargo_check" : {_object addAction [[localize "STR_act_vehicle_cargo_check", localize "STR_act_arsenal_cargo_check"] select (_object == caja), AS_actions_fnc_vehicle_cargo_check,nil,0,false,false,"",IS_PLAYER,10]};
