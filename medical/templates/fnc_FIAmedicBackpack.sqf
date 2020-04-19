@@ -1,5 +1,5 @@
 private _return = [];
-private _availableItems = getItemCargo caja;
+private _availableItems = (call AS_fnc_getArsenal) select 2;
 private _itemList = _availableItems select 0;
 private _countList = _availableItems select 1;
 
@@ -11,7 +11,20 @@ if hasACEmedical then {
         _return = [["ACE_tourniquet", 5], ["ACE_fieldDressing", 30], ["ACE_morphine", 20], ["ACE_epinephrine", 10], ["ACE_bloodIV", 1],  ["ACE_bloodIV_250", 4],  ["ACE_bloodIV_500", 4]];
     } else {
 
-        _return = [["ACE_tourniquet", 5], ["ACE_fieldDressing", 20], ["ACE_morphine", 20], ["ACE_epinephrine", 10], ["ACE_packingBandage", 10], ["ACE_quikclot", 10],["ACE_elasticBandage", 10],["ACE_adenosine", 10]];
+        _return = [
+        ["ACE_tourniquet", 5],
+        ["ACE_fieldDressing", 20],
+        ["ACE_quikclot", 10],
+        ["ACE_elasticBandage", 10],
+
+        ["ACE_morphine", 20],
+        ["ACE_epinephrine", 10],
+        ["ACE_adenosine", 5],
+
+        ["ACE_packingBandage", 10],
+
+        ["ACE_surgicalKit", 1]
+        ];
 
         if (hasACEsplint) then {_return pushBack ["ACE_splint", 5];};
 
@@ -19,8 +32,8 @@ if hasACEmedical then {
         private _bloods = [];
         private _fluids = [];
         {
-            if (_x find "blood" != -1) then {_bloods pushback _x};
-            if (_x find "saline" != -1) then {_fluids pushback _x};
+            if ("blood" in _x) then {_bloods pushback _x};
+            if ("saline" in _x or "plasma" in _x) then {_fluids pushback _x};
         } foreach (_itemList + unlockedItems);
 
           {
@@ -33,9 +46,6 @@ if hasACEmedical then {
             if (_foreachindex > 3) exitWith {}; //Don't take too much fluids
           } foreach _fluids;
         };
-
-
-
     };
 
 } else {

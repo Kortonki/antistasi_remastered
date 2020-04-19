@@ -17,5 +17,5 @@ for "_i" from 1 to (count _arguments - 3) do {
 if not ISOBJECT(_dictionary) exitWith {
     diag_log format ["DICT:set(%1):ERROR: not an object.", _arguments];
 };
-_dictionary setVariable [(tolowerANSI _key), _value, _isGlobal];
+_dictionary setVariable [(tolower _key), _value, _isGlobal];
 //diag_log format ["DICT:set(%1):Value set to dictionary. Key: %2 value %3 Global exec: %4", _dictionary, _key, _value, _isGlobal];

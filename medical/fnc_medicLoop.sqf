@@ -136,5 +136,5 @@ while {alive _unit} do {
 
 //For good measure when unit dead
 if (not isnull (_unit call AS_medical_fnc_getAssignedMedic)) then {
-  [_unit, _medic] call AS_medical_fnc_clearAssignedMedic;
+  [_unit, (_unit call AS_medical_fnc_getAssignedMedic)] call AS_medical_fnc_clearAssignedMedic;
 };

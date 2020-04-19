@@ -4,6 +4,8 @@ private _fnc_spawn = {
 	params ["_location"];
 	private _vehiculos = [];
 	private _soldados = [];
+	private _groups = [];
+	private _markers = [];
 
 	private _posicion = _location call AS_location_fnc_position;
 
@@ -54,28 +56,75 @@ private _fnc_spawn = {
 	private _flag = createVehicle [["AAF", "flag"] call AS_fnc_getEntity, _pos, [],0, "CAN_COLLIDE"];
 	_vehiculos pushBack _flag;
 
-	// create the patrol group
-	private _grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
-	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
-	{[_x] join _grupo} forEach units _grupoE;
-	deleteGroup _grupoE;
+	// create the patrol group(s)
 
-	// add dog
-	if (random 10 < 2.5) then {
-		[_grupo] call AS_fnc_spawnDog;
+	private _mrk = createMarker [format ["%2_%1_patrolarea", (diag_tickTime), random 100], _pos];
+	_mrk setMarkerShape "RECTANGLE";
+	_mrk setMarkerSize [50,50];
+	_mrk setMarkerType "hd_warning";
+	_mrk setMarkerColor "ColorRed";
+	_mrk setMarkerBrush"DiagGrid";
+	_mrk setMarkerAlpha 0;
+
+	_markers pushback _mrk;
+
+	private _count = 0;
+	private _amount = [1,2] select (_location call AS_fnc_location_isFrontline);
+	private _amount = round(_amount*AS_teamSizeRef);
+	while {_count < _amount} do {
+		private _grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
+
+		_count = _count + (count (units _grupo));
+
+		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
+
+		if (!(isnull _grupoE)) then {
+			{[_x] join _grupo} forEach units _grupoE;
+			deleteGroup _grupoE;
+		};
+		// add dog
+		if (random 10 < 2.5) then {
+			[_grupo] call AS_fnc_spawnDog;
+		};
+
+		_groups pushback _grupo;
+
+		[leader _grupo, _mrk, "SAFE","SPAWNED","NOVEH","NOFOLLOW"] spawn UPSMON;
+
 	};
 
-	private _mrk = createMarkerLocal [format ["%1patrolarea", (diag_tickTime)], _pos];
-	_mrk setMarkerShapeLocal "RECTANGLE";
-	_mrk setMarkerSizeLocal [50,50];
-	_mrk setMarkerTypeLocal "hd_warning";
-	_mrk setMarkerColorLocal "ColorRed";
-	_mrk setMarkerBrushLocal "DiagGrid";
-	_mrk setMarkerAlphaLocal 0;
+	//Spawn parked apc or armed car and crew on sentry
 
-	[leader _grupo, _mrk, "SAFE","SPAWNED","NOVEH","NOFOLLOW"] spawn UPSMON;
+	private _priority = [0.8, 0.5] select (_location call AS_fnc_location_isFrontline);
+	private _class = "";
 
-	[_location, "resources", [taskNull, [_grupo], _vehiculos, [_mrk]]] call AS_spawn_fnc_set;
+	if (["apcs", _priority] call AS_fnc_vehicleAvailability) then {
+		_class = "apcs";
+	} else {
+		if (["cars_armed", _priority] call AS_fnc_vehicleAvailability) then {
+			_class = "cars_armed";
+		};
+	};
+
+	if (_class != "") then {
+			private _apc_pos_dir = [_location, 1, 200] call AS_location_fnc_vehicleParking;
+			private _apcPos = (_apc_pos_dir select 0) select 0;
+			private _apcDir = (_apc_pos_dir select 1) select 0;
+			private _type = selectRandom ([_class] call AS_AAFarsenal_fnc_valid);
+			([_type, _apcPos, "AAF", _apcDir] call AS_fnc_createEmptyVehicle) params ["_apc"];
+			_vehiculos pushback _apc;
+
+			([_apc, "AAF", "crew"] call AS_fnc_createVehicleGroup) params ["_crewGroup", "_units"];
+
+			private _patrolMarker = [_crewGroup, _apc, _location, 50] call AS_tactics_fnc_crew_sentry;
+
+			_soldados append _units;
+			_groups pushback _crewGroup;
+			_markers pushback _patrolMarker;
+	};
+
+
+	[_location, "resources", [taskNull, _groups, _vehiculos, _markers]] call AS_spawn_fnc_set;
 	[_location, "soldiers", _soldados] call AS_spawn_fnc_set;
 };
 

@@ -39,7 +39,7 @@ switch _type do {
 		_object addAction [localize "STR_act_FIAGarage", {[false] spawn AS_fnc_accessGarage},nil,0,false,true,"",IS_COMMANDER]
 	};
 	case "heal_camp": {_object addAction [localize "STR_act_useMed", AS_actions_fnc_heal,nil,0,false,true,"","true", 10]};
-	case "healandrepair":{_object} addAction [localize "str_act_healandRepair", AS_actions_fnc_healandrepair,nil,0,false,true,"","true"];
+	case "healandrepair" :{_object addAction [localize "str_act_healandRepair", AS_actions_fnc_healandrepair,nil,0,false,true,"","true", 20]};
 	case "refuel": {_object addAction [localize "STR_act_refuel", AS_actions_fnc_refuel,nil,0,false,false,"",IN_VEHICLE, 20]};
 	case "refuel_truck": {_object addAction [localize "STR_act_refuel_truck", AS_actions_fnc_refuel_truck,nil,0,false,false,"",IS_PLAYER, 10]};
 	case "refuel_truck_check": {_object addAction [localize "STR_act_refuel_truck_check", AS_actions_fnc_refuel_truck_check,nil,0,false,false,"",IS_PLAYER,10]};

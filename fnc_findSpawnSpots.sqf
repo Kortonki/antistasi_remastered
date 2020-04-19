@@ -23,6 +23,7 @@ if (count _conRoads > 0 and {count (nearestobjects [_posRoad, ["house"], 1, true
             _posRoad = position _x;
             _dist = _posRoad distance2D _dest;
             _dir = ([position _road, _posRoad] call BIS_fnc_dirTo);
+            //TODO: trigonometry here to put spot next to the road?
         };
     } forEach _conRoads;
 };

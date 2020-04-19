@@ -1,5 +1,5 @@
 private _return = [];
-private _availableItems = getItemCargo caja;
+private _availableItems = (call AS_fnc_getArsenal) select 2;
 private _itemList = _availableItems select 0;
 private _countList = _availableItems select 1;
 
@@ -8,7 +8,7 @@ if hasACEmedical then {
         _return = [["ACE_tourniquet", 1], ["ACE_fieldDressing", 8], ["ACE_morphine", 2], ["ACE_epinephrine", 1]];
     } else {
 
-        _return = [["ACE_tourniquet", 1], ["ACE_fieldDressing", 6],["ACE_packingBandage", 1], ["ACE_quikclot", 2], ["ACE_morphine", 2], ["ACE_epinephrine", 1]];
+        _return = [["ACE_tourniquet", 2], ["ACE_fieldDressing", 6],["ACE_packingBandage", 2], ["ACE_quikclot", 2], ["ACE_morphine", 2], ["ACE_splint", 1]];
 
     };
 

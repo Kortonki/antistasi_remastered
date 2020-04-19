@@ -294,7 +294,7 @@ fnc_BE_permission = {
 			if ((_value in BE_class_Heli) && ("Heli" in BE_current_Vehicle_Restriction)) exitWith {_result = false;};
 
 			private _vehClass = getText (configFile >> "CfgVehicles" >> _value >> "vehicleClass");
-			if (((tolowerANSI _vehClass find "heli" >= 0) || (_vehClass == "Air")) && ("Heli" in BE_current_Vehicle_Restriction)) exitWith {_result = false};
+			if (((tolower _vehClass find "heli" >= 0) || (_vehClass == "Air")) && ("Heli" in BE_current_Vehicle_Restriction)) exitWith {_result = false};
 
 			/*
 			//Capture vehicle rewards

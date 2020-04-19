@@ -71,15 +71,11 @@ private _fnc_spawn = {
 	if (_frontera) then {_groupsCount = _groupsCount * 2};
 
 
-	for "_i" from 1 to _groupsCount do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
-		_grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "teams"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
-		private _stance = "RANDOM";
-		if (_i == 1) then {_stance = "RANDOMUP"};
-		[leader _grupo, _location, "SAFE","SPAWNED",_stance,"NOVEH","NOFOLLOW"] spawn UPSMON;
-		_grupos pushBack _grupo;
-		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
-	};
+
+	([_location, _groupCount] call AS_fnc_spawnAAF_patrol) params ["_units2", "_groups2", "_patrolMarker2"];
+	_soldados append _units2;
+	_grupos append _groups2;
+	_markers pushBack _patroMarker2;
 
 	[_location, _grupos] call AS_fnc_spawnJournalist;
 

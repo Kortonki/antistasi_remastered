@@ -14,10 +14,8 @@ AS_Pset("player_side", _side);
 
 //get flag texture of the player faction via a dummy flag. Used for the HQ flag
 
-private _dummy = (["FIA", "flag"] call AS_fnc_getEntity) createVehicle [0,0,0];
-_texture = flagTexture _dummy;
-bandera setFlagTexture _texture;
-deletevehicle _dummy;
+bandera setFlagTexture (["FIA"] call AS_fnc_getFlagTexture);
+
 
 
 if (_difficulty == "easy") then {
@@ -27,20 +25,42 @@ if (_difficulty == "easy") then {
 // Fill Crate with additional items
 
 //////////////////// additional Cargo /////////////////
+//UGLY solution but works without new one-time use function
   {
-    caja addweaponCargoGlobal [_x select 0, _x select 1];
+    [
+    [[_x select 0], [_x select 1]],
+    [[],[]],
+    [[],[]],
+    [[],[]]
+    ] call AS_fnc_addToArsenal;
   } foreach (["FIA", "addWeapons"] call AS_fnc_getEntity);
 
   {
-    caja addMagazineCargoGlobal [_x select 0, _x select 1];
+    [
+    [[],[]],
+    [[_x select 0], [_x select 1]],
+    [[],[]],
+    [[],[]]
+    ] call AS_fnc_addToArsenal;
   } foreach (["FIA", "addMagazines"] call AS_fnc_getEntity);
 
   {
-    caja addBackpackCargoGlobal [_x select 0, _x select 1];
+    [
+    [[],[]],
+    [[],[]],
+    [[],[]],
+    [[_x select 0], [_x select 1]]
+    ] call AS_fnc_addToArsenal;
+
   } foreach (["FIA", "addBackpacks"] call AS_fnc_getEntity);
 
   {
-    caja addItemCargoGlobal [_x select 0, _x select 1];
+    [
+    [[],[]],
+    [[],[]],
+    [[_x select 0], [_x select 1]],
+    [[],[]]
+    ] call AS_fnc_addToArsenal;
   } foreach (["FIA", "addItems"] call AS_fnc_getEntity);
 
 // populate garage with vehicles

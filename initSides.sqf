@@ -180,3 +180,12 @@ private _vehicles = [];
 [AS_entities, "FIA" call AS_fnc_getFaction, "vehicles", _vehicles] call DICT_fnc_set;
 
 civHeli = ["FIA", "air_vehicles"] call AS_fnc_getEntity;
+
+//For amount of spawned units in locations. Smaller groups -> more groups to keep unit count constant
+//Reference for patrols, for squads times 2
+//These can be used as an universal settings for amount of enemies: higher value -> more enemies.
+//Patrols mostly for cities, Squads for mil locations, Teams at roadblocks
+
+AS_patrolSizeRef = 3;
+AS_teamSizeRef = 4;
+AS_squadSizeRef = 9;
