@@ -15,7 +15,7 @@ private _fnc_spawn = {
 	_findPlaneParking = {
 		private _return = [];
 		{
-			private _type = toLower (typeof _x);
+			private _type = toLowerANSI (typeof _x);
 			//This finds all hangars, but excludes those with "2" referring to double hanagas (checked with vanilla + cup objects)
 			if (_type find "hangar" > -1 and {!(_type find "ruins" > -1) and {!(_type find "2" > -1)}}) then {
 				_return pushback _x;

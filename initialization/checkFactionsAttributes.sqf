@@ -69,7 +69,7 @@ private _role = "anti_state";
 		private _vehicles_with_cost = allVariables ([AS_entities, _faction, "costs"] call DICT_fnc_get);
 		private _mandatory_costs = [];
 		{
-			_mandatory_costs pushBack (tolower _x);
+			_mandatory_costs pushBack (tolowerANSI _x);
 		} forEach ([AS_entities, _faction, "land_vehicles"] call DICT_fnc_get);
 
 		if (count (_mandatory_costs - _vehicles_with_cost) != 0) then {

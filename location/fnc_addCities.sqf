@@ -8,7 +8,7 @@ params ["_excludeBelow", "_minSize", "_maxSize", ["_excluded", []]];
 {
     private _city = text _x;
     private _position = getPos _x;
-    private _size = [_city, _minSize] call AS_location_fnc_getNameSize;
+    private _size = [_minSize, _maxSize, _position] call AS_location_fnc_calcCitySize;
     _size = _size min _maxSize;
     //Exclude below doesn't work atm, and is obsolete as most maps don't define location sizes
     if (_city != "" and !(_city in _excluded) and _size >= _excludeBelow) then {
