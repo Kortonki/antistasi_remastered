@@ -206,11 +206,19 @@ if hasRHS then {
 		_dict = call compile preprocessFileLineNumbers "templates\FIA_EAST_FFP.sqf";
 		AS_entities setVariable ["RHS_FIA_EAST_FFP", _dict];
 	};
+
 	if has3CB then {
 		_dict = call compile preprocessFileLineNumbers "templates\NATO_3CB_AFGHAN.sqf";
-		AS_entities setVariable ["RHS_3CB_AFGHAN", _dict];
+		AS_entities setVariable ["3CB_NATO_AFGHAN", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\AAF_CW_USSR_EARLY_3CB.sqf";
+		AS_entities setVariable ["3CB_AAF_CW_USSR_EARLY", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\NATO_CW_USAF_EARLY_3CB.sqf";
+		AS_entities setVariable ["3CB_AAF_CW_USAF_EARLY", _dict];
 	};
 };
+
+
+
 if hasCUP then {
 	_dict = call compile preprocessFileLineNumbers "templates\AAF_CUP.sqf";
 	AS_entities setVariable ["CUP_AAF", _dict];

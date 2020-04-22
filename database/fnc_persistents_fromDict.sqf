@@ -102,6 +102,10 @@ if (isNil {AS_P("aphorisms")}) then {
   AS_Pset("aphorisms", AS_aphorisms);
 };
 
+if (isNIL {AS_P("AAFskillDropKills")}) then {
+  AS_Pset("AAFskillDropKills", 0);
+};
+
 //Apply weather changes immediately if there is atan2
 private _clear = AS_P("clear");
 if (!(isNil "_clear")) then {

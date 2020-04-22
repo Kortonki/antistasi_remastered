@@ -166,6 +166,12 @@ lockArsenal = false;
 
 [] call AS_stats_fnc_initialize;
 
+//AAF location count reference for skill calculations.  15 seems reasonable and is the loc count for ruha
+
+AS_AAFlocCountRef = 15;
+AS_AAFsoldierperLocRef = 50;
+AS_Pset("AAFskillDropKills", 0);
+
 AS_active_messages = [];
 
 

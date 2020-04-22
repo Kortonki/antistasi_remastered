@@ -24,6 +24,9 @@ _unit removeAllEventHandlers "HandleDamage";
 
 
 [_killed] remoteExec ["AS_fnc_activateCleanup",2];
+//Stats
+["AAF", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+AS_Persistent setVariable ["AAFskillDropKills", (AS_Persistent getVariable "AAFskillDropKills") + 1, true];
 
 if (hasACE) then {
 	if ((isNull _killer) || (_killer == _killed)) then {
@@ -35,6 +38,8 @@ if (hasACE) then {
 if (_killer call AS_fnc_getSide == "NATO" and {isNil{["NATO_killAAF_date"] call AS_stats_fnc_get}}) then {
 	["NATO_killAAF_date", date] call AS_stats_fnc_set;
 };
+
+
 
 if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) then { //Investigate if this triggers for civilians
 	["kill"] remoteExec ["fnc_BE_XP", 2];
@@ -54,14 +59,15 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 		[-_cost] remoteExec ["AS_fnc_changeAAFmoney",2];
 		[-0.5,0,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2];
 
-		//Stats
-		["AAF", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
 
 		if (isPlayer _killer) then {
 			[_killer, "score", 2, false] remoteExec ["AS_players_fnc_change", 2];
 			[_killer, "kills", 1] call AS_players_fnc_change;
 		};
 	};
+
+
 
 
 

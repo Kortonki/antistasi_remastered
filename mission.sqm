@@ -8,22 +8,22 @@ class EditorData
 	toggles=65;
 	class ItemIDProvider
 	{
-		nextID=2680;
+		nextID=3288;
 	};
 	class MarkerIDProvider
 	{
-		nextID=146;
+		nextID=148;
 	};
 	class LayerIndexProvider
 	{
-		nextID=3;
+		nextID=13;
 	};
 	class Camera
 	{
-		pos[]={2670.4302,278.78613,3079.0645};
-		dir[]={-0.12689719,-0.9264617,0.35462701};
-		up[]={-0.31212637,0.3764289,0.87227118};
-		aside[]={0.94161654,1.3197423e-006,0.33693793};
+		pos[]={5836.2124,44.519138,3141.7578};
+		dir[]={-0.51929486,-0.66192973,0.54055178};
+		up[]={-0.45860443,0.74952704,0.47737783};
+		aside[]={0.72114909,-4.7497451e-008,0.69278914};
 	};
 };
 binarizationWanted=0;
@@ -32,13 +32,14 @@ addons[]=
 	"A3_Ui_F",
 	"A3_Modules_F_Hc",
 	"A3_Characters_F",
-	"CUP_Editor_A2_Roads_Config"
+	"CUP_Editor_A2_Roads_Config",
+	"UK3CB_BAF_Units_Arctic"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=4;
+		items=5;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -64,6 +65,13 @@ class AddonsMetaData
 		{
 			className="CUP_Editor_A2_Roads_Config";
 			name="CUP_Editor_A2_Roads_Config";
+		};
+		class Item4
+		{
+			className="UK3CB_BAF_Units_Arctic";
+			name="3CB BAF Units - Arctic";
+			author="3 Commando Brigade";
+			url="www.3commandobrigade.com";
 		};
 	};
 };
@@ -158,7 +166,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.83";
+		briefingName="Antistasi Remastered V0.99.84";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +191,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=148;
+		items=159;
 		class Item0
 		{
 			dataType="Marker";
@@ -3119,6 +3127,178 @@ class Mission
 			};
 			id=2674;
 			type="CUP_A2_Road_mud_25";
+		};
+		class Item148
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4351.7017,-1.5550489,4508.5625};
+				angles[]={0.38480943,2.5245717,0.43113881};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2682;
+			type="CUP_A2_Road_mud_25";
+		};
+		class Item149
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4337.7969,-3.2347999,4525.8232};
+				angles[]={5.4346395,2.4523551,6.1810422};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2683;
+			type="CUP_A2_Road_mud_25";
+		};
+		class Item150
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5852.4473,0,7093.1372};
+				angles[]={0,1.84297,0};
+			};
+			side="Empty";
+			class Attributes
+			{
+			};
+			id=2686;
+			type="CUP_A2_Road_mud_25";
+			atlOffset=0.46437746;
+		};
+		class Item151
+		{
+			dataType="Layer";
+			name="Camp Audacity";
+			id=3186;
+			atlOffset=-19.15;
+		};
+		class Item152
+		{
+			dataType="Layer";
+			name="Camp Ant";
+			id=3223;
+			atlOffset=-19.15;
+		};
+		class Item153
+		{
+			dataType="Layer";
+			name="Camp Falcon";
+			id=3245;
+			atlOffset=-19.15;
+		};
+		class Item154
+		{
+			dataType="Layer";
+			name="Tower Bunker Checkpoint #B";
+			id=3273;
+			atlOffset=-19.15;
+		};
+		class Item155
+		{
+			dataType="Group";
+			side="West";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5895.5342,12.392756,3323.5344};
+					};
+					side="West";
+					flags=7;
+					class Attributes
+					{
+						isPlayer=1;
+					};
+					id=3276;
+					type="UK3CB_BAF_HeliPilot_RAF_Arctic";
+					atlOffset=9.5367432e-007;
+				};
+			};
+			class Attributes
+			{
+			};
+			id=3275;
+			atlOffset=9.5367432e-007;
+		};
+		class Item156
+		{
+			dataType="Layer";
+			name="Layer 8";
+			id=3279;
+			atlOffset=-19.15;
+		};
+		class Item157
+		{
+			dataType="Group";
+			side="West";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5736.394,17.629303,3113.6042};
+					};
+					side="West";
+					flags=7;
+					class Attributes
+					{
+					};
+					id=3281;
+					type="B_Soldier_A_F";
+					atlOffset=1.9073486e-006;
+				};
+			};
+			class Attributes
+			{
+			};
+			id=3280;
+			atlOffset=1.9073486e-006;
+		};
+		class Item158
+		{
+			dataType="Group";
+			side="West";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5817.5439,16.853224,3122.6433};
+					};
+					side="West";
+					flags=7;
+					class Attributes
+					{
+					};
+					id=3285;
+					type="B_Soldier_A_F";
+				};
+			};
+			class Attributes
+			{
+			};
+			id=3284;
 		};
 	};
 	class Connections

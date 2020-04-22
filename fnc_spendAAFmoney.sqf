@@ -7,6 +7,7 @@ AS_resourcesIsChanging = true;
 //this does not use external func for resource calcs as it is updated during the buying process and dictionary is not updated during
 
 private _resourcesAAF = AS_P("resourcesAAF");
+private _skillAAF = AS_P("skillAAF");
 
 private _AAFlocCount = count ([["base","airfield","outpost","resource","factory","powerplant","seaport"],"AAF"] call AS_location_fnc_TS);
 private _AAFresAdj = _resourcesAAF / _AAFlocCount; //Consider this also as it affects units ammo and fuel
@@ -14,6 +15,23 @@ private _AAFresAdj = _resourcesAAF / _AAFlocCount; //Consider this also as it af
 private _debug_prefix = "[AS] Debug AS_fnc_spendAAFmoney: ";
 private _debug_message = format ["buying with %1", _resourcesAAF];
 diag_log (_debug_prefix + _debug_message);
+
+//First check if aaf has enough casualties to warrant a skill drop
+//Assume all new recruits are skill 1 and has 50 soldiers per location
+
+private _skillDropLimit = (_AAFlocCount*AS_AAFSoldierperLocRef) / ((_skillAAF - 1) max 0.1);
+private _AAFskillDropKills = AS_P("AAFskillDropKills");
+
+while {_AAFskillDropKills >= _skillDropLimit and {_skillAAF > 1}} do {
+  _skillAAF = (_skillAAF - 1);
+  _AAFskillDropKills = _AAFskillDropKills - _skillDropLimit;
+  AS_Pset("skillAAF", _skillAAF);
+  AS_Pset("AAFskillDropKills", _AAFskillDropKills);
+  diag_log format ["[AS] Skilldrop: Skill dropped due to casualties. Skill now: %1 Casualty limit: %2 Casualties since last drop: %3", _skillAAF, _skillDropLimit, _AAFskillDropKills];
+
+  [format ["International press reports that high casualties suffered by the %1 has had impact in their fighting ability. Lots of veteran soldiers have been replaced with new recruits with only minimal training. This can be seen in their overall skill and competence.", ["AAF", "shortname"] call AS_fnc_getEntity], 10, "aafSkillDrop"] spawn AS_fnc_globalMessage;
+
+};
 
 //////////////// try to restore cities ////////////////
 if (_resourcesAAF > 5000 and {_AAFresAdj > 1000}) then {
@@ -95,9 +113,8 @@ deleteVehicle _extra_conditions;
 
 //////////////// try to upgrade skills ////////////////
 private _skillFIA = AS_P("skillFIA");
-private _skillAAF = AS_P("skillAAF");
 if ((_skillAAF < (_skillFIA + 4)) && (_skillAAF < AS_maxSkill)) then {
-	private _coste = 1000 + (1.5*(_skillAAF *750));
+	private _coste = 1000 + (1.5*(_skillAAF *750)*(_AAFlocCount/AS_AAFlocCountRef)); //AAF location count resembels amount of soldiers thus the universal cost to train them
 	if (_coste < _resourcesAAF and {_AAFresAdj > 1000}) then {
         AS_Pset("skillAAF", _skillAAF + 1);
         _skillAAF = _skillAAF + 1;
