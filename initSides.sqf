@@ -188,4 +188,5 @@ civHeli = ["FIA", "air_vehicles"] call AS_fnc_getEntity;
 
 AS_patrolSizeRef = 3;
 AS_teamSizeRef = 4;
+AS_AAteamSizeRef = 4;
 AS_squadSizeRef = 9;

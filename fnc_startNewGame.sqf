@@ -2,10 +2,16 @@
 AS_SERVER_ONLY("AS_fnc_startGame.sqf");
 params ["_side", "_guerrilla", "_pro_guerrilla", "_state", "_pro_state", "_civilians", "_position", "_difficulty"];
 
+
+
 AS_Pset("faction_anti_state", _guerrilla);
 AS_Pset("faction_pro_anti_state", _pro_guerrilla);
 AS_Pset("faction_state", _state);
 AS_Pset("faction_pro_state", _pro_state);
+
+//Override civilian template to match the same with FIA side
+_civilians = ["FIA", "civs"] call AS_fnc_getEntity;
+
 AS_Pset("faction_civilian", _civilians);
 
 AS_Pset("player_side", _side);

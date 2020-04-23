@@ -118,10 +118,14 @@ _truck setVariable ["boxCargo", (_truck getVariable "boxCargo") + [_box], true];
 _box setdir (getdir _truck + 90);
 
 private _selectionName = "trup";
-if (!(_truck iskindOf "Truck_F")) then {
-  _box attachTo [_truck, [0, (-1)-(_boxcount), 0], _selectionName]; //"trup works good with vanilla vehicles"
+if (_box isKindof "Land_WoodenCrate_01_F") then {
+  _box attachTo [_truck, [0, -1, (_boxcount)*0.5], _selectionName]; 
 } else {
-  _box attachTo [_truck, [0, -(_boxcount), 0], _selectionName]; //"trup works good with vanilla vehicles"
+  if (!(_truck iskindOf "Truck_F")) then {
+    _box attachTo [_truck, [0, (-1)-(_boxcount), 0], _selectionName]; //"trup works good with vanilla vehicles"
+  } else {
+    _box attachTo [_truck, [0, -(_boxcount), 0], _selectionName]; //"trup works good with vanilla vehicles"
+  };
 };
 
 if ((_boxcount + 1) == 1) then {

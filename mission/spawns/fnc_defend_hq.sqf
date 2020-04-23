@@ -147,6 +147,12 @@ private _fnc_spawn = {
 			_vehiculos append _vehicles1;
 			sleep 15;
 		};
+
+		//Attack Waypoints for tank groups must re-inited.
+		if (count (units _vehGroup) > 0) then {
+			[_originPos, _position, _vehGroup, _patrolMarker, _threat] spawn AS_tactics_fnc_ground_attack;
+		};
+
 		diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
 
 		//Support vehicles here. //Choose support position from AAF locations whice are close to the target & the base

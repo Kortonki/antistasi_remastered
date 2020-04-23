@@ -124,8 +124,14 @@ private _fnc_spawn = {
 			_vehicles append _vehicles1;
 
 
-			sleep 15;
+			sleep 15; //Big delay to make room for spawning units
 		};
+
+		//Attack Waypoints for tank groups must re-inited.
+		if (count (units _vehGroup) > 0) then {
+			[_originPos, _position, _vehGroup, _patrolMarker, _threatEvalLand] spawn AS_tactics_fnc_ground_attack;
+		};
+
 		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};
 

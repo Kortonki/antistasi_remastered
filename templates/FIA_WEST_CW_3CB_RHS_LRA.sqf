@@ -1,39 +1,37 @@
 private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy;
 [_dict, "side", str west] call DICT_fnc_set;
-[_dict, "name", "FIA CW (RHS & 3CB)"] call DICT_fnc_set;
-[_dict, "flag", "Flag_Blue_F"] call DICT_fnc_set;
+[_dict, "name", "Livonia Resistance Army (RHS and 3CB)"] call DICT_fnc_set;
+[_dict, "shortname", "LRA"] call DICT_fnc_set;
+[_dict, "flag", "Flag_Enoch_F"] call DICT_fnc_set;
 
-[_dict, "soldier", "B_G_Soldier_F"] call DICT_fnc_set;
-[_dict, "crew", "B_G_Soldier_lite_F"] call DICT_fnc_set;
-[_dict, "survivor", "B_G_Survivor_F"] call DICT_fnc_set;
-[_dict, "engineer", "B_G_engineer_F"] call DICT_fnc_set;
-[_dict, "medic", "B_G_medic_F"] call DICT_fnc_set;
+[_dict, "civs", "3CB_CIV_CW"] call DICT_fnc_set;
 
-[_dict, "uniforms", [
-	"rhsgref_uniform_ttsko_mountain",
-	"U_IG_Guerilla1_1",
-	"U_IG_Guerilla2_1",
-	"U_IG_Guerilla2_2",
-	"U_IG_Guerilla2_3",
-	"U_IG_Guerilla3_1",
-	"U_IG_Guerilla3_2",
-	"U_IG_leader",
-	"U_BG_Guerilla1_1",
-	"U_BG_Guerilla2_2",
-	"U_BG_Guerilla2_3",
-	"U_BG_Guerilla3_1",
-	"U_BG_Guerilla3_2",
-	"U_BG_leader",
-	"U_OG_Guerilla1_1",
-	"U_OG_Guerilla2_1",
-	"U_OG_Guerilla2_2",
-	"U_OG_Guerilla2_3",
-	"U_OG_Guerilla3_1",
-	"U_OG_Guerilla3_2",
-	"U_OG_leader"]
-] call DICT_fnc_set;
+[_dict, "soldier", "UK3CB_CCM_B_RIF_1"] call DICT_fnc_set;
+[_dict, "crew", "UK3CB_CCM_B_RIF_2"] call DICT_fnc_set;
+[_dict, "survivor", "UK3CB_CCM_B_RIF_LITE"] call DICT_fnc_set;
+[_dict, "engineer", "UK3CB_CCM_B_ENG"] call DICT_fnc_set;
+[_dict, "medic", "UK3CB_CCM_B_MD"] call DICT_fnc_set;
+
+
+private _config = configfile >> "CfgGroups" >> "West" >> "UK3CB_CCM_B" >> "Infantry";
+private _FIAsoldiers = _config call AS_fnc_getAllUnits;
+
+// List of all FIA 3CB equipment
+private _result = [_FIAsoldiers] call AS_fnc_listUniqueEquipment;
+
+private _uniforms = _result select 4;
+_uniforms append [
+"rhsgref_uniform_ttsko_mountain",
+"U_BG_Guerrilla2_2",
+"U_BG_Guerrilla_6_1",
+"U_I_E_Uniform_01_shortsleeve_F",
+"U_I_E_Uniform_01_officer_F"
+];
+
+[_dict, "uniforms", _uniforms] call DICT_fnc_set;
 
 [_dict, "unlockedWeapons", [
+	"rhs_weap_Izh18",
 	"rhs_weap_makarov_pm",
 	"rhs_weap_m38",
 	"sgun_HunterShotgun_01_sawedoff_F",
@@ -41,8 +39,10 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 	]] call DICT_fnc_set;
 
 [_dict, "unlockedMagazines", [
-	"rhs_mag_9x18_8_57N181S",
+	"rhsgref_1Rnd_00Buck",
 	"2Rnd_12Gauge_Pellets",
+	"rhsgref_1Rnd_Slug",
+	"rhs_mag_9x18_8_57N181S",
 	"rhs_mag_rdg2_white",
 	"IEDUrbanBig_Remote_Mag",
 	"IEDLandBig_Remote_Mag",
@@ -50,7 +50,7 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 	"IEDLandSmall_Remote_Mag"
 	]] call DICT_fnc_set;
 
-[_dict, "unlockedBackpacks", ["rhs_assault_umbts"]] call DICT_fnc_set;
+[_dict, "unlockedBackpacks", ["B_FieldPack_green_F", "B_Bergen_mcamo_F"]] call DICT_fnc_set;
 
 unlockeditems pushback "Chemlight_blue";
 
@@ -63,7 +63,7 @@ unlockeditems pushback "Chemlight_blue";
 [_dict, "addMagazines", [
 [	"rhsgref_5Rnd_762x54_m38", 400],
 ["rhs_charge_tnt_x2_mag", 20],
-["rhs_mag_m67", 20],
+["rhs_grenade_nbhgr39_mag", 12],
 ["rhs_ec400_sand_mag", 2],
 ["rhs_ec200_sand_mag", 2],
 ["rhs_ec75_sand_mag", 2],
@@ -149,19 +149,20 @@ unlockeditems pushback "Chemlight_blue";
 
 // FIA minefield uses first of this list
 [_dict, "land_vehicles", [
+	"UK3CB_CHC_C_Tractor_Old",
+	"UK3CB_C_Hilux_Closed",
+	"UK3CB_C_Hilux_Open",
+	"UK3CB_C_LandRover_Open",
 	"rhsgref_cdf_b_reg_uaz_open",
-	"RHS_Ural_Civ_01",
-	"rhsgref_cdf_b_ural",
-	"B_G_Quadbike_01_F",
-	"B_G_Offroad_01_F",
-	"C_Offroad_01_F",
-	"C_Offroad_02_unarmed_F",
-	"C_Van_02_transport_F",
-	"C_Van_02_vehicle_F",
-	"C_Van_02_service_F",
-	"C_Van_01_fuel_F",
+	"UK3CB_CHC_C_V3S_Open",
+	"UK3CB_CHC_C_V3S_Closed",
+	"UK3CB_CHC_C_V3S_Reammo",
+	"UK3CB_CHC_C_V3S_Repair",
+	"UK3CB_CHC_C_V3S_Refuel",
 	"rhsgref_cdf_b_reg_uaz_dshkm",
 	"rhsgref_cdf_b_reg_uaz_spg9",
+	"rhsgref_cdf_b_gaz66",
+	"rhsgref_cdf_b_gaz66o",
 	"rhsgref_cdf_b_gaz66_zu23"
 
 ]] call DICT_fnc_set;
@@ -182,15 +183,18 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 //[_dict, "costs", _costs] call DICT_fnc_set;
 
 
+[_costs, "UK3CB_CHC_C_Tractor_Old", 50] call DICT_fnc_set;
+[_costs, "UK3CB_C_Hilux_Closed", 300] call DICT_fnc_set;
+[_costs, "UK3CB_C_Hilux_Open", 300] call DICT_fnc_set;
+[_costs, "UK3CB_C_LandRover_Open", 400] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_reg_uaz_open", 300] call DICT_fnc_set;
-[_costs, "RHS_Ural_Civ_01", 600] call DICT_fnc_set;
-[_costs, "rhsgref_cdf_b_ural",600] call DICT_fnc_set;
-[_costs, "B_G_Quadbike_01_F", 50] call DICT_fnc_set;
-[_costs, "C_Offroad_01_F", 300] call DICT_fnc_set;
-[_costs, "C_Offroad_02_unarmed_F", 300] call DICT_fnc_set;
-[_costs, "C_Van_02_transport_F", 300] call DICT_fnc_set;
-[_costs, "C_Van_02_vehicle_F", 300] call DICT_fnc_set;
-[_costs, "C_Van_02_service_F", 1000] call DICT_fnc_set;
+[_costs, "UK3CB_CHC_C_V3S_Open", 500] call DICT_fnc_set;
+[_costs, "UK3CB_CHC_C_V3S_Closed",500] call DICT_fnc_set;
+[_costs, "UK3CB_CHC_C_V3S_Reammo", 600] call DICT_fnc_set;
+[_costs, "UK3CB_CHC_C_V3S_Refuel", 600] call DICT_fnc_set;
+[_costs, "UK3CB_CHC_C_V3S_Repair", 600] call DICT_fnc_set;
+[_costs, "rhsgref_cdf_b_gaz66", 400] call DICT_fnc_set;
+[_costs, "rhsgref_cdf_b_gaz66o", 400] call DICT_fnc_set;
 [_costs, "C_Van_01_fuel_F", 400] call DICT_fnc_set;
 
 
@@ -204,10 +208,5 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 [_costs, "rhsgref_cdf_SPG9", 600] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_DSHKM", 300] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_reg_M252", 600] call DICT_fnc_set;
-
-//Helos
-
-[_costs, "rhs_Mi8amt_civilian", 8000] call DICT_fnc_set; //Currently non-buyable
-[_costs, "C_Heli_Light_01_civil_F", 3000] call DICT_fnc_set;  // used in custom vehicles
 
 _dict

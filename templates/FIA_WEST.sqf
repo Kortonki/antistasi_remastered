@@ -5,6 +5,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "shortname", "FIA"] call DICT_fnc_set;
 [_dict, "flag", "Flag_FIA_F"] call DICT_fnc_set;
 
+[_dict, "civs", "CIV"] call DICT_fnc_set;
+
 [_dict, "vests", ["V_BandollierB_oli"]] call DICT_fnc_set;
 
 [_dict, "googles", [

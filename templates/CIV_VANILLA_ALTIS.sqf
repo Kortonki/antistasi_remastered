@@ -1,7 +1,7 @@
 private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str civilian] call DICT_fnc_set;
 [_dict, "roles", ["civilian"]] call DICT_fnc_set;
-[_dict, "name", "Altis (RHS)"] call DICT_fnc_set;
+[_dict, "name", "Altis"] call DICT_fnc_set;
 
 [_dict, "units", [
 "C_man_1","C_man_1_1_F","C_man_1_2_F","C_man_1_3_F","C_man_hunter_1_F",
@@ -26,12 +26,6 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 "C_Truck_02_covered_F",
 "C_Truck_02_box_F",
 "C_Truck_02_fuel_F",
-"RHS_Ural_Open_Civ_01",
-"RHS_Ural_Open_Civ_02",
-"RHS_Ural_Open_Civ_03",
-"RHS_Ural_Civ_01",
-"RHS_Ural_Civ_02",
-"RHS_Ural_Civ_03",
 "C_Van_02_transport_F",
 "C_Van_02_vehicle_F",
 "C_Van_02_service_F",

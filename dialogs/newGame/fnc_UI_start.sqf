@@ -12,6 +12,7 @@ closeDialog 0;
 hint "Select the position you want to start your HQ from.
       \nClose the map to start in the default position.
       \nChoose wisely: game changes a lot with the initial position!
+      \nPay attention to enemy AA locations and foreign carrier locations to get ammodrops easily!
       \nYou can move your HQ later.";
 private _position = [true] call AS_fnc_UI_newGame_selectHQ;
 hint "";

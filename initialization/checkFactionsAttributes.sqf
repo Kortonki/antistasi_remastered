@@ -18,7 +18,7 @@ private _common_attributes = [
 ];
 
 private _anti_state_attributes = [
-"flag",
+"flag", "civs", //CIVS must be linked to FIA so possible civilian tagged vehicles can match
 "googles", "uniforms", "helmets", "vests",
 "vans",
 "static_aa", "static_at", "static_mg", "static_mortar",
