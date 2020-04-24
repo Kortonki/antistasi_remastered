@@ -37,7 +37,7 @@ private _intend = "";
       _intend = "  ";
     };
 
-    if (_count > 1)  then {
+    if (_count > 1 and {!(("Rocket" in _name) or ("Missile" in _name))})  then {
       _name = _name + "s";
     };
 

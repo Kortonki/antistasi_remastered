@@ -22,11 +22,9 @@ private _result = [_FIAsoldiers] call AS_fnc_listUniqueEquipment;
 
 private _uniforms = _result select 4;
 _uniforms append [
-"rhsgref_uniform_ttsko_mountain",
 "U_BG_Guerrilla2_2",
 "U_BG_Guerrilla_6_1",
-"U_I_E_Uniform_01_shortsleeve_F",
-"U_I_E_Uniform_01_officer_F"
+"U_I_E_Uniform_01_shortsleeve_F"
 ];
 
 [_dict, "uniforms", _uniforms

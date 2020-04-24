@@ -21,11 +21,9 @@ private _result = [_FIAsoldiers] call AS_fnc_listUniqueEquipment;
 
 private _uniforms = _result select 4;
 _uniforms append [
-"rhsgref_uniform_ttsko_mountain",
 "U_BG_Guerrilla2_2",
 "U_BG_Guerrilla_6_1",
-"U_I_E_Uniform_01_shortsleeve_F",
-"U_I_E_Uniform_01_officer_F"
+"U_I_E_Uniform_01_shortsleeve_F"
 ];
 
 [_dict, "uniforms", _uniforms] call DICT_fnc_set;
@@ -63,10 +61,10 @@ unlockeditems pushback "Chemlight_blue";
 [_dict, "addMagazines", [
 [	"rhsgref_5Rnd_762x54_m38", 400],
 ["rhs_charge_tnt_x2_mag", 20],
-["rhs_grenade_nbhgr39_mag", 12],
-["rhs_ec400_sand_mag", 2],
-["rhs_ec200_sand_mag", 2],
-["rhs_ec75_sand_mag", 2],
+["rhs_grenade_sthgr43_heerfrag_mag", 12],
+["rhs_ec400_sand_mag", 10],
+["rhs_ec200_sand_mag", 10],
+["rhs_ec75_sand_mag", 10],
 
 ["rhsgref_296Rnd_792x57_SmE_belt", 4]
 ]] call DICT_fnc_set;
@@ -153,12 +151,13 @@ unlockeditems pushback "Chemlight_blue";
 	"UK3CB_C_Hilux_Closed",
 	"UK3CB_C_Hilux_Open",
 	"UK3CB_C_LandRover_Open",
+	"UK3CB_C_LandRover_Closed",
 	"rhsgref_cdf_b_reg_uaz_open",
-	"UK3CB_CHC_C_V3S_Open",
-	"UK3CB_CHC_C_V3S_Closed",
+	"UK3CB_C_V3S_Open",
+	"UK3CB_C_V3S_Closed",
 	"UK3CB_CHC_C_V3S_Reammo",
-	"UK3CB_CHC_C_V3S_Repair",
-	"UK3CB_CHC_C_V3S_Refuel",
+	"UK3CB_C_V3S_Repair",
+	"UK3CB_C_V3S_Refuel",
 	"rhsgref_cdf_b_reg_uaz_dshkm",
 	"rhsgref_cdf_b_reg_uaz_spg9",
 	"rhsgref_cdf_b_gaz66",
@@ -187,12 +186,13 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 [_costs, "UK3CB_C_Hilux_Closed", 300] call DICT_fnc_set;
 [_costs, "UK3CB_C_Hilux_Open", 300] call DICT_fnc_set;
 [_costs, "UK3CB_C_LandRover_Open", 400] call DICT_fnc_set;
+[_costs, "UK3CB_C_LandRover_Closed", 400] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_reg_uaz_open", 300] call DICT_fnc_set;
-[_costs, "UK3CB_CHC_C_V3S_Open", 500] call DICT_fnc_set;
-[_costs, "UK3CB_CHC_C_V3S_Closed",500] call DICT_fnc_set;
+[_costs, "UK3CB_C_V3S_Open", 500] call DICT_fnc_set;
+[_costs, "UK3CB_C_V3S_Closed",500] call DICT_fnc_set;
 [_costs, "UK3CB_CHC_C_V3S_Reammo", 600] call DICT_fnc_set;
-[_costs, "UK3CB_CHC_C_V3S_Refuel", 600] call DICT_fnc_set;
-[_costs, "UK3CB_CHC_C_V3S_Repair", 600] call DICT_fnc_set;
+[_costs, "UK3CB_C_V3S_Refuel", 600] call DICT_fnc_set;
+[_costs, "UK3CB_C_V3S_Repair", 600] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_gaz66", 400] call DICT_fnc_set;
 [_costs, "rhsgref_cdf_b_gaz66o", 400] call DICT_fnc_set;
 [_costs, "C_Van_01_fuel_F", 400] call DICT_fnc_set;

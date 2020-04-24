@@ -118,17 +118,7 @@ if (isPlayer(leader _unit)) then {
 
 				//IF a non-undercover AI is seen to enter a vehicle, make it compromised
 
-				private _detected = false;
-
-				if (!(captive _soldier)) then {
-
-					{
-						if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {(_x distance _soldier < 5) or ((_x knowsAbout _soldier > 1.4) and {_x distance _soldier < 500})}) exitWith {
-								AS_Sset("reportedVehs", AS_S("reportedVehs") + [_veh]);
-								_detected = true;
-						};
-					} forEach allUnits;
-				};
+				private _detected = [_soldier] call AS_fnc_detected;
 
 				//if (!(_detected) and {!(captive _soldier)}) then {[_soldier] remoteExec ["AS_fnc_activateUndercoverAI", _soldier]}; //Probably unnecessary, activate player undercover already does this
 			};

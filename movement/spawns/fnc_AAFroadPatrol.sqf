@@ -9,7 +9,7 @@ private _fnc_spawn = {
 	private _posbase = _origin call AS_location_fnc_position;
 	private _dir = 0;
 	private _special = ["NONE", "FLY"] select _isFlying;
-	private _crew = ["crew", "pilot"] select _isFlying;
+	private _crew = ["gunner", "pilot"] select _isFlying;
 
 	if not _isFlying then {
 		if (_type in (["AAF", "boats"] call AS_fnc_getEntity)) then {

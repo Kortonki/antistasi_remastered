@@ -49,7 +49,7 @@ switch _type do {
 	case "toggle_device": {_object addAction [localize "STR_act_toggleDevice", "Scripts\toggleDevice.sqf",nil,0,false,true,"","true"]};
 	case "moveObject" : {_object addAction [localize "STR_act_moveAsset", AS_actions_fnc_moveObject,nil,0,false,true,"",IS_COMMANDER + " and " + NOT_MOVING]};
 	case "deploy" : {_object addAction [localize "STR_act_buildPad", {[_this select 0, _this select 1] remoteExec ["AS_fnc_HQdeployPad", 2]},nil,0,false,true,"",IS_COMMANDER]};
-	case "arsenal" : {_object addAction [localize "STR_act_arsenal", AS_actions_fnc_arsenal,nil,4,false,true,"",IS_PLAYER]};
+	case "arsenal" : {_object addAction [localize "STR_act_arsenal", AS_actions_fnc_arsenal,nil,4,false,true,"",IS_PLAYER, 10]};
 	case "repackMagazines" : {_object addAction [localize "STR_act_repack", AS_actions_fnc_repackMagazines,nil,0,false,true,"",IS_PLAYER]};
 	case "loadCargo" : {_object addAction [localize "STR_act_loadBoxCargo" + "(" + (_object getVariable ["dest", "any"]) + ")", AS_actions_fnc_loadCargo,nil,0,false,true,"",IS_UNLOADED, 10]};
 	case "unloadCargo" : {_object addAction [localize "STR_act_unloadBoxCargo", AS_actions_fnc_unloadCargo,nil,0,false,true,"",NOT_IN_VEHICLE, 10]};

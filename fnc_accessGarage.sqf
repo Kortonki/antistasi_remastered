@@ -34,7 +34,7 @@ if (isNil "vehiclePad") then {
 } else {
 	garagePos = position vehiclePad;
 	garagePos set [2, 0.5]; //Spawn vehicles above ground to avoid clipping
-	if (count (vehiclePad nearObjects ["AllVehicles",5]) > 0) then {_break = true}; //[type, radius] will fail if objects withn 5 (old 7)
+	if (count (vehiclePad nearObjects ["All",4]) > 0) then {_break = true}; //[type, radius] will fail if objects withn 5 (old 7)
 };
 if _break exitWith {hintC "Clear the area, not enough space to spawn a vehicle."};
 

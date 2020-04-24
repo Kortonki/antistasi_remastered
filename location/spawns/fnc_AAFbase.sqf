@@ -154,7 +154,7 @@ private _fnc_spawn = {
 	} foreach ["ammo", "fuel", "repair"];
 
 	// spawn patrols
-	private _groupCount = (round (_size/30)) max 1;
+	private _groupCount = (round (_size/45)) max 1; //Increased to 45 to 30 to make them less crowded
 	// _mrk => to be deleted at the end
 	([_location, _groupCount] call AS_fnc_spawnAAF_patrol) params ["_units1", "_groups1", "_mrk"];
 	_spatrol append _units1;

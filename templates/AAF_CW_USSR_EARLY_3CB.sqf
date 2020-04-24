@@ -50,8 +50,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 "UK3CB_CW_SOV_O_EARLY_T72A",
 "UK3CB_CW_SOV_O_EARLY_T72BM",
 "UK3CB_CW_SOV_O_EARLY_T72B",
-"UK3CB_CW_SOV_O_EARLY_T72BA",
-"UK3CB_CW_SOV_O_EARLY_T72BE"
+"UK3CB_CW_SOV_O_EARLY_T72BA"
 ]] call DICT_fnc_set;
 [_dict, "boats", ["I_G_Boat_Transport_01_F"]] call DICT_fnc_set;
 [_dict, "cars_transport", ["UK3CB_CW_SOV_O_EARLY_UAZ_Closed",
@@ -98,7 +97,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "truck_fuel", "UK3CB_CW_SOV_O_EARLY_Ural_Fuel"] call DICT_fnc_set;
 
 [_dict, "uavs_small", ["I_UAV_01_F"]] call DICT_fnc_set;
-[_dict, "uavs_attack", []] call DICT_fnc_set;
+[_dict, "uavs_attack", ["I_UAV_02_F"]] call DICT_fnc_set;
 
 //first one should be the most used one, latter for special occasions
 [_dict, "static_aa", ["UK3CB_CW_SOV_O_Early_ZU23", "UK3CB_CW_SOV_O_Early_Igla_AA_pod"]] call DICT_fnc_set;

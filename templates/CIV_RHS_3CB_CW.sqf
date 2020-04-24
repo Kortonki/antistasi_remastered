@@ -69,8 +69,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 "UK3CB_C_Ural_Empty",
 "UK3CB_C_Ural_Recovery",
 "UK3CB_C_Ural_Repair",
-"UK3CB_C_Gaz24",
-"UK3CB_C_Golf"
+"UK3CB_C_Gaz24"
 
 ]] call DICT_fnc_set;
 

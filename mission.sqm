@@ -8,22 +8,22 @@ class EditorData
 	toggles=65;
 	class ItemIDProvider
 	{
-		nextID=3477;
+		nextID=3493;
 	};
 	class MarkerIDProvider
 	{
-		nextID=148;
+		nextID=149;
 	};
 	class LayerIndexProvider
 	{
-		nextID=18;
+		nextID=28;
 	};
 	class Camera
 	{
-		pos[]={6000.4106,149.32191,3521.2224};
-		dir[]={0.079512089,-0.93374091,-0.34933791};
-		up[]={0.20722091,0.35805172,-0.91042525};
-		aside[]={-0.97517163,-1.3033568e-006,-0.22195666};
+		pos[]={6540.6807,52.338711,1300.4241};
+		dir[]={-0.0089751678,-0.91167074,0.41097984};
+		up[]={-0.019905444,0.41080245,0.91150415};
+		aside[]={0.99981618,-2.2082895e-007,0.021835374};
 	};
 };
 binarizationWanted=0;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.85";
+		briefingName="Antistasi Remastered V0.99.86";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +183,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=155;
+		items=154;
 		class Item0
 		{
 			dataType="Marker";
@@ -1832,8 +1832,8 @@ class Mission
 			markerType="RECTANGLE";
 			type="Empty";
 			colorName="ColorGUER";
-			a=110;
-			b=160;
+			a=200;
+			b=200;
 			angle=128.83299;
 			id=469;
 			atlOffset=75.04493;
@@ -3062,22 +3062,6 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={4204.8623,5.1881528,4017.356};
-				angles[]={0.14154659,2.4876664,6.2731905};
-			};
-			side="Empty";
-			flags=4;
-			class Attributes
-			{
-			};
-			id=2672;
-			type="CUP_A2_Road_mud_25";
-		};
-		class Item145
-		{
-			dataType="Object";
-			class PositionInfo
-			{
 				position[]={3396.6475,-1.310531,1988.2833};
 				angles[]={0,5.6086755,0};
 			};
@@ -3089,7 +3073,7 @@ class Mission
 			type="CUP_A2_Road_mud_25";
 			atlOffset=0.68090415;
 		};
-		class Item146
+		class Item145
 		{
 			dataType="Object";
 			class PositionInfo
@@ -3105,7 +3089,7 @@ class Mission
 			id=2674;
 			type="CUP_A2_Road_mud_25";
 		};
-		class Item147
+		class Item146
 		{
 			dataType="Object";
 			class PositionInfo
@@ -3121,7 +3105,7 @@ class Mission
 			id=2682;
 			type="CUP_A2_Road_mud_25";
 		};
-		class Item148
+		class Item147
 		{
 			dataType="Object";
 			class PositionInfo
@@ -3137,7 +3121,7 @@ class Mission
 			id=2683;
 			type="CUP_A2_Road_mud_25";
 		};
-		class Item149
+		class Item148
 		{
 			dataType="Object";
 			class PositionInfo
@@ -3153,35 +3137,35 @@ class Mission
 			type="CUP_A2_Road_mud_25";
 			atlOffset=0.46437746;
 		};
-		class Item150
+		class Item149
 		{
 			dataType="Layer";
 			name="Camp Audacity";
 			id=3186;
 			atlOffset=-19.15;
 		};
-		class Item151
+		class Item150
 		{
 			dataType="Layer";
 			name="Camp Ant";
 			id=3223;
 			atlOffset=-19.15;
 		};
-		class Item152
+		class Item151
 		{
 			dataType="Layer";
 			name="Camp Falcon";
 			id=3245;
 			atlOffset=-19.15;
 		};
-		class Item153
+		class Item152
 		{
 			dataType="Layer";
 			name="Tower Bunker Checkpoint #B";
 			id=3273;
 			atlOffset=-19.15;
 		};
-		class Item154
+		class Item153
 		{
 			dataType="Layer";
 			name="Layer 8";

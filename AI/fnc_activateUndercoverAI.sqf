@@ -52,12 +52,14 @@ while {(captive (leader _unit)) and {captive _unit}} do {
 	sleep 1;
 	private _type = typeOf vehicle _unit;
 	// vehicle reported.
-	if ((vehicle _unit != _unit) and {not(_type in _undercoverVehicles) || vehicle _unit in AS_S("reportedVehs")}) exitWith {};
+	if ((vehicle _unit != _unit) and {not(_type in _undercoverVehicles) || vehicle _unit in AS_S("reportedVehs")}) exitWith {
+		[_unit, false] remoteExecCall ["setCaptive", _unit];
+	};
 
 	private _location = [_detectingLocations, _unit] call BIS_fnc_nearestPosition;
 	private _position = _location call AS_location_fnc_position;
 	private _size = _location call AS_location_fnc_size;
-	if (_unit distance _position < _size*2) exitWith {[_unit, false] remoteExecCall ["setCaptive", _unit];};
+	if (_unit distance2D _position < _size*2) exitWith {[_unit, false] remoteExecCall ["setCaptive", _unit];};
 };
 
 if (!(captive _unit)) then {
