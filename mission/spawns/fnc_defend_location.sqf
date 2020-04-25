@@ -50,7 +50,7 @@ private _fnc_spawn = {
 	//CSAT attack
 
 	if (_useCSAT) then {
-		private _cuenta = 3;
+		private _cuenta = (floor (AS_P("CSATSupport")/25)) max 1;
 		//if ((_base == "") and (_airfield == "")) then {_cuenta = 6}; //TODO make count depend on CSAT support
 
 		([_location, _cuenta, _threatEvalAir] call AS_fnc_spawnCSATattack) params ["_groups1", "_vehicles1"];

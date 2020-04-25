@@ -14,9 +14,10 @@ while {sleep AS_spawnLoopTime; (alive _veh) and {(!(isNil{_veh getVariable "marc
 
     //Only reveal to location if there's radio coverage and the leader is alive after the contact for some.
 
-      if (_x knowsAbout _veh > 1.4) then {
+      //Changed to check if any subordinate has visual with the location or is close enough
+      if (_x knowsAbout _veh > 1.4 and {([_x, "VIEW"] checkVisibility [eyepos _x, _position]) > 0.5}) then {
         private _leader = leader _x;
-        if (_leader == _x and {(position _x) call AS_fnc_hasRadioCoverage  and {!(_x getVariable ["revealing", false])  and {([_x, "VIEW"] checkVisibility [eyepos _x, _position]) > 0.5}}}) then {
+        if (_leader == _x and {(position _x) call AS_fnc_hasRadioCoverage  and {!(_x getVariable ["revealing", false])}}) then {
 
            [_x, _location] spawn {
              params ["_unit","_location"];

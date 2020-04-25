@@ -90,6 +90,9 @@ class AS {
         FNC_BASE(pickGroup);
         FNC_BASE(updateProgressBar);
 
+        FNC_BASE(useCSAT);
+        FNC_BASE(NATOinvolved);
+
         FNC_BASE(spawnComposition);
         FNC_BASE(findSpawnSpots);
         FNC_BASE(roadAndDir);

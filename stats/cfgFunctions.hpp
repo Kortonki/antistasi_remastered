@@ -3,11 +3,15 @@ class AS_stats {
         FNC(stats,initialize);
         FNC(stats,deinitialize);
         FNC(stats,init);
-        FNC(stats,change);
         FNC(stats,dictionary);
         FNC(stats,fromDict);
         FNC(stats,toDict);
-        FNC(stats,get);
-        FNC(stats,set);
+        FNC(stats,storeMessage);
+    };
+
+    class common {
+      FNC(stats,get);
+      FNC(stats,set);
+      FNC(stats,change);
     };
 };

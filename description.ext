@@ -440,18 +440,18 @@ class Params {
   class StartingHR
   {
     title = "HR at start"; // Param name visible in the list
-    values[] = {-1, 0,1,5,10,20,50}; // Values; must be integers; has to have the same number of elements as 'texts'
-    texts[] = {"Random","0","1","5","10","20","50"}; // Description of each selectable item
-    default = 10; // Default value; must be listed in 'values' array, otherwise 0 is used
+    values[] = {-1, 1,5,10,20,50,100}; // Values; must be integers; has to have the same number of elements as 'texts'
+    texts[] = {"Random","1","5","10","20","50","100"}; // Description of each selectable item
+    default = 50; // Default value; must be listed in 'values' array, otherwise 0 is used
     // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
   };
 
   class StartingMoney
   {
     title = "Money at start"; // Param name visible in the list
-    values[] = {-1, 0,50,100,200,1000,5000,10000}; // Values; must be integers; has to have the same number of elements as 'texts'
-    texts[] = {"Random","0","50","100","200","1000","5000","10000"}; // Description of each selectable item
-    default = 1000; // Default value; must be listed in 'values' array, otherwise 0 is used
+    values[] = {-1, 50,100,200,1000, 2000, 4000, 5000, 10000, 20000}; // Values; must be integers; has to have the same number of elements as 'texts'
+    texts[] = {"Random","50","100","200","1000", "2000", "4000", "5000", "10000", "20000"}; // Description of each selectable item
+    default = 4000; // Default value; must be listed in 'values' array, otherwise 0 is used
     // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
   };
 
@@ -460,15 +460,15 @@ class Params {
     title = "Fuel reserves at start"; // Param name visible in the list
     values[] = {-1, 0,10,50,100,200,1000,5000,10000}; // Values; must be integers; has to have the same number of elements as 'texts'
     texts[] = {"Random","0","10","50","100","200","1000","5000","10000"}; // Description of each selectable item
-    default = 100; // Default value; must be listed in 'values' array, otherwise 0 is used
+    default = 200; // Default value; must be listed in 'values' array, otherwise 0 is used
     // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
   };
 
   class StartingNS
   {
     title = "Foreign support at start"; // Param name visible in the list
-    values[] = {-1, 0,5,10,20,50,100}; // Values; must be integers; has to have the same number of elements as 'texts'
-    texts[] = {"Random","0","5","10","20","50","100"}; // Description of each selectable item
+    values[] = {-1, 0,5,10,20,50, 75, 100}; // Values; must be integers; has to have the same number of elements as 'texts'
+    texts[] = {"Random","0","5","10","20","50", "75", "100"}; // Description of each selectable item
     default = 5; // Default value; must be listed in 'values' array, otherwise 0 is used
     // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
   };

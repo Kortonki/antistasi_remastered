@@ -29,7 +29,7 @@ while {_AAFskillDropKills >= _skillDropLimit and {_skillAAF > 1}} do {
   AS_Pset("AAFskillDropKills", _AAFskillDropKills);
   diag_log format ["[AS] Skilldrop: Skill dropped due to casualties. Skill now: %1 Casualty limit: %2 Casualties since last drop: %3", _skillAAF, _skillDropLimit, _AAFskillDropKills];
 
-  [format ["International press reports that high casualties suffered by the %1 has had impact in their fighting ability. Lots of veteran soldiers have been replaced with new recruits with only minimal training. This can be seen in their overall skill and competence.", ["AAF", "shortname"] call AS_fnc_getEntity], 10, "aafSkillDrop"] spawn AS_fnc_globalMessage;
+  [format [localize "STR_msg_AAFSkillDrop", ["AAF", "shortname"] call AS_fnc_getEntity], 10, "aafSkillDrop", false] spawn AS_fnc_globalMessage;
 
 };
 

@@ -2,9 +2,15 @@ This file is for documentation for statistics variables and story related events
 
 "Story"
 
+storedMessages [[date1, msg1],[date2,msg2]...]
+
 startDate
 NATO_killAAF_date
 NATO_killCSAT_date
+FIA_killCSAT_date
+FIA_killAAF_date
+FIRSTBLOOD_side
+FIRSTBLOOD_date
 
 
 Cities:

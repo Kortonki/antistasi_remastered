@@ -13,15 +13,14 @@ private _alarm = false;
 
 private _FIAbases = [["base","airfield"], "FIA"] call AS_location_fnc_TS;
 
-private _useCSAT = true;
+private _useCSAT = call AS_fnc_useCSAT;
 
 private _validTypes = ["base", "airfield", "outpost", "city", "powerplant", "factory", "resource"];
 //Fia_hq, watchpost, roadblock, camp must be first discovered by AAF
 
 // only attack cities and use CSAT if FIA controls a base or airfield
-if ((random 100 > AS_P("CSATsupport")) or (count _FIAbases == 0) or AS_S("blockCSAT")) then {
+if (!_useCSAT) then {
 	_validTypes = _validTypes - ["city"];
-	_useCSAT = false;
 };
 
 private _validLocations = ([_validTypes, "FIA"] call AS_location_fnc_TS); //Fixed locations + FIA locations discovered by the AAF

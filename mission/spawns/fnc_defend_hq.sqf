@@ -29,9 +29,9 @@ private _fnc_spawn = {
 	_patrolMarker setMarkerAlpha 0;
 
 
-	//Transport choppers. They will come regardless of support
+	//Transport choppers.
 
-	for "_i" from 1 to (1 + round random 2) do {
+	for "_i" from 1 to (1 + round(AS_P("CSATSupport")/50)) do {
 		[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2]; //CSAT support lowered each attack
 		private _pos = [_origin, 300, random 360] call BIS_Fnc_relPos;
 		private _type = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);

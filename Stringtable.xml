@@ -351,6 +351,27 @@
 			<Key ID="STR_tskDesc_resRefugees">
 				<Original>A group of FIA supportes are hidden in a house in %1. We have to get there and find them before %2 does and bring them back to base.</Original>
 			</Key>
+
+			<Key ID="STR_msg_AAFSkillDrop">
+				<Original>International press reports that high casualties suffered by the %1 has had impact in their fighting ability. Lots of veteran soldiers have been replaced with new recruits with only minimal training. This can be seen in their overall skill and competence.</Original>
+			</Key>
+
+			<Key ID="STR_msg_firstblood_CSAT_FIA">
+				<Original>International press reports: "The tensions in %1 have escalated into armed conflict. The first casualty of the skirmish belongs to the %2. It is confirmed that the perpetrator was member of %3.
+				The accident has caused the %4 to mobilize it's armed forces near the %1 area. %5, which is a known supporter of the %6, is aware of the incident put there are no reports of any %7 military activities in the area.
+				The conflict is expected to escalate into multiple skirmishes around the area. Global media slowly shifts it's attention to the developing hot zone."</Original>
+			</Key>
+			<Key ID="STR_msg_firstblood_AAF_FIA">
+				<Original>International press reports: "The tensions in %1 have escalated into armed conflict. The first casualty of the skirmish belongs to the %2. It is confirmed that the perpetrator was member of the %3.
+					The accident has caught the attention of %4, a well known ally to the %5. The %6 has stated it will increase it's material support to the area.
+					There are no reports of %8s known supporter %7 taking active measures in the area.
+					The conflict is expected to escalate into multiple skirmishes around the area. Global media slowly shifts it's attention to the developing hot zone."</Original>
+				</Key>
+			<Key ID="STR_msg_firstblood_FIA_AAFCSAT">
+				<Original>International press reports: "The tensions in %1 have escalated into armed conflict. The first casualty belongs to the small group resisting %2 occupation called %3.
+					 It is now confirmed that %4 was the perpetrator and the incident has turned sympathies towards the %5. %6 has publicly sent their condolences to the %5 and promises to support them in
+					 form of supplies and military equipment. The incident will most probably cause further military conflict in the area and number of the number casualties is expected to rise"</Original>
+				</Key>
 		</Container>
 	</Package>
 </Project>
