@@ -249,6 +249,11 @@ class AS {
         FNC_BASE(initUnitNATO);
         FNC_BASE(initUnitCSAT);
         FNC_BASE(initUnitSurvivor);
+
+        FNC_BASE(FIAstoryTags);
+        FNC_BASE(AAFstoryTags);
+        FNC_BASE(CSATstoryTags);
+        FNC_BASE(NATOstoryTags);
     };
 
     class withInterface {

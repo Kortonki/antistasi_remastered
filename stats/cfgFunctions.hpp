@@ -3,7 +3,7 @@ class AS_stats {
         FNC(stats,initialize);
         FNC(stats,deinitialize);
         FNC(stats,init);
-        FNC(stats,dictionary);
+
         FNC(stats,fromDict);
         FNC(stats,toDict);
         FNC(stats,storeMessage);
@@ -13,5 +13,7 @@ class AS_stats {
       FNC(stats,get);
       FNC(stats,set);
       FNC(stats,change);
+      FNC(stats,dictionary);
+      FNC(stats,exists);
     };
 };

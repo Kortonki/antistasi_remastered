@@ -87,7 +87,7 @@ AS_Pset("civPerc",0.01); //initial % civ spawn rate
 AS_Pset("spawnDistance",1200); //initial spawn distance. Less than 1Km makes parked vehicles spawn in your nose while you approach.
 AS_Pset("minimumFPS",15); //initial minimum FPS. This value can be changed in a menu.
 AS_Pset("cleantime",60*60); // time to delete dead bodies and vehicles.
-AS_Pset("minAISkill",0.3); // The minimum skill of the AAF/FIA AI (at lowest skill level)
+AS_Pset("minAISkill",0.2); // The minimum skill of the AAF/FIA AI (at lowest skill level)
 AS_Pset("maxAISkill",0.9); // The maximum skill of the AAF/FIA AI (at highest skill level)
 
 // Weather PERSISTENTS

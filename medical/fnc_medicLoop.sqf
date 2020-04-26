@@ -27,6 +27,7 @@ while {alive _unit} do {
           _medic call AS_medical_fnc_isUnconscious or
           (!([_unit] call ace_medical_blood_fnc_isBleeding) and {not ([_unit] call AS_medical_fnc_isMedic)}) or //Medics can handle unconscious stabilised patients
           (_unit getVariable ["ace_medical_triageLevel", -1]) == 4 or
+          (_unit call AS_medical_fnc_isMoved) or
           not(alive _unit)})
 
           then {
@@ -35,7 +36,11 @@ while {alive _unit} do {
       };
 
         //If Has ACE medical, player can prevent AI healing hopeless cases by black triage card
-        if (_isUnconscious and {isNull (_unit call AS_medical_fnc_getAssignedMedic) and {!(hasACEmedical) or (_unit getVariable ["ace_medical_triageLevel", -1]) != 4 or (hasACEmedical and {[_unit] call ace_medical_blood_fnc_isBleeding})}}) then {
+        if (_isUnconscious and {isNull (_unit call AS_medical_fnc_getAssignedMedic) and {!(_unit call AS_medical_fnc_isMoved) and {
+          !(hasACEmedical) or
+          (_unit getVariable ["ace_medical_triageLevel", -1]) != 4 or
+          (hasACEmedical and {[_unit] call ace_medical_blood_fnc_isBleeding})}
+          }}) then {
             // Choose a medic.
             private _bestDistance = 81; // best distance of the current medic (max distance for first medic)
 

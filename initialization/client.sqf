@@ -112,6 +112,7 @@ if _isJip then {
   if (_x isKindof "Truck_F" and {!((_x call AS_fuel_fnc_getfuelCargoSize) > 0)}) then {
     [_x, "recoverEquipment"] call AS_fnc_addAction;
     [_x, "transferTo"] call AS_fnc_addAction;
+    [_x, "vehicle_cargo_check"] call AS_fnc_addAction;
 
     //TODO somehow to check that boxcargo has synced? is it even necessary?
     if (count(_x getVariable ["boxCargo",[]]) > 0) then {

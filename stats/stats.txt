@@ -9,6 +9,10 @@ NATO_killAAF_date
 NATO_killCSAT_date
 FIA_killCSAT_date
 FIA_killAAF_date
+AAF_killFIA_date
+CSAT_killFIA_date
+AAF_killNATO_date
+CSAT_killNATO_date
 FIRSTBLOOD_side
 FIRSTBLOOD_date
 

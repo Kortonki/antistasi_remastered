@@ -68,7 +68,7 @@ private _fnc_spawn = {
 	_vehiculos append _vehicles1;
 
 	// spawn guarding squads
-	private _groupCount = round (_size/50);
+	private _groupCount = round (_size/60);
 	if (_location call AS_fnc_location_isFrontline) then {_groupCount = _groupCount * 2};
 	_groupCount = _groupCount max 1;
 

@@ -183,11 +183,14 @@ AS_HQ_placements = []; // objects placed on HQ
 
 //Disable fuel from fuel stations
 
-private _allFuelStations = ([0,0,0] nearObjects 150000) select {getFuelCargo _x > 0};
-{_x setFuelCargo 0} foreach _allFuelStations;
+
 
 if (!isNil "ace_common_settingFeedbackIcons") then {
+  private _allFuelStations = ([0,0,0] nearObjects 40000) select {([_x] call ace_refuel_fnc_getFuel) > 0};
   {[_x, 0] call ace_refuel_fnc_setFuel} foreach _allFuelStations;
+} else {
+  private _allFuelStations = ([0,0,0] nearObjects 40000) select {getFuelCargo _x > 0};
+  {_x setFuelCargo 0} foreach _allFuelStations;
 };
 
 //Maximum amount for AAF vehicles

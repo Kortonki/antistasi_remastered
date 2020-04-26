@@ -112,7 +112,7 @@ player addEventHandler ["GetOutMan", {
 }];
 
 player addEventHandler ["killed", {
-	params ["_unit"];
+	params ["_unit", "_killer"];
 	private _vehicle = vehicle _unit;
 	//_unit removeAllEventHandlers "HandleDamage"; //These are no longer needed //IMPORTANT: this also removes "killed" eventhNdlers!
 
@@ -127,6 +127,17 @@ player addEventHandler ["killed", {
 	if (count (units _group select {alive _x}) == 0) then {
 		deleteGroup _group;
 	};
+
+	if (hasACE) then {
+		if ((isNull _killer) || (_killer == _unit)) then {
+			_killer = _unit getVariable ["ace_medical_lastDamageSource", _killer];
+		};
+	};
+
+	//Story related tags
+
+	[_killer] call AS_fnc_FIAstoryTags;
+
 	//Stats
 
 	["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];

@@ -13,9 +13,11 @@ if _store then {
 
  //Back to number and to date fix the form
  //Different names to not have problems with array handling (referring, copying)
+//TODO investigate what happens if additional minutes push date into new year, is datetonumber > 1 and how to accomodote it with year
 
+ private _year = _date select 0;
  private _daten = dateTonumber _date;
- private _dateFinal = numberToDate _daten;
+ private _dateFinal = numberToDate [_year, _daten];
 
  [_dateFinal, _message] remoteExec ["AS_stats_fnc_storeMessage", 2];
 };

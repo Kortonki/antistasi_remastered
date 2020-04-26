@@ -73,7 +73,7 @@ if (not (_origin isEqualTo "spawnCSAT")) then {
 } else {
 	_origin = getMarkerPos "spawnCSAT";
 
-	if (_side == "small") then {
+	if (_size == "small") then {
 
 		if (AS_P("CSATsupport") < 5) exitWith {
 			_noArsenal = true;
