@@ -56,7 +56,7 @@ if ((_equipment select 4 == "") and {([_unit] call AS_fnc_getFIAUnitType) != "Su
 
 //This is to recover cargo if unit dies inside vehicle
 _unit addEventHandler ["killed", {
-	params ["_unit", "killer"];
+	params ["_unit", "_killer"];
 	private _vehicle = vehicle _unit;
 	//_unit removeAllEventHandlers "HandleDamage"; //These are no longer needed //IMPORTANT: this also removes "killed" eventhNdlers!
 	//ACE might make the killed eventhandler fire twice. Prevent it.
@@ -74,7 +74,7 @@ _unit addEventHandler ["killed", {
 	//Story related tags
 
 	[_unit, _killer] call AS_fnc_FIAstoryTags;
-	
+
 		if (_vehicle != _unit and {!(_vehicle isKindOf "StaticWeapon")}) then {
 			([_unit, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_magazineRemains"];
 			[_vehicle, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;

@@ -19,7 +19,7 @@ diag_log (_debug_prefix + _debug_message);
 //First check if aaf has enough casualties to warrant a skill drop
 //Assume all new recruits are skill 1 and has 50 soldiers per location
 
-private _skillDropLimit = (_AAFlocCount*AS_AAFSoldierperLocRef) / ((_skillAAF - 1) max 0.1);
+private _skillDropLimit = round ((_AAFlocCount*AS_AAFSoldierperLocRef) / ((_skillAAF - 1) max 0.1));
 private _AAFskillDropKills = AS_P("AAFskillDropKills");
 
 while {_AAFskillDropKills >= _skillDropLimit and {_skillAAF > 1}} do {

@@ -4,7 +4,7 @@
             ACE_setting = 1;
             values[] = {0,1};
             texts[] = {"Off","On"};
-            default = 0;
+            default = 1;
             typeName = "BOOL";
             force = 1;
     };
@@ -61,26 +61,6 @@
 
 
 
-    class ace_map_BFT_HideAiGroups {
-        title = "Hide AI groups on map?";
-            ACE_setting = 1;
-            values[] = {0,1};
-            texts[] = {"Off","On"};
-            default = 1;
-            typeName = "BOOL";
-            force = 1;
-    };
-
-    class ace_map_BFT_ShowPlayerNames {
-        title = "Show player names map?";
-            ACE_setting = 1;
-            values[] = {0,1};
-            texts[] = {"Off","On"};
-            default = 1;
-            typeName = "BOOL";
-            force = 1;
-    };
-
     class ace_map_defaultChannel {
         title = "Map default channel";
             ACE_setting = 1;
@@ -90,17 +70,6 @@
             typeName = "SCALAR";
             force = 1;
     };
-
-    class ace_microdagr_mapDataAvailable {
-        title = "MicroDAGR map fill";
-            ACE_setting = 1;
-            values[] = {0,1};
-            texts[] = {"Off","On"};
-            default = 1;
-            typeName = "SCALAR";
-            force = 1;
-    };
-
 
     class ace_repair_fullRepairLocation {
         title = "Full repair locations?";
