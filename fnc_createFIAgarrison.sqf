@@ -82,7 +82,7 @@ if (_type in  ["camp", "fia_hq"]) then {
 
 //Create the patrol marker to avoid UPSMON issues
 
-private _patrolMarker = createMarker [format ["fia_gar_%1", _location], _position];
+private _patrolMarker = createMarker [format ["fia_gar_%1", _position], _position]; //Changed location to position to avoid issues with upsmon and spec characters
 _patrolMarker setMarkerShape "ELLIPSE";
 _patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;

@@ -234,10 +234,11 @@ private _fnc_spawn = {
 		_crate = (["CIV", "box"] call AS_fnc_getEntity) createVehicle [0,0,0];
 		[_crate] call AS_fnc_emptyCrate;
 		_vehicles pushBack _crate;
-
-		private _manifest = format ["Supplies to %1", _location];
+				private _manifest = format ["Supplies to %1", _location];
 		if (_missionType == "convoy_money") then {
 			_manifest = format ["Money to %1", _location];
+		} else {
+			_mainVehicle forceFlagTexture (["AAF"] call AS_fnc_getFlagTexture);
 		};
 		_crate setVariable ["dest", _manifest, true];
 		_crate setVariable ["requiredVehs", ["Truck_F"], true];

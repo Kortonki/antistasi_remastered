@@ -33,7 +33,7 @@ private _reportedVehs = AS_S("reportedVehs");
 {
 	if (_x distance2D _posHQ < 200) then {
 	_reportedVehs = _reportedVehs - [_x];
-	if ((typeof _x) in BE_mil_vehicles) then {
+	if ((typeof _x) in BE_foreign_landVehicles) then {
 	 	_x forceflagTexture (["FIA"] call AS_fnc_getFlagTexture);
 	};
 

@@ -372,6 +372,13 @@
 					 It is now confirmed that %4 was the perpetrator and the incident has turned sympathies towards the %5. %6 has publicly sent their condolences to the %5 and promises to support them in
 					 form of supplies and military equipment. The incident will most probably cause further military conflict in the area and number of the number casualties is expected to rise"</Original>
 				</Key>
+
+			<Key ID="STR_msg_AAFcity_FIApresence">
+				<Original>Local press reports that citizens in %1 are worried about %2 presence in their city. They're obviously not pleased with the %3 unable to handle the situation.</Original>
+				</Key>
+			<Key ID="STR_msg_FIAcity_AAFpresence">
+				<Original>Local population in %1 is worried about %2 presence in their city. They're discontent with our ability to handle the situation.</Original>
+			</Key>
 		</Container>
 	</Package>
 </Project>

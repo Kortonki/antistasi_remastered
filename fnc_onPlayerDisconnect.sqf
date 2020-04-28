@@ -100,6 +100,7 @@ params ["_group", "_units", "_text", "_unit"];
 			AS_commander hcSetGroup [_group];
 			_group setVariable ["isHCgroup", true, true];
 			[leader _group, "fia_hq", "NOWP3", "NOVEH2"] spawn UPSMON; //_location passed as patrolmarker for upsmon to work: with nowp3 it won't be used
+			_text = _text + format ["AI group continues as HC group, commander alive. Group %1, unitcount: %2 players %3. ", _group, count _units, count (_units select {isPlayer _x})];
 		};
 	};
 

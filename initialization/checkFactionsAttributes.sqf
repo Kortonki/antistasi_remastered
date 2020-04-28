@@ -38,7 +38,7 @@ private _attributes = [
 	["units", "vehicles"],
 	_anti_state_attributes,
 	_state_attributes,
-	_common_attributes + ["traitor", "cars_transport", "uavs_small", "artillery1", "artillery2", "other_vehicles", "static_mg_low", "helis_attack", "recon_squad", "recon_team", "flag_marker", "explosives", "ap_mines", "at_mines"]
+	_common_attributes + ["self_aa", "traitor", "cars_transport", "uavs_small", "artillery1", "artillery2", "other_vehicles", "static_mg_low", "helis_attack", "recon_squad", "recon_team", "flag_marker", "explosives", "ap_mines", "at_mines"]
 ];
 
 {

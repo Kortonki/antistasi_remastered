@@ -103,6 +103,8 @@ if (_side != "NATO") then {
 					[_category, 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
 				};
 
+				_vehicle forceFlagTexture ""; //In case of enemy convoy veh, take the flag out
+
 
 
 				//After capturing fuel truck, make it FIA fuel system compatible
@@ -259,7 +261,7 @@ if (_side == "FIA") then {
 		_veh setVariable ["boxCargo",[], true];
 	};
 
-	if (_tipo in BE_mil_vehicles) then {
+	if (_tipo in BE_foreign_landVehicles) then {
 		_veh forceflagTexture (["FIA"] call AS_fnc_getFlagTexture);
 	};
 
