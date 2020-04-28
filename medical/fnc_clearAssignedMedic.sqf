@@ -6,6 +6,7 @@ if not hasACEmedical then {
 
     _unit setVariable ["ace_medical_ai_assignedMedic", objNull];
     _unit forcespeed -1; //This to override forcespeed 0 in ace medical
+    _unit setVariable ["treatmentpos", nil];
 
     [[_medic, _unit], {
       params ["_medic", "_unit"];

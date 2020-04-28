@@ -113,9 +113,9 @@ private _vehiculos = [];
 private _markers = [];
 
 // create a patrol marker
-private _patrolMarker = createMarkerLocal [format ["Patrol-%1-%2", (diag_tickTime/60), round (random 100)],_destination];
-_patrolMarker setMarkerShapeLocal "RECTANGLE";
-_patrolMarker setMarkerSizeLocal [150,150];
+private _patrolMarker = createMarker [format ["Patrol-%1-%2", (diag_tickTime/60), round (random 100)],_destination];
+_patrolMarker setMarkerShape "RECTANGLE";
+_patrolMarker setMarkerSize [150,150];
 _patrolMarker setMarkerAlpha 0;
 _markers pushBack _patrolMarker;
 
