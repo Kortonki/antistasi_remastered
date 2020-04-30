@@ -82,8 +82,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "teams", ["UK3CB_CW_US_B_EARLY_AR_FireTeam", "UK3CB_CW_US_B_EARLY_AT_FireTeam", "UK3CB_CW_US_B_EARLY_MG_FireTeam","UK3CB_CW_US_B_EARLY_RIF_FireTeam","UK3CB_CW_US_B_EARLY_UGL_FireTeam"]] call DICT_fnc_set;
 [_dict, "teamsAA", ["UK3CB_CW_US_B_EARLY_AA_FireTeam", "UK3CB_CW_US_B_EARLY_AA_Squad"]] call DICT_fnc_set;
 [_dict, "patrols", ["UK3CB_CW_US_B_EARLY_AR_Sentry", "UK3CB_CW_US_B_EARLY_LAT_Sentry", "UK3CB_CW_US_B_EARLY_MG_Sentry","UK3CB_CW_US_B_EARLY_MK_Sentry","UK3CB_CW_US_B_EARLY_RIF_Sentry","UK3CB_CW_US_B_EARLY_UGL_Sentry"]] call DICT_fnc_set;
-[_dict, "recon_squad", "UK3CB_CW_US_B_EARLY_Recon_SpecSquad"] call DICT_fnc_set;
-[_dict, "recon_team", "UK3CB_CW_US_B_EARLY_Recon_SpecTeam"] call DICT_fnc_set;
+[_dict, "recon_squad", configfile >> "CfgGroups" >> "West" >> "UK3CB_CW_US_B_EARLY" >> "SpecOps" >> "UK3CB_CW_US_B_EARLY_Recon_SpecSquad"] call DICT_fnc_set;
+[_dict, "recon_team", configfile >> "CfgGroups" >> "West" >> "UK3CB_CW_US_B_EARLY" >> "SpecOps" >> "UK3CB_CW_US_B_EARLY_Recon_SpecTeam"] call DICT_fnc_set;
 
 // To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
 [_dict, "additionalWeapons", []] call DICT_fnc_set;

@@ -128,12 +128,13 @@ _category
 
     if (_name in AS_allMinesMags) exitWith {
       ["Explosive", _count] call _fnc_addToArray;
-      if (_name in (call AS_fnc_allATmines)) then {
+      if ((_name call AS_fnc_mineVehicle) in (call AS_fnc_allATmines)) exitWith {
         ["AT mine", _count] call _fnc_addToArray;
       };
-      if (_name in (call AS_fnc_allAPmines)) then {
+      if ((_name call AS_fnc_mineVehicle) in (call AS_fnc_allAPmines)) exitWith {
         ["AP mine", _count] call _fnc_addToArray;
       };
+      ["Miscellaneous explosives", _count] call _fnc_addToArray;
     };
 
     //This moved to below so handgrenades are picked before as_allmagazine picks them

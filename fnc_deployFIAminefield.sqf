@@ -1,10 +1,5 @@
 #include "macros.hpp"
-params ["_type"];
-
-if (count ("fia_minefield" call AS_mission_fnc_active_missions) != 0) exitWith {
-	hint "We can only deploy one minefield at a time.";
-	createDialog "AS_createminefield";
-};
+params ["_type", "_magazines"];
 
 if (!([player] call AS_fnc_hasRadio)) exitWith {
 	hint "You need a radio in your inventory to be able to give orders to other squads";
@@ -16,12 +11,12 @@ private _possibleMines = (["AAF", _type] call AS_fnc_getEntity);
 _possibleMines pushBackUnique _x;
 } foreach ((["NATO", _type] call AS_fnc_getEntity) + (["CSAT", _type] call AS_fnc_getEntity));
 
-private _allMags = magazineCargo caja;
 private _availableMines = []; // mines per type
 private _totalAvailableMines = 0;
 {
 	private _mag = _x call AS_fnc_mineMag;
-	private _amount = {_x == _mag} count _allMags;
+	private _index = (_magazines select 0) find _mag;
+	private _amount = if (_index > -1) then {(_magazines select 1) select _index} else {0};
 	_availableMines pushBack _amount;
 	_totalAvailableMines = _totalAvailableMines + _amount;
 } forEach _possibleMines;
@@ -30,6 +25,8 @@ if (_totalAvailableMines == 0) exitWith {
 	hint "you have no mines available";
 	createDialog "AS_createminefield";
 };
+
+
 
 private _vehicleType = (["FIA", "land_vehicles"] call AS_fnc_getEntity) select 0;
 private _cost = 2*("Explosives Specialist" call AS_fnc_getCost) +
@@ -155,12 +152,12 @@ private _remaining = count _positions; // sum of all used mines.
 // pay price and remove mines from box
 [-_hr,-_cost] remoteExec ["AS_fnc_changeFIAmoney",2];
 
-([caja, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
-_cargo_m = [_cargo_m, _usedMines, false] call AS_fnc_mergeCargoLists;  // false -> remove from _cargo_m
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] remoteExecCall  ["AS_fnc_populateBox", 2];
+//This needs to be polled from the server
+[[[[],[]], _usedMines, [[],[]], [[],[]]]] remoteExec ["AS_fnc_removeFromArsenal", 2];
+
 
 // create the mission
-private _mission = ["establish_fia_minefield", ""] call AS_mission_fnc_add;
+private _mission = ["establish_fia_minefield", _locationPosition] call AS_mission_fnc_add;
 [_mission, "status", "active"] call AS_mission_fnc_set;
 [_mission, "mines_cargo", _usedMines] call AS_mission_fnc_set;
 [_mission, "position", _locationPosition] call AS_mission_fnc_set;

@@ -37,10 +37,12 @@ private _fnc_spawn = {
 	private _truck = _vehType createVehicle _pos;
 	[_truck, "FIA"] call AS_fnc_initVehicle;
 
+
+
 	private _group = createGroup ("FIA" call AS_fnc_getFactionSide);
 	AS_commander hcSetGroup [_group];
 	_group setVariable ["isHCgroup", true, true];
-	_group setGroupId ["MineF"];
+	_group setGroupId [format ["MineF_%1", round (diag_tickTime)]];
 
 	_group addVehicle _truck;
 	["Explosives Specialist", getMarkerPos "FIA_HQ", _group] call AS_fnc_spawnFIAUnit;
@@ -75,7 +77,7 @@ private _fnc_wait_to_arrive = {
 	AS_commander hcRemoveGroup _group;
 
 	if _arrivedSafely then {
-		[[petros,"sideChat","Engineers are now deploying the mines."],"AS_fnc_localCommunication"] call BIS_fnc_MP;
+		[petros, "sidechat", "Engineers are now deploying the mines."] remoteExec ["AS_fnc_localCommunication", [0, -2] select isDedicated];
 		[leader _group, _mrk, "SAFE","SPAWNED", "NOVEH2",  "SHOWMARKER"] spawn UPSMON;
 	} else {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -97,6 +99,7 @@ private _fnc_wait_to_deploy = {
 	if _arrivedSafely then {
 		// simulates putting mines.
 		//sleep (20*(count _minesPositions));
+
 
 		if ((alive _truck) and ({alive _x} count units _group > 0)) then {
 			// create minefield
@@ -154,11 +157,11 @@ private _fnc_wait_to_deploy = {
 private _fnc_clean = {
 	params ["_mission"];
 	private _resources = [_mission, "resources"] call AS_spawn_fnc_get;
-	private _group = _resources select 1 select 0;
-	private _truck = _resources select 2 select 0;
+	private _group = (_resources select 1) select 0;
+	private _truck = (_resources select 2) select 0;
 
 	_group setVariable ["isHCgroup", false, true];
-	_group setVariable ["UPSMON_Remove", true]; 
+	_group setVariable ["UPSMON_Remove", true];
 	[_group, getMarkerpos "FIA_HQ"] spawn AS_fnc_dismissFIAsquad; //Just dismiss usually, everythings recovered
 
 	/*

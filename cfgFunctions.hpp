@@ -238,6 +238,7 @@ class AS {
         FNC(arsenal,addMagazineRemains);
         FNC(arsenal,showUnlocked);
         FNC(arsenal,collectDroppedEquipment);
+        FNC(arsenal,excludeBlanks);
 
         FNC_BASE(initPlayerPosition);
         FNC_BASE(initVehicle);

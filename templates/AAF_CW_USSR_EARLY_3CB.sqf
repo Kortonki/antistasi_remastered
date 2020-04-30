@@ -34,8 +34,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "teams", ["UK3CB_CW_SOV_O_EARLY_AR_FireTeam", "UK3CB_CW_SOV_O_EARLY_AT_FireTeam", "UK3CB_CW_SOV_O_EARLY_MG_FireTeam", "UK3CB_CW_SOV_O_EARLY_RIF_FireTeam", "UK3CB_CW_SOV_O_EARLY_UGL_FireTeam"]] call DICT_fnc_set;
 [_dict, "squads", ["UK3CB_CW_SOV_O_EARLY_AR_Squad", "UK3CB_CW_SOV_O_EARLY_AT_Squad", "UK3CB_CW_SOV_O_EARLY_MG_Squad", "UK3CB_CW_SOV_O_EARLY_MK_Squad", "UK3CB_CW_SOV_O_EARLY_RIF_Squad"]] call DICT_fnc_set;
 [_dict, "teamsAA", ["UK3CB_CW_SOV_O_EARLY_AA_FireTeam", "UK3CB_CW_SOV_O_EARLY_AA_Squad"]] call DICT_fnc_set;
-[_dict, "recon_squad", "UK3CB_CW_SOV_O_EARLY_Recon_SpecSquad"] call DICT_fnc_set;
-[_dict, "recon_team", "UK3CB_CW_SOV_O_EARLY_Recon_SpecTeam"] call DICT_fnc_set;
+[_dict, "recon_squad", configfile >> "CfgGroups" >> "East" >> "UK3CB_CW_SOV_O_EARLY" >> "SpecOps" >> "UK3CB_CW_SOV_O_EARLY_Recon_SpecSquad"] call DICT_fnc_set;
+[_dict, "recon_team", configfile >> "CfgGroups" >> "East" >> "UK3CB_CW_SOV_O_EARLY" >> "SpecOps" >> "UK3CB_CW_SOV_O_EARLY_Recon_SpecTeam"] call DICT_fnc_set;
 
 // To modders: overwrite this in the template to change the vehicles AAF uses.
 // Rules:

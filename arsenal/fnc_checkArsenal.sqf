@@ -189,6 +189,6 @@ if (_text != "" ) then {
 //UPDATE arsenal with remaining
 
 //Populate with new cargo, called so no simultaneous calcs
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] remoteExecCall ["AS_fnc_populateBox", 2];
+[_cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExecCall ["AS_fnc_setArsenal", 2];
 _unit setVariable ["arsenalPoll", nil];
 _unit setVariable ["old_Cargo", nil, false];

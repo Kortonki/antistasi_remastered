@@ -5,7 +5,7 @@ if not hasACEmedical then {
 } else {
 
     _unit setVariable ["ace_medical_ai_assignedMedic", objNull];
-    _unit forcespeed -1; //This to override forcespeed 0 in ace medical
+    _unit forcespeed -1; //This to override forcespeed 0 in ace medicala
     _unit setVariable ["treatmentpos", nil];
 
     [[_medic, _unit], {
@@ -14,6 +14,7 @@ if not hasACEmedical then {
       _healQueue = _healQueue - [_unit];
       _medic setVariable ["ace_medical_ai_healQueue", _healQueue];
       _medic forcespeed -1; //This to override forcespeed 0 in ace medical
+      _medic switchmove "";
       _medic dofollow (leader _medic);
       }]
 

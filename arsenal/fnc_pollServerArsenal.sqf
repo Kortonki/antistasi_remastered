@@ -1,7 +1,7 @@
 #include "../macros.hpp"
 AS_SERVER_ONLY("AS_fnc_pollServerArsenal.sqf");
 
-params ["_unit", "_phase", "_box"];
+params ["_unit", "_phase", "_box", ["_mineTypes", "at_mines"]];
 
 private _owner = owner _unit;
 
@@ -58,6 +58,11 @@ if (_phase == "inventory") exitWith {
 
   private _arsenalInventory = +(call AS_fnc_getArsenal);
   [_box, _unit, nil, _arsenalInventory, true] remoteExec ["AS_actions_fnc_vehicle_cargo_check", _owner, false];
+};
+
+if (_phase == "minefield") exitWith {
+  private _magazines = +((call AS_fnc_getArsenal) select 1);
+  [_mineTypes, _magazines] remoteExec ["AS_fnc_deployFIAminefield", _owner, false];
 };
 
 diag_log format ["[AS] error: AS_fnc_pollServerArsenal called with invalid phase: %1", _phase];

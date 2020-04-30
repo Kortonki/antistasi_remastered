@@ -98,5 +98,5 @@ private _vs = [];
 
 //Add everything
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] remoteExec ["AS_fnc_populateBox", 2];
+[_cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExec ["AS_fnc_addToArsenal", 2];
 [_hr,_resourcesFIA] remoteExec ["AS_fnc_changeFIAmoney",2];
