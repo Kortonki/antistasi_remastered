@@ -1,5 +1,9 @@
 //This script sends random convoy mission if AAF can't attack anywhere
 
+params [["_skipping", false]];
+
+private _alarm = false;
+
 private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status in ["available","possible"] and
   {_x call AS_mission_fnc_type in [
     "convoy_ammo",
@@ -12,7 +16,7 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
     ] and {!(_x call AS_spawn_fnc_exists)}}};
 
   //Send recon every 10th time anyway
-  if (count _missions > 0 and {random 1 < 0.90}) then {
+  if (count _missions > 0 and {random 1 < 0.90 and {sunOrMoon == 1 or (random 1 < 0.1)}}) then { //AAF will only send convoys in daylight with only small exceptions
 
     private _mission = "";
 
@@ -32,8 +36,8 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
     call {
 
-      //If low on money prioritize logistics to get money
-      if ((call AS_fnc_getAAFresourcesAdj) < 2000) then {
+      //If low on money prioritize logistics to get money. Random component added
+      if ((call AS_fnc_getAAFresourcesAdj) < 2000 or (random 1 < 0.1)) then {
 
         {
           if ("ammo" in _x or "fuel" in _x or "money" in _x) exitwith {
@@ -55,7 +59,7 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
       } foreach (["city", "FIA"] call AS_location_fnc_TS);
 
-      if (_mission != "") exitWith {};
+      if (_mission != "" and {random 1 < 0.90}) exitWith {_alarm = true; _skipping = false}; //random component here. aaf won't allways send to fia cities
 
       //Then others where support is needed
       {
@@ -70,10 +74,15 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
     };
 
-    //random component added
-    if (_mission == "" or (random 1 > 0.95)) then {_mission = selectRandom _missions;};
-    _mission call AS_mission_fnc_activate;
-    diag_log "[AS] sendAAFConvoy: Valid convoy mission found, starting mission";
+
+    if (_mission == "") then {
+      call AS_movement_fnc_sendAAFRecon;
+    } else { //Prevent changing mission if it's worth an alarm
+      _mission call AS_mission_fnc_activate;
+      [_mission, "skipping", _skipping] call AS_mission_fnc_set; //Tell convoy missions if skipping time: Will automatically fail if not bound to FIA location
+      diag_log "[AS] sendAAFConvoy: Valid convoy mission found, starting mission";
+    };
   } else {
-    [] call AS_movement_fnc_sendAAFRecon;
+    call AS_movement_fnc_sendAAFRecon;
   };
+  _alarm

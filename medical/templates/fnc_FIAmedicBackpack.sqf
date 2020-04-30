@@ -37,12 +37,12 @@ if hasACEmedical then {
         } foreach (_itemList + unlockedItems);
 
           {
-            _return pushBack [_x, 2];
+            _return pushBack [_x, round(5/(count _bloods))];
           } foreach _bloods;
 
-        if (count _bloods < 4) then {
+        if (count _return < 1) then {
           {
-          _return pushBack [_x, 2];
+          _return pushBack [_x, round(5/(count _fluids))];
             if (_foreachindex > 3) exitWith {}; //Don't take too much fluids
           } foreach _fluids;
         };

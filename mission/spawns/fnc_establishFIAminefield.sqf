@@ -59,9 +59,9 @@ private _fnc_spawn = {
 private _fnc_wait_to_arrive = {
 	params ["_mission"];
 	private _mapPosition = [_mission, "position"] call AS_mission_fnc_get;
-	private _group = ([_mission, "resources"] call AS_spawn_fnc_get) select 1 select 0;
-	private _truck = ([_mission, "resources"] call AS_spawn_fnc_get) select 2 select 0;
-	private _mrk = ([_mission, "resources"] call AS_spawn_fnc_get) select 3 select 0;
+	private _group = (([_mission, "resources"] call AS_spawn_fnc_get) select 1) select 0;
+	private _truck = (([_mission, "resources"] call AS_spawn_fnc_get) select 2) select 0;
+	private _mrk = (([_mission, "resources"] call AS_spawn_fnc_get) select 3) select 0;
 
 	private _arrivedSafely = false;
 	waitUntil {sleep 1;
@@ -92,8 +92,8 @@ private _fnc_wait_to_deploy = {
 	private _mapPosition = [_mission, "position"] call AS_mission_fnc_get;
 	private _mines_cargo = [_mission, "mines_cargo"] call AS_mission_fnc_get;
 	private _minesPositions = [_mission, "positions"] call AS_mission_fnc_get;
-	private _group = ([_mission, "resources"] call AS_spawn_fnc_get) select 1 select 0;
-	private _truck = ([_mission, "resources"] call AS_spawn_fnc_get) select 2 select 0;
+	private _group = (([_mission, "resources"] call AS_spawn_fnc_get) select 1) select 0;
+	private _truck = (([_mission, "resources"] call AS_spawn_fnc_get) select 2) select 0;
 	private _arrivedSafely = [_mission, "arrivedSafely"] call AS_spawn_fnc_get;
 
 	if _arrivedSafely then {
@@ -144,21 +144,22 @@ private _fnc_wait_to_deploy = {
 
 
 			([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-			[_mission] remoteExec ["AS_mission_fnc_success", 2];
+			[_mission, "status", "completed"] call AS_mission_fnc_set; //this changed to contain mission name only
+			["mis"] call fnc_BE_XP;
 
 			{[_x] orderGetin true; [_x] allowGetin true} foreach _units;
 		} else {
 			([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-			[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+			[_mission, "status", "completed"] call AS_mission_fnc_set; //this changed to contain mission name only
+
 		};
 	};
 };
 
 private _fnc_clean = {
 	params ["_mission"];
-	private _resources = [_mission, "resources"] call AS_spawn_fnc_get;
-	private _group = (_resources select 1) select 0;
-	private _truck = (_resources select 2) select 0;
+	private _group = (([_mission, "resources"] call AS_spawn_fnc_get) select 1) select 0;
+	private _truck = (([_mission, "resources"] call AS_spawn_fnc_get) select 2) select 0;
 
 	_group setVariable ["isHCgroup", false, true];
 	_group setVariable ["UPSMON_Remove", true];

@@ -3,9 +3,33 @@
 private _fnc_initialize = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
-	private _position = _location call AS_location_fnc_positionConvoy;
+	private _position = _location call AS_location_fnc_position;
 
 	private _missionType = _mission call AS_mission_fnc_type;
+
+	private _skipping = if (!isnil{[_mission, "skipping"] call AS_mission_fnc_get}) then {
+		([_mission, "skipping"] call AS_mission_fnc_get)
+	}	else {
+		false
+	};
+
+	//Automatic failure if skipping
+	if _skipping exitWith {
+		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+
+		private _msg = "Enemy convoy to ";
+		if (_location in (call AS_location_fnc_cities)) then {
+			_msg = format ["%1%2 reached it's destination while you were asleep", _msg, _location];
+		} else {
+			_msg = format ["%1%2 near %3 reached it's destination while you were asleep", _msg, _location call AS_location_fnc_type, [call AS_location_fnc_cities, _position] call BIS_fnc_nearestPosition];
+		};
+
+		["TaskFailed", ["", _msg]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+
+		waitUntil {sleep 1; (_mission call AS_mission_fnc_status) == "completed"}; //Above will set this up when ready
+		[_mission, "state_index", 100] call AS_spawn_fnc_set;
+		[_mission, "delete", true] call AS_spawn_fnc_set;
+	};
 
 	private _originTypes = ["base", "airfield"];
 	if (_missionType == "convoy_money") then {

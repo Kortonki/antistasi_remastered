@@ -1,7 +1,7 @@
 #include "macros.hpp"
 
 [["You decided to rest some time","BLACK OUT",5]] remoteExec ["cutText", [0,-2] select isDedicated];
-[player, false] remoteExec ["enableSimulation", [0,-2] select isDedicated]; //Careful with this shit
+[[], {player enableSimulation false}] remoteExec ["call", [0,-2] select isDedicated]; //Careful with this shit
 sleep 5;
 //TODO: A dialog to choose how long to skip?
 private _skiptimeMax = 1*60;
@@ -42,7 +42,7 @@ while {!(_attack) and {_skippedTime < _skipTimeMax}} do {
 
 //Switch everything back on:
 
-[player, true] remoteExec ["enableSimulation", [0,-2] select isDedicated];
+[[], {player enableSimulation true}] remoteExec ["call", [0,-2] select isDedicated];
 
 [true] call AS_spawn_fnc_toggle;
 [true] call AS_fnc_resourcesToggle;

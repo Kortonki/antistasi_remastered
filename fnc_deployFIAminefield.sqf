@@ -158,7 +158,6 @@ private _remaining = count _positions; // sum of all used mines.
 
 // create the mission
 private _mission = ["establish_fia_minefield", _locationPosition] call AS_mission_fnc_add;
-[_mission, "status", "active"] call AS_mission_fnc_set;
 [_mission, "mines_cargo", _usedMines] call AS_mission_fnc_set;
 [_mission, "position", _locationPosition] call AS_mission_fnc_set;
 [_mission, "positions", _positions] call AS_mission_fnc_set;

@@ -32,13 +32,10 @@ _enemyLocations append _validLocations;
 
 if (count _validLocations == 0) exitWith {
 
-	//If skipping time, don't spam anything
-	if (!(_skipping))	then {
 	_debug_message = "postponed: no valid targets. Starting a convoy mission for AAF or recon patrol";
 	diag_log (_debug_prefix + _debug_message);
 
-	[] call AS_movement_fnc_sendAAFConvoy;
-	};
+	_alarm = [_skipping] call AS_movement_fnc_sendAAFConvoy;
 		//Schedule next attack
 		private _attFreq = AS_P("secondsForAAFattack");
 		private _nextAttack = [date select 0, date select 1, date select 2, date select 3, (date select 4) + (_attFreq/60)];
@@ -47,7 +44,7 @@ if (count _validLocations == 0) exitWith {
 		AS_AAF_attackLock = nil;
 
 		//The alarm for skipping time
-		false
+		_alarm
 };
 
 // the potential the AAF has to attack
@@ -167,7 +164,7 @@ if (count _objectives > 0) then {
 	};
 
 } else {
-	[] call AS_movement_fnc_sendAAFConvoy;
+	if ([_skipping] call AS_movement_fnc_sendAAFConvoy) then {_alarm = true}; //Convoys to FIA locations trigger alarm
 };
 
 //Schedule next attack

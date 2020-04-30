@@ -3,12 +3,7 @@ private _wasUnconscious = false;
 while {alive _unit} do {
     sleep AS_spawnlooptime*2;
 
-
-
     private _isUnconscious = _unit call AS_medical_fnc_isUnconscious;
-
-
-
 
     if (not _wasUnconscious and _isUnconscious) then {
         // became unconscious
@@ -22,13 +17,18 @@ while {alive _unit} do {
       if (hasACEmedical) then {
         //Black tagged or dead units or stabliisied units are cleared from healqueue
         private _medic = (_unit call AS_medical_fnc_getAssignedMedic);
+        //TODO: Consider if the following conditions could be reversed and run through lazy eval with ands
+        //Possible better this way, as it is more rare event that medic is released, than vice versa, continuin treatment
         if (not isNull _medic and {
           not alive _medic or
-          _medic call AS_medical_fnc_isUnconscious or
-          (!([_unit] call ace_medical_blood_fnc_isBleeding) and {not ([_unit] call AS_medical_fnc_isMedic)}) or //Medics can handle unconscious stabilised patients
-          (_unit getVariable ["ace_medical_triageLevel", -1]) == 4 or
-          (_unit call AS_medical_fnc_isMoved) or
-          not(alive _unit)})
+          {_medic call AS_medical_fnc_isUnconscious or
+          {(!([_unit] call ace_medical_blood_fnc_isBleeding) and {not ([_unit] call AS_medical_fnc_isMedic)}) or //Medics can handle unconscious stabilised patients
+          {(_unit getVariable ["ace_medical_triageLevel", -1]) == 4 or
+          {(_unit call AS_medical_fnc_isMoved) or
+          {not(alive _unit) or
+          {(_unit call AS_medical_status_inStableCondition)
+          }}}}}}
+          })
 
           then {
             [_unit, _medic] call AS_medical_fnc_clearAssignedMedic;
@@ -39,7 +39,7 @@ while {alive _unit} do {
         if (_isUnconscious and {isNull (_unit call AS_medical_fnc_getAssignedMedic) and {!(_unit call AS_medical_fnc_isMoved) and {
           !(hasACEmedical) or
           (_unit getVariable ["ace_medical_triageLevel", -1]) != 4 or
-          (hasACEmedical and {[_unit] call ace_medical_blood_fnc_isBleeding})}
+          (hasACEmedical and {!([_unit] call ace_medical_status_fnc_isInStableCondition)})}
           }}) then {
             // Choose a medic.
             private _bestDistance = 81; // best distance of the current medic (max distance for first medic)
@@ -143,3 +143,18 @@ while {alive _unit} do {
 if (not isnull (_unit call AS_medical_fnc_getAssignedMedic)) then {
   [_unit, (_unit call AS_medical_fnc_getAssignedMedic)] call AS_medical_fnc_clearAssignedMedic;
 };
+
+//Sketch for other medic release condition (inversed, needs checking)
+/*
+!(alive _medic and
+{!(_medic call AS_medical_fnc_isUnconscious) and
+{[_unit] call ace_medical_blood_fnc_isBleeding or ([_unit] call AS_medical_fnc_isMedic) and
+{(_unit getVariable ["ace_medical_triageLevel", 1]) != 4 and
+{!(_unit call AS_medical_fnc_isMoved) and
+{alive _unit and
+{!(_unit call AS_medical_status_fnc_inStableCondition)
+
+
+
+}}}}}})
+*/
