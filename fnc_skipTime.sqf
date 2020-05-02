@@ -10,6 +10,25 @@ private _attack = false;
 private _text = "Time to go";
 //AS_weather_fnc_randomWeather", 2];
 
+//Fail all current convoy missions
+{
+	private _mission = _x;
+
+	private _location = _mission call AS_mission_fnc_location;
+	private _position = _location call AS_location_fnc_position;
+
+	//FAIL the mission naturally to avoid problems. Teleport mainvehicle to target
+
+	[_mission, _position] spawn {
+		params ["_mission", "_position"];
+		waitUntil {sleep 0.5; ([_mission, "state_index"] call AS_spawn_fnc_get) == 2};
+		private _mainVehicle = [_mission, "mainVehicle"] call AS_spawn_fnc_get;
+		_mainVehicle setVehiclePosition [_position, [], 0, "NONE"];
+		_mainVehicle forcespeed 0;
+	};
+
+} foreach ((call AS_mission_fnc_active_missions) select {"convoy" in _x});
+
 //Shut down resources and spawn loops first:
 
 [false] call AS_spawn_fnc_toggle;

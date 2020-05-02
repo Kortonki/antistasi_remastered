@@ -64,8 +64,13 @@ if (_killer call AS_fnc_getSide in ["FIA", "NATO"]) then {
       diag_log format ["[AS] ERROR in AS_AAF_VE_EHkilled: '%1' is invalid type", typeOf _veh];
     };
   };
+  //Capturing enemy vehs nets support, destroying doesn't
   if (_citySupportEffect != 0) then {
-    [-_citySupportEffect,_citySupportEffect,position _veh, true] remoteExec ["AS_fnc_changeCitySupport",2];
+    if (alive _veh) then {
+      [-_citySupportEffect,_citySupportEffect,position _veh, true] remoteExec ["AS_fnc_changeCitySupport",2];
+    } else {
+      [-_citySupportEffect,0,position _veh, true] remoteExec ["AS_fnc_changeCitySupport",2];
+    };
   };
   if (_xpEffect != "" and {_killer call AS_fnc_getSide == "FIA"}) then {[_xpEffect] remoteExec ["fnc_BE_XP", 2]};
 };

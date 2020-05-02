@@ -87,6 +87,8 @@ _unit addEventHandler ["killed", {
 
 _unit allowFleeing 0;	//Experminet with this: way to make garrison stay in area,or detect fleeing and do things like disband etc.
 
+_unit setVariable ["rearming",false];
+
 if (isPlayer(leader _unit)) then {
 	if (captive player and {!(captive _unit)}) then {[_unit] remoteExec ["AS_fnc_activateUndercoverAI", _unit]};
 	_unit addEventHandler ["killed", {
@@ -115,9 +117,8 @@ if (isPlayer(leader _unit)) then {
 
 	}];
 
-	_unit setVariable ["rearming",false];
-
-	_unit addEventHandler ["GetInMan", {
+	//Did nothing
+	/*_unit addEventHandler ["GetInMan", {
 		private ["_soldier","_veh"];
 		_soldier = _this select 0;
 		_veh = _this select 2;
@@ -133,9 +134,10 @@ if (isPlayer(leader _unit)) then {
 				//if (!(_detected) and {!(captive _soldier)}) then {[_soldier] remoteExec ["AS_fnc_activateUndercoverAI", _soldier]}; //Probably unnecessary, activate player undercover already does this
 			};
 		};
-	}];
+	}];*/
 
-	_unit addEventHandler ["GetOutMan", {
+	//Seems buggy,, commented out
+	/*_unit addEventHandler ["GetOutMan", {
 		private ["_unit","_vehicle"];
 		_unit = _this select 0;
 		_vehicle = _this select 2;
@@ -143,10 +145,12 @@ if (isPlayer(leader _unit)) then {
 		if (_vehicle in (AS_S("reportedVehs")) and {[_unit] call AS_fnc_detected}) then {
 			[_unit, false] remoteExecCall ["setCaptive", _unit];
 		};
-	}];
+	}];*/
 
 } else {
 	_unit addEventHandler ["killed", {
+
+
 		params ["_unit", "_killer"];
 
 		//ACE might make the killed eventhandler fire twice. Prevent it.

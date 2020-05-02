@@ -28,4 +28,4 @@ sleep (_delayFinal * 60);
 [petros, "globalChat", _message] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 
 
-AS_active_messages - [_type];
+AS_active_messages = AS_active_messages - [_type];

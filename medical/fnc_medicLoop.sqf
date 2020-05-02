@@ -26,7 +26,7 @@ while {alive _unit} do {
           {(_unit getVariable ["ace_medical_triageLevel", -1]) == 4 or
           {(_unit call AS_medical_fnc_isMoved) or
           {not(alive _unit) or
-          {(_unit call AS_medical_status_inStableCondition)
+          {(_unit call AS_medical_status_fnc_inStableCondition)
           }}}}}}
           })
 

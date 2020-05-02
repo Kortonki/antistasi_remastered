@@ -8,7 +8,7 @@ private _position = _location call AS_location_fnc_position;
 _position set [2, 0]; //Failsafe so marker z wont interfere
 private _size = _location call AS_location_fnc_size;
 private _type = _location call AS_location_fnc_type;
-private _estaticas = AS_P("vehicles") select {(typeOf _x) in AS_allStatics and {_x distance2D _position < _size}};
+private _estaticas = vehicles select {((typeOf _x) in AS_allStatics or (_x isKindof "StaticWeapon")) and {_x distance2D _position < _size}}; //Changed pers. vehicles to all vehicles in case not all of them are yet persistent
 private _garrison = _location call AS_location_fnc_garrison;
 private _combatmode = _location call AS_location_fnc_combatMode;
 private _behaviour = _location call AS_location_fnc_behaviour;
@@ -46,6 +46,9 @@ _grupo setGroupId [format ["Garr_%1_%2_%3", _location, floor (diag_tickTime), co
 				_unit moveInGunner _estatica;
 			};
 			_estaticas = _estaticas - [_estatica];
+
+
+
 		};
 
 		_unit = [_x, _position, _grupo] call AS_fnc_spawnFIAUnit;

@@ -23,13 +23,14 @@ private _totalSupport = _FIAsupport + _AAFsupport;
 
 
 //here if AAF less than 1% and getting less add FIA support instead and vice versa
+//Here a modifier added so killing is not good at increasing support
 
 if ((_blufor < 0) and {_FIAsupport <= 1}) then {
-	_opfor = _opfor - _blufor;
+	_opfor = _opfor - (_blufor/2);
 };
 
 if ((_opfor < 0) and {_AAFsupport <= 1}) then {
-	_blufor = _blufor - _opfor;
+	_blufor = _blufor - (_opfor/2);
 };
 
 if (_blufor >= _opfor) then {

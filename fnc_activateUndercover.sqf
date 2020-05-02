@@ -212,22 +212,22 @@ private _setPlayerCompromised = {
 	// the player only becomes compromised when he is detected
 	//
 	if ([_player] call AS_fnc_detected) then {
+		_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
 		if (vehicle _player != _player) then {
 			AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
 			call _setVehicleGroupCompromised;
-		} else { //Player doesn't get compromised but the vehicle does
-			_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
 		};
+
+
 	} else {
 		//If player is spotted while in a vehicle make it comprose (after the initilian bust
 		//If player goes back to undercover, ditch this check
 		waitUntil {sleep (AS_spawnLoopTime); [_player] call AS_fnc_detected or not(alive _player) or (captive _player)};
 		if (alive _player and {!(captive _player)}) then {
+			_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
 			if (vehicle _player != _player) then {
 				AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
 				call _setVehicleGroupCompromised;
-			} else {
-				_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
 			};
 		};
 

@@ -19,9 +19,9 @@ private _fnc_initialize = {
 
 		private _msg = "Enemy convoy to ";
 		if (_location in (call AS_location_fnc_cities)) then {
-			_msg = format ["%1%2 reached it's destination while you were asleep", _msg, _location];
+			_msg = format ["%1%2 arrived while you were asleep", _msg, _location];
 		} else {
-			_msg = format ["%1%2 near %3 reached it's destination while you were asleep", _msg, _location call AS_location_fnc_type, [call AS_location_fnc_cities, _position] call BIS_fnc_nearestPosition];
+			_msg = format ["%1%2 near %3 arrived while you were asleep", _msg, _location call AS_location_fnc_type, [call AS_location_fnc_cities, _position] call BIS_fnc_nearestPosition];
 		};
 
 		["TaskFailed", ["", _msg]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];

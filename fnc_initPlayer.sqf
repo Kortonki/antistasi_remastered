@@ -87,9 +87,7 @@ player addEventHandler ["GetInMan", {
 
 		//Detected player seen entering a vehicle -> vehicle to wanted list
 
-		if (!(_detected)) then {
-				//[true] spawn AS_fnc_activateUndercover; //Let's try to only UNdercover manually
-		} else {
+		if (_detected and {!(captive _unit)}) then {
 				AS_Sset("reportedVehs", AS_S("reportedVehs") + [_vehicle]);
 		};
 
@@ -100,7 +98,8 @@ player addEventHandler ["GetInMan", {
 		player setVariable ["EH_ids", _ids];
 }];
 
-player addEventHandler ["GetOutMan", {
+//Commented out, probably buggy
+/*player addEventHandler ["GetOutMan", {
     params ["_unit", "_seat", "_vehicle"];
 	{_vehicle removeAction _x} forEach (player getVariable ["EH_ids", []]);
 	player setVariable ["EH_ids", nil];
@@ -109,7 +108,7 @@ player addEventHandler ["GetOutMan", {
 	if (_vehicle in (AS_S("reportedVehs")) and {[_unit] call AS_fnc_detected}) then {
 		_unit setVariable ["compromised",  (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
 	};
-}];
+}];*/
 
 player addEventHandler ["killed", {
 	params ["_unit", "_killer"];

@@ -145,6 +145,10 @@ if (_enemySide == "FIA") then {
 
 } foreach (vehicles select {!((typeof _x) isEqualTo "WeaponHolderSimulated") and {(_x call AS_fnc_getSide) in _enemySides and {_x distance2D _position < 1000}}}); //Changed to side so undercover (side civilian) don't affect this
 
+if (sunOrmoon < 1) then {
+	_threat = _threat *1.5;
+};
+
 diag_log format ["[AS] getlandThreat: Position: %1 near %2 Enemyside: %3 LandThreat: %4", _position, [call AS_location_fnc_cities, _position] call bis_fnc_nearestPosition, _enemySide, _threat];
 
 _threat
