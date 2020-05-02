@@ -30,7 +30,7 @@ private _FIAResIncomeMultiplier = 1;
 
     if (_city call AS_location_fnc_spawned) then {
       if (_side == "AAF") then {
-          private _enemyUnits = {_x call AS_fnc_getSide in ["NATO", "FIA"] and {_x call AS_fnc_canFight and {_x distance2D _position <= _size}}} count allUnits;
+          private _enemyUnits = {_x call AS_fnc_getSide in ["NATO", "FIA"] and {_x call AS_fnc_canFight and {!(captive _x) and {_x distance2D _position <= _size}}}} count allUnits;
           if (_enemyUnits > 0) then {
             [-_enemyUnits, 0, _city] call AS_fnc_changeCitySupport;
             [[_city], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
@@ -100,7 +100,7 @@ private _FIAResIncomeMultiplier = 1;
 
         //Small chance for a traitor mission depending on natoSupport
 
-        if ((AS_P("NATOsupport") + 50)  < random 100) then {
+        if ((AS_P("NATOsupport") + 50) < random 100) then {
 
           //If city is spawned, do not spawn mission there. random new location
           if (_city call AS_location_fnc_spawned) then {

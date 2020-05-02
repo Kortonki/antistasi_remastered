@@ -6,6 +6,7 @@ if (not hasACEMedical) then {
 } else {
     // for ACE, assign medic to unit
     _target setVariable ["ace_medical_ai_assignedMedic", _medic];
+    _medic groupChat (format ["I'm going to heal %1", (name _target)]);
 
     //_medic setVariable ["ace_medical_ai_healQueue", _healQueue];
     [[_medic, _target], {

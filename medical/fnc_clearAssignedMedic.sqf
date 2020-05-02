@@ -1,4 +1,9 @@
 params ["_unit", "_medic"];
+if (alive _unit) then {
+  _medic groupChat (format ["I'm ready with %1", (name _unit)]);
+} else {
+  _medic groupChat "He's dead already";
+};
 if not hasACEmedical then {
     _unit setVariable ["AS_medical_assignedMedic", nil];
     _medic setVariable ["AS_medical_assignedPatient", nil];

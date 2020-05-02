@@ -98,17 +98,18 @@ player addEventHandler ["GetInMan", {
 		player setVariable ["EH_ids", _ids];
 }];
 
-//Commented out, probably buggy
-/*player addEventHandler ["GetOutMan", {
+
+player addEventHandler ["GetOutMan", {
     params ["_unit", "_seat", "_vehicle"];
 	{_vehicle removeAction _x} forEach (player getVariable ["EH_ids", []]);
 	player setVariable ["EH_ids", nil];
 
 	//If player seen exiting a comromised vehicle, naturally should not able to get undercover
-	if (_vehicle in (AS_S("reportedVehs")) and {[_unit] call AS_fnc_detected}) then {
+	//Commented out, probably buggy
+	/*if (_vehicle in (AS_S("reportedVehs")) and {[_unit] call AS_fnc_detected}) then {
 		_unit setVariable ["compromised",  (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
-	};
-}];*/
+	};*/
+}];
 
 player addEventHandler ["killed", {
 	params ["_unit", "_killer"];
