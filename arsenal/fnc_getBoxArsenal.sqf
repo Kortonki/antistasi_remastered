@@ -1,4 +1,10 @@
+#include "../macros.hpp"
 params ["_box", ["_restrict", false]];
+
+//Caja is allways accessed via getArsenal. For caja keep this normal so normal inventory is recovered in savegame and possible other reasons
+/*if (_box == caja) exitWith {
+		(call AS_fnc_getArsenal)
+};*/
 
 private _weapons = [];
 private _magazinesCargo = magazinesAmmoCargo _box;

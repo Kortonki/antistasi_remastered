@@ -25,6 +25,8 @@ waitUntil {
 
 //todo: check for uncoscius units and don't return resources for them TEST
 
+private _hqPos = getMarkerPos "FIA_HQ";
+
 private _cargo_w = [[], []];
 private _cargo_m = [[], []];
 private _cargo_i = [[], []];
@@ -34,7 +36,7 @@ private _cargo_b = [[], []];
 private _vs = [];
 	{
 		private _unit = _x;
-		if (alive _x and (not(_x call AS_medical_fnc_isUnconscious))) then {
+		if (alive _x and {not(_x call AS_medical_fnc_isUnconscious) or _x distance2D _hqPos <= 100}) then { //TODO to check for other healing places, where unconscious can be revived
 			_hr = _hr + 1;
 			_resourcesFIA = _resourcesFIA + ((_x call AS_fnc_getFIAUnitType) call AS_fnc_getCost); //Get unit cost back
 
@@ -96,5 +98,5 @@ private _vs = [];
 
 //Add everything
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+[_cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExec ["AS_fnc_addToArsenal", 2];
 [_hr,_resourcesFIA] remoteExec ["AS_fnc_changeFIAmoney",2];

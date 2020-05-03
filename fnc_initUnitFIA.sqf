@@ -56,7 +56,7 @@ if ((_equipment select 4 == "") and {([_unit] call AS_fnc_getFIAUnitType) != "Su
 
 //This is to recover cargo if unit dies inside vehicle
 _unit addEventHandler ["killed", {
-	params ["_unit"];
+	params ["_unit", "_killer"];
 	private _vehicle = vehicle _unit;
 	//_unit removeAllEventHandlers "HandleDamage"; //These are no longer needed //IMPORTANT: this also removes "killed" eventhNdlers!
 	//ACE might make the killed eventhandler fire twice. Prevent it.
@@ -64,6 +64,16 @@ _unit addEventHandler ["killed", {
 		diag_log format ["[AS] initUnitFIA: Killed eventhandler fired twice. Killed %1", _unit];
 	};
 	_unit setVariable ["k_v", true, false];
+
+	if (hasACE) then {
+		if ((isNull _killer) || (_killer == _unit)) then {
+			_killer = _unit getVariable ["ace_medical_lastDamageSource", _killer];
+		};
+	};
+
+	//Story related tags
+
+	[_unit, _killer] call AS_fnc_FIAstoryTags;
 
 		if (_vehicle != _unit and {!(_vehicle isKindOf "StaticWeapon")}) then {
 			([_unit, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_magazineRemains"];
@@ -76,6 +86,8 @@ _unit addEventHandler ["killed", {
 	}];
 
 _unit allowFleeing 0;	//Experminet with this: way to make garrison stay in area,or detect fleeing and do things like disband etc.
+
+_unit setVariable ["rearming",false];
 
 if (isPlayer(leader _unit)) then {
 	if (captive player and {!(captive _unit)}) then {[_unit] remoteExec ["AS_fnc_activateUndercoverAI", _unit]};
@@ -105,9 +117,8 @@ if (isPlayer(leader _unit)) then {
 
 	}];
 
-	_unit setVariable ["rearming",false];
-
-	_unit addEventHandler ["GetInMan", {
+	//Did nothing
+	/*_unit addEventHandler ["GetInMan", {
 		private ["_soldier","_veh"];
 		_soldier = _this select 0;
 		_veh = _this select 2;
@@ -118,28 +129,28 @@ if (isPlayer(leader _unit)) then {
 
 				//IF a non-undercover AI is seen to enter a vehicle, make it compromised
 
-				private _detected = false;
-
-				if (!(captive _soldier)) then {
-
-					{
-						if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {(_x distance _soldier < 5) or ((_x knowsAbout _soldier > 1.4) and {_x distance _soldier < 500})}) exitWith {
-								AS_Sset("reportedVehs", AS_S("reportedVehs") + [_veh]);
-								_detected = true;
-						};
-					} forEach allUnits;
-				};
+				private _detected = [_soldier] call AS_fnc_detected;
 
 				//if (!(_detected) and {!(captive _soldier)}) then {[_soldier] remoteExec ["AS_fnc_activateUndercoverAI", _soldier]}; //Probably unnecessary, activate player undercover already does this
 			};
 		};
+	}];*/
 
+	//Seems buggy,, commented out
+	/*_unit addEventHandler ["GetOutMan", {
+		private ["_unit","_vehicle"];
+		_unit = _this select 0;
+		_vehicle = _this select 2;
 
+		if (_vehicle in (AS_S("reportedVehs")) and {[_unit] call AS_fnc_detected}) then {
+			[_unit, false] remoteExecCall ["setCaptive", _unit];
+		};
+	}];*/
 
-
-	}];
 } else {
 	_unit addEventHandler ["killed", {
+
+
 		params ["_unit", "_killer"];
 
 		//ACE might make the killed eventhandler fire twice. Prevent it.

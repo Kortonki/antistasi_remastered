@@ -18,9 +18,10 @@ class AS_location {
         FNC(location,addRoadblock);
         FNC(location,getCityRoads);
         FNC(location,addCities);
+        FNC(location,calcCitySize);
         FNC(location,addHills);
         FNC(location,updateMarker);
-        // serialization
+                // serialization
         FNC(location,toDict);
         FNC(location,fromDict);
     };

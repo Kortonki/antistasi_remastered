@@ -77,7 +77,11 @@ private _fnc_spawn = {
 	};
 
 	// create NATO garrison (creates at least 1)
-	for "_i" from 1 to _nVeh do {
+
+	private _amount = round(_nveh*AS_squadSizeRef);
+	private _count = 0;
+
+	while {_count < _amount} do {
 		if !(_location call AS_location_fnc_spawned) exitWith {};
 
 		// get random pos
@@ -87,6 +91,7 @@ private _fnc_spawn = {
 			if (!surfaceIsWater _pos) exitWith {};
 		};
 		private _grupo = [_pos, ("NATO" call AS_fnc_getFactionSide), [["NATO", "squads"] call AS_fnc_getEntity, "NATO"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
+		_count = _count + (count(units _group));
 		_grupos pushBack _grupo;
 		{[_x] call AS_fnc_initUnitNATO; _soldados pushBack _x} forEach units _grupo;
 		[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH", "NOFOLLOW"] spawn UPSMON;

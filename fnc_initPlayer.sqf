@@ -82,20 +82,12 @@ player addEventHandler ["GetInMan", {
 			_exit = true;
 		};
 	};*/
-	if not _exit then {
 
-		private _detected = false;
-		{
-			if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {(_x distance _player < 5) or ((_x knowsAbout (vehicle _player) > 1.4) and {_x distance _player < 500})}) exitWith {
-				_detected = true;
-			};
-		} forEach allUnits;
+		private _detected = [_unit] call AS_fnc_detected;
 
 		//Detected player seen entering a vehicle -> vehicle to wanted list
 
-		if (!(_detected)) then {
-				//[true] spawn AS_fnc_activateUndercover; //Let's try to only UNdercover manually
-		} else {
+		if (_detected and {!(captive _unit)}) then {
 				AS_Sset("reportedVehs", AS_S("reportedVehs") + [_vehicle]);
 		};
 
@@ -104,20 +96,23 @@ player addEventHandler ["GetInMan", {
 		private _ids = player getVariable ["EH_ids", []];
 		_ids pushBack _EHid2;
 		player setVariable ["EH_ids", _ids];
-
-
-
-	};
 }];
+
 
 player addEventHandler ["GetOutMan", {
     params ["_unit", "_seat", "_vehicle"];
 	{_vehicle removeAction _x} forEach (player getVariable ["EH_ids", []]);
 	player setVariable ["EH_ids", nil];
+
+	//If player seen exiting a comromised vehicle, naturally should not able to get undercover
+	//Commented out, probably buggy
+	/*if (_vehicle in (AS_S("reportedVehs")) and {[_unit] call AS_fnc_detected}) then {
+		_unit setVariable ["compromised",  (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
+	};*/
 }];
 
 player addEventHandler ["killed", {
-	params ["_unit"];
+	params ["_unit", "_killer"];
 	private _vehicle = vehicle _unit;
 	//_unit removeAllEventHandlers "HandleDamage"; //These are no longer needed //IMPORTANT: this also removes "killed" eventhNdlers!
 
@@ -132,6 +127,17 @@ player addEventHandler ["killed", {
 	if (count (units _group select {alive _x}) == 0) then {
 		deleteGroup _group;
 	};
+
+	if (hasACE) then {
+		if ((isNull _killer) || (_killer == _unit)) then {
+			_killer = _unit getVariable ["ace_medical_lastDamageSource", _killer];
+		};
+	};
+
+	//Story related tags
+
+	[_killer] call AS_fnc_FIAstoryTags;
+
 	//Stats
 
 	["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];

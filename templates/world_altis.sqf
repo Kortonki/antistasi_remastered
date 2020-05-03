@@ -1,7 +1,7 @@
 
 // sagonisi and hill12 are excluded for an unknown reason.
 // todo: document why these are excluded.
-[200, 200, 1000, ["sagonisi","hill12"]] call AS_location_fnc_addCities;
+[100, 100, 1000, ["sagonisi","hill12"]] call AS_location_fnc_addCities;
 
 // These have to be names of hills in the map
 private _hillsAA = ["Agela","Agia Stemma","Agios Andreas","Agios Minas","Amoni","Didymos","Kira","Pyrsos","Riga","Skopos","Synneforos","Thronos"];

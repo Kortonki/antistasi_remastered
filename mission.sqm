@@ -8,22 +8,22 @@ class EditorData
 	toggles=65;
 	class ItemIDProvider
 	{
-		nextID=2672;
+		nextID=3493;
 	};
 	class MarkerIDProvider
 	{
-		nextID=146;
+		nextID=149;
 	};
 	class LayerIndexProvider
 	{
-		nextID=3;
+		nextID=93;
 	};
 	class Camera
 	{
-		pos[]={6713.4424,558.06842,1276.8992};
-		dir[]={-0.19548059,-0.94742173,0.25344098};
-		up[]={-0.5786764,0.31976217,0.75025553};
-		aside[]={0.79184902,-7.8449375e-008,0.61075538};
+		pos[]={1304.7737,243.3047,5536.4263};
+		dir[]={0,-0.70710683,0.70710683};
+		up[]={0,0.70710677,0.70710677};
+		aside[]={0.99999994,0,-0};
 	};
 };
 binarizationWanted=0;
@@ -75,7 +75,7 @@ class DynamicSimulation
 randomSeed=8109385;
 class ScenarioData
 {
-	author="Kortonki";
+	author="Kortonk";
 	saving=0;
 	respawn=3;
 	respawnDelay=60.000004;
@@ -158,7 +158,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Antistasi Remastered V0.99.71";
+		briefingName="Antistasi Remastered V0.99.96";
 		overviewText="Build FIA Army from scratch and defeat the AAF and CSAT forces in a whole map Dynamic Mission.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +183,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=145;
+		items=154;
 		class Item0
 		{
 			dataType="Marker";
@@ -495,7 +495,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={1294.875,20.946842,5792.4292};
+						position[]={1295.043,20.93611,5792.6606};
 						angles[]={0,0.81944954,0};
 					};
 					side="West";
@@ -1177,7 +1177,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={1284.0332,20.87841,5791.8628};
+						position[]={-550.0174,29.931438,2754.541};
 						angles[]={0,0.81944954,0};
 					};
 					side="West";
@@ -1827,16 +1827,16 @@ class Mission
 		class Item55
 		{
 			dataType="Marker";
-			position[]={2867.9121,90.749001,917.396};
+			position[]={2861.438,92.224998,891.19702};
 			name="AS_base";
 			markerType="RECTANGLE";
 			type="Empty";
 			colorName="ColorGUER";
-			a=110;
-			b=160;
+			a=250;
+			b=250;
 			angle=128.83299;
 			id=469;
-			atlOffset=75.04493;
+			atlOffset=75.045212;
 		};
 		class Item56
 		{
@@ -1986,7 +1986,7 @@ class Mission
 			b=70;
 			angle=41.633991;
 			id=485;
-			atlOffset=5.4920387;
+			atlOffset=1.8064461;
 		};
 		class Item67
 		{
@@ -2224,15 +2224,16 @@ class Mission
 		class Item84
 		{
 			dataType="Marker";
-			position[]={4256.4287,13.0346,1428.6122};
+			position[]={4325.3325,59.525822,1428.8325};
 			name="AS_roadblock_29";
 			markerType="RECTANGLE";
 			type="Empty";
 			colorName="ColorPink";
 			a=30;
 			b=30;
-			angle=270.62177;
+			angle=97.042267;
 			id=523;
+			atlOffset=43.78791;
 		};
 		class Item85
 		{
@@ -2325,9 +2326,9 @@ class Mission
 			markerType="RECTANGLE";
 			type="Empty";
 			colorName="ColorYellow";
-			a=80;
-			b=80;
-			angle=313.02893;
+			a=100;
+			b=100;
+			angle=313.02896;
 			id=535;
 			atlOffset=-0.00043678284;
 		};
@@ -2554,11 +2555,11 @@ class Mission
 		class Item105
 		{
 			dataType="Marker";
-			position[]={6941.564,48.912998,1148.209};
+			position[]={6936.5415,47.12085,1173.1431};
 			name="as_airfield_convoy";
 			type="Empty";
 			id=2246;
-			atlOffset=0.00037002563;
+			atlOffset=-2.0357552;
 		};
 		class Item106
 		{
@@ -3013,22 +3014,6 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={2495.6663,6.8256311,987.18616};
-				angles[]={6.270689,1.2641078,0.072372913};
-			};
-			side="Empty";
-			flags=4;
-			class Attributes
-			{
-			};
-			id=2587;
-			type="CUP_A2_Road_mud_6konec";
-		};
-		class Item142
-		{
-			dataType="Object";
-			class PositionInfo
-			{
 				position[]={2650.7512,5.7023516,1032.77};
 				angles[]={6.1269689,1.42421,6.1391892};
 			};
@@ -3040,7 +3025,7 @@ class Mission
 			id=2588;
 			type="CUP_A2_Road_mud_25";
 		};
-		class Item143
+		class Item142
 		{
 			dataType="Trigger";
 			position[]={2695.2891,0.82331604,1023.9149};
@@ -3056,7 +3041,7 @@ class Mission
 			type="EmptyDetector";
 			atlOffset=-5.3048134e-006;
 		};
-		class Item144
+		class Item143
 		{
 			dataType="Trigger";
 			position[]={2720.6934,4.8272314,1002.1284};
@@ -3071,6 +3056,121 @@ class Mission
 			id=2590;
 			type="EmptyDetector";
 			atlOffset=1.6689301e-005;
+		};
+		class Item144
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3396.6475,-1.310531,1988.2833};
+				angles[]={0,5.6086755,0};
+			};
+			side="Empty";
+			class Attributes
+			{
+			};
+			id=2673;
+			type="CUP_A2_Road_mud_25";
+			atlOffset=0.68090415;
+		};
+		class Item145
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={2965.6274,1.39985,1466.6206};
+				angles[]={0.00084572798,2.2935965,6.2812634};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2674;
+			type="CUP_A2_Road_mud_25";
+		};
+		class Item146
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4351.7017,-1.5550489,4508.5625};
+				angles[]={0.38480943,2.5245717,0.43113881};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2682;
+			type="CUP_A2_Road_mud_25";
+		};
+		class Item147
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={4337.7969,-3.2347999,4525.8232};
+				angles[]={5.4346395,2.4523551,6.1810422};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2683;
+			type="CUP_A2_Road_mud_25";
+		};
+		class Item148
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={5852.4473,0,7093.1372};
+				angles[]={0,1.84297,0};
+			};
+			side="Empty";
+			class Attributes
+			{
+			};
+			id=2686;
+			type="CUP_A2_Road_mud_25";
+			atlOffset=0.46437746;
+		};
+		class Item149
+		{
+			dataType="Layer";
+			name="Camp Audacity";
+			id=3186;
+			atlOffset=-19.15;
+		};
+		class Item150
+		{
+			dataType="Layer";
+			name="Camp Ant";
+			id=3223;
+			atlOffset=-19.15;
+		};
+		class Item151
+		{
+			dataType="Layer";
+			name="Camp Falcon";
+			id=3245;
+			atlOffset=-19.15;
+		};
+		class Item152
+		{
+			dataType="Layer";
+			name="Tower Bunker Checkpoint #B";
+			id=3273;
+			atlOffset=-19.15;
+		};
+		class Item153
+		{
+			dataType="Layer";
+			name="Layer 8";
+			id=3279;
+			atlOffset=-19.15;
 		};
 	};
 	class Connections

@@ -86,10 +86,10 @@ if (_type == "convoy_fuel") exitWith {
 
 
 if (_type == "convoy_armor") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], -20*60]
+    [-10, 0, [0, 0], [0, 0], [0, 0, []], -30*60]
 };
 if (_type == "convoy_hvt") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], -20*60]
+    [-10, 0, [0, 0], [0, 0], [0, 0, []], -30*60]
 };
 if (_type == "convoy_prisoners") exitWith {
     [-10, 0, [0, 0], [0, 0], [-5, -5, _position], 0]
@@ -164,10 +164,10 @@ if (_type == "repair_antenna") exitWith {
 };
 if (_type == "rescue_prisioners") exitWith {
     _args params [["_dead", 0]];
-    [-10, 0, [-_dead, 0], [0, 0], [0, 0, []], 0, [["Variable lost of NATO support", {}]]]
+    [-10, 0, [-(round(_dead/2)), 0], [0, 0], [0, 0, []], 0, [["Variable lost of NATO support", {}]]]
 };
 if (_type == "rescue_refugees") exitWith {
     _args params [["_dead", 0]];
-    [-10, 0, [-_dead, 0], [0, 0], [0, -_dead, _position, true], 0, [["Variable lost of NATO and city support", {}]]]
+    [-10, 0, [-(round(_dead/2)), 0], [0, 0], [0, (-_dead/2), _position, true], 0, [["Variable lost of NATO and city support", {}]]]
 };
 [-10]

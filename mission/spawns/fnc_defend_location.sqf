@@ -44,18 +44,13 @@ private _fnc_spawn = {
 	private _threatEvalLand = 0;
 	if (_base != "") then {_threatEvalLand = [_position, "FIA"] call AS_fnc_getLandThreat};
 
-	if (_location call AS_location_fnc_type in ["base", "airfield"]) then {
-			_threatEvalLand = _threatEvalLand + (AS_P("NATOsupport")/10);
-			_threatEvalAir = _threatEvalAir + (AS_P("NATOsupport")/10);
-	};
-
 	private _groups = [];
 	private _vehicles = [];
 
 	//CSAT attack
 
 	if (_useCSAT) then {
-		private _cuenta = 3;
+		private _cuenta = (floor (AS_P("CSATSupport")/25)) max 1;
 		//if ((_base == "") and (_airfield == "")) then {_cuenta = 6}; //TODO make count depend on CSAT support
 
 		([_location, _cuenta, _threatEvalAir] call AS_fnc_spawnCSATattack) params ["_groups1", "_vehicles1"];
@@ -98,6 +93,10 @@ private _fnc_spawn = {
 		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
 		_groups pushback _vehGroup;
 
+		private _origin_Pos_dir = [_originPos, _position] call AS_fnc_findSpawnSpots;
+		_originPos = _origin_Pos_dir select 0;
+		private _dir = _origin_Pos_dir select 1;
+
 		// spawn them
 		for "_i" from 1 to _nVeh do {
 			//Only use at most 50% of heavy equipment for attack
@@ -107,8 +106,13 @@ private _fnc_spawn = {
 			};
 			if (_threatEvalLand > 5 and {["tanks", 0.5] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "tanks";
+				_i = _i + 1; //tanks make up for more vehicles
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+
+			_origin_Pos_dir = [[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+			_originPos = [_originPos, 15, _dir + 180] call bis_fnc_relPos;
+			_dir = _origin_Pos_dir select 1;
 
 			//Tanks make one group
 			if (_toUse == "tanks") then {
@@ -118,8 +122,16 @@ private _fnc_spawn = {
 				_groups append _groups1;
 			};
 			_vehicles append _vehicles1;
-			sleep 5;
+
+
+			sleep 15; //Big delay to make room for spawning units
 		};
+
+		//Attack Waypoints for tank groups must re-inited.
+		if (count (units _vehGroup) > 0) then {
+			[_originPos, _position, _vehGroup, _patrolMarker, _threatEvalLand] spawn AS_tactics_fnc_ground_attack;
+		};
+
 		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};
 
@@ -166,7 +178,7 @@ private _fnc_spawn = {
 			([_toUse, _originPos, _position, _patrolMarker] call AS_fnc_spawnAAFairAttack) params ["_groups1", "_vehicles1"];
 			_groups append _groups1;
 			_vehicles append _vehicles1;
-			sleep 10;
+			sleep 5;
 		};
 		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};
@@ -175,7 +187,7 @@ private _fnc_spawn = {
 	//TODO improve this to search from farther
 	//TODO consider when to spawn which support. eg trucks don't need ammo
 
-	private _supDest = _originPos;
+	private _supDest = +_originPos;
 	private _supLoc	= ["AAF" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
 	private _supLocPos = _supLoc call AS_location_fnc_position;
 	if (_supLocPos distance2D _originPos < _position distance2D _originPos) then {
@@ -185,7 +197,7 @@ private _fnc_spawn = {
 
 	([_originPos, _supDest] call AS_fnc_findSpawnSpots) params ["_supPos", "_supDir"];
 
-	([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
+	([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair", "fuel"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
 	_vehicles append _supVehs;
 	_groups pushback _supGroup;
 

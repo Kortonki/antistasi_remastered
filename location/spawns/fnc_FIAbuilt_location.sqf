@@ -154,7 +154,7 @@ private _fnc_wait_to_abandon = {
 			//AS_Sset("lockTransfer", true);
 
 			//Improved removal, no variable checks but UNSCHEDULED at SERVER to avoid errors due to lag etc.
-			 ([caja, true] call AS_fnc_getBoxArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
+			 (call AS_fnc_getArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 
 				   {
 		        private _values = _x select 1;

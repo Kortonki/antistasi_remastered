@@ -3,10 +3,10 @@ params ["_position", "_group", ["_priority", 0.25]];
 private _vehicles = [];
 private _units = [];
 
-(_position call AS_fnc_roadAndDir) params ["_road", "_dir"];
-if (!isNull _road and {["static_at", _priority] call AS_fnc_vehicleAvailability}) then {
+([_position, [_position, 100, random 360] call Bis_fnc_relpos] call AS_fnc_findspawnSpots) params ["_roadpos", "_dir"];
+if ((count _roadpos) > 0 and {["static_at", _priority] call AS_fnc_vehicleAvailability}) then {
     //spg can't fire over the bunker wall -> todo: sandbags to the side?
-    private _pos = [getPos _road, 7, _dir + 270] call BIS_Fnc_relPos;
+    private _pos = [_roadpos, 7, _dir + 270] call BIS_Fnc_relPos;
     //private _bunker = "Land_BagBunker_Small_F" createVehicle _pos;
     //_bunker setDir _dir;
     //_pos = getPosATL _bunker;

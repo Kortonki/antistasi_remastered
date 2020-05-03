@@ -1,7 +1,8 @@
 #include "../macros.hpp"
 
-if (player != AS_commander) exitWith {hint "Only the commander has access to this function"};
-if (!([player] call AS_fnc_hasRadio)) exitWith {hint "You need a radio in your inventory to be able to give orders to other squads"};
+//These checks are made before
+//if (player != AS_commander) exitWith {hint "Only the commander has access to this function"};
+//if (!([player] call AS_fnc_hasRadio)) exitWith {hint "You need a radio in your inventory to be able to give orders to other squads"};
 if (!(isNil "AS_HQ_moving")) exitWith {hint format "You can't recruit groups while HQ is not in place"};
 
 if ([getmarkerPos "FIA_HQ", nil] call AS_fnc_enemiesNearby) exitWith {

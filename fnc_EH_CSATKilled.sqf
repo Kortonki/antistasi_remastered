@@ -23,6 +23,9 @@ _unit removeAllEventHandlers "HandleDamage";
 
 
 [_killed] remoteExec ["AS_fnc_activateCleanup",2];
+//Stats
+
+["CSAT", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
 
 if (hasACE) then {
 	if ((isNull _killer) || (_killer == _killed)) then {
@@ -30,10 +33,8 @@ if (hasACE) then {
 	};
 };
 
-//NATO killing AAF triggers CSAT attacks, save the date for the record
-if (_killer call AS_fnc_getSide == "NATO" and {isNil{["NATO_killCSAT_date"] call AS_stats_fnc_get}}) then {
-	["NATO_killCSAT_date", date] call AS_stats_fnc_set;
-};
+
+[_killer] call AS_fnc_CSATstoryTags;
 
 
 if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) then {
@@ -52,9 +53,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 	} else {
 		// otherwise, it decreases by -1.
 		[-1,0,getPos _killed, true] remoteExec ["AS_fnc_changeCitySupport",2]; //Double city support loss compared to AAF
-		//Stats
 
-		["CSAT", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
 
 		if (isPlayer _killer) then {
 			[_killer, "score", 4, false] remoteExec ["AS_players_fnc_change", 2]; //Double points compared to AAF soldiers

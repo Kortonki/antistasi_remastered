@@ -185,7 +185,7 @@ while {true} do
 						{
 							_inmarker =  [_attackpos,_areamarker] call UPSMON_pos_fnc_isBlacklisted;
 							// Offensive Behaviour
-							If (_dist <= 300 && ({alive _x && !(captive _x)} count units _grp) >= 4 && !("arti" in _typeofgrp)  && (!(_grp getvariable ["UPSMON_NOFOLLOW",false]) || !_inmarker)) then
+							If (_dist <= 300 && ({alive _x && !(captive _x)} count units _grp) >= 4 && !("arti" in _typeofgrp)  && (!(_grp getvariable ["UPSMON_NOFOLLOW",false]) || _inmarker)) then //Changed the last logic so inmarker is not negated
 							{
 								//Assault
 								If ("car" in _typeofgrp && !("infantry" in _typeofgrp)) then
@@ -228,13 +228,17 @@ while {true} do
 									else
 									{
 										//FLANK
-										[_grp,_attackpos,_lastattackpos,_dist,_typeofgrp,_terrainscan,_areamarker,_haslos,_targetpos,_currpos] call UPSMON_PLANFLANK;
+										if (!(_grp getvariable ["UPSMON_NOFOLLOW",false]) || _inmarker) then { //These are new checks to prevent nofollows from wandering
+											[_grp,_attackpos,_lastattackpos,_dist,_typeofgrp,_terrainscan,_areamarker,_haslos,_targetpos,_currpos] call UPSMON_PLANFLANK;
+										};
 									};
 								}
 								else
 								{
 									//FLANK
-									[_grp,_attackpos,_lastattackpos,_dist,_typeofgrp,_terrainscan,_areamarker,_haslos,_targetpos,_currpos] call UPSMON_PLANFLANK;
+									if (!(_grp getvariable ["UPSMON_NOFOLLOW",false]) || _inmarker) then {
+										[_grp,_attackpos,_lastattackpos,_dist,_typeofgrp,_terrainscan,_areamarker,_haslos,_targetpos,_currpos] call UPSMON_PLANFLANK;
+									};
 								};
 							};
 						}
@@ -252,6 +256,8 @@ while {true} do
 					};
 				};
 			};
+
+			//END of MANEUVER
 
 			If (IsNull _target) then
 			{

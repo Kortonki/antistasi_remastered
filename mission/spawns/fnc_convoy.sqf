@@ -3,9 +3,33 @@
 private _fnc_initialize = {
 	params ["_mission"];
 	private _location = _mission call AS_mission_fnc_location;
-	private _position = _location call AS_location_fnc_positionConvoy;
+	private _position = _location call AS_location_fnc_position;
 
 	private _missionType = _mission call AS_mission_fnc_type;
+
+	private _skipping = if (!isnil{[_mission, "skipping"] call AS_mission_fnc_get}) then {
+		([_mission, "skipping"] call AS_mission_fnc_get)
+	}	else {
+		false
+	};
+
+	//Automatic failure if skipping
+	if _skipping exitWith {
+		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+
+		private _msg = "Enemy convoy to ";
+		if (_location in (call AS_location_fnc_cities)) then {
+			_msg = format ["%1%2 arrived while you were asleep", _msg, _location];
+		} else {
+			_msg = format ["%1%2 near %3 arrived while you were asleep", _msg, _location call AS_location_fnc_type, [call AS_location_fnc_cities, _position] call BIS_fnc_nearestPosition];
+		};
+
+		["TaskFailed", ["", _msg]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+
+		waitUntil {sleep 1; (_mission call AS_mission_fnc_status) == "completed"}; //Above will set this up when ready
+		[_mission, "state_index", 100] call AS_spawn_fnc_set;
+		[_mission, "delete", true] call AS_spawn_fnc_set;
+	};
 
 	private _originTypes = ["base", "airfield"];
 	if (_missionType == "convoy_money") then {
@@ -63,7 +87,7 @@ private _fnc_initialize = {
 			if (_type call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				diag_log format ["[AS] Error: convoy: tanks requested but not available. AAF bought one", _mission];
 				private _cost = "tanks" call AS_AAFarsenal_fnc_cost;
-				"tanks" call AS_AAFarsenal_fnc_addVehicle;
+				["tanks"] remoteExecCall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 			_mainVehicleType = selectRandom (_type call AS_AAFarsenal_fnc_valid);
@@ -87,7 +111,7 @@ private _fnc_initialize = {
 			if (isNil "_type") then {
 				_type = "cars_transport";
 				private _cost = "cars_transport" call AS_AAFarsenal_fnc_cost;
-				"cars_transport" call AS_AAFarsenal_fnc_addVehicle;
+				["cars_transport"] remoteexeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 
@@ -100,7 +124,7 @@ private _fnc_initialize = {
 			if ("trucks" call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				diag_log format ["[AS] Error: convoy: truck requested but not available", _mission];
 				private _cost = "trucks" call AS_AAFarsenal_fnc_cost;
-				"trucks" call AS_AAFarsenal_fnc_addVehicle;
+				["trucks"] remoteExeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 		};
@@ -141,13 +165,16 @@ private _fnc_spawn = {
 	private _group = createGroup ("AAF" call AS_fnc_getFactionSide);
 	_groups pushBack _group;
 	//_posbase = _posbase findEmptyPosition [50, 100, _mainVehicleType];
-	([_posbase, _position] call AS_fnc_findSpawnSpots) params ["_posRoad", "_dir"];
+	private _origin_Pos_dir = [_posbase, _position] call AS_fnc_findSpawnSpots;
+	private _posRoad = _origin_Pos_dir select 0;
+	private _dir = _origin_Pos_dir select 1;
+
 	//_posbase = _posbase findEmptyPosition [0, 10, _mainVehicleType];
 	private _escortSize = 1;
 	private _frontLine = false;
 	if ([_location] call AS_fnc_location_isFrontline) then {
 		_frontLine = true;
-		_escortSize = (round random 2) + 1
+		_escortSize = (round random 1) + 2
 	};
 
 	private _leadCategory = ["cars_transport", "cars_armed"] select (["cars_armed"] call AS_AAFarsenal_fnc_countAvailable > 0);
@@ -171,7 +198,10 @@ private _fnc_spawn = {
 
 
 		([_escortVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_vehicle", "_vehicleGroup"];
-		_posRoad = [(_posRoad select 0) - (15*(sin _dir )), (_posRoad select 1) - (15*(cos _dir)), 0]; //next one is 15m behind
+
+		_origin_Pos_dir = [[_posRoad, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+		_posRoad = [_posRoad, 10, _dir + 180] call bis_fnc_relPos;
+		_dir = _origin_Pos_dir select 1;
 
 		{
 			if (_i == _escortSize and {_escortSize > 1}) then {_x setRank "PRIVATE";} else {_x setRank "SERGEANT";}; //Make one escort last of the convoy
@@ -210,7 +240,9 @@ private _fnc_spawn = {
 		};
 
 	};
-	_posRoad = [(_posRoad select 0) - (15*(sin _dir )), (_posRoad select 1) - (15*(cos _dir)), 0]; //next pos is 15m behing
+	_origin_Pos_dir = [[_posRoad, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+	_posRoad = [_posRoad, 10, _dir + 180] call bis_fnc_relPos;
+	_dir = _origin_Pos_dir select 1;
 
 	([_mainVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_mainVehicle","_mainVehicleGroup","_driver"];
 	_vehicles pushBack _mainVehicle;
@@ -226,18 +258,19 @@ private _fnc_spawn = {
 		_crate = (["CIV", "box"] call AS_fnc_getEntity) createVehicle [0,0,0];
 		[_crate] call AS_fnc_emptyCrate;
 		_vehicles pushBack _crate;
-
-		private _manifest = format ["Supplies to %1", _location];
+				private _manifest = format ["Supplies to %1", _location];
 		if (_missionType == "convoy_money") then {
 			_manifest = format ["Money to %1", _location];
+		} else {
+			_mainVehicle forceFlagTexture (["AAF"] call AS_fnc_getFlagTexture);
 		};
 		_crate setVariable ["dest", _manifest, true];
 		_crate setVariable ["requiredVehs", ["Truck_F"], true];
-		[_crate, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		[_crate, "loadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 
 		_crate attachTo [_mainVehicle, [0, 0, 0], "trup"];
 		_mainVehicle setVariable ["boxCargo", [_crate], true];
-		[_mainVehicle, "unloadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated, true];
+		[_mainVehicle, "unloadCargo"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
 		_crate setvariable ["asCargo", true, true];
 	};
 
@@ -603,7 +636,7 @@ private _fnc_run = {
 
 				} forEach _pows;
 
-				[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+				[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] remoteExec ["AS_fnc_populateBox", 2];
 			}
 		};
 	};

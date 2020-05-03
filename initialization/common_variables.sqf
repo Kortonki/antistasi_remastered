@@ -172,7 +172,7 @@ AS_MusicFiles = AS_MusicFiles - ["fire"];
 AS_entities = createSimpleObject ["Static", [0, 0, 0]];
 
 // fallback to the default template
-private _dict = call compile preprocessFileLineNumbers "templates\CIV.sqf";
+private _dict = call compile preprocessFileLineNumbers "templates\CIV.sqf"; //This is default INCLUDING RHS. Name kept the same for legacy saves
 AS_entities setVariable ["CIV", _dict];
 _dict = call compile preprocessFileLineNumbers "templates\AAF.sqf";
 AS_entities setVariable ["AAF", _dict];
@@ -186,6 +186,8 @@ _dict = call compile preprocessFileLineNumbers "templates\FIA_EAST.sqf";
 AS_entities setVariable ["FIA_EAST", _dict];
 
 if hasRHS then {
+	_dict = call compile preprocessFileLineNumbers "templates\CIV_VANILLA_ALTIS.sqf";
+	AS_entities setVariable ["CIV_VANILLA_ALTIS", _dict];
 	_dict = call compile preprocessFileLineNumbers "templates\AAF_RHS.sqf";
 	AS_entities setVariable ["RHS_AAF", _dict];
 	_dict = call compile preprocessFileLineNumbers "templates\CSAT_RHS.sqf";
@@ -206,11 +208,25 @@ if hasRHS then {
 		_dict = call compile preprocessFileLineNumbers "templates\FIA_EAST_FFP.sqf";
 		AS_entities setVariable ["RHS_FIA_EAST_FFP", _dict];
 	};
+
 	if has3CB then {
+		_dict = call compile preprocessFileLineNumbers "templates\CIV_RHS_3CB_CW.sqf";
+		AS_entities setVariable ["3CB_CIV_CW", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\FIA_WEST_CW_3CB_RHS_LRA.sqf";
+		AS_entities setVariable ["3CB_FIA_WEST_LRA", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\FIA_EAST_CW_3CB_RHS_LRA.sqf";
+		AS_entities setVariable ["3CB_FIA_EAST_LRA", _dict];
 		_dict = call compile preprocessFileLineNumbers "templates\NATO_3CB_AFGHAN.sqf";
-		AS_entities setVariable ["RHS_3CB_AFGHAN", _dict];
+		AS_entities setVariable ["3CB_NATO_AFGHAN", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\AAF_CW_USSR_EARLY_3CB.sqf";
+		AS_entities setVariable ["3CB_AAF_CW_USSR_EARLY", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\NATO_CW_USAF_EARLY_3CB.sqf";
+		AS_entities setVariable ["3CB_AAF_CW_USAF_EARLY", _dict];
 	};
 };
+
+
+
 if hasCUP then {
 	_dict = call compile preprocessFileLineNumbers "templates\AAF_CUP.sqf";
 	AS_entities setVariable ["CUP_AAF", _dict];

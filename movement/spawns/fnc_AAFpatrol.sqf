@@ -31,9 +31,9 @@ private _fnc_spawn = {
 
 	// save the marker or position
 	//Location needs a patrol marker for good measure as well
-	private _patrolMarker = createMarkerLocal [format ["patrol_%1_%2", (diag_tickTime), round(random 100)], _position];
-	_patrolMarker setMarkerShapeLocal "RECTANGLE";
-	_patrolMarker setMarkerSizeLocal [200, 200];
+	private _patrolMarker = createMarker [format ["patrol_%1_%2", (diag_tickTime), round(random 100)], _position];
+	_patrolMarker setMarkerShape "RECTANGLE";
+	_patrolMarker setMarkerSize [200, 200];
 	_patrolMarker setMarkerAlpha 0;
 	_markers pushBack _patrolMarker;
 

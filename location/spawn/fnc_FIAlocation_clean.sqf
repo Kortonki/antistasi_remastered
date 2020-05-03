@@ -51,7 +51,7 @@ if (_location call AS_location_fnc_side == "FIA") then {
 
 //add everything
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_populateBox;
+[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExec ["AS_fnc_populateBox", 2];
 
 //TODO: transfer from Cajaveh to arsenal to repack full mags?
 

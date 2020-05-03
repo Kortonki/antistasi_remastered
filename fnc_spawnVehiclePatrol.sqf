@@ -12,6 +12,6 @@ _patrolMarker setMarkerShape "ELLIPSE";
 _patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;
 
-[leader _group, _patrolMarker, "SAFE", "LIMITED", "SPAWNED"] spawn UPSMON;
+[leader _group, _patrolMarker, "SAFE", "LIMITED", "SPAWNED", "ONROAD"] spawn UPSMON;
 
 [_vehicle, _group, _patrolMarker]

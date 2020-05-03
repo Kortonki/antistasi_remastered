@@ -43,7 +43,7 @@ private _fnc_spawn = {
 		private _tipoveh = selectRandom _csatAir;
 		private _timeOut = 0;
 		private _pos = ORIGIN findEmptyPosition [0,100,_tipoveh];
-		while {_timeOut < 60 or {count _pos == 0}} do {
+		while {_timeOut < 60 and {count _pos == 0}} do { //This is infinite loop: not finding a positionn keeps the loop going
 			_timeOut = _timeOut + 1;
 			_pos = ORIGIN findEmptyPosition [0,100,_tipoveh];
 			sleep 1;

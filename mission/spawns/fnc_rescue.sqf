@@ -159,7 +159,7 @@ private _fnc_run = {
 
 			} forEach _pows;
 
-		[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+		[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] remoteExec ["AS_fnc_populateBox", 2];
 
 	};
 

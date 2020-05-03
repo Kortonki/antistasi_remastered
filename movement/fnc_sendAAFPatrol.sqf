@@ -75,18 +75,7 @@ if (!_isDirectAttack) then {
 
 // check if CSAT will help.
 //Changed to same condition as in sendAAFattack
-private _hayCSAT = false;
-if (count _FIAbases > 0 and {random 100 < AS_P("CSATsupport") and {!(AS_S("blockCSAT"))}}) then {
-	_hayCSAT = true;
-};
-
-//Will not block all comms
-//Moved from beginnig of the script here to prevent CSAT
-if AS_S("blockCSAT") then {
-	private _message = " blocked";
-	diag_log (_debug_prefix + _message);
-	_hayCSAT = false;
-};
+private _hayCSAT = call AS_fnc_useCSAT;
 
 if ((_base == "") and {(_aeropuerto == "") and {!(_hayCSAT)}}) exitWith {
 	private _message = "no bases close to attack";

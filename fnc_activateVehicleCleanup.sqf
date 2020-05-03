@@ -28,7 +28,7 @@ if (_vehicle in AS_P("vehicles")) exitWith {
 if (alive _vehicle and {_vehicle call AS_fnc_getSide == "AAF"}) then {
 	//Deduct from spawned vehicles. Killed vehicles are deducted from arsenal elsewhere
 	private _vehicleType = typeof _vehicle;
-	[_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
+	[_vehicleType, false] RemoteExeccall ["AS_AAFarsenal_fnc_spawnCounter", 2];
 };
 
 if (_vehicle in AS_S("reportedVehs")) then {

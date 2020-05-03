@@ -43,6 +43,13 @@ _unit addEventHandler ["killed", {
 		_unit call AS_fnc_emptyUnit;
 	};
 
+	if (hasACE) then {
+		if ((isNull _killer) || (_killer == _unit)) then {
+			_killer = _unit getVariable ["ace_medical_lastDamageSource", _killer];
+		};
+	};
+
+	[_killer] call AS_fnc_NATOstoryTags;
 
 	if (_killer call AS_fnc_getSide == "FIA") then {
 

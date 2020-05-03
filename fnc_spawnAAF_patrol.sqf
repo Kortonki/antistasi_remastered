@@ -8,17 +8,20 @@ private _units = [];
 private _groups = [];
 
 // marker used to set the patrol area
-private _mrk = createMarkerLocal [format ["%1patrolarea", random 100], _position];
-_mrk setMarkerShapeLocal "RECTANGLE";
-_mrk setMarkerSizeLocal [_size*1.5,_size*1.5];
-_mrk setMarkerTypeLocal "hd_warning";
-_mrk setMarkerColorLocal "ColorRed";
-_mrk setMarkerBrushLocal "DiagGrid";
-_mrk setMarkerDirLocal (markerDir _location);  // ERROR
-_mrk setMarkerAlphaLocal 0;
+private _mrk = createMarker [format ["%1_%2_patrolarea", random 100, diag_tickTime], _position];
+_mrk setMarkerShape "RECTANGLE";
+_mrk setMarkerSize [_size*1.5,_size*1.5];
+_mrk setMarkerType "hd_warning";
+_mrk setMarkerColor "ColorRed";
+_mrk setMarkerBrush "DiagGrid";
+_mrk setMarkerDir(markerDir _location);  // ERROR
+_mrk setMarkerAlpha 0;
 
+
+private _count = 0;
+_amount = round(_amount*AS_patrolSizeRef);
 // spawn patrols
-for "_i" from 1 to _amount do {
+while {_count < _amount} do {
     if !(_location call AS_location_fnc_spawned) exitWith {};
 
     private _pos = [0,0,0];
@@ -27,8 +30,9 @@ for "_i" from 1 to _amount do {
         if (!surfaceIsWater _pos) exitWith {};
     };
     private _group = [_pos, "AAF" call AS_fnc_getFactionSide, [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
+    _count = _count + (count (units _group));
 
-    if (random 10 < 2.5) then {
+    if (random 10 < ((count _units)*2.5/AS_patrolSizeRef)) then {
         [_group] call AS_fnc_spawnDog;
     };
     [leader _group, _mrk, "SAFE","SPAWNED", "NOVEH"] spawn UPSMON;

@@ -46,7 +46,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 // special units used in special occasions
 [_dict, "officer", "B_officer_F"] call DICT_fnc_set;
-[_dict, "traitor", "B_G_officer_F"] call DICT_fnc_set;
+[_dict, "traitor", "B_G_Survivor_F"] call DICT_fnc_set;
 [_dict, "gunner", "B_crew_F"] call DICT_fnc_set;
 [_dict, "crew", "B_crew_F"] call DICT_fnc_set;
 [_dict, "pilot", "B_Pilot_F"] call DICT_fnc_set;
@@ -71,8 +71,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "additionalMagazines", []] call DICT_fnc_set;
 [_dict, "additionalItems", ["Item_B_UavTerminal"]] call DICT_fnc_set;
 [_dict, "additionalBackpacks", [
-["B_UAV_01_backpack_F", "Item_B_UavTerminal"],
-["B_UAV_06_backpack_F", "Item_B_UavTerminal"]
+["B_UAV_01_backpack_F", "B_UavTerminal"],
+["B_UAV_06_backpack_F", "B_UavTerminal"]
 ]] call DICT_fnc_set;
 [_dict, "additionalLaunchers", []] call DICT_fnc_set;
 [_dict, "additionalBinoculars", []] call DICT_fnc_set;

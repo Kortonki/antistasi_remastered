@@ -66,7 +66,7 @@ private _fnc_spawn = {
 	// spawn AT road checkpoint
 	for "_i" from 1 to (_atAmount min ("static_at" call AS_AAFarsenal_fnc_countAvailable)) do {
 		if ((_location call AS_location_fnc_spawned)) then {
-			([_posicion, _grupo, 0] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
+			([[_posicion, (_size/2) + random (_size/2), random 360] call bis_fnc_relpos, _grupo, 0] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
 			_soldados append _units1;
 			_vehiculos append _vehicles1;
 		};
@@ -154,7 +154,7 @@ private _fnc_spawn = {
 	} foreach ["ammo", "fuel", "repair"];
 
 	// spawn patrols
-	private _groupCount = (round (_size/30)) max 1;
+	private _groupCount = (round (_size/45)) max 1; //Increased to 45 to 30 to make them less crowded
 	// _mrk => to be deleted at the end
 	([_location, _groupCount] call AS_fnc_spawnAAF_patrol) params ["_units1", "_groups1", "_mrk"];
 	_spatrol append _units1;

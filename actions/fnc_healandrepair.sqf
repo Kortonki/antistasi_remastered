@@ -32,10 +32,10 @@ if ([position player, AS_enemyDist*2] call AS_fnc_enemiesNearby) then {
 private _reportedVehs = AS_S("reportedVehs");
 {
 	if (_x distance2D _posHQ < 200) then {
-
-
-
-	 _reportedVehs = _reportedVehs - [_x];
+	_reportedVehs = _reportedVehs - [_x];
+	if ((typeof _x) in BE_foreign_landVehicles) then {
+	 	_x forceflagTexture (["FIA"] call AS_fnc_getFlagTexture);
+	};
 
 //This might set ammo to 0 for undercover AI with magazines: Maybe only has to do with gunning positions
 //For now only rearm buyable FIA armed cars and unlocked aaf vehicle types. Avoid FFV vehicles during rearm.

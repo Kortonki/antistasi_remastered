@@ -41,6 +41,9 @@ fnc_BE_initialize = {
 	BE_class_MRAP = (["AAF", "cars_armed"] call AS_fnc_getEntity) + (["AAF", "cars_transport"] call AS_fnc_getEntity) + (["NATO", "cars_armed"] call AS_fnc_getEntity) + (["NATO", "cars_transport"] call AS_fnc_getEntity);
 
 	BE_mil_vehicles = BE_class_Heli + BE_class_MBT + BE_class_APC + BE_class_MRAP;
+	BE_foreign_landVehicles =	(["AAF", "landvehicles"] call AS_fnc_getEntity) +
+														(["CSAT", "landvehicles"] call AS_fnc_getEntity) +
+														(["NATO", "landvehicles"] call AS_fnc_getEntity);
 
 	[true] call fnc_BE_refresh;
 	diag_log format ["[AS] Time %1: BE_module initialized", time];
@@ -86,6 +89,7 @@ fnc_BE_pushVariables = {
 	publicVariable "BE_class_APC";
 	publicVariable "BE_class_MRAP";
 	publicVariable "BE_mil_vehicles";
+	publicVariable "BE_foreign_landVehicles";
 
 	publicVariable "BE_currentStage";
 };

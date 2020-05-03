@@ -5,6 +5,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "shortname", "FIA"] call DICT_fnc_set;
 [_dict, "flag", "Flag_FIA_F"] call DICT_fnc_set;
 
+[_dict, "civs", "CIV"] call DICT_fnc_set;
+
 [_dict, "vests", ["V_BandollierB_oli"]] call DICT_fnc_set;
 
 [_dict, "googles", [
@@ -61,11 +63,15 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 [_dict, "unlockedMagazines", [
 	"30Rnd_9x21_Mag",
-	"9Rnd_45ACP_Mag"
+	"9Rnd_45ACP_Mag",
+	"IEDUrbanBig_Remote_Mag",
+	"IEDLandBig_Remote_Mag",
+	"IEDUrbanSmall_Remote_Mag",
+	"IEDLandSmall_Remote_Mag"
 	]
 ] call DICT_fnc_set;
 
-[_dict, "unlockedBackpacks", ["B_TacticalPack_blk"]] call DICT_fnc_set;
+[_dict, "unlockedBackpacks", ["B_FieldPack_green_F"]] call DICT_fnc_set;
 
 [_dict, "addWeapons", []] call DICT_fnc_set;
 [_dict, "addMagazines", []] call DICT_fnc_set;
@@ -203,7 +209,7 @@ unlockedItems = unlockedItems - [
 [_dict, "land_vehicles", ["C_Offroad_01_F","C_Van_01_transport_F","B_G_Quadbike_01_F","B_G_Offroad_01_armed_F", "B_G_Offroad_01_F"]] call DICT_fnc_set;
 [_dict, "water_vehicles", ["B_G_Boat_Transport_01_F"]] call DICT_fnc_set;
 // First helicopter of this list is undercover
-[_dict, "air_vehicles", ["C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
+[_dict, "air_vehicles", []] call DICT_fnc_set;
 
 [_dict, "cars_armed", ["B_G_Offroad_01_armed_F", "B_G_Offroad_01_AT_F"]] call DICT_fnc_set;
 //This is new addition: used to evaluate threat

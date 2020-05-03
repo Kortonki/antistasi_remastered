@@ -243,12 +243,31 @@ AS_fnc_mineVehicle = {
 	AS_allMines select 0
 };
 
+AS_fnc_allATmines = {
+  ((["NATO", "at_mines"] call AS_fnc_getEntity) + (["AAF", "at_mines"] call AS_fnc_getEntity) + (["CSAT", "at_mines"] call AS_fnc_getEntity))
+};
+
+AS_fnc_allAPmines = {
+  ((["NATO", "ap_mines"] call AS_fnc_getEntity) + (["AAF", "ap_mines"] call AS_fnc_getEntity) + (["CSAT", "ap_mines"] call AS_fnc_getEntity))
+};
+
 private _allUniforms = [];
 {
 	_allUniforms pushBack (configName _x);
 } forEach ((format [_itemFilter, 801]) configClasses ( configFile >> "cfgWeapons" ));
 // AS_allItems does not contain Helmets and so one, which are added via addItem*
 // so we add them here:
+
+//This is an ugly way but as adv medical and such hasn't been inited yet
+//Done here before allitems grows and slows this function
+AS_allMedicalItems = ["ACE_salineIV_250", "ACE_salineIV_500", "ACE_salineIV",
+		"ACE_plasmaIV_250", "ACE_plasmaIV_500", "ACE_plasmaIV",
+		"ACE_packingBandage", "ACE_elasticBandage",
+		"ACE_quikclot", "ACE_tourniquet", "ACE_atropine","ACE_adenosine",
+		"ACE_personalAidKit", "ACE_surgicalKit", 		"ACE_fieldDressing", "ACE_bloodIV_250", "ACE_bloodIV_500",
+    		"ACE_bloodIV", "ACE_epinephrine", "ACE_morphine", "ACE_bodyBag", "ACE_splint", "FirstAidKit", "Medikit"];
+
+
 AS_allItems = AS_allItems + AS_allOptics + AS_allBipods + AS_allMuzzles + AS_allMounts + AS_allUAVs +  AS_allVests + AS_allHelmets + AS_allBinoculars + _allUniforms;
 
 // Assessories that are not reachable in the game.

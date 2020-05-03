@@ -5,6 +5,7 @@ private _fnc_spawn = {
 
 	private _posicion = _location call AS_location_fnc_position;
 	private _size = _location call AS_location_fnc_size;
+	private _population = [_location, "population"] call AS_location_fnc_get;
 
 	private _markers = [];
 
@@ -17,23 +18,33 @@ private _fnc_spawn = {
 
 	private _AAFsupport = [_location, "AAFsupport"] call AS_location_fnc_get;
 
-	private _num = round (_size / 100); // [200, 800] -> [2, 8]
-	_num = round (_num * _AAFsupport/100);
+	private _num = round (_population/50); // [200, 800] -> [2, 8] //4 is the reference size for patrol groups //EXPERIMENT depends on population, was 1 patrol per 100 of size
+	_num = _num * (0.5 + 0.5*_AAFsupport/100); //EXPERIMENT AAFsupport dependency halved, has constant now
 	if (_location call AS_fnc_location_isFrontline) then {_num = _num * 2};
-	if (_num < 1) then {_num = 1};
+	_num = _num max 1;
+	_num = _num min (_size/100); //Size gives the max cap now
+	_num = round(_num*AS_patrolSizeRef); //Number of groups changed to number of units
 
 	// generate _num patrols.
-	for "_i" from 1 to _num do {
+	private _count = 0;
+	while {_count < _num} do {
 		if !(_location call AS_location_fnc_spawned) exitWith {};
 		private _grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
+		private _units = units _grupo;
+		_count = _count + (count _units);
 
 		// generate dog with some probability.
-		if (random 10 < 2.5) then {
-			private _dog = [_grupo] call AS_fnc_spawnDog;
+		// For ref side group chance is 25%, depends on size
+		if (random 10 < ((count _units)*2.5/AS_patrolSizeRef)) then {
+			[_grupo] call AS_fnc_spawnDog;
 		};
 		//_soldados pushBack _dog; //Dog shouldn't be counted as a soldier
 
-		{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x} forEach units _grupo;
+		{
+			[_x, false] call AS_fnc_initUnitAAF;
+			_soldados pushBack _x
+		} forEach _units;
+
 
 		// put then on patrol.
 		[leader _grupo, _patrolMarker, "SAFE", "RANDOM", "SPAWNED","NOVEH", "NOFOLLOW"] spawn UPSMON;
@@ -56,7 +67,7 @@ private _fnc_run = {
 	};
 
 	// send patrol
-	if ({alive _x and !fleeing _x} count _soldados == 0) then {
+	if ({_x call AS_fnc_canFight} count _soldados == 0) then {
 		[[_posicion], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
 	};
 };

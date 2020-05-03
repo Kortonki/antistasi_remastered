@@ -15,7 +15,7 @@ publicVariable "unlockedMagazines";
 publicVariable "unlockedItems";
 publicVariable "unlockedBackpacks";
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true, true] call AS_fnc_populateBox;
+[_cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_setArsenal;
 
 //Tell petros and garrison to equip themselves
 AS_Arsenal_initialized = true;

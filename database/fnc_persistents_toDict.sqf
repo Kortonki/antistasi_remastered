@@ -4,10 +4,11 @@ AS_SERVER_ONLY("AS_database_fnc_persistents_toDict");
 private _money = AS_P("resourcesFIA");
 private _hr = AS_P("hr");
 private _fuelReserves = AS_P("fuelFIA");
+private _hqPos = getMarkerPos "FIA_HQ";
 
 // money for spawned units
 {
-    if ((alive _x) and {!(_x call AS_medical_fnc_isUnconscious)} and
+    if ((alive _x) and {!(_x call AS_medical_fnc_isUnconscious) or _x distance2D _hqPos <= 100} and
             {(_x call AS_fnc_getSide) == "FIA"} and
             {_x getVariable ["BLUFORSpawn", false]}// garrisons are already tracked by the garrison list
 
@@ -35,51 +36,52 @@ private _fuelReserves = AS_P("fuelFIA");
 
 // money and fuel for FIA vehicles TODO: vehicles to garages?
 {
-    private _pos = getpos _x;
-    private _type = typeOf _x;
+    private _veh = _x;
+    private _pos = getpos _veh;
+    private _type = typeOf _veh;
     private _closest = _pos call AS_location_fnc_nearest;
     private _size = _closest call AS_location_fnc_size;
     private _closest_pos = _closest call AS_location_fnc_position;
 
     //Vehicles closer than size and owned by FIA will become persistent
-    if (alive _x and
-        {_x isKindof "AllVehicles" and
-        {not(_x in AS_P("vehicles")) and
-        {not(_x in AS_permanent_HQplacements) and
+    if (alive _veh and
+        {_veh isKindof "AllVehicles" and
+        {not(_veh in AS_P("vehicles")) and
+        {not(_veh in AS_permanent_HQplacements) and
         {(_closest call AS_location_fnc_side) == "FIA" and
         {_closest_pos distance2D _pos <= _size and
-        {(_x call AS_fnc_getSide) != "CIV" and
-        {count (crew _x) == 0}}}}}}})
+        {(_veh call AS_fnc_getSide) in ["AAF", "CSAT"] and
+        {{alive _x} count (crew _veh) == 0}}}}}}}) // no need to check for sides -> vehicle occupied by FIA would be already persistent
     then {
-      [_x] call AS_fnc_changePersistentVehicles;
+      [_veh] call AS_fnc_changePersistentVehicles;
       diag_log format ["AS: Savegame, FIA vehicle (%1) added as persistent. Location: %2", _x,  _closest];
     } else {
 
-      if    ((alive _x) and {not(_x in AS_P("vehicles"))} and // these are saved and so they are not converted to money
-            {(_x call AS_fnc_getSide) == "FIA"} and
-            {(_x getvariable "owner") in (hcAllGroups AS_commander) and !(isPlayer(leader (_x getvariable "owner")))} and
-            {([_x] call AS_fuel_fnc_getVehicleFuel) >= (_x call AS_fuel_fnc_returnTripFuel)}
+      if    ((alive _veh) and {not(_veh in AS_P("vehicles"))} and // these are saved and so they are not converted to money
+            {(_veh call AS_fnc_getSide) == "FIA"} and
+            {(_veh getvariable "owner") in (hcAllGroups AS_commander) and !(isPlayer(leader (_veh getvariable "owner")))} and
+            {([_veh] call AS_fuel_fnc_getVehicleFuel) >= (_veh call AS_fuel_fnc_returnTripFuel)}
             ) then {
 
-        private _price = ([typeOf _x] call AS_fnc_getFIAvehiclePrice);
-        {_price = _price + ([typeOf _x] call AS_fnc_getFIAvehiclePrice)} forEach attachedObjects _x;
+        private _price = ([typeOf _veh] call AS_fnc_getFIAvehiclePrice);
+        {_price = _price + ([typeOf _veh] call AS_fnc_getFIAvehiclePrice)} forEach attachedObjects _veh;
 
-        private _fuel = (_x call AS_fuel_fnc_getVehicleFuel) - (_x call AS_fuel_fnc_returnTripFuel);
-        if (_x call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_x call AS_fuel_fnc_getFuelCargo)};
+        private _fuel = (_veh call AS_fuel_fnc_getVehicleFuel) - (_veh call AS_fuel_fnc_returnTripFuel);
+        if (_veh call AS_fuel_fnc_getFuelCargoSize > 0) then {_fuel = _fuel + (_veh call AS_fuel_fnc_getFuelCargo)};
 
         _fuelReserves = _fuelReserves + _fuel;
         _money = _money + _price;
 
 
-        diag_log format ["AS: Savegame, FIA vehicle (%1) converted to %2 money, %3 fuel. Location: %4", _x, _price, _fuel, _closest];
+        diag_log format ["AS: Savegame, FIA vehicle (%1) converted to %2 money, %3 fuel. Location: %4", _veh, _price, _fuel, _closest];
 
       };
     };
 
     //Cleanup for destroyed but not yet cleaned vehicles
-    if (not(alive _x) and {_x in AS_P("vehicles")}) then {
-      [_x, false] call AS_fnc_changePersistentVehicles;
-      diag_log format ["AS: Savegame, FIA vehicle (%1) removed from persistents. Location: %2", _x,  _closest];
+    if (not(alive _veh) and {_veh in AS_P("vehicles")}) then {
+      [_veh, false] call AS_fnc_changePersistentVehicles;
+      diag_log format ["AS: Savegame, FIA vehicle (%1) removed from persistents. Location: %2", _veh,  _closest];
     };
 } forEach (vehicles select {typeOf _x != "WeaponHolderSimulated" and {!(_x isKindOf "ReammoBox_F")}});
 

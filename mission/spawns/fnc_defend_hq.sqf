@@ -29,9 +29,9 @@ private _fnc_spawn = {
 	_patrolMarker setMarkerAlpha 0;
 
 
-	//Transport choppers. They will come regardless of support
+	//Transport choppers.
 
-	for "_i" from 1 to (1 + round random 2) do {
+	for "_i" from 1 to (1 + round(AS_P("CSATSupport")/50)) do {
 		[0,-10] remoteExec ["AS_fnc_changeForeignSupport", 2]; //CSAT support lowered each attack
 		private _pos = [_origin, 300, random 360] call BIS_Fnc_relPos;
 		private _type = selectRandom (["CSAT", "helis_transport"] call AS_fnc_getEntity);
@@ -115,6 +115,10 @@ private _fnc_spawn = {
 		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
 		_groups pushback _vehGroup;
 
+		private _origin_Pos_dir = [_originPos, _position] call AS_fnc_findSpawnSpots;
+		_originPos = _origin_Pos_dir select 0;
+		private _dir = _origin_Pos_dir select 1;
+
 		// spawn them
 		for "_i" from 1 to _nveh do {
 			private _toUse = "trucks";
@@ -123,8 +127,15 @@ private _fnc_spawn = {
 				};
 			if (_threat > 5 and {["tanks", 0.3] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "tanks";
+				_i = _i + 1;
 				};
 			([_toUse, _originPos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+
+			_origin_Pos_dir = [[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
+			_originPos = [_originPos, 15, _dir + 180] call bis_fnc_relPos;
+			_dir = _origin_Pos_dir select 1;
+
+
 			//Tanks make one group
 			{_soldiers append (units _x)} foreach _groups1;
 			if (_toUse == "tanks") then {
@@ -134,29 +145,35 @@ private _fnc_spawn = {
 				_groups append _groups1;
 			};
 			_vehiculos append _vehicles1;
-			sleep 5;
-			};
-			diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
-
-			//Support vehicles here. //Choose support position from AAF locations whice are close to the target & the base
-			//TODO improve this to search from farther
-
-			private _supDest = _originPos;
-			private _supLoc	= ["AAF" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
-			private _supLocPos = _supLoc call AS_location_fnc_position;
-			if (_supLocPos distance2D _originPos < _position distance2D _originPos) then {
-				_supDest = _supLocPos;
-			};
-
-
-			([_originPos, _supDest] call AS_fnc_findSpawnSpots) params ["_supPos", "_supDir"];
-
-			([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
-			_vehiculos append _supVehs;
-			_soldiers append _supUnits;
-			_groups pushback _supGroup;
-
+			sleep 15;
 		};
+
+		//Attack Waypoints for tank groups must re-inited.
+		if (count (units _vehGroup) > 0) then {
+			[_originPos, _position, _vehGroup, _patrolMarker, _threat] spawn AS_tactics_fnc_ground_attack;
+		};
+
+		diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
+
+		//Support vehicles here. //Choose support position from AAF locations whice are close to the target & the base
+		//TODO improve this to search from farther
+
+		private _supDest = +_originPos;
+		private _supLoc	= ["AAF" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
+		private _supLocPos = _supLoc call AS_location_fnc_position;
+		if (_supLocPos distance2D _originPos < _position distance2D _originPos) then {
+			_supDest = _supLocPos;
+		};
+
+
+		([_originPos, _supDest] call AS_fnc_findSpawnSpots) params ["_supPos", "_supDir"];
+
+		([_supPos, _supDir, _supDest, "AAF", ["ammo", "repair", "fuel"]] call AS_fnc_spawnAAF_support) params ["_supVehs", "_supGroup", "_supUnits"];
+		_vehiculos append _supVehs;
+		_soldiers append _supUnits;
+		_groups pushback _supGroup;
+
+	};
 
 		//Spawn the target, FIA HQ in this case:
 		["fia_hq", true] call AS_location_fnc_spawn;

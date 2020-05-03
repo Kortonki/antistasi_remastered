@@ -10,12 +10,14 @@ publicVariable "AS_database_savedGames";
 // Add variables here that you want to save.
 AS_database_persistents = [
 	"player_side", "faction_anti_state", "faction_pro_anti_state", "faction_state", "faction_pro_state", "faction_civilian",
-	"NATOsupport", "CSATsupport", "resourcesAAF", "resourcesFIA","fuelFIA", "skillFIA", "skillAAF", "hr",  // FIA attributes
+	"NATOsupport", "CSATsupport", "resourcesAAF", "resourcesFIA","fuelFIA", "skillFIA", "skillAAF", "hr", "AAFskillDropKills",  // FIA attributes
 	"civPerc", "spawnDistance", "minimumFPS", "cleantime",  // game options
 	"secondsForAAFAttack", "upFreq", "nextUpdate", "nextAttack", "destroyedLocations", "knownLocations", "vehiclesInGarage", "destroyedBuildings",
 	"antenasPos_alive", "antenasPos_dead", "date", "BE_module", "vehicles",
 	"patrollingLocations", "patrollingPositions",
-	"overcast", "rain", "windDir", "windSpeed", "gusts", "lightnings", "waves", "fog", "clear" //weather
+	"arsenal_w", "arsenal_m",  "arsenal_i", "arsenal_b",
+	"overcast", "rain", "windDir", "windSpeed", "gusts", "lightnings", "waves", "fog", "clear",
+	"aphorisms" //weather
 ];
 
 AS_database_persistents = AS_database_persistents + [

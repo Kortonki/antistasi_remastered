@@ -79,13 +79,17 @@ private _fnc_spawn = {
 		_vehiculos pushBack _veh;
 	};
 
+	private _amount = round((_nveh+1)*AS_squadSizeRef);
+	private _count = 0;
+
 	private _tipoGrupo = [["NATO", "squads"] call AS_fnc_getEntity, "NATO"] call AS_fnc_pickGroup;
 	private _grupo = [_posicion, ("NATO" call AS_fnc_getFactionSide), _tipoGrupo] call BIS_Fnc_spawnGroup;
-	[leader _grupo, _location, "SAFE", "RANDOMUP","SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
+	_count = _count + (count (units _grupo));
+	[leader _grupo, _location, "SAFE", "FORTIFY","SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON;
 	_grupos pushBack _grupo;
 	{[_x] spawn AS_fnc_initUnitNATO; _soldados pushBack _x} forEach units _grupo;
 
-	for "_i" from 1 to _nVeh do {
+	while {_count < _amount} do {
 		if !(_location call AS_location_fnc_spawned) exitWith {};
 		while {true} do {
 			_pos = [_posicion, random _size,random 360] call BIS_fnc_relPos;
@@ -93,12 +97,10 @@ private _fnc_spawn = {
 		};
 		_tipoGrupo = [["NATO", "squads"] call AS_fnc_getEntity, "NATO"] call AS_fnc_pickGroup;
 		_grupo = [_pos, ("NATO" call AS_fnc_getFactionSide), _tipoGrupo] call BIS_Fnc_spawnGroup;
+		_count = _count + (count (units _group));
 		sleep 1;
-		if (_i == 0) then {
-			[leader _grupo, _location, "SAFE","SPAWNED","FORTIFY","NOVEH","NOFOLLOW"] spawn UPSMON;
-		} else {
-			[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH", "NOFOLLOW"] spawn UPSMON;
-		};
+		[leader _grupo, _location, "SAFE","SPAWNED", "RANDOM","NOVEH", "NOFOLLOW"] spawn UPSMON;
+
 		_grupos pushBack _grupo;
 		{[_x] spawn AS_fnc_initUnitNATO; _soldados pushBack _x} forEach units _grupo;
 	};

@@ -13,7 +13,7 @@ if (typename _location == "STRING") then {
   _size = _location call AS_location_fnc_size;
 };
 
-private _patrolMarker = createMarker [format ["escort_%1_%2", _location, groupId _group], _position];
+private _patrolMarker = createMarker [format ["escort_%1", groupId _group], _position]; //location changed away to avoid sepc characters
 _patrolMarker setMarkerShape "RECTANGLE";
 _patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;

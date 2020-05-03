@@ -51,7 +51,11 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 	"ffp_30Rnd_762x39",
 	"ffp_17rnd_9x9_mag",
 	"2Rnd_12Gauge_Pellets",
-	"ffp_smoke_white"
+	"ffp_smoke_white",
+	"IEDUrbanBig_Remote_Mag",
+	"IEDLandBig_Remote_Mag",
+	"IEDUrbanSmall_Remote_Mag",
+	"IEDLandSmall_Remote_Mag"
 
 	]] call DICT_fnc_set;
 

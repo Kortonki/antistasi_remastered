@@ -24,6 +24,9 @@ _unit removeAllEventHandlers "HandleDamage";
 
 
 [_killed] remoteExec ["AS_fnc_activateCleanup",2];
+//Stats
+["AAF", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+AS_Persistent setVariable ["AAFskillDropKills", (AS_Persistent getVariable "AAFskillDropKills") + 1, true];
 
 if (hasACE) then {
 	if ((isNull _killer) || (_killer == _killed)) then {
@@ -31,10 +34,7 @@ if (hasACE) then {
 	};
 };
 
-//NATO killing AAF triggers CSAT attacks, save the date for the record
-if (_killer call AS_fnc_getSide == "NATO" and {isNil{["NATO_killAAF_date"] call AS_stats_fnc_get}}) then {
-	["NATO_killAAF_date", date] call AS_stats_fnc_set;
-};
+[_killer] call AS_fnc_AAFstoryTags;
 
 if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) then { //Investigate if this triggers for civilians
 	["kill"] remoteExec ["fnc_BE_XP", 2];
@@ -54,14 +54,15 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 		[-_cost] remoteExec ["AS_fnc_changeAAFmoney",2];
 		[-0.5,0,getPos _killed] remoteExec ["AS_fnc_changeCitySupport",2];
 
-		//Stats
-		["AAF", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
+
 
 		if (isPlayer _killer) then {
 			[_killer, "score", 2, false] remoteExec ["AS_players_fnc_change", 2];
 			[_killer, "kills", 1] call AS_players_fnc_change;
 		};
 	};
+
+
 
 
 
@@ -88,8 +89,8 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 				if (fleeing _unit) then {
 					if !(_unit getVariable ["surrendered",false]) then {
 
-						private _coeffSurr = 8; //TODO experiment this: 4 is in the ballpark for 1 vs 1 surrender inside 50 meters and 0.5 courage => 50% chance for surrendering
-						private _coeffSurrConstant = -0.7; //TODO experiment this. Setting this to 1 and 1 vs 1 never surrenders, but 1 vs 2 has 50% chance if coeffSurr = 4
+						private _coeffSurr = 7; //TODO experiment this: 4 is in the ballpark for 1 vs 1 surrender inside 50 meters and 0.5 courage => 50% chance for surrendering. samaller the less chance for surrender
+						private _coeffSurrConstant = -1; //TODO experiment this. Setting this to 1 and 1 vs 1 never surrenders, but 1 vs 2 has 50% chance if coeffSurr = 4
 
 						if (([200, _unit, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) and
 								{_coeffSurrConstant + _coeffSurr*(random ({alive _unit and {!([_unit] call AS_fnc_isDog) and {!(_unit getVariable ["surrendered", false])}}} count _units))*(_unit skill "courage") < count ([50, _unit, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})

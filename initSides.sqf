@@ -15,6 +15,24 @@
 	[AS_entities, _side call AS_fnc_getFaction, "helis", _vehicles] call DICT_fnc_set;
 } forEach ["CSAT", "NATO", "AAF"];
 
+// Define all land vehicles. Used for fia flags
+{
+	private _side = _x;
+	private _vehicles = [];
+	private _categories = ["cars_transport", "trucks", "boats", "apcs", "self_aa", "other_vehicles", "artillery1", "artillery2"];
+	if (_side == "AAF") then {
+		_categories = ["cars_transport", "cars_armed", "vans", "trucks", "truck_ammo", "truck_repair", "truck_fuel", "apcs", "tanks", "boats"];
+	};
+	{
+		if (([_side, _x] call AS_fnc_getEntity) isEqualType []) then {
+			_vehicles append ([_side, _x] call AS_fnc_getEntity);
+		} else {
+			_vehicles pushback ([_side, _x] call AS_fnc_getEntity);
+		};
+	} forEach _categories;
+	[AS_entities, _side call AS_fnc_getFaction, "landvehicles", _vehicles] call DICT_fnc_set;
+} forEach ["CSAT", "NATO", "AAF"];
+
 //Following isa computed list for AI target threat estimation
 //NOTE: Assuming FIA is set to not be able to buy any armed helicopters, so their armed and attack helos are allways captured
 {
@@ -180,3 +198,13 @@ private _vehicles = [];
 [AS_entities, "FIA" call AS_fnc_getFaction, "vehicles", _vehicles] call DICT_fnc_set;
 
 civHeli = ["FIA", "air_vehicles"] call AS_fnc_getEntity;
+
+//For amount of spawned units in locations. Smaller groups -> more groups to keep unit count constant
+//Reference for patrols, for squads times 2
+//These can be used as an universal settings for amount of enemies: higher value -> more enemies.
+//Patrols mostly for cities, Squads for mil locations, Teams at roadblocks
+
+AS_patrolSizeRef = 3;
+AS_teamSizeRef = 4;
+AS_AAteamSizeRef = 4;
+AS_squadSizeRef = 9;

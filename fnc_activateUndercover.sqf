@@ -10,6 +10,7 @@ private _vehicle = vehicle _player;
 
 if (captive _player) exitWith {hint "You are already undercover"};
 
+
 private _heli_spotters = [["base","airfield"], "AAF"] call AS_location_fnc_TS;
 private _all_spotters = [["base","airfield","outpost","seaport","hill", "hillAA"], "AAF"] call AS_location_fnc_TS; //Roadblock removed from here: there are dogs for spotting
 
@@ -47,17 +48,6 @@ private _isMilitaryDressed = {
 	_result
 };
 
-private _fnc_detected = {
-	private _detected = false;
-	{
-		if (!(side _x in [("FIA" call AS_fnc_getFactionSide), civilian]) and {(_x distance2D _player < 5) or ((_x knowsAbout (vehicle _player) > 1.4) and {_x distance2D _player < 500})}) exitWith {
-			_detected = true;
-		};
-	} forEach allUnits;
-	_detected
-};
-
-
 
 ///// Check whether the player can become undercover
 if (_vehicle != _player) then {
@@ -67,7 +57,7 @@ if (_vehicle != _player) then {
 	if (vehicle _player in AS_S("reportedVehs")) then {
 		_reason = "You cannot go undercover because you are in a compromised vehicle. Change your vehicle or renew it in the Garage to become undercover.";
 	};
-	if (call _fnc_detected) then {
+	if ([_player] call AS_fnc_detected) then {
 		_reason = "You cannot go undercover because the enemy knows you.";
 	};
 
@@ -104,8 +94,10 @@ private _setUndercover = {
 
 	// set AI members to be undercovered.
 	if (_player == leader group _player) then {
-		{if (!isplayer _x and {!(captive _x)}) then {[_x] remoteExec ["AS_fnc_activateUndercoverAI", _x]}} forEach units group _player;
+		{if (!isplayer _x and {!(captive _x)}) then {[_x] remoteExec ["AS_fnc_activateUndercoverAI", _x]}} forEach (units group _player);
 			};
+
+	//Set everyone in same vehicle undercover
 	["<t color='#1DA81D'>Undercover</t>",0,0,4,0,0,4] spawn bis_fnc_dynamicText;
 };
 
@@ -130,7 +122,8 @@ while {_reason == ""} do {
 			};
 			if (not (_type in civHeli) and
 				{count (_veh nearRoads 50) == 0} and
-				_fnc_detected) exitWith {
+				{[_player] call AS_fnc_detected}
+				) exitWith {
 				// no roads within 50m and detected.
 				"awayFromRoad"
 			};
@@ -152,7 +145,7 @@ while {_reason == ""} do {
 				{false or
 					{((position _player nearObjects ["DemoCharge_Remote_Ammo", 5]) select 0) mineDetectedBy ("AAF" call AS_fnc_getFactionSide)} or
 					{((position _player nearObjects ["SatchelCharge_Remote_Ammo", 5]) select 0) mineDetectedBy ("AAF" call AS_fnc_getFactionSide)}} and
-				_fnc_detected) exitWith {
+					{[_player] call AS_fnc_detected}) exitWith {
 				"vehicleWithExplosives"
 			};
 
@@ -192,7 +185,9 @@ while {_reason == ""} do {
 				private _loc = [_all_spotters, _player] call BIS_fnc_nearestPosition;
 				private _position = _loc call AS_location_fnc_position;
 				private _size = _loc call AS_location_fnc_size;
-				_player distance2d _position < _size*2}) exitWith {
+				_player distance2d _position < _size*2 and {
+				[_player] call AS_fnc_detected
+					}}) exitWith {
 				"distanceToLocation"
 			};
 			""
@@ -200,26 +195,47 @@ while {_reason == ""} do {
 	};
 };
 
+
+
 private _setPlayerCompromised = {
+	params ["_player"];
 	if (captive _player) then {_player setCaptive false};
+
+	private _setVehicleGroupCompromised = {
+		{
+			[_x, false] remoteExec ["setcaptive", _x];
+		} foreach (crew (vehicle _player));
+	};
 
 	//TODO: if player in a vehicle everyone in the vehicle become compromised
 
 	// the player only becomes compromised when he is detected
 	//
-	if (call _fnc_detected) then {
+	if ([_player] call AS_fnc_detected) then {
+		_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
 		if (vehicle _player != _player) then {
 			AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
-			{
-				[_x, false] remoteExec ["setcaptive", _x];
-			} foreach (crew (vehicle _player));
-
+			call _setVehicleGroupCompromised;
 		};
-		_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
+
+
+	} else {
+		//If player is spotted while in a vehicle make it comprose (after the initilian bust
+		//If player goes back to undercover, ditch this check
+		waitUntil {sleep (AS_spawnLoopTime); [_player] call AS_fnc_detected or not(alive _player) or (captive _player)};
+		if (alive _player and {!(captive _player)}) then {
+			_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
+			if (vehicle _player != _player) then {
+				AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
+				call _setVehicleGroupCompromised;
+			};
+		};
+
 	};
 };
 
-call _setPlayerCompromised;
+//It is spawned so waituntil won't stop from showing the message below
+[_player] spawn _setPlayerCompromised;
 
 ["<t color='#D8480A'>Not undercover</t>",0,0,4,0,0,4] spawn bis_fnc_dynamicText;
 

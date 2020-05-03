@@ -9,6 +9,8 @@ class AS_medical {
         FNC(medical,initUnit);
         FNC(medical,isHealed);
         FNC(medical,isUnconscious);
+        FNC(medical,isMedic);
+        FNC(medical,isMoved);
         FNC(medical,medicLoop);
         FNC(medical,setUnconscious);
 

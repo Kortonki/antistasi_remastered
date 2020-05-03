@@ -225,8 +225,11 @@ class AS_createMinefield
 	{
 AS_DIALOG(2,"Create minefield","closeDialog 0; createDialog ""build_menu"";");
 
-BTN_L(1,-1, "AP Mines", "", "closeDialog 0; [""ap_mines""] spawn AS_fnc_deployFIAminefield");
-BTN_R(1,-1, "AT Mines", "", "closeDialog 0; [""at_mines""] spawn AS_fnc_deployFIAminefield");
+#define STR_MINE_AT "closeDialog 0; [player, ""minefield"", caja, ""at_mines""] remoteExec [""AS_fnc_pollServerArsenal"", 2];"
+#define STR_MINE_AP "closeDialog 0; [player, ""minefield"", caja, ""ap_mines""] remoteExec [""AS_fnc_pollServerArsenal"", 2];"
+
+BTN_L(1,-1, "AP Mines", "Opens a map to choose mine placement for engineers", STR_MINE_AP);
+BTN_R(1,-1, "AT Mines", "Opens a map to choose mine placement for engineers", STR_MINE_AT);
 
 	};
 };

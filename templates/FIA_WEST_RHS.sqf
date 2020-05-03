@@ -43,19 +43,32 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 [_dict, "unlockedMagazines", [
 	"rhs_mag_9x18_8_57N181S",
 	"2Rnd_12Gauge_Pellets",
-	"rhs_mag_rdg2_white"
+	"rhs_mag_rdg2_white",
+	"IEDUrbanBig_Remote_Mag",
+	"IEDLandBig_Remote_Mag",
+	"IEDUrbanSmall_Remote_Mag",
+	"IEDLandSmall_Remote_Mag"
 	]] call DICT_fnc_set;
 
-[_dict, "unlockedBackpacks", ["rhs_assault_umbts"]] call DICT_fnc_set;
+[_dict, "unlockedBackpacks", ["B_FieldPack_green_F"]] call DICT_fnc_set;
 
 unlockeditems pushback "Chemlight_blue";
 
 //No special medical equipment for extra difficulty (need to hoard morphine etc.)
 
-[_dict, "addWeapons", []] call DICT_fnc_set;
+[_dict, "addWeapons", [
+["rhs_weap_mg42", 2]
+]] call DICT_fnc_set;
 
 [_dict, "addMagazines", [
-[	"rhsgref_5Rnd_762x54_m38", 400]
+[	"rhsgref_5Rnd_762x54_m38", 400],
+["rhs_charge_tnt_x2_mag", 20],
+["rhs_mag_m67", 20],
+["rhs_ec400_sand_mag", 2],
+["rhs_ec200_sand_mag", 2],
+["rhs_ec75_sand_mag", 2],
+
+["rhsgref_296Rnd_792x57_SmE_belt", 4]
 ]] call DICT_fnc_set;
 
 
@@ -155,7 +168,7 @@ unlockeditems pushback "Chemlight_blue";
 
 [_dict, "water_vehicles", ["B_G_Boat_Transport_01_F"]] call DICT_fnc_set;
 // First helicopter of this list is undercover
-[_dict, "air_vehicles", ["rhs_Mi8amt_civilian","C_Heli_Light_01_civil_F"]] call DICT_fnc_set;
+[_dict, "air_vehicles", []] call DICT_fnc_set;
 
 [_dict, "cars_armed", ["rhsgref_cdf_b_reg_uaz_dshkm","rhsgref_cdf_b_reg_uaz_spg9","rhsgref_cdf_b_gaz66_zu23"]] call DICT_fnc_set;
 //This is new addition: used to evaluate threat
@@ -194,7 +207,7 @@ private _costs = [_dict, "costs"] call DICT_fnc_get;
 
 //Helos
 
-[_costs, "rhs_Mi8amt_civilian", 8000] call DICT_fnc_set;
+[_costs, "rhs_Mi8amt_civilian", 8000] call DICT_fnc_set; //Currently non-buyable
 [_costs, "C_Heli_Light_01_civil_F", 3000] call DICT_fnc_set;  // used in custom vehicles
 
 _dict

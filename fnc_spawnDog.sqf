@@ -41,7 +41,7 @@ _unit setSpeaker "NoVoice"; //Will this silence the dog? Check if dog as a soldi
 		};
 		sleep 0.05;
 	};
-	deleteVehicle _guy;
+	[_guy] call AS_fnc_safeDelete;
 	[_dog] spawn AS_fnc_activateVehicleCleanup;
 };
 

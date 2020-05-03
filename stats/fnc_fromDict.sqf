@@ -12,3 +12,7 @@ if (isNil {["startdate"] call AS_stats_fnc_get}) then {
   [] call AS_stats_fnc_initialize;
   ["startdate", [2035, 6, 6, 0, 0]] call AS_stats_fnc_set;
 };
+
+if (isnil {["storedmessages"] call AS_stats_fnc_get}) then {
+  ["storedmessages", []] call AS_stats_fnc_set;
+};

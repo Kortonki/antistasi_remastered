@@ -49,3 +49,7 @@ private _FIAstats = ["rescued", "civHealed", "vehsCaptured", "apcsCaptured", "ta
 {
 	[AS_container, "stats", "fiastats", _x, 0] call DICT_fnc_setGlobal;
 } foreach _FIAstats;
+
+//Stored messages
+
+["storedmessages", []] call AS_stats_fnc_set;

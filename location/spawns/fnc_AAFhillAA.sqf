@@ -129,9 +129,9 @@ private _fnc_run = {
 		(call _fnc_isAADestroyed) and (call _fnc_isCleaned)};
 
 	if ((call _fnc_isAADestroyed) and (call _fnc_isCleaned)) then {
-		[-5,0,_posicion] remoteExec ["AS_fnc_changeCitySupport",2];
+		[-10,0,_posicion] remoteExec ["AS_fnc_changeCitySupport",2];
 		[0,-10] remoteExec ["AS_fnc_changeForeignSupport",2];
-		[["TaskSucceeded", ["", "AA Nest Cleansed"]],"BIS_fnc_showNotification"] call BIS_fnc_MP;
+		["TaskSucceeded", ["", "AA Nest Cleansed"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 
 		//AA hills are not captured, they're removed:
 		//[_location,"side","FIA"] call AS_location_fnc_set;

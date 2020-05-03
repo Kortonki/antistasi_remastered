@@ -31,6 +31,7 @@ _groupToDelete setGroupid [format ["Dismissed-%1", count allGroups]];
 
 	private _hr = 0;
 	private _resourcesFIA = 0;
+	private _hqPos = getMarkerPos "FIA_HQ";
 
 	private _cargo_w = [[], []];
 	private _cargo_m = [[], []];
@@ -38,7 +39,7 @@ _groupToDelete setGroupid [format ["Dismissed-%1", count allGroups]];
 	private _cargo_b = [[], []];
 	{
 		private _unit = _x;
-		if ((alive _unit) and {not(_unit call AS_medical_fnc_isUnconscious) or _unit distance2D getMarkerPos "FIA_HQ" < 50}) then {
+		if ((alive _unit) and {not(_unit call AS_medical_fnc_isUnconscious) or _unit distance2D _hqPos <= 100}) then {
 
 
 			//Wait unit to lose undercover and get weapons back
@@ -65,7 +66,7 @@ _groupToDelete setGroupid [format ["Dismissed-%1", count allGroups]];
 	} forEach units _groupToDelete;
 	[_groupToDelete] RemoteExec ["deleteGroup", _groupToDelete];
 
-	[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+	[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] remoteExec ["AS_fnc_populateBox", 2];
 
 	if (!isMultiplayer) then {
 		[_hr,_resourcesFIA] remoteExec ["AS_fnc_changeFIAmoney",2];

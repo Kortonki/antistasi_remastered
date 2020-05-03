@@ -1,3 +1,5 @@
+#include "../macros.hpp"
+
 if (count (["defend_location","defend_camp","defend_city"] call AS_mission_fnc_active_missions) != 0) exitWith {
 	hint "You cannot rest while FIA is under attack";
 };
@@ -14,5 +16,11 @@ private _posHQ = getMarkerPos "FIA_HQ";
 } forEach (allPlayers - (entities "HeadlessClient_F"));
 
 if _all_around exitWith {hint "All players must be around the HQ to rest"};
+
+
+fuego inflame true;
+{
+	_x playAction "SitDown";
+} foreach allPlayers;
 
 [] remoteExec ["AS_fnc_skipTime", 2];

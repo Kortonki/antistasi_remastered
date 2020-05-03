@@ -84,7 +84,7 @@ private _fnc_spawn = {
 	([_location] call AS_fnc_spawnAAF_truck) params ["_vehicles1"];
 	_vehiculos append _vehicles1;
 
-	private _groupCount = round (_size/50);
+	private _groupCount = round (_size/60);
 	if (_frontera) then {_groupCount = _groupCount * 2};
 	_groupCount = _groupCount max 1;
 

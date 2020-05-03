@@ -31,6 +31,10 @@ if (_enemySide == "FIA") then {
 		private _positionOther = _x call AS_location_fnc_position;
 
 		if (_positionOther distance2D _position < 1500) then {
+			if (_location call AS_location_fnc_type in ["base", "airfield"]) then {
+					_threat = _threat + (AS_P("NATOsupport")/10);
+			};
+
 			private _garrison = _x call AS_location_fnc_garrison;
 			private _size = _x call AS_location_fnc_size;
 			_threat = _threat + (floor((count _garrison)/4)) + (2*({(_x == "AA Specialist")} count _garrison));
@@ -136,6 +140,11 @@ if (_enemySide == "FIA") then {
 		};
 
 } foreach (vehicles select {!((typeof _x) isEqualTo "WeaponHolderSimulated") and {(_x call AS_fnc_getSide) in _enemySides and {_x distance2D _position < 1500}}});
+
+//Dayligh modifier. Maybe AAF won't attack as much in night. For land threat the modifier is 1.5, for air 2
+if (sunOrmoon < 1) then {
+	_threat = _threat *2;
+};
 
 diag_log format ["[AS] getairThreat: Position: %1 near %2 EnemySide: %3 AirThreat: %4", _position, [call AS_location_fnc_cities, _position] call bis_fnc_nearestPosition, _enemySide, _threat];
 

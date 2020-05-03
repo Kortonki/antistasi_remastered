@@ -90,6 +90,9 @@ class AS {
         FNC_BASE(pickGroup);
         FNC_BASE(updateProgressBar);
 
+        FNC_BASE(useCSAT);
+        FNC_BASE(NATOinvolved);
+
         FNC_BASE(spawnComposition);
         FNC_BASE(findSpawnSpots);
         FNC_BASE(roadAndDir);
@@ -112,6 +115,7 @@ class AS {
         FNC_BASE(deployFIAminefield);
 
         FNC_BASE(canFight);
+        FNC_BASE(detected);
 
         // auxiliars to missions
         FNC_BASE(oneStepMission);
@@ -141,6 +145,7 @@ class AS {
         FNC_BASE(EH_CSATKilled);
         FNC_BASE(EH_AAFVehicleKilled);
         FNC_BASE(EH_CSATVehicleKilled);
+        FNC_BASE(EH_VehicleHit);
         FNC_BASE(getContactThreat);
         FNC_BASE(getLandThreat);
         FNC_BASE(getAirThreat);
@@ -198,7 +203,11 @@ class AS {
         FNC_BASE(dropArtilleryShells);
         FNC_BASE(dropArtilleryShellsNATO);
         FNC_BASE(changeStreetLights);
+        FNC_BASE(getFlagTexture);
 
+        FNC(arsenal,removeUnlocked);
+        FNC(arsenal,getArsenal);
+        FNC(arsenal,setArsenal);
         FNC(arsenal,checkArsenal);
         FNC(arsenal,openArsenal);
         FNC(arsenal,buyGear);
@@ -228,8 +237,8 @@ class AS {
         FNC(arsenal,unlockedCargoList);
         FNC(arsenal,addMagazineRemains);
         FNC(arsenal,showUnlocked);
-        FNC(arsenal,waitArsenalSync);
         FNC(arsenal,collectDroppedEquipment);
+        FNC(arsenal,excludeBlanks);
 
         FNC_BASE(initPlayerPosition);
         FNC_BASE(initVehicle);
@@ -241,6 +250,11 @@ class AS {
         FNC_BASE(initUnitNATO);
         FNC_BASE(initUnitCSAT);
         FNC_BASE(initUnitSurvivor);
+
+        FNC_BASE(FIAstoryTags);
+        FNC_BASE(AAFstoryTags);
+        FNC_BASE(CSATstoryTags);
+        FNC_BASE(NATOstoryTags);
     };
 
     class withInterface {
@@ -255,6 +269,11 @@ class AS {
         FNC_BASE(revealToPlayer);
 
         FNC(actions,addAction);
+
+        FNC(arsenal,countArsenal);
+        FNC(arsenal,getCargoAsText);
+
+        FNC_BASE(displayCargo_hint);
 
         FNC(ai_control,controlsAI);
         FNC(ai_control,setAIControl);

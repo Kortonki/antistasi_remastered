@@ -2,14 +2,15 @@
 AS_SERVER_ONLY("AS_FIAarsenal_fnc_toDict");
 private _dict = call DICT_fnc_create;
 
-private _all = [[[], []], [[], []], [[], []], [[], []]];
+private _all = call AS_fnc_getArsenal; //Virtual arsenal is the baseline
 private _allMagazineRemains = [];
+private _hqPos = getMarkerPos "FIA_HQ";
 
 private _fnc_getUnitsEquipment = {
     params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 
     {
-        if ((_x call AS_fnc_getSide == "FIA") and {alive _x and {!(_x call AS_medical_fnc_isUnconscious)}}) then {
+        if ((_x call AS_fnc_getSide == "FIA") and {alive _x and {!(_x call AS_medical_fnc_isUnconscious) or _x distance2D _hqPos <= 100}}) then {
             private _arsenal = [_x, true] call AS_fnc_getUnitArsenal;
             _cargo_w = [_cargo_w, _arsenal select 0] call AS_fnc_mergeCargoLists;
             _cargo_m = [_cargo_m, _arsenal select 1] call AS_fnc_mergeCargoLists;
@@ -29,7 +30,7 @@ private _fnc_getVehiclesEquipment = {
         private _closest = (getPos _x) call AS_location_fnc_nearest;
         private _size = _closest call AS_location_fnc_size;
         if ((_closest call AS_location_fnc_side == "FIA") and
-                {(_x in AS_permanent_HQplacements) or (_x call AS_fnc_getSide) == "FIA" or (_x isKindOf "ReammoBox_F")} and
+                {(_x in AS_permanent_HQplacements) or (_x call AS_fnc_getSide) == "FIA" or (_x isKindOf "ReammoBox_F")} and //Caja aka the arsenal box is recovered here in case there are items 'normally'
                 {alive _x} and
                 {_x distance2D (_closest call AS_location_fnc_position) <= _size} and
                 {private _invalid = weaponsItemsCargo _x; not isNil "_invalid"}) then {

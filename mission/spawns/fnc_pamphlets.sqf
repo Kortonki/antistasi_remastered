@@ -50,7 +50,7 @@ private _fnc_spawn = {
 
 	private _crate3 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate3, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-	_crate3 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
+	_crate3 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F", "UK3CB_Hilux_Open", "UK3CB_Hilux_Closed"], true];
 	_crate3 setVariable ["asCargo", false, true];
 	_crate3 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate3;
@@ -60,7 +60,7 @@ private _fnc_spawn = {
 
 	private _crate2 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate2, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-	_crate2 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
+	_crate2 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F", "UK3CB_Hilux_Open", "UK3CB_Hilux_Closed"], true];
 	_crate2 setVariable ["asCargo", false, true];
 	_crate2 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate2;
@@ -69,7 +69,7 @@ private _fnc_spawn = {
 
 	private _crate1 = createVehicle [_crateType, _pos, [], 0, "NONE"];
 	[_crate1, "loadCargo"] remoteExec  ["AS_fnc_addAction", [0, -2] select isDedicated, true];
-	_crate1 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F"], true];
+	_crate1 setVariable ["requiredVehs", ["Truck_F", "Van_02_vehicle_F","Van_01_transport_F", "Van_01_box_F", "I_G_Offroad_01_F", "Offroad_01_civil_base_F", "UK3CB_Hilux_Open", "UK3CB_Hilux_Closed"], true];
 	_crate1 setVariable ["asCargo", false, true];
 	_crate1 setVariable ["dest", _location, true];
 	_vehicles pushBack _crate1;

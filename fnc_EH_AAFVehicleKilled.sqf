@@ -1,17 +1,24 @@
 params ["_veh", "_killer"];
 if ((_veh call AS_fnc_getSide) != "AAF") exitWith {diag_log "[AS] Warning: EH_AAF_VehicleKilled executed for non-AAF vehicle";}; //If vehicle was stolen, there's nothing to do here
+
+if ((isNull _killer) || (_killer == _veh)) then {
+  if (!(isnil {_veh getVariable "vehLastDamageSource"})) then {
+    _killer = _veh getVariable "vehLastDamageSource";
+  };
+};
+
   //Deduct from AAF arsenal regardless of killers side
   //Also remove from spawn counter so new one can spawn
 private _vehicleType = typeOf _veh;
-[_vehicleType, false] call AS_AAFarsenal_fnc_spawnCounter;
+[_vehicleType, false] RemoteExeccall ["AS_AAFarsenal_fnc_spawnCounter", 2];
 
 private _vehicleCategory = _vehicleType call AS_AAFarsenal_fnc_category;
-[_vehicleCategory] call AS_AAFarsenal_fnc_deleteVehicle;
+[_vehicleCategory] remoteExeccall ["AS_AAFarsenal_fnc_deleteVehicle", 2];
 
 
 
   //This was moved so XP is gained only if FIA is the killer or capturer
-if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {
+if (_killer call AS_fnc_getSide in ["FIA", "NATO"]) then {
 
   private _citySupportEffect = 0;
   private _xpEffect = "";
@@ -57,8 +64,13 @@ if (side _killer == ("FIA" call AS_fnc_getFactionSide)) then {
       diag_log format ["[AS] ERROR in AS_AAF_VE_EHkilled: '%1' is invalid type", typeOf _veh];
     };
   };
+  //Capturing enemy vehs nets support, destroying doesn't
   if (_citySupportEffect != 0) then {
-    [-_citySupportEffect,_citySupportEffect,position _veh, true] remoteExec ["AS_fnc_changeCitySupport",2];
+    if (alive _veh) then {
+      [-_citySupportEffect,_citySupportEffect,position _veh, true] remoteExec ["AS_fnc_changeCitySupport",2];
+    } else {
+      [-_citySupportEffect,0,position _veh, true] remoteExec ["AS_fnc_changeCitySupport",2];
+    };
   };
-  if (_xpEffect != "") then {[_xpEffect] remoteExec ["fnc_BE_XP", 2]};
+  if (_xpEffect != "" and {_killer call AS_fnc_getSide == "FIA"}) then {[_xpEffect] remoteExec ["fnc_BE_XP", 2]};
 };

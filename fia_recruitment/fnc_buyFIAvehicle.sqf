@@ -20,7 +20,7 @@ if (isMultiPlayer and player != AS_commander) then {
 if (_resourcesFIA < _coste) exitWith {hint format ["You do not have enough money for this vehicle: %1 € required",_coste]};
 
 private _pos = [];
-if (_location == "fia_hq" and{!(isNil "vehiclePad") and {!(count (vehiclePad nearObjects ["AllVehicles",7]) > 0)}}) then {
+if (_location == "fia_hq" and {!(isNil "vehiclePad") and {!(count (vehiclePad nearObjects ["AllVehicles",4]) > 0)}}) then {
 	_pos = position vehiclePad;
 	_pos set [2, 0.5];
 } else {
