@@ -79,7 +79,7 @@ params ["_dict"];
     };
 } forEach AS_database_persistents;
 
-//Legacy stuff
+//LEGACY STUFF
 
 if (isNil {AS_P("knownLocations")}) then {AS_Pset("knownLocations",[])};
 
@@ -104,6 +104,11 @@ if (isNil {AS_P("aphorisms")}) then {
 
 if (isNIL {AS_P("AAFskillDropKills")}) then {
   AS_Pset("AAFskillDropKills", 0);
+};
+
+if (isNIL {AS_P("threatEval_Land_mod")}) then {
+  AS_Pset("threatEval_Land_mod", 0);
+  AS_Pset("threatEval_Air_mod", 0);
 };
 
 //Apply weather changes immediately if there is atan2

@@ -199,6 +199,9 @@ private _fnc_run = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 
+		//No way to say if it was ground/air attack or both, adjust all
+		["true", "true", -1] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
+
 		//After a while after petros' death, send the soldiers away:
 
 		[_soldiers, _groups, _originPos] spawn {
@@ -233,6 +236,8 @@ private _fnc_run = {
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
+
+		["true", "true", 1] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
 
 		//private _origin = getMarkerPos "spawnCSAT";
 

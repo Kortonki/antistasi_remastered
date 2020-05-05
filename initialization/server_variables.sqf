@@ -172,6 +172,10 @@ AS_AAFlocCountRef = 15;
 AS_AAFsoldierperLocRef = 50;
 AS_Pset("AAFskillDropKills", 0);
 
+//VERY CRUDE AI LEARNING ALGORITHM. fails and successes affect aaf threat evaluation
+AS_Pset("threatEval_Land_mod", 0);
+AS_Pset("threatEval_Air_mod", 0);
+
 AS_active_messages = [];
 
 

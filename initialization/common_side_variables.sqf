@@ -28,6 +28,7 @@ call compile preprocessFileLineNumbers "Compositions\campList.sqf";
 call compile preprocessFileLineNumbers "Compositions\FIA_RB.sqf";
 call compile preprocessFileLineNumbers "Compositions\cmpNATO_RB.sqf";
 call compile preprocessFileLineNumbers "Compositions\cmpExp.sqf";
+call compile preprocessFileLineNumbers "Compositions\genericCompositions.sqf";
 
 AS_compositions = call DICT_fnc_create;
 [AS_compositions, "locations", call DICT_fnc_create] call DICT_fnc_set;

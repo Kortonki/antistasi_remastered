@@ -1,4 +1,4 @@
 #include "macros.hpp"
 
-if (((random 100 < AS_P("CSATsupport")) or (call AS_fnc_NATOinvolved)) and {not(AS_S("blockCSAT"))}) exitWith {true};
+if (AS_P("CSATsupport") >= 10 and {not(AS_S("blockCSAT")) and {((random 100 < AS_P("CSATsupport")) or (call AS_fnc_NATOinvolved))}}) exitWith {true};
 false

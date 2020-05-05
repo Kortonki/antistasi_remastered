@@ -338,6 +338,7 @@ class AS_AI {
         FNC(ai,rearmCall);
         FNC(ai,dangerOnApproach);
         FNC(AI,setOrders);
+        FNC(AI,adjustThreatModifier);
 
     };
 

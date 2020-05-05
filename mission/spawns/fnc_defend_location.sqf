@@ -219,6 +219,9 @@ private _fnc_run = {
 	private _soldiers = [_mission, "soldiers"] call AS_spawn_fnc_get;
 	private _groups = ([_mission, "resources"] call AS_spawn_fnc_get) select 1;
 
+	private _base = [_mission, "base"] call AS_mission_fnc_get;
+	private _airfield = [_mission, "airfield"] call AS_mission_fnc_get;
+
 	private _min_fighters = round ((count _soldiers)/2);
 	private _max_time = time + 60*60;
 
@@ -228,6 +231,9 @@ private _fnc_run = {
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+		//EXPERIMENT AND ADJUST
+		[_base, _airfield, -1] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
+
 	};
 	private _fnc_missionSuccessfulCondition = {
 		{_x call AS_fnc_canFight} count _soldiers < _min_fighters or
@@ -237,6 +243,7 @@ private _fnc_run = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 
+		[_base, _airfield, 1] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
 
 
 		private _originPos = [_mission, "originPos"] call AS_spawn_fnc_get;

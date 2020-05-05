@@ -16,6 +16,7 @@ AS_big_bunker_type = "Land_BagBunker_01_large_green_F";
 AS_sandbag_type_round = "Land_BagFence_01_round_green_F";
 AS_camonet_type = "CamoNet_BLUFOR_big_F";
 AS_h_barrier_type = "Land_HBarrier_01_line_5_green_F";
+AS_h_barrier_big_type = "Land_HBarrier_01_big_4_green_F";
 
 AS_antenasTypes = [
 "Land_TTowerBig_1_F",

@@ -13,6 +13,7 @@ if (captive _player) exitWith {hint "You are already undercover"};
 
 private _heli_spotters = [["base","airfield"], "AAF"] call AS_location_fnc_TS;
 private _all_spotters = [["base","airfield","outpost","seaport","hill", "hillAA"], "AAF"] call AS_location_fnc_TS; //Roadblock removed from here: there are dogs for spotting
+_all_spotters append ([["hillAA"], "CSAT"] call AS_location_fnc_TS);
 
 private _undercoverVehicles = (["CIV", "vehicles"] call AS_fnc_getEntity) + civHeli;
 
