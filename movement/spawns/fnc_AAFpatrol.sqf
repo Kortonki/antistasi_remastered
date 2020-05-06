@@ -47,19 +47,20 @@ private _fnc_spawn = {
 		_origin = _base call AS_location_fnc_positionConvoy;
 		_aeropuerto = "";
 
-		private _count = round(_threatEval/3) max 1; //TODO: experiment and adjust
+		private _maxcount = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 6;
+		private _count = (round(_threatEval/3) max 1) min _maxcount; //TODO: experiment and adjust
 		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
 		_grupos pushback _vehGroup;
 
-		if (!_isDirectAttack) then {[_base,15] call AS_location_fnc_increaseBusy;};
+		if (!_isDirectAttack) then {[_base,_count*10] call AS_location_fnc_increaseBusy;};
 
 		for "_i" from 1 to _count do {  // the attack has 2 units for a non-marker
 
 			private _toUse = "trucks";
-			if (_threatEval > 3 and {["apcs", 0.4] call AS_fnc_vehicleAvailability}) then {
+			if (_threatEval > 3 and {["apcs", 0.7] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "apcs";
 			};
-			if (_threatEval > 5 and {["tanks", 0.4] call AS_fnc_vehicleAvailability}) then {
+			if (_threatEval > 5 and {["tanks", 0.7] call AS_fnc_vehicleAvailability}) then {
 				_toUse = "tanks";
 			};
 
@@ -80,19 +81,19 @@ private _fnc_spawn = {
 	};
 
 	if (_aeropuerto != "") then {
-		if (!_isDirectAttack) then {[_aeropuerto,15] call AS_location_fnc_increaseBusy;};
-		_origin = _aeropuerto call AS_location_fnc_position;
-		private _cuenta = round(_threatEval/7.5) max 1; //Here spawn less, main attack is by land
-		if (_isLocation) then {_cuenta = _cuenta * 2};
+				_origin = _aeropuerto call AS_location_fnc_position;
+		private _maxcount = ("helis_transport" call AS_AAFarsenal_fnc_countAvailable) min 4;
+		private _cuenta = (round(_threatEval/7.5) max 1) min _maxcount; //Here spawn less, main attack is by land
+		if (_isLocation) then {_cuenta = (round(_threatEval/5) max 2) min _maxcount;};
 		for "_i" from 1 to _cuenta do {  // the attack has 2 units for a non-marker
 			private _toUse = "helis_transport";  // last attack is always a transport
 
 			// first attack (1/2) can be any unit, stronger the higher the treat
 			if (_i < _cuenta) then {
-				if (["helis_armed", 0.4] call AS_fnc_vehicleAvailability) then {
+				if (["helis_armed", 0.3] call AS_fnc_vehicleAvailability) then {
 					_toUse = "helis_armed";
 				};
-				if (_threatEval > 15 and {["planes", 0.2] call AS_fnc_vehicleAvailability}) then {
+				if (_threatEval > 15 and {["planes", 0.3] call AS_fnc_vehicleAvailability}) then {
 					_toUse = "planes";
 				};
 			};
@@ -101,6 +102,8 @@ private _fnc_spawn = {
 			_vehiculos = _vehiculos + _vehicles1;
 			sleep 30;
 		};
+
+		if (!_isDirectAttack) then {[_aeropuerto,15*_cuenta] call AS_location_fnc_increaseBusy;};
 	};
 
 	if _useCSAT then {

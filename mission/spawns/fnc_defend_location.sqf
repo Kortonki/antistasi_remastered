@@ -75,7 +75,6 @@ private _fnc_spawn = {
 
 	private _originPos = [];
 	if (_base != "") then {
-		[_base,60] call AS_location_fnc_increaseBusy;
 		_originPos = _base call AS_location_fnc_positionConvoy;
 		private _size = _base call AS_location_fnc_size;
 
@@ -132,11 +131,12 @@ private _fnc_spawn = {
 			[_originPos, _position, _vehGroup, _patrolMarker, _threatEvalLand] spawn AS_tactics_fnc_ground_attack;
 		};
 
+		[_base,10*_nveh] call AS_location_fnc_increaseBusy;
+
 		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};
 
 	if (_airfield != "") then {
-		[_airfield,60] call AS_location_fnc_increaseBusy;
 		if (_base != "") then {sleep ((_originPos distance2D _position)/16)};
 
 		_originPos = _airfield call AS_location_fnc_position;
@@ -180,6 +180,9 @@ private _fnc_spawn = {
 			_vehicles append _vehicles1;
 			sleep 5;
 		};
+
+		[_airfield,15*_nveh] call AS_location_fnc_increaseBusy;
+
 		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};
 

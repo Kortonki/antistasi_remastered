@@ -71,6 +71,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 	]
 ] call DICT_fnc_set;
 
+[_dict, "unlockedItems", ["Chemlight_blue"]] call DICT_fnc_set;
+
 [_dict, "unlockedBackpacks", ["B_FieldPack_green_F"]] call DICT_fnc_set;
 
 [_dict, "addWeapons", []] call DICT_fnc_set;

@@ -98,7 +98,7 @@ private _fnc_spawn = {
 
 	private _originPos = [];
 	if (_base != "") then {
-		[_base,60] call AS_location_fnc_increaseBusy;
+
 		_originPos = _base call AS_location_fnc_positionConvoy;
 		private _size = _base call AS_location_fnc_size;
 
@@ -152,6 +152,8 @@ private _fnc_spawn = {
 		if (count (units _vehGroup) > 0) then {
 			[_originPos, _position, _vehGroup, _patrolMarker, _threat] spawn AS_tactics_fnc_ground_attack;
 		};
+
+		[_base,10*_nveh] call AS_location_fnc_increaseBusy;
 
 		diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
 
