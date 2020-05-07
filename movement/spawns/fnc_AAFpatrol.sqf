@@ -123,8 +123,8 @@ private _fnc_run = {
 	private _isLocation = false;
 	private _position = "";
 
-	private _base = [_spawnName, "base"] call AS_mission_fnc_get;
-	private _airfield = [_spawnName, "airfield"] call AS_mission_fnc_get;
+	private _base = [_spawnName, "base"] call AS_spawn_fnc_get;
+	private _airfield = [_spawnName, "airfield"] call AS_spawn_fnc_get;
 
 	if (typeName _location == typeName "") then {
 		_isLocation = true;
