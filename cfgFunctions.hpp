@@ -68,6 +68,7 @@ class AS {
         FNC_BASE(isAdmin);
 
         FNC_BASE(codeToString);
+        FNC_BASE(uniqueID);
 
         FNC_BASE(setDefaultSkill);
         FNC_BASE(lockVehicle);
@@ -338,6 +339,7 @@ class AS_AI {
         FNC(ai,rearmCall);
         FNC(ai,dangerOnApproach);
         FNC(AI,setOrders);
+        FNC(AI,adjustThreatModifier);
 
     };
 

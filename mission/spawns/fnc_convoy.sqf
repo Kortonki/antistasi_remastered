@@ -160,7 +160,7 @@ private _fnc_spawn = {
 	private _groups = [];
 	private _vehicles = [];
 
-	[_origin,10] call AS_location_fnc_increaseBusy;
+
 
 	private _group = createGroup ("AAF" call AS_fnc_getFactionSide);
 	_groups pushBack _group;
@@ -200,7 +200,7 @@ private _fnc_spawn = {
 		([_escortVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_vehicle", "_vehicleGroup"];
 
 		_origin_Pos_dir = [[_posRoad, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
-		_posRoad = [_posRoad, 10, _dir + 180] call bis_fnc_relPos;
+		_posRoad = [_posRoad, 15, _dir + 180] call bis_fnc_relPos;
 		_dir = _origin_Pos_dir select 1;
 
 		{
@@ -241,7 +241,7 @@ private _fnc_spawn = {
 
 	};
 	_origin_Pos_dir = [[_posRoad, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
-	_posRoad = [_posRoad, 10, _dir + 180] call bis_fnc_relPos;
+	_posRoad = [_posRoad, 15, _dir + 180] call bis_fnc_relPos;
 	_dir = _origin_Pos_dir select 1;
 
 	([_mainVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_mainVehicle","_mainVehicleGroup","_driver"];
@@ -250,6 +250,8 @@ private _fnc_spawn = {
 		[_x] joinSilent _group;
 	} foreach units _mainVehicleGroup;
 	//_mainVehicle setConvoySeparation _separation;
+
+	[_origin,(5+10*_escortsize)] call AS_location_fnc_increaseBusy;
 
 	//The crate for money and supply convoys
 

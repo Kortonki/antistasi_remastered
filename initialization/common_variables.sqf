@@ -240,4 +240,6 @@ if hasCUP then {
 	AS_entities setVariable ["CUP_FIA_EAST", _dict];
 };
 
-call compile preprocessFileLineNumbers "initialization\checkFactionsAttributes.sqf"
+call compile preprocessFileLineNumbers "initialization\checkFactionsAttributes.sqf";
+
+AS_unique_ID = 0;

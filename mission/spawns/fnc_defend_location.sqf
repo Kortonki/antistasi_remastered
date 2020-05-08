@@ -32,7 +32,7 @@ private _fnc_spawn = {
 
 	[_location, true] call AS_location_fnc_spawn;
 
-	private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
+	private _patrolMarker = createMarker [format ["def_%1", call AS_fnc_uniqueID], _position];
 	_patrolMarker setMarkerShape "ELLIPSE";
 	_patrolMarker setMarkerSize [_size*1.5 min 200, _size*1.5 min 200];
 	_patrolMarker setMarkerAlpha 0;
@@ -75,7 +75,6 @@ private _fnc_spawn = {
 
 	private _originPos = [];
 	if (_base != "") then {
-		[_base,60] call AS_location_fnc_increaseBusy;
 		_originPos = _base call AS_location_fnc_positionConvoy;
 		private _size = _base call AS_location_fnc_size;
 
@@ -89,9 +88,6 @@ private _fnc_spawn = {
 
 
 
-		//Make a group for vehicles
-		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
-		_groups pushback _vehGroup;
 
 		private _origin_Pos_dir = [_originPos, _position] call AS_fnc_findSpawnSpots;
 		_originPos = _origin_Pos_dir select 0;
@@ -110,33 +106,24 @@ private _fnc_spawn = {
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 
-			_origin_Pos_dir = [[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
-			_originPos = [_originPos, 15, _dir + 180] call bis_fnc_relPos;
+			_origin_Pos_dir = +([[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots);
+			_originPos = +([_originPos, 15, _dir + 180] call bis_fnc_relPos);
 			_dir = _origin_Pos_dir select 1;
 
-			//Tanks make one group
-			if (_toUse == "tanks") then {
-				(units (_groups1 select 0)) join _vehGroup;
-				deletegroup (_groups1 select 0);
-			} else {
-				_groups append _groups1;
-			};
+
+			_groups append _groups1;
 			_vehicles append _vehicles1;
 
 
-			sleep 15; //Big delay to make room for spawning units
+			sleep 10; //Big delay to make room for spawning units
 		};
 
-		//Attack Waypoints for tank groups must re-inited.
-		if (count (units _vehGroup) > 0) then {
-			[_originPos, _position, _vehGroup, _patrolMarker, _threatEvalLand] spawn AS_tactics_fnc_ground_attack;
-		};
+		[_base,10*_nveh] call AS_location_fnc_increaseBusy;
 
 		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};
 
 	if (_airfield != "") then {
-		[_airfield,60] call AS_location_fnc_increaseBusy;
 		if (_base != "") then {sleep ((_originPos distance2D _position)/16)};
 
 		_originPos = _airfield call AS_location_fnc_position;
@@ -180,6 +167,9 @@ private _fnc_spawn = {
 			_vehicles append _vehicles1;
 			sleep 5;
 		};
+
+		[_airfield,15*_nveh] call AS_location_fnc_increaseBusy;
+
 		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};
 
@@ -219,6 +209,9 @@ private _fnc_run = {
 	private _soldiers = [_mission, "soldiers"] call AS_spawn_fnc_get;
 	private _groups = ([_mission, "resources"] call AS_spawn_fnc_get) select 1;
 
+	private _base = [_mission, "base"] call AS_mission_fnc_get;
+	private _airfield = [_mission, "airfield"] call AS_mission_fnc_get;
+
 	private _min_fighters = round ((count _soldiers)/2);
 	private _max_time = time + 60*60;
 
@@ -228,6 +221,9 @@ private _fnc_run = {
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+		//EXPERIMENT AND ADJUST
+		[_base, _airfield, -1] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
+
 	};
 	private _fnc_missionSuccessfulCondition = {
 		{_x call AS_fnc_canFight} count _soldiers < _min_fighters or
@@ -237,6 +233,7 @@ private _fnc_run = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 
+		[_base, _airfield, 1] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
 
 
 		private _originPos = [_mission, "originPos"] call AS_spawn_fnc_get;

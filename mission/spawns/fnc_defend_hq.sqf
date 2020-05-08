@@ -23,7 +23,7 @@ private _fnc_spawn = {
 	private _soldiers = [];
 	private _groups = [];
 
-	private _patrolMarker = createMarker [format ["defhq_%1", round (diag_tickTime/60)], _position];
+	private _patrolMarker = createMarker [format ["defhq_%1", call AS_fnc_uniqueID], _position];
 	_patrolMarker setMarkerShape "ELLIPSE";
 	_patrolMarker setMarkerSize [100,100];
 	_patrolMarker setMarkerAlpha 0;
@@ -98,7 +98,7 @@ private _fnc_spawn = {
 
 	private _originPos = [];
 	if (_base != "") then {
-		[_base,60] call AS_location_fnc_increaseBusy;
+
 		_originPos = _base call AS_location_fnc_positionConvoy;
 		private _size = _base call AS_location_fnc_size;
 
@@ -110,10 +110,6 @@ private _fnc_spawn = {
 		private _arsenalCount = (["trucks", "apcs", "tanks"] call AS_AAFarsenal_fnc_countAvailable);
 		private _max = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of trucks if choosing to not use apcs or tanks
 		private _nVeh = (round((_threat/2)*(_arsenalCount/30)) max 1) min (_arsenalCount min _max);
-
-		//Group for vehicles (tanks)
-		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
-		_groups pushback _vehGroup;
 
 		private _origin_Pos_dir = [_originPos, _position] call AS_fnc_findSpawnSpots;
 		_originPos = _origin_Pos_dir select 0;
@@ -131,27 +127,20 @@ private _fnc_spawn = {
 				};
 			([_toUse, _originPos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 
-			_origin_Pos_dir = [[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
-			_originPos = [_originPos, 15, _dir + 180] call bis_fnc_relPos;
+			_origin_Pos_dir = +([[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots);
+			_originPos = +([_originPos, 15, _dir + 180] call bis_fnc_relPos);
 			_dir = _origin_Pos_dir select 1;
 
 
 			//Tanks make one group
 			{_soldiers append (units _x)} foreach _groups1;
-			if (_toUse == "tanks") then {
-				(units (_groups1 select 0)) join _vehGroup;
-				deletegroup (_groups1 select 0);
-			} else {
-				_groups append _groups1;
-			};
+			_groups append _groups1;
+
 			_vehiculos append _vehicles1;
-			sleep 15;
+			sleep 10;
 		};
 
-		//Attack Waypoints for tank groups must re-inited.
-		if (count (units _vehGroup) > 0) then {
-			[_originPos, _position, _vehGroup, _patrolMarker, _threat] spawn AS_tactics_fnc_ground_attack;
-		};
+		[_base,10*_nveh] call AS_location_fnc_increaseBusy;
 
 		diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
 
@@ -199,6 +188,9 @@ private _fnc_run = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
 
+		//No way to say if it was ground/air attack or both, adjust all
+		["true", "true", -1] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
+
 		//After a while after petros' death, send the soldiers away:
 
 		[_soldiers, _groups, _originPos] spawn {
@@ -233,6 +225,8 @@ private _fnc_run = {
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
+
+		["true", "true", 1] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
 
 		//private _origin = getMarkerPos "spawnCSAT";
 

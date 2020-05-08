@@ -16,7 +16,7 @@ _wp1 setWaypointBehaviour "AWARE";
 _wp1 setWaypointSpeed "FULL";
 
 
-private _patrolMarker = createMarker [format ["crew_sentry_%1_%2", _location, groupId _crewGroup], _position];
+private _patrolMarker = createMarker [format ["crew_sentry_%1", call AS_fnc_uniqueID], _position];
 _patrolMarker setMarkerShape "RECTANGLE";
 _patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;

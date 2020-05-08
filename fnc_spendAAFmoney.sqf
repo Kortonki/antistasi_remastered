@@ -87,10 +87,11 @@ private _FIAcontrolledBases = count (
 	[["airfield", "base"], "FIA"] call AS_location_fnc_TS);
 
 private _extra_conditions = createSimpleObject ["Static", [0, 0, 0]];
-_extra_conditions setVariable ["helis_transport", _FIAcontrolledLocations >= 1];
-_extra_conditions setVariable ["tanks", _FIAcontrolledLocations >= 3 or _FIAcontrolledBases >= 1];
-_extra_conditions setVariable ["helis_armed", _FIAcontrolledLocations >= 3 or _FIAcontrolledBases >= 1];
-_extra_conditions setVariable ["planes", _FIAcontrolledBases >= 1];
+//TODO casualty limits probably need tweaking. consider to scale for aaf location numbers etc.
+_extra_conditions setVariable ["helis_transport", _FIAcontrolledLocations >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 100];
+_extra_conditions setVariable ["tanks", _FIAcontrolledLocations >= 3 or _FIAcontrolledBases >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 250];
+_extra_conditions setVariable ["helis_armed", _FIAcontrolledLocations >= 3 or _FIAcontrolledBases >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 500];
+_extra_conditions setVariable ["planes", _FIAcontrolledBases >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 1000];
 
 {
 	private _debug_bought_count = 0;
@@ -105,17 +106,18 @@ _extra_conditions setVariable ["planes", _FIAcontrolledBases >= 1];
 	};
 
 	_debug_message = format ["bought %1 '%2' (%3,%4), remaining money: %5",
-			_debug_bought_count, _x, _x call AS_AAFarsenal_fnc_canAdd, _extra_condition, _resourcesAAF];
+	_debug_bought_count, _x, _x call AS_AAFarsenal_fnc_canAdd, _extra_condition, _resourcesAAF];
 	diag_log (_debug_prefix + _debug_message);
 } forEach AS_AAFarsenal_buying_order;
 
 deleteVehicle _extra_conditions;
 
 //////////////// try to upgrade skills ////////////////
+//EXPERIMENT no artificial limit, but AAF loses skill easier the higher their level is
 private _skillFIA = AS_P("skillFIA");
-if ((_skillAAF < (_skillFIA + 4)) && (_skillAAF < AS_maxSkill)) then {
+if (_skillAAF < AS_maxSkill) then {
 	private _coste = 1000 + (1.5*(_skillAAF *750)*(_AAFlocCount/AS_AAFlocCountRef)); //AAF location count resembels amount of soldiers thus the universal cost to train them
-	if (_coste < _resourcesAAF and {_AAFresAdj > 1000}) then {
+	if (_coste < _resourcesAAF and {_AAFresAdj > 2000}) then { //this adjusted to 2000 from 1000 when limit removed
         AS_Pset("skillAAF", _skillAAF + 1);
         _skillAAF = _skillAAF + 1;
 		_resourcesAAF = _resourcesAAF - _coste;

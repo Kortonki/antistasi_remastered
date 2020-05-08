@@ -83,6 +83,7 @@ CIVUniforms = _result select 4;
 unlockedWeapons = ["FIA", "unlockedWeapons"] call AS_fnc_getEntity;
 unlockedMagazines = ["FIA", "unlockedMagazines"] call AS_fnc_getEntity;
 unlockedBackpacks = ["FIA", "unlockedBackpacks"] call AS_fnc_getEntity;
+unlockedItems append (["FIA", "unlockedItems"] call AS_fnc_getEntity);
 
 if hasTFAR then {
     unlockedItems = unlockedItems - ["ItemRadio"];

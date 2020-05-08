@@ -16,8 +16,14 @@ private _fnc_spawn = {
 
 	//create _bunker, only if there's no preset composition
 	if (!([([AS_compositions, "locations"] call DICT_fnc_get), _location] call DICT_fnc_exists)) then {
-		private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
-		_vehiculos pushBack _bunker;
+		//private _bunker = AS_big_bunker_type createVehicle ([_posicion, 0, 50, 5, 0, 5, 0,[], _posicion] call BIS_Fnc_findSafePos);
+		//_vehiculos pushBack _bunker;
+
+		//Spawn generic AA
+		private _check = isNil {
+		    private _composition = AS_AA_gen_1;
+		    _objects = [_posicion, 0, _composition] call BIS_fnc_ObjectsMapper;
+		};
 	};
 
 	private _AAVeh = [];
@@ -69,7 +75,7 @@ private _fnc_spawn = {
 		};
 	} forEach _stcs;
 
-	private _mrkfin = createMarker [format ["specops%1", (diag_ticktime/60)],_posicion];
+	private _mrkfin = createMarker [format ["specops_%1", call AS_fnc_uniqueID],_posicion];
 	_mrkfin setMarkerShape "RECTANGLE";
 	_mrkfin setMarkerSize [500,500];
 

@@ -8,6 +8,8 @@ private _fnc_spawn = {
 	private _useCSAT = [_spawnName, "useCSAT"] call AS_spawn_fnc_get;
 	private _isDirectAttack = [_spawnName, "isDirectAttack"] call AS_spawn_fnc_get;
 	private _threatEval = [_spawnName, "threatEval"] call AS_spawn_fnc_get;
+	//The threateval here is from sendaafpatrol, where landthreat is evaluated later thus sent to this function
+	//Thus it is the LANDTHREAT
 
 	private _isLocation = false;
 	private _position = "";
@@ -31,7 +33,7 @@ private _fnc_spawn = {
 
 	// save the marker or position
 	//Location needs a patrol marker for good measure as well
-	private _patrolMarker = createMarker [format ["patrol_%1_%2", (diag_tickTime), round(random 100)], _position];
+	private _patrolMarker = createMarker [format ["patrol_%1", call AS_fnc_uniqueID], _position];
 	_patrolMarker setMarkerShape "RECTANGLE";
 	_patrolMarker setMarkerSize [200, 200];
 	_patrolMarker setMarkerAlpha 0;
@@ -44,35 +46,45 @@ private _fnc_spawn = {
 	if (_base != "") then {
 		_origin = _base call AS_location_fnc_positionConvoy;
 		_aeropuerto = "";
-		if (!_isDirectAttack) then {[_base,15] call AS_location_fnc_increaseBusy;};
 
-		private _toUse = "trucks";
-		if (_threatEval > 3 and {"apcs" call AS_AAFarsenal_fnc_countAvailable > 0}) then {
-			_toUse = "apcs";
-		};
-		if (_threatEval > 5 and {"tanks" call AS_AAFarsenal_fnc_countAvailable > 0}) then {
-			_toUse = "tanks";
-		};
+		private _maxcount = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 6;
+		private _count = (round(_threatEval/3) max 1) min _maxcount; //TODO: experiment and adjust
 
-		([_toUse, _origin, _patrolMarker, _threatEval] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
-		_grupos append _groups1;
-		_vehiculos append _vehicles1;
+		if (!_isDirectAttack) then {[_base,_count*10] call AS_location_fnc_increaseBusy;};
+
+		for "_i" from 1 to _count do {  // the attack has 2 units for a non-marker
+
+			private _toUse = "trucks";
+			if (_threatEval > 3 and {["apcs", 0.7] call AS_fnc_vehicleAvailability}) then {
+				_toUse = "apcs";
+			};
+			if (_threatEval > 5 and {["tanks", 0.7] call AS_fnc_vehicleAvailability}) then {
+				_toUse = "tanks";
+			};
+
+			([_toUse, _origin, _patrolMarker, _threatEval] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
+
+			_grupos append _groups1;
+
+			_vehiculos append _vehicles1;
+			sleep 10;
+		};
 	};
 
 	if (_aeropuerto != "") then {
-		if (!_isDirectAttack) then {[_aeropuerto,15] call AS_location_fnc_increaseBusy;};
-		_origin = _aeropuerto call AS_location_fnc_position;
-		private _cuenta = 1;
-		if (_isLocation) then {_cuenta = 2};
+				_origin = _aeropuerto call AS_location_fnc_position;
+		private _maxcount = ("helis_transport" call AS_AAFarsenal_fnc_countAvailable) min 4;
+		private _cuenta = (round(_threatEval/7.5) max 1) min _maxcount; //Here spawn less, main attack is by land
+		if (_isLocation) then {_cuenta = (round(_threatEval/5) max 2) min _maxcount;};
 		for "_i" from 1 to _cuenta do {  // the attack has 2 units for a non-marker
 			private _toUse = "helis_transport";  // last attack is always a transport
 
 			// first attack (1/2) can be any unit, stronger the higher the treat
 			if (_i < _cuenta) then {
-				if ("helis_armed" call AS_AAFarsenal_fnc_countAvailable > 0) then {
+				if (["helis_armed", 0.3] call AS_fnc_vehicleAvailability) then {
 					_toUse = "helis_armed";
 				};
-				if (_threatEval > 15 and ("planes" call AS_AAFarsenal_fnc_countAvailable > 0)) then {
+				if (_threatEval > 15 and {["planes", 0.3] call AS_fnc_vehicleAvailability}) then {
 					_toUse = "planes";
 				};
 			};
@@ -81,6 +93,8 @@ private _fnc_spawn = {
 			_vehiculos = _vehiculos + _vehicles1;
 			sleep 30;
 		};
+
+		if (!_isDirectAttack) then {[_aeropuerto,15*_cuenta] call AS_location_fnc_increaseBusy;};
 	};
 
 	if _useCSAT then {
@@ -99,6 +113,9 @@ private _fnc_run = {
 	private _origin = [_spawnName, "origin"] call AS_spawn_fnc_get;
 	private _isLocation = false;
 	private _position = "";
+
+	private _base = [_spawnName, "base"] call AS_spawn_fnc_get;
+	private _airfield = [_spawnName, "airfield"] call AS_spawn_fnc_get;
 
 	if (typeName _location == typeName "") then {
 		_isLocation = true;
@@ -131,9 +148,15 @@ private _fnc_run = {
 
 		waitUntil {sleep 10; time > _tiempo or ({_x call AS_fnc_canFight} count _soldados) < ({!(_x call AS_fnc_canFight)} count _soldados)};
 
+		//AI modifiers. if killed, next time come more prepared. Effect half of what it is for actual attacks
+		if (time <= _tiempo) then {
+			[_base, _airfield, 0.5] remoteExec ["AS_AI_fnc_adjustThreatModifier", 2];
+		};
+
 
 		AS_Pset("patrollingPositions", AS_P("patrollingPositions") - [_position]);
 	};
+
 
 	//RTB
 	{

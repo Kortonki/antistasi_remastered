@@ -9,7 +9,7 @@ private _fnc_spawn = {
 
 	private _markers = [];
 
-	private _patrolMarker = createMarker [format ["%1_gar", _posicion], _posicion];
+	private _patrolMarker = createMarker [format ["%1_gar", call AS_fnc_uniqueID], _posicion];
 	_patrolMarker setMarkerShape "ELLIPSE";
 	_patrolMarker setMarkerSize [_size,_size];
 	_patrolMarker setMarkerAlpha 0;

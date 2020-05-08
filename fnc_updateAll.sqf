@@ -27,10 +27,13 @@ private _FIAResIncomeMultiplier = 1;
     //EACH tick check if enemy side has any troops in the area -> lower support depending on amount
     //The fear element of gaining city support, in addition to providing supplies
     //Big bicture: killing can only lower support, sending supplies and propaganda can also increase
+    //TODO: Make an assumption that if city is spawned, so is a possible nearby location thus their spawns have presence normally
+    //Nearby enemy locs to affect support
 
     if (_city call AS_location_fnc_spawned) then {
       if (_side == "AAF") then {
           private _enemyUnits = {_x call AS_fnc_getSide in ["NATO", "FIA"] and {_x call AS_fnc_canFight and {!(captive _x) and {_x distance2D _position <= _size}}}} count allUnits;
+
           if (_enemyUnits > 0) then {
             [-_enemyUnits, 0, _city] call AS_fnc_changeCitySupport;
             [[_city], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
@@ -47,7 +50,45 @@ private _FIAResIncomeMultiplier = 1;
 
       if (_side == "FIA") then {
         private _enemyUnits = {_x call AS_fnc_getSide in ["AAF", "CSAT"] and {_x call AS_fnc_canFight and {_x distance2D _position <= _size}}} count allUnits;
+
         if (_enemyUnits > 0) then {
+          [0, -_enemyUnits, _city, true] call AS_fnc_changeCitySupport;
+
+          private _text = format [localize "STR_msg_FIAcity_AAFpresence",
+          _city,
+          ["AAF", "shortname"] call AS_fnc_getEntity
+          ];
+
+          [_text, 5, "FIAcity_AAFpresence", false] spawn AS_fnc_globalMessage;
+        };
+      };
+    } else {
+      if (_side == "AAF") then {
+        //Check if city is inside a location, that counts as presence too. -> Nearby non spawned cities and other locations soon turn into near occupiers side
+        private _nearestLoc = ["FIA" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
+        if ((_nearestLoc call AS_location_fnc_position) distance2D _position <= (_nearestLoc call AS_location_fnc_size)) then {
+          private _enemyUnits = (count (_nearestLoc call AS_location_fnc_garrison));
+
+          if (_enemyUnits > 0) then {
+            [-_enemyUnits, 0, _city] call AS_fnc_changeCitySupport;
+            [[_city], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
+
+            private _text = format [localize "STR_msg_AAFcity_FIApresence",
+            _city,
+            ["FIA", "shortname"] call AS_fnc_getEntity,
+            ["AAF", "shortname"] call AS_fnc_getEntity
+            ];
+
+            [_text, 15, "AAFcity_FIApresence", false] spawn AS_fnc_globalMessage;
+          };
+        };
+      };
+
+      if (_side == "FIA") then {
+        //Check if city is inside a location, that counts as presence too. -> Nearby non spawned cities and other locations soon turn into near occupiers side
+        private _nearestLoc = [["AAF", "CSAT"] call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
+        if ((_nearestLoc call AS_location_fnc_position) distance2D _position <= (_nearestLoc call AS_location_fnc_size)) then {
+          private _enemyUnits = round((_nearestLoc call AS_location_fnc_size)/7.5); //This is an approximation
           [0, -_enemyUnits, _city, true] call AS_fnc_changeCitySupport;
 
           private _text = format [localize "STR_msg_FIAcity_AAFpresence",

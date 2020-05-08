@@ -113,7 +113,7 @@ private _vehiculos = [];
 private _markers = [];
 
 // create a patrol marker
-private _patrolMarker = createMarker [format ["Patrol-%1-%2", (diag_tickTime/60), round (random 100)],_destination];
+private _patrolMarker = createMarker [format ["PatrolQRF_%1", call AS_fnc_uniqueID],_destination];
 _patrolMarker setMarkerShape "RECTANGLE";
 _patrolMarker setMarkerSize [150,150];
 _patrolMarker setMarkerAlpha 0;

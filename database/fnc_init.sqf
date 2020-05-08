@@ -14,7 +14,7 @@ AS_database_persistents = [
 	"civPerc", "spawnDistance", "minimumFPS", "cleantime",  // game options
 	"secondsForAAFAttack", "upFreq", "nextUpdate", "nextAttack", "destroyedLocations", "knownLocations", "vehiclesInGarage", "destroyedBuildings",
 	"antenasPos_alive", "antenasPos_dead", "date", "BE_module", "vehicles",
-	"patrollingLocations", "patrollingPositions",
+	"patrollingLocations", "patrollingPositions", "threatEval_Land_mod", "threatEval_Air_mod",
 	"arsenal_w", "arsenal_m",  "arsenal_i", "arsenal_b",
 	"overcast", "rain", "windDir", "windSpeed", "gusts", "lightnings", "waves", "fog", "clear",
 	"aphorisms" //weather

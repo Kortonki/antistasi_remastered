@@ -15,6 +15,8 @@ private _position = ((getMarkerPos "FIA_HQ") findEmptyPosition [1, 50, "C_Offroa
 private _compromised = player getvariable ["compromised", 0];
 private _punish = player getVariable ["punish", 0];
 
+//TODO: Consider  here if spawning new unit is necessary? Probably is, otherwise why is it here. 
+
 private _unit = [_type, _position, _group] call AS_fnc_spawnFIAunit;
 
 _unit setVariable ["BLUFORSpawn", true, true]; // players make things spawn

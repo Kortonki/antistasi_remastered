@@ -24,7 +24,7 @@ if (_destination isEqualTo []) then {
 
 diag_log format ["[AS] SetConvoyImmune started. Vehicle: %1 Type of vehicle %2 Destination: %3 Text %4", _veh, typeOf _veh, _destination, _text];
 
-while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh distance2D _destination > 50 and {currentWaypoint _group == _waypoint}}}} do {
+while {(alive _veh) and {!(isNull driver _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh distance2D _destination > 50 and {currentWaypoint _group == _waypoint}}}}} do {
 	private _pos = getPos _veh;
 	sleep 60;
 	private _newPos = getPos _veh;
@@ -55,9 +55,25 @@ while {(alive _veh) and {((driver _veh) call AS_fnc_getSide) == _side and {_veh 
 			_group selectLeader (effectiveCommander _veh);
 		};
 		(driver _veh) dofollow (leader _group);
-
-
 	};
+};
+
+//If driver got out because vehicle flipped, do following checks
+(_veh call BIS_fnc_getPitchBank) params ["_vx","_vy"];
+private _isFlipped = if (([_vx,_vy] findIf {_x > 70 || _x < -70}) != -1) then {true} else {false};
+
+//If flipped and not captured, set upright and spawn new convoysetimmune
+if (_isFlipped and {_veh call AS_fnc_getSide == _side and {{_x distance2D (position _veh) < 500} count (allPlayers - (entities "HeadlessClient_F")) == 0}}) exitWith {
+	_veh setVectorUp (surfaceNormal (position _veh));
+	_driver assignAsDriver _veh;
+	_driver moveinDriver _veh;
+	_group addVehicle _veh;
+
+	[_veh, _text, _destination] spawn AS_fnc_setConvoyImmune;
+
+	diag_log format ["[AS] SetConvoyImmune ended and restarted. Vehicle flipped, crew reassigned. Vehicle: %1 Type of vehicle %2 Destination: %3 Text %4", _veh, typeOf _veh, _destination, _text];
+
+
 };
 
 diag_log format ["[AS] SetConvoyImmune ended. Vehicle: %1 Type of vehicle %2 Destination: %3 Text %4", _veh, typeOf _veh, _destination, _text];

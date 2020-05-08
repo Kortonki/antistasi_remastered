@@ -13,12 +13,12 @@ if (typename _location == "STRING") then {
   _size = _location call AS_location_fnc_size;
 };
 
-private _patrolMarker = createMarker [format ["escort_%1", groupId _group], _position]; //location changed away to avoid sepc characters
+private _patrolMarker = createMarker [format ["escort_%1", call AS_fnc_uniqueID], _position]; //location changed away to avoid sepc characters
 _patrolMarker setMarkerShape "RECTANGLE";
 _patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;
 
-private _threat = [_position] call AS_fnc_getLandThreat;
+private _threat = [_position, "FIA"] call AS_fnc_getLandThreat;
 
 private _distance = _size + ((400 + (_threat*50)) min _minDist);
 private _leader = leader _group;
@@ -30,7 +30,7 @@ while {{alive _x} count units _group > 0} do {
     //This to let dismount on danger fire, stay in combat mode for dismount, then aware
     _group setBehaviour "COMBAT";
     sleep 20;
-    [_leader, _patrolMarker, "AWARE", "SPAWNED", "NOFOLLOW", "NOVEH"] spawn UPSMON;
+    [_leader, _patrolMarker, "AWARE", "SPAWNED", "NOVEH"] spawn UPSMON;
   };
   sleep 1;
 };

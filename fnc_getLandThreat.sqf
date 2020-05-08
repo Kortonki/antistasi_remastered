@@ -149,6 +149,8 @@ if (sunOrmoon < 1) then {
 	_threat = _threat *1.5;
 };
 
-diag_log format ["[AS] getlandThreat: Position: %1 near %2 Enemyside: %3 LandThreat: %4", _position, [call AS_location_fnc_cities, _position] call bis_fnc_nearestPosition, _enemySide, _threat];
+_threatMod = AS_P("threatEval_Land_mod");
 
-_threat
+diag_log format ["[AS] getlandThreat: Position: %1 near %2 Enemyside: %3 LandThreat: %4 modifier: %5", _position, [call AS_location_fnc_cities, _position] call bis_fnc_nearestPosition, _enemySide, _threat, _threatMod];
+
+(_threat + _threatMod)

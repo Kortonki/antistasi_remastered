@@ -19,7 +19,7 @@ private _position = +_origin;
   _vehicles pushback _veh;
   deleteGroup _vehGroup;
 
-  _position = [_position, 10, _dir + 180] call BIS_fnc_relpos;
+  _position = [_position, 15, _dir + 180] call BIS_fnc_relpos;
 } foreach _types;
 
 private _wp0 = _supportGroup addWaypoint [_destination, 0];
