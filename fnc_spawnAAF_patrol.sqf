@@ -8,7 +8,7 @@ private _units = [];
 private _groups = [];
 
 // marker used to set the patrol area
-private _mrk = createMarker [format ["%1_%2_patrolarea", random 100, diag_tickTime], _position];
+private _mrk = createMarker [format ["%1_patrolarea", call AS_fnc_uniqueID], _position];
 _mrk setMarkerShape "RECTANGLE";
 _mrk setMarkerSize [_size*1.5,_size*1.5];
 _mrk setMarkerType "hd_warning";

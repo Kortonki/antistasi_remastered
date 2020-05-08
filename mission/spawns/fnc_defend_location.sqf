@@ -32,7 +32,7 @@ private _fnc_spawn = {
 
 	[_location, true] call AS_location_fnc_spawn;
 
-	private _patrolMarker = createMarker [format ["def_%1", round (diag_tickTime/60)], _position];
+	private _patrolMarker = createMarker [format ["def_%1", call AS_fnc_uniqueID], _position];
 	_patrolMarker setMarkerShape "ELLIPSE";
 	_patrolMarker setMarkerSize [_size*1.5 min 200, _size*1.5 min 200];
 	_patrolMarker setMarkerAlpha 0;
@@ -88,9 +88,6 @@ private _fnc_spawn = {
 
 
 
-		//Make a group for vehicles
-		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
-		_groups pushback _vehGroup;
 
 		private _origin_Pos_dir = [_originPos, _position] call AS_fnc_findSpawnSpots;
 		_originPos = _origin_Pos_dir select 0;
@@ -109,26 +106,16 @@ private _fnc_spawn = {
 			};
 			([_toUse, _originPos, _patrolMarker, _threatEvalLand] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 
-			_origin_Pos_dir = [[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
-			_originPos = [_originPos, 15, _dir + 180] call bis_fnc_relPos;
+			_origin_Pos_dir = +([[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots);
+			_originPos = +([_originPos, 15, _dir + 180] call bis_fnc_relPos);
 			_dir = _origin_Pos_dir select 1;
 
-			//Tanks make one group
-			if (_toUse == "tanks") then {
-				(units (_groups1 select 0)) join _vehGroup;
-				deletegroup (_groups1 select 0);
-			} else {
-				_groups append _groups1;
-			};
+
+			_groups append _groups1;
 			_vehicles append _vehicles1;
 
 
-			sleep 15; //Big delay to make room for spawning units
-		};
-
-		//Attack Waypoints for tank groups must re-inited.
-		if (count (units _vehGroup) > 0) then {
-			[_originPos, _position, _vehGroup, _patrolMarker, _threatEvalLand] spawn AS_tactics_fnc_ground_attack;
+			sleep 10; //Big delay to make room for spawning units
 		};
 
 		[_base,10*_nveh] call AS_location_fnc_increaseBusy;

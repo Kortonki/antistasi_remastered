@@ -68,6 +68,7 @@ class AS {
         FNC_BASE(isAdmin);
 
         FNC_BASE(codeToString);
+        FNC_BASE(uniqueID);
 
         FNC_BASE(setDefaultSkill);
         FNC_BASE(lockVehicle);

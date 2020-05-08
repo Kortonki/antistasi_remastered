@@ -18,7 +18,7 @@ private _grupoEst = grpNull;
 
 private _grupo = createGroup ("FIA" call AS_fnc_getFactionSide);
 _grupos pushBack _grupo;
-_grupo setGroupId [format ["Garr_%1_%2_%3", _location, floor (diag_tickTime), count _grupos]];
+_grupo setGroupId [format ["Garr_%1_%2", _location, call AS_fnc_uniqueID]];
 {
 	if !(_location call AS_location_fnc_spawned) exitWith {};
 	private _unit = objNull;
@@ -85,7 +85,7 @@ if (_type in  ["camp", "fia_hq"]) then {
 
 //Create the patrol marker to avoid UPSMON issues
 
-private _patrolMarker = createMarker [format ["fia_gar_%1", _position], _position]; //Changed location to position to avoid issues with upsmon and spec characters
+private _patrolMarker = createMarker [format ["fia_gar_%1", call AS_fnc_uniqueID], _position]; //Changed location to position to avoid issues with upsmon and spec characters
 _patrolMarker setMarkerShape "ELLIPSE";
 _patrolMarker setMarkerSize [_size,_size];
 _patrolMarker setMarkerAlpha 0;

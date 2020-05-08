@@ -75,7 +75,7 @@ private _fnc_spawn = {
 		};
 	} forEach _stcs;
 
-	private _mrkfin = createMarker [format ["specops%1", (diag_ticktime/60)],_posicion];
+	private _mrkfin = createMarker [format ["specops_%1", call AS_fnc_uniqueID],_posicion];
 	_mrkfin setMarkerShape "RECTANGLE";
 	_mrkfin setMarkerSize [500,500];
 

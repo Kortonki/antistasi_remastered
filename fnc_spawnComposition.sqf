@@ -9,4 +9,13 @@ private _check = isNil {
 
   };
 };
+
+//This to alleviate floating objs problem
+{
+  [_x] spawn {
+    params ["_obj"];
+    sleep (60 + (random 15));
+    _obj setPosATL [getPosATL _obj select 0,getPosATL _obj select 1,0];
+    };
+} foreach _returnObjects;
 _returnObjects

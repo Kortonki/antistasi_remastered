@@ -241,3 +241,5 @@ if hasCUP then {
 };
 
 call compile preprocessFileLineNumbers "initialization\checkFactionsAttributes.sqf";
+
+AS_unique_ID = 0;

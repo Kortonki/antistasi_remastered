@@ -81,7 +81,8 @@ private _fnc_wait_to_arrive = {
 		[leader _group, _mrk, "SAFE","SPAWNED", "NOVEH2",  "SHOWMARKER"] spawn UPSMON;
 	} else {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
-		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+		[_mission, "status", "completed"] call AS_mission_fnc_set; //this changed to contain mission name only
+
 	};
 
 	[_mission, "arrivedSafely", _arrivedSafely] call AS_spawn_fnc_set;

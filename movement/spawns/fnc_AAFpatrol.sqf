@@ -33,7 +33,7 @@ private _fnc_spawn = {
 
 	// save the marker or position
 	//Location needs a patrol marker for good measure as well
-	private _patrolMarker = createMarker [format ["patrol_%1_%2", (diag_tickTime), round(random 100)], _position];
+	private _patrolMarker = createMarker [format ["patrol_%1", call AS_fnc_uniqueID], _position];
 	_patrolMarker setMarkerShape "RECTANGLE";
 	_patrolMarker setMarkerSize [200, 200];
 	_patrolMarker setMarkerAlpha 0;
@@ -49,8 +49,6 @@ private _fnc_spawn = {
 
 		private _maxcount = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 6;
 		private _count = (round(_threatEval/3) max 1) min _maxcount; //TODO: experiment and adjust
-		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
-		_grupos pushback _vehGroup;
 
 		if (!_isDirectAttack) then {[_base,_count*10] call AS_location_fnc_increaseBusy;};
 
@@ -66,17 +64,10 @@ private _fnc_spawn = {
 
 			([_toUse, _origin, _patrolMarker, _threatEval] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 
-			if (_toUse == "tanks") then {
-				(units (_groups1 select 0)) join _vehGroup;
-				deletegroup (_groups1 select 0);
-			} else {
-				_grupos append _groups1;
-			};
+			_grupos append _groups1;
+
 			_vehiculos append _vehicles1;
-		};
-		//Attack Waypoints for tank groups must re-inited.
-		if (count (units _vehGroup) > 0) then {
-			[_origin, _position, _vehGroup, _patrolMarker, _threatEval] spawn AS_tactics_fnc_ground_attack;
+			sleep 10;
 		};
 	};
 

@@ -98,7 +98,7 @@ private _fnc_run = {
 		private _leader = leader (driver _vehicle);
 		(group _leader) setSpeedMode "NORMAL";
 
-		private _patrolMarker = createMarker [format ["roadpatrol_%1", diag_tickTime], _targetpos];
+		private _patrolMarker = createMarker [format ["roadpatrol_%1", call AS_fnc_uniqueID], _targetpos];
 		_patrolMarker setMarkerShape "RECTANGLE";
 		_patrolMarker setMarkerSize [_size,_size];
 		_patrolMarker setMarkerAlpha 0;

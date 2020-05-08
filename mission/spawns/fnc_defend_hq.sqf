@@ -23,7 +23,7 @@ private _fnc_spawn = {
 	private _soldiers = [];
 	private _groups = [];
 
-	private _patrolMarker = createMarker [format ["defhq_%1", round (diag_tickTime/60)], _position];
+	private _patrolMarker = createMarker [format ["defhq_%1", call AS_fnc_uniqueID], _position];
 	_patrolMarker setMarkerShape "ELLIPSE";
 	_patrolMarker setMarkerSize [100,100];
 	_patrolMarker setMarkerAlpha 0;
@@ -111,10 +111,6 @@ private _fnc_spawn = {
 		private _max = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 10; //This check to ensure not to run out of trucks if choosing to not use apcs or tanks
 		private _nVeh = (round((_threat/2)*(_arsenalCount/30)) max 1) min (_arsenalCount min _max);
 
-		//Group for vehicles (tanks)
-		private _vehGroup = createGroup ("AAF" call AS_fnc_getFactionSide);
-		_groups pushback _vehGroup;
-
 		private _origin_Pos_dir = [_originPos, _position] call AS_fnc_findSpawnSpots;
 		_originPos = _origin_Pos_dir select 0;
 		private _dir = _origin_Pos_dir select 1;
@@ -131,26 +127,17 @@ private _fnc_spawn = {
 				};
 			([_toUse, _originPos, _patrolMarker, _threat] call AS_fnc_spawnAAFlandAttack) params ["_groups1", "_vehicles1"];
 
-			_origin_Pos_dir = [[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots;
-			_originPos = [_originPos, 15, _dir + 180] call bis_fnc_relPos;
+			_origin_Pos_dir = +([[_originPos, 15, _dir + 180] call bis_fnc_relPos, _position] call AS_fnc_findSpawnSpots);
+			_originPos = +([_originPos, 15, _dir + 180] call bis_fnc_relPos);
 			_dir = _origin_Pos_dir select 1;
 
 
 			//Tanks make one group
 			{_soldiers append (units _x)} foreach _groups1;
-			if (_toUse == "tanks") then {
-				(units (_groups1 select 0)) join _vehGroup;
-				deletegroup (_groups1 select 0);
-			} else {
-				_groups append _groups1;
-			};
-			_vehiculos append _vehicles1;
-			sleep 15;
-		};
+			_groups append _groups1;
 
-		//Attack Waypoints for tank groups must re-inited.
-		if (count (units _vehGroup) > 0) then {
-			[_originPos, _position, _vehGroup, _patrolMarker, _threat] spawn AS_tactics_fnc_ground_attack;
+			_vehiculos append _vehicles1;
+			sleep 10;
 		};
 
 		[_base,10*_nveh] call AS_location_fnc_increaseBusy;
