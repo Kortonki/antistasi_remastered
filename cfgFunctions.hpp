@@ -52,6 +52,7 @@ class AS {
         FNC_BASE(updateAll);
         FNC_BASE(revealFromAAFRadio);
         FNC_BASE(globalMessage);
+        FNC_BASE(eventCheck);
 
         FNC_BASE(win_location);
         FNC_BASE(lose_location);

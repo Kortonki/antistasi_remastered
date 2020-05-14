@@ -77,6 +77,12 @@ petros setSkill 1;
         }];*/
 
 petros addEventHandler ["killed", {
+  private _killed = _this select 0;
+  if (!(isnil{_killed getVariable "k"})) exitWith {
+    diag_log "[AS] EH_AAFKilled: Killed eventhandler fired twice. Killed: Petros";
+  };
+  _killed setVariable ["k", true, false];
+
     [petros, "remove"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
     private _killer = _this select 1;
         diag_log format ["[AS] INFO: Petros died. Killer: %1", _killer];

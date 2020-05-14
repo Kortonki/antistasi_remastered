@@ -172,10 +172,10 @@ private _fnc_spawn = {
 	//_posbase = _posbase findEmptyPosition [0, 10, _mainVehicleType];
 	private _escortSize = 1;
 	private _frontLine = false;
-	if ([_location] call AS_fnc_location_isFrontline) then {
+	if (_location call AS_fnc_location_isFrontline) then {
 		_frontLine = true;
-		_escortSize = (round random 1) + 2
-	};
+		_escortSize = (round random 1) + 2;
+};
 
 	private _leadCategory = ["cars_transport", "cars_armed"] select (["cars_armed"] call AS_AAFarsenal_fnc_countAvailable > 0);
 
@@ -252,6 +252,11 @@ private _fnc_spawn = {
 	//_mainVehicle setConvoySeparation _separation;
 
 	[_origin,(5+10*_escortsize)] call AS_location_fnc_increaseBusy;
+
+	//This is done after so busy parameter is applied before checking for convoy
+	if (_frontLine) then {
+		[[_location], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute; //Before convoy try to send forces to secure the area first
+	};
 
 	//The crate for money and supply convoys
 

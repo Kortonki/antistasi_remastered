@@ -47,7 +47,8 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 	"IEDUrbanBig_Remote_Mag",
 	"IEDLandBig_Remote_Mag",
 	"IEDUrbanSmall_Remote_Mag",
-	"IEDLandSmall_Remote_Mag"
+	"IEDLandSmall_Remote_Mag",
+	"Chemlight_blue"
 	]] call DICT_fnc_set;
 
 [_dict, "unlockedBackpacks", ["B_FieldPack_green_F"]] call DICT_fnc_set;

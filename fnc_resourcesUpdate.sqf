@@ -35,11 +35,14 @@ if (!(_skipping)) then {
     diag_log format ["[AS] ResourcesUpdate: movement_sendAAFroadPatrol started at %1", date];
 
     // Check if any communications were intercepted.
-    [] call AS_fnc_revealFromAAFRadio;
+    call AS_fnc_revealFromAAFRadio;
 
     if isMultiplayer then {[] spawn AS_fnc_chooseCommander;};
 
 };
+
+
+call AS_fnc_eventCheck;
 
 // repair and re-arm all statics.
 //TODO: optimise and improve this (check for nearby enemies etc.)

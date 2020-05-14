@@ -50,8 +50,13 @@ if (_enemiesNearby) exitWith {Hint "You cannot use fast travel with enemies near
 
 posicionTel = [];
 
-if (_isHCfastTravel) then {hcShowBar false};
-hint "Click on the zone you want to travel to";
+if (_isHCfastTravel) then {
+	hcShowBar false;
+	hint "Click on the zone you want the HC squad to travel to";
+}
+else {
+	hint "Click on the zone you want to travel to";
+};
 openMap true;
 onMapSingleClick "posicionTel = _pos;";
 

@@ -215,8 +215,8 @@ AS_maxAmounts = [
 [4,1,4]],
 [["base"],
 ["static_mg", "static_at", "static_aa", "static_mortar", "cars_transport", "cars_armed", "trucks", "apcs", "tanks"],
-[8, 4, 4, 4, 2, 4, 4, 4, 4]],
+[8, 4, 4, 4, 2, 4, 7, 4, 4]], //Trucks 4 + 3 supports
 [["airfield"],
 ["static_mg", "static_at", "static_aa", "cars_transport", "cars_armed", "trucks", "apcs", "helis_transport", "helis_armed", "planes"],
-[8, 4, 4, 2, 4, 4, 4, 4, 4, 4]]
+[8, 4, 4, 2, 4, 7, 4, 4, 4, 4]]
 ];

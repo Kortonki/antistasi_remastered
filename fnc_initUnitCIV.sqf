@@ -50,6 +50,10 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 		if (typeOf _unit == "C_journalist_F") then {
 			_coeff = 10;
 			[_killer call AS_fnc_getSide, 1, "journalistKills"] remoteExec ["AS_stats_fnc_change", 2];
+
+
+
+
 		};
 		private _sideKiller = side _killer;
 
@@ -74,12 +78,35 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 					};
 			};
 
+			//Global message reporting
+
+			private _msg = format [localize "STR_msg_FIA_killsReporter",
+
+			worldName,
+			["FIA", "shortname"] call AS_fnc_getEntity,
+			["NATO", "shortname"] call AS_fnc_getEntity
+			];
+
+			[_msg, 15, "reporterKilledFIA"] remoteExec ["AS_fnc_globalMessage", 2];
+
 		} else {
 			if (_sideKiller == ("AAF" call AS_fnc_getFactionSide)) then {
 				[1*_coeff,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 				[-5,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2]; //Civ killing penalties hardened 1 -> 5%
 				//Journalist kills lower city support everywhere 5%, civs not
 				{[floor(-0.5*_coeff),0,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
+
+				//Global message reporting
+
+				private _msg = format [localize "STR_msg_AAF_killsReporter",
+
+				worldName,
+		    ["AAF", "shortname"] call AS_fnc_getEntity,
+		    ["NATO", "shortname"] call AS_fnc_getEntity,
+				["FIA", "shortname"] call AS_fnc_getEntity
+		    ];
+
+				[_msg, 15, "reporterKilledFIA"] remoteExec ["AS_fnc_globalMessage", 2];
 			};
 		};
 	};
@@ -123,7 +150,7 @@ if (typeOf _unit == "C_Journalist_F") then {
  		private _unit = _this select 0;
  		private _source = _this select 3;
 
- 		if (diag_tickTime - (_unit getVariable ["hitTime", 0]) < 0.1) exitWith {}; //No duplicate activation
+ 		if (_source == _unit or {diag_tickTime - (_unit getVariable ["hitTime", 0]) < 0.1}) exitWith {}; //No duplicate activation
 
  		_unit setVariable ["hitTime", diag_tickTime, false];
 

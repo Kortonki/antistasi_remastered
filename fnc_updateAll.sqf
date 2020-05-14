@@ -59,7 +59,7 @@ private _FIAResIncomeMultiplier = 1;
           ["AAF", "shortname"] call AS_fnc_getEntity
           ];
 
-          [_text, 5, "FIAcity_AAFpresence", false] spawn AS_fnc_globalMessage;
+          [_text, 1, "FIAcity_AAFpresence", false] spawn AS_fnc_globalMessage;
         };
       };
     } else {

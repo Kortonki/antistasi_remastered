@@ -67,7 +67,8 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 	"IEDUrbanBig_Remote_Mag",
 	"IEDLandBig_Remote_Mag",
 	"IEDUrbanSmall_Remote_Mag",
-	"IEDLandSmall_Remote_Mag"
+	"IEDLandSmall_Remote_Mag",
+	"Chemlight_blue"
 	]
 ] call DICT_fnc_set;
 
