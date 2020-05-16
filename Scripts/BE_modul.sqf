@@ -138,10 +138,10 @@ fnc_BE_XP = {
 			_delta = 5;
 		};
 		case "death": {
-			_delta = -0.5;
+			_delta = -0.1*(AS_P("skillFIA"));
 		};
 		case "deathP": {
-			_delta = -1;
+			_delta = -0.2*(AS_P("skillFIA"));
 		};
 		default {
 			diag_log format ["Error in BE module XP - param 1: %1", _category];

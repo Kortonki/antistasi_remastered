@@ -1,7 +1,8 @@
 private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str west] call DICT_fnc_set;
 [_dict, "roles", ["state", "foreign"]] call DICT_fnc_set;
-[_dict, "name", "United States Armed Forces (Early Cold War)"] call DICT_fnc_set;
+[_dict, "name", "United States Armed Forces"] call DICT_fnc_set;
+[_dict, "name_info", "Early Cold War, Green Camo, 3CB"] call DICT_fnc_set;
 [_dict, "shortname", "USAF"] call DICT_fnc_set;
 [_dict, "flag", "Flag_US_F"] call DICT_fnc_set;
 [_dict, "flag_marker", "flag_USA"] call DICT_fnc_set;
@@ -99,7 +100,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 // These have to be CfgVehicles mines that explode automatically (minefields)
 [_dict, "ap_mines", ["rhsusf_mine_m14"]] call DICT_fnc_set;
-[_dict, "at_mines", ["rhs_mine_M19_mag"]] call DICT_fnc_set;
+[_dict, "at_mines", ["rhs_mine_M19"]] call DICT_fnc_set;
 // These have to be CfgVehicles
 [_dict, "explosives", ["SatchelCharge_F","DemoCharge_F","Claymore_F"]] call DICT_fnc_set;
 

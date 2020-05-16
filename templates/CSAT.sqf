@@ -1,7 +1,8 @@
 private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str east] call DICT_fnc_set;
 [_dict, "roles", ["state", "foreign"]] call DICT_fnc_set;
-[_dict, "name", "CSAT"] call DICT_fnc_set;
+[_dict, "name", "Canton Protocol Strategic Alliance Treaty"] call DICT_fnc_set;
+[_dict, "name_info", "Vanilla"] call DICT_fnc_set;
 [_dict, "shortname", "CSAT"] call DICT_fnc_set;
 [_dict, "flag", "Flag_CSAT_F"] call DICT_fnc_set;
 [_dict, "flag_marker", "flag_CSAT"] call DICT_fnc_set;

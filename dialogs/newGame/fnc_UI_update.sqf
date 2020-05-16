@@ -15,8 +15,9 @@ private _roles = ["anti_state", "foreign", "state", "foreign"];
         private _faction_side = AS_entities getVariable _x getVariable "side";
         private _faction_roles = AS_entities getVariable _x getVariable "roles";
         if (_role in _faction_roles and _faction_side == _valid_side) then {
-            _control_list lbAdd (AS_entities getVariable _x getVariable "name");
+            private _index = _control_list lbAdd (format ["%1 ""%2"" (%3)", (AS_entities getVariable _x getVariable "name"), (AS_entities getVariable _x getVariable "shortname"), (AS_entities getVariable _x getVariable "name_info")]);
             _control_list lbSetData [lbSize _control_list - 1, _side + _x];
+            _control_list lbSetToolTip [_index, (AS_entities getVariable _x getVariable "name_info")];
         };
     } forEach allVariables AS_entities;
 

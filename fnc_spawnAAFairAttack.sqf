@@ -9,6 +9,9 @@ private _vehicleType = selectRandom (_toUse call AS_AAFarsenal_fnc_valid);
 // get a valid position to spawn vehicle.
 private _size = 100;
 private _pos = [];
+
+//TODO: improve this
+
 while {count _pos == 0} do {
 	_pos = _origin findEmptyPosition [0, _size, _vehicleType];
 };
