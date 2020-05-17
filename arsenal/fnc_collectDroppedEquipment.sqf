@@ -1,5 +1,5 @@
 #include "../macros.hpp"
-params ["_location","_box"]; //_box appears to be caja for all the calls
+params ["_location"]; //_box appears to be caja for all the calls
 private _size = _location call AS_location_fnc_size;
 private _position = _location call AS_location_fnc_position;
 private _side = _location call AS_location_fnc_side;
@@ -74,7 +74,7 @@ if (_side == "FIA" or _location == "fia_hq") then {
         if (_vehicleCategory != "") then {
 
           if (_vehicleCategory call AS_AAFarsenal_fnc_canAdd) then {
-            [_vehicleCategory] remoteExecCall ["AS_AAFarsenal_fnc_addVehicle", 2];
+            _vehicleCategory remoteExecCall ["AS_AAFarsenal_fnc_addVehicle", 2];
           } else {
             private _count = 0.5+(0.1*(count (["seaport", "AAF"] call AS_location_fnc_TS)));
             [(_vehicleCategory call AS_AAFarsenal_fnc_cost)*_count] remoteExec ["AS_fnc_changeAAFmoney", 2];

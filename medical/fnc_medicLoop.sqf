@@ -22,7 +22,7 @@ while {alive _unit} do {
         if (not isNull _medic and {
           not alive _medic or
           {_medic call AS_medical_fnc_isUnconscious or
-          {(!([_unit] call ace_medical_blood_fnc_isBleeding) and {not (_unit call AS_medical_fnc_isMedic)}) or //Medics can handle unconscious stabilised patients
+          {(!([_unit] call ace_medical_blood_fnc_isBleeding) and {not (_medic call AS_medical_fnc_isMedic)}) or //Medics can handle unconscious stabilised patients
           {(_unit getVariable ["ace_medical_triageLevel", -1]) == 4 or //Drop it if black triaged
           {(_unit getVariable ["ace_medical_bloodVolume", 6]) <= 3 or //Lost fatal amounts of blood, drop it
           {(_unit call AS_medical_fnc_isMoved) or

@@ -87,7 +87,7 @@ private _fnc_initialize = {
 			if (_type call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				diag_log format ["[AS] Error: convoy: tanks requested but not available. AAF bought one", _mission];
 				private _cost = "tanks" call AS_AAFarsenal_fnc_cost;
-				["tanks"] remoteExecCall ["AS_AAFarsenal_fnc_addVehicle", 2];
+				"tanks" remoteExecCall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 			_mainVehicleType = selectRandom (_type call AS_AAFarsenal_fnc_valid);
@@ -111,7 +111,7 @@ private _fnc_initialize = {
 			if (isNil "_type") then {
 				_type = "cars_transport";
 				private _cost = "cars_transport" call AS_AAFarsenal_fnc_cost;
-				["cars_transport"] remoteexeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
+				"cars_transport" remoteexeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 
@@ -124,7 +124,7 @@ private _fnc_initialize = {
 			if ("trucks" call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				diag_log format ["[AS] Error: convoy: truck requested but not available", _mission];
 				private _cost = "trucks" call AS_AAFarsenal_fnc_cost;
-				["trucks"] remoteExeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
+				"trucks" remoteExeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 		};

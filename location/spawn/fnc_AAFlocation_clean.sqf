@@ -14,7 +14,7 @@ if (_location call AS_location_fnc_side == "FIA") then {
     //TODO consider if necessary, as collectroppedequipment is run if location won
     if (!(alive _x)) then {
         ([_x, true] call AS_fnc_getUnitArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b", "_remains"];
-        [caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b, true] call AS_fnc_populateBox;
+        [_cargo_w, _cargo_m, _cargo_i, _cargo_b] RemoteExec ["AS_fnc_addToArsenal", 2];
         [cajaVeh, _remains] call AS_fnc_addMagazineRemains;
         _x call AS_fnc_emptyUnit;
     };
@@ -22,7 +22,7 @@ if (_location call AS_location_fnc_side == "FIA") then {
 
 };
 
-[_location, caja] call AS_fnc_collectDroppedEquipment;
+_location call AS_fnc_collectDroppedEquipment;
 
 //Send each soldier away from closest BLUFORspawn to avoid soldier multiplying when location despawns and spawns while
 //soldiers do not (individually checked for spawn condition). OTOH removing them immediately might make them

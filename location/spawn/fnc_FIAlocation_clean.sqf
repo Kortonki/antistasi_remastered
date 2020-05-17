@@ -47,7 +47,7 @@ if (_location call AS_location_fnc_side == "FIA") then {
     } forEach _soldadosFIA;
 };
 
-[_location, caja] call AS_fnc_collectDroppedEquipment;
+_location call AS_fnc_collectDroppedEquipment;
 
 //add everything
 

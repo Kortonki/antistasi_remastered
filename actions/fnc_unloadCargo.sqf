@@ -42,7 +42,7 @@ private _dist = (abs(((boundingBox _truck select 0) select 1) - ((boundingBox _t
 
 private _dir = getDir _truck;
 private _pos = [(getpos _truck select 0) - (_dist * (sin _dir)), (getpos _truck select 1) - (_dist *(cos _dir)), 0];
-_pos = [_pos, 0, 2, 1.2, 0, 0,0,[],[]] call bis_fnc_findSafePos;
+_pos = [_pos, 0, 2, 1.7, 0, 0,0,[], []] call bis_fnc_findSafePos;
 
 if (_pos isEqualTo []) exitWith {
 
@@ -83,7 +83,7 @@ if (speed _truck > 10) exitWith {
 };
 
 detach _box;
-_box setVehicleposition [_pos, [], 1, "NONE"];
+_box setVehicleposition [_pos, [], 0, "NONE"];
 
 _box setVariable ["asCargo", false, true];
 _truck setVariable ["boxCargo", (_truck getVariable "boxCargo") - [_box], true];
