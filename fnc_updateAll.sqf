@@ -44,7 +44,7 @@ private _FIAResIncomeMultiplier = 1;
             ["AAF", "shortname"] call AS_fnc_getEntity
             ];
 
-            [_text, 15, "AAFcity_FIApresence", false] spawn AS_fnc_globalMessage;
+            [_text, 15, format ["AAFcity_FIApresence_%1", _city], false] spawn AS_fnc_globalMessage;
           };
       };
 
@@ -59,7 +59,7 @@ private _FIAResIncomeMultiplier = 1;
           ["AAF", "shortname"] call AS_fnc_getEntity
           ];
 
-          [_text, 1, "FIAcity_AAFpresence", false] spawn AS_fnc_globalMessage;
+          [_text, 1, format ["FIAcity_AAFpresence_%1", _city], false] spawn AS_fnc_globalMessage;
         };
       };
     } else {
