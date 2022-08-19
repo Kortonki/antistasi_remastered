@@ -319,7 +319,7 @@ AS_allWeaponsAttrs = [];
 			_bull_speed = 0;
 		};
 
-		AS_allWeaponsAttrs pushBack [_weight, _bull_weight*_bull_speed/100*_bull_speed/100, _magazines];
+		AS_allWeaponsAttrs pushBack [_weight, _bull_weight*_bull_speed/50*_bull_speed/50, _magazines];
 
 		private _weaponType = ([_name] call BIS_fnc_itemType) select 1;
 

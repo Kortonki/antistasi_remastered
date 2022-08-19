@@ -61,7 +61,7 @@ while {true} do {
 
 		if ([position _vehicle, 50] call AS_fnc_enemiesNearby) exitWith {
 
-				private _text = "You cannot load cargo with enemies nearby!";
+				private _text = "You cannot load cargo with enemies nearby! (50m)";
 				[_unit, "hint", _text] call AS_fnc_localCommunication;
 				breakTo "main";
 		};
@@ -95,7 +95,7 @@ while {true} do {
 
 		if ([position _vehicle, 50] call AS_fnc_enemiesNearby) exitWith {
 
-				private _text = "You cannot load cargo with enemies nearby!";
+				private _text = "You cannot load cargo with enemies nearby! (50m)";
 				[_unit, "hint", _text] call AS_fnc_localCommunication;
 				breakTo "main";
 		};
@@ -133,7 +133,7 @@ while {true} do {
 
 		if ([position _vehicle, 50] call AS_fnc_enemiesNearby) exitWith {
 
-				private _text = "You cannot load cargo with enemies nearby!";
+				private _text = "You cannot load cargo with enemies nearby! (50m)";
 				[_unit, "hint", _text] call AS_fnc_localCommunication;
 				breakTo "main";
 		};
