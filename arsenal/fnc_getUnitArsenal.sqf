@@ -15,7 +15,7 @@ if (_backpack != "") then {
 	if (_x != "") then {
 		_items pushBack _x;
 	};
-} forEach [headgear _unit, vest _unit] + items _unit + assignedItems _unit - AS_allBinoculars;
+} forEach [headgear _unit, vest _unit] + items _unit + assignedItems _unit + [hmd _unit] - AS_allBinoculars;
 
 // weapons and attachments
 private _result = [weaponsItems _unit] call AS_fnc_getWeaponItemsCargo;

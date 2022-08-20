@@ -44,7 +44,7 @@ private _fnc_spawn = {
 		if (count _validBases > 0) then {
 			private _base = [_validBases,_posicion] call BIS_fnc_nearestPosition;
 			private _position = _base call AS_location_fnc_position;
-			if (_position distance _posicion > 1000) then {
+			if (_position distance2d _posicion > 1000) then {
 				([_posicion, "AAF"] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
 				_soldados append _mortar_units;
 				_vehiculos append _mortar_vehicles;

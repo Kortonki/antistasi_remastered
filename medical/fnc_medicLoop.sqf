@@ -89,7 +89,7 @@ while {alive _unit} do {
         if (not(hasACEmedical)) then {
 
           if _isUnconscious then {
-              _unit setHit ["body",((_unit getHit "body") + 0.0005)];  //Bleedout, test & tweak
+              _unit setHit ["body",((_unit getHit "body") + 0.003)];  //Bleedout, test & tweak: Was 0.0005, now 0.003. 0.0005 would take 416 minutes in avg from 0 to 1
                 if (_unit call AS_medical_fnc_isHealed) then {
                     sleep (5 + random 15);
 

@@ -1,0 +1,47 @@
+params ["_destination"];
+
+if (player getVariable ["loadingCrate", false]) exitWith {
+	hint "You are already transfering cargo...";
+};
+
+private _candidates = nearestObjects [_destination, ["LandVehicle", "ReammoBox_F"], 20];
+_candidates = _candidates select {not (_x isKindOf "StaticWeapon") and {not(_x getVariable ["asCargo", false])}};
+_candidates = _candidates - [_destination];
+if (count _candidates == 0) exitWith {hint "No valid target to transfer from."};
+private _origin = _candidates select 0;
+
+private _total = count (weaponCargo _origin + magazineCargo _origin + itemCargo _origin + backpackCargo _origin);
+
+if (_total == 0) exitWith {
+	hint "closest crate has no cargo";
+};
+
+player setVariable ["loadingCrate", true];
+_total = round (_total / 100);
+if (caja in [_destination, _origin]) then {
+	// in HQ attacks, transfer is 10x slower.
+	if (count ("aaf_attack_hq" call AS_mission_fnc_active_missions) != 0) then {
+		_total = round (_total * 10);
+	};
+};
+_total = _total max 1; // min 1s
+_total = _total min 120; // max 2m
+
+private _fnc_stopCondition = {
+	speed _origin > 1 or {speed _destination > 1}
+};
+
+[_origin, nil, _total, {true}, _fnc_stopCondition, "", ""] call AS_fnc_wait_or_fail;
+
+if (call _fnc_stopCondition) then {
+	hint "Movement cancelled transfer";
+} else {
+	[_origin, _destination] remoteExecCall ["AS_fnc_transferToBox", 2];
+
+	{
+		[_x, _destination] remoteExecCall ["AS_fnc_transferToBox", 2];
+	} foreach (_origin getVariable ["boxCargo", []]);
+};
+
+[0,true] remoteExec ["AS_fnc_showProgressBar",player];
+player setVariable ["loadingCrate", false];
