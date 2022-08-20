@@ -84,7 +84,6 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 
 [_dict, "addItems", [
 
-["FirstAidKit", 100],
 ["Medikit", 2],
 ["ToolKit", 2],
 ["ACE_splint", 10],
