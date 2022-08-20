@@ -19,7 +19,7 @@ if hasACEmedical then {
 //TODO: optimise array operations
 {
     private _item = _x select 0;
-    if (_item in _itemList) then {
+    if (_item in _itemList and{!(_item in unlockedItems)}) then {
       private _index1 = _itemList find _item;
       private _amount = (((_countList select _index1) - 10) max 0) min (_x select 1); //Leave minimum of 10 of each item to the players
       (_return select _foreachindex) set [1, _amount]; //Take all of available
