@@ -220,8 +220,12 @@ if hasRHS then {
 		AS_entities setVariable ["3CB_NATO_AFGHAN", _dict];
 		_dict = call compile preprocessFileLineNumbers "templates\AAF_CW_USSR_EARLY_3CB.sqf";
 		AS_entities setVariable ["3CB_AAF_CW_USSR_EARLY", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\AAF_CW_USSR_LATE_3CB.sqf";
+		AS_entities setVariable ["3CB_AAF_CW_USSR_LATE", _dict];
 		_dict = call compile preprocessFileLineNumbers "templates\NATO_CW_USAF_EARLY_3CB.sqf";
 		AS_entities setVariable ["3CB_AAF_CW_USAF_EARLY", _dict];
+		_dict = call compile preprocessFileLineNumbers "templates\NATO_CW_USAF_LATE_3CB.sqf";
+		AS_entities setVariable ["3CB_AAF_CW_USAF_LATE", _dict];
 	};
 };
 

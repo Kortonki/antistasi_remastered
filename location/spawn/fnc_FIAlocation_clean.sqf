@@ -47,11 +47,11 @@ if (_location call AS_location_fnc_side == "FIA") then {
     } forEach _soldadosFIA;
 };
 
-[_location, caja] call AS_fnc_collectDroppedEquipment;
+_location call AS_fnc_collectDroppedEquipment;
 
 //add everything
 
-[caja, _cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExec ["AS_fnc_populateBox", 2];
+[_cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExec ["AS_fnc_addToArsenal", 2];
 
 //TODO: transfer from Cajaveh to arsenal to repack full mags?
 

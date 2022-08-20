@@ -154,17 +154,20 @@ private _fnc_wait_to_abandon = {
 			//AS_Sset("lockTransfer", true);
 
 			//Improved removal, no variable checks but UNSCHEDULED at SERVER to avoid errors due to lag etc.
+			//Here put to set to avoid issues referencing to array instead of copying it
+			lockArsenal = true;
 			 (call AS_fnc_getArsenal) params ["_cargo_w", "_cargo_m", "_cargo_i", "_cargo_b"];
 
 				   {
 		        private _values = _x select 1;
 		        for "_i" from 0 to (count _values - 1) do {
-		            private _new_value = floor ((_values select _i)*0.1);
+		            private _new_value = floor ((_values select _i)*0.9);
 		            _values set [_i, _new_value];
 		        };
 		    } forEach [_cargo_w, _cargo_m, _cargo_i, _cargo_b];
 
-				[[_cargo_w, _cargo_m, _cargo_i, _cargo_b]] remoteExecCall ["AS_fnc_removeFromArsenal", 2];
+				[_cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExecCall ["AS_fnc_setArsenal", 2];
+				[format ["CAMP LOST\n\n10% of all arsenal items lost!"]] remoteExec ["hint", AS_Commander];
 		};
 	} else {
 		if (_wasAbandoned) then {

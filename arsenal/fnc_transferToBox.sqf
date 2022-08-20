@@ -9,7 +9,7 @@ private _restrict_to_locked = false;
 
 if (_destination == caja) then {
 	//AS_Sset("lockTransfer", false);
-	[_destination, _cargo_w, _cargo_m, _cargo_i, _cargo_b, _restrict_to_locked] remoteExec ["AS_fnc_populateBox", 2];
+	[_cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExec ["AS_fnc_addToArsenal", 2];
 	[cajaVeh, _magazineRemains] call AS_fnc_addMagazineRemains;
 
 	//Publish arsenal update

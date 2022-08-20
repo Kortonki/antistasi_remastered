@@ -19,7 +19,7 @@ if _store then {
  private _daten = dateTonumber _date;
  private _dateFinal = numberToDate [_year, _daten];
 
- [_dateFinal, _message] remoteExec ["AS_stats_fnc_storeMessage", 2];
+ [_dateFinal, _type, _message] remoteExec ["AS_stats_fnc_storeMessage", 2];
 };
 
 sleep (_delayFinal * 60);

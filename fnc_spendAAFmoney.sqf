@@ -34,7 +34,7 @@ while {_AAFskillDropKills >= _skillDropLimit and {_skillAAF > 1}} do {
 };
 
 //////////////// try to restore cities ////////////////
-if (_resourcesAAF > 5000 and {_AAFresAdj > 1000}) then {
+if (_resourcesAAF > 10000 and {_AAFresAdj > 2000}) then {
 	// todo: this only repairs cities. It should repair everything. TEST below, AAF should now only repair their own cities
 	//private _destroyedCities = AS_P("destroyedLocations") arrayIntersect (call AS_location_fnc_cities);
  	private _destroyedCities = AS_P("destroyedLocations") arrayIntersect ([["powerplant","city","factory","resource"], "AAF"] call AS_location_fnc_TS);
@@ -42,7 +42,7 @@ if (_resourcesAAF > 5000 and {_AAFresAdj > 1000}) then {
 	if (count _destroyedCities > 0) then {
 		{
 			private _destroyed = _x;
-			if ((_resourcesAAF > 5000 and _AAFresAdj > 1000) and (not(_destroyed call AS_location_fnc_spawned))) then {
+			if ((_resourcesAAF > 10000 and _AAFresAdj > 2000) and (not(_destroyed call AS_location_fnc_spawned))) then {
 				_resourcesAAF = _resourcesAAF - 5000;
         _AAFresAdj = _resourcesAAF / _AAFlocCount;
 				_repaired pushBack _destroyed;
@@ -63,7 +63,7 @@ if (_resourcesAAF > 5000 and {_AAFresAdj > 1000}) then {
 			// try to rebuild one antenna.
 			{
 				private _location = _x call AS_location_fnc_nearest;
-				if ((_resourcesAAF > 5000 and _AAFresAdj > 1000) and
+				if ((_resourcesAAF > 10000 and _AAFresAdj > 2000) and
 				    {_location call AS_location_fnc_side == "AAF"} and
 					{!(_location call AS_location_fnc_spawned)} and
 					_fnc_isnotRepairing) exitWith {
@@ -89,8 +89,8 @@ private _FIAcontrolledBases = count (
 private _extra_conditions = createSimpleObject ["Static", [0, 0, 0]];
 //TODO casualty limits probably need tweaking. consider to scale for aaf location numbers etc.
 _extra_conditions setVariable ["helis_transport", _FIAcontrolledLocations >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 100];
-_extra_conditions setVariable ["tanks", _FIAcontrolledLocations >= 3 or _FIAcontrolledBases >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 250];
-_extra_conditions setVariable ["helis_armed", _FIAcontrolledLocations >= 3 or _FIAcontrolledBases >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 500];
+_extra_conditions setVariable ["tanks", _FIAcontrolledLocations >= 3 or _FIAcontrolledBases >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 500];
+_extra_conditions setVariable ["helis_armed", _FIAcontrolledLocations >= 3 or _FIAcontrolledBases >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 250];
 _extra_conditions setVariable ["planes", _FIAcontrolledBases >= 1 or (["AAF", "casualties"] call AS_stats_fnc_get) > 1000];
 
 {
@@ -98,7 +98,7 @@ _extra_conditions setVariable ["planes", _FIAcontrolledBases >= 1 or (["AAF", "c
 	private _cost = _x call AS_AAFarsenal_fnc_cost;
 	private _extra_condition = _extra_conditions getvariable [_x,true];
 
-	while {_extra_condition and {_x call AS_AAFarsenal_fnc_canAdd} and {_resourcesAAF > _cost and _AAFresAdj > 1000}} do {
+	while {_extra_condition and {_x call AS_AAFarsenal_fnc_canAdd} and {_resourcesAAF > _cost*2 and _AAFresAdj > 2000}} do { //Cost * 2 so aafresadj can't go below 1000
 		_x call AS_AAFarsenal_fnc_addVehicle;
 		_resourcesAAF = _resourcesAAF - _cost;
     _AAFresAdj = _resourcesAAF / _AAFlocCount;
@@ -117,7 +117,7 @@ deleteVehicle _extra_conditions;
 private _skillFIA = AS_P("skillFIA");
 if (_skillAAF < AS_maxSkill) then {
 	private _coste = 1000 + (1.5*(_skillAAF *750)*(_AAFlocCount/AS_AAFlocCountRef)); //AAF location count resembels amount of soldiers thus the universal cost to train them
-	if (_coste < _resourcesAAF and {_AAFresAdj > 2000}) then { //this adjusted to 2000 from 1000 when limit removed
+	if (_coste*2 < _resourcesAAF and {_AAFresAdj > 2000}) then { //this adjusted to 2000 from 1000 when limit removed
         AS_Pset("skillAAF", _skillAAF + 1);
         _skillAAF = _skillAAF + 1;
 		_resourcesAAF = _resourcesAAF - _coste;
@@ -126,7 +126,7 @@ if (_skillAAF < AS_maxSkill) then {
 };
 
 //////////////// try to build a minefield ////////////////
-if (_resourcesAAF > 2000 and {_AAFresAdj > 1000} and {count (["minefield","AAF"] call AS_location_fnc_TS) < 3}) then {
+if (_resourcesAAF > 4000 and {_AAFresAdj > 2000} and {count (["minefield","AAF"] call AS_location_fnc_TS) < 3}) then {
 	private _minefieldDeployed = call AS_fnc_deployAAFminefield;
 	if (_minefieldDeployed) then {
     _resourcesAAF = _resourcesAAF - 2000;

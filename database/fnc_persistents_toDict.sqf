@@ -95,8 +95,11 @@ private _hqPos = getMarkerPos "FIA_HQ";
 private _vehicles = [];
 
 {
-    private _type = typeOf _x;
+
+
     private _pos = getPos _x;
+
+    private _type = typeOf _x;
     //To make sure objects won't sink
     if ((_pos select 2) < 0) then {_pos set [2, 0];};
     private _dir = getDir _x;
@@ -110,6 +113,7 @@ private _vehicles = [];
 
     _vehicles pushBack [_type, _pos, _dir, _fuel, _fuelCargo, _damage];
     diag_log format ["AS: Savegame, vehicle (%1) saved as persistent: Type %2 Pos %3 Dir %4 Fuel %5 Fuelcargo %6 Damage %7 ",_x, _type, _pos, _dir, _fuel, _fuelCargo, _damage];
+
 
 } forEach AS_P("vehicles");
 

@@ -1,6 +1,7 @@
 private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy;
 [_dict, "side", str west] call DICT_fnc_set;
-[_dict, "name", "Livonia Resistance Army (RHS and 3CB)"] call DICT_fnc_set;
+[_dict, "name", "Livonia Resistance Army"] call DICT_fnc_set;
+[_dict, "name_info", "RHS and 3CB"] call DICT_fnc_set;
 [_dict, "shortname", "LRA"] call DICT_fnc_set;
 [_dict, "flag", "Flag_Enoch_F"] call DICT_fnc_set;
 
@@ -45,7 +46,8 @@ _uniforms append [
 	"IEDUrbanBig_Remote_Mag",
 	"IEDLandBig_Remote_Mag",
 	"IEDUrbanSmall_Remote_Mag",
-	"IEDLandSmall_Remote_Mag"
+	"IEDLandSmall_Remote_Mag",
+	"Chemlight_blue"
 	]] call DICT_fnc_set;
 
 [_dict, "unlockedBackpacks", ["B_FieldPack_green_F", "B_Bergen_mcamo_F"]] call DICT_fnc_set;
@@ -147,9 +149,9 @@ unlockeditems pushback "Chemlight_blue";
 
 // FIA minefield uses first of this list
 [_dict, "land_vehicles", [
-	"UK3CB_CHC_C_Tractor_Old",
 	"UK3CB_C_Hilux_Closed",
 	"UK3CB_C_Hilux_Open",
+	"UK3CB_CHC_C_Tractor_Old",
 	"UK3CB_C_LandRover_Open",
 	"UK3CB_C_LandRover_Closed",
 	"rhsgref_cdf_b_reg_uaz_open",

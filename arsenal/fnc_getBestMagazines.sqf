@@ -18,7 +18,7 @@ if (count _alwaysAvailable > 0) exitWith {
 };
 
 // else, fill result with the mags from the box
-private _availableMags = (call AS_fnc_getArsenal) select 1;
+private _availableMags = +((call AS_fnc_getArsenal) select 1);
 private _result = [[], []];  // magazines names, magazines count
 private _totalMags = 0;  // sum of the second list of _result.
 private _count = count (_availableMags select 0);

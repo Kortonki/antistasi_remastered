@@ -112,7 +112,8 @@ SHK_Fastrope_fnc_AIs = {
 
   [_heli, _units] spawn {
     params ["_heli","_units","_ropes","_rope","_count","_sh",["_i",0]];
-    waitUntil {sleep 3; (speed _heli) < 5 and {((velocity _heli) select 2) * 3.6 < 0.5}};
+    waitUntil {sleep 3; isNull _heli or ((speed _heli) < 5 and {((velocity _heli) select 2) * 3.6 < 0.5})};
+    if (isNull _heli) exitWith {};
     sleep 4;
     _heli call SHK_Fastrope_fnc_createRopes;
     private _driver = driver _heli;

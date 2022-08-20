@@ -70,8 +70,8 @@ private _fnc_allPossibleMissions = {
         //The actual check
 
         False or
-        (not (_missionType in ["convoy_money", "convoy_supplies", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel"])) or
-        (_missionType in ["convoy_supplies", "convoy_fuel", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_money"] and {
+        (not (_missionType in ["convoy_money", "convoy_supplies", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel", "rescue_refugees", "kill_specops"])) or
+        {_missionType in ["convoy_supplies", "convoy_fuel", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_money"] and {
 
           private _locs = ["base", "airfield"];
           if (_missionType == "convoy_money") then {
@@ -84,8 +84,8 @@ private _fnc_allPossibleMissions = {
 
           private _condition = {false or (_base_condition and {_lead_condition and {_truck_condition}})};
           call _condition
-        }) or
-        (_missionType == "convoy_armor" and {
+        }} or
+        {_missionType == "convoy_armor" and {
 
           private _lead_condition = ("cars_transport" call AS_AAFarsenal_fnc_countAvailable) > 0;
           private _truck_condition = ("trucks" call AS_AAFarsenal_fnc_countAvailable) > 3;
@@ -95,7 +95,11 @@ private _fnc_allPossibleMissions = {
 
           private _condition = {false or (_armor_condition and {_lead_condition and {_base_condition and {_truck_condition}}})};
           call _condition
-        })
+        }} or
+        {_missionType in ["rescue_refugees", "kill_specops"] and {
+          private _condition = {false or (_location call AS_location_fnc_side) != "FIA"};
+          call _condition
+        }}
 
     };
 

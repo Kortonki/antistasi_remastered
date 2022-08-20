@@ -6,8 +6,7 @@ if (_vehicle == caja) then {
     [_player, "inventory", _vehicle] remoteExec ["AS_fnc_pollServerArsenal", 2];
   };
   private _text = "ARSENAL INVENTORY:\n";
-  private _arsenal = _args;
-  private _itemArray = _arsenal call AS_fnc_countArsenal;
+  private _itemArray = _args call AS_fnc_countArsenal;
   [_itemArray, _text, true] call AS_fnc_displayCargo_hint;
 
 } else {

@@ -35,17 +35,22 @@ if (!(_skipping)) then {
     diag_log format ["[AS] ResourcesUpdate: movement_sendAAFroadPatrol started at %1", date];
 
     // Check if any communications were intercepted.
-    [] call AS_fnc_revealFromAAFRadio;
+    call AS_fnc_revealFromAAFRadio;
 
     if isMultiplayer then {[] spawn AS_fnc_chooseCommander;};
 
 };
 
+
+call AS_fnc_eventCheck;
+
 // repair and re-arm all statics.
 //TODO: optimise and improve this (check for nearby enemies etc.)
 {
     private _veh = _x;
-    if ((_veh isKindOf "StaticWeapon") and ({isPlayer _x} count crew _veh == 0) and (alive _veh)) then {
+    private _pos = getpos _veh;
+    private _nearestLoc = ["FIA" call AS_location_fnc_S, _pos] call BIS_fnc_nearestPosition;
+    if ((_veh isKindOf "StaticWeapon") and {{isPlayer _x} count crew _veh == 0 and {alive _veh and {_pos distance2d (_nearestLoc call AS_location_fnc_position) <= (_nearestLoc call AS_location_fnc_size)}}}) then {
         _veh setDamage 0;
         [_veh,1] remoteExec ["setVehicleAmmoDef",_veh];
     };

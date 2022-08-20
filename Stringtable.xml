@@ -379,6 +379,71 @@
 			<Key ID="STR_msg_FIAcity_AAFpresence">
 				<Original>Local population in %1 is worried about %2 presence in their city. They're discontent with our ability to handle the situation.</Original>
 			</Key>
+
+			<Key ID="STR_msg_AAF_100casualties">
+				<Original>International press reports: "Armed conflict of %1 continues, as occupying forces, %2, have lost more than 100 soldiers in the last few days. Guerrilla forces, %3, haven't disclosed any numbers of their fallen, but our experts estimate that about %4 of them are either killed or missing in action. Our reporters keep a close eye on the progress."
+</Original>
+			</Key>
+			<Key ID="STR_msg_AAF_250casualties_FIAhigh">
+				<Original>International press reports: "Battles are getting bloodier every day at %1, with more than 250 reported casualties of %2 forces. According to our special reporters on the field, defending liberation army %3 stands with %4 soldiers missing in action.
+    Spokesperson of %5, which is allied to %2, didn't give any comments to our reporters. It seems that %5 is taking a little distance from the ongoing feud for now."</Original>
+			</Key>
+			<Key ID="STR_msg_AAF_250casualties_FIAlow">
+				<Original>International press reports: "Battles are getting bloodier every day at %1, with more than 250 reported deaths of %2 forces. According to our specialist reporters at the field, defending liberation army %3 stands with %4 soldiers missing in action."
+    Spokesperson of %5, which is allied to %2, said the following:
+    "Liberation of %1 is going as planned. There are always some warlike minor terrorist factions, but they shall be crushed. Our support towards %2 grows even stronger, so their sacrifices will not go in vain."</Original>
+			</Key>
+			<Key ID="STR_msg_AAF_500casualties">
+				<Original>International press reports: "Situation is getting more severe at %1. Battles are constant with both forces suffering casualties every day. It was reported today that occupying force, %2, reached 500 men killed in action, during the course of this conflict. Our experts say that the defending forces, %3, have themselves suffered losses of about %4 men."
+    We reached the anonymous spokesperson of %3 for a comment:
+    "This is a significant milestone for %3, and truly a remarkable day for all %1 for decades to remember. Let this show our enemies, that the bigger you are, the harder you fall."
+    When asked if %3 is having a celebration for their "significant milestone", spokesperson only said that "party is always in our minds, but let's finish the war first".</Original>
+			</Key>
+			<Key ID="STR_msg_AAF_1000casualties">
+				<Original>International press reports: "Headquarters of %5 reported today, that their ally, %2, has suffered it's 1000th casualty in the armed conflict of %1. Here's the comment of their spokesperson:"
+    "This is a sad day to our allies, with so many soldiers being brutally murdered over the last weeks. This can't go on like this. Something must change."
+    "When asked if this means truce, or increasing aggressiveness from %2, we didn't get clear answer. Although, the spokesperson of %3 was more clear with their message:"
+    "We will drive the enemy from our lands: this we owe to our %4 fallen brethren. There will be peace only when there is no %2 blood left to spill on our fields, hills, cities and villages! People of %1 can rest easy, for we are awake!"
+    "Our reporters are not sure about resting easy, since battles still take place both night and day."</Original>
+			</Key>
+
+			<Key ID="STR_msg_FIA_killsReporter">
+				<Original>International press reports: "Battle of %1 rages on, taking victims not only from warring factions, but also from the rows of innocent bystanders. Today one of our special journalists met his demise by the hands of guerrilla army %2.
+    We got a comment from spokesperson of %3, active associate of %2:  "This is something we definitely won't stand by, and there will be consequences. We need to seriously think about our values, and make it clear to our allies, that we are the good guys -- and so they should be, too."
+    "It is not known if killing our reporter was by a stray bullet, or intentional act of violence, but a terrible loss to media and free press worldwide, in any case. He, and especially his devotion to always be there where the fire burns the hottest, will be missed."
+</Original>
+			</Key>
+
+			<Key ID="STR_msg_AAF_killsReporter">
+				<Original>International press reports: "Battle of %1 claims one more collateral victim, as our reporter was killed in the field. The soldier accused of homicide was wearing the uniform of %2, which is considered as the occupying forces in this conflict.
+    	We reached the spokesperson of %3, faction reportedly allied to %4: "We will not support the slaughter of the innocent. There will be investigations of the incident, where we will confirm our strong suspicions that the deed was actually made by %2 soldier."
+	   "Our reporter was well liked by his co-workers, and always went where the fighting was worst, reporting the truth for all the world. He will be missed." %3 later publicly condemned aforementioned actions of the %2 and the %2 occupation of %1.
+</Original>
+			</Key>
+
+			<Key ID="STR_msg_AAFfirstHelis">
+				<Original>International press reports: "Local government of %1 has declared that all air traffic in the area is to be restricted, and civilian airlines need to plan detours around the zone of conflict. This is a precaution caused by local armed conflict, in which %2 have started to use transport helicopters. %3 is expected to use anti-air weaponry as a result, so all airspace of %1 is considered unsafe for civilian airplanes. We keep an eye on the progress of the situation, but this aviation ban is likely to stay in place until the end of conflict."
+			</Original>
+			</Key>
+
+			<Key ID="STR_msg_AAFfirstArmedHelis">
+				<Original>International press reports: "Today, civilians in the area of %1 have been instructed to stay indoors and keep an eye to the sky, because %2 air forces have deployed armed transport helicopters to the zone of conflict. Spokesperson of %2 declared this to be "a necessary retaliation" for the increased activity of %3, a guerrilla army formed by local people and third party volunteers."
+			</Original>
+			</Key>
+
+			<Key ID="STR_msg_AAFfirstTanks">
+				<Original>International press reports: "Severity of armed conflict of %1 has taken a step forward, as occupying forces of %2 have sent heavy armor to the field. A local civilian, who wishes to stay anonymous, gave us a comment:"
+	"They're loud and ruin our roads -- not that they ever were in good shape anyway. And when they're not destroying our roads, they destroy our fields. Walking the streets of our town is also getting more dangerous, as I'm not sure if a tank driver sees well what's in front of him."
+	"Local people are, understandably, concerned about their safety with these heavily armed 40 ton behemoths roaming all over their neighborhood."
+			</Original>
+			</Key>
+
+			<Key ID="STR_msg_AAFfirstPlanes">
+				<Original>International press reports: "Aviation exclusion zone of %1 has been enlarged. Air forces of %2 have reportedly been using jet fighters in the zone, probably causing %3 to use anti-air weaponry for longer distances. Civilian aircrafts have been banned for some time now already, and airlines may need to make some extra adjustments to their previous detours to keep safe distance from the conflict zone."
+
+			</Original>
+			</Key>
+
 		</Container>
 	</Package>
 </Project>

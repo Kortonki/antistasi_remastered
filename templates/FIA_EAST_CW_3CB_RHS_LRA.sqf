@@ -1,6 +1,6 @@
 private _dict = ([AS_entities, "3CB_FIA_WEST_LRA"] call DICT_fnc_get) call DICT_fnc_copy;
 [_dict, "side", str east] call DICT_fnc_set;
-[_dict, "name", "Livonia Resistance Army (RHS and 3CB)"] call DICT_fnc_set;
+[_dict, "name", "Livonia Resistance Army"] call DICT_fnc_set;
 
 /*[_dict, "soldier", "rhsgref_ins_rifleman"] call DICT_fnc_set;
 [_dict, "crew", "rhsgref_ins_crew"] call DICT_fnc_set;

@@ -1,5 +1,5 @@
 params ["_unit", "_medic"];
-if (alive _unit) then {
+if (alive _unit and {(_unit getVariable ["ace_medical_triageLevel", -1]) != 4 and {(_unit getVariable ["ace_medical_bloodVolume", 6]) > 3}}) then {
   _medic groupChat (format ["I'm ready with %1", (name _unit)]);
 } else {
   _medic groupChat "He's dead already";

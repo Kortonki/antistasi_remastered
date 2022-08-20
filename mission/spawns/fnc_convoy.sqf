@@ -87,7 +87,7 @@ private _fnc_initialize = {
 			if (_type call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				diag_log format ["[AS] Error: convoy: tanks requested but not available. AAF bought one", _mission];
 				private _cost = "tanks" call AS_AAFarsenal_fnc_cost;
-				["tanks"] remoteExecCall ["AS_AAFarsenal_fnc_addVehicle", 2];
+				"tanks" remoteExecCall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 			_mainVehicleType = selectRandom (_type call AS_AAFarsenal_fnc_valid);
@@ -111,7 +111,7 @@ private _fnc_initialize = {
 			if (isNil "_type") then {
 				_type = "cars_transport";
 				private _cost = "cars_transport" call AS_AAFarsenal_fnc_cost;
-				["cars_transport"] remoteexeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
+				"cars_transport" remoteexeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 
@@ -124,7 +124,7 @@ private _fnc_initialize = {
 			if ("trucks" call AS_AAFarsenal_fnc_countAvailable == 0) then {
 				diag_log format ["[AS] Error: convoy: truck requested but not available", _mission];
 				private _cost = "trucks" call AS_AAFarsenal_fnc_cost;
-				["trucks"] remoteExeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
+				"trucks" remoteExeccall ["AS_AAFarsenal_fnc_addVehicle", 2];
 				[-(_cost)] remoteExec ["AS_fnc_changeAAFmoney", 2];
 			};
 		};
@@ -172,10 +172,10 @@ private _fnc_spawn = {
 	//_posbase = _posbase findEmptyPosition [0, 10, _mainVehicleType];
 	private _escortSize = 1;
 	private _frontLine = false;
-	if ([_location] call AS_fnc_location_isFrontline) then {
+	if (_location call AS_fnc_location_isFrontline) then {
 		_frontLine = true;
-		_escortSize = (round random 1) + 2
-	};
+		_escortSize = (round random 1) + 2;
+};
 
 	private _leadCategory = ["cars_transport", "cars_armed"] select (["cars_armed"] call AS_AAFarsenal_fnc_countAvailable > 0);
 
@@ -252,6 +252,11 @@ private _fnc_spawn = {
 	//_mainVehicle setConvoySeparation _separation;
 
 	[_origin,(5+10*_escortsize)] call AS_location_fnc_increaseBusy;
+
+	//This is done after so busy parameter is applied before checking for convoy
+	if (_frontLine) then {
+		[[_location], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute; //Before convoy try to send forces to secure the area first
+	};
 
 	//The crate for money and supply convoys
 
