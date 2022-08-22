@@ -79,7 +79,7 @@ if (_type == "binoculars") then {
 };
 
 if (_type == "throw_grenades") then {
-	_availableItems = getMagazineCargo _box;
+	_availableItems = (call AS_fnc_getArsenal) select 1; // Magazines
 
 	// select grenades that cause any damage
 	_allItemsAttrs = [];
@@ -106,7 +106,7 @@ if (_type == "throw_grenades") then {
 };
 
 	if (_type == "throw_smokes") then {
-		_availableItems = getMagazineCargo _box;
+		_availableItems = (call AS_fnc_getArsenal) select 1; // Magazines
 
 		// select grenades that cause any damage
 		_allItemsAttrs = [];

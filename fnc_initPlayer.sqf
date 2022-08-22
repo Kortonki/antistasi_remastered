@@ -91,6 +91,10 @@ player addEventHandler ["GetInMan", {
 				AS_Sset("reportedVehs", AS_S("reportedVehs") + [_vehicle]);
 		};
 
+		if (!(captive _unit) and {typeof _vehicle in ((["CIV", "vehicles"] call AS_fnc_getEntity) + civHeli)}) then {
+			[true] spawn AS_fnc_activateUndercover;
+		};
+
 
 		private _EHid2 = [_vehicle, "radio"] call AS_fnc_addAction;
 		private _ids = player getVariable ["EH_ids", []];
@@ -198,3 +202,13 @@ player addEventhandler ["handleHeal", {
 
 		_return
 	}];
+
+	player addEventHandler ["FiredMan", {
+	params ["_unit", "_weapon"];
+
+	if ((_weapon isKindof "Put") and {captive _unit and {[_unit] call AS_fnc_detected}}) then {
+			_unit setCaptive false;
+	};
+
+
+}];

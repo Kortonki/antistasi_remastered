@@ -79,7 +79,7 @@ if (_vehicle != _player) then {
 			_reason = "You cannot go undercover because you are wearing " + (_isMilitaryHints select _forEachIndex);
 		};
 	} forEach _isMilitaryDressedConditions;
-	if (dateToNumber date < _compromised) then {
+	if (dateToNumber date < _compromised and {_vehicle != _player}) then {
 		_reason = "You cannot go undercover because you are compromised. [use heal and repair in HQ or wait 30 minutes]";
 	};
 };
@@ -150,7 +150,7 @@ while {_reason == ""} do {
 				"vehicleWithExplosives"
 			};
 
-			if call _isMilitaryDressed exitWith {
+			if (call _isMilitaryDressed and {[_player, 4] call AS_fnc_detected}) exitWith {
 				"militaryDressed"
 			};
 

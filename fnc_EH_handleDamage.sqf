@@ -1,7 +1,7 @@
 #include "macros.hpp"
 params ["_unit", "_part", "_dam", "_injurer"];
 
-if (captive _injurer) then {
+if (captive _injurer and {!(side _injurer in [("FIA" call AS_fnc_getFactionSide), civilian]) or [_injurer] call AS_fnc_detected}) then {
 	[_injurer, false] remoteExecCall ["setCaptive", _injurer];
 };
 
