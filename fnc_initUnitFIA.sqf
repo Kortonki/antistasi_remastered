@@ -137,15 +137,15 @@ if (isPlayer(leader _unit)) then {
 	}];*/
 
 	//Seems buggy,, commented out
-	/*_unit addEventHandler ["GetOutMan", {
+	_unit addEventHandler ["GetOutMan", {
 		private ["_unit","_vehicle"];
 		_unit = _this select 0;
 		_vehicle = _this select 2;
 
-		if (_vehicle in (AS_S("reportedVehs")) and {[_unit] call AS_fnc_detected}) then {
+		if (_vehicle in (AS_S("reportedVehs")) and {[_vehicle, 4] call AS_fnc_detected}) then {
 			[_unit, false] remoteExecCall ["setCaptive", _unit];
 		};
-	}];*/
+	}];
 
 } else {
 	_unit addEventHandler ["killed", {

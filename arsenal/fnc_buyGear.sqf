@@ -52,4 +52,18 @@ if (_type in ["ASRifles", "Machineguns", "Sniper Rifles", "Launchers", "Pistols"
     };
 };
 
+[_player, "hint", "The merchandise is in the box"] remoteExec ["AS_fnc_localCommunication", _player];
+
+if ([_player] call AS_fnc_detected) then {
+	{
+		[_x, false] remoteExecCall ["setcaptive", _x];
+		if (_x isKindOf "C_Nikos") then {
+			[_x, 0] remoteExec ["allowfleeing" _x];
+			[_x, false] remoteExec ["stop", _x];
+			[_x, "AWARE"] remoteExec  ["setBehaviour", _x];
+		};
+
+	} foreach (allUnits select {side _x == "FIA" call AS_fnc_getFactionSide and {_x distance2D _player < 50}});
+};
+
 [0, -_money] remoteExec ["AS_fnc_changeFIAmoney",2];

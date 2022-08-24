@@ -57,7 +57,7 @@ private _fnc_wait = {
 		(not alive _crate) or (dateToNumber date > _max_date)
 	};
 
-	waitUntil {sleep 1; ((_crate distance2D _position < 100) and (speed _crate < 1)) or _fnc_missionFailedCondition};
+	waitUntil {sleep 1; ((_crate distance2D _position < 100) and {not(_crate getVariable ["asCargo", false]) or (isNull attachedTo _crate))} or _fnc_missionFailedCondition};
 
 	if (call _fnc_missionFailedCondition) exitWith {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -96,10 +96,10 @@ private _fnc_run = {
 		while {([_mission, "state_index"] call AS_spawn_fnc_get) == 3} do {
 			{
 				private _soldierFIA = _x;
-				if (captive _soldierFIA) then {
-					[_soldierFIA,false] remoteExec ["setCaptive",_soldierFIA];
+				if (captive _soldierFIA and {[_soldierFIA] call AS_fnc_detected}) then {
+					[_soldierFIA, false] remoteExec ["setCaptive",_soldierFIA];
 				};
-			} forEach ([300, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
+			} forEach ([50, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
 			sleep 10;
 		};
 	};

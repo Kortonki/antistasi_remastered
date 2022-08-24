@@ -7,7 +7,7 @@ private _fnc_initialize = {
 	private _tskTitle = _mission call AS_mission_fnc_title;
 	_tskTitle = format ["%1 to %2", _tskTitle, _location];
 
-	private _tiempolim = 60;
+	private _tiempolim = 180;
 	private _fechalim = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _tiempolim];
 
 	private _posHQ = "FIA_HQ" call AS_location_fnc_position;
@@ -17,8 +17,8 @@ private _fnc_initialize = {
 	private _bases = [];
 	{
 		private _basePosition = _x call AS_location_fnc_position;
-		if ((_position distance _basePosition < 7500) and
-			(_position distance _basePosition > 1500) and
+		if ((_position distance2D _basePosition < 7500) and
+			(_position distance2D _basePosition > 1500) and
 			(not (_x call AS_location_fnc_spawned))) then {_bases pushBack _x}
 	} forEach (["base", "AAF"] call AS_location_fnc_TS);
 
@@ -46,9 +46,9 @@ private _fnc_initialize = {
 		private _fposition = _nfMarker call AS_location_fnc_position;
 		private _hposition = _nfMarker call AS_location_fnc_position;
 		if ((!surfaceIsWater _crashPosition) &&
-		    (_crashPosition distance _posHQ < 4000) &&
-			(_fposition distance _crashPosition > 500) &&
-			(_hposition distance _crashPosition > 800)) exitWith {};
+		    (_crashPosition distance2D _posHQ < 4000) &&
+			(_fposition distance2D _crashPosition > 500) &&
+			(_hposition distance2D _crashPosition > 800)) exitWith {};
 	};
 
 	if (_crashPosition isEqualTo []) exitWith {
@@ -199,7 +199,7 @@ private _fnc_wait_to_arrive = {
 	private _fnc_missionFailedCondition = {(dateToNumber date > _max_date) or (not alive _crate)};
 	// wait for any activity around the truck
 	waitUntil {sleep 5;
-		({(side _x == ("FIA" call AS_fnc_getFactionSide)) and (_x distance _crate < 50)} count allUnits > 0) or _fnc_missionFailedCondition
+		({(side _x == ("FIA" call AS_fnc_getFactionSide)) and (_x distance2D _crate < 50)} count allUnits > 0) or _fnc_missionFailedCondition
 	};
 
 	if (call _fnc_missionFailedCondition) then {
@@ -330,10 +330,14 @@ private _fnc_wait_to_deliver = {
 
 	} else {
 		if (not(alive _crate)) then {
-			[-10,-5, _position, true] remoteExec ["AS_fnc_changeCitySupport",2]; // No one delivers the crate: both lose support
-		} else {
-			[20,0, _position] remoteExec ["AS_fnc_changeCitySupport", 2]; // AAF manages to deliver the crate
+			[-10, -5, _position, true] remoteExec ["AS_fnc_changeCitySupport",2]; // No one delivers the crate: both lose support
 		};
+
+		// COMMENTED OUT until there's a way to check if FIA has intervened or the mission is designed that the AAF actually delivers the crate.
+		//Perhaps when the patrol arrives the crate is loaded and delivered to the destination
+		/* else {
+			[20,0, _position] remoteExec ["AS_fnc_changeCitySupport", 2]; // AAF manages to deliver the crate
+		};*/
 
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExecCall ["AS_mission_fnc_fail", 2];

@@ -58,7 +58,7 @@ if (_vehicle != _player) then {
 	if (vehicle _player in AS_S("reportedVehs")) then {
 		_reason = "You cannot go undercover because you are in a compromised vehicle. Change your vehicle or renew it in the Garage to become undercover.";
 	};
-	if ([_player] call AS_fnc_detected) then {
+	if ([_player, 4] call AS_fnc_detected) then {
 		_reason = "You cannot go undercover because the enemy knows you.";
 	};
 
@@ -123,7 +123,7 @@ while {_reason == ""} do {
 			};
 			if (not (_type in civHeli) and
 				{count (_veh nearRoads 50) == 0} and
-				{[_player] call AS_fnc_detected}
+				{[_veh] call AS_fnc_detected}
 				) exitWith {
 				// no roads within 50m and detected.
 				"awayFromRoad"
@@ -132,25 +132,25 @@ while {_reason == ""} do {
 				private _base = [_all_spotters, _player] call BIS_fnc_nearestPosition;
 				private _position = _base call AS_location_fnc_position;
 				private _size = _base call AS_location_fnc_size;
-				_player distance _position < _size}) exitWith {
+				_player distance2D _position < _size}) exitWith {
 					"distanceToLocation"
 			};
 			if ((_type in civHeli) and {
 				private _base = [_heli_spotters, _player] call BIS_fnc_nearestPosition;
 				private _position = _base call AS_location_fnc_position;
 				private _size = _base call AS_location_fnc_size;
-				_player distance _position < _size*2}) exitWith {
+				_player distance2D _position < _size*2}) exitWith {
 					"distanceToLocation"
 			};
 			if (hasACE and {not(_type in civHeli)} and
 				{false or
 					{((position _player nearObjects ["DemoCharge_Remote_Ammo", 5]) select 0) mineDetectedBy ("AAF" call AS_fnc_getFactionSide)} or
 					{((position _player nearObjects ["SatchelCharge_Remote_Ammo", 5]) select 0) mineDetectedBy ("AAF" call AS_fnc_getFactionSide)}} and
-					{[_player] call AS_fnc_detected}) exitWith {
+					{[_veh] call AS_fnc_detected}) exitWith {
 				"vehicleWithExplosives"
 			};
 
-			if (call _isMilitaryDressed and {[_player, 4] call AS_fnc_detected}) exitWith {
+			if (call _isMilitaryDressed and {[_veh, 4] call AS_fnc_detected}) exitWith {
 				"militaryDressed"
 			};
 
@@ -212,27 +212,31 @@ private _setPlayerCompromised = {
 
 	// the player only becomes compromised when he is detected
 	//
-	if ([_player] call AS_fnc_detected) then {
-		_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
-		if (vehicle _player != _player) then {
-			AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
-			call _setVehicleGroupCompromised;
-		};
-
-
-	} else {
+	if ([vehicle _player] call AS_fnc_detected) then {
+		if (vehicle _player == _player) then {
+				_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
+			} else {
+				AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
+				if ([vehicle _player, 4] call AS_fnc_detected) then {
+					call _setVehicleGroupCompromised;
+					_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
+				};
+			};
+	};
 		//If player is spotted while in a vehicle make it comprose (after the initilian bust
 		//If player goes back to undercover, ditch this check
-		waitUntil {sleep (AS_spawnLoopTime); [_player] call AS_fnc_detected or not(alive _player) or (captive _player)};
-		if (alive _player and {!(captive _player)}) then {
-			_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
-			if (vehicle _player != _player) then {
+		waitUntil {sleep (AS_spawnLoopTime); [vehicle _player] call AS_fnc_detected or not(alive _player) or (captive _player)};
+		if ([vehicle _player] call AS_fnc_detected and {alive _player and {!(captive _player)}}) then {
+			if (vehicle _player == _player) then {
+				_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
+			} else {
 				AS_Sset("reportedVehs", AS_S("reportedVehs") + [vehicle _player]);
-				call _setVehicleGroupCompromised;
+				if ([vehicle _player, 4] call AS_fnc_detected) then {
+					call _setVehicleGroupCompromised;
+					_player setVariable ["compromised", (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
+				};
 			};
 		};
-
-	};
 };
 
 //It is spawned so waituntil won't stop from showing the message below

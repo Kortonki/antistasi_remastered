@@ -110,9 +110,9 @@ player addEventHandler ["GetOutMan", {
 
 	//If player seen exiting a comromised vehicle, naturally should not able to get undercover
 	//Commented out, probably buggy
-	/*if (_vehicle in (AS_S("reportedVehs")) and {[_unit] call AS_fnc_detected}) then {
+	if (_vehicle in (AS_S("reportedVehs")) and {[_vehicle, 4] call AS_fnc_detected}) then {
 		_unit setVariable ["compromised",  (dateToNumber [date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
-	};*/
+	};
 }];
 
 player addEventHandler ["killed", {

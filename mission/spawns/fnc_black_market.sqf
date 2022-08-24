@@ -65,7 +65,7 @@ private _fnc_spawn = {
 	//_dealer setunitpos "up";
 	_dealer setCaptive true;
 	_dealer allowfleeing 0;
-	_dealer setBehaviour "SAFE";
+	_dealer setBehaviour "CARELESS";
 	_dealer stop true;
 
 	//Arm the guy with pistol
@@ -77,8 +77,8 @@ private _fnc_spawn = {
 	{
 		call {
 			if (str typeof _x find "Box_IND_Wps_F" > -1) exitWith {expCrate = _x; [expCrate] call AS_fnc_emptyCrate;};
-			if (str typeof _x find "Box_Syndicate_Wps_F" > -1) exitWith { [_x] call AS_fnc_emptyCrate;};
-			if (str typeof _x find "Box_IED_Exp_F" > -1) exitWith { [_x] call AS_fnc_emptyCrate;};
+		//	if (str typeof _x find "Box_Syndicate_Wps_F" > -1) exitWith { [_x] call AS_fnc_emptyCrate;}; // Deleted from composition so less confusing for the player
+		//	if (str typeof _x find "Box_IED_Exp_F" > -1) exitWith { [_x] call AS_fnc_emptyCrate;};
 		};
 	} forEach _objs;
 
@@ -95,8 +95,10 @@ private _fnc_wait_to_arrive = {
 
 	private _fnc_missionFailedCondition = {(dateToNumber date > _max_date) or !(alive _dealer)};
 
+	[_dealer, "buy_exp"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
+
 	private _missionStartCondition = {
-		{_x distance _dealer < 200} count (allPlayers - (entities "HeadlessClient_F")) > 0
+		{_x distance2D _dealer < 200} count (allPlayers - (entities "HeadlessClient_F")) > 0
 	};
 
 	waitUntil {sleep 1; False or _missionStartCondition or _fnc_missionFailedCondition};
@@ -106,10 +108,12 @@ private _fnc_wait_to_arrive = {
 		_mission remoteExec ["AS_mission_fnc_fail", 2];
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
 		[_mission, "state_index", 3] call AS_spawn_fnc_set;
-	} else {
+	};
+	//COMMENTED OUT: Why would CSAT know about the dealer and at the same time AAF not attacking it?
+	/* else {
 		_dealer allowDamage true;
 		[["spawnCSAT", _posCmp, _location, 15, "transport", "small"], "AS_movement_fnc_sendEnemyQRF"] remoteExec ["AS_scheduler_fnc_execute", 2];
-	};
+	};*/
 };
 
 private _fnc_wait_to_end = {
@@ -131,10 +135,10 @@ private _fnc_wait_to_end = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 
 		//[[_dealer,"buy_exp"],"AS_fnc_addAction"] call BIS_fnc_MP;
-		[_dealer, "buy_exp"] remoteExec ["AS_fnc_addAction", [0, -2] select isDedicated];
-		[_dealer, false] remoteExecCall ["setcaptive", _dealer];
-		[_dealer, 1] remoteExecCall ["allowFleeing", _dealer];
-		_dealer stop false;
+
+		//[_dealer, false] remoteExecCall ["setcaptive", _dealer]; //COMMENTED OUT: blowing cover is handled during the dialog
+		//[_dealer, 1] remoteExecCall ["allowFleeing", _dealer];
+		//_dealer stop false;
 
 		[_mission] remoteExec ["AS_mission_fnc_success", 2];
 	};
@@ -143,6 +147,9 @@ private _fnc_wait_to_end = {
 
 	//The dealer will wait for 15 minutes
 	private _time = time + 15*60;
+	{
+		[_x, "hint", "The dealer will wait for 15 minutes"] remoteExec ["AS_fnc_localCommunication", _x];
+	} foreach ((allPlayers - (entities "HeadlessClient_F")) select {_x distance2D _dealer < 200});
 	waitUntil {sleep 1; (time > _time or dateToNumber date > _max_date) or !(alive _dealer) or (fleeing _dealer)};
 
 
@@ -152,7 +159,7 @@ private _fnc_wait_to_end = {
 		//_dealer enableAI "ANIM";
 		//_dealer enableAI "MOVE";
 		[_dealer, "globalChat", "That's it, i'm out of here!"] call AS_fnc_localCommunication;
-		_dealer doMove ((selectRandom ("resource" call AS_location_fnc_T)) call AS_location_fnc_position);
+		_dealer doMove ((selectRandom ("city" call AS_location_fnc_T - [_mission call AS_mission_fnc_location])) call AS_location_fnc_position);
 	};
 };
 
