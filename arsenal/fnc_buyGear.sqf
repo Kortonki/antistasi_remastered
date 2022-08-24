@@ -58,7 +58,7 @@ if ([_player] call AS_fnc_detected) then {
 	{
 		[_x, false] remoteExecCall ["setcaptive", _x];
 		if (_x isKindOf "C_Nikos") then {
-			[_x, 0] remoteExec ["allowfleeing" _x];
+			[_x, 0] remoteExec ["allowfleeing", _x];
 			[_x, false] remoteExec ["stop", _x];
 			[_x, "AWARE"] remoteExec  ["setBehaviour", _x];
 		};
