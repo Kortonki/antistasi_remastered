@@ -57,7 +57,7 @@ private _fnc_wait = {
 		(not alive _crate) or (dateToNumber date > _max_date)
 	};
 
-	waitUntil {sleep 1; ((_crate distance2D _position < 100) and {not(_crate getVariable ["asCargo", false]) or (isNull attachedTo _crate))} or _fnc_missionFailedCondition};
+	waitUntil {sleep 1; ((_crate distance2D _position < 100) and {not(_crate getVariable ["asCargo", false]) or (isNull attachedTo _crate)}) or _fnc_missionFailedCondition};
 
 	if (call _fnc_missionFailedCondition) exitWith {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
