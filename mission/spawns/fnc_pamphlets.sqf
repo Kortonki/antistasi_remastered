@@ -190,7 +190,7 @@ private _fnc_deliver = {
 
 			private _return = {
 
-				if (!(_crate getVariable ["asCargo", false]) and {_crate distance (position _x) < 20}) exitWith {
+				if (!(_crate getVariable ["asCargo", false]) and {_crate distance2d (position _x) < 50}) exitWith {
 					_droppedCrate = _crate;
 					_buildings = _buildings - [_x];
 
@@ -201,10 +201,10 @@ private _fnc_deliver = {
 					//Make close friendlies lose undercover
 					{
 						private _soldierFIA = _x;
-						if (captive _soldierFIA) then {
+						if (captive _soldierFIA and {[_soldierFIA] call AS_fnc_detected}) then {
 							[_soldierFIA,false] remoteExec ["setCaptive",_soldierFIA];
 						};
-					} forEach ([300, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
+					} forEach ([50, _crate, "BLUFORSpawn"] call AS_fnc_unitsAtDistance);
 					true
 				};
 				false

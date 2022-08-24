@@ -569,6 +569,10 @@ private _fnc_run = {
 				if (_missionType in ["convoy_supplies", "convoy_money"]) then {
 					_fnc_missionSuccessfulCondition = {!(_crate getvariable ["asCargo", false]) and {_crate distance2D _destination < 100 and {isnil "AS_HQ_moving" or _missionType == "convoy_supplies"}}};
 				};
+
+				if (_missionType in ["convoy_ammo", "convoy_fuel"]) then {
+					_fnc_missionSuccessfulCondition = {_mainVehicle call AS_fnc_getSide == "FIA"};
+				};
 				//CONVOY CAPTURED
 				private _fnc_missionSuccessful = {
 					([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
@@ -604,7 +608,7 @@ private _fnc_run = {
 				([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 				[_mission, [getPos _mainVehicle]] remoteExec ["AS_mission_fnc_success", 2];
 
-				[position _hvt] spawn AS_movement_fnc_sendAAFpatrol;
+				[position _hvt] remoteExec ["AS_movement_fnc_sendAAFpatrol", 2];
 			}
 		};
 		if (_missionType == "convoy_prisoners") exitWith {

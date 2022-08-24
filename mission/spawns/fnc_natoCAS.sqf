@@ -52,7 +52,7 @@ private _fnc_spawn = {
 	private _crew = "pilot";
 
 	private _grupoHeli = createGroup ("NATO" call AS_fnc_getFactionSide);
-	_grupoHeli setGroupId (format ["NATO_CAS_%1", round(diag_ticktime)]);
+	_grupoHeli setGroupIdGlobal [format ["%1 CAS %2", ["NATO", "shortname"] call AS_fnc_getEntity, call AS_fnc_UniqueID]];
 	_groups pushBack _grupoHeli;
 
 	for "_i" from 1 to 3 do {
