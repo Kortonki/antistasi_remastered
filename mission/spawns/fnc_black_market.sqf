@@ -26,7 +26,7 @@ private _fnc_initialize = {
 	} forEach (([_location, "roads"] call AS_location_fnc_get) call AS_fnc_shuffle);
 
 	if not _foundSuitablePlace exitWith {
-		[[petros, "globalChat", "Dealer cancelled the deal."],"AS_fnc_localCommunication"] call BIS_fnc_MP;
+		[petros, "Dealer cancelled the deal"] remoteExec ["globalChat", [0, -2] select isDedicated];
 		_mission call AS_mission_fnc_remove;
 
 		// set the spawn state to `run` so that the next one is `clean`, since this ends the mission
@@ -44,7 +44,7 @@ private _fnc_initialize = {
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, "campDisposition", [_posCmp, _dirveh]] call AS_spawn_fnc_set;
-	[_mission, [_tskDesc,_tskTitle,_location], _position, "Find"] call AS_mission_spawn_fnc_saveTask;
+	[_mission, [_tskDesc,_tskTitle,_location], _posCmp, "Find"] call AS_mission_spawn_fnc_saveTask;
 };
 
 private _fnc_spawn = {

@@ -122,6 +122,7 @@ if (_skillAAF < AS_maxSkill) then {
         _skillAAF = _skillAAF + 1;
 		_resourcesAAF = _resourcesAAF - _coste;
     _AAFresAdj = _resourcesAAF / _AAFlocCount;
+    diag_log format ["[AS] AAF skill increased. Skill now: %1", _skillAAF];
 	};
 };
 

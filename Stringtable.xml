@@ -271,7 +271,7 @@
 				<Original>Find the Crazy Irishman</Original>
 			</Key>
 			<Key ID="STR_tskDesc_fndExp">
-				<Original>Black Market dealer Devin Connell has been spotted near %1. He's scheduled for a flight to Metavira or Arulco at %2:%3, so you better hurry up if you wish to acquire some of his fine products. From our recent meetings with him, he has agreed to meet with FIA overt soldiers only, apparently he doesnt like civilians all that much. </Original>
+				<Original>Black Market dealer Devin Connell has been spotted near %1. He's scheduled for a flight to Metavira or Arulco at %2:%3, so you better hurry up if you wish to acquire some of his fine products. If you get caught dealing with him that will blow your cover and he might try to flee. </Original>
 			</Key>
 			<Key ID="STR_tsk_logAmmo">
 				<Original>Steal ammo truck</Original>

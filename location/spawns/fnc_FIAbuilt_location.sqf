@@ -167,7 +167,7 @@ private _fnc_wait_to_abandon = {
 		    } forEach [_cargo_w, _cargo_m, _cargo_i, _cargo_b];
 
 				[_cargo_w, _cargo_m, _cargo_i, _cargo_b] remoteExecCall ["AS_fnc_setArsenal", 2];
-				[format ["CAMP LOST\n\n10% of all arsenal items lost!"]] remoteExec ["hint", AS_Commander];
+				[format ["CAMP LOST\n\n10 percent of all arsenal items lost!"]] remoteExec ["hint", [0, -2] select isDedicated];
 		};
 	} else {
 		if (_wasAbandoned) then {

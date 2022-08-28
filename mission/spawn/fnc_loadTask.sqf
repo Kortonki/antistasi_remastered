@@ -9,8 +9,9 @@ if (count _position == 0) then {
     _position = _params select 2;
 };
 
-[_params select 0,[("FIA" call AS_fnc_getFactionSide),civilian],
- _settings,
- _position,
- _status, 5,true,true,
- _params select 3]
+[_params select 0,
+[("FIA" call AS_fnc_getFactionSide),civilian],
+_settings,
+_position,
+_status, 5,true,true,
+_params select 3]

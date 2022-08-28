@@ -64,7 +64,7 @@ if (_vehicle != _player) then {
 
 	if (count (ropeAttachedObjects _vehicle) > 0) then {
 		private _attached = ropeAttachedObjects _vehicle select 0;
-			if (!(_attached in _undercoverVehicles) or _attached in AS_S("reportedVehs")) then {
+			if (!((typeof _attached) in _undercoverVehicles) or _attached in AS_S("reportedVehs")) then {
 				_reason = "You're towing a compromised vehicle";
 			} else {
 				if (count (ropeAttachedObjects _attached) > 0) then {

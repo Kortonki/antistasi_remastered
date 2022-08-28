@@ -10,7 +10,7 @@ private _mrkName = format ["Dum%1", _location];
 private _markerType = "";
 private _locationName = "";
 switch (_type) do {
-    case "fia_hq": {_markerType = "hd_flag"; _locationName = "FIA HQ"};
+    case "fia_hq": {_markerType = "hd_flag"; _locationName = format ["%1 HQ", ["FIA", "shortname"] call AS_fnc_getEntity]};
     case "city": {_markerType = "mil_flag"; _locationName = ""};
     case "powerplant": {_markerType = "loc_power"; _locationName = "Power Plant"};
     case "airfield": {

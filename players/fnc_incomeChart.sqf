@@ -8,7 +8,7 @@ private _count = count _playerIncomes;
 
 private _list = [_playerIncomes, [], {_x select 1}, "DESCEND"] call BIS_fnc_sortBy;
 
-private _text = "<t size='1.2'>FIA Earners TOP 5:</t><br/><br/>";
+private _text = format ["<t size='1.2'>%1 Earners TOP 5:</t><br/><br/>", ["FIA", "shortname"] call AS_fnc_getEntity];
 
 for "_i" from 0 to ((_count - 1) min 4) do {
   private _player = ((_list select _i) select 0);

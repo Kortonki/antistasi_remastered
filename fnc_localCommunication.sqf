@@ -31,12 +31,12 @@ if (_tipo == "globalChat") then {
 	_unit globalChat format ["%1", _texto];
 };
 if (_tipo == "income") then {
-	waitUntil {sleep 0.2; isNil "incomeRep"};
-	incomeRep = true;
+	waitUntil {sleep 0.2; incomeRep < 3};
 	playSound "3DEN_notificationDefault";
-	[_texto, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5, 6, 0, 0, 2] spawn bis_fnc_dynamicText;
+	[_texto, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5 - (incomeRep*0.15), _showtime, 0, 0, incomeRep] spawn bis_fnc_dynamicText;
+	incomeRep = incomeRep + 1;
 	sleep _showTime;
-	incomeRep = nil;
+	incomeRep = incomeRep - 1;
 };
 if (_tipo == "countdown") then {
 	_texto = format ["Time Remaining: %1 secs",_texto];
