@@ -21,4 +21,4 @@ for "_i" from 0 to ((_count - 1) min 4) do {
   };
 };
 
-[petros, "income", _text,5] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
+[petros, "income", _text, 10] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];

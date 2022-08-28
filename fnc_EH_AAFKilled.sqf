@@ -89,11 +89,11 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 				if (fleeing _unit) then {
 					if !(_unit getVariable ["surrendered",false]) then {
 
-						private _coeffSurr = 7; //TODO experiment this: 4 is in the ballpark for 1 vs 1 surrender inside 50 meters and 0.5 courage => 50% chance for surrendering. samaller the less chance for surrender
-						private _coeffSurrConstant = -1; //TODO experiment this. Setting this to 1 and 1 vs 1 never surrenders, but 1 vs 2 has 50% chance if coeffSurr = 4
+						private _coeffSurr = 4; //TODO experiment this: 4 is in the ballpark for 1 vs 1 surrender inside 50 meters and 0.5 courage => 50% chance for surrendering. samaller the more chance for surrender
+						private _coeffSurrConstant = 1; //TODO experiment this. Setting this to 1 and 1 vs 1 never surrenders, but 1 vs 2 has 50% chance if coeffSurr = 4
 
 						if (([200, _unit, "BLUFORSpawn", "boolean"] call AS_fnc_unitsAtDistance) and
-								{_coeffSurrConstant + _coeffSurr*(random ({alive _unit and {!([_unit] call AS_fnc_isDog) and {!(_unit getVariable ["surrendered", false])}}} count _units))*(_unit skill "courage") < count ([50, _unit, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)})
+								{_coeffSurrConstant + _coeffSurr*(random ({alive _unit and {!([_unit] call AS_fnc_isDog) and {!(_unit getVariable ["surrendered", false])}}} count _units))*(_unit skill "courage") < ((count ([50, _unit, "BLUFORSpawn"] call AS_fnc_unitsAtDistance)) + random 1)})
 								then {
 									if (_unit == leader _group) then {
 										{[_unit] spawn AS_AI_fnc_surrender} foreach (_units select {!(_unit getVariable ["surrendered", false])}); 	//If squad leader surrenders, everybody in the group surrender as well
@@ -112,6 +112,7 @@ if ((side _killer == ("FIA" call AS_fnc_getFactionSide)) || (captive _killer)) t
 				if (_unit == leader group _unit and {!([_unit] call AS_fnc_isDog) and {(position _unit) call AS_fnc_hasRadioCoverage}}) then {
 					if (random 1 < 0.5) then { //This was increased from 0.1 to 0.5 and moved to be used if AAF unit killed, doesn't require fleeing
 						_enemy = _unit findNearestEnemy _unit;
+						//TODO: Exclude empty "FIA" vehicles that findnearestEnemy detects. Also position to be dead AAF soldier if _enemy is null
 						if (!isNull _enemy) then {
 							([_unit] call AS_fnc_getContactThreat) params ["_threatEval_Land", "_threatEval_Air"];
 							private _position = position _enemy;

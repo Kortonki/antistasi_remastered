@@ -466,7 +466,6 @@ _sortedArr = [];
 		};
 	};
 } forEach _unsortedArr;
-
 diag_log "[";
 {
 	diag_log format ["%1", _x];
@@ -478,3 +477,5 @@ diag_log "];";
 now delete the quotation marks around the "[" and "];" characters and
 this array is good to use in a script or whatever.
 */
+
+_sortedArr

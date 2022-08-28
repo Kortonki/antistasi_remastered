@@ -78,7 +78,7 @@ private _fnc_wait_to_arrive = {
 
 	if _arrivedSafely then {
 		[petros, "sidechat", "Engineers are now deploying the mines."] remoteExec ["AS_fnc_localCommunication", [0, -2] select isDedicated];
-		// [leader _group, _mrk, "SAFE","SPAWNED", "NOVEH2",  "SHOWMARKER"] spawn UPSMON; //COMMMENTED OUT: UPSMON could interfere with HC
+		[leader _group, _mrk, "SAFE","SPAWNED", "NOVEH2",  "SHOWMARKER"] spawn UPSMON; //COMMMENTED OUT: UPSMON could interfere with HC
 	} else {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission, "status", "completed"] call AS_mission_fnc_set; //this changed to contain mission name only
@@ -163,7 +163,7 @@ private _fnc_clean = {
 	private _truck = (([_mission, "resources"] call AS_spawn_fnc_get) select 2) select 0;
 
 	_group setVariable ["isHCgroup", false, true];
-	// _group setVariable ["UPSMON_Remove", true];
+	_group setVariable ["UPSMON_Remove", true];
 	[_group, getMarkerpos "FIA_HQ"] spawn AS_fnc_dismissFIAsquad; //Just dismiss usually, everythings recovered
 
 	/*

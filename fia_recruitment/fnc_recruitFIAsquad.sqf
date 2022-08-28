@@ -120,6 +120,7 @@ petros directSay "SentGenBaseAS_fnc_unlockVehicle";
 //This to activate target sharing in UPSMON and between garrison groups
 
 //COMMENTED OUT: won't respond to player commands always
-// [leader _grupo, "fia_hq", "NOWP3", "NOVEH2"] spawn UPSMON; //FIA HQ there just to not throw error
+//UPSMON seems to not be the problem
+ [leader _grupo, "fia_hq", "NOWP3", "NOVEH2"] spawn UPSMON; //FIA HQ there just to not throw error
 
 //TODO: A loop to share enemy info

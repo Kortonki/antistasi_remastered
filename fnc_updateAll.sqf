@@ -292,7 +292,7 @@ if (!(alive petros) or !(isNil "AS_HQ_moving")) then {
 
   private _texto = format ["<t size='0.6' color='#C1C0BB'>Taxes Income.<br/> <t size='0.5' color='#C1C0BB'><br/>Manpower: +%1<br/>Money: +%2 €<br/>Fuel: +%3",floor _FIAnewHR, round _FIAnewMoney, round _FIAnewFuel];
 
-  [petros, "income",_texto] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
+  [petros, "income",_texto, 10] remoteExec ["AS_fnc_localCommunication", [0,-2] select isDedicated];
 
 };
 

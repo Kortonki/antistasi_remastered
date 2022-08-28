@@ -116,7 +116,7 @@ deleteVehicle _extra_conditions;
 //EXPERIMENT no artificial limit, but AAF loses skill easier the higher their level is
 private _skillFIA = AS_P("skillFIA");
 if (_skillAAF < AS_maxSkill) then {
-	private _coste = 1000 + (1.5*(_skillAAF *750)*(_AAFlocCount/AS_AAFlocCountRef)); //AAF location count resembels amount of soldiers thus the universal cost to train them
+	private _coste = 1000 + (3*(_skillAAF*750)*(_AAFlocCount/AS_AAFlocCountRef)); //AAF location count resembels amount of soldiers thus the universal cost to train them. 1.5 changed to 3. Doubled the cost on 280822. The AAF got to skill 16 in about 20 hours with 1.5
 	if (_coste*2 < _resourcesAAF and {_AAFresAdj > 2000}) then { //this adjusted to 2000 from 1000 when limit removed
         AS_Pset("skillAAF", _skillAAF + 1);
         _skillAAF = _skillAAF + 1;

@@ -35,5 +35,5 @@ else {
 _texto = format ["<t size='0.5' color='#C1C0BB'>Fuel reserves:<br/> %2%1 l",_actualFuel,_fuelSim];
 
 if (_texto != "") then {
-	[petros,"income",_texto] remoteExec ["AS_fnc_localCommunication", AS_commander]
+	[petros,"income",_texto, 5] remoteExec ["AS_fnc_localCommunication", AS_commander]
 };

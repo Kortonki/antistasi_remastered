@@ -20,5 +20,5 @@ if (_attribute == "traits") then {
 
 if (_notify and {_attribute == "money"}) then {
     private _texto = format ["<br/><br/><br/><br/><br/><br/>Money %1 €", _difference];
-	[_player, "income", _texto] remoteExec ["AS_fnc_localCommunication", _player];
+	[_player, "income", _texto, 5] remoteExec ["AS_fnc_localCommunication", _player];
 };
