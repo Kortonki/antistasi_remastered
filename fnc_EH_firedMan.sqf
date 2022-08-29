@@ -1,8 +1,11 @@
 
 params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile"];
 
-if ((_weapon isKindof "Put") and {captive _unit and {[_unit] call AS_fnc_detected}}) then {
-    _unit setCaptive false;
+if (_weapon isKindof "Put") then {
+
+    if (captive _unit and {[_unit] call AS_fnc_detected}) then {
+      _unit setCaptive false;
+    };
 
     //MINE STUFF starts here
     if (_magazine in AS_allMinesMags) then {
