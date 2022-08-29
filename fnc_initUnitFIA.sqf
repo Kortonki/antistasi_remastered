@@ -245,11 +245,4 @@ _unit addEventhandler ["handleHeal", {
 		_return
 	}];
 
-	_unit addEventHandler ["FiredMan", {
-	params ["_unit", "_weapon"];
-
-		if ((_weapon isKindof "Put") and {captive _unit and {[_unit] call AS_fnc_detected}}) then {
-			_unit setCaptive false;
-		};
-
-	}];
+	_unit addEventHandler ["FiredMan", AS_fnc_EH_firedMan];

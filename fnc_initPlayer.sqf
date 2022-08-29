@@ -203,12 +203,4 @@ player addEventhandler ["handleHeal", {
 		_return
 	}];
 
-	player addEventHandler ["FiredMan", {
-	params ["_unit", "_weapon"];
-
-	if ((_weapon isKindof "Put") and {captive _unit and {[_unit] call AS_fnc_detected}}) then {
-			_unit setCaptive false;
-	};
-
-
-}];
+	player addEventHandler ["FiredMan", AS_fnc_EH_firedMan];

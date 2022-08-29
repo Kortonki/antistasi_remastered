@@ -38,6 +38,7 @@ class AS {
         FNC_BASE(buildWatchpost);
 
         FNC_BASE(addMinefield);
+        FNC_BASE(addToMinefield);
         FNC_BASE(changePersistentVehicles);
         FNC_BASE(deployAAFminefield);
 
@@ -110,6 +111,8 @@ class AS {
         FNC_BASE(safeDelete);
         FNC_BASE(vehicleAvailability);
 
+        FNC_BASE(mineFieldCheck);
+
         FNC(Scripts,spawnAttackWaves);
 
         FNC_BASE(AAFattackScore);
@@ -148,6 +151,7 @@ class AS {
         FNC_BASE(EH_AAFVehicleKilled);
         FNC_BASE(EH_CSATVehicleKilled);
         FNC_BASE(EH_VehicleHit);
+        FNC_BASE(EH_firedMan);
         FNC_BASE(getContactThreat);
         FNC_BASE(getLandThreat);
         FNC_BASE(getAirThreat);

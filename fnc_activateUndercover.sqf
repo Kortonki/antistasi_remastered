@@ -63,7 +63,7 @@ if (_vehicle != _player) then {
 	};
 
 	if (count (ropeAttachedObjects _vehicle) > 0) then {
-		private _attached = ropeAttachedObjects _vehicle select 0;
+		private _attached = attachedTo (ropeAttachedObjects _vehicle select 0); //There's a proxy can object between the rope and the towed
 			if (!((typeof _attached) in _undercoverVehicles) or _attached in AS_S("reportedVehs")) then {
 				_reason = "You're towing a compromised vehicle";
 			} else {
@@ -80,7 +80,10 @@ if (_vehicle != _player) then {
 		};
 	} forEach _isMilitaryDressedConditions;
 	if (dateToNumber date < _compromised) then {
-		_reason = "You cannot go undercover because you are compromised. [use heal and repair in HQ or wait 30 minutes]";
+		_reason = format ["You cannot go undercover because you are compromised. Use heal and repair in HQ or wait until %1:%2",
+		(numberToDate [date select 0, (_player getvariable ["compromised", datetonumber date])]) select 3,
+		(numberToDate [date select 0, (_player getvariable ["compromised", datetonumber date])]) select 4
+		];
 	};
 };
 

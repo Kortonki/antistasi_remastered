@@ -29,17 +29,20 @@ private _hrSim = "";
 if (_hr > 0) then {_hrSim = "+"};
 
 private _resourcesFIASim = "";
+private _showTime = 5;
+
 if (_resourcesFIA > 0) then {_resourcesFIASim = "+"};
 if ((_hr != 0) and (_resourcesFIA != 0)) then {
-	_texto = format ["<t size='0.6' color='#C1C0BB'>%5 Resources.<br/> <t size='0.5' color='#C1C0BB'><br/>HR: %3%1<br/>Money: %4%2 €",_hr,_resourcesFIA,_hrSim,_resourcesFIASim, ["FIA", "shortname"] call AS_fnc_getEntity]
+	_texto = format ["<t size='0.6' color='#C1C0BB'>%5 Resources.<br/> <t size='0.5' color='#C1C0BB'><br/>HR: %3%1<br/>Money: %4%2 €",_hr,_resourcesFIA,_hrSim,_resourcesFIASim, ["FIA", "shortname"] call AS_fnc_getEntity];
+	_showTime = 10;
 } else {
 	if (_hr != 0) then {
-		_texto = format ["<t size='0.6' color='#C1C0BB'>%4 Resources.<br/> <t size='0.5' color='#C1C0BB'><br/>HR: %3%1",_hr,_resourcesFIA,_hrSim, ["FIA", "shortname"] call AS_fnc_getEntity]
+		_texto = format ["<t size='0.6' color='#C1C0BB'>%4 Resources.<br/> <t size='0.5' color='#C1C0BB'><br/>HR: %3%1",_hr,_resourcesFIA,_hrSim, ["FIA", "shortname"] call AS_fnc_getEntity];
 	} else {
-		_texto = format ["<t size='0.6' color='#C1C0BB'>%5 Resources.<br/> <t size='0.5' color='#C1C0BB'><br/>Money: %4%2 €",_hr,_resourcesFIA,_hrSim,_resourcesFIASim, ["FIA", "shortname"] call AS_fnc_getEntity]
+		_texto = format ["<t size='0.6' color='#C1C0BB'>%5 Resources.<br/> <t size='0.5' color='#C1C0BB'><br/>Money: %4%2 €",_hr,_resourcesFIA,_hrSim,_resourcesFIASim, ["FIA", "shortname"] call AS_fnc_getEntity];
 	};
 };
 
 if (_texto != "") then {
-	[petros,"income",_texto, 10] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
+	[petros,"income",_texto, _showTime] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 };
