@@ -67,8 +67,8 @@ private _fnc_spawn = {
 	{[_x, false] call AS_fnc_initUnitAAF; _soldados pushBack _x;} forEach units _grupo;
 	[leader _grupo, _location, "SAFE","SPAWNED","RANDOM","NOVEH","NOFOLLOW"] spawn UPSMON;
 
-	private _groupsCount = (round (_size/50)) max 1;
-	if (_frontera) then {_groupsCount = _groupsCount * 2};
+	private _groupCount = (round (_size/60)) max 1;
+	if (_frontera) then {_groupCount = _groupCount * 2};
 
 
 

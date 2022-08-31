@@ -76,7 +76,7 @@ private _fnc_spawn = {
 
 	{
 		call {
-			if (str typeof _x find "Box_IND_Wps_F" > -1) exitWith {expCrate = _x; [expCrate] call AS_fnc_emptyCrate;};
+			if (str typeof _x find "Box_IND_Wps_F" > -1) exitWith {expCrate = _x; publicVariable "expCrate"; [expCrate] call AS_fnc_emptyCrate;}; //ADded publicVariable, because buyGear.sqf is run on server to avoid locality issues
 		//	if (str typeof _x find "Box_Syndicate_Wps_F" > -1) exitWith { [_x] call AS_fnc_emptyCrate;}; // Deleted from composition so less confusing for the player
 		//	if (str typeof _x find "Box_IED_Exp_F" > -1) exitWith { [_x] call AS_fnc_emptyCrate;};
 		};

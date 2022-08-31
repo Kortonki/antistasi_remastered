@@ -1,7 +1,7 @@
 
 params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile"];
 
-if (_weapon isKindof "Put") then {
+if (_weapon == "Put") then {
 
     if (captive _unit and {[_unit] call AS_fnc_detected}) then {
       _unit setCaptive false;
@@ -36,8 +36,25 @@ if (_weapon isKindof "Put") then {
 
         [_position, "FIA", [_mineData]] remoteExec ["AS_fnc_addMinefield", 2];
 
-        [_projectile, _closest] spawn {
-          params ["_projectile", "_closest"];
+        [_projectile] spawn {
+          params ["_projectile"];
+
+          private _closest = "";
+          private _mineFields = [];
+
+          while {_closest isEqualto ""} do {
+            sleep AS_spawnLoopTime;
+
+            _mineFields = ["minefield", "FIA"] call AS_location_fnc_TS;
+
+            {
+              if ( (_x call AS_location_fnc_position) distance2D _projectile < 100) then {
+                _closest = _x;
+              };
+            } foreach _mineFields;
+
+          };
+
           waitUntil {sleep AS_spawnLoopTime; _closest call AS_spawn_fnc_exists};
           waitUntil {sleep AS_spawnLoopTime; ([_closest, "state_index"] call AS_spawn_fnc_get) == 1}; // Mines would have spawned by now
           [_projectile] remoteExec ["deleteVehicle", _projectile]; // Delete, the mine will already appear again with the minefield spawning. This to avoid duplicates

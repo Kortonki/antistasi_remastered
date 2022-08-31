@@ -17,3 +17,5 @@ _mines pushBack _projectile;
 [_closest, "mines", _mines] call AS_spawn_fnc_set;
 
 [_projectile, _closest] spawn AS_fnc_mineFieldCheck;
+
+_closest call AS_location_fnc_updateMarker;
