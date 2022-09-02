@@ -11,7 +11,7 @@ _mrk setMarkerAlpha 0;
 [_mrk,"minefield", false] call AS_location_fnc_add;
 [_mrk,"side",_side] call AS_location_fnc_set;
 
-if (_minesData isEqualTo []) then {
+if (_minesData isEqualTo [] and {_side != "FIA"}) then {
     for "_i" from 1 to (30 + floor random 30) do {
         _minesData pushBack [selectRandom (["AAF", "ap_mines"] call AS_fnc_getEntity), ([_position, random _size, random 360] call BIS_Fnc_relPos), random 360];
     };
