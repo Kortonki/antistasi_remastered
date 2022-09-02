@@ -34,13 +34,15 @@ if (_weapon == "Put") then {
 
       } else {
 
-        [_position, "FIA", [_mineData]] remoteExec ["AS_fnc_addMinefield", 2];
+        [_position, "FIA", []] remoteExec ["AS_fnc_addMinefield", 2];
 
-        [_projectile] spawn {
-          params ["_projectile"];
+        [_minedata, _projectile] spawn {
+
+          params ["_minedata", "_projectile"];
 
           private _closest = "";
           private _mineFields = [];
+
 
           while {_closest isEqualto ""} do {
             sleep AS_spawnLoopTime;
@@ -48,16 +50,15 @@ if (_weapon == "Put") then {
             _mineFields = ["minefield", "FIA"] call AS_location_fnc_TS;
 
             {
-              if ( (_x call AS_location_fnc_position) distance2D _projectile < 100) then {
-                _closest = _x;
-              };
+              if ( (_x call AS_location_fnc_position) distance2D (_minedata select 1) < 100) exitWith {_closest = _x};
             } foreach _mineFields;
 
           };
 
           waitUntil {sleep AS_spawnLoopTime; _closest call AS_spawn_fnc_exists};
           waitUntil {sleep AS_spawnLoopTime; ([_closest, "state_index"] call AS_spawn_fnc_get) == 1}; // Mines would have spawned by now
-          [_projectile] remoteExec ["deleteVehicle", _projectile]; // Delete, the mine will already appear again with the minefield spawning. This to avoid duplicates
+
+          [_closest, _mineData, _projectile] remoteExec  ["AS_fnc_addToMinefield", 2];
         };
       };
 
