@@ -46,7 +46,7 @@ if (_type == "Sniper") then {
 };
 if (_type == "AT Specialist") then {
     // todo: this list includes AT and AA. Fix it.
-    _secondaryWeapons = (AS_weapons select 10); // missile launchers
+    _secondaryWeapons = (AS_weapons select 10); // rocket launchers
     _useBackpack = true;
 };
 if (_type == "AA Specialist") then {

@@ -143,6 +143,11 @@ if (hasACE) then {
 	(_items select 1) pushBack _intNATOSupp;
 };
 
+//NVGs
+
+(_items select 0) pushBack selectRandom (NATOItems arrayIntersect AS_allNVGs);
+(_items select 1) pushBack _intNATOSupp;
+
 if hasTFAR then {
     _backpacks pushBack [(["NATO", "tfar_lr_radio"] call AS_fnc_getEntity), 2*_intNATOSupp];
 };

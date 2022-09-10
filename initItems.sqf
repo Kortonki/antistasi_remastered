@@ -356,12 +356,13 @@ AS_allWeaponsAttrs = [];
 
               call {
                   //send AA weapons to slot 8
+                  // Titan_F is the vanilla AA launcher
 
                   private _is_ML = false;
                   {
                       private _class = (configFile >> "CfgWeapons" >> _name >> _x);
                       if (!isNull _class and "launch_O_Titan_F" in ([_class,true] call BIS_fnc_returnParents)) exitWith {
-                          AS_allGrenades append (getArray (_class >> "magazines"));
+                          //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
                           _is_ML = true;
                       };
                   } forEach getArray (configFile >> "CfgWeapons" >> _name >> "muzzles");
@@ -376,7 +377,26 @@ AS_allWeaponsAttrs = [];
 
 			case "MachineGun": {(AS_weapons select 6) pushBack _name};
 			case "Magazine": {(AS_weapons select 7) pushBack _name};
-			case "MissileLauncher": {(AS_weapons select 8) pushBack _name}; //AA Spesialist uses these
+			case "MissileLauncher": {  call {
+            //send AA weapons to slot 8
+            // Titan_F is the vanilla AA launcher.  Should be a parent for modded AAs
+
+            private _is_ML = false;
+            {
+                private _class = (configFile >> "CfgWeapons" >> _name >> _x);
+                if (!isNull _class and "launch_O_Titan_F" in ([_class,true] call BIS_fnc_returnParents)) exitWith {
+                    //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
+                    _is_ML = true;
+                };
+            } forEach getArray (configFile >> "CfgWeapons" >> _name >> "muzzles");
+
+              if (_is_ML) exitWith {
+                (AS_weapons select 8) pushback _name;
+              };
+
+             (AS_weapons select 10) pushBack _name
+           };
+      }; //AA Spesialist uses these
 			case "Mortar": {(AS_weapons select 9) pushBack _name};
 			case "RocketLauncher": {(AS_weapons select 10) pushBack _name}; //AT Spesialist uses these
 			case "Shotgun": {(AS_weapons select 11) pushBack _name};

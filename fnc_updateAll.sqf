@@ -65,7 +65,7 @@ private _FIAResIncomeMultiplier = 1;
     } else {
       if (_side == "AAF") then {
         //Check if city is inside a location, that counts as presence too. -> Nearby non spawned cities and other locations soon turn into near occupiers side
-        private _nearestLoc = ["FIA" call AS_location_fnc_S, _position] call BIS_fnc_nearestPosition;
+        private _nearestLoc = [[["outpost", "outpostAA", "roadblock", "watchpost", "factory", "resource", "powerplant", "seaport", "base", "airfield", "camp", "fia_hq"], "FIA"] call AS_location_fnc_TS, _position] call BIS_fnc_nearestPosition;
         if ((_nearestLoc call AS_location_fnc_position) distance2D _position <= (_nearestLoc call AS_location_fnc_size)) then {
           private _enemyUnits = (count (_nearestLoc call AS_location_fnc_garrison));
 
