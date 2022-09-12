@@ -39,8 +39,8 @@ private _fnc_initialize = {
 	private _tskTitle = _mission call AS_mission_fnc_title;
 	private _tskDesc = format [localize "Str_tskDesc_fndExp",
 		[_location] call AS_fnc_location_name,
-		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4];
+		numberToDate [date select 0,dateToNumber _fechalim] select 3,
+		numberToDate [date select 0,dateToNumber _fechalim] select 4];
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, "campDisposition", [_posCmp, _dirveh]] call AS_spawn_fnc_set;

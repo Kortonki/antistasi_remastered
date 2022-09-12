@@ -35,8 +35,8 @@ private _dict = ([AS_entities, "FIA_WEST"] call DICT_fnc_get) call DICT_fnc_copy
 ] call DICT_fnc_set;
 
 [_dict, "unlockedWeapons", [
-	"rhs_weap_makarov_pm",
 	"rhs_weap_m38",
+	"rhs_weap_makarov_pm",
 	"sgun_HunterShotgun_01_sawedoff_F",
 	"Binocular"
 	]] call DICT_fnc_set;

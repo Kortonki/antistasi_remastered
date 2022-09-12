@@ -19,8 +19,8 @@ private _fnc_initialize = {
 	private _taskDesc = format [localize "STR_tskDesc_logBank",
 		_nombredest,
 		_location,
-		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4,
+		numberToDate [date select 0,dateToNumber _fechalim] select 3,
+		numberToDate [date select 0,dateToNumber _fechalim] select 4,
 		(["AAF", "shortname"] call AS_fnc_getEntity)
 	];
 

@@ -1,5 +1,7 @@
 //This script sends random convoy mission if AAF can't attack anywhere
 
+#include "../macros.hpp"
+
 params [["_skipping", false]];
 
 private _alarm = false;
@@ -41,6 +43,22 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
         {
           if ("ammo" in _x or "fuel" in _x or "money" in _x) exitwith {
+            _mission = _x;
+          };
+        } foreach _missions;
+      };
+
+      if (_mission != "") exitWith {};
+
+      // If disorganization try HVT convoy with a bit of a random component, the more disorganization the more probable. Minimum of thrice the normal interval left for next initiative to trigger. On avg 5 times more
+      // Guaranteed to trigger if 20 time s the normal
+
+      private _minutes = (numberToDate [date select 0, (AS_P("nextAttack") - (datetoNumber date))]) select 4;
+
+      if ((_minutes * (0.05 + random 0.3)) > (AS_P("upFreq") * 2)) then {
+
+        {
+          if ("hvt" in _x) exitwith {
             _mission = _x;
           };
         } foreach _missions;

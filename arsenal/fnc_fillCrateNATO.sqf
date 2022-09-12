@@ -22,9 +22,9 @@ _addWeapon = {
 };
 
 // Handguns and submachine guns
-[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 3*_intNATOSupp, 18*3*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect ((AS_weapons select 4) + (AS_weapons select 14))), 4*_intNATOSupp, 18*4*_intNATOSupp] call _addWeapon;
 // Rifles
-[selectRandom (NATOweapons arrayIntersect (AS_weapons select 0)), 3*_intNATOSupp, 18*3*_intNATOSupp] call _addWeapon;
+[selectRandom (NATOweapons arrayIntersect (AS_weapons select 0)), 4*_intNATOSupp, 18*4*_intNATOSupp] call _addWeapon;
 // Machine guns
 [selectRandom (NATOweapons arrayIntersect (AS_weapons select 6)), _intNATOSupp, 6*_intNATOSupp] call _addWeapon;
 
@@ -48,7 +48,7 @@ private _bestScope = [NATOItems arrayIntersect AS_allOptics, "sniperScope"] call
 
 for "_i" from 1 to 5 do {
 	(_magazines select 0) pushBack (selectRandom NATOThrowGrenades);
-	(_magazines select 1) pushBack 3*_intNATOSupp;
+	(_magazines select 1) pushBack 4*_intNATOSupp;
 };
 
 for "_i" from 1 to 5 do {
@@ -102,12 +102,12 @@ if (_intNATOSupp > random 10) then {
 
 {
 	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
-	(_magazines select 1) pushBack 2*_intNatoSupp;
+	(_magazines select 1) pushBack 10*_intNatoSupp;
 } foreach (["NATO", "ap_mines"] call AS_fnc_getEntity);
 
 {
 	(_magazines select 0) pushBack (_x call AS_fnc_mineMag);
-	(_magazines select 1) pushBack _intNatoSupp;
+	(_magazines select 1) pushBack 4*_intNatoSupp;
 } foreach ((["NATO", "at_mines"] call AS_fnc_getEntity) + (["NATO", "explosives"] call AS_fnc_getEntity));
 
 //TODO check if RHS has equivalents?

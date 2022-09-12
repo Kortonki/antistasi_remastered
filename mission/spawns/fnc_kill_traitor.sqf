@@ -23,8 +23,8 @@ private _fnc_initialize = {
 	private _tskTitle = _mission call AS_mission_fnc_title;
 	private _tskDesc = format [localize "STR_tskDesc_ASSTraitor",
 		[_location] call AS_fnc_location_name,
-		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4,
+		numberToDate [date select 0,dateToNumber _fechalim] select 3,
+		numberToDate [date select 0,dateToNumber _fechalim] select 4,
 		["CSAT", "shortname"] call AS_fnc_getEntity
 	];
 

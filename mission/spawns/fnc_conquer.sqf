@@ -26,7 +26,7 @@ private _fnc_initialize = {
     	};
     };
 
-    _tskDesc = format [_tskDesc,[_location] call AS_fnc_location_name,numberToDate [2035,_fechalimnum] select 3,numberToDate [2035,_fechalimnum] select 4];
+    _tskDesc = format [_tskDesc,[_location] call AS_fnc_location_name,numberToDate [date select 0,_fechalimnum] select 3,numberToDate [date select 0,_fechalimnum] select 4];
 
     [_mission, [_tskDesc,_tskTitle,_location], _position, "Target"] call AS_mission_spawn_fnc_saveTask;
     [_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;

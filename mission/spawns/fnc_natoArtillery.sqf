@@ -10,8 +10,8 @@ private _fnc_initialize = {
 	private _tskTitle = (["NATO", "shortname"] call AS_fnc_getEntity) + " Artillery support";
 	private _tskDesc = format [(["NATO", "shortname"] call AS_fnc_getEntity) + " has given us control over their artillery at %1. They will be under our command until %2:%3.",
 		[_location] call AS_fnc_location_name,
-		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4
+		numberToDate [date select 0,dateToNumber _fechalim] select 3,
+		numberToDate [date select 0,dateToNumber _fechalim] select 4
 	];
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;

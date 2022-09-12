@@ -23,8 +23,8 @@ private _fnc_initialize = {
 	private _tskTitle = _mission call AS_mission_fnc_title;
 	private _tskDesc = format [localize "STR_tskDesc_DesVehicle",
 		[_location] call AS_fnc_location_name,
-		numberToDate [2035,_fechalimnum] select 3,
-		numberToDate [2035,_fechalimnum] select 4,
+		numberToDate [date select 0,_fechalimnum] select 3,
+		numberToDate [date select 0,_fechalimnum] select 4,
 		_texto
 	];
 

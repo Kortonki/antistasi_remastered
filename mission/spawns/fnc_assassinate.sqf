@@ -21,8 +21,8 @@ private _fnc_initialize = {
 	};
 	_tskDesc = format [_tskDesc,
 		[_location] call AS_fnc_location_name,
-		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4,
+		numberToDate [date select 0,dateToNumber _fechalim] select 3,
+		numberToDate [date select 0,dateToNumber _fechalim] select 4,
 		["CSAT", "shortname"] call AS_fnc_getEntity
 	];
 

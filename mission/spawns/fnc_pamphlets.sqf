@@ -16,8 +16,8 @@ private _fnc_initialize = {
 	private _tskTitle = _mission call AS_mission_fnc_title;
 	private _tskDesc = format [localize "STR_tskDesc_PRPamphlet",
 		[_location] call AS_fnc_location_name,
-		numberToDate [2035,dateToNumber _fechalim] select 3,
-		numberToDate [2035,dateToNumber _fechalim] select 4];
+		numberToDate [date select 0,dateToNumber _fechalim] select 3,
+		numberToDate [date select 0,dateToNumber _fechalim] select 4];
 
 	private _buildings = nearestObjects [_position, ["Building"], _size];
 	_buildings = _buildings call AS_fnc_shuffle;
@@ -267,8 +267,8 @@ private _fnc_deliver = {
 		} else {
 			private _tskDesc_success = format [localize "STR_tskDesc_PRPamphlet_success",
 				[_location] call AS_fnc_location_name,
-				numberToDate [2035,_max_date] select 3,
-				numberToDate [2035,_max_date] select 4
+				numberToDate [date select 0,_max_date] select 3,
+				numberToDate [date select 0,_max_date] select 4
 			];
 			([_mission, "SUCCEEDED", _tskDesc_success] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 			[_mission] remoteExec ["AS_mission_fnc_success", 2];

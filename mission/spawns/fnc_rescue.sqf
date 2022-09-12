@@ -13,8 +13,8 @@ private _fnc_initialize = {
 		if (_missionType == "rescue_prisioners") exitWith {
 			format [localize "STR_tskDesc_resPrisoners",
 				[_location] call AS_fnc_location_name,
-				numberToDate [2035,dateToNumber _fechalim] select 3,
-				numberToDate [2035,dateToNumber _fechalim] select 4
+				numberToDate [date select 0,dateToNumber _fechalim] select 3,
+				numberToDate [date select 0,dateToNumber _fechalim] select 4
 			]
 		};
 		if (_missionType == "rescue_refugees") exitWith {

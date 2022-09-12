@@ -19,8 +19,8 @@ private _fnc_initialize = {
 	private _tskDesc = format ["%1 is providing a UAV from %2. It will be under our command in a few seconds and until %3:%4.",
 	                           (["NATO", "shortname"] call AS_fnc_getEntity),
 							   _nombreorig,
-							   numberToDate [2035,dateToNumber _fechalim] select 3,
-							   numberToDate [2035,dateToNumber _fechalim] select 4];
+							   numberToDate [date select 0,dateToNumber _fechalim] select 3,
+							   numberToDate [date select 0,dateToNumber _fechalim] select 4];
 	private _tskTitle = (["NATO", "shortname"] call AS_fnc_getEntity) + " UAV";
 
 	[_mission, [_tskDesc,_tskTitle,_origin], _position, "Attack"] call AS_mission_spawn_fnc_saveTask;

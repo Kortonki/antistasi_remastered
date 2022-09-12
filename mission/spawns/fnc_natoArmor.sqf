@@ -12,7 +12,7 @@ private _fnc_initialize = {
 	private _tskDesc = format ["%1 is sending an armored section departing from %2. They will stay until %3:%4.",
 		(["NATO", "shortname"] call AS_fnc_getEntity),
 		[_origin] call AS_fnc_location_name,
-		numberToDate [2035, dateToNumber _fechalim] select 3,numberToDate [2035, dateToNumber _fechalim] select 4];
+		numberToDate [date select 0, dateToNumber _fechalim] select 3,numberToDate [date select 0, dateToNumber _fechalim] select 4];
 
 	[_mission, "max_date", dateToNumber _fechalim] call AS_spawn_fnc_set;
 	[_mission, "position", _position] call AS_spawn_fnc_set;

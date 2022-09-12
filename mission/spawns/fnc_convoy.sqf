@@ -133,8 +133,8 @@ private _fnc_initialize = {
 	_tskDesc = format [_tskDesc,
 		[_origin] call AS_fnc_location_name, _origin,
 		[_location] call AS_fnc_location_name, _location,
-		numberToDate [2035,dateToNumber _startTime] select 3,
-		numberToDate [2035,dateToNumber _startTime] select 4];
+		numberToDate [date select 0,dateToNumber _startTime] select 3,
+		numberToDate [date select 0,dateToNumber _startTime] select 4];
 
 	[_mission, "origin", _origin] call AS_spawn_fnc_set;
 	[_mission, "mainVehicleType", _mainVehicleType] call AS_spawn_fnc_set;
@@ -244,7 +244,7 @@ private _fnc_spawn = {
 	_posRoad = [_posRoad, 15, _dir + 180] call bis_fnc_relPos;
 	_dir = _origin_Pos_dir select 1;
 
-	([_mainVehicleType, _posRoad, _dir, "AAF", "any"] call AS_fnc_createVehicle) params ["_mainVehicle","_mainVehicleGroup","_driver"];
+	([_mainVehicleType, _posRoad, _dir, "AAF", "any", 0, "NONE", true, 1] call AS_fnc_createVehicle) params ["_mainVehicle","_mainVehicleGroup","_driver"];
 	_vehicles pushBack _mainVehicle;
 	{
 		[_x] joinSilent _group;
@@ -315,8 +315,17 @@ private _fnc_spawn = {
 		//TODO improve this, spawn suitable group or something
 		//or special forces units
 
+		private _gunner = 0;
+		while {_gunner = _gunner + 1; (_mainVehicle emptyPositions "Gunner") > 0 and _gunner < 4} do {
+				private _unit = _group createUnit [["AAF", "gunner"] call AS_fnc_getEntity, _posbase, [], 0, "NONE"]; //TODO: Consider spec-op class here
+				[_unit] call AS_fnc_initUnitAAF;
+				_unit assignAsGunner _mainVehicle;
+				_unit moveInGunner _mainVehicle;
+
+		};
+
 		private _cargo = 0;
-		while {_cargo = _cargo + 1; (_mainVehicle emptyPositions "Cargo") > 0 or _cargo < 6} do {
+		while {_cargo = _cargo + 1; (_mainVehicle emptyPositions "Cargo") > 0 and _cargo < 6} do {
 				private _unit = _group createUnit [["AAF", "gunner"] call AS_fnc_getEntity, _posbase, [], 0, "NONE"]; //TODO: Consider spec-op class here
 				[_unit] call AS_fnc_initUnitAAF;
 				_unit assignAsCargo _mainVehicle;

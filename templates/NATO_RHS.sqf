@@ -85,7 +85,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 // These have to be CfgVehicles
 [_dict, "explosives", ["SatchelCharge_F","DemoCharge_F","Claymore_F"]] call DICT_fnc_set;
 
-[_dict, "box", "Box_NATO_Equip_F"] call DICT_fnc_set;
+[_dict, "box", "B_supplyCrate_F"] call DICT_fnc_set;
 
 // To modders: this is additional equipment that you want to find in crates but that isnt equipped on units above
 [_dict, "additionalWeapons", []] call DICT_fnc_set;
