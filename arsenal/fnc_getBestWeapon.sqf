@@ -38,11 +38,13 @@ private _attributes = [];
     private _indexOfAvailable = _availableWeaponsTypes find _x;
 
     private _w_amount = _availableWeaponsCounts select _indexOfAvailable;
-    private _index = AS_allWeapons find _x;
-    private _validMagazines = (AS_allWeaponsAttrs select _index) select 2;
-    private _m_amount = [_validMagazines] call _fnc_magazineCount;
-    _attributes pushBack ((AS_allWeaponsAttrs select _index) + [_w_amount, _m_amount]);
-    _indexes pushBack _forEachIndex;
+	  	private _index = AS_allWeapons find _x;
+    	private _validMagazines = (AS_allWeaponsAttrs select _index) select 2;
+    	private _m_amount = [_validMagazines] call _fnc_magazineCount;
+			if (_w_amount > 0 and {_m_amount > 0}) then {
+    	_attributes pushBack ((AS_allWeaponsAttrs select _index) + [_w_amount, _m_amount]);
+    	_indexes pushBack _forEachIndex;
+		};
 } forEach _validWeapons;
 
 private _bestWeapon = "";

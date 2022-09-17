@@ -1,5 +1,8 @@
 params ["_type"];
 
+
+//A check here to wait until arming another and arsenal removal has finished?
+
 private _vest = ([caja, "vest"] call AS_fnc_getBestItem);
 private _helmet = ([caja, "helmet"] call AS_fnc_getBestItem);
 
@@ -80,6 +83,7 @@ private _binoculars = "";
 if _useBinoculars then {
     _binoculars = [caja, "binoculars"] call AS_fnc_getBestItem;
 };
+
 
 private _availableWeapons = +((call AS_fnc_getArsenal) select 0);
 private _availableMagazines = +((call AS_fnc_getArsenal) select 1);

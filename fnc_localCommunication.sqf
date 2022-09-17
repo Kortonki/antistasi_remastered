@@ -33,7 +33,7 @@ if (_tipo == "globalChat") then {
 if (_tipo == "income") then {
 	waitUntil {sleep 0.2; incomeRep < 3};
 	playSound "3DEN_notificationDefault";
-	[_texto, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.5 - (incomeRep*0.15), _showtime, 0, 0, incomeRep] spawn bis_fnc_dynamicText;
+	[_texto, [safeZoneX + (0.8 * safeZoneW), (0.2 * safeZoneW)], 0.6 - (incomeRep*0.2), _showtime, 0, 0, incomeRep] spawn bis_fnc_dynamicText;
 	incomeRep = incomeRep + 1;
 	sleep _showTime;
 	incomeRep = incomeRep - 1;

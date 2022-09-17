@@ -323,6 +323,8 @@ AS_allWeaponsAttrs = [];
 
 		private _weaponType = ([_name] call BIS_fnc_itemType) select 1;
 
+    private _RL_exceptions = ["rhs_weap_fgm148"];
+
 		switch (_weaponType) do {
             case "AssaultRifle": {
 
@@ -361,7 +363,7 @@ AS_allWeaponsAttrs = [];
                   private _is_ML = false;
                   {
                       private _class = (configFile >> "CfgWeapons" >> _name >> _x);
-                      if (!isNull _class and "launch_O_Titan_F" in ([_class,true] call BIS_fnc_returnParents)) exitWith {
+                      if (!isNull _class and {"launch_Titan_base" in ([_class,true] call BIS_fnc_returnParents)}) exitWith {
                           //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
                           _is_ML = true;
                       };
@@ -377,28 +379,53 @@ AS_allWeaponsAttrs = [];
 
 			case "MachineGun": {(AS_weapons select 6) pushBack _name};
 			case "Magazine": {(AS_weapons select 7) pushBack _name};
-			case "MissileLauncher": {  call {
-            //send AA weapons to slot 8
-            // Titan_F is the vanilla AA launcher.  Should be a parent for modded AAs
+			case "MissileLauncher": {
 
-            private _is_ML = false;
-            {
-                private _class = (configFile >> "CfgWeapons" >> _name >> _x);
-                if (!isNull _class and "launch_O_Titan_F" in ([_class,true] call BIS_fnc_returnParents)) exitWith {
-                    //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
-                    _is_ML = true;
-                };
-            } forEach getArray (configFile >> "CfgWeapons" >> _name >> "muzzles");
+              call {
+                  //send AT weapons to slot 8
+                  // Titan_F is the vanilla AA launcher, short is the AT launcher
 
-              if (_is_ML) exitWith {
-                (AS_weapons select 8) pushback _name;
-              };
+                  private _is_RL = false;
+                  {
+                      private _class = (configFile >> "CfgWeapons" >> _name >> _x);
+                      //RHS Javelin exception
+                      if (!isNull _class and {"launch_Titan_short_base" in ([_class,true] call BIS_fnc_returnParents) or _class in _RL_exceptions}) exitWith {
+                          //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
+                          _is_RL = true;
+                      };
+                  } forEach getArray (configFile >> "CfgWeapons" >> _name >> "muzzles");
 
-             (AS_weapons select 10) pushBack _name
-           };
+                    if (_is_RL) exitWith {
+                      (AS_weapons select 10) pushback _name;
+                    };
+
+                   (AS_weapons select 8) pushBack _name
+                 };
       }; //AA Spesialist uses these
 			case "Mortar": {(AS_weapons select 9) pushBack _name};
-			case "RocketLauncher": {(AS_weapons select 10) pushBack _name}; //AT Spesialist uses these
+			case "RocketLauncher": {
+
+              call {
+                  //send AA weapons to slot 8
+                  // Titan_F is the vanilla AA launcher
+
+                  private _is_ML = false;
+                  {
+                      private _class = (configFile >> "CfgWeapons" >> _name >> _x);
+                      if (!isNull _class and {"launch_Titan_base" in ([_class,true] call BIS_fnc_returnParents)}) exitWith {
+                          //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
+                          _is_ML = true;
+                      };
+                  } forEach getArray (configFile >> "CfgWeapons" >> _name >> "muzzles");
+
+                    if (_is_ML) exitWith {
+                      (AS_weapons select 8) pushback _name;
+                    };
+
+                   (AS_weapons select 10) pushBack _name
+                 };
+
+        }; //AT Spesialist uses these
 			case "Shotgun": {(AS_weapons select 11) pushBack _name};
 			case "Throw": {(AS_weapons select 12) pushBack _name};
 			case "Rifle": {(AS_weapons select 13) pushBack _name};
