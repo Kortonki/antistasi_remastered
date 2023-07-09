@@ -62,6 +62,10 @@ private _FIAResIncomeMultiplier = 1;
           [_text, 1, format ["FIAcity_AAFpresence_%1", _city], false] spawn AS_fnc_globalMessage;
         };
       };
+
+      //TODO Neutral town gains support from presence?
+
+
     } else {
       if (_side == "AAF") then {
         //Check if city is inside a location, that counts as presence too. -> Nearby non spawned cities and other locations soon turn into near occupiers side
@@ -102,7 +106,7 @@ private _FIAResIncomeMultiplier = 1;
     };
 
     // flip cities due to majority change. THIS MOVED BEFORE CALCULATING INCOME
-    if ((_AAFsupport < _FIAsupport) and {_side == "AAF"}) then {
+    if ((_FIAsupport > 50) and {_side in ["AAF", "Neutral"]}) then {
         //For now use the location as string. getlocationName returns empty string
         ["TaskSucceeded", ["", format ["%1 joined FIA",_city]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 
@@ -112,54 +116,84 @@ private _FIAResIncomeMultiplier = 1;
         ["con_cit"] call fnc_BE_XP;
 
         [0,5] call AS_fnc_changeForeignSupport;
-        [_city, !_power] spawn AS_fnc_changeStreetLights;
+
+        _power = [_city] call AS_fnc_location_isPowered;
+        [_city, _power] spawn AS_fnc_changeStreetLights;
     };
-    if ((_AAFsupport > _FIAsupport) and {_side == "FIA"}) then {
+    if (_AAFsupport > 50 and {_side in ["FIA", "Neutral"]}) then {
         ["TaskFailed", ["", format ["%1 joined %2", _city, ["AAF", "shortname"] call AS_fnc_getEntity ]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+
+        if (_side == "FIA") then {
+          [0,-5] call AS_fnc_changeForeignSupport;
+          if (_city call AS_location_fnc_spawned) then {
+            _city call AS_fnc_garrisonRelease;
+          } else {
+            [_city, "garrison", []] call AS_location_fnc_set;
+            private _garHR = 0;
+            private _garMoney = 0;
+            {
+              _garHR = _garHR + 1;
+              _garMoney = _garMoney + (_x call AS_fnc_getCost);
+            } foreach ([_city, "garrison"] call AS_location_fnc_get);
+            [_garHr, _garMoney] spawn AS_fnc_changeFIAmoney; //Spawned so the lock won't slow down actual update
+          };
+
+          //Small chance for a traitor mission depending on natoSupport
+
+          if ((AS_P("NATOsupport") + 50) < random 100) then {
+
+            //If city is spawned, do not spawn mission there. random new location
+            if (_city call AS_location_fnc_spawned) then {
+              private _maxdist = 2500;
+              private _cities = (["city"] call AS_location_fnc_T);
+              while {private _distance = (_city call AS_location_fnc_position) distance2D ("fia_hq" call AS_location_fnc_position);
+                    _distance > _maxdist or _distance < AS_P("spawnDistance") or _city call AS_location_fnc_spawned} do {
+              _cities = _cities - [_city];
+              if (count _cities == 0) exitWith {_city == ""};
+              _city = selectRandom _cities;
+              _maxdist = _maxdist + 500;
+              sleep 1;
+              };
+            };
+            if (_city == "") exitWith {diag_log "[AS] updateAll: No traitor mission possible, no valid cities"};
+            private _mission = ["kill_traitor", _city] call AS_mission_fnc_add;
+            _mission call AS_mission_fnc_activate;
+          };
+        };
 
         [_city, "side", "AAF"] call AS_location_fnc_set;
         _city call AS_location_fnc_updateMarker;
 
-        [0,-5] call AS_fnc_changeForeignSupport;
-        [_city, !_power] spawn AS_fnc_changeStreetLights;
+        _power = [_city] call AS_fnc_location_isPowered;
+        [_city, _power] spawn AS_fnc_changeStreetLights;
 
         //Release garrison if spawned, otherwise refund garrison
         //Changed to check location spawned instead of if spawn exist. Reason: Spawn exists for some time after deletion even though things are deleted
         //spawned parameter is changed to false when despawning process starts
-        if (_city call AS_location_fnc_spawned) then {
-          _city call AS_fnc_garrisonRelease;
-        } else {
-          [_city, "garrison", []] call AS_location_fnc_set;
-          private _garHR = 0;
-          private _garMoney = 0;
-          {
-            _garHR = _garHR + 1;
-            _garMoney = _garMoney + (_x call AS_fnc_getCost);
-          } foreach ([_city, "garrison"] call AS_location_fnc_get);
-          [_garHr, _garMoney] spawn AS_fnc_changeFIAmoney; //Spawned so the lock won't slow down actual update
-        };
 
-        //Small chance for a traitor mission depending on natoSupport
 
-        if ((AS_P("NATOsupport") + 50) < random 100) then {
+    };
 
-          //If city is spawned, do not spawn mission there. random new location
-          if (_city call AS_location_fnc_spawned) then {
-            private _maxdist = 2500;
-            private _cities = (["city"] call AS_location_fnc_T);
-            while {private _distance = (_city call AS_location_fnc_position) distance2D ("fia_hq" call AS_location_fnc_position);
-                  _distance > _maxdist or _distance < AS_P("spawnDistance") or _city call AS_location_fnc_spawned} do {
-            _cities = _cities - [_city];
-            if (count _cities == 0) exitWith {_city == ""};
-            _city = selectRandom _cities;
-            _maxdist = _maxdist + 500;
-            sleep 1;
-            };
-          };
-          if (_city == "") exitWith {diag_log "[AS] updateAll: No traitor mission possible, no valid cities"};
-          private _mission = ["kill_traitor", _city] call AS_mission_fnc_add;
-          _mission call AS_mission_fnc_activate;
-        };
+    if (_side == "FIA" and {_FIAsupport <= 50}) then {
+      //Neutral again from FIA
+      ["TaskFailed", ["", format ["%1 became neutral", _city]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+
+      [_city, "side", "Neutral"] call AS_location_fnc_set;
+      _city call AS_location_fnc_updateMarker;
+
+      _power = [_city] call AS_fnc_location_isPowered;
+      [_city, _power] spawn AS_fnc_changeStreetLights;
+    };
+
+    if (_side == "AAF" and {_AAFsupport <= 50}) then {
+      //Neutral again from AAF
+      ["TaskSucceeded", ["", format ["%1 became neutral",_city]]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+
+      [_city, "side", "Neutral"] call AS_location_fnc_set;
+      _city call AS_location_fnc_updateMarker;
+
+      _power = [_city] call AS_fnc_location_isPowered;
+      [_city, _power] spawn AS_fnc_changeStreetLights;
     };
 
     private _incomeAAF = 0;

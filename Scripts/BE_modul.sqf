@@ -128,6 +128,9 @@ fnc_BE_XP = {
 		case "con_ter": {
 			_delta = 10;
 		};
+		case "con_neut": {
+			_delta = 2;
+		};
 		case "con_bas": {
 			_delta = 20;
 		};

@@ -24,7 +24,7 @@ if (_side == "CIV") then {
 };
 if (_side == "FIA") then {
     switch (true) do {
-        case (_type in ["resource","powerplant","factory","fia_hq","city","outpost","outpostAA"]): {
+        case (_type in ["resource","powerplant","factory","fia_hq","city","outpost","outpostAA", "seaport"]): {
             _spawn_type = "FIAgeneric";
         };
         case (_type == "airfield"): {
@@ -69,6 +69,16 @@ if (_side == "CSAT") then {
     };
   ""
   };
+};
+
+  if (_side == "Neutral") then {
+    if (_type in ["resource","powerplant","factory","city","seaport"]) then {
+        _spawn_type = "Neutralgeneric";
+    };
+};
+
+if (_spawn_type == "Neutralgeneric") exitWith {
+    [AS_spawn_createNeutralgeneric_states, AS_spawn_createNeutralgeneric_state_functions]
 };
 
 if (_spawn_type == "AAFgeneric") exitWith {

@@ -66,6 +66,20 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
       if (_mission != "") exitWith {};
 
+        //First neutral cities
+
+        {
+          private _loc = _x;
+          {
+            if (_loc in _x) exitwith {_mission = _x};
+
+          } foreach (_missions select {"supplies" in _x});
+          if (_mission != "") exitWith  {};
+
+        } foreach (["city", "Neutral"] call AS_location_fnc_TS);
+
+        if (_mission != "" and {random 1 < 0.95}) exitWith {_alarm = true; _skipping = false}; //random component here. aaf won't allways send to neutral cities
+
       //Then FIA cities
       {
         private _loc = _x;

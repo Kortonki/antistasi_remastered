@@ -147,7 +147,8 @@ publicVariable "AS_RadioCoverage";
         if (_x find "AS_seaport" == 0) exitWith {[_x, "seaport"] call AS_location_fnc_add};
         if (_x find "AS_outpostAA" == 0) exitWith {[_x, "outpostAA"] call AS_location_fnc_add};
         if (_x find "AS_outpost" == 0) exitWith {[_x, "outpost"] call AS_location_fnc_add};
-        if (_x find "AS_roadblock" == 0) exitWith {[_x, "roadblock"] call AS_location_fnc_add};
+        //if (_x find "AS_roadblock" == 0) exitWith {[_x, "roadblock"] call AS_location_fnc_add}; //Commented out for now so no far flung roadblocks initally from AAF Bases (9.7.23 after neutral city update)
+        if (_x find "AS_roadblock" == 0) exitWith {deletemarker _x};
         if (_x find "AS_hillAA" == 0) exitWith {[_x, "hillAA"] call AS_location_fnc_add};
 
     };

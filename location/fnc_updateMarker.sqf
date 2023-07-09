@@ -99,3 +99,8 @@ if (_side == "CSAT") then {
   };
 
 };
+
+if (_side == "Neutral") then {
+  _mrk setMarkerColor "ColorGrey";
+
+};

@@ -77,6 +77,7 @@ class AS_location {
         INIT_FNC(location\spawns,FIAbase);
         INIT_FNC(location\spawns,FIAbuilt_location);
         INIT_FNC(location\spawns,FIAgeneric);
+        INIT_FNC(location\spawns,Neutralgeneric);
         INIT_FNC(location\spawns,Minefield);
         INIT_FNC(location\spawns,NATOroadblock);
     };
@@ -89,5 +90,7 @@ class AS_location_spawn {
         FNC(location\spawn,AAFwait_capture);
         FNC(location\spawn,FIAlocation_clean);
         FNC(location\spawn,FIAwait_capture);
+        FNC(location\spawn,Neutralwait_capture);
+        FNC(location\spawn,Neutrallocation_clean);
     };
 };

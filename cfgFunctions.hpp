@@ -56,7 +56,9 @@ class AS {
         FNC_BASE(eventCheck);
 
         FNC_BASE(win_location);
+        FNC_BASE(win_neutrallocation);
         FNC_BASE(lose_location);
+        FNC_BASE(lose_neutrallocation);
         FNC_BASE(destroy_location);
 
         FNC_BASE(recomputePowerGrid);

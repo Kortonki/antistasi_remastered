@@ -2,12 +2,15 @@
 private _scoreNeededLand = 0;
 private _scoreNeededAir = 0;
 
+if (_x call AS_location_fnc_S == "Neutral") exitWith {[_scoreNeededLand, _scoreNeededAir]};
+
 {
     private _analizado = _x;
     private _analizadoPos = _x call AS_location_fnc_position;
     private _analizadoSize = _x call AS_location_fnc_size;
     private _analizadoType = _x call AS_location_fnc_type;
     private _analizadoGarrison = _x call AS_location_fnc_garrison;
+
 
     _scoreNeededLand = _scoreNeededLand + floor ((count _analizadoGarrison)/8);
     _scoreNeededAir = _scoreNeededAir + floor (({_x == "AA Specialist"} count _analizadoGarrison)/2);

@@ -123,6 +123,8 @@ if (_useCSAT) then {
 				if (_type in ["powerplant", "factory"]) then {_cuenta = 4};
 				if (_type in ["base", "airfield"]) then {_cuenta = 5};
 
+				if ((_location call AS_location_fnc_S) == "Neutral") then {_cuenta = _cuenta * 3};
+
 				// amplify the effect to combined attacks or close targets.
 				if (_base != "") then {
 					if (_aeropuerto != "") then {_cuenta = _cuenta*2};
@@ -151,7 +153,7 @@ if (count _objectives > 0) then {
 			_location call AS_mission_fnc_createDefendCamp;
 			_alarm = true;
 		};*/
-		if (_location call AS_location_fnc_type == "city") exitWith {
+		if (_location call AS_location_fnc_type == "city" and {_location call AS_location_fnc_S == "FIA"}) exitWith {
 			_location call AS_mission_fnc_createDefendCity;
 			_alarm = true;
 		};

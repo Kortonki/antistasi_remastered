@@ -48,9 +48,9 @@ private _attributes = [];
 } forEach _validWeapons;
 
 private _bestWeapon = "";
-if ((count _validWeapons) > 0) then {
+if ((count _indexes) > 0) then {
 	// select the best item
-	private _indexes = [_indexes, [_attributes], _sortingFunction, "DESCEND"] call BIS_fnc_sortBy;
+	_indexes = [_indexes, [_attributes], _sortingFunction, "DESCEND"] call BIS_fnc_sortBy;
 	_bestWeapon = _validWeapons select (_indexes select 0);
 };
 _bestWeapon
