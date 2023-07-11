@@ -107,7 +107,7 @@ if (_type == "defend_camp") exitWith {
     [-5, [500, _position, 5], [0, -5], [0, 0], [0, -5, _position], -10*60]
 };
 if (_type == "defend_location") exitWith {
-    [-5, [500, _position, 5], [0, -5], [0, 0], [0, -5, _position], -10*60]
+    [-5, [500, _position, 5], [0, -5], [0, 0], [0, 0, _position], -10*60]
 };
 if (_type == "defend_hq") exitWith {
     [-10, [500, _position, 5], [0, -5], [0, 0], [0, -10, _position], -10*60]

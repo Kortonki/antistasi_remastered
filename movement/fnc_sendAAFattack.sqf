@@ -26,6 +26,7 @@ private _validTypes = ["base", "airfield", "outpost", "powerplant", "factory", "
 private _validLocations = ([_validTypes, "FIA"] call AS_location_fnc_TS); //Fixed locations + FIA locations discovered by the AAF
 private _knownLocations = [] call AS_location_fnc_knownLocations;
 _validLocations append _knownLocations;
+_validLocations append ([_validTypes, "Neutral"] call AS_location_fnc_TS);
 
 private _enemyLocations = "NATO" call AS_location_fnc_S; //This changed so known locations are checked and excluding minefields to avoid errors
 _enemyLocations append _validLocations;
@@ -79,9 +80,16 @@ if (_useCSAT) then {
 
 		// short circuit if no valid bases or airfields to attack
 		if ((_base != "") or (_aeropuerto != "")) then {
-			private _closeEnemylocations = _enemyLocations select {((_x call AS_location_fnc_position) distance2D _position < AS_P("spawnDistance")/2)};
+			private _closeEnemylocations = _enemyLocations select {((_x call AS_location_fnc_position) distance2D _position < 500)};
+
+
+
 
 			(_closeEnemylocations call AS_fnc_AAFattackScore) params ["_scoreNeededLand", "_scoreNeededAir"];
+			if ((_location call AS_location_fnc_side) == "Neutral") then {
+				_scoreNeededLand = 0;
+				_scoreNeededAir = 0;
+			};
 
 			private _isEasy = (_scoreNeededLand < 4) and (_scoreNeededAir < 4) and (count _garrison < 4) and !(_type in ["base", "airfield", "fia_hq"]);
 
@@ -97,6 +105,8 @@ if (_useCSAT) then {
 					if !(_location in AS_P("patrollingLocations")) then {
 						_count_easy = _count_easy + 2;
 						[[_location,_base], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+						_debug_message = format ["  %1: Easy target. Patrol sent", _location];
+						diag_log(_debug_prefix + _debug_message);
 						//sleep 15; this function is called as well
 					};
 				};
@@ -110,6 +120,8 @@ if (_useCSAT) then {
 					if !(_location in AS_P("patrollingLocations")) then {
 						_count_easy = _count_easy + 1;
 						[[_location,_aeropuerto], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
+						_debug_message = format ["  %1: Easy target. Patrol sent.", _location];
+						diag_log(_debug_prefix + _debug_message);
 						//sleep 15;
 					};
 				};
@@ -123,7 +135,7 @@ if (_useCSAT) then {
 				if (_type in ["powerplant", "factory"]) then {_cuenta = 4};
 				if (_type in ["base", "airfield"]) then {_cuenta = 5};
 
-				if ((_location call AS_location_fnc_S) == "Neutral") then {_cuenta = _cuenta * 3};
+				if ((_location call AS_location_fnc_side) == "Neutral") then {_cuenta = _cuenta * 3};
 
 				// amplify the effect to combined attacks or close targets.
 				if (_base != "") then {
@@ -153,7 +165,7 @@ if (count _objectives > 0) then {
 			_location call AS_mission_fnc_createDefendCamp;
 			_alarm = true;
 		};*/
-		if (_location call AS_location_fnc_type == "city" and {_location call AS_location_fnc_S == "FIA"}) exitWith {
+		if (_location call AS_location_fnc_type == "city" and {_location call AS_location_fnc_side == "FIA"}) exitWith {
 			_location call AS_mission_fnc_createDefendCity;
 			_alarm = true;
 		};

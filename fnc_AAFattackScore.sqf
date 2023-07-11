@@ -2,8 +2,6 @@
 private _scoreNeededLand = 0;
 private _scoreNeededAir = 0;
 
-if (_x call AS_location_fnc_S == "Neutral") exitWith {[_scoreNeededLand, _scoreNeededAir]};
-
 {
     private _analizado = _x;
     private _analizadoPos = _x call AS_location_fnc_position;

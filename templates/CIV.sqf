@@ -2,7 +2,7 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 [_dict, "side", str civilian] call DICT_fnc_set;
 [_dict, "roles", ["civilian"]] call DICT_fnc_set;
 [_dict, "name", "Altis (RHS)"] call DICT_fnc_set;
-[_dict, "flat", "Flag_White_F"] call DICT_fnc_set;
+[_dict, "flag", "Flag_White_F"] call DICT_fnc_set;
 
 [_dict, "units", [
 "C_man_1","C_man_1_1_F","C_man_1_2_F","C_man_1_3_F","C_man_hunter_1_F",

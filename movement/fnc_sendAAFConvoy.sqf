@@ -17,9 +17,11 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
     "convoy_prisoners"
     ] and {!(_x call AS_spawn_fnc_exists)}}};
 
+
+
   //Send recon every 10th time anyway
   if (count _missions > 0 and {random 1 < 0.90 and {sunOrMoon == 1 or (random 1 < 0.1)}}) then { //AAF will only send convoys in daylight with only small exceptions
-
+      diag_log format ["[AS] sendAAFConvoy: Valid convoy missions found %1", count _missions];
     private _mission = "";
 
     //TODO improve this to find a city nearest to a base
@@ -108,6 +110,7 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
 
     if (_mission == "") then {
+      diag_log "[AS] sendAAFConvoy: Valid convoy mission not found, sending recon";
       call AS_movement_fnc_sendAAFRecon;
     } else { //Prevent changing mission if it's worth an alarm
       _mission call AS_mission_fnc_activate;
@@ -115,6 +118,7 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
       diag_log "[AS] sendAAFConvoy: Valid convoy mission found, starting mission";
     };
   } else {
+    diag_log "[AS] sendAAFConvoy: Valid convoy mission not found, sending recon";
     call AS_movement_fnc_sendAAFRecon;
   };
   _alarm

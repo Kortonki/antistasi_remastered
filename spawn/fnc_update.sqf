@@ -101,7 +101,11 @@ private _spawningOPFORunits = [];
         private _playerIsClose = (_x call AS_location_fnc_forced_spawned) or
                                  ({not (_x call AS_fnc_controlsAI) and {_x distance2D _position < AS_P("spawnDistance")}} count _spawningBLUFORunits > 0);
         // enemies are close.
-        private _spawnCondition = _playerIsClose;
+        private _spawnCondition = (_playerIsClose) or ({_x distance2D _position < AS_P("spawnDistance")} count _spawningOPFORunits > 0) or ({_x distance2D _position < AS_P("spawnDistance")} count _spawningBLUFORunits > 0);
+        //City has no use spawning when AI are around
+        if ((_x call AS_location_fnc_type) == "city") then {
+          _spawnCondition = _playerIsClose;
+        };
         //Added a condition here to check last spawn has finished before starting a new one. Rare but can happen because of scheduling
         if (!_isSpawned and {!(_x call AS_spawn_fnc_exists) and {_spawnCondition}}) then {
             _x call AS_location_fnc_spawn;
@@ -126,11 +130,16 @@ private _spawningOPFORunits = [];
             private _playerIsClose = (_spawn call AS_location_fnc_forced_spawned) or
                                      ({not (_x call AS_fnc_controlsAI) and {_x distance2D _position < AS_P("spawnDistance")}} count _spawningBLUFORunits > 0);
             // enemies are close.
-            private _spawnCondition = _playerIsClose;
+            private _spawnCondition = _playerIsClose or ({_x distance2D _position < AS_P("spawnDistance")} count _spawningOPFORunits > 0) or ({_x distance2D _position < AS_P("spawnDistance")} count _spawningBLUFORunits > 0);
+
+            if ((_spawn call AS_location_fnc_type) == "city") then {
+              _spawnCondition = _playerIsClose;
+            };
 
             if (!_spawnCondition) then {
               _spawn call AS_location_fnc_despawn;
               };
+
             [_spawn, "despawning", false] call AS_location_fnc_set;
             };
 

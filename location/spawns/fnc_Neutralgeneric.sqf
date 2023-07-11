@@ -18,7 +18,7 @@ private _fnc_spawn = {
 
 	if (_type != "city") then {
 		// The flag
-		private _veh = createVehicle [["FIA", "flag"] call AS_fnc_getEntity, _posicion, [],0, "CAN_COLLIDE"];
+		private _veh = createVehicle [["CIV", "flag"] call AS_fnc_getEntity, _posicion, [],0, "CAN_COLLIDE"];
 		_veh allowDamage false;
 		_vehiculos pushBack _veh;
 		//create _bunker, only if there's no preset composition

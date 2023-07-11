@@ -12,9 +12,14 @@ private _fnc_initialize = {
 	private _name = [_location] call AS_fnc_location_name;
 
 	private _tskTitle = "Defend " + _name;
-	private _tskDesc = (["AAF", "shortname"] call AS_fnc_getEntity) + " is attacking %1. Defend it or we lose it";
-	if _useCSAT then {
-		_tskDesc = (format ["%1 and %2", (["AAF", "shortname"] call AS_fnc_getEntity), ["CSAT", "shortname"] call AS_fnc_getEntity]) + " are attacking %1. Defend it or we lose it";
+	private _tskDesc = "";
+	if (_location call AS_location_fnc_side == "Neutral") then {
+		_tskDesc = (["AAF", "shortname"] call AS_fnc_getEntity) + " is going to capture %1.";
+	} else {
+		_tskDesc = (["AAF", "shortname"] call AS_fnc_getEntity) + " is attacking %1. Defend it or we lose it";
+		if _useCSAT then {
+			_tskDesc = (format ["%1 and %2", (["AAF", "shortname"] call AS_fnc_getEntity), ["CSAT", "shortname"] call AS_fnc_getEntity]) + " are attacking %1. Defend it or we lose it";
+		};
 	};
 	_tskDesc = format [_tskDesc,_name];
 
@@ -217,7 +222,7 @@ private _fnc_run = {
 
 
 
-	private _fnc_missionFailedCondition = {_location call AS_location_fnc_side != "FIA"};
+	private _fnc_missionFailedCondition = {_location call AS_location_fnc_side == "AAF"};
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];

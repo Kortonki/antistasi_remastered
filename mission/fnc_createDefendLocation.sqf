@@ -8,7 +8,7 @@ if AS_S("blockCSAT") exitWith {
 };
 
 private _position = _location call AS_location_fnc_position;
-private _side = _location call AS_location_fnc_S;
+private _side = _location call AS_location_fnc_side;
 
 private _base = [_position] call AS_fnc_getBasesForCA;
 private _airfield = [_position] call AS_fnc_getAirportsForCA;
