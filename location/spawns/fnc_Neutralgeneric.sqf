@@ -29,7 +29,7 @@ private _fnc_spawn = {
 		};*/
 		// worker civilians in non-military non-destroyed markers
 		if ((_type in ["powerplant","resource","factory"]) and !_isDestroyed) then {
-			if ((daytime > 8) and (daytime < 18)) then {
+
 				private _grupo = createGroup civilian;
 				_grupos pushBack _grupo;
 				for "_i" from 1 to 8 do {
@@ -37,7 +37,7 @@ private _fnc_spawn = {
 					[_civ] spawn AS_fnc_initUnitCIV;
 					_civs pushBack _civ;
 					sleep 0.5;
-				};
+
 				[_location,_civs] spawn AS_fnc_location_canBeDestroyed;  // power shuts if everyone is killed
 				[leader _grupo, _location, "SAFE", "SPAWNED","NOFOLLOW", "NOSHARE","DORELAX","NOVEH2"] spawn UPSMON;
 			};

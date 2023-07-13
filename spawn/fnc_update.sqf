@@ -123,7 +123,7 @@ private _spawningOPFORunits = [];
         };
         if (!(_deSpawning) and {_isSpawned and {!_spawnCondition}}) then {
           [_x, _position, _spawningBLUFORunits, _spawningOPFORunits] spawn {
-            params ["_spawn", "_position", "_spawningBLUFORunits"];
+            params ["_spawn", "_position", "_spawningBLUFORunits", "_spawningOPFORunits"];
             [_spawn, "despawning", true] call AS_location_fnc_set; //This to avoid multiple spawns of this function
             sleep 70; //Delay to reduce unneccessary despawn
 

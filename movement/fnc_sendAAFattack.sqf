@@ -15,7 +15,7 @@ private _FIAbases = [["base","airfield"], "FIA"] call AS_location_fnc_TS;
 
 private _useCSAT = call AS_fnc_useCSAT;
 
-private _validTypes = ["base", "airfield", "outpost", "powerplant", "factory", "resource"]; //City removed from types, until fixed (gets stuck without error, prolly infinite loap). Probably needs balancing too now, as useCSAT criteria has changed
+private _validTypes = ["base", "airfield", "outpost", "powerplant", "factory", "resource", "seaport", "city"]; //City removed from types, until fixed (gets stuck without error, prolly infinite loap). Probably needs balancing too now, as useCSAT criteria has changed
 //Fia_hq, watchpost, roadblock, camp must be first discovered by AAF
 
 // only attack cities and use CSAT if FIA controls a base or airfield
@@ -23,10 +23,13 @@ private _validTypes = ["base", "airfield", "outpost", "powerplant", "factory", "
 	_validTypes = _validTypes - ["city"];
 };*/
 
-private _validLocations = ([_validTypes, "FIA"] call AS_location_fnc_TS); //Fixed locations + FIA locations discovered by the AAF
+//Order here is important. Neutral first so convoys get sent to them first before bases get busy
+private _validLocations = ([_validTypes, "Neutral"] call AS_location_fnc_TS); //Fixed locations + FIA locations discovered by the AAF
 private _knownLocations = [] call AS_location_fnc_knownLocations;
 _validLocations append _knownLocations;
-_validLocations append ([_validTypes, "Neutral"] call AS_location_fnc_TS);
+_validLocations append ([_validTypes, "FIA"] call AS_location_fnc_TS);
+
+//TODO: Order the locations to prioritize cities?
 
 private _enemyLocations = "NATO" call AS_location_fnc_S; //This changed so known locations are checked and excluding minefields to avoid errors
 _enemyLocations append _validLocations;
@@ -69,8 +72,18 @@ if (_useCSAT) then {
 			private _AAFsupport = [_x, "AAFsupport"] call AS_location_fnc_get;
 
 			// only attack cities that have high FIA and low AAF support
-			if ((_AAFsupport < 5) and (_FIAsupport > 70)) then {
+			if ((_AAFsupport < 5) and {_FIAsupport > 90} and {_useCSAT}) then {
 				_objectives append [_x, _x, _x, _x, _x];
+			} else {
+				//Otherwise send convoy if neutral. FIA cities get convoys if no valid targets via the end of the script
+				private _mission = format ["convoy_supplies_%1", _location];
+				if ((_location call AS_location_fnc_side == "Neutral") and {!(_mission call AS_spawn_fnc_exists) and {_mission in (call AS_mission_fnc_all) and {_mission call AS_mission_fnc_status in ["possible", "available"]}}}) then {
+					_mission call AS_mission_fnc_activate;
+					_debug_message = format ["  %1: Sending supply convoy to neutral %1.", _location];
+					diag_log(_debug_prefix + _debug_message);
+					waitUntil {sleep 1; [_mission, "state_index"] call AS_spawn_fnc_get >= 2 or !(_mission call AS_spawn_fnc_exists)};
+				};
+
 			};
 		};
 
@@ -131,6 +144,7 @@ if (_useCSAT) then {
 			if (((_base != "") or (_aeropuerto != ""))) then {
 				// increase likelihood of bases and others
 				private _cuenta = 1;
+				if (_type in ["seaport"]) then {_cuenta = 2};
 				if (_type in ["resource"]) then {_cuenta = 3};
 				if (_type in ["powerplant", "factory"]) then {_cuenta = 4};
 				if (_type in ["base", "airfield"]) then {_cuenta = 5};

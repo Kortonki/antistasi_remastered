@@ -68,7 +68,7 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
       if (_mission != "") exitWith {};
 
-        //First neutral cities
+        //First neutral cities. MIGHT BE UNNECESSARY DEALT WITH IN SENDAAFATTACK
 
         {
           private _loc = _x;

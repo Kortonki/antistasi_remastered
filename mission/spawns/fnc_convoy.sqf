@@ -42,7 +42,7 @@ private _fnc_initialize = {
   private _origin = [_position, _originTypes] call AS_fnc_getBasesForConvoy;
 
 	if (_origin == "") exitWith {
-		[petros, "hint", "mission is no longer available"] call AS_fnc_localCommunication;
+		//[petros, "hint", "mission is no longer available"] call AS_fnc_localCommunication;
 
 		diag_log format ["[AS] Error mission %1 canceled, no valid basses for convoy", _mission];
 		[_mission] remoteExecCall ["AS_mission_fnc_cancel", 2];
@@ -251,7 +251,7 @@ private _fnc_spawn = {
 	} foreach units _mainVehicleGroup;
 	//_mainVehicle setConvoySeparation _separation;
 
-	[_origin,(5+10*_escortsize)] call AS_location_fnc_increaseBusy;
+	[_origin,(5+5*_escortsize)] remoteExec ["AS_location_fnc_increaseBusy", 2];
 
 	//This is done after so busy parameter is applied before checking for convoy
 	if (_frontLine) then {
