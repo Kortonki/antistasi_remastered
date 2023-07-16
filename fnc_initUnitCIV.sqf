@@ -61,7 +61,7 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 			[_killer call AS_fnc_getSide, 1, "civKills"] remoteExec ["AS_stats_fnc_change", 2];
 		};
 
-		if (_sideKiller == ("FIA" call AS_fnc_getFactionSide)) then {
+		if (_killer call AS_fnc_getSide in ["NATO", "FIA"]) then {
 			[-1*_coeff,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 			[0,-5,getPos _unit, true] remoteExec ["AS_fnc_changeCitySupport",2]; //Civ killing penalties hardened
 			//Journalist kills lower city support everywhere %5, civs not
@@ -87,10 +87,10 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 			["NATO", "shortname"] call AS_fnc_getEntity
 			];
 
-			[_msg, 15, "reporterKilledFIA"] remoteExec ["AS_fnc_globalMessage", 2];
+			[_msg, 15, "reporterKilledFIA", true] remoteExec ["AS_fnc_globalMessage", 2];
 
 		} else {
-			if (_sideKiller == ("AAF" call AS_fnc_getFactionSide)) then {
+			if (_killer call AS_fnc_getSide in ["AAF", "CSAT"]) then {
 				[1*_coeff,0] remoteExec ["AS_fnc_changeForeignSupport",2];
 				[-5,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2]; //Civ killing penalties hardened 1 -> 5%
 				//Journalist kills lower city support everywhere 5%, civs not
@@ -106,7 +106,7 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 				["FIA", "shortname"] call AS_fnc_getEntity
 		    ];
 
-				[_msg, 15, "reporterKilledFIA"] remoteExec ["AS_fnc_globalMessage", 2];
+				[_msg, 15, "reporterKilledAAF", true] remoteExec ["AS_fnc_globalMessage", 2];
 			};
 		};
 	};
@@ -133,12 +133,12 @@ if (typeOf _unit == "C_Journalist_F") then {
 		if (!(alive _unit)) exitWith {}; //If unit was killed, then only kill penalty
 
 			//Journalist INJURY penalties
-			if (side _source == ("FIA" call AS_fnc_getFactionSide)) then {
+			if (_source call AS_fnc_getSide in ["NATO", "FIA"]) then {
 					[0, -1, getpos _unit, true] remoteExec ["AS_fnc_changeForeignSupport", 2];
 					{[0,-1,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 					[0,-4,getPos _unit, true] remoteExec ["AS_fnc_changeCitySupport",2];
 				};
-			if (side _source == ("AAF" call AS_fnc_getFactionSide)) then {
+			if (_source call AS_fnc_getSide in ["AAF", "CSAT"]) then {
 					[0, 1, getpos _unit, true] remoteExec ["AS_fnc_changeForeignSupport", 2];
 					{[-1, 0,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 					[-4,0,getPos _unit, true] remoteExec ["AS_fnc_changeCitySupport",2];
@@ -160,10 +160,10 @@ if (typeOf _unit == "C_Journalist_F") then {
 
 			if (!(alive _unit)) exitWith {}; //If unit was killed, then only kill penalty
 			//Civilian INJURY penalties
- 			if (side _source == ("FIA" call AS_fnc_getFactionSide)) then {
+ 			if (_source call AS_fnc_getSide in ["NATO", "FIA"]) then {
 					[0,-2,getPos _unit, true] remoteExec ["AS_fnc_changeCitySupport",2];
  			};
-			if (side _source == ("AAF" call AS_fnc_getFactionSide)) then {
+			if (_source call AS_fnc_getSide in ["AAF", "CSAT"]) then {
 					[-2,0,getPos _unit, true] remoteExec ["AS_fnc_changeCitySupport",2];
  			};
 		};

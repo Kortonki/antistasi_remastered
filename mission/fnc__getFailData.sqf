@@ -70,7 +70,7 @@ if (_type == "conquer") exitWith {
     [-5, 0, [0, 0], [0, 0], [5, 0, _position], -10*60]
 };
 if (_type == "convoy_supplies") exitWith {
-    [-10, 0, [0, 5], [0, 0], [20, 0, _position], 0]
+    [-10, 0, [0, 0], [0, 0], [20, 0, _position], 0]
 };
 if (_type == "convoy_money") exitWith {
     [-10, 0, [0, 0], [0, 0], [0, 0, []], 0, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]

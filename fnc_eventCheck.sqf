@@ -11,7 +11,7 @@ if (!("AAF_100casualties_date" call AS_stats_fnc_exists) and {(["AAF", "casualti
     ["FIA", "casualties"] call AS_stats_fnc_get
     ];
 
-    [_msg, 20, "AAFcasualties"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFcasualties", true] remoteExec ["AS_fnc_globalMessage", 2];
 };
 
 if (!("AAF_250casualties_date" call AS_stats_fnc_exists) and {(["AAF", "casualties"] call AS_stats_fnc_get) >= 250 and {(["FIA", "casualties"] call AS_stats_fnc_get) >= 250}}) then {
@@ -24,7 +24,7 @@ if (!("AAF_250casualties_date" call AS_stats_fnc_exists) and {(["AAF", "casualti
     ["CSAT", "shortname"] call AS_fnc_getEntity
     ];
 
-    [_msg, 20, "AAFcasualties"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFcasualties", true] remoteExec ["AS_fnc_globalMessage", 2];
 
     [0, -20] remoteExec ["AS_fnc_changeForeignSupport", 2];
 
@@ -40,7 +40,7 @@ if (!("AAF_250casualties_date" call AS_stats_fnc_exists) and {(["AAF", "casualti
     ["CSAT", "shortname"] call AS_fnc_getEntity
     ];
 
-    [_msg, 20, "AAFcasualties"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFcasualties", true] remoteExec ["AS_fnc_globalMessage", 2];
 
     [0, 20] remoteExec ["AS_fnc_changeForeignSupport", 2];
 
@@ -55,7 +55,7 @@ if (!("AAF_500casualties_date" call AS_stats_fnc_exists) and {(["AAF", "casualti
     ["FIA", "casualties"] call AS_stats_fnc_get
     ];
 
-    [_msg, 20, "AAFcasualties"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFcasualties", true] remoteExec ["AS_fnc_globalMessage", 2];
 };
 
 if (!("AAF_1000casualties_date" call AS_stats_fnc_exists) and {(["AAF", "casualties"] call AS_stats_fnc_get) >= 1000}) then {
@@ -69,7 +69,7 @@ if (!("AAF_1000casualties_date" call AS_stats_fnc_exists) and {(["AAF", "casualt
     ];
 
 
-    [_msg, 20, "AAFcasualties"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFcasualties",  true] remoteExec ["AS_fnc_globalMessage", 2];
 };
 
 //AAF new vehicles checks
@@ -83,7 +83,7 @@ if (!("AAF_firstHelis_date" call AS_stats_fnc_exists) and {"helis_transport" cal
     ];
 
 
-    [_msg, 20, "AAFfirstHelis"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFfirstHelis", true] remoteExec ["AS_fnc_globalMessage", 2];
 };
 
 if (!("AAF_firstArmedHelis_date" call AS_stats_fnc_exists) and {"helis_armed" call AS_AAFarsenal_fnc_count > 0}) then {
@@ -94,7 +94,7 @@ if (!("AAF_firstArmedHelis_date" call AS_stats_fnc_exists) and {"helis_armed" ca
     ["FIA", "shortname"] call AS_fnc_getEntity
     ];
 
-    [_msg, 20, "AAFfirstHelisArmed"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFfirstHelisArmed", true] remoteExec ["AS_fnc_globalMessage", 2];
 };
 
 if (!("AAF_firstTanks_date" call AS_stats_fnc_exists) and {"tanks" call AS_AAFarsenal_fnc_count > 0}) then {
@@ -105,7 +105,7 @@ if (!("AAF_firstTanks_date" call AS_stats_fnc_exists) and {"tanks" call AS_AAFar
     ];
 
 
-    [_msg, 20, "AAFfirstTanks"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFfirstTanks", true] remoteExec ["AS_fnc_globalMessage", 2];
 };
 
 if (!("AAF_firstPlanes_date" call AS_stats_fnc_exists) and {"planes" call AS_AAFarsenal_fnc_count > 0}) then {
@@ -117,5 +117,5 @@ if (!("AAF_firstPlanes_date" call AS_stats_fnc_exists) and {"planes" call AS_AAF
     ];
 
 
-    [_msg, 20, "AAFfirstPlanes"] remoteExec ["AS_fnc_globalMessage", 2];
+    [_msg, 20, "AAFfirstPlanes", true] remoteExec ["AS_fnc_globalMessage", 2];
 };

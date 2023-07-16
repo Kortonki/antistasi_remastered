@@ -38,7 +38,7 @@ if (_type in ["outpost", "outpostAA", "seaport"]) then {
 	};
 };
 if (_type == "powerplant") then {
-	[0,-5] call AS_fnc_changeForeignSupport;
+	[0,-10] call AS_fnc_changeForeignSupport;
 	[10,-10,_posicion] call AS_fnc_changeCitySupport;
 	["TaskFailed", ["", "Powerplant Lost"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[_location] call AS_fnc_recomputePowerGrid;

@@ -1,6 +1,6 @@
 #include "macros.hpp"
 
-params [["_message", ".....&¤#&%¤...."], ["_delay", 5], ["_type", ""], ["_store", true]]; //Delay in minutes. Type is checked so similar type of messages arent multiplied.
+params [["_message", ".....&¤#&%¤...."], ["_delay", 5], ["_type", ""], ["_store", false]]; //Delay in minutes. Type is checked so similar type of messages arent multiplied.
 
 if (_type != "" and {_type in AS_active_messages}) exitWith {};
 AS_active_messages pushback _type;
@@ -19,7 +19,7 @@ if _store then {
  private _daten = dateTonumber _date;
  private _dateFinal = numberToDate [_year, _daten];
 
- [_dateFinal, _type, _message] remoteExec ["AS_stats_fnc_storeMessage", 2];
+ [_dateFinal, _type, _message] remoteExecCall ["AS_stats_fnc_storeMessage", 2];
 };
 
 sleep (_delayFinal * 60);

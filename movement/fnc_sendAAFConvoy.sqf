@@ -2,20 +2,22 @@
 
 #include "../macros.hpp"
 
-params [["_skipping", false]];
+params [["_skipping", false],
+["_types",
+["convoy_ammo",
+"convoy_armor",
+"convoy_fuel",
+"convoy_hvt",
+"convoy_supplies",
+"convoy_money",
+"convoy_prisoners",
+"recon"]]
+];
 
 private _alarm = false;
 
 private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status in ["available","possible"] and
-  {_x call AS_mission_fnc_type in [
-    "convoy_ammo",
-    "convoy_armor",
-    "convoy_fuel",
-    "convoy_hvt",
-    "convoy_supplies",
-    "convoy_money",
-    "convoy_prisoners"
-    ] and {!(_x call AS_spawn_fnc_exists)}}};
+  {_x call AS_mission_fnc_type in _types and {!(_x call AS_spawn_fnc_exists)}}};
 
 
 
@@ -52,15 +54,15 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
       if (_mission != "") exitWith {};
 
-      // If disorganization try HVT convoy with a bit of a random component, the more disorganization the more probable. Minimum of thrice the normal interval left for next initiative to trigger. On avg 5 times more
-      // Guaranteed to trigger if 20 time s the normal
+      // If disorganization try HVT convoy with a bit of a random component, the more disorganization the more probable. Minimum of twice the normal interval left for next initiative to trigger. On avg 5 times more
+      // Guaranteed to trigger if 5 time s the normal
 
       private _minutes = (numberToDate [date select 0, (AS_P("nextAttack") - (datetoNumber date))]) select 4;
 
-      if ((_minutes * (0.05 + random 0.3)) > (AS_P("upFreq") * 2)) then {
+      if ((_minutes * (0.2 + random 0.3)) > ((AS_P("upFreq")/60) * 2)) then {
 
         {
-          if ("hvt" in _x) exitwith {
+          if ("hvt" in _x or "armor" in _x) exitwith {
             _mission = _x;
           };
         } foreach _missions;
@@ -119,6 +121,8 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
     };
   } else {
     diag_log "[AS] sendAAFConvoy: Valid convoy mission not found, sending recon";
-    call AS_movement_fnc_sendAAFRecon;
+    if ("recon" in _types) then {
+      call AS_movement_fnc_sendAAFRecon;
+    };
   };
   _alarm

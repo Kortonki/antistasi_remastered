@@ -389,7 +389,7 @@ AS_allWeaponsAttrs = [];
                   {
                       private _class = (configFile >> "CfgWeapons" >> _name >> _x);
                       //RHS Javelin exception
-                      if (!isNull _class and {"launch_Titan_short_base" in ([_class,true] call BIS_fnc_returnParents) or _name in _RL_exceptions}) exitWith {
+                      if (!isNull _class and {"launch_Titan_short_base" in ([_class,true] call BIS_fnc_returnParents) or _class in _RL_exceptions}) exitWith {
                           //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
                           _is_RL = true;
                       };

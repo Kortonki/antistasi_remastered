@@ -24,7 +24,8 @@ private _fnc_allPossibleMissions = {
         params ["_missionType", "_location"];
         //In following missions _location is the destination so it doesn't matter if it's spawned or not
         (not(_location call AS_location_fnc_spawned) or (_missionType in ["convoy_supplies", "convoy_money", "convoy_fuel", "convoy_armor", "convoy_prisoners", "convoy_hvt", "convoy_ammo"]))
-            // and{(_location call AS_location_fnc_position) distance2D (getMarkerPos "FIA_HQ") < AS_missions_MAX_DISTANCE} // Commented out for now. So player cannot prevent missions by having HQ far. Also AAF needs to be able to send convoys to neutral towns
+            and{(_location call AS_location_fnc_position) distance2D (getMarkerPos "FIA_HQ") < AS_missions_MAX_DISTANCE or (_missionType in ["convoy_supplies", "convoy_money", "convoy_fuel", "convoy_armor", "convoy_hvt", "convoy_ammo"])}
+            // Prisoner convoy is player triggered and has to be close, all other convoy missions are AAF triggered with no distance limit
     };
 
     private _cityMissions = [
@@ -171,12 +172,13 @@ private _new_possible = call _fnc_allPossibleMissions;
 } forEach ((call AS_mission_fnc_all) select {_x call AS_mission_fnc_status in ["possible"]});
 
 // Add new possible missions
-private _possible = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "possible"};
-private _active_available = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "active"};
+// Convoy missions only run in the background
+private _possible = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "possible" and {!((_x call AS_mission_fnc_type) in ["convoy_supplies", "convoy_ammo", "convoy_armor", "convoy_fuel", "convoy_money", "convoy_hvt"])}};
+private _active_available = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "active" and {!((_x call AS_mission_fnc_type) in ["convoy_supplies", "convoy_ammo", "convoy_armor", "convoy_fuel", "convoy_money", "convoy_hvt"])}};
 {
     _x params ["_type", "_location"];
     private _sig = (format ["%1_%2", _type, _location]);
-    if not (_sig in _possible or _sig in _active_available or _sig call AS_spawn_fnc_exists) then { //added spawn exist condition to not add missions still not ended and deleted
+    if not (_sig in _possible or _sig call AS_mission_fnc_status == "active" or _sig call AS_spawn_fnc_exists) then { //added spawn exist condition to not add missions still not ended and deleted
         _x call AS_mission_fnc_add;
         _possible pushBack _sig;
     };

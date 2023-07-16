@@ -39,7 +39,7 @@ sleep 5;
 
 if (_type == "powerplant") then {
 	["TaskSucceeded", ["", "Powerplant Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
-	[0,10] call AS_fnc_changeForeignSupport;
+	[0,5] call AS_fnc_changeForeignSupport;
 	[0, 10, _posicion] call AS_fnc_changeCitySupport;
 	["con_neut"] call fnc_BE_XP;
 	[_location] call AS_fnc_recomputePowerGrid;
@@ -54,7 +54,7 @@ if (_type in ["factory", "resource"]) then {
 	if (_type == "factory") then {["TaskSucceeded", ["", "Factory Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];};
 	if (_type == "resource") then {["TaskSucceeded", ["", "Resource Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];};
 	["con_neut"] call fnc_BE_XP;
-	[0,5] call AS_fnc_changeForeignSupport;
+	[0,2] call AS_fnc_changeForeignSupport;
 	[0, 5, _posicion] call AS_fnc_changeCitySupport;
 	private _powerpl = ["powerplant" call AS_location_fnc_T, _posicion] call BIS_fnc_nearestPosition;
 	if (_powerpl call AS_location_fnc_side != "FIA") then {

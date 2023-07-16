@@ -32,14 +32,14 @@ if (_type == "seaport") then {
 	["TaskFailed", ["", "Seaport captured"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 };
 if (_type == "powerplant") then {
-	[10,0] call AS_fnc_changeForeignSupport;
+	[5,0] call AS_fnc_changeForeignSupport;
 	[10,0,_posicion] call AS_fnc_changeCitySupport;
 	["TaskFailed", ["", "Powerplant captured"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[_location] call AS_fnc_recomputePowerGrid;
 };
 if (_type in ["resource", "factory"]) then {
 	[5,0,_posicion] call AS_fnc_changeCitySupport;
-	[5,0] call AS_fnc_changeForeignSupport;
+	[2,0] call AS_fnc_changeForeignSupport;
 
 	if (_type == "resource") then {
 		["TaskFailed", ["", "Resource captured"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];

@@ -251,7 +251,7 @@ private _fnc_spawn = {
 	} foreach units _mainVehicleGroup;
 	//_mainVehicle setConvoySeparation _separation;
 
-	[_origin,(5+5*_escortsize)] remoteExec ["AS_location_fnc_increaseBusy", 2];
+	[_origin,(5+10*_escortsize)] remoteExec ["AS_location_fnc_increaseBusy", 2];
 
 	//This is done after so busy parameter is applied before checking for convoy
 	if (_frontLine) then {

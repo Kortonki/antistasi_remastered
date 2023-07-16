@@ -61,7 +61,7 @@ if (_type == "base") then {
 
 if (_type == "powerplant") then {
 	["TaskSucceeded", ["", "Powerplant Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
-	[0,5] call AS_fnc_changeForeignSupport;
+	[0,10] call AS_fnc_changeForeignSupport;
 	[-10, 10, _posicion] call AS_fnc_changeCitySupport;
 	["con_ter"] call fnc_BE_XP;
 	[_location] call AS_fnc_recomputePowerGrid;

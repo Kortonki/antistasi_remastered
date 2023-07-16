@@ -23,7 +23,7 @@ if (!(["FIRSTBLOOD_date"] call AS_stats_fnc_exists) and {_killer call AS_fnc_get
   ["NATO", "name"] call AS_fnc_getEntity
   ];
 
-  [_msg, 30, ""] remoteExec ["AS_fnc_globalMessage", 2];
+  [_msg, 30, "", true] remoteExec ["AS_fnc_globalMessage", 2];
 
   [20, 0] remoteExec ["AS_fnc_changeForeignSupport", 2];
 };

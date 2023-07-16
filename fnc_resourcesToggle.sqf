@@ -18,7 +18,12 @@ if (not AS_resourcing and _on) then {
 			if (dateToNumber date >= (AS_P("nextUpdate"))) then {
 					diag_log format ["[AS] ResourcesUpdate: Update started at %1", date];
 					[] call AS_fnc_resourcesUpdate;
+					//Every update check if AAF can send disorganziation helping convoy
+					[false, ["convoy_hvt", "convoy_armor"]] spawn AS_movement_fnc_SendAAFConvoy;
 					diag_log format ["[AS] ResourcesUpdate: Update finished at %1", date];
+
+
+
 				};
 			if (dateToNumber date >= (AS_P("nextAttack"))) then {
 				private _noWaves = isNil {AS_S("waves_active")};

@@ -90,9 +90,9 @@ if (not (_origin isEqualTo "spawnCSAT")) then {
 if (_noArsenal) exitWith {diag_log "[AS]: Not enough vehicles, cancelling QRF";};
 
 if (_size == "small") then {
-	[_origin,5] call AS_location_fnc_increaseBusy;
-} else {
 	[_origin,10] call AS_location_fnc_increaseBusy;
+} else {
+	[_origin,15] call AS_location_fnc_increaseBusy;
 };
 
 // get the position of the target marker
