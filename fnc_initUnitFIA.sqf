@@ -36,7 +36,13 @@ if (count _equipment == 0) then {
 
 //Warn if no launchers for squad members
 
-if (([_unit] call AS_fnc_getFIAUnitType) in ["AT Specialist", "AA Specialist"] and {_equipment select 6 == ""}) then {
+if (([_unit] call AS_fnc_getFIAUnitType) in ["AT missile Specialist"] and {_equipment select 6 == ""}) then {
+
+	[player, "hint", "No proper launcher for squad AT missile specialist. He tries to find a lighter launcher"] remoteExec ["AS_fnc_localCommunication", player];
+	_equipment = ["AT Specialist"] call AS_fnc_getBestEquipment;
+	};
+
+if (([_unit] call AS_fnc_getFIAUnitType) in ["AT Specialist", "AT missile Specialist", "AA Specialist"] and {_equipment select 6 == ""}) then {
 
 	[player, "hint", "No proper launcher for squad launcher specialist. He proceeds without one."] remoteExec ["AS_fnc_localCommunication", player];
 	};

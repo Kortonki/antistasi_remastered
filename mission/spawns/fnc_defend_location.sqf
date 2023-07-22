@@ -222,7 +222,7 @@ private _fnc_run = {
 
 
 
-	private _fnc_missionFailedCondition = {_location call AS_location_fnc_side == "AAF"};
+	private _fnc_missionFailedCondition = {_location call AS_location_fnc_side == "AAF" or    (_location call AS_location_fnc_type in ["watchpost", "roadblock", "camp"]) and {!(isNil ([_location, "toRemove"] call AS_location_fnc_get)) and {[_location, "toRemove"] call AS_location_fnc_get}}};
 	private _fnc_missionFailed = {
 		([_mission, "FAILED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];

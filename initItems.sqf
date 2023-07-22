@@ -296,7 +296,7 @@ SubmachineGun
 SniperRifle
 */
 AS_weapons = [
-	[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
+	[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
 ];
 
 AS_allGrenades = [];  // fired grenades, not throwable
@@ -323,6 +323,7 @@ AS_allWeaponsAttrs = [];
 
 		private _weaponType = ([_name] call BIS_fnc_itemType) select 1;
 
+    //RHS Javelin is AT missile, recognized as missilelauncher thus the exception
     private _RL_exceptions = ["rhs_weap_fgm148"];
 
 		switch (_weaponType) do {
@@ -389,14 +390,15 @@ AS_allWeaponsAttrs = [];
                   {
                       private _class = (configFile >> "CfgWeapons" >> _name >> _x);
                       //RHS Javelin exception
-                      if (!isNull _class and {"launch_Titan_short_base" in ([_class,true] call BIS_fnc_returnParents) or _class in _RL_exceptions}) exitWith {
+                      if (!isNull _class and {"launch_Titan_short_base" in ([_class,true] call BIS_fnc_returnParents) or _name in _RL_exceptions}) exitWith {
                           //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
                           _is_RL = true;
                       };
                   } forEach getArray (configFile >> "CfgWeapons" >> _name >> "muzzles");
 
                     if (_is_RL) exitWith {
-                      (AS_weapons select 10) pushback _name;
+                      //New class for AT missile
+                      (AS_weapons select 16) pushback _name;
                     };
 
                    (AS_weapons select 8) pushBack _name

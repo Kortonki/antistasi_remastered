@@ -27,7 +27,8 @@ if (_type == "Grenadier" and _primaryWeapon == "") exitWith {
     // todo: check existence of enough grenades.
     [_player, "hint", "No grenade launchers or ammo to equip a grenadier."] remoteExec ["AS_fnc_localCommunication", _player];
 };
-if (_type in ["AA Specialist", "AT Specialist"] and _secondaryWeapon == "") exitWith {
+
+if (_type in ["AA Specialist", "AT Specialist", "AT missile Specialist"] and _secondaryWeapon == "") exitWith {
     // todo: check existence of enough rockets
     // todo: check existence of AA/AT launchers
     [_player, "hint", "No launchers."] remoteExec ["AS_fnc_localCommunication", _player];

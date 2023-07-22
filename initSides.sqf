@@ -146,6 +146,7 @@ AS_allFIAUnitTypes = [
 	"Autorifleman",
 	"Squad Leader",
 	"AT Specialist",
+	"AT missile Specialist",
 	"Sniper",
 	"Engineer",
 	"AA Specialist",
@@ -185,6 +186,7 @@ AS_data_allCosts setVariable ["Squad Leader", 100];
 AS_data_allCosts setVariable ["Engineer", 250];
 AS_data_allCosts setVariable ["Explosives Specialist", 150];
 AS_data_allCosts setVariable ["AT Specialist", 50];
+AS_data_allCosts setVariable ["AT missile Specialist", 50];
 AS_data_allCosts setVariable ["AA Specialist", 50];
 AS_data_allCosts setVariable ["Sniper", 50];
 
