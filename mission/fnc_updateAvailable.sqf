@@ -173,12 +173,12 @@ private _new_possible = call _fnc_allPossibleMissions;
 
 // Add new possible missions
 // Convoy missions only run in the background
-private _possible = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "possible" and {!((_x call AS_mission_fnc_type) in ["convoy_supplies", "convoy_ammo", "convoy_armor", "convoy_fuel", "convoy_money", "convoy_hvt"])}};
-private _active_available = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "active" and {!((_x call AS_mission_fnc_type) in ["convoy_supplies", "convoy_ammo", "convoy_armor", "convoy_fuel", "convoy_money", "convoy_hvt"])}};
+private _possible = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "possible"};
+private _active_available = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_status == "active"};
 {
     _x params ["_type", "_location"];
     private _sig = (format ["%1_%2", _type, _location]);
-    if not (_sig in _possible or _sig call AS_mission_fnc_status == "active" or _sig call AS_spawn_fnc_exists) then { //added spawn exist condition to not add missions still not ended and deleted
+    if not (_sig in _possible or _sig in _active_available or _sig call AS_spawn_fnc_exists) then { //added spawn exist condition to not add missions still not ended and deleted
         _x call AS_mission_fnc_add;
         _possible pushBack _sig;
     };
@@ -191,7 +191,7 @@ private _count = count _active_available;
 {
     if (_count >= AS_missions_MAX_MISSIONS) exitWith {};
     // make mission available
-    if not (_x in _active_available) then {
+    if not (_x in _active_available and {!((_x call AS_mission_fnc_type) in ["convoy_supplies", "convoy_ammo", "convoy_armor", "convoy_fuel", "convoy_money", "convoy_hvt"])}) then {
         [_x, "status", "available"] call AS_mission_fnc_set;
         // update in-memory
         _active_available pushBack _x;

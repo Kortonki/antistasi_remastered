@@ -305,6 +305,14 @@ AS_allWeaponsAttrs = [];
 {
 	private _name = configName _x;
 	_name = [_name] call BIS_fnc_baseWeapon;
+
+  private _RL_exceptions = ["rhs_weap_fgm148"];
+
+  if (_name in _RL_exceptions) then {
+    (AS_weapons select 16) pushback _name;
+    AS_allWeapons pushBack _name;
+
+  };
 	if (not(_name in AS_allWeapons)) then {
 		AS_allWeapons pushBack _name;
 		private _weight = (getNumber (configFile >> "CfgWeapons" >> _name >> "WeaponSlotsInfo" >> "mass"));
@@ -324,7 +332,7 @@ AS_allWeaponsAttrs = [];
 		private _weaponType = ([_name] call BIS_fnc_itemType) select 1;
 
     //RHS Javelin is AT missile, recognized as missilelauncher thus the exception
-    private _RL_exceptions = ["rhs_weap_fgm148"];
+
 
 		switch (_weaponType) do {
             case "AssaultRifle": {
@@ -364,7 +372,7 @@ AS_allWeaponsAttrs = [];
                   private _is_ML = false;
                   {
                       private _class = (configFile >> "CfgWeapons" >> _name >> _x);
-                      if (!isNull _class and {"launch_Titan_base" in ([_class,true] call BIS_fnc_returnParents)}) exitWith {
+                      if (!isNull _class and {"launch_Titan_base" in ([_class,true] call BIS_fnc_returnParents)} and {!(_name in _RL_exceptions)}) exitWith {
                           //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
                           _is_ML = true;
                       };
@@ -414,7 +422,7 @@ AS_allWeaponsAttrs = [];
                   private _is_ML = false;
                   {
                       private _class = (configFile >> "CfgWeapons" >> _name >> _x);
-                      if (!isNull _class and {"launch_Titan_base" in ([_class,true] call BIS_fnc_returnParents)}) exitWith {
+                      if (!isNull _class and {"launch_Titan_base" in ([_class,true] call BIS_fnc_returnParents)}  and {!(_name in _RL_exceptions)}) exitWith {
                           //AS_allGrenades append (getArray (_class >> "magazines")); // AA launcher ammo not a grenade?
                           _is_ML = true;
                       };
