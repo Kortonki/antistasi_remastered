@@ -10,7 +10,13 @@ private _mrkName = format ["Dum%1", _location];
 private _markerType = "";
 private _locationName = "";
 switch (_type) do {
-    case "fia_hq": {_markerType = "hd_flag"; _locationName = format ["%1 HQ", ["FIA", "shortname"] call AS_fnc_getEntity]};
+    case "fia_hq": {_markerType = "hd_flag";
+        if (!(isNil "AS_server_side_variables_initialized")) then {
+          _locationName = format ["%1 HQ", ["FIA", "shortname"] call AS_fnc_getEntity];
+        } else {
+          _locationName = "FIA HQ";
+        };
+    };
     case "city": {_markerType = "mil_flag"; _locationName = ""};
     case "powerplant": {_markerType = "loc_power"; _locationName = "Power Plant"};
     case "airfield": {
@@ -102,5 +108,11 @@ if (_side == "CSAT") then {
 
 if (_side == "Neutral") then {
   _mrk setMarkerColor "ColorGrey";
+
+  if  (_type in ["resource", "factory"]) then {
+    _mrk setMarkerText format ["%1", _locationName];
+  } else {
+    _mrk setMarkerText "";
+  };
 
 };

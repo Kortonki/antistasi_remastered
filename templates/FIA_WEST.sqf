@@ -106,14 +106,14 @@ private _dict = createSimpleObject ["Static", [0, 0, 0]];
 ]] call DICT_fnc_set;
 
 [_dict, "squad", [
-	"Squad Leader", "Medic", "AT missile Specialist", "Autorifleman", "Grenadier", "AT Specialist", "AT specialist", "Rifleman"
+	"Squad Leader", "Medic", "Sniper", "Autorifleman", "Grenadier", "AT Specialist", "AT specialist", "Rifleman"
 ]] call DICT_fnc_set;
 [_dict, "team", ["Squad Leader", "Autorifleman", "Grenadier", "AT Specialist"]] call DICT_fnc_set;
-[_dict, "team_at", ["Squad Leader", "AT missile Specialist", "AT missile Specialist"]] call DICT_fnc_set;
-[_dict, "team_aa", ["Squad Leader", "AA Specialist", "AA Specialist"]] call DICT_fnc_set;
+[_dict, "team_at", ["Squad Leader", "AT missile Specialist", "AT missile Specialist", "AT Specialist", "AT Specialist"]] call DICT_fnc_set;
+[_dict, "team_aa", ["Squad Leader", "AA Specialist", "AA Specialist", "AA Specialist", "AA Specialist"]] call DICT_fnc_set;
 [_dict, "team_sniper", ["Rifleman", "Sniper"]] call DICT_fnc_set;
 [_dict, "team_patrol", ["Rifleman", "Grenadier"]] call DICT_fnc_set;
-[_dict, "team_crew", ["AT Specialist", "Crew"]] call DICT_fnc_set;
+[_dict, "team_crew", ["Crew", "Crew"]] call DICT_fnc_set;
 
 [_dict, "squads", ["squad", "team", "team_at","team_aa", "team_sniper", "team_patrol", "mobile_aa", "mobile_at", "mobile_mortar"]] call DICT_fnc_set;
 [_dict, "squad_names", ["Squad", "Team", "AT Team","AA Team", "Sniper Team", "Patrol", "Mobile AA", "Mobile AT", "Mobile Mortar"]] call DICT_fnc_set;

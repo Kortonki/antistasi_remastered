@@ -221,7 +221,7 @@ private _FIAResIncomeMultiplier = 1;
             _incomeAAF = _incomeAAF/2;
             if _power then {
                 if (_FIAsupport + _AAFsupport + 1 <= 100) then {[0,1,_city] call AS_fnc_changeCitySupport};
-            }
+            };
             //This edited so no longer city support loss without power (game balance)
             /*else {
                 if (_FIAsupport > 6) then {
@@ -230,12 +230,14 @@ private _FIAResIncomeMultiplier = 1;
                     [1,0,_city] call AS_fnc_changeCitySupport;
                 };
             };*/
-        } else {
+        };
+
+        if (_side == "AAF") then {
             _incomeFIA = (_incomeFIA/2);
             _HRincomeFIA = (_HRincomeFIA/2);
             if _power then {
                 if (_AAFsupport + _FIAsupport + 1 <= 100) then {[1,0,_city] call AS_fnc_changeCitySupport};
-            }
+            };
             /*else {
                 if (_AAFsupport > 6) then {
                     [-1,0,_city] call AS_fnc_changeCitySupport;
@@ -243,6 +245,31 @@ private _FIAResIncomeMultiplier = 1;
                     [0,1,_city] call AS_fnc_changeCitySupport;
                 };
             };*/
+        };
+
+        if (_side == "Neutral") then {
+            _incomeFIA = (_incomeFIA/2);
+            _HRincomeFIA = (_HRincomeFIA/2);
+
+            _incomeAAF = _incomeAAF/2;
+
+            //Neutral cities are powered by FIA or AAF -> support gained
+            if _power then {
+
+                private _powerplant = ["powerplant" call AS_location_fnc_T, _city call AS_location_fnc_position] call BIS_fnc_nearestPosition;
+                private _powerplantside = _powerplant call AS_location_fnc_side;
+
+                if (_powerplantside == "FIA") then {
+                  if (_FIAsupport + _AAFsupport + 1 <= 100) then {[0,1,_city, true] call AS_fnc_changeCitySupport};
+                };
+
+                if (_powerplantside == "AAF") then {
+                  if (_AAFsupport + _FIAsupport + 1 <= 100) then {[1,0,_city] call AS_fnc_changeCitySupport};
+                };
+
+
+            };
+
         };
     };
 

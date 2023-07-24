@@ -191,7 +191,7 @@ private _count = count _active_available;
 {
     if (_count >= AS_missions_MAX_MISSIONS) exitWith {};
     // make mission available
-    if not (_x in _active_available and {!((_x call AS_mission_fnc_type) in ["convoy_supplies", "convoy_ammo", "convoy_armor", "convoy_fuel", "convoy_money", "convoy_hvt"])}) then {
+    if not(_x in _active_available or (_x call AS_mission_fnc_type) in ["convoy_supplies", "convoy_ammo", "convoy_armor", "convoy_fuel", "convoy_money", "convoy_hvt"]) then {
         [_x, "status", "available"] call AS_mission_fnc_set;
         // update in-memory
         _active_available pushBack _x;

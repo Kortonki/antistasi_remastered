@@ -44,7 +44,7 @@ if (_enemySide == "FIA") then {
 			private _garrison = _x call AS_location_fnc_garrison;
 			private _size = _x call AS_location_fnc_size;
 
-			_threat = _threat + (1.5*({(_x == "AT Specialist")} count _garrison)) + (floor((count _garrison)/8)); //Ammo bearer here changed to AT spesialist (wtf)
+			_threat = _threat + (0.5*({(_x == "AT missile Specialist")} count _garrison)) + (0.25*({(_x == "AT Specialist")} count _garrison)) + (floor((count _garrison)/8)); //Ammo bearer here changed to AT spesialist (wtf)
 			private _estaticas = AS_P("vehicles") select {_x distance2D _otherPosition < _size};
 			if (count _estaticas > 0) then {
 				_threat = _threat + ({typeOf _x in AS_allMortarStatics} count _estaticas) + (2*({typeOf _x in AS_allATstatics} count _estaticas));
@@ -70,7 +70,8 @@ if (_enemySide == "FIA") then {
 
 {
 	 if (random 1 < 0.5) then {
-	 	if ((secondaryWeapon _x) in (AS_weapons select 10)) then {_threat = _threat + 1.5;}; //Probably adjust this? threat of 10 prevents AAF sending patrol without tanks. was 2
+	 	if ((secondaryWeapon _x) in (AS_weapons select 10)) then {_threat = _threat + 0.25;};
+		if ((secondaryWeapon _x) in (AS_weapons select 16)) then {_threat = _threat + 0.5;}; //Probably adjust this? threat of 10 prevents AAF sending patrol without tanks. was 2
 		_threat = _threat + 0.1;
 	};
 
@@ -102,16 +103,16 @@ if (_enemySide == "FIA") then {
 		  //MRAP Threat
 
 			if (_type in (["FIA", "cars_at"] call AS_fnc_getEntity)) exitWith {
-				_threat = _threat + 4;
+				_threat = _threat + 2;
 			};
 
 		  if (_type in (BE_class_MRAP + (["FIA", "cars_armed"] call AS_fnc_getEntity))) exitWith {
-		    _threat = _threat + 2;
+		    _threat = _threat + 1;
 		  };
 
 		  //STATICs threat
 
-		  if (_type in AS_allATStatics) exitWith {_threat = _threat + 2;};
+		  if (_type in AS_allATStatics) exitWith {_threat = _threat + 1.5;};
 		  if (_type in AS_allMGStatics) exitWith {_threat = _threat + 1;};
 		  if (_type in AS_allMortarStatics) exitWith {_threat = _threat + 1;};
 

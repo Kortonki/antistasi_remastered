@@ -10,7 +10,7 @@ params ["_dict"];
              //This is to make sure BE_module is initialized before spawning vehicles.
              //There was a probable race condition where player_side loading from here triggered BE_initialization etc later.
              //Now players side is loaded first in persistents triggering server_side_variable initialization
-            waitUntil {not(isnil "AS_server_side_variables_initialized")};
+            //waitUntil {not(isnil "AS_server_side_variables_initialized")}; Commented out not to jam load
             private _vehicles = [];
             {
                 _x params ["_type", "_pos", "_dir", "_fuel", "_fuelCargo", "_damage"];
@@ -42,14 +42,17 @@ params ["_dict"];
                   _fuel = 0.5;
                 };
 
-                if (!(["vehicle", typeOf _vehicle, _vehicle] call fnc_BE_permission)) then {
-                    _vehicle setVehicleAmmoDef 0; //This is to not exploit rearming vehicles not yet unlocked
-                };
+
 
                 //Wait to initialise sides before initing vehicles
                 [_vehicle, _fuel, _fuelCargo] spawn {
                   params ["_vehicle", "_fuel", "_fuelCargo"];
-                  waitUntil {sleep 0.1; not isNil "AS_dataInitialized"};
+                  waitUntil {sleep 0.1; not isNil "AS_dataLoadComplete"};
+
+                  if (!(["vehicle", typeOf _vehicle, _vehicle] call fnc_BE_permission)) then {
+                      _vehicle setVehicleAmmoDef 0; //This is to not exploit rearming vehicles not yet unlocked
+                  };
+
                   [_vehicle, "FIA", _fuel, _fuelCargo] call AS_fnc_initVehicle;
                   //After init, enable simulation
                   sleep 5;

@@ -17,7 +17,7 @@ private _demand = ["city", "factory", "resource"] call AS_location_fnc_T;
 	private _supplyingPowerplant = [_supply,_pos] call BIS_fnc_nearestPosition;
 	private _powered = true;
 	if (_supplyingPowerplant == _location) then {
-		if ((_location in AS_P("destroyedLocations")) or _supplySide != _demandSide) then {
+		if (((_location in AS_P("destroyedLocations")) or _supplySide != _demandSide) and {!(_x call AS_location_fnc_type == "city" and {_demandSide == "Neutral"})}) then {
 			_powered = false;
 		};
 		[_x,_powered] spawn AS_fnc_changeStreetLights;

@@ -32,6 +32,27 @@ if (_difficulty == "easy") then {
 
 //////////////////// additional Cargo /////////////////
 //UGLY solution but works without new one-time use function
+
+
+// populate garage with vehicles
+private _validVehicles = (
+    (["FIA", "land_vehicles"] call AS_fnc_getEntity)
+);
+private _garageVehicles = [];
+for "_i" from 1 to (1 + floor random 3) do {
+	_garageVehicles pushBack (selectRandom _validVehicles);
+};
+AS_Pset("vehiclesInGarage", _garageVehicles);
+
+{
+    [_x, "valid", ["AAF", _x] call AS_fnc_getEntity] call AS_AAFarsenal_fnc_set;
+} forEach AS_AAFarsenal_buying_order;
+
+AS_dataInitialized = true;
+publicVariable "AS_dataInitialized";
+
+
+waitUntil {sleep 0.2; not(isNil "AS_server_side_variables_initialized")};
   {
     [
     [[_x select 0], [_x select 1]],
@@ -68,23 +89,6 @@ if (_difficulty == "easy") then {
     [[],[]]
     ] call AS_fnc_addToArsenal;
   } foreach (["FIA", "addItems"] call AS_fnc_getEntity);
-
-// populate garage with vehicles
-private _validVehicles = (
-    (["FIA", "land_vehicles"] call AS_fnc_getEntity)
-);
-private _garageVehicles = [];
-for "_i" from 1 to (1 + floor random 3) do {
-	_garageVehicles pushBack (selectRandom _validVehicles);
-};
-AS_Pset("vehiclesInGarage", _garageVehicles);
-
-{
-    [_x, "valid", ["AAF", _x] call AS_fnc_getEntity] call AS_AAFarsenal_fnc_set;
-} forEach AS_AAFarsenal_buying_order;
-
-AS_dataInitialized = true;
-publicVariable "AS_dataInitialized";
 
 //Init weather
 

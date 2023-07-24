@@ -25,7 +25,7 @@
 fnc_BE_initialize = {
 	if !(isNil "BE_INIT") exitWith {};
 
-	BE_INIT = true;
+
 
 	//These checks must be here because this init runs after loading a game
 
@@ -44,7 +44,7 @@ fnc_BE_initialize = {
 	BE_foreign_landVehicles =	(["AAF", "landvehicles"] call AS_fnc_getEntity) +
 														(["CSAT", "landvehicles"] call AS_fnc_getEntity) +
 														(["NATO", "landvehicles"] call AS_fnc_getEntity);
-
+	BE_INIT = true;
 	[true] call fnc_BE_refresh;
 	diag_log format ["[AS] Time %1: BE_module initialized", time];
 };

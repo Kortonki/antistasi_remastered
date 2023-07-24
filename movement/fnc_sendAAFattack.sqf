@@ -79,6 +79,7 @@ if (_useCSAT) then {
 				private _mission = format ["convoy_supplies_%1", _location];
 				if ((_location call AS_location_fnc_side == "Neutral") and {!(_mission call AS_spawn_fnc_exists) and {_mission in (call AS_mission_fnc_all) and {_mission call AS_mission_fnc_status in ["possible", "available"]}}}) then {
 					_mission call AS_mission_fnc_activate;
+					[_mission, "skipping", _skipping] call AS_mission_fnc_set;
 					_debug_message = format ["  %1: Sending supply convoy to neutral %1.", _location];
 					diag_log(_debug_prefix + _debug_message);
 					waitUntil {sleep 1; [_mission, "state_index"] call AS_spawn_fnc_get >= 2 or !(_mission call AS_spawn_fnc_exists)};

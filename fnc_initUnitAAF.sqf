@@ -47,5 +47,5 @@ private _AAFresAdj = _AAFres / _AAFlocCount;*/ //Replaced with external cfgFunct
 
 private _AAFresAdj = [] call AS_fnc_getAAFresourcesAdj;
 
-private _max = (0.8*(_AAFresAdj / 1000)) min 0.8;
-_unit setVehicleAmmo (0.2 + _max);
+private _max = (0.7*(_AAFresAdj / 1000)) min 0.7;
+_unit setVehicleAmmo (0.3 + _max);

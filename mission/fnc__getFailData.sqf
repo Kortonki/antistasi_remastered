@@ -61,35 +61,35 @@ if (_type == "aaf_attack_hq") exitWith {
     [-25, [500, _position, 10], [0, 3], [0, 0], [0,0, []], 5*60]
 };
 if (_type == "black_market") exitWith {
-    [-10, 0, [-5, 0]]
+    [-10, 0, [0, 0]]
 };
 if (_type == "aaf_attack") exitWith {
-    [-25, 0, [-2, 0], [0, -1000], [0, 0, []], 2700]
+    [-25, 0, [0, 0], [0, -1000], [0, 0, []], 2700]
 };
 if (_type == "conquer") exitWith {
     [-5, 0, [0, 0], [0, 0], [5, 0, _position], -10*60]
 };
 if (_type == "convoy_supplies") exitWith {
-    [-10, 0, [0, 0], [0, 0], [20, 0, _position], 0]
+    [0, 0, [0, 0], [0, 0], [20, 0, _position], 0]
 };
 if (_type == "convoy_money") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], 0, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
+    [0, 0, [0, 0], [0, 0], [0, 0, []], 0, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
 };
 if (_type == "convoy_ammo") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], -10*60, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[10000] call AS_fnc_changeAAFmoney}]]]
+    [0, 0, [0, 0], [0, 0], [0, 0, []], -10*60, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[10000] call AS_fnc_changeAAFmoney}]]]
 };
 if (_type == "convoy_fuel") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, _position], -10*60, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
+    [0, 0, [0, 0], [0, 0], [0, 0, _position], -10*60, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " gains money", {[5000] call AS_fnc_changeAAFmoney}]]]
 
 
 };
 
 
 if (_type == "convoy_armor") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], -30*60]
+    [0, 0, [0, 0], [0, 0], [0, 0, []], -30*60]
 };
 if (_type == "convoy_hvt") exitWith {
-    [-10, 0, [0, 0], [0, 0], [0, 0, []], -30*60]
+    [0, 0, [0, 0], [0, 0], [0, 0, []], -30*60]
 };
 if (_type == "convoy_prisoners") exitWith {
     [-10, 0, [0, 0], [0, 0], [-5, -5, _position], 0]
@@ -110,7 +110,7 @@ if (_type == "defend_location") exitWith {
     [-5, [500, _position, 5], [0, -5], [0, 0], [0, 0, _position], -10*60]
 };
 if (_type == "defend_hq") exitWith {
-    [-10, [500, _position, 5], [0, -5], [0, 0], [0, -10, _position], -10*60]
+    [-10, [500, _position, 5], [0, -10], [0, 0], [0, -10, _position], -10*60]
 };
 if (_type in ["destroy_antenna", "destroy_helicopter", "destroy_vehicle", "steal_ammo", "rob_bank","steal_fuel"]) exitWith {
     [-10, 0, [0, 0], [0, 0], [0, 0, []], -10*60]
@@ -123,7 +123,7 @@ if (_type == "help_meds") exitWith {
     [-10, 0, [0, 5], [0, 0], [0,0,[]]] //City support depends on if the crate was left intact
 };
 if (_type in ["nato_armor", "nato_ammo", "nato_artillery", "nato_uav", "nato_roadblock", "nato_qrf", "nato_cas"]) exitWith {
-    [-10, 0, [-10, 0]]
+    [-10, 0, [0, 0]]
 };
 if (_type == "broadcast") exitWith {
     [-5, 0, [0, 0], [0, 0], [5,-5,_position, true]]

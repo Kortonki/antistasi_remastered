@@ -27,6 +27,9 @@ waitUntil {sleep 1; time > _timer or diag_fps > 30};
 diag_log "[AS] Server: loading persistents...";
 ([_dict, "AS_persistent"] call DICT_fnc_get) call AS_database_fnc_persistents_fromDict;
 
+AS_dataInitialized = true;
+publicVariable "AS_dataInitialized";
+
 waitUntil {sleep 0.1; not isNil "AS_server_side_variables_initialized"};
 
 // above initializes player_side, which is required to initialize common variables on the other thread
@@ -62,7 +65,8 @@ diag_log "[AS] Server: loading missions...";
 ([_dict, "AS_mission"] call DICT_fnc_get) call AS_mission_fnc_fromDict;
 
 _dict call DICT_fnc_del;
-diag_log "[AS] Server: loading completed.";
 
-AS_dataInitialized = true;
-publicVariable "AS_dataInitialized";
+AS_dataLoadComplete = true;
+publicVariable "AS_dataLoadComplete";
+
+diag_log "[AS] Server: loading completed.";

@@ -44,5 +44,6 @@ if ((_hr != 0) and (_resourcesFIA != 0)) then {
 };
 
 if (_texto != "") then {
-	[petros,"income",_texto, _showTime] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
+	//Why petros, FIX
+	[nil,"income",_texto, _showTime] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 };

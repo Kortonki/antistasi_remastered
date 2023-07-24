@@ -26,7 +26,7 @@ if (_overcast >= 0.7) then {
 
 private _maxWind = 10 - (_overcast * 7) + (_rain * 15); //maximum wind component, 18 m/s, depends on Overcast and rain
 private _windDir = round (random 360);
-private _windSpeed = _maxWind * (random 1)^3;
+private _windSpeed = _maxWind * (random 1)^4;
 private _windX = (cos _windDir) * _windSpeed;
 private _windY = (sin _windDir) * _windSpeed;
 

@@ -42,8 +42,9 @@ private _dist = (abs(((boundingBox _truck select 0) select 1) - ((boundingBox _t
 
 private _dir = getDir _truck;
 private _pos = [(getpos _truck select 0) - (_dist * (sin _dir)), (getpos _truck select 1) - (_dist *(cos _dir)), 0];
-_pos = [_pos, 0, 2, 1.7, 0, 0,0,[], []] call bis_fnc_findSafePos;
-
+//Experiment which one is better
+//_pos = [_pos, 0, 2, 1.7, 0, 0,0,[], []] call bis_fnc_findSafePos;
+_pos = _pos findEmptyPosition [0, 10, "C_Offroad_01_F"];
 if (_pos isEqualTo []) exitWith {
 
   private _text = "There's no space to unload the cargo!";
@@ -65,7 +66,7 @@ _truck setVariable ["Loading", true, true];
 
 _unit playActionNow "MedicOther";
 
-[_truck, (position _truck), 10, {speed _truck < 1}, {([position _box, 50] call AS_fnc_enemiesNearby) or speed _truck > 10}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
+[_truck, (position _truck), 5, {speed _truck < 1}, {([position _box, 50] call AS_fnc_enemiesNearby) or speed _truck > 10}, "Keep the truck still", ""] call AS_fnc_wait_or_fail;
 
 if ([position _box, 50] call AS_fnc_enemiesNearby) exitWith {
 
@@ -82,8 +83,19 @@ if (speed _truck > 10) exitWith {
 
 };
 
+[_truck, false] remoteExecCall [allowdamage, _truck];
+[_box, false] remoteExecCall [allowdamage, _box];
+
+sleep 0.1;
 detach _box;
-_box setVehicleposition [_pos, [], 0, "NONE"];
+
+//"NONE" doesnt seem to work to avoid collision
+_box setVehicleposition [_pos, [], 0, "CAN_COLLIDE"];
+
+sleep 0.1;
+
+[_truck, true] remoteExecCall [allowdamage, _truck];
+[_box, true] remoteExecCall [allowdamage, _box];
 
 _box setVariable ["asCargo", false, true];
 _truck setVariable ["boxCargo", (_truck getVariable "boxCargo") - [_box], true];

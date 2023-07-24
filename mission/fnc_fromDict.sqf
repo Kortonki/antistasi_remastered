@@ -6,5 +6,9 @@ call AS_mission_fnc_deinitialize;
 [] spawn {
   //This to make sure tasks etc. load properly
   waitUntil {count (allPlayers select {_x getVariable ["inited", false]}) > 0};
-  {_x call AS_mission_fnc_activate} forEach ([] call AS_mission_fnc_active_missions);
+  {
+    _x call AS_mission_fnc_activate;
+    private _i = 0;
+    waitUntil {sleep 1; _i = _i + 1; [_x, "state_index"] call AS_spawn_fnc_get >= 2 or !(_x call AS_spawn_fnc_exists) or _i > 20};
+  } forEach ([] call AS_mission_fnc_active_missions);
 };

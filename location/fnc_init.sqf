@@ -4,6 +4,7 @@ AS_SERVER_ONLY("AS_location_fnc_init");
 params ["_location"];
 
 switch (_location call AS_location_fnc_type) do {
+
     case "city": {
         [_location,"AAFsupport",0, false] call AS_location_fnc_set;
         [_location,"FIAsupport",0, false] call AS_location_fnc_set;

@@ -145,7 +145,7 @@ AS_Sset("AS_vehicleOrientation", 0);
 	private _max = _x call AS_AAFarsenal_fnc_max;
 	private _amount =  round((0.75+(random 0.25))*_max);
 	[_x, "count", _amount] call AS_AAFarsenal_fnc_set;
-} foreach ["cars_transport", "cars_armed", "trucks", "boats", "static_mg", "static_at", "static_aa", "static_mortar", "apcs"];
+} foreach ["cars_transport", "cars_armed", "trucks", "boats", "static_mg", "static_at", "static_aa", "static_mortar"];
 
 
 AS_AAF_attackLock = nil;

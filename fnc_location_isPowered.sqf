@@ -5,4 +5,4 @@ private _power = ["powerplant" call AS_location_fnc_T, _location call AS_locatio
 
 if (_power in AS_P("destroyedLocations")) exitWith {false};
 
-(_location call AS_location_fnc_side) == (_power call AS_location_fnc_side)
+(((_location call AS_location_fnc_side) == (_power call AS_location_fnc_side)) or (_location call AS_location_fnc_type == "city" and {_location call AS_location_fnc_side == "Neutral"}))

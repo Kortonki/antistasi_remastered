@@ -155,7 +155,6 @@ publicVariable "AS_RadioCoverage";
 } forEach (allMapMarkers select {!(_x find "convoy" > 0)}); //Do not make locations out of convoy start markers
 
 call AS_location_fnc_addAllRoadblocks;
-
 ["FIA_HQ", "fia_hq"] call AS_location_fnc_add;
 
 // Initializes HQ placements and petros
