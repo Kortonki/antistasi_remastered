@@ -13,9 +13,38 @@ private _fnc_initialize = {
 		false
 	};
 
+	//Consider moving below code above skipping and to make the base busy or fail to send convoy if no bases available
+
+	private _originTypes = ["base", "airfield"];
+	if (_missionType == "convoy_money") then {
+		_originTypes append ["resource", "seaport", "factory"];
+	};
+	if (_missionType == "convoy_armor") then {
+		_originTypes = _originTypes - ["airfield"];
+	};
+
+	private _origin = [_position, _originTypes] call AS_fnc_getBasesForConvoy;
+
+	if (_origin == "") exitWith {
+		//[petros, "hint", "mission is no longer available"] call AS_fnc_localCommunication;
+
+		diag_log format ["[AS] Error mission %1 canceled, no valid basses for convoy", _mission];
+		[_mission] remoteExecCall ["AS_mission_fnc_cancel", 2];
+		[_mission, "state_index", 100] call AS_spawn_fnc_set; // terminate everything
+		[_mission, "delete", true] call AS_spawn_fnc_set;
+	};
+
 	//Automatic failure if skipping
 	if _skipping exitWith {
 		[_mission] remoteExec ["AS_mission_fnc_fail", 2];
+
+		private _extratime = 10;
+
+		if (_location call AS_fnc_location_isFrontline) then {
+			_extratime = 25;
+		};
+
+		[_origin,5+_extratime] remoteExec ["AS_location_fnc_increaseBusy", 2];
 
 		private _msg = "Enemy convoy to ";
 		if (_location in (call AS_location_fnc_cities)) then {
@@ -31,24 +60,7 @@ private _fnc_initialize = {
 		[_mission, "delete", true] call AS_spawn_fnc_set;
 	};
 
-	private _originTypes = ["base", "airfield"];
-	if (_missionType == "convoy_money") then {
-		_originTypes append ["resource", "seaport", "factory"];
-	};
-	if (_missionType == "convoy_armor") then {
-		_originTypes = _originTypes - ["airfield"];
-	};
 
-  private _origin = [_position, _originTypes] call AS_fnc_getBasesForConvoy;
-
-	if (_origin == "") exitWith {
-		//[petros, "hint", "mission is no longer available"] call AS_fnc_localCommunication;
-
-		diag_log format ["[AS] Error mission %1 canceled, no valid basses for convoy", _mission];
-		[_mission] remoteExecCall ["AS_mission_fnc_cancel", 2];
-		[_mission, "state_index", 100] call AS_spawn_fnc_set; // terminate everything
-		[_mission, "delete", true] call AS_spawn_fnc_set;
-	};
 
 	private _tiempolim = 70;
 	private _startAfter = 10;

@@ -56,6 +56,7 @@ while {!(_attack) and {_skippedTime < _skipTimeMax}} do {
 
   if ((dateToNumber date) >= AS_P("nextUpdate")) then {
       [true] call AS_fnc_resourcesUpdate;
+			[true, ["convoy_hvt", "convoy_armor"]] spawn AS_movement_fnc_SendAAFConvoy;
   };
 };
 

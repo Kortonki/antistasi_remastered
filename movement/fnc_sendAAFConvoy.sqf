@@ -82,7 +82,7 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
         } foreach (["city", "Neutral"] call AS_location_fnc_TS);
 
-        if (_mission != "" and {random 1 < 0.95}) exitWith {_alarm = true; _skipping = false}; //random component here. aaf won't allways send to neutral cities
+        if (_mission != "" and {random 1 < 0.95}) exitWith {_alarm = false;}; //random component here. aaf won't allways send to neutral cities
 
       //Then FIA cities
       {
