@@ -44,7 +44,7 @@ private _dir = getDir _truck;
 private _pos = [(getpos _truck select 0) - (_dist * (sin _dir)), (getpos _truck select 1) - (_dist *(cos _dir)), 0];
 //Experiment which one is better
 //_pos = [_pos, 0, 2, 1.7, 0, 0,0,[], []] call bis_fnc_findSafePos;
-_pos = _pos findEmptyPosition [0, 10, "C_Offroad_01_F"];
+_pos = _pos findEmptyPosition [0, 10, (["CIV", "box"] call AS_fnc_getEntity)];
 if (_pos isEqualTo []) exitWith {
 
   private _text = "There's no space to unload the cargo!";
@@ -86,13 +86,13 @@ if (speed _truck > 10) exitWith {
 [_truck, false] remoteExecCall [allowdamage, _truck];
 [_box, false] remoteExecCall [allowdamage, _box];
 
-sleep 0.1;
+sleep 0.2;
 detach _box;
 
 //"NONE" doesnt seem to work to avoid collision
 _box setVehicleposition [_pos, [], 0, "CAN_COLLIDE"];
 
-sleep 0.1;
+sleep 0.2;
 
 [_truck, true] remoteExecCall [allowdamage, _truck];
 [_box, true] remoteExecCall [allowdamage, _box];

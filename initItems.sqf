@@ -308,13 +308,10 @@ AS_allWeaponsAttrs = [];
 
   private _RL_exceptions = ["rhs_weap_fgm148"];
 
-  if (_name in _RL_exceptions) then {
-    (AS_weapons select 16) pushback _name;
-    AS_allWeapons pushBack _name;
 
-  };
 	if (not(_name in AS_allWeapons)) then {
-		AS_allWeapons pushBack _name;
+
+    AS_allWeapons pushBack _name;
 		private _weight = (getNumber (configFile >> "CfgWeapons" >> _name >> "WeaponSlotsInfo" >> "mass"));
 		private _magazines = (getArray (configFile >> "CfgWeapons" >> _name >> "magazines"));
 		private _bull_weight = (getNumber (configFile >> "CfgMagazines" >> (_magazines select 0) >> "mass"));
@@ -333,6 +330,11 @@ AS_allWeaponsAttrs = [];
 
     //RHS Javelin is AT missile, recognized as missilelauncher thus the exception
 
+    //Exception here for Javelin at least
+    //Moved from earlier scope to initi mags properly too
+    if (_name in _RL_exceptions) then {
+      _weapontype = "ATMissileLauncher";
+    };
 
 		switch (_weaponType) do {
             case "AssaultRifle": {
@@ -441,6 +443,7 @@ AS_allWeaponsAttrs = [];
 			case "Rifle": {(AS_weapons select 13) pushBack _name};
 			case "SubmachineGun": {(AS_weapons select 14) pushBack _name};
 			case "SniperRifle": {(AS_weapons select 15) pushBack _name};
+      case "ATMissileLauncher" :{(AS_weapons select 16) pushback _name};
 		};
 	};
 } forEach _allPrimaryWeapons + _allHandGuns + _allLaunchers;

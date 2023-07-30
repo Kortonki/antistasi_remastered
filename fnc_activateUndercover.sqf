@@ -98,8 +98,12 @@ private _setUndercover = {
 
 	// set AI members to be undercovered.
 	if (_player == leader group _player) then {
-		{if (!isplayer _x and {!(captive _x)}) then {[_x] remoteExec ["AS_fnc_activateUndercoverAI", _x]}} forEach (units group _player);
-			};
+		{
+
+			if (!isplayer _x and {!(captive _x)}) then {[_x] remoteExec ["AS_fnc_activateUndercoverAI", _x]}
+
+		} forEach (units group _player);
+	};
 
 	//Set everyone in same vehicle undercover
 	["<t color='#1DA81D'>Undercover</t>",0,0,4,0,0,4] spawn bis_fnc_dynamicText;

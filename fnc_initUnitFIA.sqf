@@ -38,13 +38,13 @@ if (count _equipment == 0) then {
 
 if (([_unit] call AS_fnc_getFIAUnitType) in ["AT missile Specialist"] and {_equipment select 6 == ""}) then {
 
-	[player, "hint", "No proper launcher for squad AT missile specialist. He tries to find a lighter launcher"] remoteExec ["AS_fnc_localCommunication", player];
+	[petros, "sideChat", "No proper launcher for squad AT missile specialist. He tries to find a lighter launcher"] remoteExec ["AS_fnc_localCommunication", player];
 	_equipment = ["AT Specialist"] call AS_fnc_getBestEquipment;
 	};
 
 if (([_unit] call AS_fnc_getFIAUnitType) in ["AT Specialist", "AT missile Specialist", "AA Specialist"] and {_equipment select 6 == ""}) then {
 
-	[player, "hint", "No proper launcher for squad launcher specialist. He proceeds without one."] remoteExec ["AS_fnc_localCommunication", player];
+	[petros, "sidechat", "No proper launcher for squad launcher specialist. He proceeds without one."] remoteExec ["AS_fnc_localCommunication", player];
 	};
 
 //Fallback if unit still has no weapon
@@ -54,7 +54,7 @@ if ((_equipment select 4 == "") and {([_unit] call AS_fnc_getFIAUnitType) != "Su
 	if (not(isNil {(_unlockedCargoWeapons select 0) select 0})) then {_equipment set [4,((_unlockedCargoWeapons select 0) select 0)];};
 	_equipment set [5,([caja, (_equipment select 4), 10] call AS_fnc_getBestMagazines)];
 
-	[player, "hint", "No proper weapons available for a squad member. He armed himself with whatever there was."] remoteExec ["AS_fnc_localCommunication", player];
+	[petros, "sideChat", "No proper weapons available for a squad member. He armed himself with whatever there was."] remoteExec ["AS_fnc_localCommunication", player];
 };
 
 [_unit, _equipment] call AS_fnc_equipUnit;

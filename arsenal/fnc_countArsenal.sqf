@@ -45,6 +45,7 @@ private _fnc_weapon_category = {
     case 13 : {_name = "Rifle"};
     case 14 : {_name = "Submachinegun"};
     case 15 : {_name = "Sniper rifle"};
+    case 16 : {_name = "AT missile launcher"};
   };
 
   _name

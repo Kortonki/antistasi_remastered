@@ -80,6 +80,7 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 
 			//Global message reporting
 
+			if (typeOf _unit == "C_journalist_F") then {
 			private _msg = format [localize "STR_msg_FIA_killsReporter",
 
 			worldName,
@@ -87,7 +88,9 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 			["NATO", "shortname"] call AS_fnc_getEntity
 			];
 
-			[_msg, 15, "reporterKilledFIA", true] remoteExec ["AS_fnc_globalMessage", 2];
+			[_msg, 10, "reporterKilledFIA", true] remoteExec ["AS_fnc_globalMessage", 2];
+
+		};
 
 		} else {
 			if (_killer call AS_fnc_getSide in ["AAF", "CSAT"]) then {
@@ -98,15 +101,18 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 
 				//Global message reporting
 
-				private _msg = format [localize "STR_msg_AAF_killsReporter",
+				if (typeOf _unit == "C_journalist_F") then {
 
-				worldName,
-		    ["AAF", "shortname"] call AS_fnc_getEntity,
-		    ["NATO", "shortname"] call AS_fnc_getEntity,
-				["FIA", "shortname"] call AS_fnc_getEntity
-		    ];
+					private _msg = format [localize "STR_msg_AAF_killsReporter",
 
-				[_msg, 15, "reporterKilledAAF", true] remoteExec ["AS_fnc_globalMessage", 2];
+					worldName,
+			    ["AAF", "shortname"] call AS_fnc_getEntity,
+			    ["NATO", "shortname"] call AS_fnc_getEntity,
+					["FIA", "shortname"] call AS_fnc_getEntity
+			    ];
+
+					[_msg, 10, "reporterKilledAAF", true] remoteExec ["AS_fnc_globalMessage", 2];
+				};
 			};
 		};
 	};

@@ -3,9 +3,13 @@ params ["_unit"];
 
 if (captive _unit) exitWith {diag_log format ["[AS] Warning: AI activating undercover while already undercover. Time: %1 Unit: %2", time, _unit]};
 
+
+
 private _leader = leader _unit;
 private _vehicle = vehicle _unit;
 waitUntil {sleep 1; _vehicle = vehicle _unit; (vehicle _leader != _leader and {_vehicle == vehicle _leader}) or (vehicle _leader == _leader)}; //Check if ai is in the same vehicle or all dismounted
+
+//TODO: Consider Y menu option to force undercover / not undercover and force it here
 
 if ([_unit] call AS_fnc_detected) exitWith {_unit groupChat "Can't go undercover, I'm being observed by the enemy"};
 if (captive _unit) exitWith {diag_log format ["[AS] Warning: AI activating undercover while already undercover. Time: %1 Unit: %2", time, _unit]};
