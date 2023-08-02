@@ -48,7 +48,8 @@ AS_server_side_variables_initialized = true;
 publicVariable "AS_server_side_variables_initialized";
 diag_log "[AS] Server: server side-variables initialized";
 
-
+AS_dataLoadComplete = true;
+publicVariable "AS_dataLoadComplete";
 
 if isMultiplayer then {
     // after game start because disconnects before have no influence
@@ -72,8 +73,7 @@ if isMultiplayer then {
     [player] call AS_fnc_setCommander;
 };
 
-AS_dataLoadComplete = true;
-publicVariable "AS_dataLoadComplete";
+
 
 [true] call AS_spawn_fnc_toggle;
 [true] call AS_fnc_resourcesToggle;

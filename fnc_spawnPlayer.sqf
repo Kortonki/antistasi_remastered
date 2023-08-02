@@ -11,7 +11,18 @@ if _isCommander then {_default_score = 25}; // so the commander does not lose th
 private _group = createGroup ("FIA" call AS_fnc_getFactionSide);
 
 private _old_player = player;
-private _position = ((getMarkerPos "FIA_HQ") findEmptyPosition [1, 50, "C_Offroad_01_F"]);
+
+private _radius = 50;
+
+private _position = [];
+
+while {count _position < 3} do {
+
+	_position = ((getMarkerPos "FIA_HQ") findEmptyPosition [1, _radius, "B_G_Soldier_F"]);
+	_radius = _radius + 20;
+};
+
+
 private _compromised = player getvariable ["compromised", 0];
 private _punish = player getVariable ["punish", 0];
 

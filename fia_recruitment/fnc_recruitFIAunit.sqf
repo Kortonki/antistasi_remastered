@@ -28,10 +28,10 @@ if (_type == "Grenadier" and _primaryWeapon == "") exitWith {
     [_player, "hint", "No grenade launchers or ammo to equip a grenadier."] remoteExec ["AS_fnc_localCommunication", _player];
 };
 
-if (_type in ["AA Specialist", "AT Specialist", "AT missile Specialist"] and _secondaryWeapon == "") exitWith {
+if (_type in ["AA Specialist", "AT Specialist", "AT missile Specialist"] and { _secondaryWeapon == "" or ([_secondaryMags] call AS_fnc_getTotalCargo) < 1}) exitWith {
     // todo: check existence of enough rockets
     // todo: check existence of AA/AT launchers
-    [_player, "hint", "Not enough launchers."] remoteExec ["AS_fnc_localCommunication", _player];
+    [_player, "hint", "Not enough launchers or launcher ammo."] remoteExec ["AS_fnc_localCommunication", _player];
 };
 
 if (_type == "Rifleman" and _primaryWeapon == "") then {
@@ -39,9 +39,9 @@ if (_type == "Rifleman" and _primaryWeapon == "") then {
 };
 
 if not isMultiPlayer then {
-    [-1, -_cost, 1] call AS_fnc_changeFIAmoney;
+    [-1, -_cost] call AS_fnc_changeFIAmoney;
 } else {
-    [-1, 0, 1] call AS_fnc_changeFIAmoney;
+    [-1, 0] call AS_fnc_changeFIAmoney;
     [_player, "money", -_cost] call AS_players_fnc_change;
     [_player, "hint", "Soldier Recruited.\n\nRemember: if you use the group menu to switch groups you will lose control of your recruited AI"] remoteExec ["AS_fnc_localCommunication", _player];
 };

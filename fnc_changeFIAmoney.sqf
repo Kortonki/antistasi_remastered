@@ -6,7 +6,7 @@ if (not isNil "AS_LOCK_changeFIAmoney") then {
 };
 AS_LOCK_changeFIAmoney = true;
 
-params [["_hr", 0], ["_resourcesFIA", 0], ["_showTimeOverride", 0]];
+params [["_hr", 0], ["_resourcesFIA", 0]];
 
 private _hrT = AS_P("hr");
 private _resourcesFIAT = AS_P("resourcesFIA");
@@ -45,5 +45,5 @@ if ((_hr != 0) and (_resourcesFIA != 0)) then {
 
 if (_texto != "") then {
 	//Why petros, FIX
-	[nil,"income",_texto, [_showTimeOverride, _showTime] select {(_showTimeOverRide == 0)}] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
+	[nil,"income",_texto, _showTime] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 };

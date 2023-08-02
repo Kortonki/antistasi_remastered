@@ -53,11 +53,48 @@ if (_type == "helmet") then {
 	_allItemsAttrs = AS_allHelmetsAttrs;
 	_unlockedItems = unlockedItems;
 };
+
 if (_type == "backpack") then {
 	_allItems = AS_allBackpacks;
 	_allItemsAttrs = AS_allBackpacksAttrs;
 	_unlockedItems = unlockedBackpacks;
+
+	_availableItems = ((call AS_fnc_getArsenal) select 3);
+
+	_sortingFunction = {
+		private _index = _input0 find _x;
+		private _weight = (_input1 select _index) select 0;
+		private _capacity = (_input1 select _index) select 1;
+		private _amount = (_input1 select _index) select 2;
+
+		private _w_factor = 1.0/(1 + exp (-2*(_amount - 5)));  // 0 => 0; 5 => 0.5; 10 => 1
+
+		_w_factor*(1 + _capacity)/(1 + _weight/2)
+
+	};
 };
+
+if (_type == "bigBackpack") then {
+	_allItems = AS_allBackpacks;
+	_allItemsAttrs = AS_allBackpacksAttrs;
+	_unlockedItems = unlockedBackpacks;
+
+	_availableItems = ((call AS_fnc_getArsenal) select 3);
+
+	_sortingFunction = {
+		private _index = _input0 find _x;
+		private _weight = (_input1 select _index) select 0;
+		private _capacity = (_input1 select _index) select 1;
+		private _amount = (_input1 select _index) select 2;
+
+		private _w_factor = 1.0/(1 + exp (-2*(_amount*2 - 5)));  // 0 => 0; 2 => 0.5; 4 => 1
+
+		_w_factor*(1 + _capacity)/(1 + _weight/500)
+
+	};
+};
+
+
 
 if (_type == "binoculars") then {
 	_allItems = AS_allBinoculars;

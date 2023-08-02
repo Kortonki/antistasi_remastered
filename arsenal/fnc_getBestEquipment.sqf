@@ -16,6 +16,7 @@ private _primaryWeapons = (AS_weapons select 0) + (AS_weapons select 13) + (AS_w
 private _secondaryWeapons = [];
 private _useBinoculars = false;
 private _useBackpack = false;
+private _useBigBackpack = false;
 private _items = call AS_medical_fnc_FIAuniformMeds;
 private _scopeType = "rifleScope";  // "rifleScope" prefers as low zoom as possible
 private _primaryMagCount = 6 + 1;  // +1 for the weapon.
@@ -56,11 +57,13 @@ if (_type == "AT missile Specialist") then {
     // todo: this list includes AT and AA. Fix it.
     _secondaryWeapons = (AS_weapons select 16); // AT missile launchers
     _useBackpack = true;
+    _useBigBackpack = true;
 };
 if (_type == "AA Specialist") then {
     // todo: this list includes AT and AA. Fix it.
     _secondaryWeapons = (AS_weapons select 8); // missile launchers
     _useBackpack = true;
+    _useBigBackpack = true;
 };
 if (_type == "Medic") then {
     _items = call AS_medical_fnc_FIAmedicBackpack;
@@ -68,6 +71,7 @@ if (_type == "Medic") then {
     _missingSmokes = 4;
     _scopeType = "";
     _useBackpack = true;
+
 };
 if (_type == "Engineer") then {
     _items = [["ToolKit", 1]];
@@ -81,7 +85,11 @@ if (_type == "Crew") then {
 
 private _backpack = "";
 if _useBackpack then {
+    if (_useBigBackpack) then {
+      _backpack = ([caja, "bigBackpack"] call AS_fnc_getBestItem);
+    } else {
     _backpack = ([caja, "backpack"] call AS_fnc_getBestItem);
+  };
 };
 
 private _binoculars = "";
