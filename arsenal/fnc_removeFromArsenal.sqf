@@ -13,6 +13,7 @@ _cargo_m = [_cargo_m, _cargo select 1, false] call AS_fnc_mergeCargoLists;
 _cargo_i = [_cargo_i, _cargo select 2, false] call AS_fnc_mergeCargoLists;
 _cargo_b = [_cargo_b, _cargo select 3, false] call AS_fnc_mergeCargoLists;
 
+//this prolly unnecessary because above is a pointer to arsenal array
 [_cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_setArsenal;
 
 //AS_Sset("lockTransfer", false);

@@ -17,6 +17,7 @@ _cargo_m = [_arsenal select 1, _cargo_m] call AS_fnc_mergeCargoLists;
 _cargo_i = [_arsenal select 2, _cargo_i] call AS_fnc_mergeCargoLists;
 _cargo_b = [_arsenal select 3, _cargo_b] call AS_fnc_mergeCargoLists;
 
+//Prolly unnecessary because above is a reference not a copy of arsenal array
 [_cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_setArsenal;
 
 /*waitUntil {sleep 0.1; not(AS_S("lockTransfer"))};

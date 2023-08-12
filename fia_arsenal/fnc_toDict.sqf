@@ -2,7 +2,7 @@
 AS_SERVER_ONLY("AS_FIAarsenal_fnc_toDict");
 private _dict = call DICT_fnc_create;
 
-private _all = call AS_fnc_getArsenal; //Virtual arsenal is the baseline
+private _all = +(call AS_fnc_getArsenal); //Virtual arsenal is the baseline //fixed to taking a copy of the arsenal not an array pointer to avoid duplication under savegame
 private _allMagazineRemains = [];
 private _hqPos = getMarkerPos "FIA_HQ";
 

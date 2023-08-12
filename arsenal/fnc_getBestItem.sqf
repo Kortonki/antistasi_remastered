@@ -59,7 +59,7 @@ if (_type == "backpack") then {
 	_allItemsAttrs = AS_allBackpacksAttrs;
 	_unlockedItems = unlockedBackpacks;
 
-	_availableItems = ((call AS_fnc_getArsenal) select 3);
+	_availableItems = +((call AS_fnc_getArsenal) select 3);
 
 	_sortingFunction = {
 		private _index = _input0 find _x;
@@ -79,7 +79,7 @@ if (_type == "bigBackpack") then {
 	_allItemsAttrs = AS_allBackpacksAttrs;
 	_unlockedItems = unlockedBackpacks;
 
-	_availableItems = ((call AS_fnc_getArsenal) select 3);
+	_availableItems = +((call AS_fnc_getArsenal) select 3);
 
 	_sortingFunction = {
 		private _index = _input0 find _x;
@@ -116,7 +116,7 @@ if (_type == "binoculars") then {
 };
 
 if (_type == "throw_grenades") then {
-	_availableItems = (call AS_fnc_getArsenal) select 1; // Magazines
+	_availableItems = +(call AS_fnc_getArsenal) select 1; // Magazines
 
 	// select grenades that cause any damage
 	_allItemsAttrs = [];
@@ -143,7 +143,7 @@ if (_type == "throw_grenades") then {
 };
 
 	if (_type == "throw_smokes") then {
-		_availableItems = (call AS_fnc_getArsenal) select 1; // Magazines
+		_availableItems = +(call AS_fnc_getArsenal) select 1; // Magazines
 
 		// select grenades that cause any damage
 		_allItemsAttrs = [];

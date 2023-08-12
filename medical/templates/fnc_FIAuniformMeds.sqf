@@ -1,5 +1,5 @@
 private _return = [];
-private _availableItems = (call AS_fnc_getArsenal) select 2;
+private _availableItems = +((call AS_fnc_getArsenal) select 2);
 private _itemList = _availableItems select 0;
 private _countList = _availableItems select 1;
 
