@@ -66,7 +66,7 @@ private _angorig = _ang - 180;
 private _origpos = [_pos1, 2500, _angorig] call BIS_fnc_relPos;
 private _finpos = [_pos2, 2500, _ang] call BIS_fnc_relPos;
 
-private _planeType = selectRandom (["NATO", "planes"] call AS_fnc_getEntity);
+private _planeType = (["NATO", "planes"] call AS_fnc_getEntity) select 0; //Select first from template for consistency
 private _planefn = [_origpos, _ang, _planeType, ("NATO" call AS_fnc_getFactionSide)] call bis_fnc_spawnvehicle;
 private _plane = _planefn select 0;
 _plane setPosATL [getPosATL _plane select 0, getPosATL _plane select 1, 1000];
@@ -93,7 +93,10 @@ _wp3 setWaypointType "MOVE";
 _wp3 setWaypointSpeed "FULL";
 _wp3 setWaypointStatements ["true", "{deleteVehicle _x} forEach crew this; deleteVehicle this; deleteGroup (group this)"];
 
-waitUntil {sleep 1; (currentWaypoint group _plane == 4) or (!canMove _plane)};
+private _i = 0;
+waitUntil {sleep 1; _i = _i + 1; (currentWaypoint group _plane == 4) or (!canMove _plane) or _i > 300};
+
+[_plane] call AS_fnc_activateVehicleCleanup;
 
 deleteMarker _mrkOrig;
 deleteMarker _mrkDest;

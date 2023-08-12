@@ -318,11 +318,14 @@ AS_allWeaponsAttrs = [];
 		private _bull_speed = (getNumber (configFile >> "CfgMagazines" >> (_magazines select 0) >> "initSpeed"));
 
 		if (isNil "_bull_weight") then {
-			_bull_weight = 0;
+			_bull_weight = 0.01;
 		};
 		if (isNil "_bull_speed") then {
-			_bull_speed = 0;
+			_bull_speed = 0.01;
 		};
+    if (isNil "_weight") then {
+      _weight = 10;
+    };
 
 		AS_allWeaponsAttrs pushBack [_weight, _bull_weight*_bull_speed/40*_bull_speed/40, _magazines];
 

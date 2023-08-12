@@ -29,6 +29,9 @@ private _punish = player getVariable ["punish", 0];
 //TODO: Consider  here if spawning new unit is necessary? Probably is, otherwise why is it here.
 
 private _unit = [_type, _position, _group] call AS_fnc_spawnFIAunit;
+_unit allowDamage false;
+_unit disableAI "all";
+_unit hideObjectGlobal true;
 
 _unit setVariable ["BLUFORSpawn", true, true]; // players make things spawn
 
@@ -45,6 +48,8 @@ _unit call AS_fnc_equipDefault;
 _unit forceAddUniform (selectRandom CIVUniforms);
 //sleep for good measure to account for uniform change
 waitUntil {player == _unit};
+_unit enableAI "all";
+_unit hideObjectGlobal false;
 [false] spawn AS_fnc_activateUndercover;
 
 
@@ -136,5 +141,11 @@ if (_oldFate == "kill") then {
 [0,true] remoteExec ["AS_fnc_showProgressBar",player];
 
 _unit setVariable ["inited", true, true];
+
+[_unit] spawn {
+	params ["_unit"];
+	sleep 10; //10 seconds of invulnerability for reasons (instadeath spawn, etc etc)
+	_unit allowDamage true;
+};
 
 _unit

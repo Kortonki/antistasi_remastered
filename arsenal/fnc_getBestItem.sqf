@@ -89,7 +89,7 @@ if (_type == "bigBackpack") then {
 
 		private _w_factor = 1.0/(1 + exp (-2*(_amount*2 - 5)));  // 0 => 0; 2 => 0.5; 4 => 1
 
-		_w_factor*(1 + _capacity)/(1 + _weight/500)
+		_w_factor*(1 + _capacity*10)
 
 	};
 };

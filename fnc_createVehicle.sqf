@@ -6,8 +6,10 @@ private _vehicle = createVehicle [_vehicleType, _pos, [], _radius, _special];
 if (isNull _vehicle) exitWith {
   diag_log format ["[AS] CreateVehicle, classname doesn't exist: %1. Vehicle not created", _vehicleType];
 };
+_vehicle engineOn true;
 _vehicle allowDamage false;
-[_vehicle, false] remoteExecCall ["enablesimulationGlobal", 2];
+  [_vehicle, false] remoteExecCall ["enablesimulationGlobal", 2];
+
 _vehicle setdir _dir;
 
 private _driver = objnull;
@@ -71,7 +73,10 @@ if (_crew in [2,3,6,7]) then {
 _vehicleGroup addVehicle _vehicle;
 
 [_vehicle, _side] call AS_fnc_initVehicle;
-[_vehicle, true] remoteExecCall ["enablesimulationGlobal", 2];
+
+  [_vehicle, true] remoteExecCall ["enablesimulationGlobal", 2];
+
+
 
 [_vehicle] spawn {
   params ["_vehicle"];
