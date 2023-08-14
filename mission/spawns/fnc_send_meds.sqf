@@ -75,8 +75,8 @@ private _fnc_run = {
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = [_mission, "position"] call AS_spawn_fnc_get;
 
-	//Random chance for AAF patrol to be called by the civilians
-	if ((([_location, "AAFsupport"] call AS_location_fnc_get) / ([_location, "FIAsupport"] call AS_location_fnc_get)) > (random 2)) then {
+	//Random chance for AAF patrol to be called by the civilians: Ratio of over 2/1 is 75-99% chance. Ratio of 1/1 is 50% chance Ratio of 1/2 is 33% - 25%
+	if (((1 + ([_location, "AAFsupport"] call AS_location_fnc_get)) / (1 + ([_location, "FIAsupport"] call AS_location_fnc_get))) > (random 2)) then {
 		[[_position], "AS_movement_fnc_sendAAFpatrol"] remoteExec ["AS_scheduler_fnc_execute", 2];
 	};
 
@@ -111,10 +111,11 @@ private _fnc_run = {
 				_x move position _crate;
 			} else {
 				//Farther groups have probability to move based on their distance. Farther units have less probability, 300m away are sure to come.
-				if ((random 1) < (300/(_x distance _position))) then {
+				if ((random 1) < (300/(_x distance2d _position))) then {
 
 					if (vehicle _x != _x) then {
-							private _wp0 = (group _x) addWaypoint [_position, 500]; //TODO: improve this to consider the direction of approach
+							private _safePosition = [_position, position _x, 0] call AS_fnc_getSafeRoadToUnload;
+							private _wp0 = (group _x) addWaypoint [_safePosition,0];
 							_wp0 setWaypointType "UNLOAD";
 							_wp0 setWaypointBehaviour "SAFE";
 							(group _x) setCurrentWaypoint _wp0;

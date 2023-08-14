@@ -23,7 +23,7 @@ private _sortingFunction = {
 	private _m_count = (_input0 select _x) select 4;
 
 	private _w_factor = 1.0/(1 + exp (-2*_amount + 10));  // 0 => 0; 5 => 0.5; 10 => 1
-	private _m_factor = 1.0/(1 + exp (-2*_m_count + 2*_recomendedMags));  // 0 => 0; _recomendedMags => 0.5; 100 => 1
+	private _m_factor = 1.0/(1 + exp (-2*_m_count + 8*_recomendedMags));  // 0 => 0; _recomendedMags => 0.5; 100 => 1
 
 	_m_factor*_w_factor*(1 + _bullet_energy)/(1 + _weight)
 };

@@ -6,6 +6,8 @@ private _cargo_m = [_dict, "magazines"] call DICT_fnc_get;
 private _cargo_i = [_dict, "items"] call DICT_fnc_get;
 private _cargo_b = [_dict, "backpacks"] call DICT_fnc_get;
 
+//Commented out: These come from templates to avoid discrepance between server and clients
+/*
 unlockedWeapons = [_dict, "unlockedWeapons"] call DICT_fnc_get;
 unlockedMagazines = [_dict, "unlockedMagazines"] call DICT_fnc_get;
 unlockedItems = [_dict, "unlockedItems"] call DICT_fnc_get;
@@ -14,6 +16,7 @@ publicVariable "unlockedWeapons";
 publicVariable "unlockedMagazines";
 publicVariable "unlockedItems";
 publicVariable "unlockedBackpacks";
+*/
 
 [_cargo_w, _cargo_m, _cargo_i, _cargo_b] call AS_fnc_setArsenal;
 

@@ -7,7 +7,7 @@ if (_location in ([] call AS_location_fnc_knownLocations)) exitWith {}; //No nee
 
 private _enemySide = ["AAF"] call AS_fnc_getFactionSide;
 private _position = _location call AS_location_fnc_position;
-_position set [2, (getTerrainHeightASL _position) + 2.5];
+_position set [2, (getTerrainHeightASL _position) + 2];
 
 while {sleep AS_spawnLoopTime; (alive _veh) and {(!(isNil{_veh getVariable "marcador"}) or _veh == petros) and {!(_location in ([] call AS_location_fnc_knownLocations))}}} do {
   {
@@ -26,7 +26,7 @@ while {sleep AS_spawnLoopTime; (alive _veh) and {(!(isNil{_veh getVariable "marc
              if (alive _unit and {!(_unit call AS_medical_fnc_isUnconscious)}) then {
                 [_location] call AS_location_fnc_knownLocations;
               };
-              _unit setVariable ["revealing", nil];
+              _unit setVariable ["revealing", nil, true];
              };
            } else {
                 private _group = group _x;

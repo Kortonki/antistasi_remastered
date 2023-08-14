@@ -3,9 +3,9 @@ params ["_unit", "_player"];
 
 [_unit, "remove"] remoteExec ["AS_fnc_addAction", [0,-2] select isDedicated, true];
 
-if (!alive _unit) exitWith {};
+if (!(alive _unit)) exitWith {};
 
-_player globalChat "You have one chance, join us and help us liberate the island from tiranny!";
+//_player globalChat "You have one chance, join us and help us liberate the island from tiranny!";
 
 private _chance = AS_P("NATOsupport") - AS_P("CSATsupport");
 

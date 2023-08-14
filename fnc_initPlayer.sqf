@@ -147,6 +147,7 @@ player addEventHandler ["killed", {
 	["FIA", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
 
 	[_unit, "deaths", 1] call AS_players_fnc_change;
+	//Player score is lowered in onplayerkilled.sqf
 
 	}];
 

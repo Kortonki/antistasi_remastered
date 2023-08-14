@@ -204,7 +204,12 @@ if (_type in ["nvg", "laser", "flashlight"]) then {
 	_unlockedItems = unlockedItems;
 
     _sortingFunction = {
-        0  // in this case, it does not matter which item to pick.
+        // 0  // in this case, it does not matter which item to pick. Added 140823: Amount matters
+				private _index = _input0 find _x;
+        private _amount = (_input1 select _index) select 0;
+
+				_amount
+
     };
 };
 

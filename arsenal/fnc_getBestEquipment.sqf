@@ -49,18 +49,17 @@ if (_type == "Sniper") then {
     _primaryMagCount = 8 + 1;  // because snipers clips have less bullets.
 };
 if (_type == "AT Specialist") then {
-    // todo: this list includes AT and AA. Fix it.
+    //Todo: this might include used launchers
     _secondaryWeapons = (AS_weapons select 10); // rocket launchers
     _useBackpack = true;
 };
 if (_type == "AT missile Specialist") then {
-    // todo: this list includes AT and AA. Fix it.
     _secondaryWeapons = (AS_weapons select 16); // AT missile launchers
     _useBackpack = true;
     _useBigBackpack = true;
 };
 if (_type == "AA Specialist") then {
-    // todo: this list includes AT and AA. Fix it.
+    // todo: this list includes AT missiles not yet in exceptions in inititems.sqf
     _secondaryWeapons = (AS_weapons select 8); // missile launchers
     _useBackpack = true;
     _useBigBackpack = true;

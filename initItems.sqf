@@ -489,6 +489,17 @@ AS_allThrowSmokesAttrs = [];
 
 
 AS_allMagazines = [];
+AS_allMagazinesAttrs = [];
 {
-	AS_allMagazines pushBackUnique configName _x;
+
+  private _name = configName _x;
+
+  AS_allMagazines pushBack _name;
+
+  private _bull_weight = (getNumber (configFile >> "CfgMagazines" >> _name >> "mass"));
+  private _bull_speed = (getNumber (configFile >> "CfgMagazines" >> _name >> "initSpeed"));
+  private _count = (getNumber (configFile >> "CfgMagazines" >> _name >> "count"));
+
+  AS_allMagazinesAttrs pushback [_bull_weight, _bull_speed, _count];
+
 } forEach _allMagazines;

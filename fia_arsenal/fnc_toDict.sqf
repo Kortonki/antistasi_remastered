@@ -137,9 +137,10 @@ _all = _all call _fnc_getMagRemains;
 [_dict, "items", _all select 2] call DICT_fnc_setGlobal;
 [_dict, "backpacks", _all select 3] call DICT_fnc_setGlobal;
 
+/*
 [_dict, "unlockedWeapons", unlockedWeapons] call DICT_fnc_setGlobal;
 [_dict, "unlockedMagazines", unlockedMagazines] call DICT_fnc_setGlobal;
 [_dict, "unlockedItems", unlockedItems] call DICT_fnc_setGlobal;
 [_dict, "unlockedBackpacks", unlockedBackpacks] call DICT_fnc_setGlobal;
-
+*/
 _dict
