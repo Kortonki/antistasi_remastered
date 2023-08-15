@@ -18,6 +18,10 @@ _unit setVariable ["init", true, false];
 
 _unit setSkill 0;
 
+//This so FIA (and AAF) autoheal works on civilians
+_unit setVariable ["autoHeal", true];
+
+
 _unit setVariable ["location", _location, true];
 
 private _EHkilledIdx = _unit addEventHandler ["killed", {
@@ -175,3 +179,82 @@ if (typeOf _unit == "C_Journalist_F") then {
 		};
  	}];
 };
+
+//Moved here from FIA init
+
+_unit addEventhandler ["handleHeal", {
+		params ["_unit", "_healer", "_isMedic"];
+
+		private _return = false; //Use normal heal if not healing a civilian
+
+		private _support = 0;
+		if (damage _unit > 0.25) then { //First aid via anybody heals some -> some support
+			_support = _support + 0.5;
+			_unit setdamage 0.25;
+		};
+		if (_isMedic) then { //Using medic gains more support
+			_support = _support + 0.5;
+			_unit setdamage 0;
+		};
+		if (_unit call AS_medical_fnc_isUnconscious) then {
+			_support = _support + 0.5;
+		};
+
+		[_unit, _healer] spawn {
+			params ["_unit", "_healer"];
+			_unit stop true;
+			_healer playActionNow "MedicOther";
+			sleep 8;
+			_unit stop false;
+		};
+	_return = true;
+
+		if ((_healer call AS_fnc_getSide) isEqualTo "FIA") then {
+
+			["civHealed", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
+
+
+
+				//Maximum support from healing single CIV = 1.5 < 2 (penalty of wounding a CIV)
+				//Thus, no possibility to exploit
+
+				if (typeOf _unit == "C_Journalist_F") then {
+					[0,_support*3, position _unit, true] remoteExec ["AS_fnc_changeCitySupport", 2];
+					{[0, round(_support/2),_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
+					[5, 0, getpos _unit] remoteExec ["AS_fnc_changeForeignSupport", 2];
+				}
+				else {
+					[0,_support, position _unit, true] remoteExec ["AS_fnc_changeCitySupport", 2];
+					[1, 0, getpos _unit] remoteExec ["AS_fnc_changeForeignSupport", 2];
+
+					private _text = format [localize "STR_msg_FIACivHeal",_city,["FIA", "shortname"] call AS_fnc_getEntity];
+					[_text, 2, format ["FIACivHeal_%1", _city], false] spawn AS_fnc_globalMessage;
+				};
+
+		};
+
+		if ((_healer call AS_fnc_getSide) isEqualTo "AAF") then {
+
+			//Stat for AAF heals?
+			//["civHealed", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
+
+				//Maximum support from healing single CIV = 1.5 < 2 (penalty of wounding a CIV)
+				//Thus, no possibility to exploit
+
+				if (typeOf _unit == "C_Journalist_F") then {
+					[_support*3, position _unit,0, false] remoteExec ["AS_fnc_changeCitySupport", 2];
+					{[round(_support/2),0 ,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
+				}
+				else {
+					[_support,0, position _unit, false] remoteExec ["AS_fnc_changeCitySupport", 2];
+
+					private _text = format [localize "STR_msg_AAFCivHeal",	_city, ["AAF", "shortname"] call AS_fnc_getEntity];
+
+					[_text, 2, format ["AAFCivHeal_%1", _city], false] spawn AS_fnc_globalMessage;
+				};
+
+		};
+
+
+		_return
+	}];

@@ -19,7 +19,7 @@ params ["_excludeBelow", "_minSize", "_maxSize", ["_excluded", []]];
             private _population = (count (nearestObjects [_position, ["house"], _size]));
 
             // adjust position to be in a road
-            private _sortedRoads = [_roads, [], {_position distance _x}, "ASCEND"] call BIS_fnc_sortBy;
+            private _sortedRoads = [_roads, [], {_position distance2d _x}, "ASCEND"] call BIS_fnc_sortBy;
             _position = getPos (_sortedRoads select 0);
 
             // creates hidden marker

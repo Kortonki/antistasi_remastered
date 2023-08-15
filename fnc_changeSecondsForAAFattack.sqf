@@ -3,13 +3,13 @@ AS_SERVER_ONLY("fnc_changeSecondsforAAFattack.sqf");
 
 params ["_time"];
 
-private _FIAbases = ["base", "FIA"] call AS_location_fnc_TS;
-private _allBases = "base" call AS_location_fnc_T;
+//TODO: same function in mission description. Make it a separate function and call it here AND mission description
+private _allBases = ([["base", "airfield"], "AAF"] call AS_location_fnc_TS) select {_x call AS_fnc_hasRadioCoverage};
 
 if (count _allBases == 0) then {
 	_allBases = [0];  // avoid 0/0 below
 };
-private _multiplier = 0.3 + (1 - 0.3)*(count _FIAbases)/(count _allBases);
+private _multiplier = 0.5 + (1 - 0.5)*1/(count _allBases);
 _time = _time * _multiplier * ((AS_P("upFreq"))/600); //Multiplier for game speed as well
 
 

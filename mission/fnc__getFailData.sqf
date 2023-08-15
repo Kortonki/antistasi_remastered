@@ -164,10 +164,10 @@ if (_type == "repair_antenna") exitWith {
 };
 if (_type == "rescue_prisioners") exitWith {
     _args params [["_dead", 0]];
-    [-10, 0, [-(round(_dead/2)), 0], [0, 0], [0, 0, []], 0, [["Variable lost of NATO support", {}]]]
+    [-10, 0, [-(round(_dead/16)), 0], [0, 0], [0, 0, []], 0, [["Variable loss of NATO support", {}]]]
 };
 if (_type == "rescue_refugees") exitWith {
     _args params [["_dead", 0]];
-    [-10, 0, [-(round(_dead/2)), 0], [0, 0], [0, (-_dead/2), _position, true], 0, [["Variable lost of NATO and city support", {}]]]
+    [-10, 0, [-(round(_dead/4)), 0], [0, 0], [0, (-_dead/4), _position, true], 0, [["Variable loss of NATO and city support", {}]]]
 };
 [-10]

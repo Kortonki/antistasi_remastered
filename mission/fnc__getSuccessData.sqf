@@ -58,18 +58,18 @@ if (_type == "convoy_supplies") exitWith {
 
 if (_type in ["convoy_ammo", "convoy_fuel"]) exitWith {
   _args params [["_vehPosition", [0,0,0]]];
-  [5, [500, _vehPosition, 10], [0, 0], [0, 0], [0, 0, []], 30*60]
+  [5, [500, _vehPosition, 10], [0, 0], [0, 0], [0, 0, []], 30*60, [],[_location, 30]]
 };
 
 
 
 if (_type == "convoy_armor") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [0, 5, _position], 60*60]
+    [5, [500, _vehPosition, 10], [5, 0], [0, 0], [0, 5, _position], 60*60,[], [_location, 60]]
 };
 if (_type == "convoy_hvt") exitWith {
     _args params [["_vehPosition", [0,0,0]]];
-    [5, [500, _vehPosition, 10], [10, 0], [0, 0], [0, 5, _position], 90*60]
+    [5, [500, _vehPosition, 10], [10, 0], [0, 0], [0, 5, _position], 90*60,[], [_location, 60]]
 };
 if (_type == "convoy_prisoners") exitWith {
     _args params [["_vehPosition", [0,0,0]], ["_hr", 0]];
@@ -107,19 +107,25 @@ if (_type == "destroy_vehicle") exitWith {
     _args params [["_pos", [0,0,0]]];
     [5, [500, _pos, 10], [2, 0], [0, 300], [0, 5, _position], 20*60]
 };
-if (_type in ["steal_ammo", "steal_fuel"]) exitWith {
+if (_type == "steal_ammo") exitWith {
     _args params [["_pos", [0,0,0]]];
-    [5, [500, _pos, 10], [2, 0], [0, 300], [0, 0, []], 20*60]
+    [5, [500, _pos, 10], [2, 0], [0, 300], [0, 0, []], 20*60, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " loses money", {[-10000] call AS_fnc_changeAAFmoney}]], [_location, 30]]
 };
+if (_type == "steal_fuel") exitWith {
+    _args params [["_pos", [0,0,0]]];
+    [5, [500, _pos, 10], [2, 0], [0, 300], [0, 0, []], 20*60, [[(["AAF", "shortname"] call AS_fnc_getEntity) + " loses money", {[-5000] call AS_fnc_changeAAFmoney}]], [_location, 30]]
+};
+
+
 if (_type == "rob_bank") exitWith {
     _args params [["_pos", [0,0,0]]];
     [5, [500, _pos, 10], [-2, 0], [0, 5000], [0, -5, _position, true], 10*60]
 };
 if (_type == "send_meds") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [0, 20, _position, true], 10*60]
+    [5, [500, _position, 10], [5, 0], [0, 0], [0, 20, _position, true]]
 };
 if (_type == "help_meds") exitWith {
-    [5, [500, _position, 10], [5, 0], [0, 0], [-10, 20, _position, true]]
+    [5, [500, _position, 10], [5, 0], [0, 0], [-10, 20, _position, true], 10*60]
 };
 if (_type == "broadcast") exitWith {
     _args params [["_prestige",0]];
@@ -140,7 +146,7 @@ if (_type == "repair_antenna") exitWith {
 };
 if (_type == "rescue_prisioners") exitWith {
     _args params [["_hr", 0]];
-    [round (_hr/2), [500, getMarkerPos "FIA_HQ", _hr], [_hr, 0], [_hr, 0],  [0, _hr, _position, true], 0,
+    [round (_hr*2), [500, getMarkerPos "FIA_HQ", _hr], [_hr, 0], [_hr, 0],  [0, _hr, _position, true], 0,
         [["Variable number of resources, foreign support and city support", {}]]
     ]
 };

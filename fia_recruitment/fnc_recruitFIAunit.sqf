@@ -49,7 +49,7 @@ if not isMultiPlayer then {
 
 // the unit becomes owned by the client because the group is owned by the client
 //However, "AI units created after mission start via scripting will be local to the computer that issued the command"
-[_type, position _player, group _player, true, [true, nil, _equipment]] remoteExec ["AS_fnc_spawnFIAUnit", _player];
+[_type, position _player, group _player, true, [true, nil, _equipment],20] remoteExec ["AS_fnc_spawnFIAUnit", _player];
 
 
 

@@ -17,7 +17,7 @@ if not hasACEMedical then {
 
     } else {
   //      _unit playMove "AinjPpneMstpSnonWnonDnon_rolltofront";
-
+        sleep (5 + random 15);
         _unit playMoveNow "AmovPpneMstpSrasWrflDnon_healed";
         //_unit enableAI "ALL";
         [_unit, "ALL"] remoteExecCall ["enableAI", _unit];

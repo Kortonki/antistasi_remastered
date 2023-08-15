@@ -93,10 +93,22 @@ _unit addEventHandler ["killed", {
 
 _unit allowFleeing 0;	//Experminet with this: way to make garrison stay in area,or detect fleeing and do things like disband etc.
 
+
+
 _unit setVariable ["rearming",false];
+
+//Autoheal on for player recruits, otherwise off unless medic
+
+if (_unit call AS_medical_fnc_isMedic) then {
+_unit setVariable ["autoHeal", true];
+} else {
+_unit setVariable ["autoHeal", false];
+};
 
 if (isPlayer(leader _unit)) then {
 	if (captive player and {!(captive _unit)}) then {[_unit] remoteExec ["AS_fnc_activateUndercoverAI", _unit]};
+
+	_unit setVariable ["autoHeal", true];
 	_unit addEventHandler ["killed", {
 		params ["_unit", "_killer"];
 
@@ -111,6 +123,7 @@ if (isPlayer(leader _unit)) then {
 		[0,-0.5,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 		["death"] remoteExec ["fnc_be_XP", 2];
 		_unit setVariable ["BLUFORSpawn",nil,true];
+
 
 		//Stats
 
@@ -206,6 +219,8 @@ _unit enableGunLights "AUTO";
 
 
 //Eventhandler to increase City support for healing CIVS
+//COMMENTED OUT, moved to civ init
+/*
 _unit addEventhandler ["handleHeal", {
 		params ["_unit", "_healer", "_isMedic"];
 
@@ -213,6 +228,7 @@ _unit addEventhandler ["handleHeal", {
 		if ((_unit call AS_fnc_getSide) isEqualTo "CIV") then {
 
 			["civHealed", 1, "fiastats"] remoteExec ["AS_stats_fnc_change", 2];
+
 
 				//Maximum support from healing single CIV = 1.5 < 2 (penalty of wounding a CIV)
 				//Thus, no possibility to exploit
@@ -250,5 +266,5 @@ _unit addEventhandler ["handleHeal", {
 
 		_return
 	}];
-
+*/
 	_unit addEventHandler ["FiredMan", AS_fnc_EH_firedMan];

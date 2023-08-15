@@ -1,6 +1,6 @@
 params ["_medic", "_unit"];
 if not hasACEmedical exitWith {
-    "FirstAidKit" in (items _medic)
+    ("FirstAidKit" in (items _medic) or (_medic call AS_medical_fnc_isMedic and {"Medikit" in (items _medic)}))
 };
 private _canHeal = call {
 

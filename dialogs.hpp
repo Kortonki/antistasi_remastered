@@ -142,7 +142,10 @@ BTN_R(1,-1, "Auto Rearm", "", "[] spawn AS_AI_fnc_rearmCall");
 BTN_L(1,-1, "Control selected AI", "", "[] spawn AS_fnc_UI_controlUnit;");
 BTN_L(2,-1, "Auto Combat OFF", "Toggle automatic combat behaviour", "[] spawn AS_AI_fnc_autoCombatCallOFF;");
 BTN_R(2,-1, "Auto Combat ON", "Toggle automatic combat behaviour", "[] spawn AS_AI_fnc_autoCombatCallON;");
-BTN_M(3,-1, "Dismiss Units/Squads", "Dismisses selected units or HC squads", "closeDialog 0; [] spawn AS_fnc_UI_dismissSelected;");
+BTN_L(3,-1, "Auto Heal OFF", "Toggle automatic healing behaviour. Medics heal others", "[] spawn AS_AI_fnc_autoHealCallOFF;");
+BTN_R(3,-1, "Auto Heal ON", "Toggle automatic healing behaviour. Medics heal others", "[] spawn AS_AI_fnc_autoHealCallON;");
+
+BTN_M(4,-1, "Dismiss Units/Squads", "Dismisses selected units or HC squads", "closeDialog 0; [] spawn AS_fnc_UI_dismissSelected;");
 
 
 	};

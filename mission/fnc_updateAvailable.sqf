@@ -37,6 +37,12 @@ private _fnc_allPossibleMissions = {
         "destroy_vehicle", "convoy_armor", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel",
         "kill_officer", "rescue_prisioners", "steal_ammo", "steal_fuel"
     ];
+
+    private _airfieldMissions = [
+        "destroy_helicopter", "convoy_ammo", "convoy_prisoners", "convoy_hvt", "convoy_fuel",
+        "kill_officer", "rescue_prisioners", "steal_ammo", "steal_fuel"
+    ];
+
     private _logisticsMissions = [
       "convoy_money"
     ];
@@ -60,7 +66,7 @@ private _fnc_allPossibleMissions = {
         {_type == "outpost" and {_missionType in ["rescue_prisioners", "steal_ammo", "steal_fuel"]}} or
         {_type == "city" and {_missionType in _cityMissions}} or
         {_type == "base" and {_missionType in _baseMissions}} or
-        {_type == "airfield" and {_missionType == "destroy_helicopter"}} or
+        {_type == "airfield" and {_missionType in _airfieldMissions}} or
         {_type in _conquerableLocations and {_missionType == "conquer"}}
     };
 

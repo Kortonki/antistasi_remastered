@@ -112,16 +112,20 @@ private _missions = (call AS_mission_fnc_all) select {_x call AS_mission_fnc_sta
 
 
     if (_mission == "") then {
-      diag_log "[AS] sendAAFConvoy: Valid convoy mission not found, sending recon";
-      call AS_movement_fnc_sendAAFRecon;
+      diag_log "[AS] sendAAFConvoy: Valid convoy mission not found";
+      if ("recon" in _types) then {
+        diag_log "[AS] sendAAFConvoy: Valid convoy mission not found. Recon in mission types, sending recon";
+        call AS_movement_fnc_sendAAFRecon;
+      };
     } else { //Prevent changing mission if it's worth an alarm
       _mission call AS_mission_fnc_activate;
       [_mission, "skipping", _skipping] call AS_mission_fnc_set; //Tell convoy missions if skipping time: Will automatically fail if not bound to FIA location
       diag_log "[AS] sendAAFConvoy: Valid convoy mission found, starting mission";
     };
   } else {
-    diag_log "[AS] sendAAFConvoy: Valid convoy mission not found, sending recon";
+    diag_log "[AS] sendAAFConvoy: Valid convoy mission not found";
     if ("recon" in _types) then {
+      diag_log "[AS] sendAAFConvoy: Valid convoy mission not found. Recon in mission types, sending recon";
       call AS_movement_fnc_sendAAFRecon;
     };
   };

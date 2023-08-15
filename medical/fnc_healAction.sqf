@@ -16,9 +16,12 @@ if (_medic == _unit) exitWith {
 };
 
 private _canHeal = {(!alive _medic) or (!alive _unit) or (_medic distance _unit < 3)};
-
-_medic groupChat format ["Hold on %1, on my way to help you",name _unit];
-private _timeOut = time + 60;
+if (group _medic == group _unit) then {
+  _medic groupChat format ["Hold on %1, on my way to help you",name _unit];
+} else {
+  _medic sideChat format ["Hold on %1, on my way to help you",name _unit];
+};
+private _timeOut = time + 120; //Timeout double to 120 because medic distance doubled 100->200
 
 while {true} do {
     _medic doMove getPosATL _unit;
@@ -29,14 +32,20 @@ if (call _canHeal) then {
     _medic stop true;
     _unit stop true;
     _medic action ["HealSoldier",_unit];
-    sleep (5 + random 15);
-    if (([_unit] call AS_medical_fnc_isUnconscious)) then {[_unit, false] call AS_medical_fnc_setUnconscious};
     _medic stop false;
+    _medic doFollow leader group _unit;
+    if (group _medic == group _unit) then {
+    _medic groupChat format ["You are ready, %1", name _unit];
+    } else {
+      _medic sideChat format ["You are ready, %1", name _unit];
+    };
+    [_unit, _medic] call AS_medical_fnc_clearAssignedMedic;
+    if (([_unit] call AS_medical_fnc_isUnconscious)) then {[_unit, false] call AS_medical_fnc_setUnconscious};
     _unit stop false;
     _unit dofollow leader group _unit;
-    _medic doFollow leader group _unit;
-    _medic groupChat format ["You are ready, %1", name _unit];
+
 };
 // release the units so others can help
-[_unit, _medic] call AS_medical_fnc_clearAssignedMedic;
-_unit groupChat "I am ready";
+if (alive _unit) then {
+  _unit groupChat "I am ready";
+};

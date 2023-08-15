@@ -9,6 +9,9 @@ if (!(_location call AS_location_fnc_side == "Neutral")) exitWith {
 private _posicion = _location call AS_location_fnc_position;
 private _type = _location call AS_location_fnc_type;
 private _size = _location call AS_location_fnc_size;
+private _city = [call AS_location_fnc_cities, _pos] call BIS_fnc_nearestPosition;
+private _cityIsFriendly = false;
+if (_city call AS_location_fnc_side == "AAF") then { _cityIsFriendly = true};
 
 [_location,"side","AAF"] call AS_location_fnc_set;
 
@@ -28,17 +31,23 @@ private _staticsRemoved = [];
 */
 
 if (_type == "seaport") then {
+	if (_cityIsFriendly) then {
 	[5,0,_posicion] call AS_fnc_changeCitySupport;
+};
 	["TaskFailed", ["", "Seaport captured"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 };
 if (_type == "powerplant") then {
 	[5,0] call AS_fnc_changeForeignSupport;
+	if (_cityIsFriendly) then {
 	[10,0,_posicion] call AS_fnc_changeCitySupport;
+};
 	["TaskFailed", ["", "Powerplant captured"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[_location] call AS_fnc_recomputePowerGrid;
 };
 if (_type in ["resource", "factory"]) then {
+	if (_cityIsFriendly) then {
 	[5,0,_posicion] call AS_fnc_changeCitySupport;
+};
 	[2,0] call AS_fnc_changeForeignSupport;
 
 	if (_type == "resource") then {

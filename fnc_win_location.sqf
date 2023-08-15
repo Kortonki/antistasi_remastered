@@ -39,14 +39,18 @@ sleep 5;
 [[_posicion], "AS_movement_fnc_sendAAFpatrol"] call AS_scheduler_fnc_execute;
 
 if (_type == "airfield") then {
+	if (_cityIsFriendly) then {
 	[-20,20,_posicion] call AS_fnc_changeCitySupport;
+};
 	{[-10, 10,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	["TaskSucceeded", ["", "Airport Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[20,10] call AS_fnc_changeForeignSupport;
   ["con_bas"] call fnc_BE_XP;
 };
 if (_type == "base") then {
+	if (_cityIsFriendly) then {
 	[-20,20,_posicion] call AS_fnc_changeCitySupport;
+};
 	{[-10, 10,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	["TaskSucceeded", ["", "Base Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[20,10] call AS_fnc_changeForeignSupport;
@@ -62,12 +66,16 @@ if (_type == "base") then {
 if (_type == "powerplant") then {
 	["TaskSucceeded", ["", "Powerplant Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
 	[0,10] call AS_fnc_changeForeignSupport;
+	if (_cityIsFriendly) then {
 	[-10, 10, _posicion] call AS_fnc_changeCitySupport;
+};
 	["con_ter"] call fnc_BE_XP;
 	[_location] call AS_fnc_recomputePowerGrid;
 };
 if (_type in ["outpost", "outpostAA"]) then {
+	if (_cityIsFriendly) then {
 	[-10,10,_posicion] call AS_fnc_changeCitySupport;
+};
 	//City support changes everywhere
 	{[-5, 5,_x] remoteExec ["AS_fnc_changeCitySupport", 2]} forEach (call AS_location_fnc_cities);
 	["TaskSucceeded", ["", "Outpost Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
@@ -75,7 +83,9 @@ if (_type in ["outpost", "outpostAA"]) then {
 };
 if (_type == "seaport") then {
 	["TaskSucceeded", ["", "Seaport Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];
+	if (_cityIsFriendly) then {
 	[-10,10,_posicion] call AS_fnc_changeCitySupport;
+};
 	["con_ter"] call fnc_BE_XP;
 	[_flag, "seaport"] remoteExec ["AS_fnc_addAction", AS_CLIENTS];
 };
@@ -84,7 +94,9 @@ if (_type in ["factory", "resource"]) then {
 	if (_type == "resource") then {["TaskSucceeded", ["", "Resource Taken"]] remoteExec ["BIS_fnc_showNotification", AS_CLIENTS];};
 	["con_ter"] call fnc_BE_XP;
 	[0,5] call AS_fnc_changeForeignSupport;
+	if (_cityIsFriendly) then {
 	[-10, 10, _posicion] call AS_fnc_changeCitySupport;
+};
 	private _powerpl = ["powerplant" call AS_location_fnc_T, _posicion] call BIS_fnc_nearestPosition;
 	if (_powerpl call AS_location_fnc_side == "AAF") then {
 		sleep 5;

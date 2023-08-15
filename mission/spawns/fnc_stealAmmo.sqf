@@ -124,11 +124,17 @@ private _fnc_run = {
 	private _fnc_missionSuccessful = {
 		([_mission, "SUCCEEDED"] call AS_mission_spawn_fnc_loadTask) call BIS_fnc_setTask;
 		[_mission, [getPos _truck]] remoteExec ["AS_mission_fnc_success", 2];
-		switch (_missionType) do {
+
+		/* //Done at missionsuccss
+		if (_location call AS_location_fnc_type in ["base", "airfield"]) then {
+			[_location, 30] call AS_location_fnc_increaseBusy;
+		};
+
+		//Done at missionsucces
+		/*switch (_missionType) do {
 				case "steal_ammo": {[-10000] remoteExec ["AS_fnc_changeAAFmoney",2];};
 				case "steal_fuel": {[-5000] remoteExec ["AS_fnc_changeAAFmoney",2];};
-				default {};
-		};
+				default {};*/
 
 	};
 

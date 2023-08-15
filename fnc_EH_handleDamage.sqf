@@ -17,7 +17,9 @@ if (vehicle _unit == _unit or vehicle _unit isKindOf "StaticWeapon") then {
 	//ALSO obsolote, and for optimisations sake, don't use as has only minor effect
 	};*/
 
-	if (_dam > 5) exitWith {};
+	// Changed from 5 to 4. RHS ARF seems invulnerable otherwise
+
+	if (_dam > 4) exitWith {};
 
 	if not (_part in ["hand_l","hand_r","leg_l","leg_r","arms"]) then {
 

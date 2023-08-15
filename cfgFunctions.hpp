@@ -343,6 +343,8 @@ class AS_AI {
         FNC(AI,dismountOnDanger);
         FNC(ai,autoCombatCallON);
         FNC(ai,autoCombatCallOFF);
+        FNC(ai,autoHealCallON);
+        FNC(ai,autoHealCallOFF);
         FNC(ai,rearmCall);
         FNC(ai,dangerOnApproach);
         FNC(AI,setOrders);

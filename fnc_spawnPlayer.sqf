@@ -50,7 +50,7 @@ _unit forceAddUniform (selectRandom CIVUniforms);
 waitUntil {player == _unit};
 _unit enableAI "all";
 _unit hideObjectGlobal false;
-[false] spawn AS_fnc_activateUndercover;
+
 
 
 if _isCommander then {
@@ -140,10 +140,14 @@ if (_oldFate == "kill") then {
 // remove any progress bar the player had
 [0,true] remoteExec ["AS_fnc_showProgressBar",player];
 
+[false] spawn AS_fnc_activateUndercover;
+
 _unit setVariable ["inited", true, true];
 
-[_unit] spawn {
-	params ["_unit"];
+[_unit, _position, _radius] spawn {
+	params ["_unit", "_position", "_radius"];
+	private _i = 0;
+	waitUntil {sleep 1; _i = _i + 1; ((_unit distance2d _position) <= _radius) or (_i > 60)};
 	sleep 10; //10 seconds of invulnerability for reasons (instadeath spawn, etc etc)
 	_unit allowDamage true;
 };
