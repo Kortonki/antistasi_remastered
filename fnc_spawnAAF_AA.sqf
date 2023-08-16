@@ -1,11 +1,45 @@
 params ["_position", "_group", "_size", ["_priority", 0.25]];
 
+if (!(["static_aa", _priority] call AS_fnc_vehicleAvailability)) exitWith {[[], []]};
+
+
 private _vehicles = [];
 private _units = [];
 
-private _pos = [_position, _size/4, _size, 20, 0, 0.3, 0, [], [_position, [0,0,0]]] call BIS_Fnc_findSafePos;
+private _origin = +_position;
+private _initPos = +_position;
 
-if (["static_aa", _priority] call AS_fnc_vehicleAvailability and {!(_pos isEqualTo _position)}) then {
+private _newSize = _size/2;
+private _dir = random 360;
+private _i = 0;
+
+private _valid = false;
+
+//This commented out - preventing spawn?
+ //and {!(_position isFlatEmpty  [-1, -1, 0.6, 4, 0] isEqualTo [])}
+ //Todo: MAKE THIS A SEPARATE FUNCTION
+
+ while {_newSize < _size*1.5} do {
+
+   while {_i < 12} do {
+   _dir = _dir + 115;
+   _initPos = [_origin, _newSize*(random 2)/2, _dir] call BIS_fnc_relPos;
+   _position = _initPos findEmptyPosition [5, 20, "Land_HelipadSquare_F"];
+     if  ((_position call AS_fnc_isSafePos) and {!(_position isFlatEmpty  [-1, -1, 0.6, 4, 0] isEqualTo [])}) exitWith {_valid = true};
+   _i = _i + 1;
+   };
+   if (_valid) exitWith {};
+   _newSize = _newSize + 10;
+   _i = 0;
+ };
+
+if (!(_valid)) exitWith {
+    diag_log format ["AS_fnc_spawnAAF_AA could not find a suitable position, spawn cancelled near %1", _origin call AS_location_fnc_nearest];
+    [[], []]
+
+  };
+
+
     //spg can't fire over the bunker wall -> todo: sandbags to the side?
 
     //private _bunker = "Land_BagBunker_Small_F" createVehicle _pos;
@@ -13,7 +47,7 @@ if (["static_aa", _priority] call AS_fnc_vehicleAvailability and {!(_pos isEqual
     //_pos = getPosATL _bunker;
     //_vehicles pushBack _bunker;
 
-    private _veh = [selectrandom (["AAF", "static_aa"] call AS_fnc_getEntity), _pos, "AAF", random 360, "NONE"] call AS_fnc_createEmptyVehicle;
+    private _veh = [selectrandom (["AAF", "static_aa"] call AS_fnc_getEntity), _position, "AAF", random 360, "CAN_COLLIDE"] call AS_fnc_createEmptyVehicle;
     _vehicles pushBack _veh;
 
     private _objects = [
@@ -41,5 +75,4 @@ if (["static_aa", _priority] call AS_fnc_vehicleAvailability and {!(_pos isEqual
       _units pushback _commander;
       [_commander, false] call AS_fnc_initUnitAAF;
     };
-};
 [_units, _vehicles]

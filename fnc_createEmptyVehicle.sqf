@@ -16,6 +16,8 @@ if (_side isEqualto "CIV") then {
 [_vehicle] spawn {
   params ["_vehicle"];
   sleep 3;
+  waitUntil {sleep 1; speed _vehicle < 0.1};
+  sleep 1;
   _vehicle allowDamage true;
 };
 

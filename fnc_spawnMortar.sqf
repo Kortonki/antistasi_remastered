@@ -1,9 +1,43 @@
-params ["_position", "_faction"];
+params ["_position", "_faction", ["_size", 200], ["_priority", 0.25]];
 
-_position = _position findEmptyPosition [20,200, "Land_HelipadSquare_F"];
-if (count _position == 0) exitWith {
-    [[], [], []]
+if (!(["static_mortar", _priority] call AS_fnc_vehicleAvailability) and {_faction == "AAF"}) exitWith {[[], [], []]};
+
+private _newSize = _size/2;
+private _dir = random 360;
+private _i = 0;
+
+private _origin = +_position;
+private _initPos = +_position;
+
+private _valid = false;
+
+
+//This commented out - preventing spawn?
+//and {!(_position isFlatEmpty  [-1, -1, 0.35, 4, 0] isEqualTo [])
+
+//Rotate first to find
+
+while {_newSize < _size*1.5} do {
+
+  while {_i < 12} do {
+    _dir = _dir + 115;
+    _initPos = [_origin, _newSize*(random 2)/2, _dir] call BIS_fnc_relPos;
+    _position = _initPos findEmptyPosition [5, 20, "Land_HelipadSquare_F"];
+      if  ((_position call AS_fnc_isSafePos) and {!(_position isFlatEmpty  [-1, -1, 0.35, 4, 0] isEqualTo [])}) exitWith {_valid = true};
+    _i = _i + 1;
+    };
+  if (_valid) exitWith {};
+  _newSize = _newSize + 10;
+  _i = 0;
 };
+
+
+
+if (!_valid) exitWith {
+    diag_log format ["AS_fnc_spawnMortar could not find a suitable position, spawn cancelled near %1", _origin call AS_location_fnc_nearest];
+    [[], [], []]
+
+  };
 
 private _objects = [
 	["Land_SandbagBarricade_01_half_F",[-1.17114,2.7998,0.00133133],177.685,1,0,[0,-0],"","",true,false],

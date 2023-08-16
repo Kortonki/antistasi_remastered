@@ -133,12 +133,13 @@ publicVariable "S_camonet_type";
 publicVariable "AS_h_barrier_type";
 publicVariable "AS_RadioCoverage";
 
+AS_blackListAreas = [];
 
 
 // This searches through all the markers in the mission.sqm and adds them.
 {
     call {
-        if (_x find "blacklist" > 0) exitWith {_x setMarkerAlpha 0}; //This was added to not spawn vehicles on runways
+        if (_x find "blacklist" > 0) exitWith {_x setMarkerAlpha 0; AS_blackListAreas pushback _x;}; //This was added to not spawn vehicles on runways
         if (_x find "AS_powerplant" == 0) exitWith {[_x, "powerplant"] call AS_location_fnc_add};
         if (_x find "AS_base" == 0) exitWith {[_x, "base"] call AS_location_fnc_add};
         if (_x find "AS_airfield" == 0) exitWith {[_x, "airfield"] call AS_location_fnc_add};
@@ -156,6 +157,9 @@ publicVariable "AS_RadioCoverage";
 
 call AS_location_fnc_addAllRoadblocks;
 ["FIA_HQ", "fia_hq"] call AS_location_fnc_add;
+
+//Publish to clients, one time only
+publicVariable "AS_blackListAreas";
 
 // Initializes HQ placements and petros
 
@@ -181,6 +185,8 @@ vehiclePad allowDamage false;
 
 AS_permanent_HQplacements = [caja, cajaVeh, mapa, fuego, bandera, vehiclePad];
 AS_HQ_placements = []; // objects placed on HQ
+
+
 
 //Disable fuel from fuel stations
 
@@ -217,6 +223,9 @@ AS_maxAmounts = [
 ["static_mg", "static_at", "static_aa", "static_mortar", "cars_transport", "cars_armed", "trucks", "apcs", "tanks"],
 [8, 4, 4, 4, 2, 4, 7, 4, 4]], //Trucks 4 + 3 supports
 [["airfield"],
-["static_mg", "static_at", "static_aa", "cars_transport", "cars_armed", "trucks", "apcs", "helis_transport", "helis_armed", "planes"],
-[8, 4, 4, 2, 4, 7, 4, 4, 4, 4]]
+["static_mg", "static_at", "static_aa", "static_mortar", "cars_transport", "cars_armed", "trucks", "apcs", "helis_transport", "helis_armed", "planes"],
+[8, 4, 4, 4, 2, 4, 7, 4, 4, 4, 4]]
 ];
+
+//One time only. Used to calculate vehicle amount for spawns
+publicVariable "AS_maxAmounts";

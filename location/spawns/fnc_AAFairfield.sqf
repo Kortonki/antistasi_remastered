@@ -53,23 +53,31 @@ private _fnc_spawn = {
 
 	// spawn AT road checkpoint
 	for "_i" from 1 to (_atAmount min ("static_at" call AS_AAFarsenal_fnc_countAvailable)) do {
-		if ((_location call AS_location_fnc_spawned)) then {
-			([_posicion, _grupo, 0] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
+			([_posicion, _grupo, _size, 0] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
 			_soldados append _units1;
 			_vehiculos append _vehicles1;
-		};
 	};
 
 	private _aaAmount = ["static_aa", "airfield"] call AS_location_fnc_vehicleAmount;
 
 		// spawn AA
 		for "_i" from 1 to (_aaAmount min ("static_aa" call AS_AAFarsenal_fnc_countAvailable)) do {
-			if ((_location call AS_location_fnc_spawned)) then {
+
 
 				([_posicion, _grupo, _size, 0] call AS_fnc_spawnAAF_AA) params ["_units1", "_vehicles1"];
 				_soldados append _units1;
 				_vehiculos append _vehicles1;
-			};
+		};
+
+		private _mortarAmount = ["static_mortar", "airfield"] call AS_location_fnc_vehicleAmount;
+
+		// spawn up to available mortars (failsafe, above calc should already limit it)
+		for "_i" from 1 to (_mortarAmount min ("static_mortar" call AS_AAFarsenal_fnc_countAvailable)) do {
+			//if !(_location call AS_location_fnc_spawned) exitWith {};
+			([_posicion, "AAF", _size, 0.1] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
+			_soldados append _mortar_units;
+			_vehiculos append _mortar_vehicles;
+			_grupos append _mortar_groups;
 		};
 
 	//Populate mil buildings and add choppers to pads
@@ -98,6 +106,31 @@ private _fnc_spawn = {
 	_planepads append ((nearestObjects [_posicion, ["House"], _size, true]) call _findPlaneParking);
 	//Here no arrayintersect for uniques: duplicates will be deleted anyway.
 
+	//Make more pads via vehicle parking if not enough pads
+	//There's an unreliable fallback afterwards
+
+	if (count _helipads < (["helis_transport", "airfield"] call AS_location_fnc_vehicleAmount) +  (["helis_armed", "airfield"] call AS_location_fnc_vehicleAmount)) then {
+		private _neededCount = (["helis_transport", "airfield"] call AS_location_fnc_vehicleAmount) + (["helis_armed", "airfield"] call AS_location_fnc_vehicleAmount) - count _helipads;
+		private _pos_dir = [_location, _neededCount , "helis_transport", nil, 40] call AS_location_fnc_vehicleParking;
+		for "_i" from 0 to (_neededCount - 1) do {
+		 private _pad =  createVehicle ["Land_HelipadSquare_F", ((_pos_dir select 0) select _i), [], 0, "CAN_COLLIDE"];
+		 _pad setdir ((_pos_dir select 1) select _i);
+		 _helipads pushback _pad;
+		 _vehiculos pushback _pad;
+	 };
+	};
+
+	if (count _planepads < (["planes", "airfield"] call AS_location_fnc_vehicleAmount)) then {
+		private _neededCount = (["planes", "airfield"] call AS_location_fnc_vehicleAmount) - count _planepads;
+		private _pos_dir = [_location, _neededCount , "planes"] call AS_location_fnc_vehicleParking;
+		for "_i" from 0 to (_neededCount - 1) do {
+		 private _pad =  createVehicle ["Land_HelipadSquare_F", ((_pos_dir select 0) select _i), [], 0, "CAN_COLLIDE"];
+		 _pad setdir ((_pos_dir select 1) select _i);
+		 _planepads pushback _pad;
+		 _vehiculos pushback _pad;
+	 };
+	};
+
 	//private _pos = _posicion findEmptyPosition [10, _size/2, "I_Heli_Transport_02_F"];
 	//posOrig is only for automatic locations if no pads
 	private _ang = markerdir _location;
@@ -106,7 +139,7 @@ private _fnc_spawn = {
 	private _airVehClasses = ("airfield" call AS_location_fnc_vehicleClasses) arrayIntersect ["helis_transport", "helis_armed", "planes"];
 
 	{
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 		private _vehCount = [_x, "airfield"] call AS_location_fnc_vehicleAmount;
 
 		for "_i" from 1 to (_vehCount min (_x call AS_AAFarsenal_fnc_countAvailable)) do {
@@ -144,6 +177,7 @@ private _fnc_spawn = {
 				};
 
 				if (isnull _pad) then {
+
 
 					_pos = [_posOrig, _size*0.05,_ang + 90] call BIS_fnc_relPos; //If no longer landing pads, next one is 20 meters to the right of the last pad
 				 	_posOrig = _pos;
@@ -187,12 +221,12 @@ private _fnc_spawn = {
 
 	private _LandvehClasses = ("airfield" call AS_location_fnc_vehicleClasses) arrayIntersect ["cars_transport", "cars_armed", "trucks", "apcs"];
 	{
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 		private _vehCount = [_x, "airfield"] call AS_location_fnc_vehicleAmount;
 
 		//Find parking for vehicle class
 
-		private _pos_dir = [_location, _vehCount] call AS_location_fnc_vehicleParking;
+		private _pos_dir = [_location, _vehCount, _x] call AS_location_fnc_vehicleParking;
 
 		for "_i" from 0 to ((_vehCount min (_x call AS_AAFarsenal_fnc_countAvailable)) - 1) do {
 
@@ -205,11 +239,10 @@ private _fnc_spawn = {
 				_pos = (_pos_dir select 0) select _i;
 				_dir = (_pos_dir select 1) select _i;
 			} else {
-				if (_size > 40) then {
-					_pos = [_posicion, 5, _size, 10, 0, 0.3, 0, [], [_posicion, [0,0,0]]] call BIS_Fnc_findSafePos;
-					} else {
-					_pos = _posicion findEmptyPosition [10,60,_tipoVeh];
-				};
+
+					//_pos = [_posicion, 5, _size, 10, 0, 0.3, 0, [], [_posicion, [0,0,0]]] call BIS_Fnc_findSafePos;
+
+					_pos = _posicion findEmptyPosition [5,50,_tipoVeh];
 			};
 			//In frontilne no parked combat vehicles
 			if ((!(_frontera) and {random 10 <= 5}) or (_x in (["trucks", "cars_transport"]))) then {
@@ -236,7 +269,7 @@ private _fnc_spawn = {
 		};
 	} foreach _landVehClasses;
 
-	private _support_pos_dir = [_location, 3] call AS_location_fnc_vehicleParking;
+	private _support_pos_dir = [_location, 3, "trucks"] call AS_location_fnc_vehicleParking;
 
 	{
 		private _pos = (_support_pos_dir select 0) select _forEachIndex;

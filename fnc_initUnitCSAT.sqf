@@ -1,4 +1,4 @@
-params ["_unit"];
+params ["_unit", ["_spawned", true]];
 
 if(!(local _unit)) exitWith {
 		diag_log format ["[AS] Error: InitUnitCSAT run where the unit is not local. InitUnitCSAT remoteExec'd where it's local. Time: %1, Unit: %2", time, _unit];
@@ -9,7 +9,9 @@ if (!isNil{_unit getVariable "init"}) exitWith {diag_log format ["Unit %1 attemp
 
 _unit setVariable ["init", true, false];
 
-_unit setVariable ["OPFORSpawn",true,true];
+if (_spawned) then {
+	_unit setVariable ["OPFORSpawn",true,true];
+};
 
 [_unit, "CSAT"] call AS_fnc_setSide;
 

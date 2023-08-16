@@ -64,7 +64,7 @@ private _fnc_spawn = {
 				private _base = [_validBases,_posicion] call BIS_fnc_nearestPosition;
 				private _position = _base call AS_location_fnc_position;
 				if (_position distance _posicion > 1000) then {
-					([_posicion, "AAF"] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
+					([_posicion, "AAF", _size, 0.3] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
 					_soldados append _mortar_units;
 					_vehiculos append _mortar_vehicles;
 					_grupos append _mortar_groups;
@@ -74,7 +74,7 @@ private _fnc_spawn = {
 		};
 
 		if ((_location call AS_location_fnc_spawned) and _frontera) then {
-			([_posicion, _grupo] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
+			([_posicion, _grupo, _size, 0.3] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
 			_soldados append _units1;
 			_vehiculos append _vehicles1;
 		};

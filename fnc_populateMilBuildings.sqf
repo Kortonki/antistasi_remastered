@@ -29,6 +29,9 @@ private _markers = [];
 	if (_buildingType in AS_MGbuildings) then {
 
 	call {
+				//THese often glitch outpost
+
+				/*
 				if (((_side == "AAF" and {["static_aa", _minimumShare] call AS_fnc_vehicleAvailability}) or _side != "AAF") and {_buildingType in ["Land_Cargo_HQ_V1_F", "Land_Cargo_HQ_V2_F", "Land_Cargo_HQ_V3_F"]}) exitWith {
 					private _veh = [_staticAA, (_building buildingPos 8), _side, getDir _building, "CAN_COLLIDE"] call AS_fnc_createEmptyVehicle;
 					_veh setPosATL [(getPos _building select 0),(getPos _building select 1),(getPosATL _veh select 2)];
@@ -37,6 +40,7 @@ private _markers = [];
 					_soldiers pushback _unit;
 					_vehicles pushback _veh;
 				};
+				*/
 
 				if (((_side == "AAF" and {["static_mg", _minimumShare] call AS_fnc_vehicleAvailability}) or _side != "AAF") and {_buildingType in ["Land_Cargo_Patrol_V1_F", "Land_Cargo_Patrol_V2_F", "Land_Cargo_Patrol_V3_F"]}) exitWith {
 					private _veh = [_staticMG, (_building buildingPos 1), _side, (getDir _building) - 180, "CAN_COLLIDE"] call AS_fnc_createEmptyVehicle;
@@ -50,6 +54,7 @@ private _markers = [];
 					_vehicles pushback _veh;
 				};
 
+				/*
 				if (((_side == "AAF" and {["static_mg", _minimumShare] call AS_fnc_vehicleAvailability}) or _side != "AAF") and {_buildingType in ["Land_Cargo_Tower_V1_F", "Land_Cargo_Tower_V2_F", "Land_Cargo_Tower_V3_F"]}) exitWith {
 				private _veh = [_staticMG, (_building buildingPos 13), _side, random 360, "CAN_COLLIDE"] call AS_fnc_createEmptyVehicle;
 				private _unit = _grupo createUnit [_gunnerCrew, _posicion, [], 0, "NONE"];
@@ -64,7 +69,7 @@ private _markers = [];
 				_vehicles pushback _veh;
 
 			};
-
+			*/
 			//This is for small sandbag bunkers
 
 			if ((_side == "AAF" and {["static_mg", _minimumShare] call AS_fnc_vehicleAvailability}) or _side != "AAF") exitWith {

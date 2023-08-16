@@ -79,7 +79,7 @@ private _fnc_spawn = {
 
 	// spawn moving cars
 	for "_i" from 1 to _numVeh do {
-		if !(_location call AS_location_fnc_spawned) exitwith {};
+		//if !(_location call AS_location_fnc_spawned) exitwith {};
 		private _road = selectRandom _roads;
 		private _p1 = getPos _road;
 		private _grupoP = createGroup civilian;

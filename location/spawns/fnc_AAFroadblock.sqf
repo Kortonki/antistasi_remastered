@@ -107,7 +107,7 @@ private _fnc_spawn = {
 	};
 
 	if (_class != "") then {
-			private _apc_pos_dir = [_location, 1, 200] call AS_location_fnc_vehicleParking;
+			private _apc_pos_dir = [_location, 1, _class, 200] call AS_location_fnc_vehicleParking;
 			private _apcPos = (_apc_pos_dir select 0) select 0;
 			private _apcDir = (_apc_pos_dir select 1) select 0;
 			private _type = selectRandom ([_class] call AS_AAFarsenal_fnc_valid);

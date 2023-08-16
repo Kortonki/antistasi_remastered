@@ -22,7 +22,7 @@ private _count = 0;
 _amount = round(_amount*AS_patrolSizeRef);
 // spawn patrols
 while {_count < _amount} do {
-    if !(_location call AS_location_fnc_spawned) exitWith {};
+    //if !(_location call AS_location_fnc_spawned) exitWith {};
 
     private _pos = [0,0,0];
     while {true} do {

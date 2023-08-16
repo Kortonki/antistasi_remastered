@@ -28,7 +28,7 @@ private _fnc_spawn = {
 	// generate _num patrols.
 	private _count = 0;
 	while {_count < _num} do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 		private _grupo = [_posicion, ("AAF" call AS_fnc_getFactionSide), [["AAF", "patrols"] call AS_fnc_getEntity, "AAF"] call AS_fnc_pickGroup] call BIS_Fnc_spawnGroup;
 		private _units = units _grupo;
 		_count = _count + (count _units);

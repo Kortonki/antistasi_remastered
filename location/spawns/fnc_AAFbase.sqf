@@ -1,6 +1,7 @@
 #include "../../macros.hpp"
 
 private _fnc_spawn = {
+
 	params ["_location"];
 
 	private _soldados = [];
@@ -52,8 +53,8 @@ private _fnc_spawn = {
 
 	// spawn up to available mortars (failsafe, above calc should already limit it)
 	for "_i" from 1 to (_mortarAmount min ("static_mortar" call AS_AAFarsenal_fnc_countAvailable)) do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
-		([_posicion, "AAF"] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
+		([_posicion, "AAF", _size, 0] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
 		_soldados append _mortar_units;
 		_vehiculos append _mortar_vehicles;
 		_grupos append _mortar_groups;
@@ -65,11 +66,10 @@ private _fnc_spawn = {
 
 	// spawn AT road checkpoint
 	for "_i" from 1 to (_atAmount min ("static_at" call AS_AAFarsenal_fnc_countAvailable)) do {
-		if ((_location call AS_location_fnc_spawned)) then {
-			([[_posicion, (_size/2) + random (_size/2), random 360] call bis_fnc_relpos, _grupo, 0] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
+			([_posicion, _grupo, _size, 0] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
 			_soldados append _units1;
 			_vehiculos append _vehicles1;
-		};
+
 	};
 
 	//Spawn some AA	private _atAmount = round((("static_at" call AS_AAFarsenal_fnc_count) / ("static_at" call AS_AAFarsenal_fnc_max)) * (["static_at", "base"] call AS_location_fnc_vehicles));
@@ -78,12 +78,11 @@ private _fnc_spawn = {
 
 		// spawn AA
 		for "_i" from 1 to (_aaAmount min ("static_aa" call AS_AAFarsenal_fnc_countAvailable)) do {
-			if ((_location call AS_location_fnc_spawned)) then {
 
 				([_posicion, _grupo, _size, 0] call AS_fnc_spawnAAF_AA) params ["_units1", "_vehicles1"];
 				_soldados append _units1;
 				_vehiculos append _vehicles1;
-			};
+
 		};
 
 	// spawn parked vehicles
@@ -92,10 +91,10 @@ private _fnc_spawn = {
 	private _vehClasses = ("base" call AS_location_fnc_vehicleClasses) arrayIntersect ["cars_transport", "cars_armed", "trucks", "apcs", "tanks"];
 
 	{
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 		private _vehCount = [_x, "base"] call AS_location_fnc_vehicleAmount;
 
-		private _pos_dir = [_location, _vehCount] call AS_location_fnc_vehicleParking;
+		private _pos_dir = [_location, _vehCount,  _x] call AS_location_fnc_vehicleParking;
 
 		for "_i" from 0 to ((_vehCount min (_x call AS_AAFarsenal_fnc_countAvailable)) -1) do {
 
@@ -141,7 +140,7 @@ private _fnc_spawn = {
 
 	//Create support vehicles, own group for each type
 
-	private _support_pos_dir = [_location, 3] call AS_location_fnc_vehicleParking;
+	private _support_pos_dir = [_location, 3, "trucks"] call AS_location_fnc_vehicleParking;
 
 	{
 		private _pos = (_support_pos_dir select 0) select _forEachIndex;

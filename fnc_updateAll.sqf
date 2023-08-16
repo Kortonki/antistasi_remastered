@@ -12,6 +12,7 @@ private _FIAtotalPop = 0;
 private _AAFtotalPop = 0;
 private _AAFResIncomeMultiplier = 1;
 private _FIAResIncomeMultiplier = 1;
+private _totalPop = 0;
 
 // forEach city, add to HR and money
 {
@@ -23,6 +24,9 @@ private _FIAResIncomeMultiplier = 1;
     private _AAFsupport = [_x, "AAFsupport"] call AS_location_fnc_get;
     private _FIAsupport = [_x, "FIAsupport"] call AS_location_fnc_get;
     private _power = [_city] call AS_fnc_location_isPowered;
+
+    //Used for win condition
+    _totalPop = _totalPop + _population;
 
     //EACH tick check if enemy side has any troops in the area -> lower support depending on amount
     //The fear element of gaining city support, in addition to providing supplies
@@ -283,11 +287,11 @@ private _FIAResIncomeMultiplier = 1;
 
 //WIN CONDITION
 // control the airport and have majority => win game.
-//Edited: must have twice as much influence as AAF:: 66% against 33%
+//Edited: must have twice as much influence as AAF:: 66% against 33% AND half of total pop
 //TODO: consider having a world spesific win locations instead of the airfield
 //TODO: Not end the mission here straight, but make AAF offer peace treaty
 //If player declines, able to conquer rest of the island, but with a loss of NATO support
-if ((_FIAtotalPop > (2 * _AAFtotalPop)) and ("AS_airfield" call AS_location_fnc_side == "FIA")) exitWith {
+if ((_FIAtotalPop > (2 * _AAFtotalPop)) and {"AS_airfield" call AS_location_fnc_side == "FIA" and {_FIAtotalPop > (_totalPop/2)}}) exitWith {
     "end1" call BIS_fnc_endMissionServer;
 };
 

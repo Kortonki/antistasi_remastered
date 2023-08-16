@@ -25,7 +25,7 @@ private _fnc_spawn = {
 		private _grupo = createGroup ("NATO" call AS_fnc_getFactionSide);
 		_grupos pushBack _grupo;
 		for "_i" from 1 to (round (5*_prestigio)) do {
-			if !(_location call AS_location_fnc_spawned) exitWith {};
+			//if !(_location call AS_location_fnc_spawned) exitWith {};
 			private _tipoveh = selectRandom (["NATO", "helis"] call AS_fnc_getEntity);
 			private _veh = createVehicle [_tipoveh, _pos, [],3, "NONE"];
 			_veh setDir (_ang + 90);
@@ -65,7 +65,7 @@ private _fnc_spawn = {
 
 	// create vehicles
 	for "_i" from 1 to _nVeh do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 
 		private _tipoVeh = selectRandom (["NATO", "other_vehicles"] call AS_fnc_getEntity);
 		private _pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
@@ -82,7 +82,7 @@ private _fnc_spawn = {
 	private _count = 0;
 
 	while {_count < _amount} do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 
 		// get random pos
 		private _pos = [];
@@ -99,7 +99,7 @@ private _fnc_spawn = {
 	};
 
 	for "_i" from 1 to (floor (_nVeh/2)) do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 
 		private _vehClass = selectRandom ["cars_armed", "apcs", "tanks", "self_aa"];
 		private _vehicleType = selectRandom (["NATO", _vehClass] call AS_fnc_getEntity);

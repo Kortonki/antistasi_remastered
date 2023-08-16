@@ -54,8 +54,8 @@ private _fnc_spawn = {
 
 	// spawn mortars
 	for "_i" from 1 to _nVeh do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
-		([_posicion, "NATO"] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
+		([_posicion, "NATO", _size] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
 		_soldados append _mortar_units;
 		_vehiculos append _mortar_vehicles;
 		_grupos append _mortar_groups;
@@ -67,7 +67,7 @@ private _fnc_spawn = {
 
 	private _pos = _posicion;
 	for "_i" from 1 to _nVeh do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 
 		_pos = [_posicion, 10, _size/2, 10, 0, 0.3, 0] call BIS_Fnc_findSafePos;
 
@@ -90,7 +90,7 @@ private _fnc_spawn = {
 	{[_x] spawn AS_fnc_initUnitNATO; _soldados pushBack _x} forEach units _grupo;
 
 	while {_count < _amount} do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 		while {true} do {
 			_pos = [_posicion, random _size,random 360] call BIS_fnc_relPos;
 			if (!surfaceIsWater _pos) exitWith {};
@@ -110,7 +110,7 @@ private _fnc_spawn = {
 
 
 	for "_i" from 1 to (floor (_nVeh/2)) do {
-		if !(_location call AS_location_fnc_spawned) exitWith {};
+		//if !(_location call AS_location_fnc_spawned) exitWith {};
 
 		private _vehClass = selectRandom ["cars_armed", "apcs", "tanks", "self_aa"];
 		private _vehicleType = selectRandom (["NATO", _vehClass] call AS_fnc_getEntity);

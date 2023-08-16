@@ -1,4 +1,4 @@
-params ["_unit"];
+params ["_unit", ["_spawned", true]];
 
 if(!(local _unit)) exitWith {
 		diag_log format ["[AS] Error: InitUnitNATO run where the unit is not local. InitUnitNATO remoteExec'd where it's local. Time: %1, Unit: %2", time, _unit];
@@ -19,7 +19,9 @@ _unit allowFleeing 0;
 
 [_unit] call AS_fnc_setDefaultSkill;
 
-_unit setVariable ["BLUFORSpawn",true,true];
+if (_spawned) then  {
+	_unit setVariable ["BLUFORSpawn",true,true];
+};
 
 _unit addEventHandler ["killed", {
 	params ["_unit", "_killer"];
@@ -30,7 +32,7 @@ _unit addEventHandler ["killed", {
 	};
 	_unit setVariable ["k", true, false];
 
-	[0.25,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
+	[0,0,getPos _unit] remoteExec ["AS_fnc_changeCitySupport",2];
 	["NATO", 1, "casualties"] remoteExec ["AS_stats_fnc_change", 2];
 	[_unit] remoteExec ["AS_fnc_activateCleanup",2];
 	_unit removeAllEventHandlers "HandleDamage";

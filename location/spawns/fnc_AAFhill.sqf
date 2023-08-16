@@ -34,7 +34,7 @@ private _fnc_spawn = {
 	_vehiculos append _vehicles1;
 
 	// create a mortar
-	([_posicion, "AAF"] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
+	([_posicion, "AAF", _size, 0.5] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
 	_soldados append _mortar_units;
 	_vehiculos append _mortar_vehicles;
 	_grupos append _mortar_groups;

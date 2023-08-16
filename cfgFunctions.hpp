@@ -112,6 +112,7 @@ class AS {
         FNC_BASE(createEmptyVehicle);
         FNC_BASE(safeDelete);
         FNC_BASE(vehicleAvailability);
+        FNC_BASE(isSafePos);
 
         FNC_BASE(mineFieldCheck);
 

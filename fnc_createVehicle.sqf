@@ -8,9 +8,19 @@ if (isNull _vehicle) exitWith {
 };
 _vehicle engineOn true;
 _vehicle allowDamage false;
+
+if (!(_vehicle isKindOf "Plane" and {_special == "FLY"})) then {
   [_vehicle, false] remoteExecCall ["enablesimulationGlobal", 2];
+};
 
 _vehicle setdir _dir;
+
+if (_vehicle isKindOf "Plane" ) then {
+  _spawn = false; //Universally don't let planes spawn stuff for performance reasons
+  if (_special == "FLY") then {
+  _vehicle setVelocityModelSpace [0, 100, 0];
+  };
+};
 
 private _driver = objnull;
 
@@ -74,13 +84,13 @@ _vehicleGroup addVehicle _vehicle;
 
 [_vehicle, _side] call AS_fnc_initVehicle;
 
-  [_vehicle, true] remoteExecCall ["enablesimulationGlobal", 2];
+[_vehicle, true] remoteExecCall ["enablesimulationGlobal", 2];
 
 
 
 [_vehicle] spawn {
   params ["_vehicle"];
-  sleep 3;
+  sleep 5;
   _vehicle allowDamage true;
 };
 

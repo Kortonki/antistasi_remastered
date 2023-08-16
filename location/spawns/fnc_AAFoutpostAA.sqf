@@ -45,14 +45,14 @@ private _fnc_spawn = {
 			private _base = [_validBases,_posicion] call BIS_fnc_nearestPosition;
 			private _position = _base call AS_location_fnc_position;
 			if (_position distance2d _posicion > 1000) then {
-				([_posicion, "AAF"] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
+				([_posicion, "AAF", _size, 0.2] call AS_fnc_spawnMortar) params ["_mortar_units", "_mortar_groups", "_mortar_vehicles"];
 				_soldados append _mortar_units;
 				_vehiculos append _mortar_vehicles;
 				_grupos append _mortar_groups;
 				sleep 1;
 			};
 		};
-		([_posicion, _grupo] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
+		([_posicion, _grupo, _size, 0.2] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
 		_soldados append _units1;
 		_vehiculos append _vehicles1;
 	};
@@ -75,7 +75,7 @@ private _fnc_spawn = {
 	([_location, _groupCount] call AS_fnc_spawnAAF_patrol) params ["_units2", "_groups2", "_patrolMarker2"];
 	_soldados append _units2;
 	_grupos append _groups2;
-	_markers pushBack _patroMarker2;
+	_markers pushBack _patrolMarker2;
 
 	[_location, _grupos] call AS_fnc_spawnJournalist;
 

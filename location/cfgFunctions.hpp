@@ -58,6 +58,7 @@ class AS_location {
         FNC(location,vehicleClasses);
         FNC(location,vehicleAmount);
         FNC(location,vehicleParking);
+        FNC(location,notBlacklistArea);
         // auxiliar
         FNC(location,getNameSize);
 

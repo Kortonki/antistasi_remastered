@@ -9,6 +9,10 @@ private _posicion = _location call AS_location_fnc_position;
 private _type = _location call AS_location_fnc_type;
 private _size = _location call AS_location_fnc_size;
 
+private _city = [call AS_location_fnc_cities, _posicion] call BIS_fnc_nearestPosition;
+private _cityIsFriendly = false;
+if (_city call AS_location_fnc_side == "FIA") then { _cityIsFriendly = true};
+
 {
 	if (isPlayer _x) then {
 		[_x, "score", 5] call AS_players_fnc_change;
