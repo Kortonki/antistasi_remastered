@@ -4,6 +4,8 @@ params ["_closest", ["_mineData", []], "_projectile"];
 
 private _minesData = [_closest, "mines"] call AS_location_fnc_get;
 
+//Marker stuff here to get proper name for it
+
 _minesData pushBack _mineData;
 
 [_closest, "mines", _minesData, true] call AS_location_fnc_set;

@@ -44,7 +44,7 @@ private _dir = getDir _truck;
 private _pos = [(getpos _truck select 0) - (_dist * (sin _dir)), (getpos _truck select 1) - (_dist *(cos _dir)), 0];
 //Experiment which one is better
 //_pos = [_pos, 0, 2, 1.7, 0, 0,0,[], []] call bis_fnc_findSafePos;
-_pos = _pos findEmptyPosition [0, 10, (["CIV", "box"] call AS_fnc_getEntity)];
+_pos = _pos findEmptyPosition [1, 4, (["CIV", "box"] call AS_fnc_getEntity)];
 if (_pos isEqualTo []) exitWith {
 
   private _text = "There's no space to unload the cargo!";

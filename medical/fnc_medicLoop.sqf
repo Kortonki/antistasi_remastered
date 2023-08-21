@@ -26,13 +26,25 @@ while {alive _unit} do {
     if (_unit getvariable ["autoHeal", false] and {vehicle _unit == _unit}) then {
 
 
-      if (damage _unit > 0.25 or (damage _unit > 0 and {_unit call AS_medical_fnc_isMedic})) then {
-
+      if (_unit getVariable ["selfHeal", false] and {damage _unit > 0.25 or (damage _unit > 0 and {_unit call AS_medical_fnc_isMedic})}) then {
+      _unit setVariable ["selfHeal", true];
       [_unit] spawn {
         params ["_unit"];
-        sleep 10; //Just to wait the possible contact to go over TODO: better figure out the situation to be clear
+        _unit setVariable ["selfHeal", nil];
+
+        //TODO: Maybe check for targetknowlege lastthreat. Figure out the format for that
+        private _time = time;
+        waitUntil {sleep AS_spawnLoopTime; private _enemy = (_unit findNearestEnemy _unit);
+          !(_enemy != objNull and
+          {_enemy distance2D _unit < 150 and
+          {([objNull, "VIEW"] checkVisibility [eyePos _unit, eyePos _enemy]) > 0 and {
+          time < _time + 10
+          }}})};
+
+        sleep 1;
         if(!(_unit call AS_medical_fnc_isUnconscious)) then {
           [_unit, _unit] call AS_medical_fnc_healAction;
+
           //_unit action ["HealSoldierSelf", _unit];
           };
         };

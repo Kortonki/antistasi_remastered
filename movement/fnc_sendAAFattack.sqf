@@ -72,7 +72,8 @@ if (_useCSAT) then {
 			private _AAFsupport = [_x, "AAFsupport"] call AS_location_fnc_get;
 
 			// only attack cities that have high FIA and low AAF support
-			if ((_AAFsupport < 5) and {_FIAsupport > 90} and {_useCSAT}) then {
+			//Deliberately over 100 - impossible. Needs reworks in multiple ares to consider destroyed towns working feature. Look for defend_city mission spawn file.
+			if ((_AAFsupport < 5) and {_FIAsupport > 90} and {AS_P("CSATSupport") > 100}) then {
 				_objectives append [_x, _x, _x, _x, _x];
 			} else {
 				//Otherwise send convoy if neutral. FIA cities get convoys if no valid targets via the end of the script

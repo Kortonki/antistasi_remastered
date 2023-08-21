@@ -15,7 +15,7 @@ if (_chance < 20) then {_chance = 20};
 
 if (floor random 100 < _chance) then {
 	//[_unit, true] enableSimulationGlobal true;
-	_unit globalChat "Okay, thank you. I was expecting this this. See you in HQ";
+	_unit globalChat "Okay, I was expecting this. See you in HQ";
 	[_unit,""] remoteExecCall ["switchmove", _unit];
 	[_unit,"ANIM"] remoteExecCall ["enableAI", _unit];
 	[_unit, "MOVE"] remoteExecCall ["enableAI", _unit];

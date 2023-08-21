@@ -135,7 +135,7 @@ class AI_management
 
 	class controls
 	{
-AS_DIALOG(3,"AI Management","closeDialog 0; if (player == AS_commander) then {createDialog ""radio_comm_commander""} else {createDialog ""radio_comm_player""};");
+AS_DIALOG(4,"AI Management","closeDialog 0; if (player == AS_commander) then {createDialog ""radio_comm_commander""} else {createDialog ""radio_comm_player""};");
 
 
 BTN_R(1,-1, "Auto Rearm", "", "[] spawn AS_AI_fnc_rearmCall");

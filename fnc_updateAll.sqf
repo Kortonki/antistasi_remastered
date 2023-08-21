@@ -20,13 +20,7 @@ private _totalPop = 0;
     private _side = _city call AS_location_fnc_side;
     private _size = _city call AS_location_fnc_size;
     private _position = _city call AS_location_fnc_position;
-    private _population = [_x, "population"] call AS_location_fnc_get;
-    private _AAFsupport = [_x, "AAFsupport"] call AS_location_fnc_get;
-    private _FIAsupport = [_x, "FIAsupport"] call AS_location_fnc_get;
-    private _power = [_city] call AS_fnc_location_isPowered;
 
-    //Used for win condition
-    _totalPop = _totalPop + _population;
 
     //EACH tick check if enemy side has any troops in the area -> lower support depending on amount
     //The fear element of gaining city support, in addition to providing supplies
@@ -104,10 +98,19 @@ private _totalPop = 0;
           ["AAF", "shortname"] call AS_fnc_getEntity
           ];
 
-          [_text, 5, "FIAcity_AAFpresence", false] spawn AS_fnc_globalMessage;
+          [_text, 2, "FIAcity_AAFpresence", false] spawn AS_fnc_globalMessage;
         };
       };
     };
+
+
+    private _population = [_x, "population"] call AS_location_fnc_get;
+    private _AAFsupport = [_x, "AAFsupport"] call AS_location_fnc_get;
+    private _FIAsupport = [_x, "FIAsupport"] call AS_location_fnc_get;
+    private _power = [_city] call AS_fnc_location_isPowered;
+
+    //Used for win condition
+    _totalPop = _totalPop + _population;
 
     // flip cities due to majority change. THIS MOVED BEFORE CALCULATING INCOME
     if ((_FIAsupport > 50) and {_side in ["AAF", "Neutral"]}) then {
@@ -187,6 +190,10 @@ private _totalPop = 0;
 
       _power = [_city] call AS_fnc_location_isPowered;
       [_city, _power] spawn AS_fnc_changeStreetLights;
+
+      if (_city call AS_location_fnc_spawned) then {
+        _city call AS_fnc_garrisonRelease;
+      }; 
     };
 
     if (_side == "AAF" and {_AAFsupport <= 50}) then {
@@ -222,7 +229,7 @@ private _totalPop = 0;
         _HRincomeFIA = (_population * (_FIAsupport / 10000));
 
         if (_side == "FIA") then {
-            _incomeAAF = _incomeAAF/2;
+            _incomeAAF = _incomeAAF/3;
             if _power then {
                 if (_FIAsupport + _AAFsupport + 1 <= 100) then {[0,1,_city] call AS_fnc_changeCitySupport};
             };
@@ -237,8 +244,8 @@ private _totalPop = 0;
         };
 
         if (_side == "AAF") then {
-            _incomeFIA = (_incomeFIA/2);
-            _HRincomeFIA = (_HRincomeFIA/2);
+            _incomeFIA = (_incomeFIA/3);
+            _HRincomeFIA = (_HRincomeFIA/3);
             if _power then {
                 if (_AAFsupport + _FIAsupport + 1 <= 100) then {[1,0,_city] call AS_fnc_changeCitySupport};
             };

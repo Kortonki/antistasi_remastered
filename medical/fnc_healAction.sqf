@@ -8,10 +8,10 @@ _medic setVariable ["AS_medical_assignedPatient", _unit];
 
 if (_medic == _unit) exitWith {
     _medic groupChat "I am patching myself";
+    [_unit, _medic] call AS_medical_fnc_clearAssignedMedic;
     _medic action ["HealSoldierSelf",_medic];
     sleep 10;
     [_unit, false] call AS_medical_fnc_setUnconscious;
-    [_unit, _medic] call AS_medical_fnc_clearAssignedMedic;
     _unit groupChat "I am ready";
 };
 

@@ -95,7 +95,7 @@ private _validWeapons = [];
 				_unit groupChat "Cannot take a better weapon";
 				};
 			_target setVariable ["busy",nil];
-			_unit doFollow player;
+			_unit doFollow (leader _unit);
 			};
 		_distancia = 51;
 		_Pweapon = primaryWeapon _unit;
@@ -104,8 +104,8 @@ private _validWeapons = [];
 	_findsAmmo = false;
 	_magCount = 6; //6 mags + 1 in rifle for infantryman, if less than that then try to rearm
 	if (_Pweapon in (AS_weapons select 6)) then {_magCount = 2}; //Machine gunners take less mags
-	_magazines = getArray (configFile / "CfgWeapons" / _Pweapon / "magazines");
-	if (_Pweapon != "" and {{_x in _magazines} count (magazines _unit) < _magCount}) then
+	_magazines = getArray (configFile >> "CfgWeapons" >> _Pweapon >> "magazines");
+	if (_Pweapon != "" and {{_x in _magazines} count ((magazines _unit) select {_x in _magazines}) < _magCount}) then
 		{
 		_necesita = true;
 		_findsAmmo = false;
@@ -115,7 +115,7 @@ private _validWeapons = [];
 			_objeto = _x;
 			if (({_x in _magazines} count magazineCargo _objeto) > 0) then
 				{
-				if (_unit distance _objeto < _distancia) then
+				if (_unit distance2d _objeto < _distancia) then
 					{
 					_target = _objeto;
 					_findsAmmo = true;
@@ -161,7 +161,7 @@ private _validWeapons = [];
 			_unit groupChat "Cannot rearm";
 			};
 		_target setVariable ["busy",nil];
-		_unit doFollow player;
+		_unit doFollow (leader _unit);
 		}
 	else
 		{
@@ -175,13 +175,13 @@ if ((_Sweapon == "") and (loadAbs _unit < 340)) then
 		{
 		{
 		_objeto = _x;
-		if (_unit distance _objeto < _distancia) then
+		if (_unit distance2D _objeto < _distancia) then
 			{
 			_busy = _objeto getVariable "busy";
 			if ((count weaponCargo _objeto > 0) and (isNil "_busy")) then
 				{
 				_armas = weaponCargo _objeto;
-                _valid = (AS_weapons select 10) + (AS_weapons select 8) + (AS_weapons select 5);
+                _valid = (AS_weapons select 10) + (AS_weapons select 8) + (AS_weapons select 5) + (AS_weapons select 16);
 				for "_i" from 0 to (count _armas - 1) do
 					{
 					_posible = _armas select _i;
@@ -189,7 +189,7 @@ if ((_Sweapon == "") and (loadAbs _unit < 340)) then
 						{
 						_target = _objeto;
 						_findsAmmo = true;
-						_distancia = _unit distance _objeto;
+						_distancia = _unit distance2D _objeto;
 						_arma = _posible;
 						};
 					};
@@ -225,7 +225,7 @@ if ((_Sweapon == "") and (loadAbs _unit < 340)) then
 			_unit groupChat "Cannot take a secondary weapon";
 			};
 		_target setVariable ["busy",nil];
-		_unit doFollow player;
+		_unit doFollow (leader _unit);
 		};
 	_Sweapon = secondaryWeapon _unit;
 	_distancia = 51;
@@ -234,8 +234,8 @@ if ((_Sweapon == "") and (loadAbs _unit < 340)) then
 _findsAmmo = false;
 if (_Sweapon != "") then
 	{
-	_magazines = getArray (configFile / "CfgWeapons" / _Sweapon / "magazines");
-	if ({_x in _magazines} count (magazines _unit) < 2) then
+	_magazines = getArray (configFile >> "CfgWeapons" >> _Sweapon >> "magazines");
+	if ({_x in _magazines} count ((magazines _unit) select {_x in _magazines}) < 2) then
 		{
 		_necesita = true;
 		_findsAmmo = false;
@@ -246,7 +246,7 @@ if (_Sweapon != "") then
 			_objeto = _x;
 			if ({_x in _magazines} count magazineCargo _objeto > 0) then
 				{
-				if (_unit distance _objeto < _distancia) then
+				if (_unit distance2D _objeto < _distancia) then
 					{
 					_target = _objeto;
 					_findsAmmo = true;
@@ -275,7 +275,7 @@ if (_Sweapon != "") then
 		_timeOut = time + 60;
 		waitUntil {sleep 1; (!alive _unit) or (isNull _target) or (_unit distance _target < 3) or (_timeOut < time) or (unitReady _unit)};
 		if ((unitReady _unit) and (alive _unit) and (_unit distance _target > 3) and (_target isKindOf "ReammoBox_F") and (!isNull _target)) then {_unit setPos position _target};
-		if (_unit distance _target < 3) then
+		if (_unit distance2D _target < 3) then
 			{
 			if ((backpack _unit == "") and (backPack _target != "")) then
 				{
@@ -346,7 +346,7 @@ if (not("ItemRadio" in assignedItems _unit)) then
 			_unit groupChat "Cannot pick the Radio";
 			};
 		_target setVariable ["busy",nil];
-		_unit doFollow player;
+		_unit doFollow (leader _unit);
 		};
 	};
 _findsAmmo = false;
@@ -400,7 +400,7 @@ if (hmd _unit == "") then
 				_unit groupChat "Cannot pick those NV Googles";
 				};
 			_target setVariable ["busy",nil];
-			_unit doFollow player;
+			_unit doFollow (leader _unit);
 			};
 		};
 	};
@@ -440,7 +440,7 @@ if ((headgear _unit) == "") then
 			_unit groupChat "Cannot pick this Helmet";
 			};
 		_target setVariable ["busy",nil];
-		_unit doFollow player;
+		_unit doFollow (leader _unit);
 		};
 	};
 

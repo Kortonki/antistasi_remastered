@@ -29,7 +29,7 @@ switch _type do {
 	case "refugiado": {_object addAction [localize "STR_act_orderRefugee", AS_actions_fnc_rescue,nil,0,false,true]};
 	case "prisionero": {_object addAction [localize "STR_act_liberate", AS_actions_fnc_rescue,nil,0,false,true]};
 	case "interrogate": {_object addAction [localize "STR_act_interrogate", AS_actions_fnc_interrogate,nil,0,false,true,"",NOT_IN_VEHICLE]};
-	case "offerToJoin": {_object addAction [localize "STR_act_offerToJoin", AS_actions_offerToJoin,nil,0,false,true,"",NOT_IN_VEHICLE]};
+	case "offerToJoin": {_object addAction [localize "STR_act_offerToJoin", AS_actions_fnc_offerToJoin,nil,0,false,true,"",NOT_IN_VEHICLE]};
 	case "buildHQ": {_object addAction [localize "STR_act_buildHQ", {[] remoteExec ["AS_fnc_HQbuild", 2]},nil,3,false,true,"","true", 10]};
 	case "seaport": {_object addAction ["Buy Boat", AS_actions_fnc_buyBoat,nil,0,false,true,"",IS_PLAYER]};
 	case "garage": {

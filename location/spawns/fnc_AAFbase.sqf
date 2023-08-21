@@ -65,6 +65,7 @@ private _fnc_spawn = {
 	private _atAmount = ["static_at", "base"] call AS_location_fnc_vehicleAmount;
 
 	// spawn AT road checkpoint
+	private _roadATdir = random 360;
 	for "_i" from 1 to (_atAmount min ("static_at" call AS_AAFarsenal_fnc_countAvailable)) do {
 			([_posicion, _grupo, _size, 0] call AS_fnc_spawnAAF_roadAT) params ["_units1", "_vehicles1"];
 			_soldados append _units1;

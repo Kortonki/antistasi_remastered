@@ -75,10 +75,18 @@ if (_notify and {_blufor != 0}) then {
 	private _sign = "+";
 	if (_blufor < 0) then {_sign = "";};
 	private _text = "";
-	if (_FIAsupport > _AAFsupport) then {
-		_text = format ["<t color='#0000bb'>%1</t><t color='#ffffff'> %6 Support<br/>%2%3<br/>%4 -> %5</t>", _city, _sign,_blufor,_FIAsupport - _blufor, _FIAsupport, ["FIA", "shortname"] call AS_fnc_getEntity];
-	} else {
-		_text = format ["<t color='#00bb00'>%1</t><t color='#ffffff'> %6 Support<br/>%2%3<br/>%4 -> %5</t>", _city, _sign,_blufor,_FIAsupport - _blufor, _FIAsupport, ["FIA", "shortname"] call AS_fnc_getEntity];
+	call {
+		if (_city call AS_location_fnc_side == "FIA") exitWith {
+			_text = format ["<t color='#0000bb'>%1</t><t color='#ffffff'> %6 Support<br/>%2%3<br/>%4 -> %5</t>", _city, _sign,_blufor,_FIAsupport - _blufor, _FIAsupport, ["FIA", "shortname"] call AS_fnc_getEntity];
+		};
+		if (_city call AS_location_fnc_side == "AAF") exitWith {
+			_text = format ["<t color='#00bb00'>%1</t><t color='#ffffff'> %6 Support<br/>%2%3<br/>%4 -> %5</t>", _city, _sign,_blufor,_FIAsupport - _blufor, _FIAsupport, ["FIA", "shortname"] call AS_fnc_getEntity];
+		};
+		if (_city call AS_location_fnc_side == "Neutral") exitWith {
+			_text = format ["<t color='#999999'>%1</t><t color='#ffffff'> %6 Support<br/>%2%3<br/>%4 -> %5</t>", _city, _sign,_blufor,_FIAsupport - _blufor, _FIAsupport, ["FIA", "shortname"] call AS_fnc_getEntity];
+		};
+
+
 	};
 	[petros, "income", _text, 5] remoteExec ["AS_fnc_localCommunication", AS_CLIENTS];
 };

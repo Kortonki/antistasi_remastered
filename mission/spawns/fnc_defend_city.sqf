@@ -7,8 +7,8 @@ private _fnc_initialize = {
 	private _location = _mission call AS_mission_fnc_location;
 	private _position = _location call AS_location_fnc_position;
 
-	private _tskTitle = "CSAT Punishment";
-	private _tskDesc = format ["CSAT is making a punishment expedition to %1. They will kill everybody there. Defend the city at all costs",[_location] call AS_fnc_location_name];
+	private _tskTitle = format ["%1 Punishment", ["AAF", "shortname"] call AS_fnc_getEntity];
+	private _tskDesc = format ["%1 is making a punishment expedition to %2. They will kill everybody there. Defend the city at all costs", ["AAF", "shortname"] call AS_fnc_getEntity, [_location] call AS_fnc_location_name];
 
 	[_mission, [_tskDesc,_tskTitle,_location], _position, "Defend"] call AS_mission_spawn_fnc_saveTask;
 };
@@ -34,6 +34,13 @@ private _fnc_spawn = {
 	_patrolMarker setMarkerShape "ELLIPSE";
 	_patrolMarker setMarkerSize [_size,_size];
 	_patrolMarker setMarkerAlpha 0;
+
+	//
+	//TODO: Rework this to be a reasonably defended. Civs easily get killed in arty and airstrike. Maybe tight conditions and the city gets destroyed unless airstrike plane destroyed?
+	//Might still bug out, last time just failed after creation
+	//ALSO need to work on AAFattack, mapInfo (pop 0), remove flag from the map, don't show notifications etc. etc.
+	//Mission not called as it is now
+
 
 	//CSAT Air Attack
 

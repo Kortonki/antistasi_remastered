@@ -1,6 +1,10 @@
 private ["_unit","_muzzle","_enemy"];
 
 _unit = _this select 0;
+
+if (time < _unit getVariable ["smokeUsed",time - 1]) exitWith {};
+if (vehicle _unit != _unit) exitWith {};
+
 _ayudado = _this select 1;
 
 private _returnMuzzle = {
@@ -24,9 +28,7 @@ private _returnMuzzle = {
 	_muzzle
 };
 
-if (time < _unit getVariable ["smokeUsed",time - 1]) exitWith {};
 
-if (vehicle _unit != _unit) exitWith {};
 
 _unit setVariable ["smokeUsed",time + 60];
 

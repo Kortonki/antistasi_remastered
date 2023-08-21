@@ -12,6 +12,8 @@ if (_weapon == "Put") then {
 
       ("FIA" call AS_fnc_getFactionSide) revealMine _projectile;
 
+
+
       // See if there is already a minefield in range
       private _position = getpos _unit;
       private _mineFields = ["minefield", "FIA"] call AS_location_fnc_TS;
@@ -25,6 +27,7 @@ if (_weapon == "Put") then {
       private _mineVehicle = _magazine call AS_fnc_mineVehicle;
       private _minePos = getPos _projectile;
       private _mineDir = getDir _projectile;
+
 
       private _mineData = [_mineVehicle, _minePos, _mineDir];
 
