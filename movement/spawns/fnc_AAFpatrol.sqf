@@ -50,7 +50,7 @@ private _fnc_spawn = {
 		private _maxcount = ("trucks" call AS_AAFarsenal_fnc_countAvailable) min 6;
 		private _count = (round(_threatEval/3) max 1) min _maxcount; //TODO: experiment and adjust
 
-		[_base,_count*10] call AS_location_fnc_increaseBusy;
+		[_base,_count*10] remoteExec ["AS_location_fnc_increaseBusy", 2];
 
 		for "_i" from 1 to _count do {  // the attack has 2 units for a non-marker
 
@@ -94,7 +94,7 @@ private _fnc_spawn = {
 			sleep 30;
 		};
 
-		[_aeropuerto,15*_cuenta] call AS_location_fnc_increaseBusy;
+		[_aeropuerto,15*_cuenta] remoteExec ["AS_location_fnc_increaseBusy", 2];
 	};
 
 	if _useCSAT then {

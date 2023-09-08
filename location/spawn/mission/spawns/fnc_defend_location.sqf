@@ -118,7 +118,7 @@ private _fnc_spawn = {
 			sleep 10; //Big delay to make room for spawning units
 		};
 
-		[_base,10*_nveh] call AS_location_fnc_increaseBusy;
+		[_base,10*_nveh] remoteExec ["AS_location_fnc_increaseBusy", 2];
 
 		diag_log format ["[AS] DefendLocation: Number of land vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalLand, _location, _arsenalCount];
 	};
@@ -168,7 +168,7 @@ private _fnc_spawn = {
 			sleep 5;
 		};
 
-		[_airfield,15*_nveh] call AS_location_fnc_increaseBusy;
+		[_airfield,15*_nveh] remoteExec ["AS_location_fnc_increaseBusy", 2];
 
 		diag_log format ["[AS] DefendLocation: Number of air vehicles: %1, ThreatEval Air: %2, Location: %3 ArsenalCount: %4", _nVeh, _threatEvalAir, _location, _arsenalCount];
 	};

@@ -140,7 +140,7 @@ private _fnc_spawn = {
 			sleep 10;
 		};
 
-		[_base,10*_nveh] call AS_location_fnc_increaseBusy;
+		[_base,10*_nveh] remoteExec ["AS_location_fnc_increaseBusy", 2];
 
 		diag_log format ["[AS] DefendHQ: Number of vehicles: %1, ThreatEval Land: %2, Location: %3 ArsenalCount: %4", _nVeh, _threat, _location, _arsenalCount];
 

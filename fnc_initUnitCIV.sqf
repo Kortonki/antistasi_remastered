@@ -53,8 +53,9 @@ private _EHkilledIdx = _unit addEventHandler ["killed", {
 		private _coeff = 1;
 		if (typeOf _unit == "C_journalist_F") then {
 			_coeff = 10;
+			if (_killer call AS_fnc_getSide in ["AAF", "NATO", "CSAT", "FIA"]) then {
 			[_killer call AS_fnc_getSide, 1, "journalistKills"] remoteExec ["AS_stats_fnc_change", 2];
-
+			};
 
 
 

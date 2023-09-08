@@ -71,13 +71,14 @@ if (_side == "FIA") then {
         //Check if a markers is already near a mine. Do it this way instead of deleting, adding to avoid network traffic
         //Todo: Figure out a more optimized way
         //Markers attached to mines - problem is they're not shown on load game when mines not spawned. Maybe via location init?
-
+        //Commented out for now, doesn't work. Createmarker locality not what's documented?
+        /*
         {
           private _pos = _x select 1;
 
           private _nearest = [allMapMarkers select {getMarkerType _x == "hd_dot"}, _pos] call BIS_Fnc_nearestPosition;
 
-          if (_nearest distance2d _pos > 0.5)
+          if ((getmarkerPos _nearest) distance2d _pos > 0.5)
           then {
             private _mrk2 = createMarkerLocal [format ["%1_%2", _location, call AS_fnc_uniqueID], _pos, 1];
             _mrk2 setMarkerSizeLocal [0.5, 0.5];
@@ -89,7 +90,7 @@ if (_side == "FIA") then {
         } foreach  ([_location, "mines"] call AS_location_fnc_get);
 
         //Marker deletion is at fnc_mineFieldCheck (Look for the nearest marker)
-
+        */
 
         };
     _mrk setMarkerColor "ColorBLUFOR";
