@@ -73,6 +73,7 @@ class AS {
 
         FNC_BASE(codeToString);
         FNC_BASE(uniqueID);
+        FNC_BASE(minutesDisplay);
 
         FNC_BASE(setDefaultSkill);
         FNC_BASE(lockVehicle);

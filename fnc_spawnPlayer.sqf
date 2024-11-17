@@ -140,7 +140,7 @@ if (_oldFate == "kill") then {
 // remove any progress bar the player had
 [0,true] remoteExec ["AS_fnc_showProgressBar",player];
 
-[false] spawn AS_fnc_activateUndercover;
+
 
 _unit setVariable ["inited", true, true];
 

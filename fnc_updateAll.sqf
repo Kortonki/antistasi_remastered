@@ -47,10 +47,11 @@ private _totalPop = 0;
       };
 
       if (_side == "FIA") then {
-        private _enemyUnits = {_x call AS_fnc_getSide in ["AAF", "CSAT"] and {_x call AS_fnc_canFight and {_x distance2D _position <= _size}}} count allUnits;
+        private _enemyUnits = allUnits select {_x call AS_fnc_getSide in ["AAF", "CSAT"] and {_x call AS_fnc_canFight and {_x distance2D _position <= _size}}};
+        private _enemyUnitCount = count _enemyUnits;
 
-        if (_enemyUnits > 0) then {
-          [0, -_enemyUnits, _city, true] call AS_fnc_changeCitySupport;
+        if (_enemyUnitCount > 0) then {
+          [0, -_enemyUnitCount, _city, true] call AS_fnc_changeCitySupport;
 
           private _text = format [localize "STR_msg_FIAcity_AAFpresence",
           _city,
@@ -58,6 +59,12 @@ private _totalPop = 0;
           ];
 
           [_text, 1, format ["FIAcity_AAFpresence_%1", _city], false] spawn AS_fnc_globalMessage;
+
+          {
+            _x call AS_markers_fnc_enemyDetected;
+          } foreach (_enemyUnits select { leader _x == _x});
+
+
         };
       };
 
@@ -193,7 +200,7 @@ private _totalPop = 0;
 
       if (_city call AS_location_fnc_spawned) then {
         _city call AS_fnc_garrisonRelease;
-      }; 
+      };
     };
 
     if (_side == "AAF" and {_AAFsupport <= 50}) then {

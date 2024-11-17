@@ -166,11 +166,13 @@ private _fnc_clean = {
 
 	[_location, _groups] spawn AS_fnc_sendAwayFromBlufor;
 
-	waitUntil {sleep AS_spawnLoopTime; not(_location call AS_location_fnc_spawned)};
-
 	if (_wasDestroyed) then {
 			[_location] remoteExec ["AS_location_fnc_remove", 2];
 	};
+
+
+	waitUntil {sleep AS_spawnLoopTime; not(_location call AS_location_fnc_spawned)};
+
 
 	[_groups,  _vehicles, _markers] call AS_fnc_cleanResources;
 

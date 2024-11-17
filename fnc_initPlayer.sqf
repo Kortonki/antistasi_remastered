@@ -34,6 +34,10 @@ if (!(hasACE)) then {
 	[player,"repackMagazines"] call AS_fnc_addAction;
 };
 
+//Moved here from spawnPlayer
+
+[false] spawn AS_fnc_activateUndercover;
+
 player addEventHandler ["WeaponAssembled", {
 	params ["_EHunit", "_EHobj"];
 	if (_EHobj isKindOf "StaticWeapon") then {

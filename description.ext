@@ -498,6 +498,7 @@ class cfgFunctions {
     #include "scheduler\cfgFunctions.hpp"
     #include "debug\cfgFunctions.hpp"
     #include "spawn\cfgFunctions.hpp"
+    #include "markers\cfgFunctions.hpp"
     #include "mission\cfgFunctions.hpp"
     #include "movement\cfgFunctions.hpp"
     #include "players\cfgFunctions.hpp"

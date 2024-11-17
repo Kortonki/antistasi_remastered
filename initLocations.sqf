@@ -190,14 +190,14 @@ AS_HQ_placements = []; // objects placed on HQ
 
 //Disable fuel from fuel stations
 
-
+private _pos = getArray(configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
 if (!isNil "ace_common_settingFeedbackIcons") then {
-  private _allFuelStations = ([0,0,0] nearObjects 40000) select {([_x] call ace_refuel_fnc_getFuel) > 0};
+  private _allFuelStations = (_pos nearObjects 40000) select {([_x] call ace_refuel_fnc_getFuel) > 0};
   {[_x, 0] call ace_refuel_fnc_setFuel} foreach _allFuelStations;
 } else {
-  private _allFuelStations = ([0,0,0] nearObjects 40000) select {getFuelCargo _x > 0};
-  {_x setFuelCargo 0} foreach _allFuelStations;
+  private _allFuelStations = nearestobjects [_pos, ["Land_fs_feed_F"], 20000];
+  {_x enableSimulationGlobal false} foreach _allFuelStations;
 };
 
 //Maximum amount for AAF vehicles

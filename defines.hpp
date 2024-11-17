@@ -288,7 +288,7 @@ class RscStructuredText : RscColors
 // the black box that fills the dialog.
 class AS_box {
   type = CT_STATIC;
-  idc = -1;
+  idc = 0; //changed from -1
   style = 0;
   sizeEx = 0;
   shadow = 0;
